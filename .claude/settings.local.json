@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter --version:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(find:*)",
+      "WebSearch",
+      "WebFetch(domain:pub.dev)",
+      "Bash(dir /B \"C:\\Users\\moham\\StudioProjects\\spo_kick\\lib\\features\\auth\" 2)",
+      "Bash(nul)",
+      "Bash(dir /B \"C:\\Users\\moham\\StudioProjects\\spo_kick\\lib\\features\\fields\" 2)",
+      "Bash(dir /B \"C:\\Users\\moham\\StudioProjects\\spo_kick\\lib\\features\\bookings\" 2)",
+      "Bash(dir /S /B)",
+      "Bash(flutter analyze:*)",
+      "Bash(Select-String -Pattern \"error -\" -Context 0,0)",
+      "Bash(flutter devices:*)",
+      "Bash(Select-String -Pattern \"issues found\")",
+      "Bash(flutter run)",
+      "Bash(dart format:*)",
+      "Bash(dir:*)",
+      "Bash(Select-String \"issues found\")",
+      "Bash(findstr:*)",
+      "Bash(Select-String -Pattern \"error|warning\" -Context 0,1)",
+      "Bash(Select-Object -First 30)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
