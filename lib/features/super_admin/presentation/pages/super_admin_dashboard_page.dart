@@ -38,6 +38,30 @@ class _SuperAdminDashboardView extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         actions: [
+          BlocBuilder<SuperAdminCubit, SuperAdminState>(
+            builder: (context, state) {
+              if (state is PlatformStatisticsLoaded) {
+                return IconButton(
+                  icon: const Icon(Icons.picture_as_pdf),
+                  onPressed: () {
+                    context
+                        .read<SuperAdminCubit>()
+                        .exportPlatformStatisticsToPDF(state.statistics);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Exporting platform statistics to PDF...',
+                        ),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                  tooltip: 'Export PDF Report',
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {

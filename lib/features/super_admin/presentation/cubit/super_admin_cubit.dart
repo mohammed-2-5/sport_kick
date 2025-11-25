@@ -12,6 +12,8 @@ import 'package:spo_kick/features/super_admin/domain/usecases/get_all_bookings_u
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_users_usecase.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/core/services/csv_export_service.dart';
+import 'package:spo_kick/core/services/pdf_export_service.dart';
+import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
@@ -38,6 +40,7 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
   final DeactivateUserUseCase deactivateUserUseCase;
   final ActivateUserUseCase activateUserUseCase;
   final CsvExportService csvExportService;
+  final PdfExportService pdfExportService;
 
   SuperAdminCubit({
     required this.getPlatformStatisticsUseCase,
@@ -52,6 +55,7 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
     required this.deactivateUserUseCase,
     required this.activateUserUseCase,
     required this.csvExportService,
+    required this.pdfExportService,
   }) : super(const SuperAdminInitial());
 
   /// Load platform-wide statistics for dashboard.
@@ -526,6 +530,21 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
     } catch (e) {
       debugPrint('❌ [SuperAdminCubit] Error exporting admins: $e');
       emit(SuperAdminError('Failed to export admins: $e'));
+    }
+  }
+
+  /// Export platform statistics to PDF report
+  Future<void> exportPlatformStatisticsToPDF(
+    PlatformStatisticsEntity stats,
+  ) async {
+    debugPrint('🔄 [SuperAdminCubit] Exporting platform statistics to PDF');
+
+    try {
+      await pdfExportService.exportPlatformStatisticsToPdf(stats);
+      debugPrint('✅ [SuperAdminCubit] Platform statistics exported');
+    } catch (e) {
+      debugPrint('❌ [SuperAdminCubit] Error exporting statistics: $e');
+      emit(SuperAdminError('Failed to export statistics: $e'));
     }
   }
 

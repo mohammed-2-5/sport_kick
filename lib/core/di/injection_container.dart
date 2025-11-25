@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:spo_kick/core/network/api_client.dart';
 import 'package:spo_kick/core/network/network_info.dart';
 import 'package:spo_kick/core/services/csv_export_service.dart';
+import 'package:spo_kick/core/services/pdf_export_service.dart';
 
 // Auth Feature
 import 'package:spo_kick/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -151,6 +152,9 @@ Future<void> _initCore() async {
 
   // CSV Export Service
   sl.registerLazySingleton<CsvExportService>(() => CsvExportService());
+
+  // PDF Export Service
+  sl.registerLazySingleton<PdfExportService>(() => PdfExportService());
 }
 
 // ==================== FEATURE: AUTH ====================
@@ -299,6 +303,7 @@ void _initSuperAdmin() {
       deactivateUserUseCase: sl(),
       activateUserUseCase: sl(),
       csvExportService: sl(),
+      pdfExportService: sl(),
     ),
   );
 
