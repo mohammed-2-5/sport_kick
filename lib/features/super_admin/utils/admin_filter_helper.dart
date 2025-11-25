@@ -35,9 +35,8 @@ class AdminFilterHelper {
     // Date range filter
     if (dateRange != null && filtered.isNotEmpty) {
       filtered = filtered.where((admin) {
-        if (admin.createdAt == null) return false;
-        return admin.createdAt!.isAfter(dateRange.start) &&
-            admin.createdAt!.isBefore(dateRange.end);
+        return admin.createdAt.isAfter(dateRange.start) &&
+            admin.createdAt.isBefore(dateRange.end);
       }).toList();
     }
 

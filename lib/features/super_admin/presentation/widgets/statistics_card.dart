@@ -27,7 +27,7 @@ class StatisticsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -44,7 +44,7 @@ class StatisticsCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: color, size: 22),
@@ -86,10 +86,7 @@ class StatisticsCard extends StatelessWidget {
           // Subtitle
           Text(
             subtitle,
-            style: TextStyle(
-              fontSize: 11,
-              color: Colors.grey[500],
-            ),
+            style: TextStyle(fontSize: 11, color: Colors.grey[500]),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -106,7 +103,7 @@ class StatisticsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       decoration: BoxDecoration(
-        color: trendColor.withOpacity(0.1),
+        color: trendColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Row(

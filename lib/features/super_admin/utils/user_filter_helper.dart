@@ -24,8 +24,7 @@ class UserFilterHelper {
     if (searchQuery != null && searchQuery.isNotEmpty) {
       final query = searchQuery.toLowerCase();
       filtered = filtered.where((user) {
-        final nameMatch =
-            user.fullName?.toLowerCase().contains(query) ?? false;
+        final nameMatch = user.fullName?.toLowerCase().contains(query) ?? false;
         final emailMatch = user.email.toLowerCase().contains(query);
         final phoneMatch = user.phone?.toLowerCase().contains(query) ?? false;
         return nameMatch || emailMatch || phoneMatch;
@@ -35,10 +34,8 @@ class UserFilterHelper {
     // Date range filter
     if (dateRange != null && filtered.isNotEmpty) {
       filtered = filtered.where((user) {
-        if (user.createdAt == null) return false;
-        final createdAt = user.createdAt!;
-        return createdAt.isAfter(dateRange.start) &&
-            createdAt.isBefore(dateRange.end);
+        return user.createdAt.isAfter(dateRange.start) &&
+            user.createdAt.isBefore(dateRange.end);
       }).toList();
     }
 
