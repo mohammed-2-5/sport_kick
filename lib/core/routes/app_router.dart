@@ -16,6 +16,7 @@ import 'package:spo_kick/features/fields/presentation/pages/fields_list_page.dar
 import 'package:spo_kick/features/fields/presentation/pages/search_page.dart';
 import 'package:spo_kick/features/home/presentation/pages/home_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/add_edit_field_page.dart';
+import 'package:spo_kick/features/owner/presentation/pages/create_manual_booking_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_analytics_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_bookings_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_dashboard_page.dart';
@@ -23,9 +24,18 @@ import 'package:spo_kick/features/owner/presentation/pages/owner_fields_page.dar
 import 'package:spo_kick/features/splash/splash_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_dashboard_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/create_admin_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/create_field_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/admins_list_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/admin_details_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/users_list_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/user_details_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/cities_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/all_fields_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/all_bookings_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/platform_analytics_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_settings_page.dart';
+import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 
 /// Application routing configuration.
 ///
@@ -98,6 +108,9 @@ class AppRouter {
   /// Owner bookings management screen route
   static const String ownerBookings = '/owner/bookings';
 
+  /// Owner create manual booking screen route
+  static const String ownerCreateManualBooking = '/owner/bookings/manual';
+
   /// Owner fields management screen route
   static const String ownerFields = '/owner/fields';
 
@@ -121,14 +134,37 @@ class AppRouter {
   /// Super admin create admin screen route
   static const String superAdminCreateAdmin = '/super-admin/create-admin';
 
+  /// Super admin create field screen route
+  static const String superAdminCreateField = '/super-admin/create-field';
+
   /// Super admin view admins screen route
   static const String superAdminAdmins = '/super-admin/admins';
+
+  /// Super admin admin details screen route
+  /// Arguments: UserEntity admin
+  static const String superAdminAdminDetails = '/super-admin/admin-details';
 
   /// Super admin view users screen route
   static const String superAdminUsers = '/super-admin/users';
 
+  /// Super admin user details screen route
+  /// Arguments: UserEntity user
+  static const String superAdminUserDetails = '/super-admin/user-details';
+
   /// Super admin manage cities screen route
   static const String superAdminCities = '/super-admin/cities';
+
+  /// Super admin all fields screen route
+  static const String superAdminFields = '/super-admin/fields';
+
+  /// Super admin all bookings screen route
+  static const String superAdminBookings = '/super-admin/bookings';
+
+  /// Super admin platform analytics screen route
+  static const String superAdminAnalytics = '/super-admin/analytics';
+
+  /// Super admin settings screen route
+  static const String superAdminSettings = '/super-admin/settings';
 
   // ==================== ROUTE GENERATOR ====================
 
@@ -222,18 +258,16 @@ class AppRouter {
         return _buildRoute(
           settings: routeSettings,
           // TODO: Import and use EditProfilePage when implemented
-          builder: (_) => const Scaffold(
-            body: Center(child: Text('Edit Profile Page')),
-          ),
+          builder: (_) =>
+              const Scaffold(body: Center(child: Text('Edit Profile Page'))),
         );
 
       case settings:
         return _buildRoute(
           settings: routeSettings,
           // TODO: Import and use SettingsPage when implemented
-          builder: (_) => const Scaffold(
-            body: Center(child: Text('Settings Page')),
-          ),
+          builder: (_) =>
+              const Scaffold(body: Center(child: Text('Settings Page'))),
         );
 
       case search:
@@ -257,9 +291,7 @@ class AppRouter {
               BlocProvider(
                 create: (_) => sl<BookingCubit>()..loadOwnerBookings(),
               ),
-              BlocProvider(
-                create: (_) => sl<FieldsCubit>()..loadAllFields(),
-              ),
+              BlocProvider(create: (_) => sl<FieldsCubit>()..loadAllFields()),
             ],
             child: const OwnerDashboardPage(),
           ),
@@ -272,6 +304,12 @@ class AppRouter {
             create: (_) => sl<BookingCubit>()..loadOwnerBookings(),
             child: const OwnerBookingsPage(),
           ),
+        );
+
+      case ownerCreateManualBooking:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const CreateManualBookingPage(),
         );
 
       case ownerFields:
@@ -305,9 +343,7 @@ class AppRouter {
               BlocProvider(
                 create: (_) => sl<BookingCubit>()..loadOwnerBookings(),
               ),
-              BlocProvider(
-                create: (_) => sl<FieldsCubit>()..loadAllFields(),
-              ),
+              BlocProvider(create: (_) => sl<FieldsCubit>()..loadAllFields()),
             ],
             child: const OwnerAnalyticsPage(),
           ),
@@ -317,8 +353,8 @@ class AppRouter {
         return _buildRoute(
           settings: routeSettings,
           // TODO: Create owner settings page
-          builder: (_) =>  Scaffold(
-            appBar: AppBar(title:  Text('Owner Settings')),
+          builder: (_) => Scaffold(
+            appBar: AppBar(title: Text('Owner Settings')),
             body: Center(child: Text('Owner Settings Page')),
           ),
         );
@@ -336,10 +372,27 @@ class AppRouter {
           builder: (_) => const CreateAdminPage(),
         );
 
+      case superAdminCreateField:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const CreateFieldPage(),
+        );
+
       case superAdminAdmins:
         return _buildSlideRoute(
           settings: routeSettings,
           builder: (_) => const AdminsListPage(),
+        );
+
+      case superAdminAdminDetails:
+        // Expects: UserEntity admin
+        final admin = routeSettings.arguments as UserEntity?;
+        if (admin == null) {
+          return _buildErrorRoute('Admin data is required');
+        }
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => AdminDetailsPage(admin: admin),
         );
 
       case superAdminUsers:
@@ -348,10 +401,48 @@ class AppRouter {
           builder: (_) => const UsersListPage(),
         );
 
+      case superAdminUserDetails:
+        // Expects: UserEntity user
+        final user = routeSettings.arguments as UserEntity?;
+        if (user == null) {
+          return _buildErrorRoute('User data is required');
+        }
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => UserDetailsPage(user: user),
+        );
+
       case superAdminCities:
         return _buildSlideRoute(
           settings: routeSettings,
           builder: (_) => const CitiesPage(),
+        );
+
+      case superAdminFields:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const AllFieldsPage(),
+        );
+
+      case superAdminBookings:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const AllBookingsPage(),
+        );
+
+      case superAdminAnalytics:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const PlatformAnalyticsPage(),
+        );
+
+      case superAdminSettings:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => BlocProvider(
+            create: (_) => sl<AuthCubit>(),
+            child: const SuperAdminSettingsPage(),
+          ),
         );
 
       default:
@@ -366,10 +457,7 @@ class AppRouter {
     required RouteSettings settings,
     required WidgetBuilder builder,
   }) {
-    return MaterialPageRoute(
-      settings: settings,
-      builder: builder,
-    );
+    return MaterialPageRoute(settings: settings, builder: builder);
   }
 
   /// Build a route with fade transition
@@ -381,10 +469,7 @@ class AppRouter {
       settings: settings,
       pageBuilder: (context, animation, secondaryAnimation) => builder(context),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
+        return FadeTransition(opacity: animation, child: child);
       },
       transitionDuration: const Duration(milliseconds: 300),
     );
@@ -403,14 +488,12 @@ class AppRouter {
         const end = Offset.zero;
         const curve = Curves.easeInOut;
 
-        var tween = Tween(begin: begin, end: end).chain(
-          CurveTween(curve: curve),
-        );
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
 
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
+        return SlideTransition(position: animation.drive(tween), child: child);
       },
       transitionDuration: const Duration(milliseconds: 300),
     );
@@ -420,18 +503,12 @@ class AppRouter {
   static Route<dynamic> _buildErrorRoute(String message) {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Error'),
-        ),
+        appBar: AppBar(title: const Text('Error')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 64,
-              ),
+              const Icon(Icons.error_outline, color: Colors.red, size: 64),
               const SizedBox(height: 16),
               Text(
                 message,
@@ -454,10 +531,7 @@ extension NavigationExtensions on BuildContext {
   }
 
   /// Push named route and remove all previous routes
-  Future<T?> pushNamedAndRemoveUntil<T>(
-    String routeName, {
-    Object? arguments,
-  }) {
+  Future<T?> pushNamedAndRemoveUntil<T>(String routeName, {Object? arguments}) {
     return Navigator.pushNamedAndRemoveUntil<T>(
       this,
       routeName,

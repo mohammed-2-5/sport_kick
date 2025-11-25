@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/cancel_booking_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/create_booking_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/create_manual_booking_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_available_time_slots_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_booking_by_id_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
@@ -16,13 +17,14 @@ import '../../domain/entities/booking_status.dart';
 ///
 /// Handles all booking-related business logic:
 /// - Fetching available time slots
-/// - Creating bookings
+/// - Creating bookings (regular and manual)
 /// - Fetching user bookings
 /// - Fetching booking details
 /// - Canceling bookings
 class BookingCubit extends Cubit<BookingState> {
   final GetAvailableTimeSlotsUseCase getAvailableTimeSlotsUseCase;
   final CreateBookingUseCase createBookingUseCase;
+  final CreateManualBookingUseCase createManualBookingUseCase;
   final GetUserBookingsUseCase getUserBookingsUseCase;
   final GetBookingByIdUseCase getBookingByIdUseCase;
   final CancelBookingUseCase cancelBookingUseCase;
@@ -32,6 +34,7 @@ class BookingCubit extends Cubit<BookingState> {
   BookingCubit({
     required this.getAvailableTimeSlotsUseCase,
     required this.createBookingUseCase,
+    required this.createManualBookingUseCase,
     required this.getUserBookingsUseCase,
     required this.getBookingByIdUseCase,
     required this.cancelBookingUseCase,
@@ -98,6 +101,51 @@ class BookingCubit extends Cubit<BookingState> {
         emit(BookingError(failure.message));
       },
       (booking) => emit(BookingCreated(booking)),
+    );
+  }
+
+  /// Create a manual booking (for field owners/admins).
+  ///
+  /// Manual bookings are created by admins for walk-in customers.
+  /// They are automatically confirmed and include customer information.
+  Future<void> createManualBooking({
+    required String fieldId,
+    required DateTime date,
+    required String startTime,
+    required String endTime,
+    required double totalPrice,
+    required String customerName,
+    required String customerPhone,
+    String? customerEmail,
+    String? notes,
+  }) async {
+    debugPrint('🔄 [BookingCubit] Creating manual booking...');
+    debugPrint('   Customer: $customerName ($customerPhone)');
+    debugPrint('   Field: $fieldId, Date: $date, Time: $startTime-$endTime');
+
+    emit(const BookingLoading(message: 'Creating manual booking...'));
+
+    final result = await createManualBookingUseCase(
+      fieldId: fieldId,
+      date: date,
+      startTime: startTime,
+      endTime: endTime,
+      totalPrice: totalPrice,
+      customerName: customerName,
+      customerPhone: customerPhone,
+      customerEmail: customerEmail,
+      notes: notes,
+    );
+
+    result.fold(
+      (failure) {
+        debugPrint('❌ ERROR [createManualBooking]: ${failure.message}');
+        emit(BookingError(failure.message));
+      },
+      (booking) {
+        debugPrint('✅ [BookingCubit] Manual booking created: ${booking.id}');
+        emit(BookingCreated(booking));
+      },
     );
   }
 

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Sport Kick** is a football field booking application for local cities. The app allows users to browse available football fields, view time slots, and make bookings instantly, replacing the traditional phone call/WhatsApp booking process. Field owners manage bookings through a dashboard.
 
-**Current Status:** Implementing New Role-Based Architecture (Phase 4 of 8). Core features completed: Database setup, Domain/Data layers, Super Admin UI (80%). See `IMPLEMENTATION_STATUS.md` for detailed progress tracking.
+**Current Status:** Phase 3 (Super Admin Enhancements) - 40% Complete. See `PROJECT_STATUS.md` for detailed progress tracking and roadmap.
 
 **Master Plan:** `NEW_ROLE_ARCHITECTURE_PLAN.md` - Comprehensive role-based architecture with three distinct roles (Super Admin, Admin/Field Owner, User/Customer).
 
@@ -94,7 +94,7 @@ flutter pub outdated
 
 ## Architecture & Implementation Progress
 
-For complete implementation status and remaining phases, see `IMPLEMENTATION_PLAN.md`.
+For complete implementation status, roadmap, and next steps, see `PROJECT_STATUS.md`.
 
 ### Folder Structure (Already Created)
 ```

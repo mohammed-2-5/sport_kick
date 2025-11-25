@@ -115,9 +115,7 @@ class AdminCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextButton.icon(
-                      onPressed: () {
-                        // TODO: Assign field action
-                      },
+                      onPressed: onTap,
                       icon: const Icon(Icons.add_business, size: 18),
                       label: const Text('Assign Field'),
                       style: TextButton.styleFrom(

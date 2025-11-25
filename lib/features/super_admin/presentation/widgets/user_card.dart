@@ -136,9 +136,7 @@ class UserCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextButton.icon(
-                      onPressed: () {
-                        // TODO: View bookings action
-                      },
+                      onPressed: onTap,
                       icon: const Icon(Icons.event_note, size: 18),
                       label: const Text('Bookings'),
                       style: TextButton.styleFrom(

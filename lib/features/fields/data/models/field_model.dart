@@ -37,6 +37,29 @@ class FieldModel extends FieldEntity {
   ///
   /// Handles Supabase's snake_case naming convention and data types.
   factory FieldModel.fromJson(Map<String, dynamic> json) {
+    // Map amenities to facilities
+    final facilitiesList = json['facilities'] ?? json['amenities'];
+
+    // Map size to capacity if capacity is null
+    int? capacity = json['capacity'] as int?;
+    if (capacity == null && json['size'] != null) {
+      final size = json['size'] as String;
+      if (size == '5-a-side')
+        capacity = 10;
+      else if (size == '7-a-side')
+        capacity = 14;
+      else if (size == '11-a-side')
+        capacity = 22;
+    }
+
+    // Handle city: could be direct string, or from joined cities table
+    String cityName = 'Unknown City';
+    if (json['city'] is String) {
+      cityName = json['city'];
+    } else if (json['cities'] != null && json['cities'] is Map) {
+      cityName = json['cities']['name'] ?? 'Unknown City';
+    }
+
     return FieldModel(
       id: json['id'] as String,
       ownerId: json['owner_id'] as String?,
@@ -44,7 +67,7 @@ class FieldModel extends FieldEntity {
       name: json['name'] as String,
       description: json['description'] as String?,
       address: json['address'] as String,
-      city: json['city'] as String,
+      city: cityName,
       latitude: json['latitude'] != null
           ? (json['latitude'] as num).toDouble()
           : null,
@@ -54,14 +77,14 @@ class FieldModel extends FieldEntity {
       pricePerHour: (json['price_per_hour'] as num).toDouble(),
       currency: json['currency'] as String? ?? 'EGP',
       surfaceType: json['surface_type'] as String?,
-      capacity: json['capacity'] as int?,
+      capacity: capacity,
       isIndoor: json['is_indoor'] as bool? ?? false,
       images: json['images'] != null
           ? List<String>.from(json['images'] as List)
           : const [],
       videoUrl: json['video_url'] as String?,
-      facilities: json['facilities'] != null
-          ? List<String>.from(json['facilities'] as List)
+      facilities: facilitiesList != null
+          ? List<String>.from(facilitiesList as List)
           : const [],
       sportSpecificData: json['sport_specific_data'] != null
           ? Map<String, dynamic>.from(json['sport_specific_data'] as Map)

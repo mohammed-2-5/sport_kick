@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
@@ -5,6 +7,8 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/admin_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/admin_filter_sheet.dart';
+import 'package:spo_kick/features/super_admin/utils/admin_filter_helper.dart';
 
 /// Admins List Page
 ///
@@ -35,24 +39,59 @@ class _AdminsListView extends StatefulWidget {
 
 class _AdminsListViewState extends State<_AdminsListView> {
   final _searchController = TextEditingController();
+  Timer? _debounceTimer;
   String _searchQuery = '';
+  String? _statusFilter;
+  DateTimeRange? _dateRange;
 
   @override
   void dispose() {
     _searchController.dispose();
+    _debounceTimer?.cancel();
     super.dispose();
   }
 
-  List<UserEntity> _filterAdmins(List<UserEntity> admins) {
-    if (_searchQuery.isEmpty) return admins;
+  void _onSearchChanged(String value) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+      setState(() {
+        _searchQuery = value;
+      });
+    });
+  }
 
-    final query = _searchQuery.toLowerCase();
-    return admins.where((admin) {
-      final nameMatch = admin.fullName?.toLowerCase().contains(query) ?? false;
-      final emailMatch = admin.email.toLowerCase().contains(query);
-      final phoneMatch = admin.phone?.toLowerCase().contains(query) ?? false;
-      return nameMatch || emailMatch || phoneMatch;
-    }).toList();
+  List<UserEntity> _filterAdmins(List<UserEntity> admins) {
+    return AdminFilterHelper.filterAdmins(
+      admins,
+      searchQuery: _searchQuery,
+      statusFilter: _statusFilter,
+      dateRange: _dateRange,
+    );
+  }
+
+  void _showFilterSheet() {
+    String? tempStatus = _statusFilter;
+    DateTimeRange? tempDate = _dateRange;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (c) => StatefulBuilder(
+        builder: (_, setState) => AdminFilterSheet(
+          statusFilter: tempStatus,
+          dateRange: tempDate,
+          onStatusChanged: (v) => setState(() => tempStatus = v),
+          onDateRangeChanged: (r) => setState(() => tempDate = r),
+          onApply: () => this.setState(() {
+            _statusFilter = tempStatus;
+            _dateRange = tempDate;
+          }),
+          onReset: () => this.setState(() {
+            _statusFilter = null;
+            _dateRange = null;
+          }),
+        ),
+      ),
+    );
   }
 
   @override
@@ -64,6 +103,14 @@ class _AdminsListViewState extends State<_AdminsListView> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         actions: [
+          IconButton(
+            icon: Badge(
+              isLabelVisible: _statusFilter != null || _dateRange != null,
+              child: const Icon(Icons.filter_list),
+            ),
+            onPressed: _showFilterSheet,
+            tooltip: 'Filter',
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
@@ -174,9 +221,7 @@ class _AdminsListViewState extends State<_AdminsListView> {
                           vertical: 12,
                         ),
                       ),
-                      onChanged: (value) {
-                        setState(() => _searchQuery = value);
-                      },
+                      onChanged: _onSearchChanged,
                     ),
                   ),
 
@@ -221,7 +266,11 @@ class _AdminsListViewState extends State<_AdminsListView> {
                               return AdminCard(
                                 admin: admin,
                                 onTap: () {
-                                  // TODO: Navigate to admin details
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/super-admin/admin-details',
+                                    arguments: admin,
+                                  );
                                 },
                               );
                             },
@@ -247,20 +296,20 @@ class _AdminsListViewState extends State<_AdminsListView> {
   }
 
   Widget _buildEmptyState() {
+    final isEmpty =
+        _searchQuery.isEmpty && _statusFilter == null && _dateRange == null;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            _searchQuery.isEmpty
-                ? Icons.admin_panel_settings_outlined
-                : Icons.search_off,
+            isEmpty ? Icons.admin_panel_settings_outlined : Icons.search_off,
             size: 80,
             color: Colors.grey[400],
           ),
           const SizedBox(height: 16),
           Text(
-            _searchQuery.isEmpty ? 'No Admins Yet' : 'No Results Found',
+            isEmpty ? 'No Admins Yet' : 'No Results Found',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -269,21 +318,11 @@ class _AdminsListViewState extends State<_AdminsListView> {
           ),
           const SizedBox(height: 8),
           Text(
-            _searchQuery.isEmpty
+            isEmpty
                 ? 'Create your first field owner account'
-                : 'Try a different search term',
+                : 'Try adjusting your filters',
             style: TextStyle(fontSize: 14, color: Colors.grey[600]),
           ),
-          if (_searchQuery.isEmpty) ...[
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/super-admin/create-admin');
-              },
-              icon: const Icon(Icons.person_add),
-              label: const Text('Create Admin'),
-            ),
-          ],
         ],
       ),
     );

@@ -1,3 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 /// Application-wide constants.
 ///
 /// Contains all constant values used throughout the app including:
@@ -24,19 +26,14 @@ class AppConstants {
   // ==================== SUPABASE CONFIG ====================
 
   /// Supabase project URL
-  static const String supabaseUrl = 'https://nrpnidwpqisebkvunsur.supabase.co';
+  static String get supabaseUrl => dotenv.env['SUPABASE_URL'] ?? '';
 
   /// Supabase anonymous key
-  ///
-  /// This key is safe to use in client-side code
-  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ycG5pZHdwcWlzZWJrdnVuc3VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NjM3NjcsImV4cCI6MjA3OTMzOTc2N30.EKcEFB8d3w8-eT1Ic0R8TgxAfWs3L3bhllypBZ1w31o';
+  static String get supabaseAnonKey => dotenv.env['SUPABASE_ANON_KEY'] ?? '';
 
   /// Supabase service role key (admin access)
-  ///
-  /// ⚠️ NEVER expose this key in client-side code!
-  /// Only use server-side or for development/testing
-  /// This is stored here for reference but should not be used in production client app
-  static const String supabaseServiceRoleKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ycG5pZHdwcWlzZWJrdnVuc3VyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Mzc2Mzc2NywiZXhwIjoyMDc5MzM5NzY3fQ.P2HKIKmIaH6pDcYryl2WYMMmK3enLfWtBHiLRMBp27I';
+  static String get supabaseServiceRoleKey =>
+      dotenv.env['SUPABASE_SERVICE_ROLE_KEY'] ?? '';
 
   // ==================== STORAGE BUCKETS ====================
 
@@ -154,7 +151,12 @@ class AppConstants {
   static const int maxImageSizeBytes = 5 * 1024 * 1024;
 
   /// Supported image formats
-  static const List<String> supportedImageFormats = ['jpg', 'jpeg', 'png', 'webp'];
+  static const List<String> supportedImageFormats = [
+    'jpg',
+    'jpeg',
+    'png',
+    'webp',
+  ];
 
   /// Image quality for compression (0-100)
   static const int imageQuality = 80;
@@ -201,7 +203,11 @@ class AppConstants {
   static const List<String> fieldSizes = ['5v5', '6v6', '7v7', '11v11'];
 
   /// Surface type options
-  static const List<String> surfaceTypes = ['Grass', 'Artificial Turf', 'Concrete'];
+  static const List<String> surfaceTypes = [
+    'Grass',
+    'Artificial Turf',
+    'Concrete',
+  ];
 
   // ==================== FACILITIES ====================
 

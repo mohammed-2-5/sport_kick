@@ -248,6 +248,72 @@ class _OwnerDashboardPageState extends State<OwnerDashboardPage> {
           ),
         ),
         const SizedBox(height: 16),
+
+        // Create Manual Booking - Primary Action
+        SizedBox(
+          width: double.infinity,
+          height: 70,
+          child: ElevatedButton(
+            onPressed: () async {
+              final result = await Navigator.pushNamed(
+                context,
+                '/owner/bookings/manual',
+              );
+              // Refresh bookings if manual booking was created
+              if (result == true && context.mounted) {
+                context.read<BookingCubit>().loadOwnerBookings();
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF4CAF50),
+              foregroundColor: Colors.white,
+              elevation: 2,
+              shadowColor: const Color(0xFF4CAF50).withValues(alpha: 0.4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.add_circle_outline,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Create Manual Booking',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'For walk-in customers',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 16),
         Row(
           children: [
             Expanded(

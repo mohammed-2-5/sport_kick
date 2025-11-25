@@ -25,6 +25,13 @@ class BookingEntity extends Equatable {
   final String? cancellationReason;
   final String? notes;
 
+  // Manual booking fields (for admin-created bookings)
+  final bool isManual;
+  final String? createdBy; // Admin user ID who created the manual booking
+  final String? customerName; // For walk-in customers
+  final String? customerPhone; // For walk-in customers
+  final String? customerEmail; // For walk-in customers (optional)
+
   const BookingEntity({
     required this.id,
     required this.userId,
@@ -43,6 +50,11 @@ class BookingEntity extends Equatable {
     this.canceledAt,
     this.cancellationReason,
     this.notes,
+    this.isManual = false,
+    this.createdBy,
+    this.customerName,
+    this.customerPhone,
+    this.customerEmail,
   });
 
   @override
@@ -64,6 +76,11 @@ class BookingEntity extends Equatable {
         canceledAt,
         cancellationReason,
         notes,
+        isManual,
+        createdBy,
+        customerName,
+        customerPhone,
+        customerEmail,
       ];
 
   /// Get formatted date string (e.g., "Jan 15, 2025")
@@ -167,6 +184,11 @@ class BookingEntity extends Equatable {
     DateTime? canceledAt,
     String? cancellationReason,
     String? notes,
+    bool? isManual,
+    String? createdBy,
+    String? customerName,
+    String? customerPhone,
+    String? customerEmail,
   }) {
     return BookingEntity(
       id: id ?? this.id,
@@ -186,6 +208,11 @@ class BookingEntity extends Equatable {
       canceledAt: canceledAt ?? this.canceledAt,
       cancellationReason: cancellationReason ?? this.cancellationReason,
       notes: notes ?? this.notes,
+      isManual: isManual ?? this.isManual,
+      createdBy: createdBy ?? this.createdBy,
+      customerName: customerName ?? this.customerName,
+      customerPhone: customerPhone ?? this.customerPhone,
+      customerEmail: customerEmail ?? this.customerEmail,
     );
   }
 }

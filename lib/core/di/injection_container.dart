@@ -35,6 +35,7 @@ import 'package:spo_kick/features/bookings/data/repositories/booking_repository_
 import 'package:spo_kick/features/bookings/domain/repositories/booking_repository.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/cancel_booking_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/create_booking_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/create_manual_booking_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_available_time_slots_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_booking_by_id_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
@@ -49,6 +50,7 @@ import 'package:spo_kick/features/super_admin/domain/repositories/super_admin_re
 import 'package:spo_kick/features/super_admin/domain/usecases/activate_user_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/assign_field_to_admin_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/create_admin_account_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/create_field_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/deactivate_user_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_active_cities_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_usecase.dart';
@@ -144,9 +146,7 @@ Future<void> _initCore() async {
   );
 
   // API Client
-  sl.registerLazySingleton<ApiClient>(
-    () => ApiClient(dio: sl()),
-  );
+  sl.registerLazySingleton<ApiClient>(() => ApiClient(dio: sl()));
 }
 
 // ==================== FEATURE: AUTH ====================
@@ -177,10 +177,7 @@ void _initAuth() {
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-      remoteDataSource: sl(),
-      networkInfo: sl(),
-    ),
+    () => AuthRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()),
   );
 
   // Data Sources
@@ -220,9 +217,7 @@ void _initFields() {
   sl.registerLazySingleton(() => SearchFieldsUseCase(sl()));
 
   // Repository
-  sl.registerLazySingleton<FieldRepository>(
-    () => FieldRepositoryImpl(sl()),
-  );
+  sl.registerLazySingleton<FieldRepository>(() => FieldRepositoryImpl(sl()));
 
   // Data Sources
   sl.registerLazySingleton<FieldRemoteDataSource>(
@@ -245,6 +240,7 @@ void _initBookings() {
     () => BookingCubit(
       getAvailableTimeSlotsUseCase: sl(),
       createBookingUseCase: sl(),
+      createManualBookingUseCase: sl(),
       getUserBookingsUseCase: sl(),
       getBookingByIdUseCase: sl(),
       cancelBookingUseCase: sl(),
@@ -256,6 +252,7 @@ void _initBookings() {
   // Use Cases
   sl.registerLazySingleton(() => GetAvailableTimeSlotsUseCase(sl()));
   sl.registerLazySingleton(() => CreateBookingUseCase(sl()));
+  sl.registerLazySingleton(() => CreateManualBookingUseCase(sl()));
   sl.registerLazySingleton(() => GetUserBookingsUseCase(sl()));
   sl.registerLazySingleton(() => GetBookingByIdUseCase(sl()));
   sl.registerLazySingleton(() => CancelBookingUseCase(sl()));
@@ -288,6 +285,7 @@ void _initSuperAdmin() {
     () => SuperAdminCubit(
       getPlatformStatisticsUseCase: sl(),
       createAdminAccountUseCase: sl(),
+      createFieldUseCase: sl(),
       getAllAdminsUseCase: sl(),
       getAllUsersUseCase: sl(),
       assignFieldToAdminUseCase: sl(),
@@ -302,6 +300,7 @@ void _initSuperAdmin() {
   // Use Cases
   sl.registerLazySingleton(() => GetPlatformStatisticsUseCase(sl()));
   sl.registerLazySingleton(() => CreateAdminAccountUseCase(sl()));
+  sl.registerLazySingleton(() => CreateFieldUseCase(sl()));
   sl.registerLazySingleton(() => GetAllAdminsUseCase(sl()));
   sl.registerLazySingleton(() => GetAllUsersUseCase(sl()));
   sl.registerLazySingleton(() => AssignFieldToAdminUseCase(sl()));

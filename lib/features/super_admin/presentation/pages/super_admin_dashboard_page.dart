@@ -143,7 +143,7 @@ class _SuperAdminDashboardView extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
-                      childAspectRatio: 1.4,
+                      childAspectRatio: 1.1,
                       children: [
                         StatisticsCard(
                           title: 'Total Users',
@@ -253,7 +253,7 @@ class _SuperAdminDashboardView extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
-                      childAspectRatio: 1.3,
+                      childAspectRatio: 1.1,
                       children: [
                         QuickActionCard(
                           title: 'Create Admin',
@@ -264,6 +264,18 @@ class _SuperAdminDashboardView extends StatelessWidget {
                             Navigator.pushNamed(
                               context,
                               '/super-admin/create-admin',
+                            );
+                          },
+                        ),
+                        QuickActionCard(
+                          title: 'Create Field',
+                          subtitle: 'Add new sports field',
+                          icon: Icons.add_business,
+                          color: Colors.deepOrange,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRouter.superAdminCreateField,
                             );
                           },
                         ),
@@ -292,6 +304,39 @@ class _SuperAdminDashboardView extends StatelessWidget {
                           color: Colors.orange,
                           onTap: () {
                             Navigator.pushNamed(context, '/super-admin/cities');
+                          },
+                        ),
+                        QuickActionCard(
+                          title: 'All Fields',
+                          subtitle: 'View all sports fields',
+                          icon: Icons.sports_soccer,
+                          color: Colors.teal,
+                          onTap: () {
+                            Navigator.pushNamed(context, '/super-admin/fields');
+                          },
+                        ),
+                        QuickActionCard(
+                          title: 'All Bookings',
+                          subtitle: 'View all reservations',
+                          icon: Icons.event_note,
+                          color: Colors.indigo,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/super-admin/bookings',
+                            );
+                          },
+                        ),
+                        QuickActionCard(
+                          title: 'Analytics',
+                          subtitle: 'Platform insights',
+                          icon: Icons.analytics,
+                          color: Colors.deepPurple,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/super-admin/analytics',
+                            );
                           },
                         ),
                       ],

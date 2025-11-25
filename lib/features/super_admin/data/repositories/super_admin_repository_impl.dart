@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:spo_kick/core/errors/exceptions.dart';
 import 'package:spo_kick/core/errors/failures.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_remote_datasource.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
@@ -196,6 +197,67 @@ class SuperAdminRepositoryImpl implements SuperAdminRepository {
       debugPrint('✅ [SuperAdminRepository] Activating user...');
       await remoteDataSource.activateUser(userId);
       return const Right(null);
+    } on ServerException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] ServerException: ${e.message}');
+      return Left(ServerFailure(e.message));
+    } on AuthenticationException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] AuthException: ${e.message}');
+      return Left(AuthenticationFailure(e.message));
+    } catch (e) {
+      debugPrint('❌ [SuperAdminRepository] Unexpected error: $e');
+      return Left(ServerFailure('Unexpected error: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, FieldEntity>> createField({
+    required String ownerId,
+    required String sportCategoryId,
+    required String name,
+    required String address,
+    required String city,
+    required double pricePerHour,
+    String? description,
+    double? latitude,
+    double? longitude,
+    String currency = 'EGP',
+    String? surfaceType,
+    int? capacity,
+    bool isIndoor = false,
+    List<String> images = const [],
+    String? videoUrl,
+    List<String> facilities = const [],
+  }) async {
+    try {
+      debugPrint('⚽ [SuperAdminRepository] Creating field...');
+      final field = await remoteDataSource.createField(
+        ownerId: ownerId,
+        sportCategoryId: sportCategoryId,
+        name: name,
+        description: description,
+        address: address,
+        city: city,
+        latitude: latitude,
+        longitude: longitude,
+        pricePerHour: pricePerHour,
+        currency: currency,
+        surfaceType: surfaceType,
+        capacity: capacity,
+        isIndoor: isIndoor,
+        images: images,
+        videoUrl: videoUrl,
+        facilities: facilities,
+      );
+      return Right(field);
+    } on NotFoundException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] NotFoundException: ${e.message}');
+      return Left(NotFoundFailure(e.message));
+    } on ConflictException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] ConflictException: ${e.message}');
+      return Left(ConflictFailure(e.message));
+    } on ValidationException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] ValidationException: ${e.message}');
+      return Left(ValidationFailure(e.message));
     } on ServerException catch (e) {
       debugPrint('❌ [SuperAdminRepository] ServerException: ${e.message}');
       return Left(ServerFailure(e.message));

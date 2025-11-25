@@ -59,7 +59,7 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
     try {
       final response = await supabaseClient
           .from('fields')
-          .select()
+          .select('*, cities(name)')
           .eq('is_active', true)
           .order('created_at', ascending: false);
 
@@ -78,7 +78,7 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
     try {
       final response = await supabaseClient
           .from('fields')
-          .select()
+          .select('*, cities(name)')
           .eq('id', fieldId)
           .single();
 
@@ -224,8 +224,9 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
           .order('display_order', ascending: true);
 
       return (response as List)
-          .map((json) =>
-              SportCategoryModel.fromJson(json as Map<String, dynamic>))
+          .map(
+            (json) => SportCategoryModel.fromJson(json as Map<String, dynamic>),
+          )
           .toList();
     } on PostgrestException catch (e) {
       throw ServerException(e.message);

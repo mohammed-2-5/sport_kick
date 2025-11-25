@@ -4,6 +4,7 @@ import 'package:spo_kick/features/fields/domain/usecases/get_all_fields_usecase.
 import 'package:spo_kick/features/super_admin/domain/usecases/activate_user_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/assign_field_to_admin_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/create_admin_account_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/create_field_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/deactivate_user_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_active_cities_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_usecase.dart';
@@ -25,6 +26,7 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_sta
 class SuperAdminCubit extends Cubit<SuperAdminState> {
   final GetPlatformStatisticsUseCase getPlatformStatisticsUseCase;
   final CreateAdminAccountUseCase createAdminAccountUseCase;
+  final CreateFieldUseCase createFieldUseCase;
   final GetAllAdminsUseCase getAllAdminsUseCase;
   final GetAllUsersUseCase getAllUsersUseCase;
   final AssignFieldToAdminUseCase assignFieldToAdminUseCase;
@@ -37,6 +39,7 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
   SuperAdminCubit({
     required this.getPlatformStatisticsUseCase,
     required this.createAdminAccountUseCase,
+    required this.createFieldUseCase,
     required this.getAllAdminsUseCase,
     required this.getAllUsersUseCase,
     required this.assignFieldToAdminUseCase,
@@ -216,7 +219,9 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
 
     result.fold(
       (failure) {
-        debugPrint('❌ [SuperAdminCubit] Error loading fields: ${failure.message}');
+        debugPrint(
+          '❌ [SuperAdminCubit] Error loading fields: ${failure.message}',
+        );
         emit(SuperAdminError(failure.message));
       },
       (fields) {
@@ -235,7 +240,9 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
 
     result.fold(
       (failure) {
-        debugPrint('❌ [SuperAdminCubit] Error loading bookings: ${failure.message}');
+        debugPrint(
+          '❌ [SuperAdminCubit] Error loading bookings: ${failure.message}',
+        );
         emit(SuperAdminError(failure.message));
       },
       (bookings) {
@@ -254,7 +261,9 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
 
     result.fold(
       (failure) {
-        debugPrint('❌ [SuperAdminCubit] Error deactivating user: ${failure.message}');
+        debugPrint(
+          '❌ [SuperAdminCubit] Error deactivating user: ${failure.message}',
+        );
         emit(SuperAdminError(failure.message));
       },
       (_) {
@@ -275,7 +284,9 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
 
     result.fold(
       (failure) {
-        debugPrint('❌ [SuperAdminCubit] Error activating user: ${failure.message}');
+        debugPrint(
+          '❌ [SuperAdminCubit] Error activating user: ${failure.message}',
+        );
         emit(SuperAdminError(failure.message));
       },
       (_) {
@@ -285,6 +296,201 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
         loadUsers();
       },
     );
+  }
+
+  /// Create a new field and assign it to an admin.
+  ///
+  /// Only super admin can create fields.
+  Future<void> createField({
+    required String ownerId,
+    required String sportCategoryId,
+    required String name,
+    required String address,
+    required String city,
+    required double pricePerHour,
+    String? description,
+    double? latitude,
+    double? longitude,
+    String currency = 'EGP',
+    String? surfaceType,
+    int? capacity,
+    bool isIndoor = false,
+    List<String> images = const [],
+    String? videoUrl,
+    List<String> facilities = const [],
+  }) async {
+    debugPrint('🔄 [SuperAdminCubit] Creating field...');
+    debugPrint('   Name: $name');
+    debugPrint('   Owner ID: $ownerId');
+    debugPrint('   City: $city');
+
+    emit(const SuperAdminLoading(message: 'Creating field...'));
+
+    final result = await createFieldUseCase(
+      ownerId: ownerId,
+      sportCategoryId: sportCategoryId,
+      name: name,
+      description: description,
+      address: address,
+      city: city,
+      latitude: latitude,
+      longitude: longitude,
+      pricePerHour: pricePerHour,
+      currency: currency,
+      surfaceType: surfaceType,
+      capacity: capacity,
+      isIndoor: isIndoor,
+      images: images,
+      videoUrl: videoUrl,
+      facilities: facilities,
+    );
+
+    result.fold(
+      (failure) {
+        debugPrint(
+          '❌ [SuperAdminCubit] Error creating field: ${failure.message}',
+        );
+        emit(SuperAdminError(failure.message));
+      },
+      (field) {
+        debugPrint('✅ [SuperAdminCubit] Field created successfully!');
+        debugPrint('   Field ID: ${field.id}');
+        debugPrint('   Name: ${field.name}');
+        emit(FieldCreated(field));
+      },
+    );
+  }
+
+  /// Bulk activate multiple users.
+  Future<void> bulkActivateUsers(List<String> userIds) async {
+    debugPrint('🔄 [SuperAdminCubit] Bulk activating ${userIds.length} users');
+    emit(const SuperAdminLoading(message: 'Activating users...'));
+
+    int successCount = 0;
+    int failureCount = 0;
+
+    for (final userId in userIds) {
+      final result = await activateUserUseCase(userId: userId);
+      result.fold((_) => failureCount++, (_) => successCount++);
+    }
+
+    debugPrint(
+      '✅ [SuperAdminCubit] Bulk activation complete: $successCount succeeded, $failureCount failed',
+    );
+
+    if (failureCount > 0) {
+      emit(
+        SuperAdminError(
+          'Activated $successCount users, but $failureCount failed',
+        ),
+      );
+    } else {
+      emit(BulkActionCompleted('Successfully activated $successCount users'));
+    }
+
+    // Reload users list
+    loadUsers();
+  }
+
+  /// Bulk deactivate multiple users.
+  Future<void> bulkDeactivateUsers(List<String> userIds) async {
+    debugPrint(
+      '🔄 [SuperAdminCubit] Bulk deactivating ${userIds.length} users',
+    );
+    emit(const SuperAdminLoading(message: 'Deactivating users...'));
+
+    int successCount = 0;
+    int failureCount = 0;
+
+    for (final userId in userIds) {
+      final result = await deactivateUserUseCase(userId: userId);
+      result.fold((_) => failureCount++, (_) => successCount++);
+    }
+
+    debugPrint(
+      '✅ [SuperAdminCubit] Bulk deactivation complete: $successCount succeeded, $failureCount failed',
+    );
+
+    if (failureCount > 0) {
+      emit(
+        SuperAdminError(
+          'Deactivated $successCount users, but $failureCount failed',
+        ),
+      );
+    } else {
+      emit(BulkActionCompleted('Successfully deactivated $successCount users'));
+    }
+
+    // Reload users list
+    loadUsers();
+  }
+
+  /// Bulk activate multiple admins.
+  Future<void> bulkActivateAdmins(List<String> adminIds) async {
+    debugPrint(
+      '🔄 [SuperAdminCubit] Bulk activating ${adminIds.length} admins',
+    );
+    emit(const SuperAdminLoading(message: 'Activating admins...'));
+
+    int successCount = 0;
+    int failureCount = 0;
+
+    for (final adminId in adminIds) {
+      final result = await activateUserUseCase(userId: adminId);
+      result.fold((_) => failureCount++, (_) => successCount++);
+    }
+
+    debugPrint(
+      '✅ [SuperAdminCubit] Bulk activation complete: $successCount succeeded, $failureCount failed',
+    );
+
+    if (failureCount > 0) {
+      emit(
+        SuperAdminError(
+          'Activated $successCount admins, but $failureCount failed',
+        ),
+      );
+    } else {
+      emit(BulkActionCompleted('Successfully activated $successCount admins'));
+    }
+
+    // Reload admins list
+    loadAdmins();
+  }
+
+  /// Bulk deactivate multiple admins.
+  Future<void> bulkDeactivateAdmins(List<String> adminIds) async {
+    debugPrint(
+      '🔄 [SuperAdminCubit] Bulk deactivating ${adminIds.length} admins',
+    );
+    emit(const SuperAdminLoading(message: 'Deactivating admins...'));
+
+    int successCount = 0;
+    int failureCount = 0;
+
+    for (final adminId in adminIds) {
+      final result = await deactivateUserUseCase(userId: adminId);
+      result.fold((_) => failureCount++, (_) => successCount++);
+    }
+
+    debugPrint(
+      '✅ [SuperAdminCubit] Bulk deactivation complete: $successCount succeeded, $failureCount failed',
+    );
+
+    if (failureCount > 0) {
+      emit(
+        SuperAdminError(
+          'Deactivated $successCount admins, but $failureCount failed',
+        ),
+      );
+    } else {
+      emit(
+        BulkActionCompleted('Successfully deactivated $successCount admins'),
+      );
+    }
+
+    // Reload admins list
+    loadAdmins();
   }
 
   /// Reset to initial state.

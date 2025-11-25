@@ -6,6 +6,7 @@ import 'package:spo_kick/features/super_admin/data/models/admin_invitation_model
 import 'package:spo_kick/features/super_admin/data/models/city_model.dart';
 import 'package:spo_kick/features/super_admin/data/models/platform_statistics_model.dart';
 import 'package:spo_kick/features/auth/data/models/user_model.dart';
+import 'package:spo_kick/features/fields/data/models/field_model.dart';
 import 'dart:math';
 
 /// Remote data source for super admin operations using Supabase.
@@ -35,6 +36,24 @@ abstract class SuperAdminRemoteDataSource {
   Future<List<CityModel>> getActiveCities();
   Future<void> deactivateUser(String userId);
   Future<void> activateUser(String userId);
+  Future<FieldModel> createField({
+    required String ownerId,
+    required String sportCategoryId,
+    required String name,
+    required String address,
+    required String city,
+    required double pricePerHour,
+    String? description,
+    double? latitude,
+    double? longitude,
+    String currency,
+    String? surfaceType,
+    int? capacity,
+    bool isIndoor,
+    List<String> images,
+    String? videoUrl,
+    List<String> facilities,
+  });
 }
 
 /// Implementation of super admin remote data source.
@@ -82,6 +101,7 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
   }
 
   @override
+  @override
   Future<AdminInvitationModel> createAdminAccount({
     required String email,
     required String fullName,
@@ -91,81 +111,61 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
     try {
       final currentUserId = _currentUserId;
 
-      debugPrint('🔐 [SuperAdminDataSource] Creating admin account...');
+      debugPrint(
+        '🔐 [SuperAdminDataSource] Creating admin account via Edge Function...',
+      );
       debugPrint('   Email: $email');
       debugPrint('   Name: $fullName');
       debugPrint('   Created by: $currentUserId');
 
-      // Generate default password if not provided
       final password = defaultPassword ?? _generateDefaultPassword();
-      debugPrint('   Generated password: $password');
+      debugPrint('   Generated password (local): $password');
 
-      // Step 1: Create auth user
-      debugPrint('📝 Step 1: Creating auth user...');
-      final authResponse = await supabaseClient.auth.admin.createUser(
-        AdminUserAttributes(
-          email: email,
-          password: password,
-          emailConfirm: true, // Auto-confirm email
-        ),
+      final response = await supabaseClient.functions.invoke(
+        'create-admin', // name of the Edge Function
+        body: {
+          'email': email,
+          'fullName': fullName,
+          'phone': phone,
+          'defaultPassword': password,
+          'createdBy': currentUserId,
+        },
       );
 
-      if (authResponse.user == null) {
-        throw ServerException('Failed to create auth user');
+      if (response.data == null) {
+        debugPrint(
+          '❌ [SuperAdminDataSource] Empty response from create-admin function',
+        );
+        throw ServerException(
+          'Failed to create admin account (empty response)',
+        );
       }
 
-      final userId = authResponse.user!.id;
-      debugPrint('✅ Auth user created: $userId');
+      final data = response.data as Map<String, dynamic>;
 
-      // Step 2: Create profile entry
-      debugPrint('📝 Step 2: Creating profile entry...');
-      await supabaseClient.from('profiles').insert({
-        'id': userId,
-        'email': email,
-        'full_name': fullName,
-        if (phone != null) 'phone': phone,
-        'role': 'admin',
-        'is_active': true,
-        'password_changed': false, // Admin must change password on first login
-      });
+      if (data['error'] != null) {
+        // Edge function has returned an error object
+        final String message = data['error'].toString();
+        debugPrint('❌ [SuperAdminDataSource] Edge function error: $message');
 
-      debugPrint('✅ Profile created');
+        // Optionally map some common errors to ConflictException, etc.
+        if (message.toLowerCase().contains('already exists')) {
+          throw ConflictException('Email already exists');
+        }
 
-      // Step 3: Create invitation record
-      debugPrint('📝 Step 3: Creating invitation record...');
-      final invitationResponse = await supabaseClient
-          .from('admin_invitations')
-          .insert({
-            'email': email,
-            'default_password': password, // Store for display
-            'full_name': fullName,
-            if (phone != null) 'phone': phone,
-            'created_by': currentUserId,
-            'admin_id': userId,
-            'status': 'pending',
-          })
-          .select()
-          .single();
+        throw ServerException('Failed to create admin account: $message');
+      }
 
-      debugPrint('✅ Invitation record created');
       debugPrint(
-        '🎉 [SuperAdminDataSource] Admin account created successfully!',
+        '🎉 [SuperAdminDataSource] Admin account created successfully via Edge Function',
       );
 
-      return AdminInvitationModel.fromJson(invitationResponse);
+      // Map the received JSON to your model
+      return AdminInvitationModel.fromJson(data);
     } on PostgrestException catch (e) {
       debugPrint('❌ [SuperAdminDataSource] PostgrestException: ${e.message}');
-      debugPrint('   Code: ${e.code}');
-      debugPrint('   Details: ${e.details}');
-
-      if (e.code == '23505') {
-        // Unique constraint violation
-        throw ConflictException('Email already exists');
-      }
-
       throw ServerException('Database error: ${e.message}');
     } catch (e) {
-      // Catch any other auth or server errors
       if (e.toString().contains('already exists') ||
           e.toString().contains('already registered')) {
         debugPrint('❌ [SuperAdminDataSource] Email conflict: $e');
@@ -284,12 +284,19 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
 
       final response = await supabaseClient
           .from('cities')
-          .select()
+          .select('*, fields(count)')
           .order('name', ascending: true);
 
-      final cities = (response as List)
-          .map((json) => CityModel.fromJson(json as Map<String, dynamic>))
-          .toList();
+      final cities = (response as List).map((json) {
+        final data = Map<String, dynamic>.from(json as Map);
+        // Extract count from fields relation
+        if (data['fields'] != null && (data['fields'] as List).isNotEmpty) {
+          data['fields_count'] = (data['fields'] as List).first['count'];
+        } else {
+          data['fields_count'] = 0;
+        }
+        return CityModel.fromJson(data);
+      }).toList();
 
       debugPrint('✅ [SuperAdminDataSource] Loaded ${cities.length} cities');
       return cities;
@@ -309,13 +316,20 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
 
       final response = await supabaseClient
           .from('cities')
-          .select()
+          .select('*, fields(count)')
           .eq('is_active', true)
           .order('name', ascending: true);
 
-      final cities = (response as List)
-          .map((json) => CityModel.fromJson(json as Map<String, dynamic>))
-          .toList();
+      final cities = (response as List).map((json) {
+        final data = Map<String, dynamic>.from(json as Map);
+        // Extract count from fields relation
+        if (data['fields'] != null && (data['fields'] as List).isNotEmpty) {
+          data['fields_count'] = (data['fields'] as List).first['count'];
+        } else {
+          data['fields_count'] = 0;
+        }
+        return CityModel.fromJson(data);
+      }).toList();
 
       debugPrint(
         '✅ [SuperAdminDataSource] Loaded ${cities.length} active cities',
@@ -374,6 +388,140 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
       debugPrint('❌ [SuperAdminDataSource] Exception: $e');
       throw ServerException('Failed to activate user: $e');
     }
+  }
+
+  @override
+  Future<FieldModel> createField({
+    required String ownerId,
+    required String sportCategoryId,
+    required String name,
+    required String address,
+    required String city,
+    required double pricePerHour,
+    String? description,
+    double? latitude,
+    double? longitude,
+    String currency = 'EGP',
+    String? surfaceType,
+    int? capacity,
+    bool isIndoor = false,
+    List<String> images = const [],
+    String? videoUrl,
+    List<String> facilities = const [],
+  }) async {
+    try {
+      final currentUserId = _currentUserId;
+
+      debugPrint('⚽ [SuperAdminDataSource] Creating field...');
+      debugPrint('   Name: $name');
+      debugPrint('   Owner ID: $ownerId');
+      debugPrint('   City: $city');
+      debugPrint('   Price: $pricePerHour $currency/hour');
+
+      // Get sport_category_id - default to Football if not found
+      String actualSportCategoryId = sportCategoryId;
+      if (sportCategoryId == 'football-category-id') {
+        final sportCategoryResponse = await supabaseClient
+            .from('sport_categories')
+            .select('id')
+            .eq('name', 'Football')
+            .maybeSingle();
+
+        if (sportCategoryResponse != null) {
+          actualSportCategoryId = sportCategoryResponse['id'] as String;
+        }
+      }
+
+      // Get city_id from city name
+      final cityResponse = await supabaseClient
+          .from('cities')
+          .select('id')
+          .eq('name', city)
+          .maybeSingle();
+
+      if (cityResponse == null) {
+        throw NotFoundException('City not found: $city');
+      }
+
+      final cityId = cityResponse['id'] as String;
+
+      // Prepare field data
+      final fieldData = {
+        'owner_id': ownerId,
+        'sport_category_id': actualSportCategoryId,
+        'name': name,
+        if (description != null) 'description': description,
+        'address': address,
+        'city_id': cityId,
+        if (latitude != null) 'latitude': latitude,
+        if (longitude != null) 'longitude': longitude,
+        'price_per_hour': pricePerHour,
+        'currency': currency,
+        if (surfaceType != null) 'surface_type': surfaceType,
+        if (capacity != null) 'size': _capacityToSize(capacity),
+        'images': images,
+        'amenities': facilities,
+        'is_active': true,
+        'created_at': DateTime.now().toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
+      };
+
+      // Step 1: Insert field into database
+      final response = await supabaseClient
+          .from('fields')
+          .insert(fieldData)
+          .select()
+          .single();
+
+      debugPrint('✅ Field created in database');
+
+      // Patch the response to match FieldModel.fromJson expectations
+      final Map<String, dynamic> modelData = Map.from(response);
+      modelData['city'] = city; // Use the city name from arguments
+      modelData['capacity'] = capacity; // Use capacity from arguments
+      modelData['facilities'] =
+          response['amenities']; // Map amenities to facilities
+
+      final fieldModel = FieldModel.fromJson(modelData);
+
+      // Step 2: Create audit trail entry in admin_field_assignments
+      await supabaseClient.from('admin_field_assignments').insert({
+        'admin_id': ownerId,
+        'field_id': fieldModel.id,
+        'assigned_by': currentUserId,
+        'notes': 'Field created by super admin',
+      });
+
+      debugPrint('✅ Audit trail created');
+      debugPrint('🎉 [SuperAdminDataSource] Field created successfully!');
+      debugPrint('   Field ID: ${fieldModel.id}');
+
+      return fieldModel;
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [SuperAdminDataSource] PostgrestException: ${e.message}');
+      debugPrint('   Code: ${e.code}');
+      debugPrint('   Details: ${e.details}');
+
+      if (e.code == 'PGRST116' || e.code == '23503') {
+        throw NotFoundException('Admin or sport category not found');
+      }
+
+      if (e.code == '23505') {
+        throw ConflictException('Field with this name already exists');
+      }
+
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [SuperAdminDataSource] Exception: $e');
+      throw ServerException('Failed to create field: $e');
+    }
+  }
+
+  /// Convert capacity to size format (e.g., 10 -> "5-a-side")
+  String _capacityToSize(int capacity) {
+    if (capacity <= 10) return '5-a-side';
+    if (capacity <= 14) return '7-a-side';
+    return '11-a-side';
   }
 
   /// Generate a secure default password for new admins.

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
@@ -5,6 +7,8 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/user_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/user_filter_sheet.dart';
+import 'package:spo_kick/features/super_admin/utils/user_filter_helper.dart';
 
 /// Users List Page
 ///
@@ -35,37 +39,59 @@ class _UsersListView extends StatefulWidget {
 
 class _UsersListViewState extends State<_UsersListView> {
   final _searchController = TextEditingController();
+  Timer? _debounceTimer;
   String _searchQuery = '';
-  String _filterStatus = 'all'; // all, active, inactive
+  String? _statusFilter;
+  DateTimeRange? _dateRange;
 
   @override
   void dispose() {
     _searchController.dispose();
+    _debounceTimer?.cancel();
     super.dispose();
   }
 
+  void _onSearchChanged(String value) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+      setState(() {
+        _searchQuery = value;
+      });
+    });
+  }
+
   List<UserEntity> _filterUsers(List<UserEntity> users) {
-    var filtered = users;
+    return UserFilterHelper.filterUsers(
+      users,
+      searchQuery: _searchQuery,
+      statusFilter: _statusFilter,
+      dateRange: _dateRange,
+    );
+  }
 
-    // Apply status filter
-    if (_filterStatus == 'active') {
-      filtered = filtered.where((user) => user.isActive).toList();
-    } else if (_filterStatus == 'inactive') {
-      filtered = filtered.where((user) => !user.isActive).toList();
-    }
-
-    // Apply search query
-    if (_searchQuery.isNotEmpty) {
-      final query = _searchQuery.toLowerCase();
-      filtered = filtered.where((user) {
-        final nameMatch = user.fullName?.toLowerCase().contains(query) ?? false;
-        final emailMatch = user.email.toLowerCase().contains(query);
-        final phoneMatch = user.phone?.toLowerCase().contains(query) ?? false;
-        return nameMatch || emailMatch || phoneMatch;
-      }).toList();
-    }
-
-    return filtered;
+  void _showFilterSheet() {
+    String? tempStatus = _statusFilter;
+    DateTimeRange? tempDate = _dateRange;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (c) => StatefulBuilder(
+        builder: (_, setState) => UserFilterSheet(
+          statusFilter: tempStatus,
+          dateRange: tempDate,
+          onStatusChanged: (v) => setState(() => tempStatus = v),
+          onDateRangeChanged: (r) => setState(() => tempDate = r),
+          onApply: () => this.setState(() {
+            _statusFilter = tempStatus;
+            _dateRange = tempDate;
+          }),
+          onReset: () => this.setState(() {
+            _statusFilter = null;
+            _dateRange = null;
+          }),
+        ),
+      ),
+    );
   }
 
   @override
@@ -78,10 +104,16 @@ class _UsersListViewState extends State<_UsersListView> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
+            icon: Badge(
+              isLabelVisible: _statusFilter != null || _dateRange != null,
+              child: const Icon(Icons.filter_list),
+            ),
+            onPressed: _showFilterSheet,
+            tooltip: 'Filter',
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () {
-              context.read<SuperAdminCubit>().loadUsers();
-            },
+            onPressed: () => context.read<SuperAdminCubit>().loadUsers(),
             tooltip: 'Refresh',
           ),
         ],
@@ -149,7 +181,6 @@ class _UsersListViewState extends State<_UsersListView> {
             final allUsers = state.users;
             final filteredUsers = _filterUsers(allUsers);
             final activeCount = allUsers.where((u) => u.isActive).length;
-            final inactiveCount = allUsers.length - activeCount;
 
             return RefreshIndicator(
               onRefresh: () async {
@@ -189,44 +220,7 @@ class _UsersListViewState extends State<_UsersListView> {
                           vertical: 12,
                         ),
                       ),
-                      onChanged: (value) {
-                        setState(() => _searchQuery = value);
-                      },
-                    ),
-                  ),
-
-                  // Filter Chips
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          _buildFilterChip(
-                            'All',
-                            'all',
-                            allUsers.length,
-                            Icons.people,
-                          ),
-                          const SizedBox(width: 8),
-                          _buildFilterChip(
-                            'Active',
-                            'active',
-                            activeCount,
-                            Icons.check_circle,
-                          ),
-                          const SizedBox(width: 8),
-                          _buildFilterChip(
-                            'Inactive',
-                            'inactive',
-                            inactiveCount,
-                            Icons.cancel,
-                          ),
-                        ],
-                      ),
+                      onChanged: _onSearchChanged,
                     ),
                   ),
 
@@ -234,7 +228,7 @@ class _UsersListViewState extends State<_UsersListView> {
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
-                      vertical: 8,
+                      vertical: 12,
                     ),
                     child: Row(
                       children: [
@@ -245,6 +239,15 @@ class _UsersListViewState extends State<_UsersListView> {
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '${activeCount} active',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.green[700],
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -267,7 +270,11 @@ class _UsersListViewState extends State<_UsersListView> {
                               return UserCard(
                                 user: user,
                                 onTap: () {
-                                  // TODO: Navigate to user details
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/super-admin/user-details',
+                                    arguments: user,
+                                  );
                                 },
                               );
                             },
@@ -278,53 +285,27 @@ class _UsersListViewState extends State<_UsersListView> {
             );
           }
 
-          // Initial or unknown state
           return const Center(child: CircularProgressIndicator());
         },
       ),
     );
   }
 
-  Widget _buildFilterChip(
-    String label,
-    String value,
-    int count,
-    IconData icon,
-  ) {
-    final isSelected = _filterStatus == value;
-    return FilterChip(
-      label: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16),
-          const SizedBox(width: 6),
-          Text('$label ($count)'),
-        ],
-      ),
-      selected: isSelected,
-      onSelected: (selected) {
-        setState(() => _filterStatus = value);
-      },
-      selectedColor: Theme.of(
-        context,
-      ).colorScheme.primary.withValues(alpha: 0.2),
-      checkmarkColor: Theme.of(context).colorScheme.primary,
-    );
-  }
-
   Widget _buildEmptyState() {
+    final hasFilters =
+        _searchQuery.isNotEmpty || _statusFilter != null || _dateRange != null;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            _searchQuery.isEmpty ? Icons.people_outlined : Icons.search_off,
+            hasFilters ? Icons.search_off : Icons.people_outlined,
             size: 80,
             color: Colors.grey[400],
           ),
           const SizedBox(height: 16),
           Text(
-            _searchQuery.isEmpty ? 'No Users Yet' : 'No Results Found',
+            hasFilters ? 'No Results Found' : 'No Users Yet',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -333,9 +314,9 @@ class _UsersListViewState extends State<_UsersListView> {
           ),
           const SizedBox(height: 8),
           Text(
-            _searchQuery.isEmpty
-                ? 'Users will appear here once they register'
-                : 'Try a different search term or filter',
+            hasFilters
+                ? 'Try adjusting your filters'
+                : 'Users will appear here once they register',
             style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             textAlign: TextAlign.center,
           ),

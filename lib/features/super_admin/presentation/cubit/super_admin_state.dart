@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
@@ -140,4 +141,28 @@ class AllBookingsLoaded extends SuperAdminState {
 
   @override
   List<Object?> get props => [bookings];
+}
+
+/// Field created successfully.
+class FieldCreated extends SuperAdminState {
+  final FieldEntity field;
+
+  const FieldCreated(this.field);
+
+  @override
+  List<Object?> get props => [field];
+
+  /// Get display message for success notification
+  String get successMessage =>
+      'Field created successfully!\n\nName: ${field.name}\nCity: ${field.city}\nPrice: ${field.formattedPrice}';
+}
+
+/// Bulk action completed successfully.
+class BulkActionCompleted extends SuperAdminState {
+  final String message;
+
+  const BulkActionCompleted(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

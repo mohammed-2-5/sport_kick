@@ -60,4 +60,20 @@ abstract class BookingRepository {
 
   /// Get all bookings in the system (for super admin only).
   Future<Either<Failure, List<BookingEntity>>> getAllBookings();
+
+  /// Create a manual booking (for field owners/admins).
+  ///
+  /// Manual bookings are created by admins for walk-in customers.
+  /// They are automatically confirmed and include customer information.
+  Future<Either<Failure, BookingEntity>> createManualBooking({
+    required String fieldId,
+    required DateTime date,
+    required String startTime,
+    required String endTime,
+    required double totalPrice,
+    required String customerName,
+    required String customerPhone,
+    String? customerEmail,
+    String? notes,
+  });
 }

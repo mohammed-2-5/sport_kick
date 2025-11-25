@@ -4,6 +4,7 @@ import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_e
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// Repository interface for super admin operations.
 ///
@@ -142,4 +143,57 @@ abstract class SuperAdminRepository {
   /// - [Right(void)]: User activated
   /// - [Left(Failure)]: Error occurred
   Future<Either<Failure, void>> activateUser(String userId);
+
+  /// Create a new field and assign it to an admin.
+  ///
+  /// Only super admin can create fields. This method:
+  /// 1. Creates the field in the database
+  /// 2. Sets the owner_id to the specified admin
+  /// 3. Creates audit trail entry in admin_field_assignments
+  ///
+  /// Parameters:
+  /// - [ownerId]: ID of the admin who will own this field
+  /// - [sportCategoryId]: ID of the sport category
+  /// - [name]: Field name
+  /// - [address]: Full address
+  /// - [city]: City name
+  /// - [pricePerHour]: Hourly rental price
+  /// - [description]: Detailed description (optional)
+  /// - [latitude]: GPS latitude (optional)
+  /// - [longitude]: GPS longitude (optional)
+  /// - [currency]: Currency code (default: 'EGP')
+  /// - [surfaceType]: Surface type (optional)
+  /// - [capacity]: Number of players (optional)
+  /// - [isIndoor]: Indoor flag (default: false)
+  /// - [images]: List of image URLs (default: empty)
+  /// - [videoUrl]: Video URL (optional)
+  /// - [facilities]: List of facilities (default: empty)
+  ///
+  /// Returns:
+  /// - [Right(FieldEntity)]: Field created successfully
+  /// - [Left(Failure)]: Error occurred
+  ///
+  /// Errors:
+  /// - [ValidationFailure]: Invalid input data
+  /// - [NotFoundFailure]: Admin not found
+  /// - [UnauthorizedFailure]: User is not super admin
+  /// - [ServerFailure]: Database error
+  Future<Either<Failure, FieldEntity>> createField({
+    required String ownerId,
+    required String sportCategoryId,
+    required String name,
+    required String address,
+    required String city,
+    required double pricePerHour,
+    String? description,
+    double? latitude,
+    double? longitude,
+    String currency = 'EGP',
+    String? surfaceType,
+    int? capacity,
+    bool isIndoor = false,
+    List<String> images = const [],
+    String? videoUrl,
+    List<String> facilities = const [],
+  });
 }

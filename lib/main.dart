@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -37,6 +38,9 @@ void main() async {
 /// Initialize all app dependencies and services.
 Future<void> _initializeApp() async {
   try {
+    // 0. Load environment variables
+    await dotenv.load(fileName: ".env");
+
     // 1. Initialize Hive for local storage
     await Hive.initFlutter();
 
@@ -126,11 +130,7 @@ class MyApp extends StatelessWidget {
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.error_outline,
-                        size: 64,
-                        color: Colors.red,
-                      ),
+                      Icon(Icons.error_outline, size: 64, color: Colors.red),
                       SizedBox(height: 16),
                       Text(
                         'Something went wrong',

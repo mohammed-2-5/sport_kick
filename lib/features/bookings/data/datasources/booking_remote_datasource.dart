@@ -38,6 +38,11 @@ abstract class BookingRemoteDataSource {
 
   /// Get all bookings in the system (for super admin only).
   Future<List<BookingModel>> getAllBookings();
+
+  /// Create a manual booking (for field owners/admins).
+  ///
+  /// Manual bookings are automatically confirmed and include customer information.
+  Future<BookingModel> createManualBooking(BookingModel booking);
 }
 
 /// Implementation of booking remote data source.
@@ -441,6 +446,66 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
     } catch (e) {
       debugPrint('❌ Exception in getAllBookings: $e');
       throw ServerException('Failed to load all bookings: $e');
+    }
+  }
+
+  @override
+  Future<BookingModel> createManualBooking(BookingModel booking) async {
+    try {
+      // Get insert JSON and ensure manual booking fields are set
+      final insertData = booking.toInsertJson();
+
+      // Set the admin user ID who is creating the booking
+      insertData['created_by'] = _currentUserId;
+
+      // For manual bookings, we use a placeholder user_id (the admin's ID)
+      // The actual customer info is in customer_name, customer_phone, customer_email
+      insertData['user_id'] = _currentUserId;
+
+      debugPrint('📝 Creating manual booking by admin: $_currentUserId');
+      debugPrint('📝 Customer: ${booking.customerName} (${booking.customerPhone})');
+      debugPrint('📝 Booking data: $insertData');
+
+      // Insert new manual booking
+      // The trigger check_booking_conflict() will prevent double bookings
+      final response = await supabaseClient
+          .from('bookings')
+          .insert(insertData)
+          .select('*, field:fields(name, images)')
+          .single();
+
+      debugPrint('✅ Manual booking created successfully: ${response['id']}');
+
+      // Parse response and include field details
+      final json = response as Map<String, dynamic>;
+
+      // Extract field details from join
+      final fieldData = json['field'] as Map<String, dynamic>?;
+      if (fieldData != null) {
+        json['field_name'] = fieldData['name'];
+        json['field_image'] = (fieldData['images'] as List?)?.first;
+      }
+
+      return BookingModel.fromJson(json);
+    } on PostgrestException catch (e) {
+      debugPrint('❌ PostgrestException in createManualBooking: ${e.message}');
+      debugPrint('   Code: ${e.code}');
+
+      // Handle specific error codes
+      if (e.code == '23P01') {
+        // exclusion_violation - double booking
+        throw ConflictException('This time slot is already booked');
+      } else if (e.code == '23503') {
+        // foreign_key_violation
+        throw ValidationException('Invalid field ID');
+      } else if (e.code == '23514') {
+        // check_violation
+        throw ValidationException('Invalid booking data: ${e.message}');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ Exception in createManualBooking: $e');
+      throw ServerException('Failed to create manual booking: $e');
     }
   }
 

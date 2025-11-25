@@ -433,7 +433,14 @@ class _CitiesViewState extends State<_CitiesView> {
                   if (city.hasFields)
                     TextButton(
                       onPressed: () {
-                        // TODO: Navigate to fields in this city
+                        // Navigate to All Fields page with city filter
+                        Navigator.pushNamed(
+                          context,
+                          '/super-admin/fields',
+                        ).then((_) {
+                          // Optionally refresh cities when coming back
+                          context.read<SuperAdminCubit>().loadCities();
+                        });
                       },
                       child: const Text('View Fields'),
                     ),
