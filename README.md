@@ -1,72 +1,107 @@
-# Sport Kick ⚽🎾🏀
+# ⚽ Sport Kick
 
-**Multi-sport field booking application** - Book your sports field instantly!
+<div align="center">
 
-A modern Flutter mobile application that allows users to browse available sports fields (Football, Tennis, Basketball, Volleyball, Padel, Squash), view time slots, and make bookings instantly - replacing traditional phone call/WhatsApp booking processes.
+![Sport Kick Banner](https://via.placeholder.com/1200x400/0A1A2F/FFFFFF?text=Sport+Kick)
 
----
+**The Ultimate Football Field Booking Platform**
 
-## 🎯 Features
+[![Flutter](https://img.shields.io/badge/Flutter-3.10+-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
+[![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
+[![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](./LICENSE)
 
-- 🏟️ **Browse Multi-Sport Fields** - View all available sports fields in your city
-  - ⚽ Football (11v11, 7v7, 5v5)
-  - 🎾 Tennis & Padel Courts
-  - 🏀 Basketball Courts
-  - 🏐 Volleyball Courts
-  - 🎾 Squash Courts
-- 📅 **Book Instantly** - Select sport, date and time, book in seconds
-- 🎯 **Smart Filtering** - Filter by sport type, amenities, price, location
-- 👤 **User Accounts** - Manage your profile and bookings
-- ⭐ **Reviews & Ratings** - Rate and review fields with detailed categories
-- 👨‍💼 **Owner Dashboard** - Field owners can manage bookings across all sports
-- 🔔 **Notifications** - Get notified about booking updates
+</div>
 
 ---
 
-## 🏗️ Project Status
+## 🚀 Overview
 
-**Current Phase:** Phase 2 Complete (Supabase Backend Setup)
-**MVP Progress:** ~25% Complete
+**Sport Kick** is a cutting-edge mobile application designed to revolutionize how football enthusiasts book fields. Replacing outdated phone calls and manual scheduling, Sport Kick offers a seamless, instant booking experience for players and a powerful management suite for field owners.
 
-### Completed:
-- ✅ Phase 0: Foundation (Core infrastructure)
-- ✅ Phase 1: UI Components & Routing
-- ✅ Phase 2: Supabase Backend Setup
-
-### Next:
-- ⏳ Phase 3: Authentication Feature
-- ⏳ Phase 4: Fields Feature
-- ⏳ Phase 5: Bookings Feature
-- ⏳ Phase 6: MVP Polish & Testing
+Built with **Flutter** and **Supabase**, it delivers high performance, real-time updates, and a premium user experience across all devices.
 
 ---
 
-## 🛠️ Tech Stack
+## ✨ Key Features
 
-- **Framework:** Flutter 3.10+
-- **State Management:** Cubit/Bloc
-- **Backend:** Supabase (PostgreSQL, Auth, Storage, Realtime)
-- **Architecture:** Clean Architecture
-- **Dependency Injection:** get_it
-- **HTTP Client:** Dio
-- **Local Storage:** Hive & Shared Preferences
+### 👤 For Users (Players)
+- **🏟️ Browse & Discover:** Find the best fields in your city with high-quality photos and details.
+- **📅 Instant Booking:** View real-time availability and book your slot in seconds.
+- **📍 Location Based:** Filter fields by city, sport type, and amenities.
+- **📱 Mobile First:** A beautiful, responsive interface designed for on-the-go booking.
+
+### 👑 For Super Admins
+- **📊 Dashboard Analytics:** Real-time insights on revenue, bookings, and user growth.
+- **👥 User Management:** Full control over user and admin accounts.
+- **⚙️ Platform Control:** Manage cities, sport categories, and system-wide settings.
+- **📈 Advanced Reporting:** Export detailed reports (CSV/PDF) for data-driven decisions.
+
+### 🏢 For Field Owners (Admins)
+- **📅 Schedule Management:** Easy-to-use calendar for managing slots.
+- **💰 Revenue Tracking:** Monitor earnings and booking trends.
+- **🔔 Real-time Notifications:** Get alerted instantly for new bookings.
 
 ---
 
-## 📱 Getting Started
+## 🛠️ Technology Stack
+
+We use a modern, scalable tech stack to ensure reliability and performance.
+
+| Category | Technology | Description |
+|----------|------------|-------------|
+| **Framework** | ![Flutter](https://img.shields.io/badge/-Flutter-02569B?logo=flutter&logoColor=white) | Cross-platform UI toolkit |
+| **Language** | ![Dart](https://img.shields.io/badge/-Dart-0175C2?logo=dart&logoColor=white) | Type-safe, compiled language |
+| **Backend** | ![Supabase](https://img.shields.io/badge/-Supabase-3ECF8E?logo=supabase&logoColor=white) | PostgreSQL, Auth, Realtime, Storage |
+| **State Mgmt** | ![Bloc](https://img.shields.io/badge/-Bloc/Cubit-blue) | Predictable state management |
+| **Architecture** | ![Clean Arch](https://img.shields.io/badge/-Clean%20Architecture-orange) | Scalable, testable code structure |
+
+---
+
+## 🏗️ Architecture
+
+Sport Kick follows **Clean Architecture** principles to ensure separation of concerns and maintainability.
+
+```mermaid
+graph TD
+    UI[Presentation Layer] --> Domain[Domain Layer]
+    Data[Data Layer] --> Domain
+    Data --> Remote[Remote Data Source]
+    Data --> Local[Local Data Source]
+    Remote --> Supabase[Supabase]
+    Local --> Hive[Hive / SharedPrefs]
+```
+
+- **Presentation:** Widgets, Pages, Cubits (State Management).
+- **Domain:** Entities, UseCases, Repository Interfaces (Pure Dart).
+- **Data:** Models, Repository Implementations, Data Sources (APIs, DB).
+
+---
+
+## 📱 Screenshots
+
+<div align="center">
+  <img src="https://via.placeholder.com/250x500/0A1A2F/FFFFFF?text=Home" width="200" />
+  <img src="https://via.placeholder.com/250x500/0A1A2F/FFFFFF?text=Booking" width="200" />
+  <img src="https://via.placeholder.com/250x500/0A1A2F/FFFFFF?text=Admin" width="200" />
+  <img src="https://via.placeholder.com/250x500/0A1A2F/FFFFFF?text=Profile" width="200" />
+</div>
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Flutter SDK 3.10 or higher
-- Dart SDK
-- Android Studio / VS Code
-- Supabase account (for backend)
+- Flutter SDK (3.10+)
+- Dart SDK (3.0+)
+- Supabase Project
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd spo_kick
+   git clone https://github.com/mohammed-2-5/sport_kick.git
+   cd sport_kick
    ```
 
 2. **Install dependencies**
@@ -74,12 +109,13 @@ A modern Flutter mobile application that allows users to browse available sports
    flutter pub get
    ```
 
-3. **Set up Supabase**
-   - Follow instructions in `supabase/README.md`
-   - Run SQL scripts in order:
-     1. `01_schema_v2.sql` (Multi-sport database)
-     2. `02_rls_policies_v2.sql` (Security policies)
-     3. `03_initial_data_v2.sql` (Sample data - optional)
+3. **Configure Environment**
+   Create a `.env` file in the root directory:
+   ```env
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   ```
 
 4. **Run the app**
    ```bash
@@ -88,102 +124,26 @@ A modern Flutter mobile application that allows users to browse available sports
 
 ---
 
-## 📂 Project Structure
-
-```
-lib/
-├── main.dart                    # App entry point
-├── core/
-│   ├── constants/              # App constants, colors, strings
-│   ├── widgets/                # Reusable UI components
-│   ├── routes/                 # Navigation & routing
-│   ├── di/                     # Dependency injection
-│   ├── network/                # API client & network utils
-│   ├── utils/                  # Validators & helpers
-│   └── errors/                 # Error handling
-└── features/
-    ├── splash/                 # Splash screen
-    ├── auth/                   # Authentication (WIP)
-    ├── fields/                 # Football fields (WIP)
-    └── bookings/               # Booking management (WIP)
-```
-
----
-
-## 🗄️ Database Schema (Multi-Sport)
-
-### Tables:
-1. **sport_categories** - Sport types (Football, Tennis, Basketball, etc.)
-2. **profiles** - User accounts and information
-3. **fields** - Universal sports fields (supports all sports)
-4. **amenities** - Facilities catalog (Parking, Showers, AC, etc.)
-5. **field_amenities** - Field to amenity mapping
-6. **bookings** - Reservation records (all sports)
-7. **time_slots** - Available time slots
-8. **reviews** - User reviews with detailed ratings
-
-### Key Features:
-- ✅ Flexible multi-sport support via `sport_categories` table
-- ✅ Sport-specific properties stored as JSONB (infinitely extensible)
-- ✅ Structured amenities system with sport associations
-- ✅ Easy to add new sports without schema changes
-
-See `supabase/01_schema_v2.sql` for complete schema.
-See `supabase/SCHEMA_GUIDE_V2.md` for usage guide and examples.
-
----
-
-## 📚 Documentation
-
-- **Setup Guide:** `supabase/README.md`
-- **Implementation Plan:** `IMPLEMENTATION_PLAN.md`
-- **Architecture Guide:** `CLAUDE.md`
-- **Phase Summaries:**
-  - `PHASE_1_SUMMARY.md`
-  - `PHASE_2_COMPLETE.md`
-
----
-
-## 🚀 Development Commands
-
-```bash
-# Run the app
-flutter run
-
-# Run with hot reload
-flutter run --hot
-
-# Build for Android
-flutter build apk
-
-# Run tests
-flutter test
-
-# Analyze code
-flutter analyze
-
-# Format code
-dart format .
-```
-
----
-
 ## 🤝 Contributing
 
-This is a learning/portfolio project. Feel free to fork and experiment!
+Contributions are welcome! Please read our [Code Quality Standards](CODE_QUALITY_STANDARDS.md) before submitting a Pull Request.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-This project is open source and available for educational purposes.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-## 📧 Contact
+<div align="center">
 
-For questions or support, please refer to the documentation or create an issue.
+**Built with ❤️ by the Sport Kick Team**
 
----
-
-*Built with Flutter & Supabase* 💙
+</div>
