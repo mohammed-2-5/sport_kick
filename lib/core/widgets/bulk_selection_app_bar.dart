@@ -99,7 +99,7 @@ class BulkAction {
 /// Mixin for bulk selection functionality
 ///
 /// Add this to your StatefulWidget's State to get bulk selection features
-mixin BulkSelectionMixin<T> on State {
+mixin BulkSelectionMixin<T, W extends StatefulWidget> on State<W> {
   /// Set of selected item IDs
   final Set<String> selectedIds = {};
 

@@ -10,6 +10,8 @@ import 'package:spo_kick/features/super_admin/domain/usecases/get_active_cities_
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_bookings_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_users_usecase.dart';
+import 'package:spo_kick/core/services/csv_export_service.dart';
+import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
@@ -35,6 +37,7 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
   final GetAllBookingsUseCase getAllBookingsUseCase;
   final DeactivateUserUseCase deactivateUserUseCase;
   final ActivateUserUseCase activateUserUseCase;
+  final CsvExportService csvExportService;
 
   SuperAdminCubit({
     required this.getPlatformStatisticsUseCase,
@@ -48,6 +51,7 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
     required this.getAllBookingsUseCase,
     required this.deactivateUserUseCase,
     required this.activateUserUseCase,
+    required this.csvExportService,
   }) : super(const SuperAdminInitial());
 
   /// Load platform-wide statistics for dashboard.
@@ -491,6 +495,38 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
 
     // Reload admins list
     loadAdmins();
+  }
+
+  /// Export users to CSV file.
+  Future<void> exportUsersToCSV(List<UserEntity> users) async {
+    debugPrint('🔄 [SuperAdminCubit] Exporting ${users.length} users to CSV');
+
+    try {
+      await csvExportService.exportUsersToCsv(
+        users,
+        'users_export_${DateTime.now().millisecondsSinceEpoch}',
+      );
+      debugPrint('✅ [SuperAdminCubit] Users exported successfully');
+    } catch (e) {
+      debugPrint('❌ [SuperAdminCubit] Error exporting users: $e');
+      emit(SuperAdminError('Failed to export users: $e'));
+    }
+  }
+
+  /// Export admins to CSV file.
+  Future<void> exportAdminsToCSV(List<UserEntity> admins) async {
+    debugPrint('🔄 [SuperAdminCubit] Exporting ${admins.length} admins to CSV');
+
+    try {
+      await csvExportService.exportUsersToCsv(
+        admins,
+        'admins_export_${DateTime.now().millisecondsSinceEpoch}',
+      );
+      debugPrint('✅ [SuperAdminCubit] Admins exported successfully');
+    } catch (e) {
+      debugPrint('❌ [SuperAdminCubit] Error exporting admins: $e');
+      emit(SuperAdminError('Failed to export admins: $e'));
+    }
   }
 
   /// Reset to initial state.

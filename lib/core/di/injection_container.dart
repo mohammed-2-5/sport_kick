@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:spo_kick/core/network/api_client.dart';
 import 'package:spo_kick/core/network/network_info.dart';
+import 'package:spo_kick/core/services/csv_export_service.dart';
 
 // Auth Feature
 import 'package:spo_kick/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -147,6 +148,9 @@ Future<void> _initCore() async {
 
   // API Client
   sl.registerLazySingleton<ApiClient>(() => ApiClient(dio: sl()));
+
+  // CSV Export Service
+  sl.registerLazySingleton<CsvExportService>(() => CsvExportService());
 }
 
 // ==================== FEATURE: AUTH ====================
@@ -294,6 +298,7 @@ void _initSuperAdmin() {
       getAllBookingsUseCase: sl(),
       deactivateUserUseCase: sl(),
       activateUserUseCase: sl(),
+      csvExportService: sl(),
     ),
   );
 
