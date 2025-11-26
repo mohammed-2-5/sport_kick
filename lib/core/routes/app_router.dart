@@ -7,6 +7,7 @@ import 'package:spo_kick/features/auth/presentation/pages/register_page.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/booking_details_page.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/create_booking_page.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -286,13 +287,8 @@ class AppRouter {
       case ownerDashboard:
         return _buildSlideRoute(
           settings: routeSettings,
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (_) => sl<BookingCubit>()..loadOwnerBookings(),
-              ),
-              BlocProvider(create: (_) => sl<FieldsCubit>()..loadAllFields()),
-            ],
+          builder: (_) => BlocProvider(
+            create: (_) => sl<OwnerCubit>(),
             child: const OwnerDashboardPage(),
           ),
         );
@@ -301,7 +297,7 @@ class AppRouter {
         return _buildSlideRoute(
           settings: routeSettings,
           builder: (_) => BlocProvider(
-            create: (_) => sl<BookingCubit>()..loadOwnerBookings(),
+            create: (_) => sl<OwnerCubit>(),
             child: const OwnerBookingsPage(),
           ),
         );
@@ -316,7 +312,7 @@ class AppRouter {
         return _buildSlideRoute(
           settings: routeSettings,
           builder: (_) => BlocProvider(
-            create: (_) => sl<FieldsCubit>()..loadAllFields(),
+            create: (_) => sl<OwnerCubit>(),
             child: const OwnerFieldsPage(),
           ),
         );

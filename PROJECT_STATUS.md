@@ -1,7 +1,7 @@
 # Sport Kick - Project Status & Roadmap
 
 **Last Updated:** 2025-11-26
-**Current Status:** Phase 4 (Admin Dashboard) - Foundation In Progress (20%)
+**Current Status:** Phase 4 (Admin Dashboard) - Core Pages Complete (60%)
 
 ---
 
@@ -286,11 +286,11 @@
 ---
 
 ### Phase 4: Admin (Field Owner) Dashboard (IN PROGRESS 🔄)
-**Priority:** High  
-**Status:** 20% Complete (Foundation In Progress)  
+**Priority:** High
+**Status:** 50% Complete (UI Pages In Progress)
 **Started:** 2025-11-26
 
-#### ✅ Completed: Phase 4.1 - Foundation Setup (80%)
+#### ✅ Completed: Phase 4.1 - Foundation Setup (100%)
 
 **Domain Layer Complete:**
 - ✅ Created `OwnerRevenueEntity` for revenue analytics
@@ -318,20 +318,105 @@
 - 3 data layer files
 - 2 presentation layer files
 
-#### 🔄 In Progress: Foundation Completion (20%)
+**Dependency Injection Complete:**
+- ✅ Fixed `OwnerRemoteDataSourceImpl` Supabase queries
+  - Fixed query chaining to avoid type mismatch (line 94)
+  - Replaced deprecated `.in_()` with `.filter('status', 'in', [...])` (line 174)
+- ✅ Created `_initOwner()` function in `injection_container.dart`
+  - Registered OwnerCubit as factory
+  - Registered 7 use cases as lazy singletons
+  - Registered repository and data source
+  - Added import alias for `GetOwnerBookingsUseCase` to resolve conflict
+- ✅ Fixed DI container issues
+  - Fixed ambiguous import with alias `as owner`
+  - Fixed OwnerRepositoryImpl constructor (positional parameter)
+- ✅ All flutter analyze errors resolved (0 errors remaining)
+- ✅ Code quality standards verified
 
-**Current Tasks:**
-- [ ] Fix `OwnerRemoteDataSourceImpl` (change ApiClient to SupabaseClient)
-- [ ] Create `_initOwner()` function in dependency injection
-- [ ] Wire all dependencies in DI container
-- [ ] Run `flutter analyze` and fix any issues
+#### ✅ Completed: Phase 4.2 - Core Pages (100%)
 
-#### ⏳ Upcoming: Phase 4.2-4.4
+**✅ Owner Dashboard Page - COMPLETE**
+- **File:** `lib/features/owner/presentation/pages/owner_dashboard_page.dart`
+- **Before:** 575 lines → **After:** 276 lines (52% reduction)
+- **Refactoring:**
+  - Replaced `BookingCubit` & `FieldsCubit` with `OwnerCubit` ✅
+  - Integrated with `AuthCubit` to get current user ID
+  - Uses Clean Architecture properly (Presentation → Domain)
+- **Extracted Widgets:**
+  - `welcome_header.dart` (71 lines) - Welcome banner widget
+  - `dashboard_stats_section.dart` (106 lines) - Statistics cards section
+  - `recent_bookings_section.dart` (209 lines) - Recent bookings list
+- **Features:**
+  - Revenue overview (total, monthly)
+  - Quick stats (bookings count, pending approvals)
+  - Fields preview
+  - Recent bookings preview (top 5)
+  - Quick action buttons (Manage Bookings, Manage Fields, Analytics, Settings)
+  - Create Manual Booking primary action
+  - Pull-to-refresh support
+- **Code Quality:**
+  - ✅ File size under 300 lines (276 lines)
+  - ✅ Uses modern `withValues(alpha:)` API
+  - ✅ Type-safe state handling
+  - ✅ 0 flutter analyze errors
+  - ✅ All imports organized correctly
 
-**Phase 4.2: Core Pages (Week 2)**
-- Owner Dashboard Page
-- My Fields Page
-- Owner Bookings Page
+**✅ Routes Configuration - COMPLETE**
+- **File:** `lib/core/routes/app_router.dart`
+- **Fixed:**
+  - `ownerDashboard` route now uses `OwnerCubit` (was using `BookingCubit` + `FieldsCubit`)
+  - `ownerBookings` route now uses `OwnerCubit` (was using `BookingCubit`)
+  - `ownerFields` route now uses `OwnerCubit` (was using `FieldsCubit`)
+  - Added `OwnerCubit` import
+- **Status:** All owner routes properly configured ✅
+
+**✅ Owner Fields Page - COMPLETE**
+- **File:** `lib/features/owner/presentation/pages/owner_fields_page.dart`
+- **Before:** 563 lines → **After:** 258 lines (54% reduction)
+- **Refactoring:**
+  - Replaced `FieldsCubit` with `OwnerCubit` ✅
+  - Integrated with `AuthCubit` to get current user ID
+  - Uses Clean Architecture properly
+- **Extracted Widgets:**
+  - `owner_field_card.dart` (371 lines) - Complete field card with image, stats, actions
+- **Features:**
+  - View all owner's fields
+  - Pull-to-refresh support
+  - Edit field navigation
+  - Delete field with confirmation dialog
+  - Empty state with "Add First Field" CTA
+  - Field statistics (rating, bookings, price)
+  - Verified badge for verified fields
+- **Code Quality:**
+  - ✅ File size under 300 lines (258 lines)
+  - ✅ Uses modern `withValues(alpha:)` API
+  - ✅ Type-safe state handling
+  - ✅ 0 flutter analyze errors
+  - ✅ All imports organized correctly
+
+**✅ Owner Bookings Page - COMPLETE**
+- **File:** `lib/features/owner/presentation/pages/owner_bookings_page.dart`
+- **Before:** 631 lines → **After:** 215 lines (66% reduction)
+- **Refactoring:**
+  - Replaced `BookingCubit` with `OwnerCubit` ✅
+  - Integrated with `AuthCubit` to get current user ID
+  - Uses Clean Architecture properly
+- **Extracted Widgets:**
+  - `owner_booking_card.dart` (250 lines) - Reusable booking card with actions
+- **Features:**
+  - View all bookings for owner's fields
+  - Filter by status (All/Pending/Confirmed/Canceled)
+  - Approve/Reject actions for pending bookings
+  - Pull-to-refresh support
+  - Empty states for each tab
+- **Code Quality:**
+  - ✅ File size under 300 lines (215 lines)
+  - ✅ Uses modern `withValues(alpha:)` API
+  - ✅ Type-safe state handling
+  - ✅ 0 flutter analyze errors
+  - ✅ All imports organized correctly
+
+#### ⏳ Upcoming: Phase 4.3-4.4
 
 **Phase 4.3: Actions & Details (Week 3)**
 - Field Detail Page
@@ -615,11 +700,11 @@ If anything is unclear, ask about:
 
 ## 📊 Progress Tracking
 
-### Overall Project Progress: 45%
+### Overall Project Progress: 49%
 - ✅ Phase 1: Database & Domain (100%)
 - ✅ Phase 2: Super Admin Core (100%)
-- 🔄 Phase 3: Super Admin Enhancements (95%)
-- ⏳ Phase 4: Admin Dashboard (0%)
+- ✅ Phase 3: Super Admin Enhancements (100%)
+- 🔄 Phase 4: Admin Dashboard (50%)
 - ⏳ Phase 5: User Experience (0%)
 - ⏳ Phase 6: City Selection (0%)
 - ⏳ Phase 7: Advanced Features (0%)
@@ -661,6 +746,39 @@ Before marking Phase 3 as complete, ensure:
 
 ---
 
-**Last Updated:** 2025-11-25
-**Next Review:** After Phase 3 completion (estimated: 95% → 100%)
+**Last Updated:** 2025-11-26
+**Next Review:** Start Phase 4.3 (Actions & Details)
 **Maintained By:** Claude Code Agent
+
+---
+
+## 🚀 Latest Session Summary (2025-11-26)
+
+### Completed Work:
+1. **Phase 4.1 Foundation (100%)** - All DI, Cubit, and repository setup complete
+2. **Owner Dashboard Page (100%)** - Refactored from 575 to 276 lines, using OwnerCubit
+3. **Owner Fields Page (100%)** - Refactored from 563 to 258 lines, using OwnerCubit
+4. **Owner Bookings Page (100%)** - Refactored from 631 to 215 lines, using OwnerCubit
+5. **Routes Configuration (100%)** - Fixed all owner routes to use OwnerCubit
+6. **Widget Extraction** - Created 5 reusable widgets totaling ~1000 lines
+
+### Files Modified:
+- `lib/core/routes/app_router.dart` - Fixed owner routes
+- `lib/core/di/injection_container.dart` - Added OwnerCubit registration
+- `lib/features/owner/data/datasources/owner_remote_datasource_impl.dart` - Fixed Supabase queries
+- `lib/features/owner/presentation/pages/owner_dashboard_page.dart` - Refactored
+- `lib/features/owner/presentation/pages/owner_fields_page.dart` - Refactored
+- `lib/features/owner/presentation/pages/owner_bookings_page.dart` - Refactored
+
+### Files Created:
+- `lib/features/owner/presentation/widgets/welcome_header.dart`
+- `lib/features/owner/presentation/widgets/dashboard_stats_section.dart`
+- `lib/features/owner/presentation/widgets/recent_bookings_section.dart`
+- `lib/features/owner/presentation/widgets/owner_field_card.dart`
+- `lib/features/owner/presentation/widgets/owner_booking_card.dart`
+
+### Next Steps:
+- Begin Phase 4.3: Actions & Details pages
+  - Field Detail Page
+  - Edit Field Page
+  - Owner Profile Page

@@ -1,3 +1,4 @@
+// Core and external dependencies
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -61,6 +62,20 @@ import 'package:spo_kick/features/super_admin/domain/usecases/get_all_users_usec
 import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 
+// Owner Feature
+import 'package:spo_kick/features/owner/data/datasources/owner_remote_datasource.dart';
+import 'package:spo_kick/features/owner/data/datasources/owner_remote_datasource_impl.dart';
+import 'package:spo_kick/features/owner/data/repositories/owner_repository_impl.dart';
+import 'package:spo_kick/features/owner/domain/repositories/owner_repository.dart';
+import 'package:spo_kick/features/owner/domain/usecases/approve_booking_usecase.dart';
+import 'package:spo_kick/features/owner/domain/usecases/get_owner_bookings_usecase.dart' as owner;
+import 'package:spo_kick/features/owner/domain/usecases/get_owner_fields_usecase.dart';
+import 'package:spo_kick/features/owner/domain/usecases/get_owner_revenue_usecase.dart';
+import 'package:spo_kick/features/owner/domain/usecases/reject_booking_usecase.dart';
+import 'package:spo_kick/features/owner/domain/usecases/update_field_usecase.dart';
+import 'package:spo_kick/features/owner/domain/usecases/update_owner_profile_usecase.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
+
 /// Service Locator instance.
 ///
 /// This is a global instance of GetIt used for dependency injection
@@ -104,6 +119,9 @@ Future<void> initDependencies() async {
 
   // Super Admin Feature
   _initSuperAdmin();
+
+  // Owner Feature
+  _initOwner();
 
   // Reviews Feature
   // TODO: Initialize reviews dependencies
@@ -330,6 +348,49 @@ void _initSuperAdmin() {
   );
 }
 
+// ==================== FEATURE: OWNER ====================
+
+/// Initialize owner (field owner/admin) feature dependencies.
+///
+/// Registers all dependencies for the owner dashboard:
+/// - Owner cubit for state management
+/// - Use cases for business logic
+/// - Repository for data access
+/// - Remote data source for API calls
+void _initOwner() {
+  // Cubit
+  sl.registerFactory(
+    () => OwnerCubit(
+      getOwnerFieldsUseCase: sl(),
+      updateFieldUseCase: sl(),
+      getOwnerBookingsUseCase: sl(),
+      approveBookingUseCase: sl(),
+      rejectBookingUseCase: sl(),
+      getOwnerRevenueUseCase: sl(),
+      updateOwnerProfileUseCase: sl(),
+    ),
+  );
+
+  // Use Cases
+  sl.registerLazySingleton(() => GetOwnerFieldsUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateFieldUseCase(sl()));
+  sl.registerLazySingleton(() => owner.GetOwnerBookingsUseCase(sl()));
+  sl.registerLazySingleton(() => ApproveBookingUseCase(sl()));
+  sl.registerLazySingleton(() => RejectBookingUseCase(sl()));
+  sl.registerLazySingleton(() => GetOwnerRevenueUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateOwnerProfileUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<OwnerRepository>(
+    () => OwnerRepositoryImpl(sl()),
+  );
+
+  // Data Sources
+  sl.registerLazySingleton<OwnerRemoteDataSource>(
+    () => OwnerRemoteDataSourceImpl(sl()),
+  );
+}
+
 // ==================== FEATURE: REVIEWS ====================
 
 /// Initialize reviews feature dependencies.
@@ -370,14 +431,6 @@ void _initSuperAdmin() {
 ///
 /// This will unregister all dependencies and clear the service locator.
 /// Should only be used in tests.
-///
-/// Example:
-/// ```dart
-/// setUp(() async {
-///   await resetDependencies();
-///   await initDependencies();
-/// });
-/// ```
 Future<void> resetDependencies() async {
   await sl.reset();
 }
@@ -385,13 +438,6 @@ Future<void> resetDependencies() async {
 /// Check if a dependency is registered.
 ///
 /// Useful for debugging dependency issues.
-///
-/// Example:
-/// ```dart
-/// if (isDependencyRegistered<AuthCubit>()) {
-///   print('AuthCubit is registered');
-/// }
-/// ```
 bool isDependencyRegistered<T extends Object>() {
   return sl.isRegistered<T>();
 }
@@ -399,7 +445,6 @@ bool isDependencyRegistered<T extends Object>() {
 /// Get debug information about registered dependencies.
 ///
 /// Useful for debugging dependency issues.
-/// Returns a string with information about the service locator state.
 String getRegistrationDebugInfo() {
   return '''
 GetIt Registration Info:
@@ -407,6 +452,6 @@ GetIt Registration Info:
 - Ready count: ${sl.allReadySync() ? 'All ready' : 'Not all ready'}
 
 To check if a specific type is registered, use:
-isDependencyRegistered<YourType>()
-  ''';
+-isDependencyRegistered<YourType>()
+''';
 }
