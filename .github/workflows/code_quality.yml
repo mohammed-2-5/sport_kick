@@ -20,6 +20,27 @@ jobs:
         with:
           flutter-version: '3.38.2'
           channel: 'stable'
+
+      - name: Create .env file
+        run: |
+          if [ -n "${SUPABASE_URL}" ] || [ -n "${SUPABASE_ANON_KEY}" ]; then
+            cat <<EOF > .env
+SUPABASE_URL=${SUPABASE_URL}
+SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+EOF
+          elif [ -f .env.example ]; then
+            cp .env.example .env
+            echo "Using .env.example fallback for CI."
+          else
+            cat <<'EOF' > .env
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+EOF
+            echo "Created empty .env placeholder for CI."
+          fi
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
       
       - name: Get dependencies
         run: flutter pub get
@@ -47,6 +68,27 @@ jobs:
         with:
           flutter-version: '3.38.2'
           channel: 'stable'
+
+      - name: Create .env file
+        run: |
+          if [ -n "${SUPABASE_URL}" ] || [ -n "${SUPABASE_ANON_KEY}" ]; then
+            cat <<EOF > .env
+SUPABASE_URL=${SUPABASE_URL}
+SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+EOF
+          elif [ -f .env.example ]; then
+            cp .env.example .env
+            echo "Using .env.example fallback for CI."
+          else
+            cat <<'EOF' > .env
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+EOF
+            echo "Created empty .env placeholder for CI."
+          fi
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
       
       - name: Get dependencies
         run: flutter pub get
