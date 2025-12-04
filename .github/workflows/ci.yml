@@ -26,20 +26,19 @@ jobs:
           cache: true
 
       - name: Create .env file
+        shell: bash
         run: |
-          if [ -n "${SUPABASE_URL}" ] || [ -n "${SUPABASE_ANON_KEY}" ]; then
-            cat <<EOF > .env
-SUPABASE_URL=${SUPABASE_URL}
-SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
-EOF
-          elif [ -f .env.example ]; then
+          echo "Preparing .env for CI..."
+          : "${SUPABASE_URL:=}"
+          : "${SUPABASE_ANON_KEY:=}"
+          if [[ -n "${SUPABASE_URL}" || -n "${SUPABASE_ANON_KEY}" ]]; then
+            printf "SUPABASE_URL=%s\nSUPABASE_ANON_KEY=%s\n" "${SUPABASE_URL}" "${SUPABASE_ANON_KEY}" > .env
+            echo "Wrote .env from provided secrets."
+          elif [[ -f .env.example ]]; then
             cp .env.example .env
             echo "Using .env.example fallback for CI."
           else
-            cat <<'EOF' > .env
-SUPABASE_URL=
-SUPABASE_ANON_KEY=
-EOF
+            printf "SUPABASE_URL=\nSUPABASE_ANON_KEY=\n" > .env
             echo "Created empty .env placeholder for CI."
           fi
         env:
@@ -85,20 +84,19 @@ EOF
           cache: true
 
       - name: Create .env file
+        shell: bash
         run: |
-          if [ -n "${SUPABASE_URL}" ] || [ -n "${SUPABASE_ANON_KEY}" ]; then
-            cat <<EOF > .env
-SUPABASE_URL=${SUPABASE_URL}
-SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
-EOF
-          elif [ -f .env.example ]; then
+          echo "Preparing .env for CI..."
+          : "${SUPABASE_URL:=}"
+          : "${SUPABASE_ANON_KEY:=}"
+          if [[ -n "${SUPABASE_URL}" || -n "${SUPABASE_ANON_KEY}" ]]; then
+            printf "SUPABASE_URL=%s\nSUPABASE_ANON_KEY=%s\n" "${SUPABASE_URL}" "${SUPABASE_ANON_KEY}" > .env
+            echo "Wrote .env from provided secrets."
+          elif [[ -f .env.example ]]; then
             cp .env.example .env
             echo "Using .env.example fallback for CI."
           else
-            cat <<'EOF' > .env
-SUPABASE_URL=
-SUPABASE_ANON_KEY=
-EOF
+            printf "SUPABASE_URL=\nSUPABASE_ANON_KEY=\n" > .env
             echo "Created empty .env placeholder for CI."
           fi
         env:
@@ -135,20 +133,19 @@ EOF
           cache: true
 
       - name: Create .env file
+        shell: bash
         run: |
-          if [ -n "${SUPABASE_URL}" ] || [ -n "${SUPABASE_ANON_KEY}" ]; then
-            cat <<EOF > .env
-SUPABASE_URL=${SUPABASE_URL}
-SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
-EOF
-          elif [ -f .env.example ]; then
+          echo "Preparing .env for CI..."
+          : "${SUPABASE_URL:=}"
+          : "${SUPABASE_ANON_KEY:=}"
+          if [[ -n "${SUPABASE_URL}" || -n "${SUPABASE_ANON_KEY}" ]]; then
+            printf "SUPABASE_URL=%s\nSUPABASE_ANON_KEY=%s\n" "${SUPABASE_URL}" "${SUPABASE_ANON_KEY}" > .env
+            echo "Wrote .env from provided secrets."
+          elif [[ -f .env.example ]]; then
             cp .env.example .env
             echo "Using .env.example fallback for CI."
           else
-            cat <<'EOF' > .env
-SUPABASE_URL=
-SUPABASE_ANON_KEY=
-EOF
+            printf "SUPABASE_URL=\nSUPABASE_ANON_KEY=\n" > .env
             echo "Created empty .env placeholder for CI."
           fi
         env:
