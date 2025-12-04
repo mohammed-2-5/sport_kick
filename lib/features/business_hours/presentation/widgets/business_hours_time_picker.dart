@@ -52,7 +52,7 @@ class BusinessHoursTimePicker extends StatelessWidget {
             color: enabled ? null : Colors.grey,
           ),
         ),
-        SizedBox(height: BusinessHoursConstants.smallSpacing),
+        const SizedBox(height: BusinessHoursConstants.smallSpacing),
 
         // Time display and picker button
         Material(
@@ -80,7 +80,7 @@ class BusinessHoursTimePicker extends StatelessWidget {
                     size: BusinessHoursConstants.timeIconSize,
                     color: enabled ? AppColors.primary : Colors.grey,
                   ),
-                  SizedBox(width: BusinessHoursConstants.itemSpacing),
+                  const SizedBox(width: BusinessHoursConstants.itemSpacing),
                   Text(
                     _formatTimeDisplay(selectedTime),
                     style: theme.textTheme.bodyLarge?.copyWith(
@@ -88,7 +88,7 @@ class BusinessHoursTimePicker extends StatelessWidget {
                       color: enabled ? null : Colors.grey,
                     ),
                   ),
-                  SizedBox(width: BusinessHoursConstants.smallSpacing),
+                  const SizedBox(width: BusinessHoursConstants.smallSpacing),
                   Icon(
                     Icons.arrow_drop_down,
                     color: enabled ? Colors.grey : Colors.grey[400],
@@ -179,7 +179,7 @@ class BusinessHoursTimePicker extends StatelessWidget {
   /// Shows error message for invalid time selection
   void _showTimeError(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text(BusinessHoursStrings.invalidTimeRange),
         backgroundColor: AppColors.error,
         behavior: SnackBarBehavior.floating,

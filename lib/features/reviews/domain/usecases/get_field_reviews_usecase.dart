@@ -22,12 +22,12 @@ class GetFieldReviewsUseCase {
   ) async {
     // Validate limit
     if (params.limit < 1 || params.limit > 100) {
-      return Left(ValidationFailure('Limit must be between 1 and 100'));
+      return const Left(ValidationFailure('Limit must be between 1 and 100'));
     }
 
     // Validate offset
     if (params.offset < 0) {
-      return Left(ValidationFailure('Offset must be non-negative'));
+      return const Left(ValidationFailure('Offset must be non-negative'));
     }
 
     return await repository.getFieldReviews(

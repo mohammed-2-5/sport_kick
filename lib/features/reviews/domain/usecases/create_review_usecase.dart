@@ -20,12 +20,14 @@ class CreateReviewUseCase {
   Future<Either<Failure, ReviewEntity>> call(CreateReviewParams params) async {
     // Validate rating
     if (params.rating < 1 || params.rating > 5) {
-      return Left(ValidationFailure('Rating must be between 1 and 5'));
+      return const Left(ValidationFailure('Rating must be between 1 and 5'));
     }
 
     // Validate comment length if provided
     if (params.comment != null && params.comment!.length > 1000) {
-      return Left(ValidationFailure('Comment must not exceed 1000 characters'));
+      return const Left(
+        ValidationFailure('Comment must not exceed 1000 characters'),
+      );
     }
 
     return await repository.createReview(

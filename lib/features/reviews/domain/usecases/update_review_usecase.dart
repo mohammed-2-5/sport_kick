@@ -20,17 +20,19 @@ class UpdateReviewUseCase {
   Future<Either<Failure, ReviewEntity>> call(UpdateReviewParams params) async {
     // Validate rating if provided
     if (params.rating != null && (params.rating! < 1 || params.rating! > 5)) {
-      return Left(ValidationFailure('Rating must be between 1 and 5'));
+      return const Left(ValidationFailure('Rating must be between 1 and 5'));
     }
 
     // Validate comment length if provided
     if (params.comment != null && params.comment!.length > 1000) {
-      return Left(ValidationFailure('Comment must not exceed 1000 characters'));
+      return const Left(
+        ValidationFailure('Comment must not exceed 1000 characters'),
+      );
     }
 
     // At least one field must be provided
     if (params.rating == null && params.comment == null) {
-      return Left(
+      return const Left(
         ValidationFailure('At least rating or comment must be provided'),
       );
     }

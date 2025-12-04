@@ -188,17 +188,14 @@ class FieldReviewsSection extends StatelessWidget {
                         color: AppColors.errorLight,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Row(
+                      child: const Row(
                         children: [
-                          const Icon(
-                            Icons.error_outline,
-                            color: AppColors.error,
-                          ),
-                          const SizedBox(width: 12),
+                          Icon(Icons.error_outline, color: AppColors.error),
+                          SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               'Failed to load reviews',
-                              style: const TextStyle(color: AppColors.error),
+                              style: TextStyle(color: AppColors.error),
                             ),
                           ),
                         ],

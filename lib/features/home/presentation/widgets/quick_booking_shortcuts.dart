@@ -55,7 +55,7 @@ class QuickBookingShortcuts extends StatelessWidget {
             title: 'Profile',
             subtitle: 'Settings',
             icon: Icons.person_rounded,
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               colors: [AppColors.primary, AppColors.primaryDark],
             ),
             onTap: () => context.pushNamed('profile'),

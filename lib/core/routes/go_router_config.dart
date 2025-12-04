@@ -220,7 +220,7 @@ class AppRouterConfig {
             final field = state.extra as FieldEntity?;
             if (field == null) {
               return _buildPage(
-                child: _ErrorPage(error: 'Field data is required'),
+                child: const _ErrorPage(error: 'Field data is required'),
                 state: state,
               );
             }
@@ -266,7 +266,7 @@ class AppRouterConfig {
                 !extra.containsKey('fieldId') ||
                 !extra.containsKey('fieldName')) {
               return _buildPage(
-                child: _ErrorPage(error: 'Field information is required'),
+                child: const _ErrorPage(error: 'Field information is required'),
                 state: state,
               );
             }
@@ -295,7 +295,7 @@ class AppRouterConfig {
                 !extra.containsKey('fieldId') ||
                 !extra.containsKey('fieldName')) {
               return _buildPage(
-                child: _ErrorPage(error: 'Field information is required'),
+                child: const _ErrorPage(error: 'Field information is required'),
                 state: state,
               );
             }
@@ -366,7 +366,7 @@ class AppRouterConfig {
             final field = state.extra as FieldEntity?;
             if (field == null) {
               return _buildPage(
-                child: _ErrorPage(error: 'Field is required'),
+                child: const _ErrorPage(error: 'Field is required'),
                 state: state,
               );
             }
@@ -448,7 +448,7 @@ class AppRouterConfig {
             final admin = state.extra as UserEntity?;
             if (admin == null) {
               return _buildPage(
-                child: _ErrorPage(error: 'Admin data is required'),
+                child: const _ErrorPage(error: 'Admin data is required'),
                 state: state,
               );
             }
@@ -471,7 +471,7 @@ class AppRouterConfig {
             final user = state.extra as UserEntity?;
             if (user == null) {
               return _buildPage(
-                child: _ErrorPage(error: 'User data is required'),
+                child: const _ErrorPage(error: 'User data is required'),
                 state: state,
               );
             }

@@ -43,7 +43,7 @@ class ExploreSection extends StatelessWidget {
         BlocBuilder<FieldsCubit, FieldsState>(
           builder: (context, state) {
             if (state is FieldsLoading) {
-              return SizedBox(
+              return const SizedBox(
                 height: 240,
                 child: Center(
                   child: CircularProgressIndicator(

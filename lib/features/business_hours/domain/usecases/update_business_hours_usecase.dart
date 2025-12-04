@@ -38,13 +38,13 @@ class UpdateBusinessHoursUseCase {
   ) async {
     // Validate day of week
     if (params.dayOfWeek < 0 || params.dayOfWeek > 6) {
-      return Left(ValidationFailure('Invalid day of week'));
+      return const Left(ValidationFailure('Invalid day of week'));
     }
 
     // Validate times if open
     if (params.isOpen) {
       if (params.openingTime == null || params.closingTime == null) {
-        return Left(
+        return const Left(
           ValidationFailure('Opening and closing times required when open'),
         );
       }
@@ -52,11 +52,11 @@ class UpdateBusinessHoursUseCase {
       // Validate time format and range
       if (!_isValidTimeFormat(params.openingTime!) ||
           !_isValidTimeFormat(params.closingTime!)) {
-        return Left(ValidationFailure('Invalid time format'));
+        return const Left(ValidationFailure('Invalid time format'));
       }
 
       if (!_isValidTimeRange(params.openingTime!, params.closingTime!)) {
-        return Left(
+        return const Left(
           ValidationFailure('Opening time must be before closing time'),
         );
       }

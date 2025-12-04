@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/errors/failures.dart';
 import 'package:spo_kick/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/login_usecase.dart';

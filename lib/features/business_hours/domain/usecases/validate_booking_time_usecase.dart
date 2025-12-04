@@ -33,7 +33,7 @@ class ValidateBookingTimeUseCase {
   /// Returns [Failure] if the operation fails.
   Future<Either<Failure, bool>> call(ValidateBookingTimeParams params) async {
     if (params.fieldId.isEmpty) {
-      return Left(ValidationFailure('Field ID cannot be empty'));
+      return const Left(ValidationFailure('Field ID cannot be empty'));
     }
 
     // Don't allow bookings in the past

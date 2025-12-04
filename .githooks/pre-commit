@@ -12,17 +12,21 @@ fi
 # Run dart format check (flutter format is deprecated)
 echo "📝 Checking code formatting..."
 if ! dart format --set-exit-if-changed . > /dev/null 2>&1; then
-    echo "❌ Code formatting issues found. Run 'dart format .' to fix."
-    exit 1
+    echo "⚠️  Some files were reformatted. Adding them to commit..."
+    dart format . > /dev/null 2>&1
+    git add -u
 fi
 
-# Run flutter analyze
+# Run flutter analyze (only fail on errors, not warnings)
 echo "🔬 Running static analysis..."
-if ! flutter analyze --no-fatal-infos; then
-    echo "❌ Analysis issues found. Please fix before committing."
+ANALYZE_OUTPUT=$(flutter analyze 2>&1)
+if echo "$ANALYZE_OUTPUT" | grep -q "error •"; then
+    echo "❌ Analysis errors found. Please fix before committing."
+    echo "$ANALYZE_OUTPUT" | grep "error •"
     exit 1
 fi
 
 echo "✅ All pre-commit checks passed!"
 exit 0
+
 

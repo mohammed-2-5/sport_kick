@@ -56,7 +56,7 @@ class _SuperAdminDashboardView extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is SuperAdminLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(color: AppColors.premiumGold),
             );
           }

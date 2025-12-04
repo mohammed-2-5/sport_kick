@@ -69,14 +69,11 @@ class NearbyFieldsPreview extends StatelessWidget {
                 children: [
                   // Map Background with Grid Pattern
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [
-                          const Color(0xFFE8EAF6),
-                          const Color(0xFFC5CAE9),
-                        ],
+                        colors: [Color(0xFFE8EAF6), Color(0xFFC5CAE9)],
                       ),
                     ),
                     child: CustomPaint(

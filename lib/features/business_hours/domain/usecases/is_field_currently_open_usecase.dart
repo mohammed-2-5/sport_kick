@@ -22,7 +22,7 @@ class IsFieldCurrentlyOpenUseCase {
   /// Returns [Failure] if the operation fails.
   Future<Either<Failure, bool>> call(String fieldId) async {
     if (fieldId.isEmpty) {
-      return Left(ValidationFailure('Field ID cannot be empty'));
+      return const Left(ValidationFailure('Field ID cannot be empty'));
     }
 
     return await repository.isFieldCurrentlyOpen(fieldId);

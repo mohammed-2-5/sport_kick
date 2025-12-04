@@ -101,7 +101,7 @@ class PrivacyPolicyPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.privacy_tip, color: AppColors.primary, size: 32),
+              const Icon(Icons.privacy_tip, color: AppColors.primary, size: 32),
               const SizedBox(width: 12),
               Text(
                 'Your Privacy Matters',

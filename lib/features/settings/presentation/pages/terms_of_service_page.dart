@@ -136,7 +136,7 @@ class TermsOfServicePage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.description, color: AppColors.primary, size: 32),
+              const Icon(Icons.description, color: AppColors.primary, size: 32),
               const SizedBox(width: 12),
               Text(
                 'Terms of Service',

@@ -139,7 +139,7 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
       return _parseReviewResponse(response);
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
-        throw NotFoundException('Review not found');
+        throw const NotFoundException('Review not found');
       }
       throw ServerException(e.message);
     } catch (e) {
@@ -190,7 +190,7 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
       if (comment != null) updateData['comment'] = comment;
 
       if (updateData.isEmpty) {
-        throw ServerException('No fields to update');
+        throw const ServerException('No fields to update');
       }
 
       final response = await supabaseClient

@@ -40,7 +40,7 @@ class RevenueChart extends StatelessWidget {
         drawVerticalLine: false,
         horizontalInterval: 1,
         getDrawingHorizontalLine: (value) {
-          return FlLine(
+          return const FlLine(
             color: AppColors.premiumSurfaceHighlight,
             strokeWidth: 1,
           );
