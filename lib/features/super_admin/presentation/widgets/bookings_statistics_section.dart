@@ -17,14 +17,18 @@ class BookingsStatisticsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final totalBookings = bookings.length;
-    final pendingCount =
-        bookings.where((b) => b.status == BookingStatus.pending).length;
-    final confirmedCount =
-        bookings.where((b) => b.status == BookingStatus.confirmed).length;
-    final canceledCount =
-        bookings.where((b) => b.status == BookingStatus.canceled).length;
-    final completedCount =
-        bookings.where((b) => b.status == BookingStatus.completed).length;
+    final pendingCount = bookings
+        .where((b) => b.status == BookingStatus.pending)
+        .length;
+    final confirmedCount = bookings
+        .where((b) => b.status == BookingStatus.confirmed)
+        .length;
+    final canceledCount = bookings
+        .where((b) => b.status == BookingStatus.canceled)
+        .length;
+    final completedCount = bookings
+        .where((b) => b.status == BookingStatus.completed)
+        .length;
     final totalRevenue = bookings
         .where(
           (b) =>
@@ -41,10 +45,9 @@ class BookingsStatisticsSection extends StatelessWidget {
         children: [
           Text(
             'Bookings Overview',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           Row(

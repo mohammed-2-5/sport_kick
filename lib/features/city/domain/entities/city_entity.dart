@@ -22,13 +22,13 @@ class CityEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        arabicName,
-        isActive,
-        fieldsCount,
-        createdAt,
-      ];
+    id,
+    name,
+    arabicName,
+    isActive,
+    fieldsCount,
+    createdAt,
+  ];
 
   /// Create a copy with updated fields
   CityEntity copyWith({

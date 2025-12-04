@@ -90,8 +90,9 @@ class BookingFilterSheet extends StatelessWidget {
             hint: 'All Fields',
             options: [
               FilterOption(value: 'all', label: 'All Fields'),
-              ...availableFields
-                  .map((field) => FilterOption(value: field, label: field)),
+              ...availableFields.map(
+                (field) => FilterOption(value: field, label: field),
+              ),
             ],
             onChanged: onFieldChanged,
           ),

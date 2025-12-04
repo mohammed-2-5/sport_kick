@@ -8,10 +8,7 @@ import 'package:spo_kick/features/bookings/presentation/constants/booking_consta
 class MyBookingsLoadingState extends StatelessWidget {
   final int itemCount;
 
-  const MyBookingsLoadingState({
-    super.key,
-    this.itemCount = 5,
-  });
+  const MyBookingsLoadingState({super.key, this.itemCount = 5});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +16,17 @@ class MyBookingsLoadingState extends StatelessWidget {
       padding: const EdgeInsets.all(BookingConstants.standardPadding),
       itemCount: itemCount,
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.only(bottom: BookingConstants.standardPadding),
+        padding: const EdgeInsets.only(
+          bottom: BookingConstants.standardPadding,
+        ),
         child: ShimmerLoading(
           child: Container(
             height: 140,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(BookingConstants.borderRadius),
+              borderRadius: BorderRadius.circular(
+                BookingConstants.borderRadius,
+              ),
             ),
           ),
         ),

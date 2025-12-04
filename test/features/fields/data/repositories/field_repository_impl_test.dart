@@ -124,7 +124,10 @@ void main() {
 
           // Assert
           verify(() => mockRemoteDataSource.getFieldById(tFieldId)).called(1);
-          expect(result, equals(const Left(NotFoundFailure('Field not found'))));
+          expect(
+            result,
+            equals(const Left(NotFoundFailure('Field not found'))),
+          );
         },
       );
     });

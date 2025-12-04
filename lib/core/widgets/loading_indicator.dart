@@ -43,12 +43,10 @@ class LoadingIndicator extends StatelessWidget {
   });
 
   /// Full screen loading overlay
-  const LoadingIndicator.fullScreen({
-    super.key,
-    this.message,
-  })  : variant = LoadingVariant.fullScreen,
-        size = 48.0,
-        color = null;
+  const LoadingIndicator.fullScreen({super.key, this.message})
+    : variant = LoadingVariant.fullScreen,
+      size = 48.0,
+      color = null;
 
   /// Inline loading indicator
   const LoadingIndicator.inline({
@@ -59,12 +57,9 @@ class LoadingIndicator extends StatelessWidget {
   }) : variant = LoadingVariant.inline;
 
   /// Small button loading indicator
-  const LoadingIndicator.button({
-    super.key,
-    this.size = 20.0,
-    this.color,
-  })  : variant = LoadingVariant.button,
-        message = null;
+  const LoadingIndicator.button({super.key, this.size = 20.0, this.color})
+    : variant = LoadingVariant.button,
+      message = null;
 
   @override
   Widget build(BuildContext context) {
@@ -163,9 +158,7 @@ class LoadingIndicator extends StatelessWidget {
       height: size,
       child: CircularProgressIndicator(
         strokeWidth: 2,
-        valueColor: AlwaysStoppedAnimation<Color>(
-          color ?? Colors.white,
-        ),
+        valueColor: AlwaysStoppedAnimation<Color>(color ?? Colors.white),
       ),
     );
   }

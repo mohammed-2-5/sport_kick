@@ -60,15 +60,19 @@ class BookingCubit extends Cubit<BookingState> {
       },
       (timeSlots) {
         if (timeSlots.isEmpty) {
-          emit(const BookingsEmpty(
-            message: 'No time slots available for this date.',
-          ));
+          emit(
+            const BookingsEmpty(
+              message: 'No time slots available for this date.',
+            ),
+          );
         } else {
-          emit(TimeSlotsLoaded(
-            timeSlots: timeSlots,
-            selectedDate: date,
-            fieldId: fieldId,
-          ));
+          emit(
+            TimeSlotsLoaded(
+              timeSlots: timeSlots,
+              selectedDate: date,
+              fieldId: fieldId,
+            ),
+          );
         }
       },
     );
@@ -94,13 +98,10 @@ class BookingCubit extends Cubit<BookingState> {
       notes: notes,
     );
 
-    result.fold(
-      (failure) {
-        debugPrint('❌ ERROR [createBooking]: ${failure.message}');
-        emit(BookingError(failure.message));
-      },
-      (booking) => emit(BookingCreated(booking)),
-    );
+    result.fold((failure) {
+      debugPrint('❌ ERROR [createBooking]: ${failure.message}');
+      emit(BookingError(failure.message));
+    }, (booking) => emit(BookingCreated(booking)));
   }
 
   /// Create a manual booking (for field owners/admins).
@@ -161,9 +162,7 @@ class BookingCubit extends Cubit<BookingState> {
       },
       (bookings) {
         if (bookings.isEmpty) {
-          emit(const BookingsEmpty(
-            message: 'You have no bookings yet.',
-          ));
+          emit(const BookingsEmpty(message: 'You have no bookings yet.'));
         } else {
           emit(BookingsLoaded(bookings));
         }
@@ -177,13 +176,10 @@ class BookingCubit extends Cubit<BookingState> {
 
     final result = await getBookingByIdUseCase(bookingId);
 
-    result.fold(
-      (failure) {
-        debugPrint('❌ ERROR [loadBookingById]: ${failure.message}');
-        emit(BookingError(failure.message));
-      },
-      (booking) => emit(BookingDetailsLoaded(booking)),
-    );
+    result.fold((failure) {
+      debugPrint('❌ ERROR [loadBookingById]: ${failure.message}');
+      emit(BookingError(failure.message));
+    }, (booking) => emit(BookingDetailsLoaded(booking)));
   }
 
   /// Cancel a booking.
@@ -198,13 +194,10 @@ class BookingCubit extends Cubit<BookingState> {
       reason: reason,
     );
 
-    result.fold(
-      (failure) {
-        debugPrint('❌ ERROR [cancelBooking]: ${failure.message}');
-        emit(BookingError(failure.message));
-      },
-      (booking) => emit(BookingCanceled(booking)),
-    );
+    result.fold((failure) {
+      debugPrint('❌ ERROR [cancelBooking]: ${failure.message}');
+      emit(BookingError(failure.message));
+    }, (booking) => emit(BookingCanceled(booking)));
   }
 
   /// Reset to initial state.
@@ -234,9 +227,7 @@ class BookingCubit extends Cubit<BookingState> {
       (bookings) {
         debugPrint('✅ [BookingCubit] Loaded ${bookings.length} owner bookings');
         if (bookings.isEmpty) {
-          emit(const BookingsEmpty(
-            message: 'No bookings found.',
-          ));
+          emit(const BookingsEmpty(message: 'No bookings found.'));
         } else {
           emit(BookingsLoaded(bookings));
         }
@@ -251,7 +242,9 @@ class BookingCubit extends Cubit<BookingState> {
     String bookingId,
     BookingStatus newStatus,
   ) async {
-    debugPrint('🔄 [BookingCubit] Updating booking $bookingId to ${newStatus.displayName}');
+    debugPrint(
+      '🔄 [BookingCubit] Updating booking $bookingId to ${newStatus.displayName}',
+    );
     emit(const BookingLoading(message: 'Updating booking...'));
 
     final result = await updateBookingStatusUseCase(

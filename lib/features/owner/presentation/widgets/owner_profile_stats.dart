@@ -9,11 +9,7 @@ class OwnerProfileStats extends StatelessWidget {
   final int fieldsCount;
   final OwnerRevenueEntity? revenue;
 
-  const OwnerProfileStats({
-    super.key,
-    required this.fieldsCount,
-    this.revenue,
-  });
+  const OwnerProfileStats({super.key, required this.fieldsCount, this.revenue});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +20,7 @@ class OwnerProfileStats extends StatelessWidget {
         children: [
           const Text(
             'Your Statistics',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           Row(
@@ -102,18 +95,12 @@ class _StatCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Colors.white,
-            color.withValues(alpha: 0.05),
-          ],
+          colors: [Colors.white, color.withValues(alpha: 0.05)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-          width: 2,
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 2),
         boxShadow: [
           BoxShadow(
             color: color.withValues(alpha: 0.2),
@@ -137,9 +124,9 @@ class _StatCard extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w600,
-                ),
+              color: AppColors.textSecondary,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           const SizedBox(height: 4),
           Text(

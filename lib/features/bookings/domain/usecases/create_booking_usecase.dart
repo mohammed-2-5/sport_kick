@@ -43,7 +43,9 @@ class CreateBookingUseCase {
 
     // Validate totalPrice is positive
     if (totalPrice <= 0) {
-      return const Left(ValidationFailure('Total price must be greater than zero'));
+      return const Left(
+        ValidationFailure('Total price must be greater than zero'),
+      );
     }
 
     return await repository.createBooking(

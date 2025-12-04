@@ -26,10 +26,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 class CreateBookingPage extends StatefulWidget {
   final FieldEntity field;
 
-  const CreateBookingPage({
-    super.key,
-    required this.field,
-  });
+  const CreateBookingPage({super.key, required this.field});
 
   @override
   State<CreateBookingPage> createState() => _CreateBookingPageState();
@@ -111,9 +108,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
               BookingConstants.bookingConfirmedMessage,
             );
             // Navigate to My Bookings to show the new booking
-            Navigator.of(context).pushReplacementNamed(
-              AppRouter.myBookings,
-            );
+            Navigator.of(context).pushReplacementNamed(AppRouter.myBookings);
           }
         },
         builder: (context, state) {
@@ -130,7 +125,9 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
                 // Content
                 Expanded(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(BookingConstants.standardPadding),
+                    padding: const EdgeInsets.all(
+                      BookingConstants.standardPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -167,16 +164,11 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
       flexibleSpace: Container(
-        decoration: const BoxDecoration(
-          gradient: AppGradients.primary,
-        ),
+        decoration: const BoxDecoration(gradient: AppGradients.primary),
       ),
       title: const Text(
         'Book Field',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
       ),
       iconTheme: const IconThemeData(color: Colors.white),
       elevation: 0,

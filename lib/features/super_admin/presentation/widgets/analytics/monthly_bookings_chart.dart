@@ -7,10 +7,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/ana
 class MonthlyBookingsChart extends StatelessWidget {
   final List<BookingEntity> bookings;
 
-  const MonthlyBookingsChart({
-    super.key,
-    required this.bookings,
-  });
+  const MonthlyBookingsChart({super.key, required this.bookings});
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +75,9 @@ class MonthlyBookingsChart extends StatelessWidget {
                     showTitles: true,
                     getTitlesWidget: (value, meta) {
                       final monthIndex = now.month - 5 + value.toInt();
-                      final month =
-                          monthIndex <= 0 ? monthIndex + 12 : monthIndex;
+                      final month = monthIndex <= 0
+                          ? monthIndex + 12
+                          : monthIndex;
                       const months = [
                         '',
                         'Jan',
@@ -93,7 +91,7 @@ class MonthlyBookingsChart extends StatelessWidget {
                         'Sep',
                         'Oct',
                         'Nov',
-                        'Dec'
+                        'Dec',
                       ];
                       return Text(
                         months[month],
@@ -102,10 +100,12 @@ class MonthlyBookingsChart extends StatelessWidget {
                     },
                   ),
                 ),
-                rightTitles:
-                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles:
-                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                topTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
               ),
               borderData: FlBorderData(show: false),
               gridData: const FlGridData(show: true, drawVerticalLine: false),

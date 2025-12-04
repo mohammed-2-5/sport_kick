@@ -27,8 +27,8 @@ class CityListItem extends StatelessWidget {
       title: Text(
         city.name,
         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-            ),
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+        ),
       ),
       subtitle: _buildSubtitle(context),
       secondary: Icon(
@@ -55,9 +55,9 @@ class CityListItem extends StatelessWidget {
 
     return Text(
       subtitleParts.join(' • '),
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: AppColors.textSecondary,
-          ),
+      style: Theme.of(
+        context,
+      ).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
     );
   }
 }

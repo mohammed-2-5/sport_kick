@@ -35,9 +35,10 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
       duration: const Duration(milliseconds: 1500),
     )..repeat();
 
-    _animation = Tween<double>(begin: -1.0, end: 2.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: -1.0,
+      end: 2.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -53,7 +54,8 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
     }
 
     final baseColor = widget.baseColor ?? AppColors.surfaceVariant;
-    final highlightColor = widget.highlightColor ??
+    final highlightColor =
+        widget.highlightColor ??
         AppColors.surfaceVariant.withValues(alpha: 0.3);
 
     return AnimatedBuilder(
@@ -64,11 +66,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
             return LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                baseColor,
-                highlightColor,
-                baseColor,
-              ],
+              colors: [baseColor, highlightColor, baseColor],
               stops: [
                 _animation.value - 0.3,
                 _animation.value,
@@ -93,9 +91,7 @@ class FieldCardShimmer extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.only(bottom: 16),
         elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -104,9 +100,7 @@ class FieldCardShimmer extends StatelessWidget {
               height: 180,
               decoration: const BoxDecoration(
                 color: AppColors.surfaceVariant,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
               ),
             ),
 
@@ -210,10 +204,7 @@ class FieldCardShimmer extends StatelessWidget {
 class FieldsListShimmer extends StatelessWidget {
   final int itemCount;
 
-  const FieldsListShimmer({
-    super.key,
-    this.itemCount = 3,
-  });
+  const FieldsListShimmer({super.key, this.itemCount = 3});
 
   @override
   Widget build(BuildContext context) {

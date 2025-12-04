@@ -288,7 +288,9 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       return BookingModel.fromJson(json);
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
-        throw const NotFoundException('Booking not found or cannot be canceled');
+        throw const NotFoundException(
+          'Booking not found or cannot be canceled',
+        );
       }
       throw ServerException('Database error: ${e.message}');
     } catch (e) {

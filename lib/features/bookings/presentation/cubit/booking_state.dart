@@ -43,8 +43,7 @@ class TimeSlotsLoaded extends BookingState {
   List<Object?> get props => [timeSlots, selectedDate, fieldId];
 
   /// Check if there are available slots.
-  bool get hasAvailableSlots =>
-      timeSlots.any((slot) => slot.isAvailable);
+  bool get hasAvailableSlots => timeSlots.any((slot) => slot.isAvailable);
 
   /// Get available slots only.
   List<TimeSlotEntity> get availableSlots =>
@@ -75,15 +74,19 @@ class BookingsLoaded extends BookingState {
   List<Object?> get props => [bookings];
 
   /// Get upcoming bookings (includes pending and confirmed, excludes past).
-  List<BookingEntity> get upcomingBookings =>
-      bookings.where((b) =>
-        (b.status == BookingStatus.pending || b.status == BookingStatus.confirmed) &&
-        !b.isPast
-      ).toList();
+  List<BookingEntity> get upcomingBookings => bookings
+      .where(
+        (b) =>
+            (b.status == BookingStatus.pending ||
+                b.status == BookingStatus.confirmed) &&
+            !b.isPast,
+      )
+      .toList();
 
   /// Get booking history.
-  List<BookingEntity> get historyBookings =>
-      bookings.where((b) => b.isPast || b.status == BookingStatus.canceled).toList();
+  List<BookingEntity> get historyBookings => bookings
+      .where((b) => b.isPast || b.status == BookingStatus.canceled)
+      .toList();
 
   /// Get pending bookings.
   List<BookingEntity> get pendingBookings =>

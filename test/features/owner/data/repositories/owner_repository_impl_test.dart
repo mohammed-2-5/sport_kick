@@ -215,7 +215,10 @@ void main() {
           final result = await repository.getOwnerBookings(ownerId: tOwnerId);
 
           // Assert
-          expect(result, equals(const Left(ServerFailure('Failed to get bookings'))));
+          expect(
+            result,
+            equals(const Left(ServerFailure('Failed to get bookings'))),
+          );
           verify(
             () => mockRemoteDataSource.getOwnerBookings(
               ownerId: tOwnerId,
@@ -332,7 +335,10 @@ void main() {
           final result = await repository.getOwnerRevenue(tOwnerId);
 
           // Assert
-          expect(result, equals(const Left(ServerFailure('Failed to get revenue'))));
+          expect(
+            result,
+            equals(const Left(ServerFailure('Failed to get revenue'))),
+          );
           verify(
             () => mockRemoteDataSource.getOwnerRevenue(tOwnerId),
           ).called(1);

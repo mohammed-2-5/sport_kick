@@ -11,10 +11,7 @@ import 'package:spo_kick/features/city/presentation/widgets/city_selector_dialog
 class CitySwitcherButton extends StatelessWidget {
   final CityEntity? currentCity;
 
-  const CitySwitcherButton({
-    this.currentCity,
-    super.key,
-  });
+  const CitySwitcherButton({this.currentCity, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +21,7 @@ class CitySwitcherButton extends StatelessWidget {
 
         return TextButton.icon(
           onPressed: () => _showCitySelector(context),
-          icon: const Icon(
-            Icons.location_on,
-            color: Colors.white,
-            size: 20,
-          ),
+          icon: const Icon(Icons.location_on, color: Colors.white, size: 20),
           label: Text(
             city?.name ?? 'Select City',
             style: const TextStyle(

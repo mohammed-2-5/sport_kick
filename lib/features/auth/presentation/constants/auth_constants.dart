@@ -90,13 +90,15 @@ class AuthConstants {
       'Name must be at least $minNameLength characters';
 
   /// Current password is required
-  static const String currentPasswordRequiredMsg = 'Current password is required';
+  static const String currentPasswordRequiredMsg =
+      'Current password is required';
 
   /// New password is required
   static const String newPasswordRequiredMsg = 'New password is required';
 
   /// Confirm password is required
-  static const String confirmPasswordRequiredMsg = 'Confirm password is required';
+  static const String confirmPasswordRequiredMsg =
+      'Confirm password is required';
 
   // ==================== UI DIMENSIONS ====================
 
@@ -186,10 +188,12 @@ class AuthConstants {
   static const String registerSuccessMsg = 'Account created successfully!';
 
   /// Change password success message
-  static const String changePasswordSuccessMsg = 'Password changed successfully!';
+  static const String changePasswordSuccessMsg =
+      'Password changed successfully!';
 
   /// Reset password success message
-  static const String resetPasswordSuccessMsg = 'Reset link sent to your email!';
+  static const String resetPasswordSuccessMsg =
+      'Reset link sent to your email!';
 
   /// First login message
   static const String firstLoginMsg =

@@ -381,7 +381,10 @@ class AppRouter {
       case fieldsMap:
         return _buildSlideRoute(
           settings: routeSettings,
-          builder: (_) => const FieldsMapPage(),
+          builder: (_) => BlocProvider(
+            create: (_) => sl<FieldsCubit>()..loadAllFields(),
+            child: const FieldsMapPage(),
+          ),
         );
 
       case createReview:

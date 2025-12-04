@@ -59,9 +59,9 @@ class HomeUpcomingFeatures extends StatelessWidget {
         Text(
           HomeConstants.comingSoonTitle,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.info,
-              ),
+            fontWeight: FontWeight.bold,
+            color: AppColors.info,
+          ),
         ),
       ],
     );
@@ -73,10 +73,7 @@ class _FeatureItem extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  const _FeatureItem({
-    required this.icon,
-    required this.text,
-  });
+  const _FeatureItem({required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +92,9 @@ class _FeatureItem extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppColors.textPrimary),
             ),
           ),
         ],

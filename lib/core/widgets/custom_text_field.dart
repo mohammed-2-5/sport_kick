@@ -173,14 +173,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
               color: AppColors.textSecondary,
             ),
             prefixIcon: widget.prefixIcon != null
-                ? Icon(widget.prefixIcon, color: AppColors.textSecondary, size: 20)
+                ? Icon(
+                    widget.prefixIcon,
+                    color: AppColors.textSecondary,
+                    size: 20,
+                  )
                 : null,
             suffixIcon: _buildSuffixIcon(),
             helperText: widget.helperText,
             errorText: _errorText,
             counterText: widget.showCounter ? null : '',
             filled: true,
-            fillColor: widget.enabled ? AppColors.inputBackground : AppColors.disabled,
+            fillColor: widget.enabled
+                ? AppColors.inputBackground
+                : AppColors.disabled,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: AppColors.border),
@@ -227,7 +233,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
     if (widget.type == TextFieldType.password) {
       return IconButton(
         icon: Icon(
-          _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          _obscureText
+              ? Icons.visibility_outlined
+              : Icons.visibility_off_outlined,
           color: AppColors.textSecondary,
           size: 20,
         ),

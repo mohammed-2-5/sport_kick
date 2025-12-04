@@ -38,8 +38,9 @@ class BookingDatePicker extends StatelessWidget {
             padding: const EdgeInsets.all(BookingConstants.standardPadding),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius:
-                  BorderRadius.circular(BookingConstants.borderRadius),
+              borderRadius: BorderRadius.circular(
+                BookingConstants.borderRadius,
+              ),
               border: Border.all(color: AppColors.border),
             ),
             child: Row(
@@ -51,8 +52,9 @@ class BookingDatePicker extends StatelessWidget {
                 ),
                 const SizedBox(width: BookingConstants.itemSpacing),
                 Text(
-                  DateFormat(BookingConstants.fullDateFormat)
-                      .format(selectedDate),
+                  DateFormat(
+                    BookingConstants.fullDateFormat,
+                  ).format(selectedDate),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -77,8 +79,9 @@ class BookingDatePicker extends StatelessWidget {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now()
-          .add(const Duration(days: BookingConstants.bookingAdvanceDays)),
+      lastDate: DateTime.now().add(
+        const Duration(days: BookingConstants.bookingAdvanceDays),
+      ),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(

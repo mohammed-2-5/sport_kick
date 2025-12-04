@@ -78,7 +78,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.user == null) {
-        throw const app_exceptions.ServerException('Login failed: No user returned');
+        throw const app_exceptions.ServerException(
+          'Login failed: No user returned',
+        );
       }
 
       // Fetch profile data from profiles table

@@ -24,18 +24,12 @@ class CitiesLoaded extends CityState {
   final List<CityEntity> cities;
   final String? selectedCityId;
 
-  const CitiesLoaded({
-    required this.cities,
-    this.selectedCityId,
-  });
+  const CitiesLoaded({required this.cities, this.selectedCityId});
 
   @override
   List<Object?> get props => [cities, selectedCityId];
 
-  CitiesLoaded copyWith({
-    List<CityEntity>? cities,
-    String? selectedCityId,
-  }) {
+  CitiesLoaded copyWith({List<CityEntity>? cities, String? selectedCityId}) {
     return CitiesLoaded(
       cities: cities ?? this.cities,
       selectedCityId: selectedCityId ?? this.selectedCityId,
@@ -68,10 +62,7 @@ class CitySaved extends CityState {
   final CityEntity city;
   final String message;
 
-  const CitySaved({
-    required this.city,
-    required this.message,
-  });
+  const CitySaved({required this.city, required this.message});
 
   @override
   List<Object?> get props => [city, message];

@@ -150,14 +150,8 @@ class AppTheme {
     elevation: 0,
     centerTitle: true,
     titleTextStyle: AppTextStyles.appBarTitle,
-    iconTheme: IconThemeData(
-      color: AppColors.textOnPrimary,
-      size: 24,
-    ),
-    actionsIconTheme: IconThemeData(
-      color: AppColors.textOnPrimary,
-      size: 24,
-    ),
+    iconTheme: IconThemeData(color: AppColors.textOnPrimary, size: 24),
+    actionsIconTheme: IconThemeData(color: AppColors.textOnPrimary, size: 24),
     systemOverlayStyle: SystemUiOverlayStyle.light,
   );
 
@@ -192,48 +186,46 @@ class AppTheme {
 
   static final ElevatedButtonThemeData _elevatedButtonTheme =
       ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: AppColors.buttonPrimary,
-      foregroundColor: AppColors.buttonPrimaryText,
-      disabledBackgroundColor: AppColors.buttonDisabled,
-      disabledForegroundColor: AppColors.buttonDisabledText,
-      elevation: 2,
-      shadowColor: AppColors.shadow,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      textStyle: AppTextStyles.button,
-      minimumSize: const Size(88, 48),
-    ),
-  );
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.buttonPrimary,
+          foregroundColor: AppColors.buttonPrimaryText,
+          disabledBackgroundColor: AppColors.buttonDisabled,
+          disabledForegroundColor: AppColors.buttonDisabledText,
+          elevation: 2,
+          shadowColor: AppColors.shadow,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          textStyle: AppTextStyles.button,
+          minimumSize: const Size(88, 48),
+        ),
+      );
 
   static final TextButtonThemeData _textButtonTheme = TextButtonThemeData(
     style: TextButton.styleFrom(
       foregroundColor: AppColors.buttonText,
       disabledForegroundColor: AppColors.buttonDisabledText,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       textStyle: AppTextStyles.labelLarge,
     ),
   );
 
   static final OutlinedButtonThemeData _outlinedButtonTheme =
       OutlinedButtonThemeData(
-    style: OutlinedButton.styleFrom(
-      foregroundColor: AppColors.primary,
-      disabledForegroundColor: AppColors.buttonDisabledText,
-      side: const BorderSide(color: AppColors.primary, width: 1.5),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      textStyle: AppTextStyles.button,
-      minimumSize: const Size(88, 48),
-    ),
-  );
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          disabledForegroundColor: AppColors.buttonDisabledText,
+          side: const BorderSide(color: AppColors.primary, width: 1.5),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          textStyle: AppTextStyles.button,
+          minimumSize: const Size(88, 48),
+        ),
+      );
 
   static final FilledButtonThemeData _filledButtonTheme = FilledButtonThemeData(
     style: FilledButton.styleFrom(
@@ -242,9 +234,7 @@ class AppTheme {
       disabledBackgroundColor: AppColors.buttonDisabled,
       disabledForegroundColor: AppColors.buttonDisabledText,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       textStyle: AppTextStyles.button,
       minimumSize: const Size(88, 48),
     ),
@@ -252,8 +242,8 @@ class AppTheme {
 
   // ==================== INPUT DECORATION THEME ====================
 
-  static final InputDecorationTheme _inputDecorationTheme =
-      InputDecorationTheme(
+  static final InputDecorationTheme
+  _inputDecorationTheme = InputDecorationTheme(
     filled: true,
     fillColor: AppColors.inputBackground,
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -267,7 +257,10 @@ class AppTheme {
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: AppColors.inputBorderFocused, width: 2),
+      borderSide: const BorderSide(
+        color: AppColors.inputBorderFocused,
+        width: 2,
+      ),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
@@ -293,9 +286,7 @@ class AppTheme {
     color: AppColors.cardBackground,
     elevation: 2,
     shadowColor: AppColors.shadow,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(16),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     margin: const EdgeInsets.all(8),
   );
 
@@ -310,34 +301,35 @@ class AppTheme {
     labelStyle: AppTextStyles.chip,
     secondaryLabelStyle: AppTextStyles.chip.copyWith(color: AppColors.white),
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   );
 
   // ==================== BOTTOM NAVIGATION BAR THEME ====================
 
   static const BottomNavigationBarThemeData _bottomNavigationBarTheme =
       BottomNavigationBarThemeData(
-    backgroundColor: AppColors.bottomNavBackground,
-    selectedItemColor: AppColors.primary,
-    unselectedItemColor: AppColors.mediumGrey,
-    selectedLabelStyle: AppTextStyles.labelSmall,
-    unselectedLabelStyle: AppTextStyles.labelSmall,
-    type: BottomNavigationBarType.fixed,
-    elevation: 8,
-  );
+        backgroundColor: AppColors.bottomNavBackground,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.mediumGrey,
+        selectedLabelStyle: AppTextStyles.labelSmall,
+        unselectedLabelStyle: AppTextStyles.labelSmall,
+        type: BottomNavigationBarType.fixed,
+        elevation: 8,
+      );
 
   // ==================== NAVIGATION RAIL THEME ====================
 
   static const NavigationRailThemeData _navigationRailTheme =
       NavigationRailThemeData(
-    backgroundColor: AppColors.white,
-    selectedIconTheme: IconThemeData(color: AppColors.primary, size: 24),
-    unselectedIconTheme: IconThemeData(color: AppColors.mediumGrey, size: 24),
-    selectedLabelTextStyle: AppTextStyles.labelSmall,
-    unselectedLabelTextStyle: AppTextStyles.labelSmall,
-  );
+        backgroundColor: AppColors.white,
+        selectedIconTheme: IconThemeData(color: AppColors.primary, size: 24),
+        unselectedIconTheme: IconThemeData(
+          color: AppColors.mediumGrey,
+          size: 24,
+        ),
+        selectedLabelTextStyle: AppTextStyles.labelSmall,
+        unselectedLabelTextStyle: AppTextStyles.labelSmall,
+      );
 
   // ==================== DIVIDER THEME ====================
 
@@ -353,9 +345,7 @@ class AppTheme {
     backgroundColor: AppColors.white,
     elevation: 24,
     shadowColor: AppColors.shadow,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(28),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
     titleTextStyle: AppTextStyles.headlineSmall,
     contentTextStyle: AppTextStyles.bodyMedium,
   );
@@ -364,23 +354,21 @@ class AppTheme {
 
   static const FloatingActionButtonThemeData _fabTheme =
       FloatingActionButtonThemeData(
-    backgroundColor: AppColors.primary,
-    foregroundColor: AppColors.white,
-    elevation: 6,
-    highlightElevation: 12,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(16)),
-    ),
-  );
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.white,
+        elevation: 6,
+        highlightElevation: 12,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
+      );
 
   // ==================== SNACKBAR THEME ====================
 
   static final SnackBarThemeData _snackBarTheme = SnackBarThemeData(
     backgroundColor: AppColors.darkGrey,
     contentTextStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.white),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     behavior: SnackBarBehavior.floating,
     elevation: 6,
   );
@@ -456,9 +444,7 @@ class AppTheme {
       return AppColors.white;
     }),
     checkColor: WidgetStateProperty.all(AppColors.white),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(4),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
   );
 
   // ==================== RADIO THEME ====================
@@ -480,16 +466,17 @@ class AppTheme {
     thumbColor: AppColors.primary,
     overlayColor: AppColors.primaryWithOpacity,
     valueIndicatorColor: AppColors.primary,
-    valueIndicatorTextStyle:
-        AppTextStyles.caption.copyWith(color: AppColors.white),
+    valueIndicatorTextStyle: AppTextStyles.caption.copyWith(
+      color: AppColors.white,
+    ),
   );
 
   // ==================== PROGRESS INDICATOR THEME ====================
 
   static const ProgressIndicatorThemeData _progressIndicatorTheme =
       ProgressIndicatorThemeData(
-    color: AppColors.primary,
-    linearTrackColor: AppColors.primaryLight,
-    circularTrackColor: AppColors.primaryLight,
-  );
+        color: AppColors.primary,
+        linearTrackColor: AppColors.primaryLight,
+        circularTrackColor: AppColors.primaryLight,
+      );
 }

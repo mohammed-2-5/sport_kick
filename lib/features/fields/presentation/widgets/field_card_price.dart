@@ -9,18 +9,12 @@ class FieldCardPrice extends StatelessWidget {
   /// The formatted price string (e.g., "$50/hour")
   final String formattedPrice;
 
-  const FieldCardPrice({
-    super.key,
-    required this.formattedPrice,
-  });
+  const FieldCardPrice({super.key, required this.formattedPrice});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         gradient: AppGradients.primary,
         borderRadius: BorderRadius.circular(12),

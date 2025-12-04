@@ -132,7 +132,10 @@ void main() {
           verify(
             () => mockRemoteDataSource.getBookingById(tBookingId),
           ).called(1);
-          expect(result, equals(const Left(NotFoundFailure('Booking not found'))));
+          expect(
+            result,
+            equals(const Left(NotFoundFailure('Booking not found'))),
+          );
         },
       );
     });

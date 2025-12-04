@@ -9,20 +9,21 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/admin_filter_sheet.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_list_empty_state.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_list_search_bar.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_list_stats.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/selectable_admin_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_list_body.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_list_error_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_list_loading_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/bulk_action_dialogs.dart';
 import 'package:spo_kick/features/super_admin/utils/admin_filter_helper.dart';
+
+import '../widgets/admins_list/admin_list_empty_state.dart';
+import '../widgets/admins_list/admin_list_search_bar.dart';
+import '../widgets/admins_list/admin_list_stats.dart';
+import '../widgets/admins_list/selectable_admin_card.dart';
 
 /// Admins List Page
 ///
 /// Displays all field owner (admin) accounts.
-/// Allows super admin to:
-/// - View admin details
-/// - Search/filter admins
-/// - View assigned fields
-/// - Deactivate/activate admins
+/// Supports search, filter, bulk operations and CSV export.
 class AdminsListPage extends StatelessWidget {
   const AdminsListPage({super.key});
 
@@ -60,9 +61,7 @@ class _AdminsListViewState extends State<_AdminsListView>
   void _onSearchChanged(String value) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 300), () {
-      setState(() {
-        _searchQuery = value;
-      });
+      setState(() => _searchQuery = value);
     });
   }
 
@@ -103,22 +102,7 @@ class _AdminsListViewState extends State<_AdminsListView>
   Future<void> _handleBulkActivate() async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Activate Selected Admins'),
-        content: Text(
-          'Are you sure you want to activate ${selectedIds.length} admins?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Activate'),
-          ),
-        ],
-      ),
+      builder: (context) => BulkActivateAdminsDialog(count: selectedIds.length),
     );
 
     if (confirmed == true && mounted) {
@@ -130,26 +114,8 @@ class _AdminsListViewState extends State<_AdminsListView>
   Future<void> _handleBulkDeactivate() async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Deactivate Selected Admins'),
-        content: Text(
-          'Are you sure you want to deactivate ${selectedIds.length} admins?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Deactivate'),
-          ),
-        ],
-      ),
+      builder: (context) =>
+          BulkDeactivateAdminsDialog(count: selectedIds.length),
     );
 
     if (confirmed == true && mounted) {
@@ -252,120 +218,44 @@ class _AdminsListViewState extends State<_AdminsListView>
           body: Builder(
             builder: (context) {
               if (state is SuperAdminLoading) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 16),
-                      Text(
-                        state.message,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                );
+                return AdminListLoadingState(message: state.message);
               }
 
               if (state is SuperAdminError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 64,
-                        color: Colors.red,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Error loading admins',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        state.message,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          context.read<SuperAdminCubit>().loadAdmins();
-                        },
-                        icon: const Icon(Icons.refresh),
-                        label: const Text('Retry'),
-                      ),
-                    ],
-                  ),
+                return AdminListErrorState(
+                  message: state.message,
+                  onRetry: () {
+                    context.read<SuperAdminCubit>().loadAdmins();
+                  },
                 );
               }
 
               if (state is AdminsListLoaded) {
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    context.read<SuperAdminCubit>().loadAdmins();
-                    await Future.delayed(const Duration(milliseconds: 500));
+                return AdminListBody(
+                  searchController: _searchController,
+                  searchQuery: _searchQuery,
+                  filteredAdmins: filteredAdmins,
+                  totalCount: state.admins.length,
+                  isSelectionMode: isSelectionMode,
+                  selectedCount: selectedCount,
+                  selectedIds: selectedIds,
+                  isSearchEmpty:
+                      _searchQuery.isEmpty &&
+                      _statusFilter == null &&
+                      _dateRange == null,
+                  onSearchChanged: _onSearchChanged,
+                  onClearSearch: () {
+                    _searchController.clear();
+                    setState(() => _searchQuery = '');
                   },
-                  child: Column(
-                    children: [
-                      AdminListSearchBar(
-                        controller: _searchController,
-                        searchQuery: _searchQuery,
-                        onChanged: _onSearchChanged,
-                        onClear: () {
-                          _searchController.clear();
-                          setState(() => _searchQuery = '');
-                        },
-                      ),
-                      AdminListStats(
-                        filteredCount: filteredAdmins.length,
-                        totalCount: state.admins.length,
-                        isSelectionMode: isSelectionMode,
-                        selectedCount: selectedCount,
-                      ),
-                      Expanded(
-                        child: filteredAdmins.isEmpty
-                            ? AdminListEmptyState(
-                                isSearchEmpty:
-                                    _searchQuery.isEmpty &&
-                                    _statusFilter == null &&
-                                    _dateRange == null,
-                              )
-                            : ListView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 8,
-                                ),
-                                itemCount: filteredAdmins.length,
-                                itemBuilder: (context, index) {
-                                  final admin = filteredAdmins[index];
-                                  final isSelected = selectedIds.contains(
-                                    admin.id,
-                                  );
-
-                                  return SelectableAdminCard(
-                                    admin: admin,
-                                    isSelectionMode: isSelectionMode,
-                                    isSelected: isSelected,
-                                    onTap: () {
-                                      if (isSelectionMode) {
-                                        toggleSelection(admin.id);
-                                      } else {
-                                        context.pushNamed(
-                                          'superAdminAdminDetails',
-                                          extra: admin,
-                                        );
-                                      }
-                                    },
-                                    onLongPress: () =>
-                                        toggleSelection(admin.id),
-                                  );
-                                },
-                              ),
-                      ),
-                    ],
-                  ),
+                  onAdminTap: (admin, isSelected) {
+                    if (isSelectionMode) {
+                      toggleSelection(admin.id);
+                    } else {
+                      context.pushNamed('superAdminAdminDetails', extra: admin);
+                    }
+                  },
+                  onAdminLongPress: toggleSelection,
                 );
               }
 

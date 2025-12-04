@@ -66,7 +66,8 @@ class AppStrings {
   static const String fieldRequired = 'This field is required';
   static const String invalidEmail = 'Invalid email address';
   static const String invalidPhone = 'Invalid phone number';
-  static const String passwordTooShort = 'Password must be at least 8 characters';
+  static const String passwordTooShort =
+      'Password must be at least 8 characters';
   static const String passwordsDoNotMatch = 'Passwords do not match';
   static const String nameTooShort = 'Name must be at least 2 characters';
   static const String invalidInput = 'Invalid input';
@@ -109,7 +110,8 @@ class AppStrings {
   static const String noBookingsYet = 'No bookings yet';
   static const String bookingCreated = 'Booking created successfully';
   static const String bookingCancelled = 'Booking cancelled';
-  static const String cancelBookingConfirm = 'Are you sure you want to cancel this booking?';
+  static const String cancelBookingConfirm =
+      'Are you sure you want to cancel this booking?';
   static const String cannotCancelBooking = 'Cannot cancel this booking';
   static const String bookingAlreadyCancelled = 'Booking already cancelled';
   static const String slotAlreadyBooked = 'This time slot is already booked';
@@ -260,7 +262,8 @@ class AppStrings {
 
   static const String welcome = 'Welcome';
   static const String onboardingTitle1 = 'Find Your Perfect Field';
-  static const String onboardingDesc1 = 'Browse hundreds of football fields near you';
+  static const String onboardingDesc1 =
+      'Browse hundreds of football fields near you';
   static const String onboardingTitle2 = 'Book Instantly';
   static const String onboardingDesc2 = 'No more phone calls. Book in seconds';
   static const String onboardingTitle3 = 'Play Football';

@@ -18,8 +18,7 @@ class AdvancedFilterBottomSheet extends StatefulWidget {
       _AdvancedFilterBottomSheetState();
 }
 
-class _AdvancedFilterBottomSheetState
-    extends State<AdvancedFilterBottomSheet> {
+class _AdvancedFilterBottomSheetState extends State<AdvancedFilterBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,10 +36,7 @@ class _AdvancedFilterBottomSheetState
             children: [
               const Text(
                 'Advanced Filters',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               IconButton(
                 icon: const Icon(Icons.close),
@@ -98,10 +94,7 @@ class _AdvancedFilterBottomSheetState
       children: [
         Text(
           group.title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         group.widget,
@@ -115,10 +108,7 @@ class FilterGroup {
   final String title;
   final Widget widget;
 
-  FilterGroup({
-    required this.title,
-    required this.widget,
-  });
+  FilterGroup({required this.title, required this.widget});
 }
 
 /// Date range picker widget
@@ -178,10 +168,7 @@ class DropdownFilterWidget extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hint,
         border: const OutlineInputBorder(),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 8,
-        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
       items: options.map((option) {
         return DropdownMenuItem<String>(
@@ -199,10 +186,7 @@ class FilterOption {
   final String value;
   final String label;
 
-  FilterOption({
-    required this.value,
-    required this.label,
-  });
+  FilterOption({required this.value, required this.label});
 }
 
 /// Multi-select chip filter widget

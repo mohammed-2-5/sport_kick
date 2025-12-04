@@ -15,10 +15,7 @@ class HomeWelcomeHeader extends StatelessWidget {
   /// The current authenticated user
   final dynamic user;
 
-  const HomeWelcomeHeader({
-    super.key,
-    required this.user,
-  });
+  const HomeWelcomeHeader({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +58,9 @@ class HomeWelcomeHeader extends StatelessWidget {
           child: Text(
             HomeConstants.welcomeMessage,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],
@@ -74,9 +71,9 @@ class HomeWelcomeHeader extends StatelessWidget {
     return Text(
       user?.displayName ?? HomeConstants.guestUserFallback,
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
+        color: Colors.white,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 
@@ -84,8 +81,8 @@ class HomeWelcomeHeader extends StatelessWidget {
     return Text(
       user?.email ?? '',
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Colors.white.withValues(alpha: HomeConstants.highOpacity),
-          ),
+        color: Colors.white.withValues(alpha: HomeConstants.highOpacity),
+      ),
     );
   }
 
@@ -101,8 +98,8 @@ class HomeWelcomeHeader extends StatelessWidget {
         Text(
           user!.phone!,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.white.withValues(alpha: HomeConstants.highOpacity),
-              ),
+            color: Colors.white.withValues(alpha: HomeConstants.highOpacity),
+          ),
         ),
       ],
     );
@@ -116,7 +113,9 @@ class HomeWelcomeHeader extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: HomeConstants.lowOpacity),
-        borderRadius: BorderRadius.circular(HomeConstants.roleBadgeBorderRadius),
+        borderRadius: BorderRadius.circular(
+          HomeConstants.roleBadgeBorderRadius,
+        ),
       ),
       child: Text(
         '${user?.role?.toUpperCase() ?? 'USER'}',

@@ -49,30 +49,30 @@ class AppErrorWidget extends StatelessWidget {
     super.key,
     this.message = 'No internet connection',
     this.onRetry,
-  })  : errorType = ErrorType.network,
-        icon = null,
-        title = null,
-        showRetryButton = true;
+  }) : errorType = ErrorType.network,
+       icon = null,
+       title = null,
+       showRetryButton = true;
 
   /// Server error constructor
   const AppErrorWidget.server({
     super.key,
     this.message = 'Something went wrong',
     this.onRetry,
-  })  : errorType = ErrorType.server,
-        icon = null,
-        title = null,
-        showRetryButton = true;
+  }) : errorType = ErrorType.server,
+       icon = null,
+       title = null,
+       showRetryButton = true;
 
   /// Not found error constructor
   const AppErrorWidget.notFound({
     super.key,
     this.message = 'Content not found',
     this.onRetry,
-  })  : errorType = ErrorType.notFound,
-        icon = null,
-        title = null,
-        showRetryButton = false;
+  }) : errorType = ErrorType.notFound,
+       icon = null,
+       title = null,
+       showRetryButton = false;
 
   @override
   Widget build(BuildContext context) {

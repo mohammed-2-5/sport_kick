@@ -31,15 +31,10 @@ class FavoritesPage extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<FavoritesCubit>()..loadFavorites(),
         ),
-        BlocProvider(
-          create: (context) => sl<FieldsCubit>()..loadAllFields(),
-        ),
+        BlocProvider(create: (context) => sl<FieldsCubit>()..loadAllFields()),
       ],
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Favorites'),
-          elevation: 0,
-        ),
+        appBar: AppBar(title: const Text('Favorites'), elevation: 0),
         body: BlocListener<FavoritesCubit, FavoritesState>(
           listener: (context, state) {
             // Show snackbar when favorite is removed
@@ -86,9 +81,7 @@ class FavoritesPage extends StatelessWidget {
   ) {
     // Show loading if favorites are loading
     if (favoritesState is FavoritesLoading) {
-      return const LoadingIndicator.inline(
-        message: 'Loading favorites...',
-      );
+      return const LoadingIndicator.inline(message: 'Loading favorites...');
     }
 
     // Show error if favorites failed to load
@@ -107,9 +100,7 @@ class FavoritesPage extends StatelessWidget {
       // Reload favorites after toggle
       final cubit = context.read<FavoritesCubit>();
       Future.microtask(() => cubit.loadFavorites());
-      return const LoadingIndicator.inline(
-        message: 'Updating favorites...',
-      );
+      return const LoadingIndicator.inline(message: 'Updating favorites...');
     }
 
     // Show empty state if no favorites
@@ -119,9 +110,7 @@ class FavoritesPage extends StatelessWidget {
 
     // Show loading if fields are loading
     if (fieldsState is FieldsLoading) {
-      return const LoadingIndicator.inline(
-        message: 'Loading fields...',
-      );
+      return const LoadingIndicator.inline(message: 'Loading fields...');
     }
 
     // Show error if fields failed to load
@@ -152,9 +141,7 @@ class FavoritesPage extends StatelessWidget {
     }
 
     // Default loading state
-    return const LoadingIndicator.inline(
-      message: 'Loading...',
-    );
+    return const LoadingIndicator.inline(message: 'Loading...');
   }
 
   Widget _buildFavoritesList(
@@ -388,10 +375,7 @@ class FavoritesPage extends StatelessWidget {
             const SizedBox(height: 32),
             const Text(
               'No favorites yet',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             const Text(

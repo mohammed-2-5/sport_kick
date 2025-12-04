@@ -31,25 +31,26 @@ class AdvancedSearchFieldsUseCase {
     );
 
     // Apply sorting to results
-    return result.fold(
-      (failure) => Left(failure),
-      (fields) {
-        final sortedFields = _sortFields(fields, filters.sortBy, filters.sortAscending);
+    return result.fold((failure) => Left(failure), (fields) {
+      final sortedFields = _sortFields(
+        fields,
+        filters.sortBy,
+        filters.sortAscending,
+      );
 
-        // Apply text search filter if query exists
-        if (filters.query != null && filters.query!.trim().isNotEmpty) {
-          final query = filters.query!.toLowerCase();
-          final filteredFields = sortedFields.where((field) {
-            return field.name.toLowerCase().contains(query) ||
-                field.address.toLowerCase().contains(query) ||
-                (field.description?.toLowerCase().contains(query) ?? false);
-          }).toList();
-          return Right(filteredFields);
-        }
+      // Apply text search filter if query exists
+      if (filters.query != null && filters.query!.trim().isNotEmpty) {
+        final query = filters.query!.toLowerCase();
+        final filteredFields = sortedFields.where((field) {
+          return field.name.toLowerCase().contains(query) ||
+              field.address.toLowerCase().contains(query) ||
+              (field.description?.toLowerCase().contains(query) ?? false);
+        }).toList();
+        return Right(filteredFields);
+      }
 
-        return Right(sortedFields);
-      },
-    );
+      return Right(sortedFields);
+    });
   }
 
   /// Sort fields based on sort criteria

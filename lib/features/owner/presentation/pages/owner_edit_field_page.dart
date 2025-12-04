@@ -18,10 +18,7 @@ import 'package:spo_kick/features/owner/presentation/widgets/edit_field_form.dar
 class OwnerEditFieldPage extends StatefulWidget {
   final FieldEntity field;
 
-  const OwnerEditFieldPage({
-    super.key,
-    required this.field,
-  });
+  const OwnerEditFieldPage({super.key, required this.field});
 
   @override
   State<OwnerEditFieldPage> createState() => _OwnerEditFieldPageState();
@@ -69,9 +66,7 @@ class _OwnerEditFieldPageState extends State<OwnerEditFieldPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Field'),
-      ),
+      appBar: AppBar(title: const Text('Edit Field')),
       body: BlocConsumer<OwnerCubit, OwnerState>(
         listener: (context, state) {
           if (state is OwnerError) {
@@ -192,9 +187,6 @@ class _OwnerEditFieldPageState extends State<OwnerEditFieldPage> {
       'is_active': _isActive,
     };
 
-    context.read<OwnerCubit>().updateField(
-      widget.field.id,
-      updates,
-    );
+    context.read<OwnerCubit>().updateField(widget.field.id, updates);
   }
 }

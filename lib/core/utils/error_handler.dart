@@ -20,16 +20,10 @@ class ErrorHandler {
       SnackBar(
         content: Row(
           children: [
-            const Icon(
-              Icons.error_outline,
-              color: Colors.white,
-            ),
+            const Icon(Icons.error_outline, color: Colors.white),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                message,
-                style: const TextStyle(color: Colors.white),
-              ),
+              child: Text(message, style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -57,16 +51,10 @@ class ErrorHandler {
       SnackBar(
         content: Row(
           children: [
-            const Icon(
-              Icons.check_circle_outline,
-              color: Colors.white,
-            ),
+            const Icon(Icons.check_circle_outline, color: Colors.white),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                message,
-                style: const TextStyle(color: Colors.white),
-              ),
+              child: Text(message, style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -87,16 +75,10 @@ class ErrorHandler {
       SnackBar(
         content: Row(
           children: [
-            const Icon(
-              Icons.info_outline,
-              color: Colors.white,
-            ),
+            const Icon(Icons.info_outline, color: Colors.white),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                message,
-                style: const TextStyle(color: Colors.white),
-              ),
+              child: Text(message, style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -117,16 +99,10 @@ class ErrorHandler {
       SnackBar(
         content: Row(
           children: [
-            const Icon(
-              Icons.warning_amber_outlined,
-              color: Colors.white,
-            ),
+            const Icon(Icons.warning_amber_outlined, color: Colors.white),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                message,
-                style: const TextStyle(color: Colors.white),
-              ),
+              child: Text(message, style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -198,11 +174,7 @@ class ErrorHandler {
       builder: (context) => AlertDialog(
         title: Row(
           children: [
-            const Icon(
-              Icons.error_outline,
-              color: AppColors.error,
-              size: 28,
-            ),
+            const Icon(Icons.error_outline, color: AppColors.error, size: 28),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
@@ -216,9 +188,7 @@ class ErrorHandler {
           ],
         ),
         content: Text(message),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

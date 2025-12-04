@@ -36,7 +36,11 @@ import 'package:spo_kick/features/fields/domain/usecases/search_fields_usecase.d
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 
 // Bookings Feature
-import 'package:spo_kick/features/bookings/data/datasources/booking_remote_datasource.dart';
+import 'package:spo_kick/features/bookings/data/datasources/booking_admin_operations_datasource.dart';
+import 'package:spo_kick/features/bookings/data/datasources/booking_owner_operations_datasource.dart';
+import 'package:spo_kick/features/bookings/data/datasources/booking_remote_datasource_facade.dart';
+import 'package:spo_kick/features/bookings/data/datasources/booking_time_slot_datasource.dart';
+import 'package:spo_kick/features/bookings/data/datasources/booking_user_operations_datasource.dart';
 import 'package:spo_kick/features/bookings/data/repositories/booking_repository_impl.dart';
 import 'package:spo_kick/features/bookings/domain/repositories/booking_repository.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/cancel_booking_usecase.dart';
@@ -50,7 +54,11 @@ import 'package:spo_kick/features/bookings/domain/usecases/update_booking_status
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 
 // Super Admin Feature
-import 'package:spo_kick/features/super_admin/data/datasources/super_admin_remote_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_city_management_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_field_management_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_remote_datasource_facade.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_statistics_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_user_management_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/repositories/super_admin_repository_impl.dart';
 import 'package:spo_kick/features/super_admin/domain/repositories/super_admin_repository.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/activate_user_usecase.dart';
@@ -122,6 +130,18 @@ import 'package:spo_kick/features/reviews/domain/usecases/get_field_reviews_usec
 import 'package:spo_kick/features/reviews/domain/usecases/update_review_usecase.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 
+// Business Hours Feature
+import 'package:spo_kick/features/business_hours/data/datasources/business_hours_remote_datasource.dart';
+import 'package:spo_kick/features/business_hours/data/datasources/business_hours_remote_datasource_impl.dart';
+import 'package:spo_kick/features/business_hours/data/repositories/business_hours_repository_impl.dart';
+import 'package:spo_kick/features/business_hours/domain/repositories/business_hours_repository.dart';
+import 'package:spo_kick/features/business_hours/domain/usecases/get_field_business_hours_usecase.dart';
+import 'package:spo_kick/features/business_hours/domain/usecases/initialize_default_business_hours_usecase.dart';
+import 'package:spo_kick/features/business_hours/domain/usecases/is_field_currently_open_usecase.dart';
+import 'package:spo_kick/features/business_hours/domain/usecases/update_business_hours_usecase.dart';
+import 'package:spo_kick/features/business_hours/domain/usecases/validate_booking_time_usecase.dart';
+import 'package:spo_kick/features/business_hours/presentation/cubit/business_hours_cubit.dart';
+
 import '../../features/auth/domain/usecases/update_profile_usecase.dart';
 
 /// Service Locator instance.
@@ -182,6 +202,9 @@ Future<void> initDependencies() async {
 
   // Reviews Feature
   _initReviews();
+
+  // Business Hours Feature
+  _initBusinessHours();
 }
 
 /// Initialize external dependencies.
@@ -355,9 +378,31 @@ void _initBookings() {
     () => BookingRepositoryImpl(remoteDataSource: sl()),
   );
 
-  // Data Sources
+  // Data Sources - Specialized datasources
+  sl.registerLazySingleton<BookingUserOperationsDataSource>(
+    () => BookingUserOperationsDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<BookingTimeSlotDataSource>(
+    () => BookingTimeSlotDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<BookingOwnerOperationsDataSource>(
+    () => BookingOwnerOperationsDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<BookingAdminOperationsDataSource>(
+    () => BookingAdminOperationsDataSourceImpl(supabaseClient: sl()),
+  );
+
+  // Data Sources - Facade for backward compatibility
   sl.registerLazySingleton<BookingRemoteDataSource>(
-    () => BookingRemoteDataSourceImpl(supabaseClient: sl()),
+    () => BookingRemoteDataSourceFacade(
+      userOperationsDataSource: sl(),
+      timeSlotDataSource: sl(),
+      ownerOperationsDataSource: sl(),
+      adminOperationsDataSource: sl(),
+    ),
   );
 }
 
@@ -407,9 +452,31 @@ void _initSuperAdmin() {
     () => SuperAdminRepositoryImpl(remoteDataSource: sl()),
   );
 
-  // Data Sources
+  // Data Sources - Specialized datasources
+  sl.registerLazySingleton<SuperAdminStatisticsDataSource>(
+    () => SuperAdminStatisticsDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<SuperAdminUserManagementDataSource>(
+    () => SuperAdminUserManagementDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<SuperAdminFieldManagementDataSource>(
+    () => SuperAdminFieldManagementDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<SuperAdminCityManagementDataSource>(
+    () => SuperAdminCityManagementDataSourceImpl(supabaseClient: sl()),
+  );
+
+  // Data Sources - Facade for backward compatibility
   sl.registerLazySingleton<SuperAdminRemoteDataSource>(
-    () => SuperAdminRemoteDataSourceImpl(supabaseClient: sl()),
+    () => SuperAdminRemoteDataSourceFacade(
+      statisticsDataSource: sl(),
+      userManagementDataSource: sl(),
+      fieldManagementDataSource: sl(),
+      cityManagementDataSource: sl(),
+    ),
   );
 }
 
@@ -601,6 +668,45 @@ void _initReviews() {
   // Data Sources
   sl.registerLazySingleton<ReviewRemoteDataSource>(
     () => ReviewRemoteDataSourceImpl(supabaseClient: sl()),
+  );
+}
+
+// ==================== FEATURE: BUSINESS HOURS ====================
+
+/// Initialize business hours feature dependencies.
+///
+/// Dependencies hierarchy:
+/// - Cubits (Factory) depend on UseCases
+/// - UseCases (LazySingleton) depend on Repositories
+/// - Repositories (LazySingleton) depend on Data Sources
+/// - Data Sources (LazySingleton) depend on External services
+void _initBusinessHours() {
+  // Cubit
+  sl.registerFactory(
+    () => BusinessHoursCubit(
+      getFieldBusinessHoursUseCase: sl(),
+      updateBusinessHoursUseCase: sl(),
+      initializeDefaultBusinessHoursUseCase: sl(),
+      validateBookingTimeUseCase: sl(),
+      isFieldCurrentlyOpenUseCase: sl(),
+    ),
+  );
+
+  // Use Cases
+  sl.registerLazySingleton(() => GetFieldBusinessHoursUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateBusinessHoursUseCase(sl()));
+  sl.registerLazySingleton(() => InitializeDefaultBusinessHoursUseCase(sl()));
+  sl.registerLazySingleton(() => ValidateBookingTimeUseCase(sl()));
+  sl.registerLazySingleton(() => IsFieldCurrentlyOpenUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<BusinessHoursRepository>(
+    () => BusinessHoursRepositoryImpl(remoteDataSource: sl()),
+  );
+
+  // Data Sources
+  sl.registerLazySingleton<BusinessHoursRemoteDataSource>(
+    () => BusinessHoursRemoteDataSourceImpl(supabaseClient: sl()),
   );
 }
 

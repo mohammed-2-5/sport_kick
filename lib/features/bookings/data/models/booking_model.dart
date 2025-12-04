@@ -111,7 +111,8 @@ class BookingModel extends BookingEntity {
       if (notes != null && notes!.isNotEmpty) 'notes': notes,
       // Manual booking fields
       'is_manual': isManual,
-      if (isManual) 'status': 'confirmed', // Manual bookings are confirmed immediately
+      if (isManual)
+        'status': 'confirmed', // Manual bookings are confirmed immediately
       if (createdBy != null) 'created_by': createdBy,
       if (customerName != null) 'customer_name': customerName,
       if (customerPhone != null) 'customer_phone': customerPhone,

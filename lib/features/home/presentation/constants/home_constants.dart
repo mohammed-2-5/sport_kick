@@ -194,7 +194,8 @@ class HomeConstants {
   static const String favoritesSubtitle = 'Coming soon';
 
   /// Favorites coming soon message
-  static const String favoritesComingSoonMessage = 'Favorites feature coming soon!';
+  static const String favoritesComingSoonMessage =
+      'Favorites feature coming soon!';
 
   // Upcoming Features Text
 

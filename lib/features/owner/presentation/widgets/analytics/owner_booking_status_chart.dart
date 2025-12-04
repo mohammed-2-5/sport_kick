@@ -13,10 +13,7 @@ import 'package:spo_kick/features/owner/presentation/constants/analytics_constan
 class OwnerBookingStatusChart extends StatelessWidget {
   final OwnerRevenueEntity revenue;
 
-  const OwnerBookingStatusChart({
-    super.key,
-    required this.revenue,
-  });
+  const OwnerBookingStatusChart({super.key, required this.revenue});
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +26,8 @@ class OwnerBookingStatusChart extends StatelessWidget {
         height: AnalyticsConstants.pieChartHeight,
         child: Row(
           children: [
-            Expanded(
-              flex: 3,
-              child: _buildPieChart(),
-            ),
-            Expanded(
-              flex: 2,
-              child: _buildLegend(context),
-            ),
+            Expanded(flex: 3, child: _buildPieChart()),
+            Expanded(flex: 2, child: _buildLegend(context)),
           ],
         ),
       ),
@@ -76,32 +67,42 @@ class OwnerBookingStatusChart extends StatelessWidget {
     final pendingBookings = revenue.pendingBookings;
 
     // Estimate completed bookings (total - monthly - pending)
-    final completedBookings = totalBookings - confirmedBookings - pendingBookings;
+    final completedBookings =
+        totalBookings - confirmedBookings - pendingBookings;
 
     final sections = <PieChartSectionData>[];
 
     if (confirmedBookings > 0) {
-      sections.add(_createSection(
-        value: confirmedBookings.toDouble(),
-        color: AnalyticsConstants.statusPieColors[0],
-        title: '${((confirmedBookings / totalBookings) * 100).toStringAsFixed(0)}%',
-      ));
+      sections.add(
+        _createSection(
+          value: confirmedBookings.toDouble(),
+          color: AnalyticsConstants.statusPieColors[0],
+          title:
+              '${((confirmedBookings / totalBookings) * 100).toStringAsFixed(0)}%',
+        ),
+      );
     }
 
     if (pendingBookings > 0) {
-      sections.add(_createSection(
-        value: pendingBookings.toDouble(),
-        color: AnalyticsConstants.statusPieColors[1],
-        title: '${((pendingBookings / totalBookings) * 100).toStringAsFixed(0)}%',
-      ));
+      sections.add(
+        _createSection(
+          value: pendingBookings.toDouble(),
+          color: AnalyticsConstants.statusPieColors[1],
+          title:
+              '${((pendingBookings / totalBookings) * 100).toStringAsFixed(0)}%',
+        ),
+      );
     }
 
     if (completedBookings > 0) {
-      sections.add(_createSection(
-        value: completedBookings.toDouble(),
-        color: AnalyticsConstants.statusPieColors[2],
-        title: '${((completedBookings / totalBookings) * 100).toStringAsFixed(0)}%',
-      ));
+      sections.add(
+        _createSection(
+          value: completedBookings.toDouble(),
+          color: AnalyticsConstants.statusPieColors[2],
+          title:
+              '${((completedBookings / totalBookings) * 100).toStringAsFixed(0)}%',
+        ),
+      );
     }
 
     return sections;
@@ -150,9 +151,11 @@ class OwnerBookingStatusChart extends StatelessWidget {
         _LegendItem(
           color: AnalyticsConstants.statusPieColors[2],
           label: 'Completed',
-          value: (revenue.totalBookings -
-                  revenue.monthlyBookings -
-                  revenue.pendingBookings).toString(),
+          value:
+              (revenue.totalBookings -
+                      revenue.monthlyBookings -
+                      revenue.pendingBookings)
+                  .toString(),
         ),
       ],
     );
@@ -180,10 +183,7 @@ class _LegendItem extends StatelessWidget {
         Container(
           width: _indicatorSize,
           height: _indicatorSize,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: _spacing),
         Expanded(

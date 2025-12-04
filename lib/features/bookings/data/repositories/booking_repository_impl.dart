@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:spo_kick/core/errors/exceptions.dart';
 import 'package:spo_kick/core/errors/failures.dart';
-import 'package:spo_kick/features/bookings/data/datasources/booking_remote_datasource.dart';
+import 'package:spo_kick/features/bookings/data/datasources/booking_remote_datasource_facade.dart';
 import 'package:spo_kick/features/bookings/data/models/booking_model.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';

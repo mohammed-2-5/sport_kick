@@ -101,25 +101,29 @@ class UserConstants {
   static const String emailNotificationsLabel = 'Email Notifications';
 
   /// Email Notifications subtitle
-  static const String emailNotificationsSubtitle = 'Receive notifications via email';
+  static const String emailNotificationsSubtitle =
+      'Receive notifications via email';
 
   /// Push Notifications label
   static const String pushNotificationsLabel = 'Push Notifications';
 
   /// Push Notifications subtitle
-  static const String pushNotificationsSubtitle = 'Receive push notifications on your device';
+  static const String pushNotificationsSubtitle =
+      'Receive push notifications on your device';
 
   /// Booking Notifications label
   static const String bookingNotificationsLabel = 'Booking Alerts';
 
   /// Booking Notifications subtitle
-  static const String bookingNotificationsSubtitle = 'Get notified about booking updates';
+  static const String bookingNotificationsSubtitle =
+      'Get notified about booking updates';
 
   /// Reminder Notifications label
   static const String reminderNotificationsLabel = 'Booking Reminders';
 
   /// Reminder Notifications subtitle
-  static const String reminderNotificationsSubtitle = 'Get reminded before your bookings';
+  static const String reminderNotificationsSubtitle =
+      'Get reminded before your bookings';
 
   /// Privacy Policy label
   static const String privacyPolicyLabel = 'Privacy Policy';
@@ -145,11 +149,7 @@ class UserConstants {
   // ==================== THEME OPTIONS ====================
 
   /// Theme options
-  static const List<String> themeOptions = [
-    'System Default',
-    'Light',
-    'Dark',
-  ];
+  static const List<String> themeOptions = ['System Default', 'Light', 'Dark'];
 
   /// Theme option values
   static const Map<String, String> themeValues = {
@@ -187,7 +187,8 @@ class UserConstants {
   // ==================== MESSAGES ====================
 
   /// Logout confirmation message
-  static const String logoutConfirmationMessage = 'Are you sure you want to logout?';
+  static const String logoutConfirmationMessage =
+      'Are you sure you want to logout?';
 
   /// Logout success message
   static const String logoutSuccessMessage = 'Logged out successfully';

@@ -12,10 +12,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 class FieldDetailStats extends StatelessWidget {
   final FieldEntity field;
 
-  const FieldDetailStats({
-    super.key,
-    required this.field,
-  });
+  const FieldDetailStats({super.key, required this.field});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +23,7 @@ class FieldDetailStats extends StatelessWidget {
         children: [
           const Text(
             'Statistics',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           Row(
@@ -89,10 +83,7 @@ class _StatCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-          width: 2,
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

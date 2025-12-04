@@ -26,10 +26,7 @@ import 'package:spo_kick/features/bookings/presentation/widgets/booking_price_br
 class BookingDetailsPage extends StatelessWidget {
   final String bookingId;
 
-  const BookingDetailsPage({
-    super.key,
-    required this.bookingId,
-  });
+  const BookingDetailsPage({super.key, required this.bookingId});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +48,9 @@ class BookingDetailsPage extends StatelessWidget {
               BookingConstants.bookingCancelledMessage,
             );
             // Navigate back to My Bookings
-            Navigator.of(context).pop(true); // Return true to indicate refresh needed
+            Navigator.of(
+              context,
+            ).pop(true); // Return true to indicate refresh needed
           }
         },
         builder: (context, state) {
@@ -77,11 +76,15 @@ class BookingDetailsPage extends StatelessWidget {
         children: [
           ShimmerLoading(
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: BookingConstants.standardPadding),
+              margin: const EdgeInsets.symmetric(
+                horizontal: BookingConstants.standardPadding,
+              ),
               height: 400,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(BookingConstants.borderRadius),
+                borderRadius: BorderRadius.circular(
+                  BookingConstants.borderRadius,
+                ),
               ),
             ),
           ),

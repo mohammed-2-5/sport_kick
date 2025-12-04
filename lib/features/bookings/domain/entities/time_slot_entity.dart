@@ -20,13 +20,7 @@ class TimeSlotEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        startTime,
-        endTime,
-        isAvailable,
-        price,
-        currency,
-      ];
+  List<Object?> get props => [startTime, endTime, isAvailable, price, currency];
 
   /// Get formatted time slot (e.g., "09:00 - 10:00")
   String get formattedTime => '$startTime - $endTime';
@@ -35,8 +29,7 @@ class TimeSlotEntity extends Equatable {
   String get formattedTimeRange => formattedTime;
 
   /// Get formatted price (e.g., "200 EGP")
-  String get formattedPrice =>
-      '${price.toStringAsFixed(0)} $currency';
+  String get formattedPrice => '${price.toStringAsFixed(0)} $currency';
 
   /// Get hour value from start time
   int get startHour => int.parse(startTime.split(':')[0]);

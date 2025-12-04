@@ -191,8 +191,13 @@ class AppRouterConfig {
         GoRoute(
           path: '/fields-map',
           name: 'fieldsMap',
-          pageBuilder: (context, state) =>
-              _buildSlidePage(child: const FieldsMapPage(), state: state),
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: BlocProvider(
+              create: (_) => sl<FieldsCubit>()..loadAllFields(),
+              child: const FieldsMapPage(),
+            ),
+            state: state,
+          ),
         ),
         GoRoute(
           path: '/search',

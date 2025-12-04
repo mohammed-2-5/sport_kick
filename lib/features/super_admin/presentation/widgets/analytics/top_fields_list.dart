@@ -6,10 +6,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/ana
 class TopFieldsList extends StatelessWidget {
   final List<FieldEntity> fields;
 
-  const TopFieldsList({
-    super.key,
-    required this.fields,
-  });
+  const TopFieldsList({super.key, required this.fields});
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +70,7 @@ class TopFieldsList extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         field.city,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       ),
                     ],
                   ),

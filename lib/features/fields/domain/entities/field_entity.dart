@@ -124,13 +124,15 @@ class FieldEntity extends Equatable {
   String? get mainImage => images.isNotEmpty ? images.first : null;
 
   /// Get rating display text
-  String get ratingDisplay => averageRating != null ? averageRating!.toStringAsFixed(1) : 'N/A';
+  String get ratingDisplay =>
+      averageRating != null ? averageRating!.toStringAsFixed(1) : 'N/A';
 
   /// Check if field is popular (has many bookings)
   bool get isPopular => totalBookings > 10;
 
   /// Get formatted price with currency
-  String get formattedPrice => '${pricePerHour.toStringAsFixed(0)} $currency/hour';
+  String get formattedPrice =>
+      '${pricePerHour.toStringAsFixed(0)} $currency/hour';
 
   /// Get field size display (from capacity or surface type)
   String get fieldSize {
@@ -145,30 +147,30 @@ class FieldEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        ownerId,
-        sportCategoryId,
-        name,
-        description,
-        address,
-        city,
-        latitude,
-        longitude,
-        pricePerHour,
-        currency,
-        surfaceType,
-        capacity,
-        isIndoor,
-        images,
-        videoUrl,
-        facilities,
-        sportSpecificData,
-        isActive,
-        isVerified,
-        averageRating,
-        totalReviews,
-        totalBookings,
-        createdAt,
-        updatedAt,
-      ];
+    id,
+    ownerId,
+    sportCategoryId,
+    name,
+    description,
+    address,
+    city,
+    latitude,
+    longitude,
+    pricePerHour,
+    currency,
+    surfaceType,
+    capacity,
+    isIndoor,
+    images,
+    videoUrl,
+    facilities,
+    sportSpecificData,
+    isActive,
+    isVerified,
+    averageRating,
+    totalReviews,
+    totalBookings,
+    createdAt,
+    updatedAt,
+  ];
 }

@@ -30,8 +30,9 @@ class BookingFilterHelper {
 
     // Status filter
     if (statusFilter != null) {
-      filtered =
-          filtered.where((booking) => booking.status == statusFilter).toList();
+      filtered = filtered
+          .where((booking) => booking.status == statusFilter)
+          .toList();
     }
 
     // Date range filter
@@ -77,16 +78,21 @@ class BookingFilterHelper {
     int canceled,
     int completed,
     double revenue,
-  }) calculateStatistics(List<BookingEntity> bookings) {
+  })
+  calculateStatistics(List<BookingEntity> bookings) {
     final total = bookings.length;
-    final pending =
-        bookings.where((b) => b.status == BookingStatus.pending).length;
-    final confirmed =
-        bookings.where((b) => b.status == BookingStatus.confirmed).length;
-    final canceled =
-        bookings.where((b) => b.status == BookingStatus.canceled).length;
-    final completed =
-        bookings.where((b) => b.status == BookingStatus.completed).length;
+    final pending = bookings
+        .where((b) => b.status == BookingStatus.pending)
+        .length;
+    final confirmed = bookings
+        .where((b) => b.status == BookingStatus.confirmed)
+        .length;
+    final canceled = bookings
+        .where((b) => b.status == BookingStatus.canceled)
+        .length;
+    final completed = bookings
+        .where((b) => b.status == BookingStatus.completed)
+        .length;
     final revenue = bookings
         .where(
           (b) =>

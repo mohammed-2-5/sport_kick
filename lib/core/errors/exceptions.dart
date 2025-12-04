@@ -32,10 +32,7 @@ abstract class AppException implements Exception {
 /// }
 /// ```
 class ServerException extends AppException {
-  const ServerException([
-    super.message = 'Server error occurred',
-    super.code,
-  ]);
+  const ServerException([super.message = 'Server error occurred', super.code]);
 }
 
 /// Exception thrown when a local cache operation fails.
@@ -55,10 +52,7 @@ class ServerException extends AppException {
 /// }
 /// ```
 class CacheException extends AppException {
-  const CacheException([
-    super.message = 'Cache error occurred',
-    super.code,
-  ]);
+  const CacheException([super.message = 'Cache error occurred', super.code]);
 }
 
 /// Exception thrown when there is no network connection.
@@ -93,10 +87,7 @@ class NetworkException extends AppException {
 /// }
 /// ```
 class AuthException extends AppException {
-  const AuthException([
-    super.message = 'Authentication failed',
-    super.code,
-  ]);
+  const AuthException([super.message = 'Authentication failed', super.code]);
 }
 
 /// Exception thrown when input data is invalid.
@@ -113,10 +104,7 @@ class AuthException extends AppException {
 /// }
 /// ```
 class ValidationException extends AppException {
-  const ValidationException([
-    super.message = 'Validation failed',
-    super.code,
-  ]);
+  const ValidationException([super.message = 'Validation failed', super.code]);
 }
 
 /// Exception thrown when user is not authenticated or lacks valid session.
@@ -198,10 +186,7 @@ class DatabaseException extends AppException {
 /// }
 /// ```
 class NotFoundException extends AppException {
-  const NotFoundException([
-    super.message = 'Resource not found',
-    super.code,
-  ]);
+  const NotFoundException([super.message = 'Resource not found', super.code]);
 }
 
 /// Exception thrown when user doesn't have required permissions.
@@ -218,10 +203,7 @@ class NotFoundException extends AppException {
 /// }
 /// ```
 class PermissionException extends AppException {
-  const PermissionException([
-    super.message = 'Permission denied',
-    super.code,
-  ]);
+  const PermissionException([super.message = 'Permission denied', super.code]);
 }
 
 /// Exception thrown when an operation times out.
@@ -240,10 +222,7 @@ class PermissionException extends AppException {
 /// }
 /// ```
 class TimeoutException extends AppException {
-  const TimeoutException([
-    super.message = 'Operation timed out',
-    super.code,
-  ]);
+  const TimeoutException([super.message = 'Operation timed out', super.code]);
 }
 
 /// Exception thrown when data format is unexpected.
@@ -260,8 +239,5 @@ class TimeoutException extends AppException {
 /// }
 /// ```
 class FormatException extends AppException {
-  const FormatException([
-    super.message = 'Invalid data format',
-    super.code,
-  ]);
+  const FormatException([super.message = 'Invalid data format', super.code]);
 }

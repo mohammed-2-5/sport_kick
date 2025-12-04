@@ -22,9 +22,6 @@ class GetAvailableTimeSlotsUseCase {
       return const Left(ValidationFailure('Cannot view slots for past dates'));
     }
 
-    return await repository.getAvailableTimeSlots(
-      fieldId: fieldId,
-      date: date,
-    );
+    return await repository.getAvailableTimeSlots(fieldId: fieldId, date: date);
   }
 }

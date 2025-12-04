@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 
@@ -99,13 +100,13 @@ class UserProfileHeader extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: user.isActive
-                  ? Colors.green.withValues(alpha: 0.2)
-                  : Colors.red.withValues(alpha: 0.2),
+                  ? AppColors.success.withValues(alpha: 0.2)
+                  : AppColors.error.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(
                 AdminUIConstants.radiusXLarge,
               ),
               border: Border.all(
-                color: user.isActive ? Colors.green : Colors.red,
+                color: user.isActive ? AppColors.success : AppColors.error,
                 width: 2,
               ),
             ),
@@ -116,7 +117,7 @@ class UserProfileHeader extends StatelessWidget {
                   width: AdminUIConstants.badgeIndicatorSize,
                   height: AdminUIConstants.badgeIndicatorSize,
                   decoration: BoxDecoration(
-                    color: user.isActive ? Colors.green : Colors.red,
+                    color: user.isActive ? AppColors.success : AppColors.error,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -126,7 +127,7 @@ class UserProfileHeader extends StatelessWidget {
                   style: TextStyle(
                     fontSize: AdminUIConstants.fontSizeMedium,
                     fontWeight: AdminUIConstants.fontWeightBold,
-                    color: user.isActive ? Colors.green : Colors.red,
+                    color: user.isActive ? AppColors.success : AppColors.error,
                   ),
                 ),
               ],

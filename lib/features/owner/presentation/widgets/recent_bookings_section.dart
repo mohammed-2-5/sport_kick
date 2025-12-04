@@ -29,15 +29,9 @@ class RecentBookingsSection extends StatelessWidget {
           children: [
             const Text(
               'Recent Bookings',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            TextButton(
-              onPressed: onViewAll,
-              child: const Text('View All'),
-            ),
+            TextButton(onPressed: onViewAll, child: const Text('View All')),
           ],
         ),
         const SizedBox(height: 16),
@@ -62,10 +56,7 @@ class RecentBookingsSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceVariant.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.divider,
-          width: 1,
-        ),
+        border: Border.all(color: AppColors.divider, width: 1),
       ),
       child: Column(
         children: [
@@ -77,19 +68,13 @@ class RecentBookingsSection extends StatelessWidget {
           const SizedBox(height: 16),
           const Text(
             'No bookings yet',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           const Text(
             'Bookings will appear here once customers start booking your fields',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-            ),
+            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -110,10 +95,7 @@ class _BookingItem extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Colors.white,
-            AppColors.primary.withValues(alpha: 0.03),
-          ],
+          colors: [Colors.white, AppColors.primary.withValues(alpha: 0.03)],
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
@@ -160,10 +142,7 @@ class _BookingItem extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 6,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               gradient: _getStatusGradient(booking.status.toString()),
               borderRadius: BorderRadius.circular(20),

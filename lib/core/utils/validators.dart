@@ -405,7 +405,8 @@ class Validators {
   /// )
   /// ```
   static String? Function(String?) compose(
-      List<String? Function(String?)> validators) {
+    List<String? Function(String?)> validators,
+  ) {
     return (String? value) {
       for (final validator in validators) {
         final error = validator(value);

@@ -29,53 +29,61 @@ class ActiveFiltersDisplay extends StatelessWidget {
     if (filters.minPrice != null || filters.maxPrice != null) {
       final min = filters.minPrice?.toInt() ?? 0;
       final max = filters.maxPrice?.toInt() ?? 1000;
-      chips.add(_buildFilterChip(
-        context,
-        label: '$min - $max EGP',
-        icon: Icons.attach_money,
-        onRemove: () {
-          onFilterRemoved(filters.copyWith(clearPriceRange: true));
-        },
-      ));
+      chips.add(
+        _buildFilterChip(
+          context,
+          label: '$min - $max EGP',
+          icon: Icons.attach_money,
+          onRemove: () {
+            onFilterRemoved(filters.copyWith(clearPriceRange: true));
+          },
+        ),
+      );
     }
 
     // City chip
     if (filters.city != null) {
-      chips.add(_buildFilterChip(
-        context,
-        label: filters.city!,
-        icon: Icons.location_city,
-        onRemove: () {
-          onFilterRemoved(filters.copyWith(clearCity: true));
-        },
-      ));
+      chips.add(
+        _buildFilterChip(
+          context,
+          label: filters.city!,
+          icon: Icons.location_city,
+          onRemove: () {
+            onFilterRemoved(filters.copyWith(clearCity: true));
+          },
+        ),
+      );
     }
 
     // Category chip
     if (filters.categoryId != null) {
-      chips.add(_buildFilterChip(
-        context,
-        label: 'Category',
-        icon: Icons.sports_soccer,
-        onRemove: () {
-          onFilterRemoved(filters.copyWith(clearCategory: true));
-        },
-      ));
+      chips.add(
+        _buildFilterChip(
+          context,
+          label: 'Category',
+          icon: Icons.sports_soccer,
+          onRemove: () {
+            onFilterRemoved(filters.copyWith(clearCategory: true));
+          },
+        ),
+      );
     }
 
     // Amenities chips
     if (filters.amenities != null && filters.amenities!.isNotEmpty) {
       for (final amenity in filters.amenities!) {
-        chips.add(_buildFilterChip(
-          context,
-          label: amenity,
-          icon: Icons.star,
-          onRemove: () {
-            final updated = List<String>.from(filters.amenities!);
-            updated.remove(amenity);
-            onFilterRemoved(filters.copyWith(amenities: updated));
-          },
-        ));
+        chips.add(
+          _buildFilterChip(
+            context,
+            label: amenity,
+            icon: Icons.star,
+            onRemove: () {
+              final updated = List<String>.from(filters.amenities!);
+              updated.remove(amenity);
+              onFilterRemoved(filters.copyWith(amenities: updated));
+            },
+          ),
+        );
       }
     }
 
@@ -93,13 +101,7 @@ class ActiveFiltersDisplay extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: chips,
-            ),
-          ),
+          Expanded(child: Wrap(spacing: 8, runSpacing: 8, children: chips)),
           const SizedBox(width: 8),
           TextButton.icon(
             onPressed: onClearAll,

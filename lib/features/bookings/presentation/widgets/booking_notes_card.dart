@@ -11,11 +11,7 @@ class BookingNotesCard extends StatelessWidget {
   final String? notes;
   final String? cancellationReason;
 
-  const BookingNotesCard({
-    super.key,
-    this.notes,
-    this.cancellationReason,
-  });
+  const BookingNotesCard({super.key, this.notes, this.cancellationReason});
 
   @override
   Widget build(BuildContext context) {

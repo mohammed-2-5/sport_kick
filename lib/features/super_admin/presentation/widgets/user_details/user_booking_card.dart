@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
@@ -128,7 +129,7 @@ class UserBookingCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: AdminUIConstants.fontSizeMedium,
                       fontWeight: AdminUIConstants.fontWeightBold,
-                      color: Colors.green,
+                      color: AppColors.success,
                     ),
                   ),
                 ],
@@ -143,11 +144,11 @@ class UserBookingCard extends StatelessWidget {
   Color _getStatusColor(BookingStatus status) {
     switch (status) {
       case BookingStatus.pending:
-        return Colors.orange;
+        return AppColors.warning;
       case BookingStatus.confirmed:
-        return Colors.green;
+        return AppColors.success;
       case BookingStatus.canceled:
-        return Colors.red;
+        return AppColors.error;
       case BookingStatus.completed:
         return Colors.purple;
     }

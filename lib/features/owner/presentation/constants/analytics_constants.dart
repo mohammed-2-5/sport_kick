@@ -55,8 +55,9 @@ class AnalyticsConstants {
   static const Color revenueChartColor = AppColors.success;
 
   /// Revenue chart area color (with transparency)
-  static final Color revenueChartAreaColor =
-      AppColors.success.withValues(alpha: 0.2);
+  static final Color revenueChartAreaColor = AppColors.success.withValues(
+    alpha: 0.2,
+  );
 
   /// Bar chart colors for different fields
   static const List<Color> fieldBarColors = [
@@ -73,7 +74,7 @@ class AnalyticsConstants {
   /// Pie chart colors for booking status
   static const List<Color> statusPieColors = [
     AppColors.bookingConfirmed, // Confirmed - Green
-    AppColors.bookingPending,   // Pending - Orange
+    AppColors.bookingPending, // Pending - Orange
     AppColors.bookingCompleted, // Completed - Grey
     AppColors.bookingCancelled, // Cancelled - Red
   ];
@@ -96,7 +97,8 @@ class AnalyticsConstants {
   static const String revenueByFieldSubtitle = 'Top performing fields';
 
   /// Booking status subtitle
-  static const String bookingStatusSubtitle = 'Distribution of booking statuses';
+  static const String bookingStatusSubtitle =
+      'Distribution of booking statuses';
 
   // ==================== METRICS LABELS ====================
 

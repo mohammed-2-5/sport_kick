@@ -8,25 +8,17 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 class FieldComparisonPage extends StatelessWidget {
   final List<FieldEntity> fields;
 
-  const FieldComparisonPage({
-    super.key,
-    required this.fields,
-  });
+  const FieldComparisonPage({super.key, required this.fields});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Compare Fields'),
-        elevation: 0,
-      ),
+      appBar: AppBar(title: const Text('Compare Fields'), elevation: 0),
       body: fields.isEmpty
           ? _buildEmptyState()
           : SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: SingleChildScrollView(
-                child: _buildComparisonTable(),
-              ),
+              child: SingleChildScrollView(child: _buildComparisonTable()),
             ),
     );
   }
@@ -46,18 +38,12 @@ class FieldComparisonPage extends StatelessWidget {
             SizedBox(height: 24),
             Text(
               'No fields to compare',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 12),
             Text(
               'Select fields from the list to compare them',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-              ),
+              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             ),
           ],
@@ -76,32 +62,35 @@ class FieldComparisonPage extends StatelessWidget {
         const DataColumn(
           label: Text(
             'Feature',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ),
+        ...fields.map(
+          (field) => DataColumn(
+            label: SizedBox(
+              width: 150,
+              child: Text(
+                field.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
         ),
-        ...fields.map((field) => DataColumn(
-              label: SizedBox(
-                width: 150,
-                child: Text(
-                  field.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            )),
       ],
       rows: [
         // Image Row
-        DataRow(cells: [
-          const DataCell(Text('Image', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Image', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(
                 field.hasImages
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(8),
@@ -121,13 +110,19 @@ class FieldComparisonPage extends StatelessWidget {
                         ),
                         child: const Icon(Icons.sports_soccer),
                       ),
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
 
         // Price Row
-        DataRow(cells: [
-          const DataCell(Text('Price/Hour', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Price/Hour', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(
                 Text(
                   field.formattedPrice,
                   style: const TextStyle(
@@ -135,13 +130,19 @@ class FieldComparisonPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
 
         // Rating Row
-        DataRow(cells: [
-          const DataCell(Text('Rating', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Rating', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(
                 Row(
                   children: [
                     const Icon(Icons.star, size: 16, color: AppColors.warning),
@@ -152,35 +153,55 @@ class FieldComparisonPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
 
         // Reviews Row
-        DataRow(cells: [
-          const DataCell(Text('Reviews', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Reviews', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(
                 Text(field.hasReviews ? '${field.totalReviews}' : 'No reviews'),
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
 
         // Capacity Row
-        DataRow(cells: [
-          const DataCell(Text('Capacity', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(Text(field.fieldSize))),
-        ]),
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Capacity', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map((field) => DataCell(Text(field.fieldSize))),
+          ],
+        ),
 
         // Surface Type Row
-        DataRow(cells: [
-          const DataCell(Text('Surface', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
-                Text(field.surfaceType ?? 'Not specified'),
-              )),
-        ]),
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Surface', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(Text(field.surfaceType ?? 'Not specified')),
+            ),
+          ],
+        ),
 
         // Location Type Row
-        DataRow(cells: [
-          const DataCell(Text('Location', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Location', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(
                 Row(
                   children: [
                     Icon(
@@ -192,39 +213,61 @@ class FieldComparisonPage extends StatelessWidget {
                     Text(field.isIndoor ? 'Indoor' : 'Outdoor'),
                   ],
                 ),
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
 
         // City Row
-        DataRow(cells: [
-          const DataCell(Text('City', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('City', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(
                 Row(
                   children: [
-                    const Icon(Icons.location_city, size: 16, color: AppColors.textSecondary),
+                    const Icon(
+                      Icons.location_city,
+                      size: 16,
+                      color: AppColors.textSecondary,
+                    ),
                     const SizedBox(width: 4),
                     Text(field.city),
                   ],
                 ),
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
 
         // Verified Row
-        DataRow(cells: [
-          const DataCell(Text('Verified', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Verified', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(
                 Icon(
                   field.isVerified ? Icons.verified : Icons.cancel,
                   color: field.isVerified ? AppColors.success : AppColors.error,
                   size: 20,
                 ),
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
 
         // Facilities Row
-        DataRow(cells: [
-          const DataCell(Text('Facilities', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Facilities', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(
                 SizedBox(
                   width: 150,
                   child: Text(
@@ -236,16 +279,22 @@ class FieldComparisonPage extends StatelessWidget {
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
 
         // Total Bookings Row
-        DataRow(cells: [
-          const DataCell(Text('Popularity', style: TextStyle(fontWeight: FontWeight.w600))),
-          ...fields.map((field) => DataCell(
-                Text('${field.totalBookings} bookings'),
-              )),
-        ]),
+        DataRow(
+          cells: [
+            const DataCell(
+              Text('Popularity', style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+            ...fields.map(
+              (field) => DataCell(Text('${field.totalBookings} bookings')),
+            ),
+          ],
+        ),
       ],
     );
   }

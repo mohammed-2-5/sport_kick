@@ -13,10 +13,7 @@ import 'package:spo_kick/features/bookings/presentation/constants/booking_consta
 class BookingDetailsInfoSection extends StatelessWidget {
   final BookingEntity booking;
 
-  const BookingDetailsInfoSection({
-    super.key,
-    required this.booking,
-  });
+  const BookingDetailsInfoSection({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +66,9 @@ class BookingDetailsInfoSection extends StatelessWidget {
             padding: const EdgeInsets.all(BookingConstants.itemSpacing),
             decoration: BoxDecoration(
               color: AppColors.primary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(BookingConstants.smallPadding),
+              borderRadius: BorderRadius.circular(
+                BookingConstants.smallPadding,
+              ),
             ),
             child: Icon(icon, color: AppColors.primary, size: 24),
           ),
@@ -131,7 +130,9 @@ class BookingDetailsInfoSection extends StatelessWidget {
                 padding: const EdgeInsets.all(BookingConstants.smallPadding),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(BookingConstants.smallPadding),
+                  borderRadius: BorderRadius.circular(
+                    BookingConstants.smallPadding,
+                  ),
                 ),
                 child: const Icon(
                   Icons.calendar_today,
@@ -172,7 +173,9 @@ class BookingDetailsInfoSection extends StatelessWidget {
                 padding: const EdgeInsets.all(BookingConstants.smallPadding),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(BookingConstants.smallPadding),
+                  borderRadius: BorderRadius.circular(
+                    BookingConstants.smallPadding,
+                  ),
                 ),
                 child: const Icon(
                   Icons.access_time,

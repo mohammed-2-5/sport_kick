@@ -25,10 +25,10 @@ class FieldsStatisticsSection extends StatelessWidget {
     final avgRating = fields.where((f) => f.averageRating != null).isEmpty
         ? 0.0
         : fields
-                .where((f) => f.averageRating != null)
-                .map((f) => f.averageRating!)
-                .reduce((a, b) => a + b) /
-            fields.where((f) => f.averageRating != null).length;
+                  .where((f) => f.averageRating != null)
+                  .map((f) => f.averageRating!)
+                  .reduce((a, b) => a + b) /
+              fields.where((f) => f.averageRating != null).length;
 
     return Container(
       color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
@@ -38,10 +38,9 @@ class FieldsStatisticsSection extends StatelessWidget {
         children: [
           Text(
             'Fields Overview',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           Row(

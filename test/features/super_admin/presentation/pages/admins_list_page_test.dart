@@ -53,7 +53,9 @@ void main() {
       'should show loading indicator when state is SuperAdminLoading',
       (tester) async {
         // Arrange
-        when(() => mockSuperAdminCubit.state).thenReturn(const SuperAdminLoading());
+        when(
+          () => mockSuperAdminCubit.state,
+        ).thenReturn(const SuperAdminLoading());
         when(() => mockSuperAdminCubit.loadAdmins()).thenAnswer((_) async {});
 
         // Act
@@ -118,7 +120,9 @@ void main() {
 
     testWidgets('should trigger loadAdmins on initialization', (tester) async {
       // Arrange
-      when(() => mockSuperAdminCubit.state).thenReturn(const SuperAdminLoading());
+      when(
+        () => mockSuperAdminCubit.state,
+      ).thenReturn(const SuperAdminLoading());
       when(() => mockSuperAdminCubit.loadAdmins()).thenAnswer((_) async {});
 
       // Act

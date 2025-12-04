@@ -208,9 +208,9 @@ class _OwnerRevenueViewState extends State<_OwnerRevenueView> {
       children: [
         Text(
           'Revenue Overview',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: AnalyticsConstants.metricCardSpacing),
         Row(
@@ -219,9 +219,9 @@ class _OwnerRevenueViewState extends State<_OwnerRevenueView> {
             const SizedBox(width: 4),
             Text(
               AnalyticsConstants.getDateRangeLabel(_selectedDateRange),
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
             ),
           ],
         ),

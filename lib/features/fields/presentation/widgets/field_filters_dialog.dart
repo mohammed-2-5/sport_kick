@@ -57,8 +57,8 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
       'isIndoor': _indoorOutdoor == 'indoor'
           ? true
           : _indoorOutdoor == 'outdoor'
-              ? false
-              : null,
+          ? false
+          : null,
       'verifiedOnly': _verifiedOnly,
     };
 
@@ -69,9 +69,7 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
         constraints: const BoxConstraints(maxHeight: 600),
         padding: const EdgeInsets.all(20),
@@ -85,10 +83,7 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
               children: [
                 const Text(
                   'Filters',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
@@ -284,10 +279,7 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
+      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     );
   }
 

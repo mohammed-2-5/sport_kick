@@ -129,7 +129,9 @@ class CustomButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           foregroundColor: textColor ?? AppColors.primary,
           side: BorderSide(
-            color: isDisabled ? AppColors.disabled : (backgroundColor ?? AppColors.primary),
+            color: isDisabled
+                ? AppColors.disabled
+                : (backgroundColor ?? AppColors.primary),
             width: 1.5,
           ),
           shape: RoundedRectangleBorder(
@@ -184,18 +186,12 @@ class CustomButton extends StatelessWidget {
         children: [
           Icon(icon, size: 20),
           const SizedBox(width: 8),
-          Text(
-            text,
-            style: AppTextStyles.buttonText,
-          ),
+          Text(text, style: AppTextStyles.buttonText),
         ],
       );
     }
 
-    return Text(
-      text,
-      style: AppTextStyles.buttonText,
-    );
+    return Text(text, style: AppTextStyles.buttonText);
   }
 }
 

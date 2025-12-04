@@ -82,16 +82,16 @@ class SearchFiltersEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        query,
-        categoryId,
-        city,
-        cityId,
-        minPrice,
-        maxPrice,
-        amenities,
-        sortBy,
-        sortAscending,
-      ];
+    query,
+    categoryId,
+    city,
+    cityId,
+    minPrice,
+    maxPrice,
+    amenities,
+    sortBy,
+    sortAscending,
+  ];
 }
 
 /// Sort options for search results

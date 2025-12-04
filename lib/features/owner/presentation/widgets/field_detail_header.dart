@@ -6,10 +6,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 class FieldDetailHeader extends StatefulWidget {
   final FieldEntity field;
 
-  const FieldDetailHeader({
-    super.key,
-    required this.field,
-  });
+  const FieldDetailHeader({super.key, required this.field});
 
   @override
   State<FieldDetailHeader> createState() => _FieldDetailHeaderState();
@@ -187,10 +184,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
                 const SizedBox(height: 16),
                 const Text(
                   'Description',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -206,10 +200,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
                 const SizedBox(height: 16),
                 const Text(
                   'Facilities',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Wrap(
@@ -222,8 +213,9 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
                             facility,
                             style: const TextStyle(fontSize: 12),
                           ),
-                          backgroundColor:
-                              AppColors.primary.withValues(alpha: 0.1),
+                          backgroundColor: AppColors.primary.withValues(
+                            alpha: 0.1,
+                          ),
                         ),
                       )
                       .toList(),
@@ -243,18 +235,11 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.sports_soccer,
-              size: 48,
-              color: AppColors.textSecondary,
-            ),
+            Icon(Icons.sports_soccer, size: 48, color: AppColors.textSecondary),
             SizedBox(height: 8),
             Text(
               'No Images',
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
             ),
           ],
         ),
@@ -268,9 +253,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

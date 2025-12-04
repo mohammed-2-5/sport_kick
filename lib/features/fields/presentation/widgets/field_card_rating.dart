@@ -34,16 +34,10 @@ class FieldCardRating extends StatelessWidget {
   /// Builds the rating badge with gradient background when reviews exist
   Widget _buildRatingBadge() {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 6,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFFFFA726),
-            Color(0xFFFFB74D),
-          ],
+          colors: [Color(0xFFFFA726), Color(0xFFFFB74D)],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
@@ -57,11 +51,7 @@ class FieldCardRating extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.star_rounded,
-            size: 16,
-            color: Colors.white,
-          ),
+          const Icon(Icons.star_rounded, size: 16, color: Colors.white),
           const SizedBox(width: 4),
           Text(
             ratingDisplay,
@@ -87,10 +77,7 @@ class FieldCardRating extends StatelessWidget {
   /// Builds the "New" badge when no reviews exist
   Widget _buildNewBadge() {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 6,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: AppColors.surfaceVariant,
         borderRadius: BorderRadius.circular(20),

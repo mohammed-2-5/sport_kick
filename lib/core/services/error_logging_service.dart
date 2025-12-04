@@ -90,18 +90,11 @@ class ErrorLoggingService {
   }
 
   /// Log authentication error
-  void logAuthError(
-    Object error, {
-    String? userId,
-    String? action,
-  }) {
+  void logAuthError(Object error, {String? userId, String? action}) {
     logError(
       error,
       context: 'Authentication Error',
-      additionalData: {
-        'userId': userId,
-        'action': action,
-      },
+      additionalData: {'userId': userId, 'action': action},
       severity: ErrorSeverity.error,
     );
   }
@@ -115,9 +108,13 @@ class ErrorLoggingService {
     ErrorSeverity severity,
   ) {
     final buffer = StringBuffer();
-    buffer.writeln('╔════════════════════════════════════════════════════════════');
+    buffer.writeln(
+      '╔════════════════════════════════════════════════════════════',
+    );
     buffer.writeln('║ ERROR LOG [${severity.name.toUpperCase()}]');
-    buffer.writeln('╠════════════════════════════════════════════════════════════');
+    buffer.writeln(
+      '╠════════════════════════════════════════════════════════════',
+    );
 
     if (context != null) {
       buffer.writeln('║ Context: $context');
@@ -143,7 +140,9 @@ class ErrorLoggingService {
       }
     }
 
-    buffer.writeln('╚════════════════════════════════════════════════════════════');
+    buffer.writeln(
+      '╚════════════════════════════════════════════════════════════',
+    );
 
     debugPrint(buffer.toString());
   }
@@ -245,12 +244,7 @@ class ErrorLoggingService {
 }
 
 /// Error severity levels
-enum ErrorSeverity {
-  info,
-  warning,
-  error,
-  fatal,
-}
+enum ErrorSeverity { info, warning, error, fatal }
 
 /// Error log entry model
 class ErrorLogEntry {
@@ -271,23 +265,23 @@ class ErrorLogEntry {
   });
 
   Map<String, dynamic> toJson() => {
-        'timestamp': timestamp.toIso8601String(),
-        'error': error,
-        'stackTrace': stackTrace,
-        'context': context,
-        'additionalData': additionalData,
-        'severity': severity.name,
-      };
+    'timestamp': timestamp.toIso8601String(),
+    'error': error,
+    'stackTrace': stackTrace,
+    'context': context,
+    'additionalData': additionalData,
+    'severity': severity.name,
+  };
 
   factory ErrorLogEntry.fromJson(Map<String, dynamic> json) => ErrorLogEntry(
-        timestamp: DateTime.parse(json['timestamp'] as String),
-        error: json['error'] as String,
-        stackTrace: json['stackTrace'] as String?,
-        context: json['context'] as String?,
-        additionalData: json['additionalData'] as Map<String, dynamic>?,
-        severity: ErrorSeverity.values.firstWhere(
-          (e) => e.name == json['severity'],
-          orElse: () => ErrorSeverity.error,
-        ),
-      );
+    timestamp: DateTime.parse(json['timestamp'] as String),
+    error: json['error'] as String,
+    stackTrace: json['stackTrace'] as String?,
+    context: json['context'] as String?,
+    additionalData: json['additionalData'] as Map<String, dynamic>?,
+    severity: ErrorSeverity.values.firstWhere(
+      (e) => e.name == json['severity'],
+      orElse: () => ErrorSeverity.error,
+    ),
+  );
 }

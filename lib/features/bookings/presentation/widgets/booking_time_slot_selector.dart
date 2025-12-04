@@ -48,14 +48,17 @@ class BookingTimeSlotSelector extends StatelessWidget {
         ...List.generate(
           6,
           (index) => Padding(
-            padding: const EdgeInsets.only(bottom: BookingConstants.smallPadding),
+            padding: const EdgeInsets.only(
+              bottom: BookingConstants.smallPadding,
+            ),
             child: ShimmerLoading(
               child: Container(
                 height: BookingConstants.timeSlotHeight,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius:
-                      BorderRadius.circular(BookingConstants.borderRadius),
+                  borderRadius: BorderRadius.circular(
+                    BookingConstants.borderRadius,
+                  ),
                 ),
               ),
             ),
@@ -93,9 +96,7 @@ class BookingTimeSlotSelector extends StatelessWidget {
                 duration: const Duration(milliseconds: 375),
                 child: SlideAnimation(
                   verticalOffset: 30.0,
-                  child: FadeInAnimation(
-                    child: _buildTimeSlotCard(slot),
-                  ),
+                  child: FadeInAnimation(child: _buildTimeSlotCard(slot)),
                 ),
               );
             }),
@@ -113,9 +114,7 @@ class BookingTimeSlotSelector extends StatelessWidget {
                 duration: const Duration(milliseconds: 375),
                 child: SlideAnimation(
                   verticalOffset: 30.0,
-                  child: FadeInAnimation(
-                    child: _buildTimeSlotCard(slot),
-                  ),
+                  child: FadeInAnimation(child: _buildTimeSlotCard(slot)),
                 ),
               );
             }),
@@ -133,9 +132,7 @@ class BookingTimeSlotSelector extends StatelessWidget {
                 duration: const Duration(milliseconds: 375),
                 child: SlideAnimation(
                   verticalOffset: 30.0,
-                  child: FadeInAnimation(
-                    child: _buildTimeSlotCard(slot),
-                  ),
+                  child: FadeInAnimation(child: _buildTimeSlotCard(slot)),
                 ),
               );
             }),
@@ -181,16 +178,15 @@ class BookingTimeSlotSelector extends StatelessWidget {
             color: isSelected
                 ? AppColors.primary.withValues(alpha: 0.1)
                 : !isAvailable
-                    ? AppColors.textSecondary.withValues(alpha: 0.05)
-                    : Colors.white,
-            borderRadius:
-                BorderRadius.circular(BookingConstants.borderRadius),
+                ? AppColors.textSecondary.withValues(alpha: 0.05)
+                : Colors.white,
+            borderRadius: BorderRadius.circular(BookingConstants.borderRadius),
             border: Border.all(
               color: isSelected
                   ? AppColors.primary
                   : !isAvailable
-                      ? AppColors.textSecondary.withValues(alpha: 0.2)
-                      : AppColors.border,
+                  ? AppColors.textSecondary.withValues(alpha: 0.2)
+                  : AppColors.border,
               width: isSelected ? 2 : 1,
             ),
           ),

@@ -8,21 +8,22 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/ana
 class BookingStatusChart extends StatelessWidget {
   final List<BookingEntity> bookings;
 
-  const BookingStatusChart({
-    super.key,
-    required this.bookings,
-  });
+  const BookingStatusChart({super.key, required this.bookings});
 
   @override
   Widget build(BuildContext context) {
-    final pending =
-        bookings.where((b) => b.status == BookingStatus.pending).length;
-    final confirmed =
-        bookings.where((b) => b.status == BookingStatus.confirmed).length;
-    final canceled =
-        bookings.where((b) => b.status == BookingStatus.canceled).length;
-    final completed =
-        bookings.where((b) => b.status == BookingStatus.completed).length;
+    final pending = bookings
+        .where((b) => b.status == BookingStatus.pending)
+        .length;
+    final confirmed = bookings
+        .where((b) => b.status == BookingStatus.confirmed)
+        .length;
+    final canceled = bookings
+        .where((b) => b.status == BookingStatus.canceled)
+        .length;
+    final completed = bookings
+        .where((b) => b.status == BookingStatus.completed)
+        .length;
 
     final total = pending + confirmed + canceled + completed;
     if (total == 0) return const SizedBox.shrink();
@@ -44,7 +45,8 @@ class BookingStatusChart extends StatelessWidget {
                     if (pending > 0)
                       PieChartSectionData(
                         value: pending.toDouble(),
-                        title: '${((pending / total) * 100).toStringAsFixed(0)}%',
+                        title:
+                            '${((pending / total) * 100).toStringAsFixed(0)}%',
                         color: Colors.orange,
                         radius: 100,
                         titleStyle: const TextStyle(

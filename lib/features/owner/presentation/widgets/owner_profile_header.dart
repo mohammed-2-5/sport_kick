@@ -8,10 +8,7 @@ import 'package:spo_kick/core/constants/app_gradients.dart';
 class OwnerProfileHeader extends StatelessWidget {
   final dynamic user;
 
-  const OwnerProfileHeader({
-    super.key,
-    required this.user,
-  });
+  const OwnerProfileHeader({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +52,9 @@ class OwnerProfileHeader extends StatelessWidget {
         // Full Name
         Text(
           user.displayName,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
 
         const SizedBox(height: 4),
@@ -65,19 +62,16 @@ class OwnerProfileHeader extends StatelessWidget {
         // Email
         Text(
           user.email,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondary,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
         ),
 
         const SizedBox(height: 12),
 
         // Role Badge
         Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             gradient: AppGradients.warning,
             borderRadius: BorderRadius.circular(25),

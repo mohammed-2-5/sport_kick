@@ -27,16 +27,16 @@ class PriceRangeFilter extends StatelessWidget {
           children: [
             Text(
               'Price Range',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             Text(
               '${minPrice.toInt()} - ${maxPrice.toInt()} EGP/hour',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
+                color: AppColors.primary,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),
@@ -45,11 +45,9 @@ class PriceRangeFilter extends StatelessWidget {
           values: RangeValues(minPrice, maxPrice),
           min: SearchConstants.minPriceValue,
           max: SearchConstants.maxPriceValue,
-          divisions: (SearchConstants.maxPriceValue / SearchConstants.priceStep).round(),
-          labels: RangeLabels(
-            '${minPrice.toInt()}',
-            '${maxPrice.toInt()}',
-          ),
+          divisions: (SearchConstants.maxPriceValue / SearchConstants.priceStep)
+              .round(),
+          labels: RangeLabels('${minPrice.toInt()}', '${maxPrice.toInt()}'),
           onChanged: onChanged,
           activeColor: AppColors.primary,
         ),

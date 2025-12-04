@@ -45,14 +45,14 @@ class SportCategoryEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        slug,
-        icon,
-        color,
-        description,
-        isActive,
-        displayOrder,
-        createdAt,
-      ];
+    id,
+    name,
+    slug,
+    icon,
+    color,
+    description,
+    isActive,
+    displayOrder,
+    createdAt,
+  ];
 }

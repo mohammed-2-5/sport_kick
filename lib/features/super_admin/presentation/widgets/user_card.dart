@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/constants/app_colors.dart';
+
 /// User card widget displaying customer information
 ///
 /// Shows:
@@ -105,7 +107,11 @@ class UserCard extends StatelessWidget {
               // Phone (if available)
               if (user.phone != null && user.phone!.isNotEmpty) ...[
                 const SizedBox(height: 8),
-                _buildInfoRow(Icons.phone_outlined, user.phone!, Colors.green),
+                _buildInfoRow(
+                  Icons.phone_outlined,
+                  user.phone!,
+                  AppColors.success,
+                ),
               ],
 
               // Created Date
@@ -159,13 +165,13 @@ class UserCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: isActive
-            ? Colors.green.withValues(alpha: 0.1)
-            : Colors.red.withValues(alpha: 0.1),
+            ? AppColors.success.withValues(alpha: 0.1)
+            : AppColors.error.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: isActive
-              ? Colors.green.withValues(alpha: 0.3)
-              : Colors.red.withValues(alpha: 0.3),
+              ? AppColors.success.withValues(alpha: 0.3)
+              : AppColors.error.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -175,7 +181,7 @@ class UserCard extends StatelessWidget {
             width: 6,
             height: 6,
             decoration: BoxDecoration(
-              color: isActive ? Colors.green : Colors.red,
+              color: isActive ? AppColors.success : AppColors.error,
               shape: BoxShape.circle,
             ),
           ),
@@ -185,7 +191,7 @@ class UserCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: isActive ? Colors.green : Colors.red,
+              color: isActive ? AppColors.success : AppColors.error,
             ),
           ),
         ],

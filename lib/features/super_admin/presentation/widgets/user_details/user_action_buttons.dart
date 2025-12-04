@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 
@@ -26,7 +27,9 @@ class UserActionButtons extends StatelessWidget {
             user.isActive ? 'Deactivate Account' : 'Activate Account',
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: user.isActive ? Colors.red : Colors.green,
+            backgroundColor: user.isActive
+                ? AppColors.error
+                : AppColors.success,
             foregroundColor: Colors.white,
             padding: AdminUIConstants.paddingButton,
             shape: RoundedRectangleBorder(

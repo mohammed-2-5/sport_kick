@@ -20,7 +20,8 @@ class SearchFilterBottomSheet extends StatefulWidget {
   });
 
   @override
-  State<SearchFilterBottomSheet> createState() => _SearchFilterBottomSheetState();
+  State<SearchFilterBottomSheet> createState() =>
+      _SearchFilterBottomSheetState();
 }
 
 class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
@@ -56,8 +57,10 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                 children: [
                   // Price Range
                   PriceRangeFilter(
-                    minPrice: _filters.minPrice ?? SearchConstants.minPriceValue,
-                    maxPrice: _filters.maxPrice ?? SearchConstants.maxPriceValue,
+                    minPrice:
+                        _filters.minPrice ?? SearchConstants.minPriceValue,
+                    maxPrice:
+                        _filters.maxPrice ?? SearchConstants.maxPriceValue,
                     onChanged: (range) {
                       setState(() {
                         _filters = _filters.copyWith(
@@ -109,9 +112,9 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
         const SizedBox(width: 8),
         Text(
           'Filters',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         const Spacer(),
         if (_filters.hasActiveFilters)
@@ -145,7 +148,11 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.check_circle, size: 16, color: AppColors.primary),
+                const Icon(
+                  Icons.check_circle,
+                  size: 16,
+                  color: AppColors.primary,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   '${_filters.activeFilterCount} active',

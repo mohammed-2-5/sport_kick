@@ -51,7 +51,9 @@ class CreateManualBookingUseCase {
 
     // Validate totalPrice is positive
     if (totalPrice <= 0) {
-      return const Left(ValidationFailure('Total price must be greater than zero'));
+      return const Left(
+        ValidationFailure('Total price must be greater than zero'),
+      );
     }
 
     // Validate customer name
@@ -100,10 +102,9 @@ class CreateManualBookingUseCase {
       totalPrice: totalPrice,
       customerName: customerName.trim(),
       customerPhone: cleanPhone,
-      customerEmail:
-          customerEmail != null && customerEmail.trim().isNotEmpty
-              ? customerEmail.trim()
-              : null,
+      customerEmail: customerEmail != null && customerEmail.trim().isNotEmpty
+          ? customerEmail.trim()
+          : null,
       notes: notes,
     );
   }

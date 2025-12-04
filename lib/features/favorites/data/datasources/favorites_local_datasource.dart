@@ -69,7 +69,9 @@ class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
       final success = await sharedPreferences.remove(_favoritesKey);
 
       if (!success) {
-        throw const CacheException('Failed to clear favorites from local storage');
+        throw const CacheException(
+          'Failed to clear favorites from local storage',
+        );
       }
     } catch (e) {
       throw CacheException(

@@ -18,9 +18,6 @@ class CancelBookingUseCase {
       return const Left(ValidationFailure('Cancellation reason is required'));
     }
 
-    return await repository.cancelBooking(
-      bookingId: bookingId,
-      reason: reason,
-    );
+    return await repository.cancelBooking(bookingId: bookingId, reason: reason);
   }
 }

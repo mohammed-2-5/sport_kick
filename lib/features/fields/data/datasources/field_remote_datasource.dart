@@ -194,7 +194,8 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
         query = query.eq('city_id', cityId);
       }
 
-      final response = await query.order('booking_count', ascending: false)
+      final response = await query
+          .order('booking_count', ascending: false)
           .limit(10);
 
       return (response as List)
@@ -213,10 +214,7 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
     String? cityId,
   }) async {
     try {
-      var query = supabaseClient
-          .from('fields')
-          .select()
-          .eq('is_active', true);
+      var query = supabaseClient.from('fields').select().eq('is_active', true);
 
       // Apply city filter if provided
       if (cityId != null) {

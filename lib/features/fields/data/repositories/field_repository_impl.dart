@@ -154,7 +154,7 @@ class FieldRepositoryImpl implements FieldRepository {
 
   @override
   Future<Either<Failure, List<SportCategoryEntity>>>
-      getSportCategories() async {
+  getSportCategories() async {
     try {
       final categories = await remoteDataSource.getSportCategories();
       return Right(categories);
@@ -172,8 +172,7 @@ class FieldRepositoryImpl implements FieldRepository {
     String categoryId,
   ) async {
     try {
-      final category =
-          await remoteDataSource.getSportCategoryById(categoryId);
+      final category = await remoteDataSource.getSportCategoryById(categoryId);
       return Right(category);
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));

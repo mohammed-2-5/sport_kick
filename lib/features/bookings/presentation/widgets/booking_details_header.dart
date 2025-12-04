@@ -11,10 +11,7 @@ import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 class BookingDetailsHeader extends StatelessWidget {
   final BookingEntity booking;
 
-  const BookingDetailsHeader({
-    super.key,
-    required this.booking,
-  });
+  const BookingDetailsHeader({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {

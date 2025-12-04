@@ -9,10 +9,10 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/user_filter_sheet.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/selectable_user_card.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_empty_state.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_search_bar.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_stats.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/bulk_user_action_dialogs.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_body.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_error_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_loading_state.dart';
 import 'package:spo_kick/features/super_admin/utils/user_filter_helper.dart';
 
 /// Users List Page
@@ -98,22 +98,7 @@ class _UsersListViewState extends State<_UsersListView>
   Future<void> _handleBulkActivate() async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Activate Selected Users'),
-        content: Text(
-          'Are you sure you want to activate ${selectedIds.length} users?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Activate'),
-          ),
-        ],
-      ),
+      builder: (context) => BulkActivateUsersDialog(count: selectedIds.length),
     );
 
     if (confirmed == true && mounted) {
@@ -125,26 +110,8 @@ class _UsersListViewState extends State<_UsersListView>
   Future<void> _handleBulkDeactivate() async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Deactivate Selected Users'),
-        content: Text(
-          'Are you sure you want to deactivate ${selectedIds.length} users?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Deactivate'),
-          ),
-        ],
-      ),
+      builder: (context) =>
+          BulkDeactivateUsersDialog(count: selectedIds.length),
     );
 
     if (confirmed == true && mounted) {
@@ -249,120 +216,45 @@ class _UsersListViewState extends State<_UsersListView>
           body: Builder(
             builder: (context) {
               if (state is SuperAdminLoading) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 16),
-                      Text(
-                        state.message,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                );
+                return UserListLoadingState(message: state.message);
               }
 
               if (state is SuperAdminError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 64,
-                        color: Colors.red,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Error loading users',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        state.message,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          context.read<SuperAdminCubit>().loadUsers();
-                        },
-                        icon: const Icon(Icons.refresh),
-                        label: const Text('Retry'),
-                      ),
-                    ],
-                  ),
+                return UserListErrorState(
+                  message: state.message,
+                  onRetry: () {
+                    context.read<SuperAdminCubit>().loadUsers();
+                  },
                 );
               }
 
               if (state is UsersListLoaded) {
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    context.read<SuperAdminCubit>().loadUsers();
-                    await Future.delayed(const Duration(milliseconds: 500));
+                return UserListBody(
+                  searchController: _searchController,
+                  searchQuery: _searchQuery,
+                  filteredUsers: filteredUsers,
+                  totalCount: totalCount,
+                  activeCount: activeCount,
+                  isSelectionMode: isSelectionMode,
+                  selectedCount: selectedCount,
+                  selectedIds: selectedIds,
+                  hasFilters:
+                      _searchQuery.isNotEmpty ||
+                      _statusFilter != null ||
+                      _dateRange != null,
+                  onSearchChanged: _onSearchChanged,
+                  onClearSearch: () {
+                    _searchController.clear();
+                    setState(() => _searchQuery = '');
                   },
-                  child: Column(
-                    children: [
-                      UserListSearchBar(
-                        controller: _searchController,
-                        searchQuery: _searchQuery,
-                        onChanged: _onSearchChanged,
-                        onClear: () {
-                          _searchController.clear();
-                          setState(() => _searchQuery = '');
-                        },
-                      ),
-                      UserListStats(
-                        filteredCount: filteredUsers.length,
-                        totalCount: totalCount,
-                        activeCount: activeCount,
-                        isSelectionMode: isSelectionMode,
-                        selectedCount: selectedCount,
-                      ),
-                      Expanded(
-                        child: filteredUsers.isEmpty
-                            ? UserListEmptyState(
-                                hasFilters:
-                                    _searchQuery.isNotEmpty ||
-                                    _statusFilter != null ||
-                                    _dateRange != null,
-                              )
-                            : ListView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 8,
-                                ),
-                                itemCount: filteredUsers.length,
-                                itemBuilder: (context, index) {
-                                  final user = filteredUsers[index];
-                                  final isSelected = selectedIds.contains(
-                                    user.id,
-                                  );
-
-                                  return SelectableUserCard(
-                                    user: user,
-                                    isSelectionMode: isSelectionMode,
-                                    isSelected: isSelected,
-                                    onTap: () {
-                                      if (isSelectionMode) {
-                                        toggleSelection(user.id);
-                                      } else {
-                                        context.pushNamed(
-                                          'superAdminUserDetails',
-                                          extra: user,
-                                        );
-                                      }
-                                    },
-                                    onLongPress: () => toggleSelection(user.id),
-                                  );
-                                },
-                              ),
-                      ),
-                    ],
-                  ),
+                  onUserTap: (user, isSelected) {
+                    if (isSelectionMode) {
+                      toggleSelection(user.id);
+                    } else {
+                      context.pushNamed('superAdminUserDetails', extra: user);
+                    }
+                  },
+                  onUserLongPress: toggleSelection,
                 );
               }
 

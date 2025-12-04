@@ -185,6 +185,5 @@ class BusinessRuleFailure extends Failure {
 /// return Left(PermissionFailure('You do not have permission to perform this action'));
 /// ```
 class PermissionFailure extends Failure {
-  const PermissionFailure(
-      [super.message = 'Permission denied']);
+  const PermissionFailure([super.message = 'Permission denied']);
 }

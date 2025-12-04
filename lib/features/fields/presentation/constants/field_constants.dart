@@ -59,7 +59,8 @@ class FieldConstants {
   static const double galleryIndicatorSpacing = 4.0;
 
   /// Placeholder image path
-  static const String placeholderImagePath = 'assets/images/field_placeholder.png';
+  static const String placeholderImagePath =
+      'assets/images/field_placeholder.png';
 
   // ==================== RATING & REVIEWS ====================
 
@@ -153,7 +154,8 @@ class FieldConstants {
   static const String noReviewsMessage = 'No reviews yet';
 
   /// "Be the first to review" message
-  static const String beFirstReviewMessage = 'Be the first to review this field';
+  static const String beFirstReviewMessage =
+      'Be the first to review this field';
 
   // ==================== FILTER OPTIONS ====================
 
@@ -192,7 +194,8 @@ class FieldConstants {
   static const String favoritesEmptyMessage = 'No favorite fields yet';
 
   /// Favorites empty subtitle
-  static const String favoritesEmptySubtitle = 'Tap the heart icon on any field to add it to your favorites';
+  static const String favoritesEmptySubtitle =
+      'Tap the heart icon on any field to add it to your favorites';
 
   // ==================== FIELD SIZES ====================
 

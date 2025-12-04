@@ -56,8 +56,9 @@ class FieldFilterSheet extends StatelessWidget {
             hint: 'All Cities',
             options: [
               FilterOption(value: 'all', label: 'All Cities'),
-              ...availableCities
-                  .map((city) => FilterOption(value: city, label: city)),
+              ...availableCities.map(
+                (city) => FilterOption(value: city, label: city),
+              ),
             ],
             onChanged: onCityChanged,
           ),
@@ -70,8 +71,9 @@ class FieldFilterSheet extends StatelessWidget {
             hint: 'All Sports',
             options: [
               FilterOption(value: 'all', label: 'All Sports'),
-              ...availableSports
-                  .map((sport) => FilterOption(value: sport, label: sport)),
+              ...availableSports.map(
+                (sport) => FilterOption(value: sport, label: sport),
+              ),
             ],
             onChanged: onSportChanged,
           ),

@@ -36,10 +36,8 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
     result.fold(
       (failure) => emit(FavoritesError(message: failure.message)),
-      (isFavorite) => emit(FavoriteStatusLoaded(
-        fieldId: fieldId,
-        isFavorite: isFavorite,
-      )),
+      (isFavorite) =>
+          emit(FavoriteStatusLoaded(fieldId: fieldId, isFavorite: isFavorite)),
     );
   }
 
@@ -60,10 +58,8 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
     result.fold(
       (failure) => emit(FavoritesError(message: failure.message)),
-      (_) => emit(FavoriteToggled(
-        fieldId: fieldId,
-        isFavorite: !currentStatus,
-      )),
+      (_) =>
+          emit(FavoriteToggled(fieldId: fieldId, isFavorite: !currentStatus)),
     );
   }
 
@@ -81,9 +77,8 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
     result.fold(
       (failure) => emit(FavoritesError(message: failure.message)),
-      (favoriteFieldIds) => emit(FavoritesListLoaded(
-        favoriteFieldIds: favoriteFieldIds,
-      )),
+      (favoriteFieldIds) =>
+          emit(FavoritesListLoaded(favoriteFieldIds: favoriteFieldIds)),
     );
   }
 
@@ -101,10 +96,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
     result.fold(
       (failure) => emit(FavoritesError(message: failure.message)),
-      (_) => emit(FavoriteToggled(
-        fieldId: fieldId,
-        isFavorite: true,
-      )),
+      (_) => emit(FavoriteToggled(fieldId: fieldId, isFavorite: true)),
     );
   }
 
@@ -122,10 +114,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
     result.fold(
       (failure) => emit(FavoritesError(message: failure.message)),
-      (_) => emit(FavoriteToggled(
-        fieldId: fieldId,
-        isFavorite: false,
-      )),
+      (_) => emit(FavoriteToggled(fieldId: fieldId, isFavorite: false)),
     );
   }
 }

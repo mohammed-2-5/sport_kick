@@ -48,9 +48,9 @@ class CityCard extends StatelessWidget {
               Text(
                 city.name,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                      color: isSelected ? AppColors.primary : AppColors.textPrimary,
-                    ),
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                ),
                 textAlign: TextAlign.center,
               ),
               if (city.arabicName != null) ...[
@@ -58,8 +58,8 @@ class CityCard extends StatelessWidget {
                 Text(
                   city.arabicName!,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+                    color: AppColors.textSecondary,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -79,11 +79,13 @@ class CityCard extends StatelessWidget {
                   child: Text(
                     '${city.fieldsCount} fields',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color:
-                              isSelected ? AppColors.primary : AppColors.textSecondary,
-                          fontWeight:
-                              isSelected ? FontWeight.w600 : FontWeight.normal,
-                        ),
+                      color: isSelected
+                          ? AppColors.primary
+                          : AppColors.textSecondary,
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.normal,
+                    ),
                   ),
                 ),
               ],

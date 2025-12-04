@@ -12,10 +12,7 @@ import 'package:spo_kick/features/bookings/presentation/constants/booking_consta
 class BookingDetailsTimeline extends StatelessWidget {
   final BookingEntity booking;
 
-  const BookingDetailsTimeline({
-    super.key,
-    required this.booking,
-  });
+  const BookingDetailsTimeline({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +81,8 @@ class BookingDetailsTimeline extends StatelessWidget {
     final color = isError
         ? AppColors.error
         : isCompleted
-            ? AppColors.success
-            : AppColors.textSecondary;
+        ? AppColors.success
+        : AppColors.textSecondary;
 
     return Row(
       children: [
@@ -130,7 +127,7 @@ class BookingDetailsTimeline extends StatelessWidget {
       'Sep',
       'Oct',
       'Nov',
-      'Dec'
+      'Dec',
     ];
     final month = months[dateTime.month - 1];
     final day = dateTime.day;

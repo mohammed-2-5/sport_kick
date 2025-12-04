@@ -63,7 +63,9 @@ class _SearchPageState extends State<SearchPage> {
     }
     // Debounce search - only search after user stops typing
     Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted && _searchController.text == query && query.trim().isNotEmpty) {
+      if (mounted &&
+          _searchController.text == query &&
+          query.trim().isNotEmpty) {
         context.read<FieldsCubit>().searchFields(query);
       }
     });
@@ -116,45 +118,45 @@ class _SearchPageState extends State<SearchPage> {
             title: const Text('Search Fields'),
             elevation: 0,
           ),
-        body: Column(
-          children: [
-            // Search Bar
-            _buildSearchBar(),
+          body: Column(
+            children: [
+              // Search Bar
+              _buildSearchBar(),
 
-            // Search Results
-            Expanded(
-              child: BlocBuilder<FieldsCubit, FieldsState>(
-                builder: (context, state) {
-                  if (state is FieldsLoading) {
-                    return const LoadingIndicator.inline(
-                      message: 'Searching fields...',
-                    );
-                  }
+              // Search Results
+              Expanded(
+                child: BlocBuilder<FieldsCubit, FieldsState>(
+                  builder: (context, state) {
+                    if (state is FieldsLoading) {
+                      return const LoadingIndicator.inline(
+                        message: 'Searching fields...',
+                      );
+                    }
 
-                  if (state is FieldsError) {
-                    return AppErrorWidget(
-                      message: state.message,
-                      onRetry: () {
-                        if (_searchController.text.isNotEmpty) {
-                          context.read<FieldsCubit>().searchFields(
-                                _searchController.text,
-                              );
-                        }
-                      },
-                    );
-                  }
+                    if (state is FieldsError) {
+                      return AppErrorWidget(
+                        message: state.message,
+                        onRetry: () {
+                          if (_searchController.text.isNotEmpty) {
+                            context.read<FieldsCubit>().searchFields(
+                              _searchController.text,
+                            );
+                          }
+                        },
+                      );
+                    }
 
-                  if (state is FieldsSearchResults) {
-                    return _buildSearchResults(context, state);
-                  }
+                    if (state is FieldsSearchResults) {
+                      return _buildSearchResults(context, state);
+                    }
 
-                  // Initial state - show search tips
-                  return _buildSearchTips();
-                },
+                    // Initial state - show search tips
+                    return _buildSearchTips();
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         ),
       ),
     );
@@ -288,19 +290,13 @@ class _SearchPageState extends State<SearchPage> {
             const SizedBox(height: 16),
             Text(
               'No fields found for "$query"',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             const Text(
               'Try searching with different keywords',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-              ),
+              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             ),
           ],
@@ -322,10 +318,7 @@ class _SearchPageState extends State<SearchPage> {
               children: [
                 const Text(
                   'Recent Searches',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 TextButton(
                   onPressed: () async {
@@ -337,25 +330,30 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
             const SizedBox(height: 12),
-            ..._searchHistory.map((query) => ListTile(
-                  leading: const Icon(Icons.history, color: AppColors.textSecondary),
-                  title: Text(query),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.close, size: 20),
-                    onPressed: () async {
-                      await SearchHistory.removeFromHistory(query);
-                      await _loadSearchHistory();
-                    },
-                  ),
-                  onTap: () async {
-                    _searchController.text = query;
-                    await SearchHistory.addToHistory(query);
+            ..._searchHistory.map(
+              (query) => ListTile(
+                leading: const Icon(
+                  Icons.history,
+                  color: AppColors.textSecondary,
+                ),
+                title: Text(query),
+                trailing: IconButton(
+                  icon: const Icon(Icons.close, size: 20),
+                  onPressed: () async {
+                    await SearchHistory.removeFromHistory(query);
                     await _loadSearchHistory();
-                    if (mounted) {
-                      context.read<FieldsCubit>().searchFields(query);
-                    }
                   },
-                )),
+                ),
+                onTap: () async {
+                  _searchController.text = query;
+                  await SearchHistory.addToHistory(query);
+                  await _loadSearchHistory();
+                  if (mounted) {
+                    context.read<FieldsCubit>().searchFields(query);
+                  }
+                },
+              ),
+            ),
             const SizedBox(height: 24),
             const Divider(),
             const SizedBox(height: 24),
@@ -373,10 +371,7 @@ class _SearchPageState extends State<SearchPage> {
                 const SizedBox(height: 16),
                 const Text(
                   'Search for fields',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
                 const Text(

@@ -97,9 +97,7 @@ class FieldCard extends StatelessWidget {
                           ),
 
                           // Price badge
-                          FieldCardPrice(
-                            formattedPrice: field.formattedPrice,
-                          ),
+                          FieldCardPrice(formattedPrice: field.formattedPrice),
                         ],
                       ),
 

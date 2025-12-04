@@ -139,10 +139,7 @@ class FieldReviewsSection extends StatelessWidget {
                     onPressed: () async {
                       final result = await context.pushNamed(
                         'createReview',
-                        extra: {
-                          'fieldId': field.id,
-                          'fieldName': field.name,
-                        },
+                        extra: {'fieldId': field.id, 'fieldName': field.name},
                       );
                       // Reload field details if review was created
                       if (result == true) {

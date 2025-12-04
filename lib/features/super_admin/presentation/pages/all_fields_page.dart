@@ -6,10 +6,10 @@ import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_search_bar.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/field_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_body.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_error_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_loading_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/field_filter_sheet.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/fields_statistics_section.dart';
 import 'package:spo_kick/features/super_admin/utils/field_filter_helper.dart';
 
 /// All Fields Management Page
@@ -179,47 +179,13 @@ class _AllFieldsViewState extends State<_AllFieldsView> {
         },
         builder: (context, state) {
           if (state is SuperAdminLoading) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const CircularProgressIndicator(),
-                  const SizedBox(height: 16),
-                  Text(
-                    state.message,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
-              ),
-            );
+            return FieldsListLoadingState(message: state.message);
           }
 
           if (state is SuperAdminError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error_outline, size: 64, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Error loading fields',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    state.message,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton.icon(
-                    onPressed: () =>
-                        context.read<SuperAdminCubit>().loadAllFields(),
-                    icon: const Icon(Icons.refresh),
-                    label: const Text('Retry'),
-                  ),
-                ],
-              ),
+            return FieldsListErrorState(
+              message: state.message,
+              onRetry: () => context.read<SuperAdminCubit>().loadAllFields(),
             );
           }
 
@@ -227,82 +193,17 @@ class _AllFieldsViewState extends State<_AllFieldsView> {
             final allFields = state.fields.cast<FieldEntity>();
             final filteredFields = _filterFields(allFields);
 
-            return RefreshIndicator(
-              onRefresh: () async {
-                context.read<SuperAdminCubit>().loadAllFields();
-                await Future.delayed(const Duration(milliseconds: 500));
+            return FieldsListBody(
+              allFields: allFields,
+              filteredFields: filteredFields,
+              searchController: _searchController,
+              searchQuery: _searchQuery,
+              hasFilters: _hasActiveFilters || _searchQuery.isNotEmpty,
+              onSearchChanged: _onSearchChanged,
+              onClearSearch: () {
+                _searchController.clear();
+                setState(() => _searchQuery = '');
               },
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: FieldsStatisticsSection(fields: allFields),
-                  ),
-                  SliverToBoxAdapter(
-                    child: FieldsListSearchBar(
-                      controller: _searchController,
-                      searchQuery: _searchQuery,
-                      onChanged: _onSearchChanged,
-                      onClear: () {
-                        _searchController.clear();
-                        setState(() => _searchQuery = '');
-                      },
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      child: Text(
-                        '${filteredFields.length} field${filteredFields.length != 1 ? 's' : ''} found',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (filteredFields.isEmpty)
-                    SliverFillRemaining(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.sports_soccer_outlined,
-                              size: 64,
-                              color: Colors.grey[400],
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'No fields found',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Try adjusting your search or filters',
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.grey[600]),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  else
-                    SliverPadding(
-                      padding: const EdgeInsets.all(16),
-                      sliver: SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) => Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: FieldCard(field: filteredFields[index]),
-                          ),
-                          childCount: filteredFields.length,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
             );
           }
 

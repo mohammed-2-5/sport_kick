@@ -8,10 +8,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/ana
 class RevenueTrendsChart extends StatelessWidget {
   final List<BookingEntity> bookings;
 
-  const RevenueTrendsChart({
-    super.key,
-    required this.bookings,
-  });
+  const RevenueTrendsChart({super.key, required this.bookings});
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +64,9 @@ class RevenueTrendsChart extends StatelessWidget {
                     showTitles: true,
                     getTitlesWidget: (value, meta) {
                       final monthIndex = now.month - 5 + value.toInt();
-                      final month =
-                          monthIndex <= 0 ? monthIndex + 12 : monthIndex;
+                      final month = monthIndex <= 0
+                          ? monthIndex + 12
+                          : monthIndex;
                       const months = [
                         '',
                         'Jan',
@@ -82,7 +80,7 @@ class RevenueTrendsChart extends StatelessWidget {
                         'Sep',
                         'Oct',
                         'Nov',
-                        'Dec'
+                        'Dec',
                       ];
                       return Text(
                         months[month],
@@ -91,10 +89,12 @@ class RevenueTrendsChart extends StatelessWidget {
                     },
                   ),
                 ),
-                rightTitles:
-                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles:
-                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                topTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
               ),
               borderData: FlBorderData(show: false),
               lineBarsData: [

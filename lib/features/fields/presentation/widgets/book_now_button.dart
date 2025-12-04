@@ -32,10 +32,7 @@ class BookNowButton extends StatelessWidget {
           text: FieldConstants.bookNowLabel,
           onPressed: () {
             // Navigate to create booking page
-            context.pushNamed(
-              'createBooking',
-              extra: field,
-            );
+            context.pushNamed('createBooking', extra: field);
           },
           icon: Icons.event_available,
         ),

@@ -15,9 +15,7 @@ class FieldStatusBadge extends StatelessWidget {
             ? Colors.green.withValues(alpha: 0.1)
             : Colors.orange.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isActive ? Colors.green : Colors.orange,
-        ),
+        border: Border.all(color: isActive ? Colors.green : Colors.orange),
       ),
       child: Text(
         isActive ? 'Active' : 'Inactive',

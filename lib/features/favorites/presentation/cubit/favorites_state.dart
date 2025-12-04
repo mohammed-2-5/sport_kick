@@ -25,10 +25,7 @@ class FavoriteStatusLoaded extends FavoritesState {
   final String fieldId;
   final bool isFavorite;
 
-  const FavoriteStatusLoaded({
-    required this.fieldId,
-    required this.isFavorite,
-  });
+  const FavoriteStatusLoaded({required this.fieldId, required this.isFavorite});
 
   @override
   List<Object?> get props => [fieldId, isFavorite];
@@ -63,10 +60,7 @@ class FavoriteToggled extends FavoritesState {
   final String fieldId;
   final bool isFavorite;
 
-  const FavoriteToggled({
-    required this.fieldId,
-    required this.isFavorite,
-  });
+  const FavoriteToggled({required this.fieldId, required this.isFavorite});
 
   @override
   List<Object?> get props => [fieldId, isFavorite];

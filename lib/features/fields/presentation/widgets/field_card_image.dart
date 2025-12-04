@@ -81,11 +81,7 @@ class FieldCardImage extends StatelessWidget {
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.sports_soccer,
-            size: 48,
-            color: AppColors.textSecondary,
-          ),
+          Icon(Icons.sports_soccer, size: 48, color: AppColors.textSecondary),
           SizedBox(height: 8),
           Text(
             'No Image',
@@ -102,10 +98,7 @@ class FieldCardImage extends StatelessWidget {
       top: 12,
       left: 12,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 6,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Color(0xFFFF6B6B), Color(0xFFFF8E53)],

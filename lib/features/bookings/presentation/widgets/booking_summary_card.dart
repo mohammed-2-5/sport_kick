@@ -126,8 +126,9 @@ class BookingSummaryCard extends StatelessWidget {
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(BookingConstants.borderRadius),
+                borderRadius: BorderRadius.circular(
+                  BookingConstants.borderRadius,
+                ),
               ),
               elevation: 0,
             ),
@@ -137,16 +138,12 @@ class BookingSummaryCard extends StatelessWidget {
                     height: 24,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.white),
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   )
                 : const Text(
                     BookingConstants.confirmBookingLabel,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
           ),
         );

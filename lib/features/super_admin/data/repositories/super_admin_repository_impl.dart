@@ -4,7 +4,7 @@ import 'package:spo_kick/core/errors/exceptions.dart';
 import 'package:spo_kick/core/errors/failures.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
-import 'package:spo_kick/features/super_admin/data/datasources/super_admin_remote_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_remote_datasource_facade.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';

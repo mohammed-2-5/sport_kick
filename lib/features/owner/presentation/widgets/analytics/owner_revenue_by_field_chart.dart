@@ -9,10 +9,7 @@ import 'package:spo_kick/features/owner/presentation/constants/analytics_constan
 class OwnerRevenueByFieldChart extends StatelessWidget {
   final Map<String, double> revenueByField;
 
-  const OwnerRevenueByFieldChart({
-    super.key,
-    required this.revenueByField,
-  });
+  const OwnerRevenueByFieldChart({super.key, required this.revenueByField});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +44,9 @@ class OwnerRevenueByFieldChart extends StatelessWidget {
     final sortedEntries = revenueByField.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
-    final topFields = sortedEntries.take(AnalyticsConstants.maxFieldsInChart).toList();
+    final topFields = sortedEntries
+        .take(AnalyticsConstants.maxFieldsInChart)
+        .toList();
 
     return BarChart(
       BarChartData(
@@ -99,10 +98,7 @@ class OwnerRevenueByFieldChart extends StatelessWidget {
             sideTitles: SideTitles(showTitles: false),
           ),
         ),
-        gridData: const FlGridData(
-          show: true,
-          drawVerticalLine: false,
-        ),
+        gridData: const FlGridData(show: true, drawVerticalLine: false),
         borderData: FlBorderData(show: false),
         barGroups: _buildBarGroups(topFields),
       ),
@@ -112,32 +108,26 @@ class OwnerRevenueByFieldChart extends StatelessWidget {
   List<BarChartGroupData> _buildBarGroups(
     List<MapEntry<String, double>> topFields,
   ) {
-    return List.generate(
-      topFields.length,
-      (index) {
-        final entry = topFields[index];
-        return BarChartGroupData(
-          x: index,
-          barRods: [
-            BarChartRodData(
-              toY: entry.value,
-              color: AnalyticsConstants.getFieldBarColor(index),
-              width: 20,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(6),
-                topRight: Radius.circular(6),
-              ),
+    return List.generate(topFields.length, (index) {
+      final entry = topFields[index];
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: entry.value,
+            color: AnalyticsConstants.getFieldBarColor(index),
+            width: 20,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(6),
+              topRight: Radius.circular(6),
             ),
-          ],
-        );
-      },
-    );
+          ),
+        ],
+      );
+    });
   }
 
-  Widget _buildFieldLabel(
-    int index,
-    List<MapEntry<String, double>> topFields,
-  ) {
+  Widget _buildFieldLabel(int index, List<MapEntry<String, double>> topFields) {
     if (index >= topFields.length) {
       return const SizedBox.shrink();
     }

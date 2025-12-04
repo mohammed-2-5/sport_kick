@@ -11,14 +11,12 @@ class FavoriteFieldEntity extends Equatable {
   /// When the field was added to favorites
   final DateTime addedAt;
 
-  const FavoriteFieldEntity({
-    required this.fieldId,
-    required this.addedAt,
-  });
+  const FavoriteFieldEntity({required this.fieldId, required this.addedAt});
 
   @override
   List<Object> get props => [fieldId, addedAt];
 
   @override
-  String toString() => 'FavoriteFieldEntity(fieldId: $fieldId, addedAt: $addedAt)';
+  String toString() =>
+      'FavoriteFieldEntity(fieldId: $fieldId, addedAt: $addedAt)';
 }

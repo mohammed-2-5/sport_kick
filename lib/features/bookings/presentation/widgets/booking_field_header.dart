@@ -10,10 +10,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 class BookingFieldHeader extends StatelessWidget {
   final FieldEntity field;
 
-  const BookingFieldHeader({
-    super.key,
-    required this.field,
-  });
+  const BookingFieldHeader({super.key, required this.field});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +25,7 @@ class BookingFieldHeader extends StatelessWidget {
           const SizedBox(width: BookingConstants.itemSpacing),
 
           // Field Details
-          Expanded(
-            child: _buildFieldDetails(),
-          ),
+          Expanded(child: _buildFieldDetails()),
         ],
       ),
     );
@@ -45,7 +40,8 @@ class BookingFieldHeader extends StatelessWidget {
               width: 60,
               height: 60,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => _buildPlaceholderImage(),
+              errorBuilder: (context, error, stackTrace) =>
+                  _buildPlaceholderImage(),
             )
           : _buildPlaceholderImage(),
     );
@@ -77,10 +73,7 @@ class BookingFieldHeader extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           '${field.city} • ${field.formattedPrice}/hour',
-          style: const TextStyle(
-            fontSize: 14,
-            color: AppColors.textSecondary,
-          ),
+          style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
         ),
       ],
     );

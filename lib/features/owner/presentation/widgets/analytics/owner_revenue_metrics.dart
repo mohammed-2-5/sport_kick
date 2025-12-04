@@ -14,10 +14,7 @@ import 'package:spo_kick/features/owner/presentation/constants/analytics_constan
 class OwnerRevenueMetrics extends StatelessWidget {
   final OwnerRevenueEntity revenue;
 
-  const OwnerRevenueMetrics({
-    super.key,
-    required this.revenue,
-  });
+  const OwnerRevenueMetrics({super.key, required this.revenue});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +23,9 @@ class OwnerRevenueMetrics extends StatelessWidget {
       children: [
         Text(
           'Key Metrics',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: AnalyticsConstants.sectionSpacing / 2),
         LayoutBuilder(
@@ -123,11 +120,7 @@ class _MetricCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
-                  icon,
-                  color: color,
-                  size: _iconSize,
-                ),
+                Icon(icon, color: color, size: _iconSize),
                 const Spacer(),
               ],
             ),
@@ -135,18 +128,18 @@ class _MetricCard extends StatelessWidget {
             Text(
               value,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: color,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
             Text(
               title,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[600],
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

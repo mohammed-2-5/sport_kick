@@ -12,10 +12,7 @@ import 'package:spo_kick/features/bookings/presentation/constants/booking_consta
 class BookingPriceBreakdown extends StatelessWidget {
   final BookingEntity booking;
 
-  const BookingPriceBreakdown({
-    super.key,
-    required this.booking,
-  });
+  const BookingPriceBreakdown({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {

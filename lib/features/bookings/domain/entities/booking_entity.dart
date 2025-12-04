@@ -59,29 +59,29 @@ class BookingEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        userId,
-        fieldId,
-        date,
-        startTime,
-        endTime,
-        status,
-        totalPrice,
-        currency,
-        userName,
-        fieldName,
-        fieldImage,
-        createdAt,
-        confirmedAt,
-        canceledAt,
-        cancellationReason,
-        notes,
-        isManual,
-        createdBy,
-        customerName,
-        customerPhone,
-        customerEmail,
-      ];
+    id,
+    userId,
+    fieldId,
+    date,
+    startTime,
+    endTime,
+    status,
+    totalPrice,
+    currency,
+    userName,
+    fieldName,
+    fieldImage,
+    createdAt,
+    confirmedAt,
+    canceledAt,
+    cancellationReason,
+    notes,
+    isManual,
+    createdBy,
+    customerName,
+    customerPhone,
+    customerEmail,
+  ];
 
   /// Get formatted date string (e.g., "Jan 15, 2025")
   String get formattedDate {
@@ -97,7 +97,7 @@ class BookingEntity extends Equatable {
       'Sep',
       'Oct',
       'Nov',
-      'Dec'
+      'Dec',
     ];
     return '${months[date.month - 1]} ${date.day}, ${date.year}';
   }
@@ -106,8 +106,7 @@ class BookingEntity extends Equatable {
   String get formattedTimeSlot => '$startTime - $endTime';
 
   /// Get formatted price (e.g., "200 EGP")
-  String get formattedPrice =>
-      '${totalPrice.toStringAsFixed(0)} $currency';
+  String get formattedPrice => '${totalPrice.toStringAsFixed(0)} $currency';
 
   /// Check if booking is in the past
   bool get isPast {
@@ -122,8 +121,7 @@ class BookingEntity extends Equatable {
   }
 
   /// Check if booking is upcoming (confirmed and in future)
-  bool get isUpcoming =>
-      status == BookingStatus.confirmed && !isPast;
+  bool get isUpcoming => status == BookingStatus.confirmed && !isPast;
 
   /// Check if booking can be canceled
   bool get canCancel =>
@@ -216,4 +214,3 @@ class BookingEntity extends Equatable {
     );
   }
 }
-

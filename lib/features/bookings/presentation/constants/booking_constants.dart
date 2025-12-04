@@ -168,22 +168,26 @@ class BookingConstants {
   static const String noHistoryMessage = 'No booking history';
 
   /// Create first booking message
-  static const String createFirstBookingMessage = 'Book your first football field now!';
+  static const String createFirstBookingMessage =
+      'Book your first football field now!';
 
   /// Booking confirmed message
-  static const String bookingConfirmedMessage = 'Booking confirmed successfully!';
+  static const String bookingConfirmedMessage =
+      'Booking confirmed successfully!';
 
   /// Booking cancelled message
   static const String bookingCancelledMessage = 'Booking cancelled';
 
   /// Cancel confirmation message
-  static const String cancelConfirmationMessage = 'Are you sure you want to cancel this booking?';
+  static const String cancelConfirmationMessage =
+      'Are you sure you want to cancel this booking?';
 
   /// Cancel warning message
   static const String cancelWarningMessage = 'This action cannot be undone.';
 
   /// No available slots message
-  static const String noAvailableSlotsMessage = 'No available time slots for this date';
+  static const String noAvailableSlotsMessage =
+      'No available time slots for this date';
 
   /// Select date first message
   static const String selectDateFirstMessage = 'Please select a date first';

@@ -15,10 +15,7 @@ import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart
 class BookingDetailsActions extends StatelessWidget {
   final BookingEntity booking;
 
-  const BookingDetailsActions({
-    super.key,
-    required this.booking,
-  });
+  const BookingDetailsActions({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,9 @@ class BookingDetailsActions extends StatelessWidget {
               side: const BorderSide(color: AppColors.error, width: 2),
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(BookingConstants.borderRadius),
+                borderRadius: BorderRadius.circular(
+                  BookingConstants.borderRadius,
+                ),
               ),
             ),
           ),
@@ -58,7 +57,9 @@ class BookingDetailsActions extends StatelessWidget {
             side: const BorderSide(color: AppColors.primary),
             padding: const EdgeInsets.symmetric(vertical: 16),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(BookingConstants.borderRadius),
+              borderRadius: BorderRadius.circular(
+                BookingConstants.borderRadius,
+              ),
             ),
           ),
         ),
@@ -102,15 +103,13 @@ class BookingDetailsActions extends StatelessWidget {
             onPressed: () {
               Navigator.of(dialogContext).pop();
               context.read<BookingCubit>().cancelBooking(
-                    bookingId: booking.id,
-                    reason: reasonController.text.isEmpty
-                        ? 'Canceled by user'
-                        : reasonController.text,
-                  );
+                bookingId: booking.id,
+                reason: reasonController.text.isEmpty
+                    ? 'Canceled by user'
+                    : reasonController.text,
+              );
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.error,
-            ),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             child: const Text(BookingConstants.cancelBookingLabel),
           ),
         ],

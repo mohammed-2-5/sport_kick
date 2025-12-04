@@ -45,11 +45,7 @@ class StatCard extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 28,
-            ),
+            child: Icon(icon, color: Colors.white, size: 28),
           ),
 
           const SizedBox(height: 16),

@@ -83,16 +83,10 @@ class FieldCardInfo extends StatelessWidget {
   /// Builds the verified badge with gradient background
   Widget _buildVerifiedBadge() {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 5,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFF4CAF50),
-            Color(0xFF81C784),
-          ],
+          colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
         ),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
@@ -106,11 +100,7 @@ class FieldCardInfo extends StatelessWidget {
       child: const Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.verified,
-            size: 14,
-            color: Colors.white,
-          ),
+          Icon(Icons.verified, size: 14, color: Colors.white),
           SizedBox(width: 4),
           Text(
             'Verified',

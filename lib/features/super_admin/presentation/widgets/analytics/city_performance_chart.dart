@@ -7,10 +7,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/ana
 class CityPerformanceChart extends StatelessWidget {
   final List<BookingEntity> bookings;
 
-  const CityPerformanceChart({
-    super.key,
-    required this.bookings,
-  });
+  const CityPerformanceChart({super.key, required this.bookings});
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +88,12 @@ class CityPerformanceChart extends StatelessWidget {
                     },
                   ),
                 ),
-                rightTitles:
-                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles:
-                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                topTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
               ),
               borderData: FlBorderData(show: false),
               gridData: const FlGridData(show: true, drawVerticalLine: false),

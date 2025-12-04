@@ -93,7 +93,8 @@ class _FieldDetailsContent extends StatelessWidget {
   const _FieldDetailsContent({required this.field, this.category});
 
   Future<void> _shareField(BuildContext context) async {
-    final text = '''
+    final text =
+        '''
 Check out ${field.name}!
 
 ${field.description ?? 'A great sports field for booking'}
@@ -203,8 +204,8 @@ Book now on SpoKick!
             final isFavorite = state is FavoriteStatusLoaded
                 ? state.isFavorite
                 : state is FavoriteToggled
-                    ? state.isFavorite
-                    : false;
+                ? state.isFavorite
+                : false;
 
             return IconButton(
               icon: Icon(
@@ -213,9 +214,9 @@ Book now on SpoKick!
               ),
               onPressed: () {
                 context.read<FavoritesCubit>().toggleFavorite(
-                      field.id,
-                      isFavorite,
-                    );
+                  field.id,
+                  isFavorite,
+                );
               },
               tooltip: isFavorite
                   ? FieldConstants.removeFromFavoritesLabel
