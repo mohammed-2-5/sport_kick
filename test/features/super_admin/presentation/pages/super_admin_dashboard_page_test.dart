@@ -12,11 +12,16 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cub
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_dashboard_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/statistics_card.dart';
+import 'package:dartz/dartz.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
 
 import '../../../../helpers/test_helpers.dart';
 
 class MockSuperAdminCubit extends MockCubit<SuperAdminState>
     implements SuperAdminCubit {}
+
+class MockGetPlatformStatisticsUseCase extends Mock
+    implements GetPlatformStatisticsUseCase {}
 
 class MockAuthCubit extends MockCubit<AuthState> implements AuthCubit {}
 
@@ -29,11 +34,48 @@ void main() {
   late MockSuperAdminCubit mockSuperAdminCubit;
   late MockAuthCubit mockAuthCubit;
   late MockNavigatorObserver mockNavigatorObserver;
+  late MockGetPlatformStatisticsUseCase mockGetPlatformStatisticsUseCase;
 
   setUp(() {
     mockSuperAdminCubit = MockSuperAdminCubit();
     mockAuthCubit = MockAuthCubit();
     mockNavigatorObserver = MockNavigatorObserver();
+    mockGetPlatformStatisticsUseCase = MockGetPlatformStatisticsUseCase();
+
+    // Stub the dependency used by the extension method
+    when(
+      () => mockSuperAdminCubit.getPlatformStatisticsUseCase,
+    ).thenReturn(mockGetPlatformStatisticsUseCase);
+
+    // Stub the use case to return default statistics
+    when(() => mockGetPlatformStatisticsUseCase()).thenAnswer(
+      (_) async => const Right(
+        PlatformStatisticsEntity(
+          totalUsers: 0,
+          newUsersThisMonth: 0,
+          totalAdmins: 0,
+          activeFields: 0,
+          totalFields: 0,
+          citiesWithFields: 0,
+          activeCities: 0,
+          totalBookings: 0,
+          pendingBookings: 0,
+          confirmedBookings: 0,
+          completedBookings: 0,
+          canceledBookings: 0,
+          manualBookings: 0,
+          bookingsThisMonth: 0,
+          totalRevenue: 0,
+          revenueThisMonth: 0,
+        ),
+      ),
+    );
+
+    // Default stream behavior
+    when(
+      () => mockSuperAdminCubit.stream,
+    ).thenAnswer((_) => Stream<SuperAdminState>.empty());
+    when(() => mockSuperAdminCubit.close()).thenAnswer((_) async {});
 
     // Setup GetIt
     final getIt = GetIt.instance;
