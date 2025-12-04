@@ -250,7 +250,6 @@ void main() {
         seed: () => FieldsLoaded(fields: tFields, categories: tCategories),
         act: (cubit) => cubit.filterByCategory(tCategoryId),
         expect: () => [
-          const FieldsLoading(),
           FieldsLoaded(
             fields: tFields,
             categories: tCategories,

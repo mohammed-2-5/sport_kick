@@ -117,7 +117,7 @@ void main() {
         act: (cubit) => cubit.loadOwnerFields(tOwnerId),
         expect: () => [
           const OwnerLoading(message: 'Loading your fields...'),
-          OwnerFieldsLoaded(tFields),
+          OwnerDataLoaded(fields: tFields),
         ],
         verify: (_) {
           verify(() => mockGetOwnerFieldsUseCase(ownerId: tOwnerId)).called(1);
@@ -233,7 +233,7 @@ void main() {
         act: (cubit) => cubit.loadOwnerBookings(ownerId: tOwnerId),
         expect: () => [
           const OwnerLoading(message: 'Loading bookings...'),
-          OwnerBookingsLoaded(tBookings),
+          OwnerDataLoaded(bookings: tBookings),
         ],
       );
 
@@ -317,7 +317,7 @@ void main() {
         act: (cubit) => cubit.loadOwnerRevenue(tOwnerId),
         expect: () => [
           const OwnerLoading(message: 'Loading revenue data...'),
-          OwnerRevenueLoaded(tRevenue),
+          OwnerDataLoaded(revenue: tRevenue),
         ],
       );
     });
