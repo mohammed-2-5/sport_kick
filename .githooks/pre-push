@@ -1,0 +1,23 @@
+#!/bin/sh
+# Pre-push hook to ensure code quality before pushing.
+set -e
+
+echo "Running pre-push checks (flutter analyze + flutter test)..."
+
+# Always run from repo root to avoid path issues.
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# Verify Flutter is available before proceeding.
+if ! command -v flutter >/dev/null 2>&1; then
+  echo "Flutter is not installed or not in PATH. Aborting push."
+  exit 1
+fi
+
+echo "[1/2] flutter analyze --no-fatal-infos --no-fatal-warnings"
+flutter analyze --no-fatal-infos --no-fatal-warnings
+
+echo "[2/2] flutter test"
+flutter test
+
+echo "Pre-push checks passed. Proceeding with push."
