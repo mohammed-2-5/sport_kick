@@ -38,4 +38,7 @@ abstract class OwnerRepository {
     String? fullName,
     String? phone,
   });
+
+  /// Delete a field
+  Future<Either<Failure, void>> deleteField(String fieldId);
 }

@@ -44,9 +44,9 @@ class FieldModel extends FieldEntity {
     int? capacity = json['capacity'] as int?;
     if (capacity == null && json['size'] != null) {
       final size = json['size'] as String;
-      if (size == '5-a-side')
+      if (size == '5-a-side') {
         capacity = 10;
-      else if (size == '7-a-side')
+      } else if (size == '7-a-side')
         capacity = 14;
       else if (size == '11-a-side')
         capacity = 22;

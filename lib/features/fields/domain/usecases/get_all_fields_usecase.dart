@@ -22,10 +22,11 @@ class GetAllFieldsUseCase {
 
   /// Execute the use case.
   ///
+  /// [cityId] - Optional city filter to show only fields in specific city
   /// Returns [Either] with:
   /// - [Failure] on error (network, server, etc.)
   /// - [List<FieldEntity>] on success
-  Future<Either<Failure, List<FieldEntity>>> call() async {
-    return await repository.getAllFields();
+  Future<Either<Failure, List<FieldEntity>>> call({String? cityId}) async {
+    return await repository.getAllFields(cityId: cityId);
   }
 }

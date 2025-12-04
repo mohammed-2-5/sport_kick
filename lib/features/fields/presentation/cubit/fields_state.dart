@@ -26,12 +26,14 @@ class FieldsLoaded extends FieldsState {
   final List<SportCategoryEntity> categories;
   final String? selectedCategoryId;
   final String? searchQuery;
+  final String? currentCityId;
 
   const FieldsLoaded({
     required this.fields,
     required this.categories,
     this.selectedCategoryId,
     this.searchQuery,
+    this.currentCityId,
   });
 
   /// Get filtered fields based on selected category.
@@ -51,20 +53,24 @@ class FieldsLoaded extends FieldsState {
   /// Get selected category name.
   String? get selectedCategoryName {
     if (selectedCategoryId == null) return null;
-    final category = categories.firstWhere(
-      (cat) => cat.id == selectedCategoryId,
-      orElse: () => categories.first,
-    );
-    return category.name;
+    try {
+      final category = categories.firstWhere(
+        (cat) => cat.id == selectedCategoryId,
+      );
+      return category.name;
+    } catch (_) {
+      return null;
+    }
   }
 
   @override
   List<Object?> get props => [
-        fields,
-        categories,
-        selectedCategoryId,
-        searchQuery,
-      ];
+    fields,
+    categories,
+    selectedCategoryId,
+    searchQuery,
+    currentCityId,
+  ];
 
   /// Create a copy with modified properties.
   FieldsLoaded copyWith({
@@ -72,8 +78,10 @@ class FieldsLoaded extends FieldsState {
     List<SportCategoryEntity>? categories,
     String? selectedCategoryId,
     String? searchQuery,
+    String? currentCityId,
     bool clearCategoryFilter = false,
     bool clearSearchQuery = false,
+    bool clearCityFilter = false,
   }) {
     return FieldsLoaded(
       fields: fields ?? this.fields,
@@ -81,8 +89,10 @@ class FieldsLoaded extends FieldsState {
       selectedCategoryId: clearCategoryFilter
           ? null
           : (selectedCategoryId ?? this.selectedCategoryId),
-      searchQuery:
-          clearSearchQuery ? null : (searchQuery ?? this.searchQuery),
+      searchQuery: clearSearchQuery ? null : (searchQuery ?? this.searchQuery),
+      currentCityId: clearCityFilter
+          ? null
+          : (currentCityId ?? this.currentCityId),
     );
   }
 }
@@ -92,10 +102,7 @@ class FieldDetailsLoaded extends FieldsState {
   final FieldEntity field;
   final SportCategoryEntity? category;
 
-  const FieldDetailsLoaded({
-    required this.field,
-    this.category,
-  });
+  const FieldDetailsLoaded({required this.field, this.category});
 
   @override
   List<Object?> get props => [field, category];
@@ -106,10 +113,7 @@ class FieldsSearchResults extends FieldsState {
   final List<FieldEntity> results;
   final String query;
 
-  const FieldsSearchResults({
-    required this.results,
-    required this.query,
-  });
+  const FieldsSearchResults({required this.results, required this.query});
 
   /// Check if search returned no results.
   bool get isEmpty => results.isEmpty;
@@ -132,9 +136,7 @@ class FieldsError extends FieldsState {
 class FieldsEmpty extends FieldsState {
   final String message;
 
-  const FieldsEmpty({
-    this.message = 'No fields available',
-  });
+  const FieldsEmpty({this.message = 'No fields available'});
 
   @override
   List<Object?> get props => [message];

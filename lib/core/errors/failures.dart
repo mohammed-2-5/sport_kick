@@ -31,7 +31,7 @@ abstract class Failure extends Equatable {
 /// return Left(ServerFailure('Failed to fetch fields'));
 /// ```
 class ServerFailure extends Failure {
-  const ServerFailure([String message = 'Server error occurred']) : super(message);
+  const ServerFailure([super.message = 'Server error occurred']);
 }
 
 /// Failure that occurs when a local cache operation fails.
@@ -46,7 +46,7 @@ class ServerFailure extends Failure {
 /// return Left(CacheFailure('Failed to cache user data'));
 /// ```
 class CacheFailure extends Failure {
-  const CacheFailure([String message = 'Cache error occurred']) : super(message);
+  const CacheFailure([super.message = 'Cache error occurred']);
 }
 
 /// Failure that occurs when there is no network connection.
@@ -60,8 +60,7 @@ class CacheFailure extends Failure {
 /// }
 /// ```
 class NetworkFailure extends Failure {
-  const NetworkFailure([String message = 'No internet connection'])
-      : super(message);
+  const NetworkFailure([super.message = 'No internet connection']);
 }
 
 /// Failure that occurs during authentication operations.
@@ -77,7 +76,7 @@ class NetworkFailure extends Failure {
 /// return Left(AuthFailure('Invalid email or password'));
 /// ```
 class AuthFailure extends Failure {
-  const AuthFailure([String message = 'Authentication failed']) : super(message);
+  const AuthFailure([super.message = 'Authentication failed']);
 }
 
 /// Failure that occurs when input validation fails.
@@ -93,7 +92,7 @@ class AuthFailure extends Failure {
 /// return Left(ValidationFailure('Email format is invalid'));
 /// ```
 class ValidationFailure extends Failure {
-  const ValidationFailure([String message = 'Validation failed']) : super(message);
+  const ValidationFailure([super.message = 'Validation failed']);
 }
 
 /// Failure that occurs when user is not authenticated.
@@ -109,8 +108,7 @@ class ValidationFailure extends Failure {
 /// return Left(AuthenticationFailure('Please log in to continue'));
 /// ```
 class AuthenticationFailure extends Failure {
-  const AuthenticationFailure([String message = 'Authentication required'])
-      : super(message);
+  const AuthenticationFailure([super.message = 'Authentication required']);
 }
 
 /// Failure that occurs when a resource conflict is detected.
@@ -126,8 +124,7 @@ class AuthenticationFailure extends Failure {
 /// return Left(ConflictFailure('This time slot is already booked'));
 /// ```
 class ConflictFailure extends Failure {
-  const ConflictFailure([String message = 'Resource conflict detected'])
-      : super(message);
+  const ConflictFailure([super.message = 'Resource conflict detected']);
 }
 
 /// Failure that occurs when a database operation fails.
@@ -143,8 +140,7 @@ class ConflictFailure extends Failure {
 /// return Left(DatabaseFailure('Failed to create booking'));
 /// ```
 class DatabaseFailure extends Failure {
-  const DatabaseFailure([String message = 'Database error occurred'])
-      : super(message);
+  const DatabaseFailure([super.message = 'Database error occurred']);
 }
 
 /// Failure that occurs when a resource is not found.
@@ -159,7 +155,7 @@ class DatabaseFailure extends Failure {
 /// return Left(NotFoundFailure('Field not found'));
 /// ```
 class NotFoundFailure extends Failure {
-  const NotFoundFailure([String message = 'Resource not found']) : super(message);
+  const NotFoundFailure([super.message = 'Resource not found']);
 }
 
 /// Failure that occurs when a business rule is violated.
@@ -174,8 +170,7 @@ class NotFoundFailure extends Failure {
 /// return Left(BusinessRuleFailure('Cannot book a slot in the past'));
 /// ```
 class BusinessRuleFailure extends Failure {
-  const BusinessRuleFailure([String message = 'Business rule violation'])
-      : super(message);
+  const BusinessRuleFailure([super.message = 'Business rule violation']);
 }
 
 /// Failure that occurs when user doesn't have permission.
@@ -191,6 +186,5 @@ class BusinessRuleFailure extends Failure {
 /// ```
 class PermissionFailure extends Failure {
   const PermissionFailure(
-      [String message = 'Permission denied'])
-      : super(message);
+      [super.message = 'Permission denied']);
 }

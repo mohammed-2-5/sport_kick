@@ -49,6 +49,14 @@ abstract class AuthRemoteDataSource {
 
   /// Checks if user session is valid.
   Future<bool> isSessionValid();
+
+  /// Changes the current user's password.
+  ///
+  /// Throws [app_exceptions.ServerException] if password change fails.
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
 }
 
 /// Implementation of [AuthRemoteDataSource] using Supabase.
@@ -70,7 +78,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.user == null) {
-        throw app_exceptions.ServerException('Login failed: No user returned');
+        throw const app_exceptions.ServerException('Login failed: No user returned');
       }
 
       // Fetch profile data from profiles table
@@ -107,7 +115,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.user == null) {
-        throw app_exceptions.ServerException(
+        throw const app_exceptions.ServerException(
           'Registration failed: No user returned',
         );
       }
@@ -268,6 +276,51 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           expiresAt * 1000; // expiresAt is in seconds
     } catch (e) {
       return false;
+    }
+  }
+
+  @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    try {
+      final user = supabase.auth.currentUser;
+      if (user == null || user.email == null) {
+        throw const app_exceptions.ServerException('User not authenticated');
+      }
+
+      // 1. Verify current password by re-authenticating
+      // We use signInWithPassword to verify credentials
+      final authResponse = await supabase.auth.signInWithPassword(
+        email: user.email!,
+        password: currentPassword,
+      );
+
+      if (authResponse.user == null) {
+        throw const app_exceptions.ServerException('Invalid current password');
+      }
+
+      // 2. Update password
+      await supabase.auth.updateUser(UserAttributes(password: newPassword));
+
+      // 3. Update profile to set password_changed = true
+      await supabase
+          .from('profiles')
+          .update({'password_changed': true})
+          .eq('id', user.id);
+
+      debugPrint('✅ Password changed successfully for user: ${user.email}');
+    } on AuthException catch (e) {
+      debugPrint('❌ Password change failed: ${e.message}');
+      throw app_exceptions.ServerException(
+        'Failed to change password: ${e.message}',
+      );
+    } catch (e) {
+      debugPrint('❌ Password change error: $e');
+      throw app_exceptions.ServerException(
+        'Failed to change password: ${e.toString()}',
+      );
     }
   }
 }

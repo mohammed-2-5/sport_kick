@@ -154,4 +154,19 @@ class OwnerRepositoryImpl implements OwnerRepository {
       return Left(ServerFailure('Failed to update profile: $e'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteField(String fieldId) async {
+    try {
+      debugPrint('📦 [OwnerRepository] Deleting field: $fieldId');
+      await remoteDataSource.deleteField(fieldId);
+      return const Right(null);
+    } on ServerException catch (e) {
+      debugPrint('❌ [OwnerRepository] Server error: ${e.message}');
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      debugPrint('❌ [OwnerRepository] Unexpected error: $e');
+      return Left(ServerFailure('Failed to delete field: $e'));
+    }
+  }
 }

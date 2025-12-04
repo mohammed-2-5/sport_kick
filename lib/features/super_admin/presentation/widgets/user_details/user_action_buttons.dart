@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
+
+/// Action buttons for user details page
+class UserActionButtons extends StatelessWidget {
+  final UserEntity user;
+  final VoidCallback onToggleStatus;
+
+  const UserActionButtons({
+    required this.user,
+    required this.onToggleStatus,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: AdminUIConstants.paddingHorizontal,
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton.icon(
+          onPressed: onToggleStatus,
+          icon: Icon(user.isActive ? Icons.block : Icons.check_circle),
+          label: Text(
+            user.isActive ? 'Deactivate Account' : 'Activate Account',
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: user.isActive ? Colors.red : Colors.green,
+            foregroundColor: Colors.white,
+            padding: AdminUIConstants.paddingButton,
+            shape: RoundedRectangleBorder(
+              borderRadius: AdminUIConstants.borderRadiusMedium,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

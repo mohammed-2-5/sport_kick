@@ -49,11 +49,11 @@ class AssignFieldToAdminUseCase {
   }) async {
     // Input validation
     if (adminId.trim().isEmpty) {
-      return Left(ValidationFailure('Admin ID cannot be empty'));
+      return const Left(ValidationFailure('Admin ID cannot be empty'));
     }
 
     if (fieldId.trim().isEmpty) {
-      return Left(ValidationFailure('Field ID cannot be empty'));
+      return const Left(ValidationFailure('Field ID cannot be empty'));
     }
 
     // Call repository to assign field

@@ -81,11 +81,12 @@ class BookingRepositoryImpl implements BookingRepository {
     try {
       // Check cache first
       if (_isCacheValid && _cachedBookings != null) {
-        final cached = _cachedBookings!.firstWhere(
-          (b) => b.id == bookingId,
-          orElse: () => throw NotFoundException('Booking not in cache'),
-        );
-        return Right(cached);
+        try {
+          final cached = _cachedBookings!.firstWhere((b) => b.id == bookingId);
+          return Right(cached);
+        } catch (_) {
+          // Not in cache, proceed to remote
+        }
       }
 
       // Fetch from remote
@@ -93,15 +94,7 @@ class BookingRepositoryImpl implements BookingRepository {
 
       return Right(booking);
     } on NotFoundException catch (e) {
-      // If not in cache, try remote
-      try {
-        final booking = await remoteDataSource.getBookingById(bookingId);
-        return Right(booking);
-      } on NotFoundException catch (e) {
-        return Left(NotFoundFailure(e.message));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      }
+      return Left(NotFoundFailure(e.message));
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on AuthenticationException catch (e) {
@@ -187,10 +180,7 @@ class BookingRepositoryImpl implements BookingRepository {
     required String reason,
   }) async {
     try {
-      final booking = await remoteDataSource.cancelBooking(
-        bookingId,
-        reason,
-      );
+      final booking = await remoteDataSource.cancelBooking(bookingId, reason);
 
       // Invalidate cache (booking status changed)
       _invalidateCache();
@@ -259,25 +249,20 @@ class BookingRepositoryImpl implements BookingRepository {
       // Get all bookings and filter client-side from cache if available
       final result = await getUserBookings();
 
-      return result.fold(
-        (failure) => Left(failure),
-        (bookings) {
-          final upcoming = bookings
-              .where((b) =>
-                  b.status == BookingStatus.confirmed &&
-                  !b.isPast)
-              .toList();
+      return result.fold((failure) => Left(failure), (bookings) {
+        final upcoming = bookings
+            .where((b) => b.status == BookingStatus.confirmed && !b.isPast)
+            .toList();
 
-          // Sort by date and time
-          upcoming.sort((a, b) {
-            final dateCompare = a.date.compareTo(b.date);
-            if (dateCompare != 0) return dateCompare;
-            return a.startTime.compareTo(b.startTime);
-          });
+        // Sort by date and time
+        upcoming.sort((a, b) {
+          final dateCompare = a.date.compareTo(b.date);
+          if (dateCompare != 0) return dateCompare;
+          return a.startTime.compareTo(b.startTime);
+        });
 
-          return Right(upcoming);
-        },
-      );
+        return Right(upcoming);
+      });
     } catch (e) {
       return Left(ServerFailure('Unexpected error: $e'));
     }
@@ -289,21 +274,16 @@ class BookingRepositoryImpl implements BookingRepository {
       // Get all bookings and filter client-side
       final result = await getUserBookings();
 
-      return result.fold(
-        (failure) => Left(failure),
-        (bookings) {
-          final history = bookings
-              .where((b) =>
-                  b.isPast ||
-                  b.status == BookingStatus.canceled)
-              .toList();
+      return result.fold((failure) => Left(failure), (bookings) {
+        final history = bookings
+            .where((b) => b.isPast || b.status == BookingStatus.canceled)
+            .toList();
 
-          // Sort by date (most recent first)
-          history.sort((a, b) => b.date.compareTo(a.date));
+        // Sort by date (most recent first)
+        history.sort((a, b) => b.date.compareTo(a.date));
 
-          return Right(history);
-        },
-      );
+        return Right(history);
+      });
     } catch (e) {
       return Left(ServerFailure('Unexpected error: $e'));
     }
@@ -377,8 +357,9 @@ class BookingRepositoryImpl implements BookingRepository {
         notes: notes,
       );
 
-      final createdBooking =
-          await remoteDataSource.createManualBooking(booking);
+      final createdBooking = await remoteDataSource.createManualBooking(
+        booking,
+      );
 
       // Invalidate cache (new booking created)
       _invalidateCache();

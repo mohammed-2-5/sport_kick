@@ -19,7 +19,7 @@ class GetAvailableTimeSlotsUseCase {
     final todayDate = DateTime(today.year, today.month, today.day);
 
     if (bookingDate.isBefore(todayDate)) {
-      return Left(ValidationFailure('Cannot view slots for past dates'));
+      return const Left(ValidationFailure('Cannot view slots for past dates'));
     }
 
     return await repository.getAvailableTimeSlots(

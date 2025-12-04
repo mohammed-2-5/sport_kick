@@ -81,9 +81,10 @@ class OwnerRemoteDataSourceImpl implements OwnerRemoteDataSource {
       }
 
       // Then get bookings for those fields
+      // Use the optimized view to get bookings with all details
       var query = client
-          .from('bookings')
-          .select('*, users(*), fields(*, cities(*), sport_categories(*))')
+          .from('user_bookings_with_details')
+          .select()
           .filter('field_id', 'in', fieldIds);
 
       // Apply status filter if provided
@@ -237,12 +238,26 @@ class OwnerRemoteDataSourceImpl implements OwnerRemoteDataSource {
         return;
       }
 
-      await client.from('users').update(updates).eq('id', ownerId);
+      await client.from('profiles').update(updates).eq('id', ownerId);
 
       debugPrint('✅ [OwnerDataSource] Profile updated successfully');
     } catch (e) {
       debugPrint('❌ [OwnerDataSource] Error updating profile: $e');
       throw ServerException('Failed to update profile: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteField(String fieldId) async {
+    try {
+      debugPrint('🔄 [OwnerDataSource] Deleting field: $fieldId');
+
+      await client.from('fields').delete().eq('id', fieldId);
+
+      debugPrint('✅ [OwnerDataSource] Field deleted successfully');
+    } catch (e) {
+      debugPrint('❌ [OwnerDataSource] Error deleting field: $e');
+      throw ServerException('Failed to delete field: $e');
     }
   }
 }

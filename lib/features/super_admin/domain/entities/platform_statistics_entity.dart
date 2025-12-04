@@ -64,6 +64,9 @@ class PlatformStatisticsEntity extends Equatable {
   /// Revenue generated in last 30 days
   final double revenueThisMonth;
 
+  /// Daily revenue for the last 7 days (in thousands, oldest to newest)
+  final List<double> dailyRevenue;
+
   const PlatformStatisticsEntity({
     required this.totalUsers,
     required this.newUsersThisMonth,
@@ -81,6 +84,7 @@ class PlatformStatisticsEntity extends Equatable {
     required this.bookingsThisMonth,
     required this.totalRevenue,
     required this.revenueThisMonth,
+    this.dailyRevenue = const [],
   });
 
   /// Returns true if platform has any active users
@@ -120,6 +124,26 @@ class PlatformStatisticsEntity extends Equatable {
     return totalRevenue / totalCompletedBookings;
   }
 
+  /// Get date labels for the last 7 days (Mon, Tue, Wed, etc.)
+  List<String> get revenueDateLabels {
+    final now = DateTime.now();
+    final labels = <String>[];
+    for (int i = 6; i >= 0; i--) {
+      final date = now.subtract(Duration(days: i));
+      final dayName = [
+        'Sun',
+        'Mon',
+        'Tue',
+        'Wed',
+        'Thu',
+        'Fri',
+        'Sat',
+      ][date.weekday % 7];
+      labels.add(dayName);
+    }
+    return labels;
+  }
+
   /// Calculate field utilization rate (bookings / fields)
   double get fieldUtilizationRate {
     if (activeFields == 0) return 0.0;
@@ -157,6 +181,7 @@ class PlatformStatisticsEntity extends Equatable {
     bookingsThisMonth,
     totalRevenue,
     revenueThisMonth,
+    dailyRevenue,
   ];
 
   @override

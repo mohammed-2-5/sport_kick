@@ -15,7 +15,7 @@ class CancelBookingUseCase {
   }) async {
     // Validate reason is not empty
     if (reason.trim().isEmpty) {
-      return Left(ValidationFailure('Cancellation reason is required'));
+      return const Left(ValidationFailure('Cancellation reason is required'));
     }
 
     return await repository.cancelBooking(

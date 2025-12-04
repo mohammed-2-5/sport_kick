@@ -84,4 +84,12 @@ abstract class AuthRepository {
   ///
   /// Returns true if session is valid, false otherwise.
   Future<bool> isSessionValid();
+
+  /// Changes the current user's password.
+  ///
+  /// Returns [void] on success or [Failure] on error.
+  Future<Either<Failure, void>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
 }

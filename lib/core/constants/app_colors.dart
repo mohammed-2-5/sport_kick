@@ -262,13 +262,48 @@ class AppColors {
 
   /// Shimmer gradient for loading effect
   static const LinearGradient shimmerGradient = LinearGradient(
-    colors: [
-      shimmerBase,
-      shimmerHighlight,
-      shimmerBase,
-    ],
+    colors: [shimmerBase, shimmerHighlight, shimmerBase],
     stops: [0.0, 0.5, 1.0],
     begin: Alignment(-1.0, -0.5),
     end: Alignment(1.0, 0.5),
   );
+  // ==================== PREMIUM PALETTE (COMFORTABLE LUXURY) ====================
+
+  /// Premium Background (Deep Matte Charcoal)
+  static const Color premiumBackground = Color(0xFF121212);
+
+  /// Premium Surface (Dark Grey)
+  static const Color premiumSurface = Color(0xFF1E1E1E);
+
+  /// Premium Surface Highlight
+  static const Color premiumSurfaceHighlight = Color(0xFF2C2C2C);
+
+  /// Premium Primary Accent (Muted Gold)
+  static const Color premiumGold = Color(0xFFD4AF37);
+
+  /// Premium Secondary Accent (Soft Periwinkle)
+  static const Color premiumPeriwinkle = Color(0xFFA5A6F6);
+
+  /// Premium Text Primary (Off-White)
+  static const Color premiumTextPrimary = Color(0xFFE1E1E1);
+
+  /// Premium Text Secondary (Medium Grey)
+  static const Color premiumTextSecondary = Color(0xFFA0A0A0);
+
+  // ==================== LIGHT THEME PALETTE (CLEAN & BRIGHT) ====================
+
+  /// Light Theme Background (Soft White)
+  static const Color lightBackground = Color(0xFFF8F9FA);
+
+  /// Light Theme Surface (Pure White)
+  static const Color lightSurface = Color(0xFFFFFFFF);
+
+  /// Light Theme Text Primary (Dark Navy)
+  static const Color lightTextPrimary = Color(0xFF1A1F3A);
+
+  /// Light Theme Text Secondary (Medium Grey)
+  static const Color lightTextSecondary = Color(0xFF6C757D);
+
+  /// Light Theme Accent (Electric Cyan)
+  static const Color lightAccent = Color(0xFF00D9FF);
 }

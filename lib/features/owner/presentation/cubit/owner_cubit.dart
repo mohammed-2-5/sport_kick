@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/owner/domain/usecases/approve_booking_usecase.dart';
+import 'package:spo_kick/features/owner/domain/usecases/delete_field_usecase.dart';
 import 'package:spo_kick/features/owner/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/owner/domain/usecases/get_owner_fields_usecase.dart';
 import 'package:spo_kick/features/owner/domain/usecases/get_owner_revenue_usecase.dart';
@@ -18,6 +19,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   final RejectBookingUseCase rejectBookingUseCase;
   final GetOwnerRevenueUseCase getOwnerRevenueUseCase;
   final UpdateOwnerProfileUseCase updateOwnerProfileUseCase;
+  final DeleteFieldUseCase deleteFieldUseCase;
 
   OwnerCubit({
     required this.getOwnerFieldsUseCase,
@@ -27,6 +29,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     required this.rejectBookingUseCase,
     required this.getOwnerRevenueUseCase,
     required this.updateOwnerProfileUseCase,
+    required this.deleteFieldUseCase,
   }) : super(const OwnerInitial());
 
   /// Load all fields owned by the owner
@@ -43,7 +46,13 @@ class OwnerCubit extends Cubit<OwnerState> {
       },
       (fields) {
         debugPrint('✅ [OwnerCubit] Loaded ${fields.length} fields');
-        emit(OwnerFieldsLoaded(fields));
+        // Preserve existing data
+        final currentState = state;
+        if (currentState is OwnerDataLoaded) {
+          emit(currentState.copyWith(fields: fields));
+        } else {
+          emit(OwnerDataLoaded(fields: fields));
+        }
       },
     );
   }
@@ -63,6 +72,25 @@ class OwnerCubit extends Cubit<OwnerState> {
       (field) {
         debugPrint('✅ [OwnerCubit] Field updated successfully');
         emit(const OwnerActionSuccess('Field updated successfully'));
+      },
+    );
+  }
+
+  /// Delete a field
+  Future<void> deleteField(String fieldId) async {
+    debugPrint('🔄 [OwnerCubit] Deleting field: $fieldId');
+    emit(const OwnerLoading(message: 'Deleting field...'));
+
+    final result = await deleteFieldUseCase(fieldId);
+
+    result.fold(
+      (failure) {
+        debugPrint('❌ [OwnerCubit] Error deleting field: ${failure.message}');
+        emit(OwnerError(failure.message));
+      },
+      (_) {
+        debugPrint('✅ [OwnerCubit] Field deleted successfully');
+        emit(const OwnerActionSuccess('Field deleted successfully'));
       },
     );
   }
@@ -87,7 +115,13 @@ class OwnerCubit extends Cubit<OwnerState> {
       },
       (bookings) {
         debugPrint('✅ [OwnerCubit] Loaded ${bookings.length} bookings');
-        emit(OwnerBookingsLoaded(bookings));
+        // Preserve existing data
+        final currentState = state;
+        if (currentState is OwnerDataLoaded) {
+          emit(currentState.copyWith(bookings: bookings));
+        } else {
+          emit(OwnerDataLoaded(bookings: bookings));
+        }
       },
     );
   }
@@ -151,7 +185,13 @@ class OwnerCubit extends Cubit<OwnerState> {
       },
       (revenue) {
         debugPrint('✅ [OwnerCubit] Revenue loaded successfully');
-        emit(OwnerRevenueLoaded(revenue));
+        // Preserve existing data
+        final currentState = state;
+        if (currentState is OwnerDataLoaded) {
+          emit(currentState.copyWith(revenue: revenue));
+        } else {
+          emit(OwnerDataLoaded(revenue: revenue));
+        }
       },
     );
   }

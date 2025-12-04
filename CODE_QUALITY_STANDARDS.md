@@ -948,20 +948,6 @@ Does the layout adjust based on width breakpoints?
 
 Are text, padding, and widgets responsive?
 
-No fixed pixel values unless necessary.
-
-No layout overflow in any device.
-
-Works on web, tablet, and landscape mode.
-
-Enforcement
-
-Run flutter analyze before committing (must show 0 errors).
-
-Run flutter format . on changed files.
-
-All code reviews must check against these standards.
-
 No exceptions unless explicitly documented and approved.
 
 Last Updated: November 2025

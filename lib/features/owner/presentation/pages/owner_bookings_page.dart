@@ -108,23 +108,27 @@ class _OwnerBookingsPageState extends State<OwnerBookingsPage>
             );
           }
 
-          if (state is OwnerBookingsLoaded) {
+          if (state is OwnerDataLoaded || state is OwnerBookingsLoaded) {
+            final bookings = state is OwnerDataLoaded
+                ? state.bookings
+                : (state as OwnerBookingsLoaded).bookings;
+
             return TabBarView(
               controller: _tabController,
               children: [
-                _buildBookingsList(state.bookings),
+                _buildBookingsList(bookings),
                 _buildBookingsList(
-                  state.bookings
+                  bookings
                       .where((b) => b.status == BookingStatus.pending)
                       .toList(),
                 ),
                 _buildBookingsList(
-                  state.bookings
+                  bookings
                       .where((b) => b.status == BookingStatus.confirmed)
                       .toList(),
                 ),
                 _buildBookingsList(
-                  state.bookings
+                  bookings
                       .where((b) => b.status == BookingStatus.canceled)
                       .toList(),
                 ),

@@ -87,7 +87,7 @@ class PdfExportService {
     // Share file
     await Share.shareXFiles([
       XFile(file.path),
-    ], text: 'Sport Kick Analytics Report');
+    ], subject: 'Sport Kick Analytics Report');
   }
 
   /// Build a statistics row for PDF

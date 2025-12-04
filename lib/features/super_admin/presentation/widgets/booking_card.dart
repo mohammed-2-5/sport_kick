@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/booking_status_badge.dart';
@@ -16,10 +17,9 @@ class BookingCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            '/booking-details',
-            arguments: booking.id,
+          context.pushNamed(
+            'bookingDetails',
+            pathParameters: {'bookingId': booking.id},
           );
         },
         borderRadius: BorderRadius.circular(12),

@@ -163,7 +163,7 @@ class AppTheme {
 
   // ==================== TEXT THEME ====================
 
-  static final TextTheme _textTheme = TextTheme(
+  static const TextTheme _textTheme = TextTheme(
     displayLarge: AppTextStyles.displayLarge,
     displayMedium: AppTextStyles.displayMedium,
     displaySmall: AppTextStyles.displaySmall,
@@ -387,12 +387,12 @@ class AppTheme {
 
   // ==================== TAB BAR THEME ====================
 
-  static final TabBarThemeData _tabBarThemeData = TabBarThemeData(
+  static const TabBarThemeData _tabBarThemeData = TabBarThemeData(
     labelColor: AppColors.primary,
     unselectedLabelColor: AppColors.mediumGrey,
     labelStyle: AppTextStyles.tab,
     unselectedLabelStyle: AppTextStyles.tab,
-    indicator: const UnderlineTabIndicator(
+    indicator: UnderlineTabIndicator(
       borderSide: BorderSide(color: AppColors.primary, width: 2),
     ),
   );

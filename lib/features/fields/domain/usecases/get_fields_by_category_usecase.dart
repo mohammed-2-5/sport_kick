@@ -24,15 +24,19 @@ class GetFieldsByCategoryUseCase {
   /// Execute the use case.
   ///
   /// [categoryId] - Sport category ID (e.g., 'football', 'basketball')
+  /// [cityId] - Optional city filter to show category fields in specific city
   ///
   /// Returns [Either] with:
   /// - [Failure] on error (network, server, etc.)
   /// - [List<FieldEntity>] on success
-  Future<Either<Failure, List<FieldEntity>>> call(String categoryId) async {
+  Future<Either<Failure, List<FieldEntity>>> call(
+    String categoryId, {
+    String? cityId,
+  }) async {
     if (categoryId.isEmpty) {
-      return Left(ValidationFailure('Category ID cannot be empty'));
+      return const Left(ValidationFailure('Category ID cannot be empty'));
     }
 
-    return await repository.getFieldsByCategory(categoryId);
+    return await repository.getFieldsByCategory(categoryId, cityId: cityId);
   }
 }

@@ -25,12 +25,12 @@ class CreateBookingUseCase {
     final todayDate = DateTime(today.year, today.month, today.day);
 
     if (bookingDate.isBefore(todayDate)) {
-      return Left(ValidationFailure('Cannot book a date in the past'));
+      return const Left(ValidationFailure('Cannot book a date in the past'));
     }
 
     // Validate time format
     if (!_isValidTimeFormat(startTime) || !_isValidTimeFormat(endTime)) {
-      return Left(ValidationFailure('Invalid time format'));
+      return const Left(ValidationFailure('Invalid time format'));
     }
 
     // Validate start time is before end time
@@ -38,12 +38,12 @@ class CreateBookingUseCase {
     final endHour = int.parse(endTime.split(':')[0]);
 
     if (startHour >= endHour) {
-      return Left(ValidationFailure('End time must be after start time'));
+      return const Left(ValidationFailure('End time must be after start time'));
     }
 
     // Validate totalPrice is positive
     if (totalPrice <= 0) {
-      return Left(ValidationFailure('Total price must be greater than zero'));
+      return const Left(ValidationFailure('Total price must be greater than zero'));
     }
 
     return await repository.createBooking(

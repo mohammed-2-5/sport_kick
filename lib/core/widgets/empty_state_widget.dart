@@ -48,44 +48,44 @@ class EmptyStateWidget extends StatelessWidget {
   });
 
   /// Empty bookings state
-  const EmptyStateWidget.bookings({
-    super.key,
-    this.actionText,
-    this.onAction,
-  })  : icon = Icons.event_busy_rounded,
-        title = 'No Bookings Yet',
-        message = 'You haven\'t made any bookings.\nStart by browsing available fields.',
-        iconColor = null;
+  const EmptyStateWidget.bookings({super.key, this.actionText, this.onAction})
+    : icon = Icons.event_busy_rounded,
+      title = 'No Bookings Yet',
+      message =
+          'You haven\'t made any bookings.\nStart by browsing available fields.',
+      iconColor = null;
 
   /// Empty fields state
   const EmptyStateWidget.fields({
     super.key,
     this.actionText,
     this.onAction,
-  })  : icon = Icons.sports_soccer_rounded,
-        title = 'No Fields Found',
-        message = 'We couldn\'t find any football fields.\nTry adjusting your search.',
-        iconColor = null;
+    String? message,
+  }) : icon = Icons.sports_soccer_rounded,
+       title = 'No Fields Found',
+       message =
+           message ??
+           'We couldn\'t find any football fields.\nTry adjusting your search.',
+       iconColor = null;
 
   /// Empty search results
   const EmptyStateWidget.searchResults({
     super.key,
     this.actionText,
     this.onAction,
-  })  : icon = Icons.search_off_rounded,
-        title = 'No Results',
-        message = 'We couldn\'t find anything matching your search.\nTry different keywords.',
-        iconColor = null;
+  }) : icon = Icons.search_off_rounded,
+       title = 'No Results',
+       message =
+           'We couldn\'t find anything matching your search.\nTry different keywords.',
+       iconColor = null;
 
   /// Empty favorites
-  const EmptyStateWidget.favorites({
-    super.key,
-    this.actionText,
-    this.onAction,
-  })  : icon = Icons.favorite_border_rounded,
-        title = 'No Favorites',
-        message = 'You haven\'t added any favorite fields yet.\nTap the heart icon to save fields.',
-        iconColor = null;
+  const EmptyStateWidget.favorites({super.key, this.actionText, this.onAction})
+    : icon = Icons.favorite_border_rounded,
+      title = 'No Favorites',
+      message =
+          'You haven\'t added any favorite fields yet.\nTap the heart icon to save fields.',
+      iconColor = null;
 
   @override
   Widget build(BuildContext context) {

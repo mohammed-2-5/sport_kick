@@ -30,4 +30,7 @@ abstract class OwnerRemoteDataSource {
     String? fullName,
     String? phone,
   });
+
+  /// Delete a field
+  Future<void> deleteField(String fieldId);
 }

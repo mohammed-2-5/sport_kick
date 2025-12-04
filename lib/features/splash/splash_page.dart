@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_strings.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
-import 'package:spo_kick/core/routes/app_router.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
+import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
 
 /// Splash screen displayed when app starts.
 ///
@@ -17,7 +19,7 @@ import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 /// 2. Check auth state
 /// 3. Navigate to appropriate screen based on role:
 ///    - Admin/Super Admin → Owner Dashboard
-///    - Regular User → Home
+///    - Regular User → City Selection (if no city) or Home (if city selected)
 ///    - Not authenticated → Login
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -45,20 +47,14 @@ class _SplashPageState extends State<SplashPage>
       duration: const Duration(milliseconds: 1500),
     );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
       ),
     );
 
-    _scaleAnimation = Tween<double>(
-      begin: 0.5,
-      end: 1.0,
-    ).animate(
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
@@ -87,17 +83,43 @@ class _SplashPageState extends State<SplashPage>
 
       if (userRole == 'super_admin') {
         // Super admin goes to super admin dashboard
-        Navigator.pushReplacementNamed(context, AppRouter.superAdminDashboard);
+        context.goNamed('superAdminDashboard');
       } else if (userRole == 'admin') {
         // Field owner goes to owner dashboard
-        Navigator.pushReplacementNamed(context, AppRouter.ownerDashboard);
+        context.goNamed('ownerDashboard');
       } else {
-        // Regular users go to home
-        Navigator.pushReplacementNamed(context, AppRouter.home);
+        // Regular users - check if city is selected
+        await _checkCityAndNavigate();
       }
     } else {
       // Not authenticated - go to login
-      Navigator.pushReplacementNamed(context, AppRouter.login);
+      context.goNamed('login');
+    }
+  }
+
+  /// Check if user has selected a city and navigate accordingly
+  Future<void> _checkCityAndNavigate() async {
+    if (!mounted) return;
+
+    debugPrint('🔍 [SPLASH] Checking selected city...');
+    final cityCubit = context.read<CityCubit>();
+    await cityCubit.loadSelectedCity();
+
+    if (!mounted) return;
+
+    final cityState = cityCubit.state;
+    debugPrint('🔍 [SPLASH] City State: $cityState');
+
+    // If no city selected, go to city selection page
+    if (cityState is! CitySelected) {
+      debugPrint('⚠️ [SPLASH] No city selected, navigating to selection page');
+      context.goNamed('citySelection');
+    } else {
+      debugPrint(
+        '✅ [SPLASH] City selected: ${cityState.city.name}, navigating to home',
+      );
+      // City selected, go to home
+      context.goNamed('home');
     }
   }
 
@@ -112,14 +134,11 @@ class _SplashPageState extends State<SplashPage>
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              AppColors.primary,
-              AppColors.primaryDark,
-            ],
+            colors: [AppColors.primary, AppColors.primaryDark],
           ),
         ),
         child: SafeArea(

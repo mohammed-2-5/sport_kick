@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_strings.dart';
-import 'package:spo_kick/core/routes/app_router.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -26,10 +27,12 @@ class RegisterPage extends StatelessWidget {
           listener: (context, state) {
             if (state is Authenticated) {
               // Navigate to home on successful registration
-              Navigator.pushReplacementNamed(context, AppRouter.home);
+              context.goNamed('home');
             } else if (state is AuthError) {
               // Print error to console
-              print('🔴 Registration Error (UI): ${state.message}');
+              if (kDebugMode) {
+                print('🔴 Registration Error (UI): ${state.message}');
+              }
 
               // Show error message
               ScaffoldMessenger.of(context).showSnackBar(

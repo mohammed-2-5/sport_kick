@@ -2,23 +2,22 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/bulk_selection_app_bar.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/user_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/user_filter_sheet.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/selectable_user_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_empty_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_search_bar.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_stats.dart';
 import 'package:spo_kick/features/super_admin/utils/user_filter_helper.dart';
 
 /// Users List Page
 ///
 /// Displays all regular customer accounts.
-/// Allows super admin to:
-/// - View user details
-/// - Search/filter users
-/// - View user booking history
-/// - Deactivate/activate users
 class UsersListPage extends StatelessWidget {
   const UsersListPage({super.key});
 
@@ -307,91 +306,30 @@ class _UsersListViewState extends State<_UsersListView>
                   },
                   child: Column(
                     children: [
-                      // Search Bar
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.primary.withValues(alpha: 0.05),
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            hintText:
-                                'Search users by name, email, or phone...',
-                            prefixIcon: const Icon(Icons.search),
-                            suffixIcon: _searchQuery.isNotEmpty
-                                ? IconButton(
-                                    icon: const Icon(Icons.clear),
-                                    onPressed: () {
-                                      _searchController.clear();
-                                      setState(() => _searchQuery = '');
-                                    },
-                                  )
-                                : null,
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                          ),
-                          onChanged: _onSearchChanged,
-                        ),
+                      UserListSearchBar(
+                        controller: _searchController,
+                        searchQuery: _searchQuery,
+                        onChanged: _onSearchChanged,
+                        onClear: () {
+                          _searchController.clear();
+                          setState(() => _searchQuery = '');
+                        },
                       ),
-
-                      // Stats Summary
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.people,
-                              size: 20,
-                              color: Colors.grey[600],
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              'Showing ${filteredUsers.length} of $totalCount users',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const Spacer(),
-                            if (isSelectionMode)
-                              Text(
-                                '$selectedCount selected',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            else
-                              Text(
-                                '$activeCount active',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.green[700],
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                          ],
-                        ),
+                      UserListStats(
+                        filteredCount: filteredUsers.length,
+                        totalCount: totalCount,
+                        activeCount: activeCount,
+                        isSelectionMode: isSelectionMode,
+                        selectedCount: selectedCount,
                       ),
-
-                      // Users List
                       Expanded(
                         child: filteredUsers.isEmpty
-                            ? _buildEmptyState()
+                            ? UserListEmptyState(
+                                hasFilters:
+                                    _searchQuery.isNotEmpty ||
+                                    _statusFilter != null ||
+                                    _dateRange != null,
+                              )
                             : ListView.builder(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
@@ -404,100 +342,21 @@ class _UsersListViewState extends State<_UsersListView>
                                     user.id,
                                   );
 
-                                  return Stack(
-                                    children: [
-                                      UserCard(
-                                        user: user,
-                                        onTap: () {
-                                          if (isSelectionMode) {
-                                            toggleSelection(user.id);
-                                          } else {
-                                            Navigator.pushNamed(
-                                              context,
-                                              '/super-admin/user-details',
-                                              arguments: user,
-                                            );
-                                          }
-                                        },
-                                      ),
-                                      // Selection Overlay
-                                      if (isSelectionMode)
-                                        Positioned.fill(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: InkWell(
-                                              onTap: () =>
-                                                  toggleSelection(user.id),
-                                              onLongPress: () =>
-                                                  toggleSelection(user.id),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: isSelected
-                                                      ? Theme.of(context)
-                                                            .colorScheme
-                                                            .primary
-                                                            .withValues(
-                                                              alpha: 0.1,
-                                                            )
-                                                      : Colors.transparent,
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  border: isSelected
-                                                      ? Border.all(
-                                                          color: Theme.of(
-                                                            context,
-                                                          ).colorScheme.primary,
-                                                          width: 2,
-                                                        )
-                                                      : null,
-                                                ),
-                                                child: isSelected
-                                                    ? Align(
-                                                        alignment:
-                                                            Alignment.topRight,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets.all(
-                                                                8.0,
-                                                              ),
-                                                          child: Icon(
-                                                            Icons.check_circle,
-                                                            color:
-                                                                Theme.of(
-                                                                      context,
-                                                                    )
-                                                                    .colorScheme
-                                                                    .primary,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : null,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      else
-                                        Positioned.fill(
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: InkWell(
-                                              onLongPress: () =>
-                                                  toggleSelection(user.id),
-                                              onTap: () {
-                                                Navigator.pushNamed(
-                                                  context,
-                                                  '/super-admin/user-details',
-                                                  arguments: user,
-                                                );
-                                              },
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                          ),
-                                        ),
-                                    ],
+                                  return SelectableUserCard(
+                                    user: user,
+                                    isSelectionMode: isSelectionMode,
+                                    isSelected: isSelected,
+                                    onTap: () {
+                                      if (isSelectionMode) {
+                                        toggleSelection(user.id);
+                                      } else {
+                                        context.pushNamed(
+                                          'superAdminUserDetails',
+                                          extra: user,
+                                        );
+                                      }
+                                    },
+                                    onLongPress: () => toggleSelection(user.id),
                                   );
                                 },
                               ),
@@ -512,40 +371,6 @@ class _UsersListViewState extends State<_UsersListView>
           ),
         );
       },
-    );
-  }
-
-  Widget _buildEmptyState() {
-    final hasFilters =
-        _searchQuery.isNotEmpty || _statusFilter != null || _dateRange != null;
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            hasFilters ? Icons.search_off : Icons.people_outlined,
-            size: 80,
-            color: Colors.grey[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            hasFilters ? 'No Results Found' : 'No Users Yet',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            hasFilters
-                ? 'Try adjusting your filters'
-                : 'Users will appear here once they register',
-            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
     );
   }
 }

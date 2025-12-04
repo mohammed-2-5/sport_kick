@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/features/auth/presentation/pages/admin_login_page.dart';
+import 'package:spo_kick/features/auth/presentation/pages/change_password_page.dart';
+import 'package:spo_kick/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:spo_kick/features/auth/presentation/pages/login_page.dart';
 import 'package:spo_kick/features/auth/presentation/pages/profile_page.dart';
 import 'package:spo_kick/features/auth/presentation/pages/register_page.dart';
@@ -14,14 +17,20 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/pages/favorites_page.dart';
 import 'package:spo_kick/features/fields/presentation/pages/field_details_page.dart';
 import 'package:spo_kick/features/fields/presentation/pages/fields_list_page.dart';
+import 'package:spo_kick/features/fields/presentation/pages/fields_map_page.dart';
 import 'package:spo_kick/features/fields/presentation/pages/search_page.dart';
-import 'package:spo_kick/features/home/presentation/pages/home_page.dart';
+import 'package:spo_kick/features/home/presentation/pages/main_layout_page.dart';
+import 'package:spo_kick/features/reviews/presentation/pages/create_review_page.dart';
+import 'package:spo_kick/features/reviews/presentation/pages/all_reviews_page.dart';
+import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/pages/add_edit_field_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/create_manual_booking_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_analytics_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_bookings_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_dashboard_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_fields_page.dart';
+import 'package:spo_kick/features/owner/presentation/pages/owner_settings_page.dart';
+import 'package:spo_kick/features/owner/presentation/pages/owner_profile_page.dart';
 import 'package:spo_kick/features/splash/splash_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_dashboard_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/create_admin_page.dart';
@@ -35,8 +44,16 @@ import 'package:spo_kick/features/super_admin/presentation/pages/all_fields_page
 import 'package:spo_kick/features/super_admin/presentation/pages/all_bookings_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/platform_analytics_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_settings_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
+import 'package:spo_kick/features/city/presentation/pages/city_selection_page.dart';
+import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:spo_kick/features/settings/presentation/pages/user_settings_page.dart';
+import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/edit_profile_dialog.dart';
+import 'package:spo_kick/features/settings/presentation/pages/privacy_policy_page.dart';
+import 'package:spo_kick/features/settings/presentation/pages/terms_of_service_page.dart';
 
 /// Application routing configuration.
 ///
@@ -65,6 +82,18 @@ class AppRouter {
 
   /// Register screen route
   static const String register = '/register';
+
+  /// Admin login screen route
+  static const String adminLogin = '/admin-login';
+
+  /// Change password screen route
+  static const String changePassword = '/change-password';
+
+  /// Forgot password screen route
+  static const String forgotPassword = '/forgot-password';
+
+  /// City selection screen route
+  static const String citySelection = '/city-selection';
 
   /// Home screen route (fields list)
   static const String home = '/home';
@@ -96,11 +125,28 @@ class AppRouter {
   /// Settings screen route
   static const String settings = '/settings';
 
+  /// Privacy policy screen route
+  static const String privacyPolicy = '/privacy-policy';
+
+  /// Terms of service screen route
+  static const String termsOfService = '/terms-of-service';
+
   /// Search fields screen route
   static const String search = '/search';
 
   /// Favorites screen route
   static const String favorites = '/favorites';
+
+  /// Fields map view screen route
+  static const String fieldsMap = '/fields-map';
+
+  /// Create/edit review screen route
+  /// Arguments: Map with fieldId, fieldName, and optional bookingId, reviewId, existingRating, existingComment
+  static const String createReview = '/create-review';
+
+  /// All reviews for a field screen route
+  /// Arguments: Map with fieldId, fieldName, and optional averageRating, totalReviews
+  static const String allReviews = '/all-reviews';
 
   // Owner Dashboard Routes
   /// Owner dashboard main screen route
@@ -124,6 +170,16 @@ class AppRouter {
 
   /// Owner analytics screen route
   static const String ownerAnalytics = '/owner/analytics';
+
+  /// Owner profile screen route
+  static const String ownerProfile = '/owner/profile';
+
+  /// Owner revenue analytics screen route
+  static const String ownerRevenue = '/owner/revenue';
+
+  /// Owner field detail screen route
+  /// Arguments: FieldEntity field
+  static const String ownerFieldDetail = '/owner/fields/detail';
 
   /// Owner settings screen route
   static const String ownerSettings = '/owner/settings';
@@ -192,10 +248,38 @@ class AppRouter {
           builder: (_) => const RegisterPage(),
         );
 
+      case adminLogin:
+        return _buildRoute(
+          settings: routeSettings,
+          builder: (_) => const AdminLoginPage(),
+        );
+
+      case changePassword:
+        final isFirstLogin = routeSettings.arguments as bool? ?? false;
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => ChangePasswordPage(isFirstLogin: isFirstLogin),
+        );
+
+      case forgotPassword:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const ForgotPasswordPage(),
+        );
+
+      case citySelection:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => BlocProvider(
+            create: (_) => sl<CityCubit>(),
+            child: const CitySelectionPage(),
+          ),
+        );
+
       case home:
         return _buildRoute(
           settings: routeSettings,
-          builder: (_) => const HomePage(),
+          builder: (_) => const MainLayoutPage(),
         );
 
       case fieldsList:
@@ -258,17 +342,28 @@ class AppRouter {
       case editProfile:
         return _buildRoute(
           settings: routeSettings,
-          // TODO: Import and use EditProfilePage when implemented
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Edit Profile Page'))),
+          builder: (context) => const _EditProfilePageWrapper(),
         );
 
       case settings:
-        return _buildRoute(
+        return _buildSlideRoute(
           settings: routeSettings,
-          // TODO: Import and use SettingsPage when implemented
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Settings Page'))),
+          builder: (_) => BlocProvider(
+            create: (_) => sl<SettingsCubit>(),
+            child: const UserSettingsPage(),
+          ),
+        );
+
+      case privacyPolicy:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const PrivacyPolicyPage(),
+        );
+
+      case termsOfService:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const TermsOfServicePage(),
         );
 
       case search:
@@ -281,6 +376,53 @@ class AppRouter {
         return _buildSlideRoute(
           settings: routeSettings,
           builder: (_) => const FavoritesPage(),
+        );
+
+      case fieldsMap:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => const FieldsMapPage(),
+        );
+
+      case createReview:
+        // Expects: Map with fieldId, fieldName, and optional bookingId, reviewId, existingRating, existingComment
+        final args = routeSettings.arguments as Map<String, dynamic>?;
+        if (args == null ||
+            !args.containsKey('fieldId') ||
+            !args.containsKey('fieldName')) {
+          return _buildErrorRoute('Field information is required');
+        }
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => BlocProvider(
+            create: (_) => sl<ReviewsCubit>(),
+            child: CreateReviewPage(
+              fieldId: args['fieldId'] as String,
+              fieldName: args['fieldName'] as String,
+              bookingId: args['bookingId'] as String?,
+              existingRating: args['existingRating'] as int?,
+              existingComment: args['existingComment'] as String?,
+              reviewId: args['reviewId'] as String?,
+            ),
+          ),
+        );
+
+      case allReviews:
+        // Expects: Map with fieldId, fieldName, and optional averageRating, totalReviews
+        final args = routeSettings.arguments as Map<String, dynamic>?;
+        if (args == null ||
+            !args.containsKey('fieldId') ||
+            !args.containsKey('fieldName')) {
+          return _buildErrorRoute('Field information is required');
+        }
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => AllReviewsPage(
+            fieldId: args['fieldId'] as String,
+            fieldName: args['fieldName'] as String,
+            averageRating: args['averageRating'] as double?,
+            totalReviews: args['totalReviews'] as int?,
+          ),
         );
 
       // Owner Dashboard Routes
@@ -324,11 +466,14 @@ class AppRouter {
         );
 
       case ownerEditField:
-        // Expects: String fieldId
-        final fieldId = routeSettings.arguments as String?;
+        // Expects: FieldEntity field
+        final field = routeSettings.arguments as FieldEntity?;
+        if (field == null) {
+          return _buildErrorRoute('Field is required');
+        }
         return _buildSlideRoute(
           settings: routeSettings,
-          builder: (_) => AddEditFieldPage(fieldId: fieldId),
+          builder: (_) => AddEditFieldPage(field: field),
         );
 
       case ownerAnalytics:
@@ -336,6 +481,7 @@ class AppRouter {
           settings: routeSettings,
           builder: (_) => MultiBlocProvider(
             providers: [
+              BlocProvider(create: (_) => sl<OwnerCubit>()),
               BlocProvider(
                 create: (_) => sl<BookingCubit>()..loadOwnerBookings(),
               ),
@@ -346,12 +492,17 @@ class AppRouter {
         );
 
       case ownerSettings:
-        return _buildRoute(
+        return _buildSlideRoute(
           settings: routeSettings,
-          // TODO: Create owner settings page
-          builder: (_) => Scaffold(
-            appBar: AppBar(title: Text('Owner Settings')),
-            body: Center(child: Text('Owner Settings Page')),
+          builder: (_) => const OwnerSettingsPage(),
+        );
+
+      case ownerProfile:
+        return _buildSlideRoute(
+          settings: routeSettings,
+          builder: (_) => BlocProvider(
+            create: (_) => sl<OwnerCubit>(),
+            child: const OwnerProfilePage(),
           ),
         );
 
@@ -359,7 +510,10 @@ class AppRouter {
       case superAdminDashboard:
         return _buildSlideRoute(
           settings: routeSettings,
-          builder: (_) => const SuperAdminDashboardPage(),
+          builder: (_) => BlocProvider(
+            create: (_) => sl<SuperAdminCubit>()..loadPlatformStatistics(),
+            child: const SuperAdminDashboardPage(),
+          ),
         );
 
       case superAdminCreateAdmin:
@@ -516,6 +670,51 @@ class AppRouter {
         ),
       ),
     );
+  }
+}
+
+/// Wrapper page that shows EditProfileDialog and pops when done.
+///
+/// This is used for the /edit-profile route to show the dialog
+/// as a full page route rather than an overlay.
+class _EditProfilePageWrapper extends StatefulWidget {
+  const _EditProfilePageWrapper();
+
+  @override
+  State<_EditProfilePageWrapper> createState() =>
+      _EditProfilePageWrapperState();
+}
+
+class _EditProfilePageWrapperState extends State<_EditProfilePageWrapper> {
+  @override
+  void initState() {
+    super.initState();
+    // Show dialog after first frame is rendered
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showEditDialog();
+    });
+  }
+
+  Future<void> _showEditDialog() async {
+    if (!mounted) return;
+
+    await showDialog<void>(
+      context: context,
+      builder: (_) => BlocProvider.value(
+        value: context.read<AuthCubit>(),
+        child: const EditProfileDialog(),
+      ),
+    );
+
+    // Pop this route when dialog is closed
+    if (mounted && Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }
 

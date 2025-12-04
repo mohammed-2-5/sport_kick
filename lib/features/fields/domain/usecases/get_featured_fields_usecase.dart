@@ -23,10 +23,11 @@ class GetFeaturedFieldsUseCase {
 
   /// Execute the use case.
   ///
+  /// [cityId] - Optional city filter to show featured fields in specific city
   /// Returns [Either] with:
   /// - [Failure] on error (network, server, etc.)
   /// - [List<FieldEntity>] on success
-  Future<Either<Failure, List<FieldEntity>>> call() async {
-    return await repository.getFeaturedFields();
+  Future<Either<Failure, List<FieldEntity>>> call({String? cityId}) async {
+    return await repository.getFeaturedFields(cityId: cityId);
   }
 }

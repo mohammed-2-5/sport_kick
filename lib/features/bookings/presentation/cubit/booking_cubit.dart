@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/cancel_booking_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/create_booking_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/create_manual_booking_usecase.dart';

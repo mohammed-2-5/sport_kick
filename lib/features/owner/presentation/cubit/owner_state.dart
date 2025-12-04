@@ -26,6 +26,34 @@ class OwnerLoading extends OwnerState {
   List<Object?> get props => [message];
 }
 
+/// Combined data loaded state - holds all owner data
+class OwnerDataLoaded extends OwnerState {
+  final List<FieldEntity> fields;
+  final List<BookingEntity> bookings;
+  final OwnerRevenueEntity? revenue;
+
+  const OwnerDataLoaded({
+    this.fields = const [],
+    this.bookings = const [],
+    this.revenue,
+  });
+
+  OwnerDataLoaded copyWith({
+    List<FieldEntity>? fields,
+    List<BookingEntity>? bookings,
+    OwnerRevenueEntity? revenue,
+  }) {
+    return OwnerDataLoaded(
+      fields: fields ?? this.fields,
+      bookings: bookings ?? this.bookings,
+      revenue: revenue ?? this.revenue,
+    );
+  }
+
+  @override
+  List<Object?> get props => [fields, bookings, revenue];
+}
+
 /// Error state
 class OwnerError extends OwnerState {
   final String message;
@@ -36,6 +64,7 @@ class OwnerError extends OwnerState {
   List<Object?> get props => [message];
 }
 
+/// @deprecated Use OwnerDataLoaded instead
 /// Fields loaded successfully
 class OwnerFieldsLoaded extends OwnerState {
   final List<FieldEntity> fields;
@@ -46,6 +75,7 @@ class OwnerFieldsLoaded extends OwnerState {
   List<Object?> get props => [fields];
 }
 
+/// @deprecated Use OwnerDataLoaded instead
 /// Bookings loaded successfully
 class OwnerBookingsLoaded extends OwnerState {
   final List<BookingEntity> bookings;
@@ -56,6 +86,7 @@ class OwnerBookingsLoaded extends OwnerState {
   List<Object?> get props => [bookings];
 }
 
+/// @deprecated Use OwnerDataLoaded instead
 /// Revenue loaded successfully
 class OwnerRevenueLoaded extends OwnerState {
   final OwnerRevenueEntity revenue;

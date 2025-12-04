@@ -3,7 +3,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:spo_kick/core/errors/exceptions.dart';
 import 'package:spo_kick/features/bookings/data/models/booking_model.dart';
 import 'package:spo_kick/features/bookings/data/models/time_slot_model.dart';
-import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 
 import '../../domain/entities/booking_status.dart';
 
@@ -55,7 +54,7 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   String get _currentUserId {
     final user = supabaseClient.auth.currentUser;
     if (user == null) {
-      throw AuthenticationException('User not authenticated');
+      throw const AuthenticationException('User not authenticated');
     }
     return user.id;
   }
@@ -77,17 +76,15 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           .order('booking_date', ascending: false)
           .order('start_time', ascending: false);
 
-      if (response == null) {
-        throw ServerException('Failed to load bookings');
-      }
-
       final bookings = (response as List)
           .map((json) => BookingModel.fromJson(json as Map<String, dynamic>))
           .toList();
 
       debugPrint('✅ Found ${bookings.length} bookings');
       if (bookings.isNotEmpty) {
-        debugPrint('   First booking: ${bookings.first.id} - Status: ${bookings.first.status.displayName}');
+        debugPrint(
+          '   First booking: ${bookings.first.id} - Status: ${bookings.first.status.displayName}',
+        );
       }
 
       return bookings;
@@ -108,11 +105,11 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           .eq('id', bookingId)
           .single();
 
-      return BookingModel.fromJson(response as Map<String, dynamic>);
+      return BookingModel.fromJson(response);
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
         // No rows returned
-        throw NotFoundException('Booking not found');
+        throw const NotFoundException('Booking not found');
       }
       throw ServerException('Database error: ${e.message}');
     } catch (e) {
@@ -158,9 +155,14 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
         final status = booking['status'] as String;
 
         // Normalize time format: "08:00:00" -> "08:00"
-        final normalizedTime = startTime.substring(0, 5); // Get first 5 chars (HH:MM)
+        final normalizedTime = startTime.substring(
+          0,
+          5,
+        ); // Get first 5 chars (HH:MM)
 
-        debugPrint('   Booked: $startTime -> $normalizedTime (status: $status)');
+        debugPrint(
+          '   Booked: $startTime -> $normalizedTime (status: $status)',
+        );
         bookedSlots.add(normalizedTime);
       }
 
@@ -190,7 +192,7 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       return slots;
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
-        throw NotFoundException('Field not found');
+        throw const NotFoundException('Field not found');
       }
       throw ServerException('Database error: ${e.message}');
     } catch (e) {
@@ -219,13 +221,16 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       debugPrint('✅ Booking created successfully: ${response['id']}');
 
       // Parse response and include field details
-      final json = response as Map<String, dynamic>;
+      final json = response;
 
       // Extract field details from join
       final fieldData = json['field'] as Map<String, dynamic>?;
       if (fieldData != null) {
         json['field_name'] = fieldData['name'];
-        json['field_image'] = (fieldData['images'] as List?)?.first;
+        final images = fieldData['images'] as List?;
+        json['field_image'] = (images != null && images.isNotEmpty)
+            ? images.first
+            : null;
       }
 
       return BookingModel.fromJson(json);
@@ -233,10 +238,10 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       // Handle specific error codes
       if (e.code == '23P01') {
         // exclusion_violation - double booking
-        throw ConflictException('This time slot is already booked');
+        throw const ConflictException('This time slot is already booked');
       } else if (e.code == '23503') {
         // foreign_key_violation
-        throw ValidationException('Invalid field or user ID');
+        throw const ValidationException('Invalid field or user ID');
       } else if (e.code == '23514') {
         // check_violation
         throw ValidationException('Invalid booking data: ${e.message}');
@@ -248,10 +253,7 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   }
 
   @override
-  Future<BookingModel> cancelBooking(
-    String bookingId,
-    String reason,
-  ) async {
+  Future<BookingModel> cancelBooking(String bookingId, String reason) async {
     try {
       // Update booking status to canceled
       // RLS policies ensure user can only cancel their own bookings
@@ -264,23 +266,29 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           })
           .eq('id', bookingId)
           .eq('user_id', _currentUserId)
-          .inFilter('status', ['pending', 'confirmed']) // Can only cancel these statuses
+          .inFilter('status', [
+            'pending',
+            'confirmed',
+          ]) // Can only cancel these statuses
           .select('*, field:fields(name, images)')
           .single();
 
-      final json = response as Map<String, dynamic>;
+      final json = response;
 
       // Extract field details
       final fieldData = json['field'] as Map<String, dynamic>?;
       if (fieldData != null) {
         json['field_name'] = fieldData['name'];
-        json['field_image'] = (fieldData['images'] as List?)?.first;
+        final images = fieldData['images'] as List?;
+        json['field_image'] = (images != null && images.isNotEmpty)
+            ? images.first
+            : null;
       }
 
       return BookingModel.fromJson(json);
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
-        throw NotFoundException('Booking not found or cannot be canceled');
+        throw const NotFoundException('Booking not found or cannot be canceled');
       }
       throw ServerException('Database error: ${e.message}');
     } catch (e) {
@@ -308,19 +316,22 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           .select('*, field:fields(name, images)')
           .single();
 
-      final json = response as Map<String, dynamic>;
+      final json = response;
 
       // Extract field details
       final fieldData = json['field'] as Map<String, dynamic>?;
       if (fieldData != null) {
         json['field_name'] = fieldData['name'];
-        json['field_image'] = (fieldData['images'] as List?)?.first;
+        final images = fieldData['images'] as List?;
+        json['field_image'] = (images != null && images.isNotEmpty)
+            ? images.first
+            : null;
       }
 
       return BookingModel.fromJson(json);
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
-        throw NotFoundException('Booking not found');
+        throw const NotFoundException('Booking not found');
       }
       throw ServerException('Database error: ${e.message}');
     } catch (e) {
@@ -345,10 +356,6 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           .eq('status', status.toShortString())
           .order('booking_date', ascending: false)
           .order('start_time', ascending: false);
-
-      if (response == null) {
-        throw ServerException('Failed to load bookings');
-      }
 
       return (response as List)
           .map((json) => BookingModel.fromJson(json as Map<String, dynamic>))
@@ -392,17 +399,15 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           .order('booking_date', ascending: false)
           .order('start_time', ascending: false);
 
-      if (response == null) {
-        throw ServerException('Failed to load owner bookings');
-      }
-
       final bookings = (response as List)
           .map((json) => BookingModel.fromJson(json as Map<String, dynamic>))
           .toList();
 
       debugPrint('✅ Found ${bookings.length} bookings for owner');
       if (bookings.isNotEmpty) {
-        debugPrint('   First booking: ${bookings.first.fieldName} - ${bookings.first.status.displayName}');
+        debugPrint(
+          '   First booking: ${bookings.first.fieldName} - ${bookings.first.status.displayName}',
+        );
       }
 
       return bookings;
@@ -428,10 +433,6 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
           .select()
           .order('booking_date', ascending: false)
           .order('start_time', ascending: false);
-
-      if (response == null) {
-        throw ServerException('Failed to load all bookings');
-      }
 
       final bookings = (response as List)
           .map((json) => BookingModel.fromJson(json as Map<String, dynamic>))
@@ -463,7 +464,9 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       insertData['user_id'] = _currentUserId;
 
       debugPrint('📝 Creating manual booking by admin: $_currentUserId');
-      debugPrint('📝 Customer: ${booking.customerName} (${booking.customerPhone})');
+      debugPrint(
+        '📝 Customer: ${booking.customerName} (${booking.customerPhone})',
+      );
       debugPrint('📝 Booking data: $insertData');
 
       // Insert new manual booking
@@ -477,13 +480,16 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       debugPrint('✅ Manual booking created successfully: ${response['id']}');
 
       // Parse response and include field details
-      final json = response as Map<String, dynamic>;
+      final json = response;
 
       // Extract field details from join
       final fieldData = json['field'] as Map<String, dynamic>?;
       if (fieldData != null) {
         json['field_name'] = fieldData['name'];
-        json['field_image'] = (fieldData['images'] as List?)?.first;
+        final images = fieldData['images'] as List?;
+        json['field_image'] = (images != null && images.isNotEmpty)
+            ? images.first
+            : null;
       }
 
       return BookingModel.fromJson(json);
@@ -494,10 +500,10 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       // Handle specific error codes
       if (e.code == '23P01') {
         // exclusion_violation - double booking
-        throw ConflictException('This time slot is already booked');
+        throw const ConflictException('This time slot is already booked');
       } else if (e.code == '23503') {
         // foreign_key_violation
-        throw ValidationException('Invalid field ID');
+        throw const ValidationException('Invalid field ID');
       } else if (e.code == '23514') {
         // check_violation
         throw ValidationException('Invalid booking data: ${e.message}');

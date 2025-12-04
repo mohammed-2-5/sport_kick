@@ -48,7 +48,7 @@ class RevenueTrendsChart extends StatelessWidget {
           padding: const EdgeInsets.only(right: 16, top: 16),
           child: LineChart(
             LineChartData(
-              gridData: FlGridData(show: true, drawVerticalLine: false),
+              gridData: const FlGridData(show: true, drawVerticalLine: false),
               titlesData: FlTitlesData(
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
@@ -92,9 +92,9 @@ class RevenueTrendsChart extends StatelessWidget {
                   ),
                 ),
                 rightTitles:
-                    AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 topTitles:
-                    AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
               ),
               borderData: FlBorderData(show: false),
               lineBarsData: [
@@ -107,7 +107,7 @@ class RevenueTrendsChart extends StatelessWidget {
                     show: true,
                     color: Colors.green.withValues(alpha: 0.2),
                   ),
-                  dotData: FlDotData(show: true),
+                  dotData: const FlDotData(show: true),
                 ),
               ],
             ),

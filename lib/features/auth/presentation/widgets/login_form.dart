@@ -167,8 +167,8 @@ class LoginFormState extends State<LoginForm> {
               // Close dialog
               Navigator.pop(dialogContext);
 
-              // TODO: Implement password reset
-              // context.read<AuthCubit>().resetPassword(email: email);
+              // Send password reset email
+              context.read<AuthCubit>().resetPassword(email);
 
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(

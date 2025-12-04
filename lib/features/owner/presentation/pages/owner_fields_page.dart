@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
@@ -47,14 +48,12 @@ class _OwnerFieldsPageState extends State<OwnerFieldsPage> {
         centerTitle: true,
         elevation: 0,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: AppGradients.primary,
-          ),
+          decoration: const BoxDecoration(gradient: AppGradients.primary),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushNamed(context, '/owner/fields/add');
+          context.pushNamed('ownerAddField');
         },
         backgroundColor: AppColors.primary,
         icon: const Icon(Icons.add_rounded),
@@ -66,13 +65,15 @@ class _OwnerFieldsPageState extends State<OwnerFieldsPage> {
       body: BlocBuilder<OwnerCubit, OwnerState>(
         builder: (context, state) {
           if (state is OwnerLoading) {
-            return const LoadingIndicator.inline(
-              message: 'Loading fields...',
-            );
+            return const LoadingIndicator.inline(message: 'Loading fields...');
           }
 
-          if (state is OwnerFieldsLoaded) {
-            if (state.fields.isEmpty) {
+          if (state is OwnerDataLoaded || state is OwnerFieldsLoaded) {
+            final fields = state is OwnerDataLoaded
+                ? state.fields
+                : (state as OwnerFieldsLoaded).fields;
+
+            if (fields.isEmpty) {
               return _buildEmptyState();
             }
 
@@ -80,17 +81,13 @@ class _OwnerFieldsPageState extends State<OwnerFieldsPage> {
               onRefresh: () async => _loadFields(),
               child: ListView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: state.fields.length,
+                itemCount: fields.length,
                 itemBuilder: (context, index) {
-                  final field = state.fields[index];
+                  final field = fields[index];
                   return OwnerFieldCard(
                     field: field,
                     onEdit: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/owner/fields/edit',
-                        arguments: field.id,
-                      );
+                      context.pushNamed('ownerEditField', extra: field);
                     },
                     onDelete: () => _handleDelete(field),
                   );
@@ -151,14 +148,7 @@ class _OwnerFieldsPageState extends State<OwnerFieldsPage> {
           TextButton(
             onPressed: () {
               Navigator.pop(dialogContext);
-              // TODO: Implement delete field logic with OwnerCubit
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Field deleted successfully'),
-                  backgroundColor: AppColors.success,
-                  behavior: SnackBarBehavior.floating,
-                ),
-              );
+              context.read<OwnerCubit>().deleteField(field.id);
             },
             child: const Text(
               'Delete',
@@ -179,7 +169,7 @@ class _OwnerFieldsPageState extends State<OwnerFieldsPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(28),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: AppGradients.primary,
                 boxShadow: AppShadows.large,
@@ -193,19 +183,13 @@ class _OwnerFieldsPageState extends State<OwnerFieldsPage> {
             const SizedBox(height: 32),
             const Text(
               'No Fields Yet',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             const Text(
               'Start by adding your first football field',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 15,
-                color: AppColors.textSecondary,
-              ),
+              style: TextStyle(fontSize: 15, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 32),
             Container(
@@ -218,7 +202,7 @@ class _OwnerFieldsPageState extends State<OwnerFieldsPage> {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/owner/fields/add');
+                    context.pushNamed('ownerAddField');
                   },
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
@@ -229,11 +213,7 @@ class _OwnerFieldsPageState extends State<OwnerFieldsPage> {
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          Icons.add_rounded,
-                          color: Colors.white,
-                          size: 24,
-                        ),
+                        Icon(Icons.add_rounded, color: Colors.white, size: 24),
                         SizedBox(width: 12),
                         Text(
                           'Add Your First Field',

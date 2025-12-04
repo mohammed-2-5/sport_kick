@@ -1,10 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/core/errors/failures.dart';
+import 'package:spo_kick/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/login_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/register_usecase.dart';
+import 'package:spo_kick/features/auth/domain/usecases/reset_password_usecase.dart';
+import 'package:spo_kick/features/auth/domain/usecases/update_profile_usecase.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+
+import '../../domain/entities/user_entity.dart';
 
 /// Cubit for managing authentication state.
 ///
@@ -20,12 +25,18 @@ class AuthCubit extends Cubit<AuthState> {
   final RegisterUseCase registerUseCase;
   final LogoutUseCase logoutUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
+  final ChangePasswordUseCase changePasswordUseCase;
+  final ResetPasswordUseCase resetPasswordUseCase;
+  final UpdateProfileUseCase updateProfileUseCase;
 
   AuthCubit({
     required this.loginUseCase,
     required this.registerUseCase,
     required this.logoutUseCase,
     required this.getCurrentUserUseCase,
+    required this.changePasswordUseCase,
+    required this.resetPasswordUseCase,
+    required this.updateProfileUseCase,
   }) : super(const AuthInitial());
 
   /// Checks if user is currently logged in.
@@ -124,6 +135,65 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) => emit(AuthError(failure.message)),
       (_) => emit(const Unauthenticated()),
+    );
+  }
+
+  /// Changes the user's password.
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final result = await changePasswordUseCase(
+      ChangePasswordParams(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      ),
+    );
+
+    result.fold(
+      (failure) {
+        print('❌ Password Change Error: ${failure.message}');
+        emit(AuthError(failure.message));
+        checkAuthStatus();
+      },
+      (_) {
+        print('✅ Password Change Success');
+        emit(const PasswordChanged());
+        checkAuthStatus();
+      },
+    );
+  }
+
+  /// Resets the user's password via email.
+  Future<void> resetPassword(String email) async {
+    emit(const AuthLoading());
+    final result = await resetPasswordUseCase(email);
+    result.fold(
+      (failure) => emit(AuthError(failure.message)),
+      (success) => emit(const PasswordResetEmailSent()),
+    );
+  }
+
+  /// Updates the user's profile information.
+  Future<void> updateProfile({String? fullName, String? phone}) async {
+    emit(const AuthLoading());
+
+    final result = await updateProfileUseCase(
+      UpdateProfileParams(fullName: fullName, phone: phone),
+    );
+
+    result.fold(
+      (failure) {
+        print('❌ Profile Update Error: ${failure.message}');
+        emit(AuthError(failure.message));
+        // Re-emit authenticated state with current user to restore UI
+        checkAuthStatus();
+      },
+      (updatedUser) {
+        print('✅ Profile Update Success: ${updatedUser.displayName}');
+        emit(ProfileUpdated(updatedUser));
+        emit(Authenticated(updatedUser));
+      },
     );
   }
 

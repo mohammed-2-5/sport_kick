@@ -13,12 +13,6 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/bookings_stat
 import 'package:spo_kick/features/super_admin/utils/booking_filter_helper.dart';
 
 /// All Bookings Management Page
-///
-/// Super admin page showing all bookings in the system with:
-/// - Search functionality with debouncing
-/// - Advanced filters (status, date range, field)
-/// - Booking statistics
-/// - Booking cards with details
 class AllBookingsPage extends StatelessWidget {
   const AllBookingsPage({super.key});
 
@@ -43,10 +37,8 @@ class _AllBookingsViewState extends State<_AllBookingsView> {
   Timer? _debounceTimer;
   String _searchQuery = '';
 
-  // Filter state
-  BookingStatus? _statusFilter;
+  String? _statusFilter;
   DateTimeRange? _dateRange;
-  String? _fieldFilter;
 
   @override
   void dispose() {
@@ -58,49 +50,50 @@ class _AllBookingsViewState extends State<_AllBookingsView> {
   void _onSearchChanged(String value) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 300), () {
-      setState(() {
-        _searchQuery = value;
-      });
+      setState(() => _searchQuery = value);
     });
   }
 
-  bool get _hasActiveFilters =>
-      _statusFilter != null || _dateRange != null || _fieldFilter != null;
+  bool get _hasActiveFilters => _statusFilter != null || _dateRange != null;
 
   List<BookingEntity> _filterBookings(List<BookingEntity> bookings) {
     return BookingFilterHelper.filterBookings(
       bookings,
       searchQuery: _searchQuery,
-      statusFilter: _statusFilter,
+      statusFilter: _statusFilter != null
+          ? BookingStatus.values.firstWhere((s) => s.name == _statusFilter)
+          : null,
       dateRange: _dateRange,
-      fieldFilter: _fieldFilter,
     );
   }
 
   void _showFilterSheet(List<BookingEntity> allBookings) {
-    final fieldNames = BookingFilterHelper.getUniqueFieldNames(allBookings);
-
-    BookingStatus? tempStatus = _statusFilter;
-    DateTimeRange? tempDateRange = _dateRange;
-    String? tempField = _fieldFilter;
+    String? tempStatus = _statusFilter;
+    DateTimeRange? tempDate = _dateRange;
+    final availableFields = allBookings
+        .map((b) => b.fieldName ?? 'Unknown')
+        .toSet()
+        .toList();
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (c) => StatefulBuilder(
         builder: (_, setSheetState) => BookingFilterSheet(
-          statusFilter: tempStatus,
-          dateRange: tempDateRange,
-          fieldFilter: tempField,
-          availableFields: fieldNames,
-          onStatusChanged: (v) => setSheetState(() => tempStatus = v),
-          onDateRangeChanged: (r) => setSheetState(() => tempDateRange = r),
-          onFieldChanged: (v) => setSheetState(() => tempField = v),
+          statusFilter: tempStatus != null
+              ? BookingStatus.values.firstWhere((s) => s.name == tempStatus)
+              : null,
+          dateRange: tempDate,
+          fieldFilter: null,
+          availableFields: availableFields,
+          onStatusChanged: (status) =>
+              setSheetState(() => tempStatus = status?.name),
+          onDateRangeChanged: (r) => setSheetState(() => tempDate = r),
+          onFieldChanged: (_) {},
           onApply: () {
             setState(() {
               _statusFilter = tempStatus;
-              _dateRange = tempDateRange;
-              _fieldFilter = tempField;
+              _dateRange = tempDate;
             });
             Navigator.pop(context);
           },
@@ -108,7 +101,6 @@ class _AllBookingsViewState extends State<_AllBookingsView> {
             setState(() {
               _statusFilter = null;
               _dateRange = null;
-              _fieldFilter = null;
             });
             Navigator.pop(context);
           },
@@ -211,9 +203,6 @@ class _AllBookingsViewState extends State<_AllBookingsView> {
             final allBookings = state.bookings.cast<BookingEntity>();
             final filteredBookings = _filterBookings(allBookings);
 
-            // Sort by date (most recent first)
-            filteredBookings.sort((a, b) => b.date.compareTo(a.date));
-
             return RefreshIndicator(
               onRefresh: () async {
                 context.read<SuperAdminCubit>().loadAllBookings();
@@ -221,28 +210,23 @@ class _AllBookingsViewState extends State<_AllBookingsView> {
               },
               child: CustomScrollView(
                 slivers: [
-                  // Statistics Section
                   SliverToBoxAdapter(
                     child: BookingsStatisticsSection(bookings: allBookings),
                   ),
-
-                  // Search Bar
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: 'Search by customer, field, or booking ID...',
+                          hintText: 'Search by user, field, or booking ID...',
                           prefixIcon: const Icon(Icons.search),
                           suffixIcon: _searchQuery.isNotEmpty
                               ? IconButton(
                                   icon: const Icon(Icons.clear),
                                   onPressed: () {
-                                    setState(() {
-                                      _searchController.clear();
-                                      _searchQuery = '';
-                                    });
+                                    _searchController.clear();
+                                    setState(() => _searchQuery = '');
                                   },
                                 )
                               : null,
@@ -256,25 +240,46 @@ class _AllBookingsViewState extends State<_AllBookingsView> {
                       ),
                     ),
                   ),
-
-                  // Results count
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: Text(
                         '${filteredBookings.length} booking${filteredBookings.length != 1 ? 's' : ''} found',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey[600],
-                            ),
+                          color: Colors.grey[600],
+                        ),
                       ),
                     ),
                   ),
-
-                  const SliverToBoxAdapter(child: SizedBox(height: 8)),
-
-                  // Bookings List
                   if (filteredBookings.isEmpty)
-                    _buildEmptyState(context)
+                    SliverFillRemaining(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.event_note_outlined,
+                              size: 64,
+                              color: Colors.grey[400],
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'No bookings found',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Try adjusting your search or filters',
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.grey[600]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   else
                     SliverPadding(
                       padding: const EdgeInsets.all(16),
@@ -282,7 +287,9 @@ class _AllBookingsViewState extends State<_AllBookingsView> {
                         delegate: SliverChildBuilderDelegate(
                           (context, index) => Padding(
                             padding: const EdgeInsets.only(bottom: 16),
-                            child: BookingCard(booking: filteredBookings[index]),
+                            child: BookingCard(
+                              booking: filteredBookings[index],
+                            ),
                           ),
                           childCount: filteredBookings.length,
                         ),
@@ -295,35 +302,6 @@ class _AllBookingsViewState extends State<_AllBookingsView> {
 
           return const Center(child: CircularProgressIndicator());
         },
-      ),
-    );
-  }
-
-  Widget _buildEmptyState(BuildContext context) {
-    return SliverFillRemaining(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.event_busy,
-              size: 64,
-              color: Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'No bookings found',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Try adjusting your search or filters',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-            ),
-          ],
-        ),
       ),
     );
   }

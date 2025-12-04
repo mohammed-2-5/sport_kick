@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Booking status enum
-enum BookingStatus {
-  pending,
-  confirmed,
-  canceled,
-  completed,
-}
+enum BookingStatus { pending, confirmed, canceled, completed }
 
 /// Extension to convert string to BookingStatus
 extension BookingStatusExtension on String {
@@ -80,6 +75,20 @@ extension BookingStatusStringExtension on BookingStatus {
         return const LinearGradient(
           colors: [Color(0xFF42A5F5), Color(0xFF64B5F6)],
         );
+    }
+  }
+
+  /// Icon for status
+  IconData get icon {
+    switch (this) {
+      case BookingStatus.pending:
+        return Icons.pending_actions_rounded;
+      case BookingStatus.confirmed:
+        return Icons.check_circle_rounded;
+      case BookingStatus.canceled:
+        return Icons.cancel_rounded;
+      case BookingStatus.completed:
+        return Icons.done_all_rounded;
     }
   }
 }

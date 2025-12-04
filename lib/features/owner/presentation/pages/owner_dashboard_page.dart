@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -7,8 +8,8 @@ import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/dashboard/dashboard_quick_actions.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/dashboard_stats_section.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/quick_action_card.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/recent_bookings_section.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/welcome_header.dart';
 
@@ -51,9 +52,7 @@ class _OwnerDashboardPageState extends State<OwnerDashboardPage> {
         centerTitle: true,
         elevation: 0,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: AppGradients.primary,
-          ),
+          decoration: const BoxDecoration(gradient: AppGradients.primary),
         ),
       ),
       body: RefreshIndicator(
@@ -77,7 +76,28 @@ class _OwnerDashboardPageState extends State<OwnerDashboardPage> {
                   const SizedBox(height: 32),
 
                   // Quick Actions
-                  _buildQuickActions(),
+                  DashboardQuickActions(
+                    onManualBooking: () async {
+                      final result = await context.pushNamed(
+                        'ownerCreateManualBooking',
+                      );
+                      if (result == true && mounted) {
+                        _loadDashboardData();
+                      }
+                    },
+                    onManageBookings: () {
+                      context.pushNamed('ownerBookings');
+                    },
+                    onManageFields: () {
+                      context.pushNamed('ownerFields');
+                    },
+                    onAnalytics: () {
+                      context.pushNamed('ownerAnalytics');
+                    },
+                    onSettings: () {
+                      context.pushNamed('ownerSettings');
+                    },
+                  ),
 
                   const SizedBox(height: 32),
 
@@ -102,161 +122,21 @@ class _OwnerDashboardPageState extends State<OwnerDashboardPage> {
       );
     }
 
-    // Extract data from different state types
-    final bookings = state is OwnerBookingsLoaded
+    // Extract data from OwnerDataLoaded state
+    final bookings = state is OwnerDataLoaded
         ? state.bookings
-        : <BookingEntity>[];
-    final fields = state is OwnerFieldsLoaded
+        : (state is OwnerBookingsLoaded ? state.bookings : <BookingEntity>[]);
+    final fields = state is OwnerDataLoaded
         ? state.fields
-        : <FieldEntity>[];
-    final revenue = state is OwnerRevenueLoaded
-        ? state.revenue.totalRevenue
-        : 0.0;
+        : (state is OwnerFieldsLoaded ? state.fields : <FieldEntity>[]);
+    final revenue = state is OwnerDataLoaded
+        ? (state.revenue?.totalRevenue ?? 0.0)
+        : (state is OwnerRevenueLoaded ? state.revenue.totalRevenue : 0.0);
 
     return DashboardStatsSection(
       bookings: bookings,
       fields: fields,
       revenue: revenue,
-    );
-  }
-
-  Widget _buildQuickActions() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Quick Actions',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 16),
-
-        // Create Manual Booking - Primary Action
-        SizedBox(
-          width: double.infinity,
-          height: 70,
-          child: ElevatedButton(
-            onPressed: () async {
-              final result = await Navigator.pushNamed(
-                context,
-                '/owner/bookings/manual',
-              );
-              if (result == true && mounted) {
-                _loadDashboardData();
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4CAF50),
-              foregroundColor: Colors.white,
-              elevation: 2,
-              shadowColor: const Color(0xFF4CAF50).withValues(alpha: 0.4),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.add_circle_outline,
-                    size: 28,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Create Manual Booking',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'For walk-in customers',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: QuickActionCard(
-                title: 'Manage\nBookings',
-                icon: Icons.list_alt_rounded,
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFFF6B6B), Color(0xFFFF8E53)],
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/owner/bookings');
-                },
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: QuickActionCard(
-                title: 'Manage\nFields',
-                icon: Icons.stadium_rounded,
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/owner/fields');
-                },
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: QuickActionCard(
-                title: 'Analytics',
-                icon: Icons.bar_chart_rounded,
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF26A69A), Color(0xFF4DB6AC)],
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/owner/analytics');
-                },
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: QuickActionCard(
-                title: 'Settings',
-                icon: Icons.settings_rounded,
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFAB47BC), Color(0xFFBA68C8)],
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, '/owner/settings');
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 
@@ -270,14 +150,14 @@ class _OwnerDashboardPageState extends State<OwnerDashboardPage> {
       );
     }
 
-    final bookings = state is OwnerBookingsLoaded
+    final bookings = state is OwnerDataLoaded
         ? state.bookings
-        : <BookingEntity>[];
+        : (state is OwnerBookingsLoaded ? state.bookings : <BookingEntity>[]);
 
     return RecentBookingsSection(
       bookings: bookings,
       onViewAll: () {
-        Navigator.pushNamed(context, '/owner/bookings');
+        context.pushNamed('ownerBookings');
       },
     );
   }

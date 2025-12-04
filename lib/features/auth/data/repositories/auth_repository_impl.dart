@@ -28,7 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     // Check network connectivity
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
 
     try {
@@ -55,7 +55,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     // Check network connectivity
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
 
     try {
@@ -110,14 +110,14 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     // Check network connectivity
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
 
     try {
       // Get current user ID
       final currentUser = await remoteDataSource.getCurrentUser();
       if (currentUser == null) {
-        return Left(AuthFailure('No user is logged in'));
+        return const Left(AuthFailure('No user is logged in'));
       }
 
       final updatedUser = await remoteDataSource.updateProfile(
@@ -140,7 +140,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, void>> resetPassword({required String email}) async {
     // Check network connectivity
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
 
     try {
@@ -159,6 +159,29 @@ class AuthRepositoryImpl implements AuthRepository {
       return await remoteDataSource.isSessionValid();
     } catch (e) {
       return false;
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    // Check network connectivity
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+
+    try {
+      await remoteDataSource.changePassword(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      );
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure('Password change failed: ${e.toString()}'));
     }
   }
 }

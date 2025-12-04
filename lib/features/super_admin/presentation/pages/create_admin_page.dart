@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/create_admin/admin_form_info_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/create_admin/admin_success_dialog.dart';
 
 /// Create Admin Account Page
 ///
 /// Allows super admin to create new field owner accounts.
-/// Displays generated credentials that must be saved.
 class CreateAdminPage extends StatelessWidget {
   const CreateAdminPage({super.key});
 
@@ -60,175 +60,12 @@ class _CreateAdminViewState extends State<_CreateAdminView> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.green.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 32,
-              ),
-            ),
-            const SizedBox(width: 12),
-            const Text('Admin Created!'),
-          ],
-        ),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Admin account has been created successfully. Please save these credentials:',
-                style: TextStyle(fontSize: 14),
-              ),
-              const SizedBox(height: 20),
-              _buildCredentialField(
-                'Email',
-                state.invitation.email,
-                Icons.email,
-              ),
-              const SizedBox(height: 12),
-              _buildCredentialField(
-                'Password',
-                state.invitation.defaultPassword,
-                Icons.lock,
-                isPassword: true,
-              ),
-              const SizedBox(height: 12),
-              _buildCredentialField(
-                'Full Name',
-                state.invitation.fullName,
-                Icons.person,
-              ),
-              if (state.invitation.phone != null) ...[
-                const SizedBox(height: 12),
-                _buildCredentialField(
-                  'Phone',
-                  state.invitation.phone!,
-                  Icons.phone,
-                ),
-              ],
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: Colors.orange.withValues(alpha: 0.3),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.warning_amber, color: Colors.orange, size: 20),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Admin must change password on first login',
-                        style: TextStyle(fontSize: 12, color: Colors.orange),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Clipboard.setData(
-                ClipboardData(
-                  text:
-                      'Email: ${state.invitation.email}\n'
-                      'Password: ${state.invitation.defaultPassword}\n'
-                      'Name: ${state.invitation.fullName}',
-                ),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Credentials copied to clipboard'),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            },
-            child: const Text('Copy All'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              Navigator.of(context).pop(); // Go back to dashboard
-            },
-            child: const Text('Done'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCredentialField(
-    String label,
-    String value,
-    IconData icon, {
-    bool isPassword = false,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 20, color: Colors.grey[600]),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: isPassword
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                    color: isPassword ? Colors.deepPurple : Colors.black87,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.copy, size: 18),
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: value));
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('$label copied'),
-                  duration: const Duration(seconds: 1),
-                ),
-              );
-            },
-            tooltip: 'Copy $label',
-          ),
-        ],
+      builder: (dialogContext) => AdminSuccessDialog(
+        invitation: state.invitation,
+        onDone: () {
+          Navigator.of(dialogContext).pop();
+          Navigator.of(context).pop();
+        },
       ),
     );
   }
@@ -272,46 +109,7 @@ class _CreateAdminViewState extends State<_CreateAdminView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Info Card
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.blue.withValues(alpha: 0.3),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline, color: Colors.blue),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Create Field Owner Account',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'A secure password will be generated automatically. The admin must change it on first login.',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
+                  const AdminFormInfoCard(),
                   const SizedBox(height: 24),
 
                   // Email Field

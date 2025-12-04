@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_strings.dart';
-import 'package:spo_kick/core/routes/app_router.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -43,16 +43,10 @@ class _LoginPageState extends State<LoginPage> {
               if (_loginMode == 'admin') {
                 if (userRole == 'super_admin') {
                   // Super admin goes to super admin dashboard
-                  Navigator.pushReplacementNamed(
-                    context,
-                    AppRouter.superAdminDashboard,
-                  );
+                  context.goNamed('superAdminDashboard');
                 } else if (userRole == 'admin') {
                   // Field owner goes to owner dashboard
-                  Navigator.pushReplacementNamed(
-                    context,
-                    AppRouter.ownerDashboard,
-                  );
+                  context.goNamed('ownerDashboard');
                 } else {
                   // User selected admin but doesn't have admin role
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -65,11 +59,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   );
                   // Navigate to home anyway
-                  Navigator.pushReplacementNamed(context, AppRouter.home);
+                  context.goNamed('home');
                 }
               } else {
                 // Regular user login - navigate to home
-                Navigator.pushReplacementNamed(context, AppRouter.home);
+                context.goNamed('home');
               }
             } else if (state is AuthError) {
               // Print error to console
@@ -209,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, AppRouter.register);
+                            context.pushNamed('register');
                           },
                           child: const Text('Sign Up'),
                         ),

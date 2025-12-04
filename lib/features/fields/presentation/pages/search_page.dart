@@ -6,6 +6,9 @@ import 'package:spo_kick/core/routes/app_router.dart';
 import 'package:spo_kick/core/utils/search_history.dart';
 import 'package:spo_kick/core/widgets/app_error_widget.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
+import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
+import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_switcher_button.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/field_card.dart';
@@ -73,13 +76,46 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the current city if available
+    final cityState = context.read<CityCubit>().state;
+    String? initialCityId;
+
+    if (cityState is CitySelected) {
+      initialCityId = cityState.city.id;
+    } else if (cityState is CitySaved) {
+      initialCityId = cityState.city.id;
+    } else if (cityState is CitiesLoaded && cityState.selectedCityId != null) {
+      initialCityId = cityState.selectedCityId;
+    }
+
     return BlocProvider(
-      create: (context) => sl<FieldsCubit>(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Search Fields'),
-          elevation: 0,
-        ),
+      create: (context) {
+        final cubit = sl<FieldsCubit>();
+        // Set the initial city if available
+        if (initialCityId != null) {
+          cubit.setCurrentCity(initialCityId);
+        }
+        return cubit;
+      },
+      child: BlocListener<CityCubit, CityState>(
+        listener: (context, cityState) {
+          // Update fields when city changes
+          if (cityState is CitySelected) {
+            context.read<FieldsCubit>().setCurrentCity(cityState.city.id);
+          } else if (cityState is CitySaved) {
+            context.read<FieldsCubit>().setCurrentCity(cityState.city.id);
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            leading: const Padding(
+              padding: EdgeInsets.only(left: 4.0),
+              child: CitySwitcherButton(),
+            ),
+            leadingWidth: 140,
+            title: const Text('Search Fields'),
+            elevation: 0,
+          ),
         body: Column(
           children: [
             // Search Bar
@@ -118,6 +154,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

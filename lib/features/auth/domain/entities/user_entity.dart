@@ -30,6 +30,9 @@ class UserEntity extends Equatable {
   /// List of preferred sport category IDs
   final List<String> preferredSports;
 
+  /// Whether the user has changed their password after first login
+  final bool passwordChanged;
+
   /// Account creation timestamp
   final DateTime createdAt;
 
@@ -45,6 +48,7 @@ class UserEntity extends Equatable {
     this.isActive = true,
     this.avatarUrl,
     this.preferredSports = const [],
+    this.passwordChanged = false,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -59,6 +63,7 @@ class UserEntity extends Equatable {
     bool? isActive,
     String? avatarUrl,
     List<String>? preferredSports,
+    bool? passwordChanged,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -71,6 +76,7 @@ class UserEntity extends Equatable {
       isActive: isActive ?? this.isActive,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       preferredSports: preferredSports ?? this.preferredSports,
+      passwordChanged: passwordChanged ?? this.passwordChanged,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -110,6 +116,7 @@ class UserEntity extends Equatable {
     isActive,
     avatarUrl,
     preferredSports,
+    passwordChanged,
     createdAt,
     updatedAt,
   ];

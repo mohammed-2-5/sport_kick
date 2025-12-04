@@ -66,7 +66,7 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
   String get _currentUserId {
     final user = supabaseClient.auth.currentUser;
     if (user == null) {
-      throw AuthenticationException('User not authenticated');
+      throw const AuthenticationException('User not authenticated');
     }
     return user.id;
   }
@@ -88,7 +88,16 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
       debugPrint('   Total Bookings: ${response['total_bookings']}');
       debugPrint('   Total Revenue: ${response['total_revenue']}');
 
-      return PlatformStatisticsModel.fromJson(response);
+      // Fetch daily revenue for the last 7 days
+      debugPrint('📊 [SuperAdminDataSource] Fetching daily revenue trends...');
+      final dailyRevenue = await _getDailyRevenue();
+      debugPrint('✅ [SuperAdminDataSource] Daily revenue: $dailyRevenue');
+
+      // Merge daily revenue into response
+      final Map<String, dynamic> enhancedResponse = Map.from(response);
+      enhancedResponse['daily_revenue'] = dailyRevenue;
+
+      return PlatformStatisticsModel.fromJson(enhancedResponse);
     } on PostgrestException catch (e) {
       debugPrint('❌ [SuperAdminDataSource] PostgrestException: ${e.message}');
       debugPrint('   Code: ${e.code}');
@@ -136,7 +145,7 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
         debugPrint(
           '❌ [SuperAdminDataSource] Empty response from create-admin function',
         );
-        throw ServerException(
+        throw const ServerException(
           'Failed to create admin account (empty response)',
         );
       }
@@ -150,7 +159,7 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
 
         // Optionally map some common errors to ConflictException, etc.
         if (message.toLowerCase().contains('already exists')) {
-          throw ConflictException('Email already exists');
+          throw const ConflictException('Email already exists');
         }
 
         throw ServerException('Failed to create admin account: $message');
@@ -169,7 +178,7 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
       if (e.toString().contains('already exists') ||
           e.toString().contains('already registered')) {
         debugPrint('❌ [SuperAdminDataSource] Email conflict: $e');
-        throw ConflictException('Email already exists');
+        throw const ConflictException('Email already exists');
       }
       debugPrint('❌ [SuperAdminDataSource] Exception: $e');
       throw ServerException('Failed to create admin account: $e');
@@ -267,7 +276,7 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
       debugPrint('   Code: ${e.code}');
 
       if (e.code == 'PGRST116') {
-        throw NotFoundException('Admin or field not found');
+        throw const NotFoundException('Admin or field not found');
       }
 
       throw ServerException('Database error: ${e.message}');
@@ -503,11 +512,11 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
       debugPrint('   Details: ${e.details}');
 
       if (e.code == 'PGRST116' || e.code == '23503') {
-        throw NotFoundException('Admin or sport category not found');
+        throw const NotFoundException('Admin or sport category not found');
       }
 
       if (e.code == '23505') {
-        throw ConflictException('Field with this name already exists');
+        throw const ConflictException('Field with this name already exists');
       }
 
       throw ServerException('Database error: ${e.message}');
@@ -522,6 +531,61 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
     if (capacity <= 10) return '5-a-side';
     if (capacity <= 14) return '7-a-side';
     return '11-a-side';
+  }
+
+  /// Get daily revenue for the last 7 days from bookings table.
+  ///
+  /// Returns a list of 7 revenue values (in thousands) for the past 7 days,
+  /// ordered from oldest to newest.
+  Future<List<double>> _getDailyRevenue() async {
+    try {
+      // Calculate date 7 days ago
+      final sevenDaysAgo = DateTime.now().subtract(const Duration(days: 7));
+      final sevenDaysAgoStr = sevenDaysAgo.toIso8601String().split('T')[0];
+
+      debugPrint(
+        '📊 [SuperAdminDataSource] Querying bookings since: $sevenDaysAgoStr',
+      );
+
+      // Query bookings grouped by date
+      final response = await supabaseClient.rpc(
+        'get_daily_revenue',
+        params: {'days_back': 7},
+      );
+
+      if (response == null || response is! List || response.isEmpty) {
+        debugPrint(
+          '⚠️ [SuperAdminDataSource] No daily revenue data found, using zeros',
+        );
+        return List.filled(7, 0.0);
+      }
+
+      // Parse response into map of date -> revenue
+      final Map<String, double> revenueByDate = {};
+      for (final row in response) {
+        if (row is Map<String, dynamic>) {
+          final date = row['booking_date'] as String?;
+          final revenue = (row['daily_revenue'] as num?)?.toDouble() ?? 0.0;
+          if (date != null) {
+            revenueByDate[date] = revenue / 1000.0; // Convert to thousands
+          }
+        }
+      }
+
+      // Build list for last 7 days (oldest to newest)
+      final List<double> dailyRevenue = [];
+      for (int i = 6; i >= 0; i--) {
+        final date = DateTime.now().subtract(Duration(days: i));
+        final dateStr = date.toIso8601String().split('T')[0];
+        dailyRevenue.add(revenueByDate[dateStr] ?? 0.0);
+      }
+
+      return dailyRevenue;
+    } catch (e) {
+      debugPrint('⚠️ [SuperAdminDataSource] Error fetching daily revenue: $e');
+      // Return zeros if query fails (chart will still work)
+      return List.filled(7, 0.0);
+    }
   }
 
   /// Generate a secure default password for new admins.

@@ -22,6 +22,7 @@ class PlatformStatisticsModel extends PlatformStatisticsEntity {
     required super.bookingsThisMonth,
     required super.totalRevenue,
     required super.revenueThisMonth,
+    super.dailyRevenue = const [],
   });
 
   /// Create model from JSON (database response).
@@ -45,6 +46,7 @@ class PlatformStatisticsModel extends PlatformStatisticsEntity {
       bookingsThisMonth: _parseInt(json['bookings_this_month']),
       totalRevenue: _parseDouble(json['total_revenue']),
       revenueThisMonth: _parseDouble(json['revenue_this_month']),
+      dailyRevenue: _parseDoubleList(json['daily_revenue']),
     );
   }
 
@@ -67,6 +69,7 @@ class PlatformStatisticsModel extends PlatformStatisticsEntity {
       'bookings_this_month': bookingsThisMonth,
       'total_revenue': totalRevenue,
       'revenue_this_month': revenueThisMonth,
+      'daily_revenue': dailyRevenue,
     };
   }
 
@@ -86,6 +89,15 @@ class PlatformStatisticsModel extends PlatformStatisticsEntity {
     if (value is int) return value.toDouble();
     if (value is String) return double.tryParse(value) ?? 0.0;
     return 0.0;
+  }
+
+  /// Helper: Parse list of doubles from dynamic type
+  static List<double> _parseDoubleList(dynamic value) {
+    if (value == null) return [];
+    if (value is List) {
+      return value.map((e) => _parseDouble(e)).toList();
+    }
+    return [];
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/field_status_badge.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/metric_chip.dart';
@@ -13,16 +14,13 @@ class FieldCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
           // Navigate to field details
-          Navigator.pushNamed(
-            context,
-            '/field-details',
-            arguments: field.id,
+          context.pushNamed(
+            'fieldDetails',
+            pathParameters: {'fieldId': field.id},
           );
         },
         borderRadius: BorderRadius.circular(12),
@@ -148,10 +146,7 @@ class FieldCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       'Owner ID: ${field.ownerId!.substring(0, 8)}...',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                      ),
+                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
                     ),
                   ],
                 ),

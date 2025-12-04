@@ -16,9 +16,11 @@ class FieldRepositoryImpl implements FieldRepository {
   const FieldRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, List<FieldEntity>>> getAllFields() async {
+  Future<Either<Failure, List<FieldEntity>>> getAllFields({
+    String? cityId,
+  }) async {
     try {
-      final fields = await remoteDataSource.getAllFields();
+      final fields = await remoteDataSource.getAllFields(cityId: cityId);
       return Right(fields);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -46,9 +48,12 @@ class FieldRepositoryImpl implements FieldRepository {
   }
 
   @override
-  Future<Either<Failure, List<FieldEntity>>> searchFields(String query) async {
+  Future<Either<Failure, List<FieldEntity>>> searchFields(
+    String query, {
+    String? cityId,
+  }) async {
     try {
-      final fields = await remoteDataSource.searchFields(query);
+      final fields = await remoteDataSource.searchFields(query, cityId: cityId);
       return Right(fields);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -61,10 +66,14 @@ class FieldRepositoryImpl implements FieldRepository {
 
   @override
   Future<Either<Failure, List<FieldEntity>>> getFieldsByCategory(
-    String categoryId,
-  ) async {
+    String categoryId, {
+    String? cityId,
+  }) async {
     try {
-      final fields = await remoteDataSource.getFieldsByCategory(categoryId);
+      final fields = await remoteDataSource.getFieldsByCategory(
+        categoryId,
+        cityId: cityId,
+      );
       return Right(fields);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -92,9 +101,11 @@ class FieldRepositoryImpl implements FieldRepository {
   }
 
   @override
-  Future<Either<Failure, List<FieldEntity>>> getFeaturedFields() async {
+  Future<Either<Failure, List<FieldEntity>>> getFeaturedFields({
+    String? cityId,
+  }) async {
     try {
-      final fields = await remoteDataSource.getFeaturedFields();
+      final fields = await remoteDataSource.getFeaturedFields(cityId: cityId);
       return Right(fields);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -108,9 +119,13 @@ class FieldRepositoryImpl implements FieldRepository {
   @override
   Future<Either<Failure, List<FieldEntity>>> getPopularFields({
     int limit = 10,
+    String? cityId,
   }) async {
     try {
-      final fields = await remoteDataSource.getPopularFields(limit: limit);
+      final fields = await remoteDataSource.getPopularFields(
+        limit: limit,
+        cityId: cityId,
+      );
       return Right(fields);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -175,6 +190,7 @@ class FieldRepositoryImpl implements FieldRepository {
   Future<Either<Failure, List<FieldEntity>>> filterFields({
     String? categoryId,
     String? city,
+    String? cityId,
     double? minPrice,
     double? maxPrice,
     List<String>? amenities,
@@ -183,6 +199,7 @@ class FieldRepositoryImpl implements FieldRepository {
       final fields = await remoteDataSource.filterFields(
         categoryId: categoryId,
         city: city,
+        cityId: cityId,
         minPrice: minPrice,
         maxPrice: maxPrice,
         amenities: amenities,

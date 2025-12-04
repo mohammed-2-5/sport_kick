@@ -25,7 +25,14 @@
       "Bash(Select-String \"error -\")",
       "Bash(powershell -Command \"(Get-Content ''C:\\Users\\moham\\StudioProjects\\spo_kick\\lib\\features\\super_admin\\presentation\\pages\\admins_list_page.dart'').Count\")",
       "Bash(powershell -Command \"(Get-Content ''C:\\Users\\moham\\StudioProjects\\spo_kick\\lib\\features\\super_admin\\presentation\\pages\\users_list_page.dart'').Count\")",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(Select-String \"error -\" -Context 0,1)",
+      "Bash(Select-String -Pattern \"issue\" -Context 0,1)",
+      "Bash(cat:*)",
+      "Bash(Select-String -Pattern \"\\.env\")",
+      "Bash(Select-String -Pattern \"error|issue\" -Context 0,1)",
+      "Bash(Select-String \"city\" -Context 0,1)",
+      "Bash(Select-String \"app_router|user_settings_page\" -Context 0,1)"
     ],
     "deny": [],
     "ask": []

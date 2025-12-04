@@ -86,8 +86,16 @@ class ProfileUpdateError extends AuthState {
 }
 
 /// State when password reset email is sent successfully.
-class PasswordResetSent extends AuthState {
-  const PasswordResetSent();
+class PasswordResetEmailSent extends AuthState {
+  const PasswordResetEmailSent();
+}
+
+class ProfileUpdated extends AuthState {
+  final UserEntity user;
+  const ProfileUpdated(this.user);
+
+  @override
+  List<Object?> get props => [user];
 }
 
 /// State when password reset fails.
@@ -98,4 +106,9 @@ class PasswordResetError extends AuthState {
 
   @override
   List<Object?> get props => [message];
+}
+
+/// State when password is changed successfully.
+class PasswordChanged extends AuthState {
+  const PasswordChanged();
 }

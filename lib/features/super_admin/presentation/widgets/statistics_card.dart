@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 
 class StatisticsCard extends StatelessWidget {
   final String title;
@@ -21,14 +22,15 @@ class StatisticsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        color: AppColors.premiumSurface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
+            color: color.withValues(alpha: 0.1),
+            blurRadius: 12,
             offset: const Offset(0, 4),
           ),
         ],
@@ -37,59 +39,39 @@ class StatisticsCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Icon + Trend
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: color, size: 22),
-              ),
-              if (trend != null) _buildTrendIndicator(),
-            ],
-          ),
-
-          const SizedBox(height: 10),
-
-          // Number
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-
-          const SizedBox(height: 6),
-
           // Title
           Text(
             title,
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey[700],
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: AppColors.premiumTextSecondary,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
 
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
 
-          // Subtitle
+          // Value
           Text(
-            subtitle,
-            style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+            value,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: color,
+              shadows: [
+                Shadow(color: color.withValues(alpha: 0.5), blurRadius: 10),
+              ],
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
+
+          if (trend != null) ...[
+            const SizedBox(height: 8),
+            _buildTrendIndicator(),
+          ],
         ],
       ),
     );
@@ -97,30 +79,23 @@ class StatisticsCard extends StatelessWidget {
 
   Widget _buildTrendIndicator() {
     final isPositive = trend! >= 0;
-    final trendColor = isPositive ? Colors.green : Colors.red;
+    final trendColor = isPositive ? AppColors.success : AppColors.error;
     final trendIcon = isPositive ? Icons.trending_up : Icons.trending_down;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-      decoration: BoxDecoration(
-        color: trendColor.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(trendIcon, color: trendColor, size: 12),
-          const SizedBox(width: 2),
-          Text(
-            '${trend!.abs().toStringAsFixed(1)}%',
-            style: TextStyle(
-              color: trendColor,
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-            ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(trendIcon, color: trendColor, size: 14),
+        const SizedBox(width: 4),
+        Text(
+          '${trend!.abs().toStringAsFixed(1)}%',
+          style: TextStyle(
+            color: trendColor,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

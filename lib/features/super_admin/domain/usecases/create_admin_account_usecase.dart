@@ -57,17 +57,17 @@ class CreateAdminAccountUseCase {
   }) async {
     // Input validation
     if (email.trim().isEmpty) {
-      return Left(ValidationFailure('Email cannot be empty'));
+      return const Left(ValidationFailure('Email cannot be empty'));
     }
 
     if (fullName.trim().isEmpty) {
-      return Left(ValidationFailure('Full name cannot be empty'));
+      return const Left(ValidationFailure('Full name cannot be empty'));
     }
 
     // Email format validation
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(email)) {
-      return Left(ValidationFailure('Invalid email format'));
+      return const Left(ValidationFailure('Invalid email format'));
     }
 
     // Phone validation if provided
@@ -75,7 +75,7 @@ class CreateAdminAccountUseCase {
       // Basic phone validation (starts with +, has at least 10 digits)
       final phoneRegex = RegExp(r'^\+?[\d\s-]{10,}$');
       if (!phoneRegex.hasMatch(phone)) {
-        return Left(ValidationFailure('Invalid phone number format'));
+        return const Left(ValidationFailure('Invalid phone number format'));
       }
     }
 

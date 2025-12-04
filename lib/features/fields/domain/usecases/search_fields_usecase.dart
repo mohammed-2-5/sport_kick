@@ -23,24 +23,28 @@ class SearchFieldsUseCase {
   /// Execute the use case.
   ///
   /// [query] - Search term (field name, city, address)
+  /// [cityId] - Optional city filter to search only within specific city
   ///
   /// Returns [Either] with:
   /// - [Failure] on error (network, server, etc.)
   /// - [List<FieldEntity>] on success (empty list if no matches)
-  Future<Either<Failure, List<FieldEntity>>> call(String query) async {
+  Future<Either<Failure, List<FieldEntity>>> call(
+    String query, {
+    String? cityId,
+  }) async {
     // Trim and validate query
     final trimmedQuery = query.trim();
 
     if (trimmedQuery.isEmpty) {
-      return Left(ValidationFailure('Search query cannot be empty'));
+      return const Left(ValidationFailure('Search query cannot be empty'));
     }
 
     if (trimmedQuery.length < 2) {
-      return Left(
+      return const Left(
         ValidationFailure('Search query must be at least 2 characters'),
       );
     }
 
-    return await repository.searchFields(trimmedQuery);
+    return await repository.searchFields(trimmedQuery, cityId: cityId);
   }
 }

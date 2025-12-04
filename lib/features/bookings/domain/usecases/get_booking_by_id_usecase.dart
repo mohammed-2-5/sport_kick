@@ -11,7 +11,7 @@ class GetBookingByIdUseCase {
 
   Future<Either<Failure, BookingEntity>> call(String bookingId) async {
     if (bookingId.trim().isEmpty) {
-      return Left(ValidationFailure('Booking ID is required'));
+      return const Left(ValidationFailure('Booking ID is required'));
     }
 
     return await repository.getBookingById(bookingId);

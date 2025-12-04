@@ -33,9 +33,9 @@ abstract class AppException implements Exception {
 /// ```
 class ServerException extends AppException {
   const ServerException([
-    String message = 'Server error occurred',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Server error occurred',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when a local cache operation fails.
@@ -56,9 +56,9 @@ class ServerException extends AppException {
 /// ```
 class CacheException extends AppException {
   const CacheException([
-    String message = 'Cache error occurred',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Cache error occurred',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when there is no network connection.
@@ -73,9 +73,9 @@ class CacheException extends AppException {
 /// ```
 class NetworkException extends AppException {
   const NetworkException([
-    String message = 'No internet connection',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'No internet connection',
+    super.code,
+  ]);
 }
 
 /// Exception thrown during authentication operations.
@@ -94,9 +94,9 @@ class NetworkException extends AppException {
 /// ```
 class AuthException extends AppException {
   const AuthException([
-    String message = 'Authentication failed',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Authentication failed',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when input data is invalid.
@@ -114,9 +114,9 @@ class AuthException extends AppException {
 /// ```
 class ValidationException extends AppException {
   const ValidationException([
-    String message = 'Validation failed',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Validation failed',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when user is not authenticated or lacks valid session.
@@ -135,9 +135,9 @@ class ValidationException extends AppException {
 /// ```
 class AuthenticationException extends AppException {
   const AuthenticationException([
-    String message = 'Authentication required',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Authentication required',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when a resource conflict occurs.
@@ -156,9 +156,9 @@ class AuthenticationException extends AppException {
 /// ```
 class ConflictException extends AppException {
   const ConflictException([
-    String message = 'Resource conflict detected',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Resource conflict detected',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when a database operation fails.
@@ -179,9 +179,9 @@ class ConflictException extends AppException {
 /// ```
 class DatabaseException extends AppException {
   const DatabaseException([
-    String message = 'Database error occurred',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Database error occurred',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when a requested resource is not found.
@@ -199,9 +199,9 @@ class DatabaseException extends AppException {
 /// ```
 class NotFoundException extends AppException {
   const NotFoundException([
-    String message = 'Resource not found',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Resource not found',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when user doesn't have required permissions.
@@ -219,9 +219,9 @@ class NotFoundException extends AppException {
 /// ```
 class PermissionException extends AppException {
   const PermissionException([
-    String message = 'Permission denied',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Permission denied',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when an operation times out.
@@ -241,9 +241,9 @@ class PermissionException extends AppException {
 /// ```
 class TimeoutException extends AppException {
   const TimeoutException([
-    String message = 'Operation timed out',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Operation timed out',
+    super.code,
+  ]);
 }
 
 /// Exception thrown when data format is unexpected.
@@ -261,7 +261,7 @@ class TimeoutException extends AppException {
 /// ```
 class FormatException extends AppException {
   const FormatException([
-    String message = 'Invalid data format',
-    String? code,
-  ]) : super(message, code);
+    super.message = 'Invalid data format',
+    super.code,
+  ]);
 }

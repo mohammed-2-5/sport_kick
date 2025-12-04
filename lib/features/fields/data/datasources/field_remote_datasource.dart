@@ -9,25 +9,28 @@ import 'package:spo_kick/features/fields/data/models/sport_category_model.dart';
 /// Throws [ServerException] on any API errors.
 abstract class FieldRemoteDataSource {
   /// Get all active fields
-  Future<List<FieldModel>> getAllFields();
+  Future<List<FieldModel>> getAllFields({String? cityId});
 
   /// Get field by ID
   Future<FieldModel> getFieldById(String fieldId);
 
   /// Search fields by query
-  Future<List<FieldModel>> searchFields(String query);
+  Future<List<FieldModel>> searchFields(String query, {String? cityId});
 
   /// Get fields by sport category
-  Future<List<FieldModel>> getFieldsByCategory(String categoryId);
+  Future<List<FieldModel>> getFieldsByCategory(
+    String categoryId, {
+    String? cityId,
+  });
 
   /// Get fields by city
   Future<List<FieldModel>> getFieldsByCity(String city);
 
   /// Get featured fields
-  Future<List<FieldModel>> getFeaturedFields();
+  Future<List<FieldModel>> getFeaturedFields({String? cityId});
 
   /// Get popular fields
-  Future<List<FieldModel>> getPopularFields({int limit = 10});
+  Future<List<FieldModel>> getPopularFields({int limit = 10, String? cityId});
 
   /// Get fields by owner
   Future<List<FieldModel>> getFieldsByOwner(String ownerId);
@@ -42,6 +45,7 @@ abstract class FieldRemoteDataSource {
   Future<List<FieldModel>> filterFields({
     String? categoryId,
     String? city,
+    String? cityId,
     double? minPrice,
     double? maxPrice,
     List<String>? amenities,
@@ -55,13 +59,19 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
   const FieldRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<List<FieldModel>> getAllFields() async {
+  Future<List<FieldModel>> getAllFields({String? cityId}) async {
     try {
-      final response = await supabaseClient
+      var query = supabaseClient
           .from('fields')
           .select('*, cities(name)')
-          .eq('is_active', true)
-          .order('created_at', ascending: false);
+          .eq('is_active', true);
+
+      // Apply city filter if provided
+      if (cityId != null) {
+        query = query.eq('city_id', cityId);
+      }
+
+      final response = await query.order('created_at', ascending: false);
 
       return (response as List)
           .map((json) => FieldModel.fromJson(json as Map<String, dynamic>))
@@ -85,7 +95,7 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
       return FieldModel.fromJson(response);
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
-        throw NotFoundException('Field not found');
+        throw const NotFoundException('Field not found');
       }
       throw ServerException(e.message);
     } catch (e) {
@@ -94,13 +104,20 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
   }
 
   @override
-  Future<List<FieldModel>> searchFields(String query) async {
+  Future<List<FieldModel>> searchFields(String query, {String? cityId}) async {
     try {
       // Search in name, city, and address
-      final response = await supabaseClient
+      var queryBuilder = supabaseClient
           .from('fields')
           .select()
-          .eq('is_active', true)
+          .eq('is_active', true);
+
+      // Apply city filter if provided
+      if (cityId != null) {
+        queryBuilder = queryBuilder.eq('city_id', cityId);
+      }
+
+      final response = await queryBuilder
           .or('name.ilike.%$query%,city.ilike.%$query%,address.ilike.%$query%')
           .order('name', ascending: true);
 
@@ -115,14 +132,23 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
   }
 
   @override
-  Future<List<FieldModel>> getFieldsByCategory(String categoryId) async {
+  Future<List<FieldModel>> getFieldsByCategory(
+    String categoryId, {
+    String? cityId,
+  }) async {
     try {
-      final response = await supabaseClient
+      var query = supabaseClient
           .from('fields')
           .select()
           .eq('sport_category_id', categoryId)
-          .eq('is_active', true)
-          .order('name', ascending: true);
+          .eq('is_active', true);
+
+      // Apply city filter if provided
+      if (cityId != null) {
+        query = query.eq('city_id', cityId);
+      }
+
+      final response = await query.order('name', ascending: true);
 
       return (response as List)
           .map((json) => FieldModel.fromJson(json as Map<String, dynamic>))
@@ -155,14 +181,20 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
   }
 
   @override
-  Future<List<FieldModel>> getFeaturedFields() async {
+  Future<List<FieldModel>> getFeaturedFields({String? cityId}) async {
     try {
-      final response = await supabaseClient
+      var query = supabaseClient
           .from('fields')
           .select()
           .eq('is_featured', true)
-          .eq('is_active', true)
-          .order('booking_count', ascending: false)
+          .eq('is_active', true);
+
+      // Apply city filter if provided
+      if (cityId != null) {
+        query = query.eq('city_id', cityId);
+      }
+
+      final response = await query.order('booking_count', ascending: false)
           .limit(10);
 
       return (response as List)
@@ -176,12 +208,22 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
   }
 
   @override
-  Future<List<FieldModel>> getPopularFields({int limit = 10}) async {
+  Future<List<FieldModel>> getPopularFields({
+    int limit = 10,
+    String? cityId,
+  }) async {
     try {
-      final response = await supabaseClient
+      var query = supabaseClient
           .from('fields')
           .select()
-          .eq('is_active', true)
+          .eq('is_active', true);
+
+      // Apply city filter if provided
+      if (cityId != null) {
+        query = query.eq('city_id', cityId);
+      }
+
+      final response = await query
           .order('booking_count', ascending: false)
           .limit(limit);
 
@@ -247,7 +289,7 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
       return SportCategoryModel.fromJson(response);
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
-        throw NotFoundException('Sport category not found');
+        throw const NotFoundException('Sport category not found');
       }
       throw ServerException(e.message);
     } catch (e) {
@@ -259,6 +301,7 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
   Future<List<FieldModel>> filterFields({
     String? categoryId,
     String? city,
+    String? cityId,
     double? minPrice,
     double? maxPrice,
     List<String>? amenities,
@@ -273,6 +316,11 @@ class FieldRemoteDataSourceImpl implements FieldRemoteDataSource {
 
       if (city != null) {
         query = query.eq('city', city);
+      }
+
+      // Apply city filter if provided
+      if (cityId != null) {
+        query = query.eq('city_id', cityId);
       }
 
       if (minPrice != null) {

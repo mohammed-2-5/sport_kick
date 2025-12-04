@@ -14,6 +14,7 @@ class UserModel extends UserEntity {
     super.isActive,
     super.avatarUrl,
     super.preferredSports,
+    super.passwordChanged,
     required super.createdAt,
     required super.updatedAt,
   });
@@ -33,6 +34,7 @@ class UserModel extends UserEntity {
       preferredSports: json['preferred_sports'] != null
           ? List<String>.from(json['preferred_sports'] as List)
           : [],
+      passwordChanged: json['password_changed'] as bool? ?? false,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
@@ -51,6 +53,7 @@ class UserModel extends UserEntity {
       'is_active': isActive,
       'avatar_url': avatarUrl,
       'preferred_sports': preferredSports,
+      'password_changed': passwordChanged,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };
@@ -72,6 +75,7 @@ class UserModel extends UserEntity {
       isActive: entity.isActive,
       avatarUrl: entity.avatarUrl,
       preferredSports: entity.preferredSports,
+      passwordChanged: entity.passwordChanged,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     );
@@ -88,6 +92,7 @@ class UserModel extends UserEntity {
     bool? isActive,
     String? avatarUrl,
     List<String>? preferredSports,
+    bool? passwordChanged,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -100,6 +105,7 @@ class UserModel extends UserEntity {
       isActive: isActive ?? this.isActive,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       preferredSports: preferredSports ?? this.preferredSports,
+      passwordChanged: passwordChanged ?? this.passwordChanged,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

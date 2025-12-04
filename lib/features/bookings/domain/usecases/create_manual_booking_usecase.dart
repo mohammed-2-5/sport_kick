@@ -33,12 +33,12 @@ class CreateManualBookingUseCase {
     final todayDate = DateTime(today.year, today.month, today.day);
 
     if (bookingDate.isBefore(todayDate)) {
-      return Left(ValidationFailure('Cannot book a date in the past'));
+      return const Left(ValidationFailure('Cannot book a date in the past'));
     }
 
     // Validate time format
     if (!_isValidTimeFormat(startTime) || !_isValidTimeFormat(endTime)) {
-      return Left(ValidationFailure('Invalid time format'));
+      return const Left(ValidationFailure('Invalid time format'));
     }
 
     // Validate start time is before end time
@@ -46,28 +46,28 @@ class CreateManualBookingUseCase {
     final endHour = int.parse(endTime.split(':')[0]);
 
     if (startHour >= endHour) {
-      return Left(ValidationFailure('End time must be after start time'));
+      return const Left(ValidationFailure('End time must be after start time'));
     }
 
     // Validate totalPrice is positive
     if (totalPrice <= 0) {
-      return Left(ValidationFailure('Total price must be greater than zero'));
+      return const Left(ValidationFailure('Total price must be greater than zero'));
     }
 
     // Validate customer name
     if (customerName.trim().isEmpty) {
-      return Left(ValidationFailure('Customer name is required'));
+      return const Left(ValidationFailure('Customer name is required'));
     }
 
     if (customerName.trim().length < 2) {
-      return Left(
+      return const Left(
         ValidationFailure('Customer name must be at least 2 characters'),
       );
     }
 
     // Validate customer phone
     if (customerPhone.trim().isEmpty) {
-      return Left(ValidationFailure('Customer phone number is required'));
+      return const Left(ValidationFailure('Customer phone number is required'));
     }
 
     // Basic phone validation (Egyptian numbers: 11 digits starting with 01)
@@ -75,7 +75,7 @@ class CreateManualBookingUseCase {
     final cleanPhone = customerPhone.replaceAll(RegExp(r'[\s\-\(\)]'), '');
 
     if (!phoneRegex.hasMatch(cleanPhone)) {
-      return Left(
+      return const Left(
         ValidationFailure(
           'Invalid phone number. Egyptian numbers should be 11 digits starting with 01',
         ),
@@ -88,7 +88,7 @@ class CreateManualBookingUseCase {
         r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
       );
       if (!emailRegex.hasMatch(customerEmail.trim())) {
-        return Left(ValidationFailure('Invalid email format'));
+        return const Left(ValidationFailure('Invalid email format'));
       }
     }
 

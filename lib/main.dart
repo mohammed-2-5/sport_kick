@@ -9,9 +9,9 @@ import 'package:spo_kick/core/constants/app_constants.dart';
 import 'package:spo_kick/core/constants/app_theme.dart';
 import 'package:spo_kick/core/di/injection_container.dart' as di;
 import 'package:spo_kick/core/di/injection_container.dart';
-import 'package:spo_kick/core/routes/app_router.dart';
+import 'package:spo_kick/core/routes/go_router_config.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:spo_kick/features/splash/splash_page.dart';
+import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 
 /// Supabase client instance (globally accessible)
 SupabaseClient get supabase => Supabase.instance.client;
@@ -39,7 +39,7 @@ void main() async {
 Future<void> _initializeApp() async {
   try {
     // 0. Load environment variables
-    await dotenv.load(fileName: ".env");
+    await dotenv.load(fileName: '.env');
 
     // 1. Initialize Hive for local storage
     await Hive.initFlutter();
@@ -97,9 +97,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<AuthCubit>(),
-      child: MaterialApp(
+    final router = AppRouterConfig.createRouter();
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sl<AuthCubit>()),
+        BlocProvider(create: (context) => sl<CityCubit>()),
+      ],
+      child: MaterialApp.router(
         // ==================== APP INFO ====================
         title: AppConstants.appName,
         debugShowCheckedModeBanner: false,
@@ -111,12 +116,8 @@ class MyApp extends StatelessWidget {
         // darkTheme: AppTheme.darkTheme,
         // themeMode: ThemeMode.system,
 
-        // ==================== ROUTING ====================
-        initialRoute: AppRouter.splash,
-        onGenerateRoute: AppRouter.generateRoute,
-
-        // ==================== HOME ====================
-        home: const SplashPage(),
+        // ==================== ROUTING (GoRouter) ====================
+        routerConfig: router,
 
         // ==================== BUILDER ====================
         builder: (context, child) {

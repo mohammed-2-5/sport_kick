@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
@@ -125,7 +126,7 @@ class UserActivated extends SuperAdminState {
 
 /// All fields loaded successfully.
 class AllFieldsLoaded extends SuperAdminState {
-  final List<dynamic> fields; // Using dynamic for FieldEntity
+  final List<FieldEntity> fields;
 
   const AllFieldsLoaded(this.fields);
 
@@ -135,7 +136,7 @@ class AllFieldsLoaded extends SuperAdminState {
 
 /// All bookings loaded successfully.
 class AllBookingsLoaded extends SuperAdminState {
-  final List<dynamic> bookings; // Using dynamic for BookingEntity
+  final List<BookingEntity> bookings;
 
   const AllBookingsLoaded(this.bookings);
 

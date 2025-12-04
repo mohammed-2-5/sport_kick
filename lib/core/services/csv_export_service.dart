@@ -45,6 +45,8 @@ class CsvExportService {
     await file.writeAsString(csv);
 
     // Share file
-    await Share.shareXFiles([XFile(file.path)], text: 'Exported $fileName CSV');
+    await Share.shareXFiles([
+      XFile(file.path),
+    ], subject: 'Exported $fileName CSV');
   }
 }

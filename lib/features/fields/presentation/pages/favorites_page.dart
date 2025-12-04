@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
@@ -8,6 +7,8 @@ import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/routes/app_router.dart';
 import 'package:spo_kick/core/widgets/app_error_widget.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
+import 'package:spo_kick/features/favorites/presentation/cubit/favorites_cubit.dart';
+import 'package:spo_kick/features/favorites/presentation/cubit/favorites_state.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
@@ -20,122 +21,146 @@ import 'package:spo_kick/features/fields/presentation/widgets/field_card.dart';
 /// - Pull to refresh
 /// - Empty state with call-to-action
 /// - Remove from favorites functionality
-class FavoritesPage extends StatefulWidget {
+class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
 
   @override
-  State<FavoritesPage> createState() => _FavoritesPageState();
-}
-
-class _FavoritesPageState extends State<FavoritesPage> {
-  List<String> _favoriteIds = [];
-  List<FieldEntity> _favoriteFields = [];
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFavorites();
-  }
-
-  Future<void> _loadFavorites() async {
-    setState(() => _isLoading = true);
-
-    final prefs = await SharedPreferences.getInstance();
-    final favoriteIds = prefs.getStringList('favorite_fields') ?? [];
-
-    setState(() {
-      _favoriteIds = favoriteIds;
-    });
-
-    if (favoriteIds.isEmpty) {
-      setState(() => _isLoading = false);
-      return;
-    }
-
-    // Load all fields and filter favorites
-    if (mounted) {
-      context.read<FieldsCubit>().loadAllFields();
-    }
-  }
-
-  Future<void> _removeFavorite(String fieldId) async {
-    final prefs = await SharedPreferences.getInstance();
-    final favorites = prefs.getStringList('favorite_fields') ?? [];
-    favorites.remove(fieldId);
-    await prefs.setStringList('favorite_fields', favorites);
-
-    setState(() {
-      _favoriteIds = favorites;
-      _favoriteFields.removeWhere((field) => field.id == fieldId);
-    });
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Removed from favorites'),
-          duration: Duration(seconds: 2),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<FieldsCubit>()..loadAllFields(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<FavoritesCubit>()..loadFavorites(),
+        ),
+        BlocProvider(
+          create: (context) => sl<FieldsCubit>()..loadAllFields(),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Favorites'),
           elevation: 0,
         ),
-        body: BlocBuilder<FieldsCubit, FieldsState>(
-          builder: (context, state) {
-            if (state is FieldsLoading && _isLoading) {
-              return const LoadingIndicator.inline(
-                message: 'Loading favorites...',
+        body: BlocListener<FavoritesCubit, FavoritesState>(
+          listener: (context, state) {
+            // Show snackbar when favorite is removed
+            if (state is FavoriteToggled && !state.isFavorite) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Removed from favorites'),
+                  duration: Duration(seconds: 2),
+                  behavior: SnackBarBehavior.floating,
+                ),
               );
             }
 
-            if (state is FieldsError) {
-              return AppErrorWidget(
-                message: state.message,
-                onRetry: _loadFavorites,
+            // Show error message if operation fails
+            if (state is FavoritesError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.red,
+                  duration: const Duration(seconds: 3),
+                  behavior: SnackBarBehavior.floating,
+                ),
               );
             }
-
-            if (state is FieldsLoaded) {
-              // Filter only favorite fields
-              _favoriteFields = state.fields
-                  .where((field) => _favoriteIds.contains(field.id))
-                  .toList();
-              _isLoading = false;
-
-              if (_favoriteFields.isEmpty) {
-                return _buildEmptyState();
-              }
-
-              return RefreshIndicator(
-                onRefresh: _loadFavorites,
-                child: _buildFavoritesList(),
-              );
-            }
-
-            if (_favoriteIds.isEmpty) {
-              return _buildEmptyState();
-            }
-
-            return const LoadingIndicator.inline(
-              message: 'Loading favorites...',
-            );
           },
+          child: BlocBuilder<FavoritesCubit, FavoritesState>(
+            builder: (context, favoritesState) {
+              return BlocBuilder<FieldsCubit, FieldsState>(
+                builder: (context, fieldsState) {
+                  return _buildBody(context, favoritesState, fieldsState);
+                },
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildFavoritesList() {
+  Widget _buildBody(
+    BuildContext context,
+    FavoritesState favoritesState,
+    FieldsState fieldsState,
+  ) {
+    // Show loading if favorites are loading
+    if (favoritesState is FavoritesLoading) {
+      return const LoadingIndicator.inline(
+        message: 'Loading favorites...',
+      );
+    }
+
+    // Show error if favorites failed to load
+    if (favoritesState is FavoritesError) {
+      return AppErrorWidget(
+        message: favoritesState.message,
+        onRetry: () => context.read<FavoritesCubit>().loadFavorites(),
+      );
+    }
+
+    // Get favorite IDs
+    List<String> favoriteIds = [];
+    if (favoritesState is FavoritesListLoaded) {
+      favoriteIds = favoritesState.favoriteFieldIds;
+    } else if (favoritesState is FavoriteToggled) {
+      // Reload favorites after toggle
+      final cubit = context.read<FavoritesCubit>();
+      Future.microtask(() => cubit.loadFavorites());
+      return const LoadingIndicator.inline(
+        message: 'Updating favorites...',
+      );
+    }
+
+    // Show empty state if no favorites
+    if (favoriteIds.isEmpty) {
+      return _buildEmptyState(context);
+    }
+
+    // Show loading if fields are loading
+    if (fieldsState is FieldsLoading) {
+      return const LoadingIndicator.inline(
+        message: 'Loading fields...',
+      );
+    }
+
+    // Show error if fields failed to load
+    if (fieldsState is FieldsError) {
+      return AppErrorWidget(
+        message: fieldsState.message,
+        onRetry: () => context.read<FieldsCubit>().loadAllFields(),
+      );
+    }
+
+    // Filter and display favorite fields
+    if (fieldsState is FieldsLoaded) {
+      final favoriteFields = fieldsState.fields
+          .where((field) => favoriteIds.contains(field.id))
+          .toList();
+
+      if (favoriteFields.isEmpty) {
+        return _buildEmptyState(context);
+      }
+
+      return RefreshIndicator(
+        onRefresh: () async {
+          context.read<FavoritesCubit>().loadFavorites();
+          context.read<FieldsCubit>().loadAllFields();
+        },
+        child: _buildFavoritesList(context, favoriteFields),
+      );
+    }
+
+    // Default loading state
+    return const LoadingIndicator.inline(
+      message: 'Loading...',
+    );
+  }
+
+  Widget _buildFavoritesList(
+    BuildContext context,
+    List<FieldEntity> favoriteFields,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -192,7 +217,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '${_favoriteFields.length} field${_favoriteFields.length == 1 ? '' : 's'} saved',
+                        '${favoriteFields.length} field${favoriteFields.length == 1 ? '' : 's'} saved',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -212,7 +237,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    '${_favoriteFields.length}',
+                    '${favoriteFields.length}',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -229,9 +254,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
         Expanded(
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: _favoriteFields.length,
+            itemCount: favoriteFields.length,
             itemBuilder: (context, index) {
-              final field = _favoriteFields[index];
+              final field = favoriteFields[index];
               return Dismissible(
                 key: Key(field.id),
                 direction: DismissDirection.endToStart,
@@ -305,7 +330,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   );
                 },
                 onDismissed: (direction) {
-                  _removeFavorite(field.id);
+                  context.read<FavoritesCubit>().removeFavorite(field.id);
                 },
                 child: FieldCard(
                   field: field,
@@ -324,7 +349,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
