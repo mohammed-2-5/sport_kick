@@ -32,15 +32,17 @@ class TimeSlotsLoaded extends BookingState {
   final List<TimeSlotEntity> timeSlots;
   final DateTime selectedDate;
   final String fieldId;
+  final TimeSlotEntity? selectedSlot;
 
   const TimeSlotsLoaded({
     required this.timeSlots,
     required this.selectedDate,
     required this.fieldId,
+    this.selectedSlot,
   });
 
   @override
-  List<Object?> get props => [timeSlots, selectedDate, fieldId];
+  List<Object?> get props => [timeSlots, selectedDate, fieldId, selectedSlot];
 
   /// Check if there are available slots.
   bool get hasAvailableSlots => timeSlots.any((slot) => slot.isAvailable);
@@ -52,6 +54,20 @@ class TimeSlotsLoaded extends BookingState {
   /// Group slots by period.
   Map<String, List<TimeSlotEntity>> get slotsByPeriod =>
       TimeSlotEntity.groupSlotsByPeriod(timeSlots);
+
+  TimeSlotsLoaded copyWith({
+    List<TimeSlotEntity>? timeSlots,
+    DateTime? selectedDate,
+    String? fieldId,
+    TimeSlotEntity? selectedSlot,
+  }) {
+    return TimeSlotsLoaded(
+      timeSlots: timeSlots ?? this.timeSlots,
+      selectedDate: selectedDate ?? this.selectedDate,
+      fieldId: fieldId ?? this.fieldId,
+      selectedSlot: selectedSlot ?? this.selectedSlot,
+    );
+  }
 }
 
 /// Booking created successfully.

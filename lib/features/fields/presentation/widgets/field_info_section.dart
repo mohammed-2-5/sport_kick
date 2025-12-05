@@ -59,7 +59,10 @@ class FieldInfoSection extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFFFA726), Color(0xFFFFB74D)],
+                      colors: [
+                        FieldConstants.ratingGradientStart,
+                        FieldConstants.ratingGradientEnd,
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(25),
                     boxShadow: [
@@ -266,19 +269,31 @@ class FieldInfoSection extends StatelessWidget {
     if (label.toLowerCase().contains('grass') ||
         label.toLowerCase().contains('natural')) {
       chipGradient = const LinearGradient(
-        colors: [Color(0xFF66BB6A), Color(0xFF81C784)],
+        colors: [
+          FieldConstants.grassGradientStart,
+          FieldConstants.grassGradientEnd,
+        ],
       );
     } else if (label == 'Indoor') {
       chipGradient = const LinearGradient(
-        colors: [Color(0xFF5C6BC0), Color(0xFF7986CB)],
+        colors: [
+          FieldConstants.indoorGradientStart,
+          FieldConstants.indoorGradientEnd,
+        ],
       );
     } else if (label == 'Outdoor') {
       chipGradient = const LinearGradient(
-        colors: [Color(0xFFFFB74D), Color(0xFFFFD54F)],
+        colors: [
+          FieldConstants.outdoorGradientStart,
+          FieldConstants.outdoorGradientEnd,
+        ],
       );
     } else {
       chipGradient = const LinearGradient(
-        colors: [Color(0xFF42A5F5), Color(0xFF64B5F6)],
+        colors: [
+          FieldConstants.defaultChipGradientStart,
+          FieldConstants.defaultChipGradientEnd,
+        ],
       );
     }
 

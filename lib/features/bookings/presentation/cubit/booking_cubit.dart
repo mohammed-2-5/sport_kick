@@ -8,6 +8,8 @@ import 'package:spo_kick/features/bookings/domain/usecases/get_booking_by_id_use
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_user_bookings_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/update_booking_status_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
+import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
 
 import '../../domain/entities/booking_status.dart';
@@ -29,6 +31,9 @@ class BookingCubit extends Cubit<BookingState> {
   final CancelBookingUseCase cancelBookingUseCase;
   final GetOwnerBookingsUseCase getOwnerBookingsUseCase;
   final UpdateBookingStatusUseCase updateBookingStatusUseCase;
+  DateTime _selectedDate = DateTime.now();
+  TimeSlotEntity? _selectedTimeSlot;
+  String? _currentFieldId;
 
   BookingCubit({
     required this.getAvailableTimeSlotsUseCase,
@@ -41,11 +46,38 @@ class BookingCubit extends Cubit<BookingState> {
     required this.updateBookingStatusUseCase,
   }) : super(const BookingInitial());
 
+  DateTime get selectedDate => _selectedDate;
+  TimeSlotEntity? get selectedTimeSlot => _selectedTimeSlot;
+  String? get currentFieldId => _currentFieldId;
+
+  /// Initialize booking flow for a given field.
+  ///
+  /// Stores the field, sets the initial date, and triggers the initial
+  /// time-slot load. Keeps UI free of orchestration logic.
+  Future<void> startBookingFlow(String fieldId, {DateTime? initialDate}) async {
+    _selectedDate = initialDate ?? DateTime.now();
+    _currentFieldId = fieldId;
+    await loadAvailableTimeSlots(fieldId: fieldId, date: _selectedDate);
+  }
+
+  /// Change selected date and reload slots for the current field.
+  Future<void> changeSelectedDate(DateTime date) async {
+    _selectedDate = date;
+    if (_currentFieldId == null) {
+      emit(const BookingError(BookingConstants.selectDateFirstMessage));
+      return;
+    }
+    await loadAvailableTimeSlots(fieldId: _currentFieldId!, date: date);
+  }
+
   /// Load available time slots for a field on a specific date.
   Future<void> loadAvailableTimeSlots({
     required String fieldId,
     required DateTime date,
   }) async {
+    _selectedDate = date;
+    _currentFieldId = fieldId;
+    _selectedTimeSlot = null;
     emit(const BookingLoading(message: 'Loading available time slots...'));
 
     final result = await getAvailableTimeSlotsUseCase(
@@ -71,10 +103,43 @@ class BookingCubit extends Cubit<BookingState> {
               timeSlots: timeSlots,
               selectedDate: date,
               fieldId: fieldId,
+              selectedSlot: _selectedTimeSlot,
             ),
           );
         }
       },
+    );
+  }
+
+  /// Update selected time slot.
+  void selectTimeSlot(TimeSlotEntity slot) {
+    _selectedTimeSlot = slot;
+    final currentState = state;
+    if (currentState is TimeSlotsLoaded) {
+      emit(
+        currentState.copyWith(
+          selectedSlot: slot,
+          selectedDate: _selectedDate,
+          fieldId: _currentFieldId,
+        ),
+      );
+    }
+  }
+
+  /// Create a booking using current selection.
+  Future<void> createBookingFromSelection() async {
+    if (_currentFieldId == null || _selectedTimeSlot == null) {
+      emit(const BookingError(BookingConstants.selectTimeSlotFirstMessage));
+      return;
+    }
+
+    await createBooking(
+      fieldId: _currentFieldId!,
+      date: _selectedDate,
+      startTime: _selectedTimeSlot!.startTime,
+      endTime: _selectedTimeSlot!.endTime,
+      totalPrice: _selectedTimeSlot!.price,
+      notes: null,
     );
   }
 

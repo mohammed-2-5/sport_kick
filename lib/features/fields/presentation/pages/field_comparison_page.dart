@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/comparison_empty_state.dart';
 
 /// Field comparison page - compare multiple fields side-by-side.
 ///
@@ -15,40 +16,11 @@ class FieldComparisonPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Compare Fields'), elevation: 0),
       body: fields.isEmpty
-          ? _buildEmptyState()
+          ? const ComparisonEmptyState()
           : SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(child: _buildComparisonTable()),
             ),
-    );
-  }
-
-  Widget _buildEmptyState() {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.compare_arrows,
-              size: 80,
-              color: AppColors.textSecondary,
-            ),
-            SizedBox(height: 24),
-            Text(
-              'No fields to compare',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 12),
-            Text(
-              'Select fields from the list to compare them',
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
     );
   }
 

@@ -122,7 +122,7 @@ class AppRouterConfig {
           name: 'citySelection',
           pageBuilder: (context, state) => _buildSlidePage(
             child: BlocProvider(
-              create: (_) => sl<CityCubit>(),
+              create: (_) => sl<CityCubit>()..loadCities(),
               child: const CitySelectionPage(),
             ),
             state: state,
