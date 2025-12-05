@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/utils/validators.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/core/widgets/custom_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/login/login_mode_selector.dart';
 
 /// Login form widget with email and password fields.
 ///
@@ -67,7 +67,10 @@ class LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Login Mode Selector
-          _buildLoginModeSelector(),
+          LoginModeSelector(
+            currentMode: _loginMode,
+            onModeChanged: _setLoginMode,
+          ),
 
           const SizedBox(height: 24),
 
@@ -179,89 +182,6 @@ class LoginFormState extends State<LoginForm> {
             variant: ButtonVariant.primary,
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildLoginModeSelector() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      padding: const EdgeInsets.all(4),
-      child: Row(
-        children: [
-          Expanded(
-            child: _buildModeButton(
-              mode: 'user',
-              icon: Icons.person_outline,
-              label: 'Login as User',
-              isSelected: _loginMode == 'user',
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: _buildModeButton(
-              mode: 'admin',
-              icon: Icons.admin_panel_settings_outlined,
-              label: 'Login as Admin',
-              isSelected: _loginMode == 'admin',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildModeButton({
-    required String mode,
-    required IconData icon,
-    required String label,
-    required bool isSelected,
-  }) {
-    return GestureDetector(
-      onTap: () => _setLoginMode(mode),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        decoration: BoxDecoration(
-          gradient: isSelected ? AppGradients.primary : null,
-          color: isSelected ? null : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ]
-              : null,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 20,
-              color: isSelected ? Colors.white : AppColors.textSecondary,
-            ),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                label,
-                style: TextStyle(
-                  color: isSelected ? Colors.white : AppColors.textSecondary,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                  fontSize: 13,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

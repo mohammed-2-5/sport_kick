@@ -6,6 +6,7 @@ import 'package:spo_kick/core/constants/app_strings.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/features/auth/presentation/utils/auth_navigation_handler.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/login_form.dart';
 
 /// Login page for user authentication.
@@ -36,35 +37,12 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is Authenticated) {
-              // Use the tracked login mode
-              final userRole = state.user.role;
-
-              // Check if user selected "admin" mode and has admin/super_admin role
-              if (_loginMode == 'admin') {
-                if (userRole == 'super_admin') {
-                  // Super admin goes to super admin dashboard
-                  context.goNamed('superAdminDashboard');
-                } else if (userRole == 'admin') {
-                  // Field owner goes to owner dashboard
-                  context.goNamed('ownerDashboard');
-                } else {
-                  // User selected admin but doesn't have admin role
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Access Denied: You don\'t have admin privileges. Redirecting to user dashboard.',
-                      ),
-                      backgroundColor: AppColors.error,
-                      duration: Duration(seconds: 4),
-                    ),
-                  );
-                  // Navigate to home anyway
-                  context.goNamed('home');
-                }
-              } else {
-                // Regular user login - navigate to home
-                context.goNamed('home');
-              }
+              // Use the auth navigation handler
+              AuthNavigationHandler.handleUserLogin(
+                context: context,
+                user: state.user,
+                loginMode: _loginMode,
+              );
             } else if (state is AuthError) {
               // Print error to console
               print('🔴 Login Error (UI): ${state.message}');

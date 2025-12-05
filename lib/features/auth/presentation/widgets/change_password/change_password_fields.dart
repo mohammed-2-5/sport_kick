@@ -1,0 +1,181 @@
+import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/features/auth/presentation/utils/password_validator.dart';
+
+class CurrentPasswordField extends StatefulWidget {
+  final TextEditingController controller;
+
+  const CurrentPasswordField({required this.controller, super.key});
+
+  @override
+  State<CurrentPasswordField> createState() => _CurrentPasswordFieldState();
+}
+
+class _CurrentPasswordFieldState extends State<CurrentPasswordField> {
+  bool _obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      obscureText: _obscure,
+      decoration: InputDecoration(
+        labelText: AuthConstants.currentPasswordLabel,
+        prefixIcon: const Icon(Icons.lock_outlined),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscure
+                ? Icons.visibility_outlined
+                : Icons.visibility_off_outlined,
+          ),
+          onPressed: () {
+            setState(() {
+              _obscure = !_obscure;
+            });
+          },
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return AuthConstants.currentPasswordRequiredMsg;
+        }
+        return null;
+      },
+    );
+  }
+}
+
+class NewPasswordField extends StatefulWidget {
+  final TextEditingController controller;
+  final ValueChanged<String> onChanged;
+
+  const NewPasswordField({
+    required this.controller,
+    required this.onChanged,
+    super.key,
+  });
+
+  @override
+  State<NewPasswordField> createState() => _NewPasswordFieldState();
+}
+
+class _NewPasswordFieldState extends State<NewPasswordField> {
+  bool _obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      obscureText: _obscure,
+      decoration: InputDecoration(
+        labelText: AuthConstants.newPasswordLabel,
+        prefixIcon: const Icon(Icons.lock_reset),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscure
+                ? Icons.visibility_outlined
+                : Icons.visibility_off_outlined,
+          ),
+          onPressed: () {
+            setState(() {
+              _obscure = !_obscure;
+            });
+          },
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
+        ),
+      ),
+      validator: PasswordValidator.validateNewPassword,
+      onChanged: (value) {
+        widget.onChanged(value);
+        setState(() {}); // refresh strength indicators inside this field if any
+      },
+    );
+  }
+}
+
+class ConfirmPasswordField extends StatefulWidget {
+  final TextEditingController controller;
+  final TextEditingController newPasswordController;
+
+  const ConfirmPasswordField({
+    required this.controller,
+    required this.newPasswordController,
+    super.key,
+  });
+
+  @override
+  State<ConfirmPasswordField> createState() => _ConfirmPasswordFieldState();
+}
+
+class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
+  bool _obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      obscureText: _obscure,
+      decoration: InputDecoration(
+        labelText: AuthConstants.confirmPasswordLabel,
+        prefixIcon: const Icon(Icons.lock_outlined),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscure
+                ? Icons.visibility_outlined
+                : Icons.visibility_off_outlined,
+          ),
+          onPressed: () {
+            setState(() {
+              _obscure = !_obscure;
+            });
+          },
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return AuthConstants.confirmPasswordRequiredMsg;
+        }
+        if (value != widget.newPasswordController.text) {
+          return AuthConstants.passwordMismatchMsg;
+        }
+        return null;
+      },
+    );
+  }
+}
+
+class ChangePasswordSubmitButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const ChangePasswordSubmitButton({required this.onPressed, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: AuthConstants.buttonHeight,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
+          ),
+        ),
+        child: const Text(
+          AuthConstants.changePasswordButtonLabel,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}

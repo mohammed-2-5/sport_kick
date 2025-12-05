@@ -6,7 +6,8 @@ import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/edit_profile_dialog.dart';
-import 'package:spo_kick/features/home/presentation/widgets/curved_header_clipper.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/profile/profile_header.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/profile/profile_info_card.dart';
 
 /// Profile page with premium curved design and overlapping avatar.
 class ProfilePage extends StatelessWidget {
@@ -50,104 +51,10 @@ class ProfilePage extends StatelessWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: [
-                    // Curved Header Background
-                    ClipPath(
-                      clipper: CurvedHeaderClipper(),
-                      child: Container(
-                        height: 220,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xFF1A1F3A), // Deep Navy
-                              Color(0xFF2C3E50), // Lighter Navy
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // Header Content (Title)
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.arrow_back_ios,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                onPressed: () => Navigator.pop(context),
-                              ),
-                              const Expanded(
-                                child: Text(
-                                  'My Profile',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 40), // Balance back button
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // Overlapping Avatar
-                    Positioned(
-                      bottom: -50,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.15),
-                              blurRadius: 20,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundColor: AppColors.lightBackground,
-                          child:
-                              user.avatarUrl != null &&
-                                  user.avatarUrl!.isNotEmpty
-                              ? ClipOval(
-                                  child: Image.network(
-                                    user.avatarUrl!,
-                                    width: 112,
-                                    height: 112,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return _buildInitialsAvatar(
-                                        user.initials,
-                                      );
-                                    },
-                                  ),
-                                )
-                              : _buildInitialsAvatar(user.initials),
-                        ),
-                      ),
-                    ),
-                  ],
+                ProfileHeader(
+                  avatarUrl: user.avatarUrl,
+                  initials: user.initials,
+                  onBackPressed: () => Navigator.pop(context),
                 ),
 
                 const SizedBox(height: 60), // Space for avatar
@@ -188,7 +95,7 @@ class ProfilePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
                     children: [
-                      _ProfileInfoCard(
+                      ProfileInfoCard(
                         icon: Icons.email_outlined,
                         label: 'Email',
                         value: user.email,
@@ -196,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       if (user.phone != null && user.phone!.isNotEmpty) ...[
-                        _ProfileInfoCard(
+                        ProfileInfoCard(
                           icon: Icons.phone_outlined,
                           label: 'Phone',
                           value: user.phone!,
@@ -204,7 +111,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                       ],
-                      _ProfileInfoCard(
+                      ProfileInfoCard(
                         icon: Icons.calendar_today_outlined,
                         label: 'Member Since',
                         value: _formatDate(user.createdAt),
@@ -244,25 +151,6 @@ class ProfilePage extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildInitialsAvatar(String initials) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: AppColors.primary.withValues(alpha: 0.1),
-      ),
-      child: Center(
-        child: Text(
-          initials,
-          style: const TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
-          ),
-        ),
       ),
     );
   }
@@ -315,74 +203,5 @@ class ProfilePage extends StatelessWidget {
       'Dec',
     ];
     return '${months[date.month - 1]} ${date.day}, ${date.year}';
-  }
-}
-
-class _ProfileInfoCard extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color iconColor;
-
-  const _ProfileInfoCard({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.iconColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: iconColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Icon(icon, color: iconColor, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: AppColors.textSecondary.withValues(alpha: 0.7),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
