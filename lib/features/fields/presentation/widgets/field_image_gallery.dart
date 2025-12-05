@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/field_badges.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/image_placeholder.dart';
 
 /// Image gallery widget for field details page.
 ///
@@ -44,7 +45,7 @@ class _FieldImageGalleryState extends State<FieldImageGallery> {
 
     return SizedBox(
       height: FieldConstants.imageGalleryHeight,
-      child: hasImages ? _buildImageGallery() : _buildImagePlaceholder(),
+      child: hasImages ? _buildImageGallery() : const ImagePlaceholder(),
     );
   }
 
@@ -65,7 +66,7 @@ class _FieldImageGalleryState extends State<FieldImageGallery> {
               widget.images[index],
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                return _buildImagePlaceholder();
+                return const ImagePlaceholder();
               },
             );
 
@@ -110,107 +111,11 @@ class _FieldImageGalleryState extends State<FieldImageGallery> {
         Positioned(
           top: 60,
           left: FieldConstants.standardPadding,
-          child: _buildBadges(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildImagePlaceholder() {
-    return Container(
-      color: AppColors.surfaceVariant,
-      child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.sports_soccer, size: 64, color: AppColors.textSecondary),
-            SizedBox(height: FieldConstants.standardPadding),
-            Text(
-              'No Images Available',
-              style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBadges() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.isVerified)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
-              ),
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.success.withValues(alpha: 0.5),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.verified_rounded, size: 18, color: Colors.white),
-                SizedBox(width: 6),
-                Text(
-                  'Verified Field',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ],
-            ),
+          child: FieldBadges(
+            isVerified: widget.isVerified,
+            isPopular: widget.isPopular,
           ),
-        if (widget.isPopular) ...[
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFFF6B6B), Color(0xFFFF8E53)],
-              ),
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.orange.withValues(alpha: 0.5),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.local_fire_department_rounded,
-                  size: 18,
-                  color: Colors.white,
-                ),
-                SizedBox(width: 6),
-                Text(
-                  'TRENDING',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.8,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ],
     );
   }

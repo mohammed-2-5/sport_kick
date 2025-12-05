@@ -97,6 +97,9 @@ class BookingConstants {
   /// "Booking Summary" label
   static const String bookingSummaryLabel = 'Booking Summary';
 
+  /// "Book Field" title
+  static const String bookFieldTitle = 'Book Field';
+
   /// "Confirm Booking" button label
   static const String confirmBookingLabel = 'Confirm Booking';
 
@@ -126,6 +129,12 @@ class BookingConstants {
 
   /// "Duration" label
   static const String durationLabel = 'Duration';
+
+  /// Date & Time label
+  static const String dateTimeLabel = 'Date & Time';
+
+  /// Time slot label
+  static const String timeSlotLabel = 'Time Slot';
 
   /// "Total Price" label
   static const String totalPriceLabel = 'Total Price';
@@ -245,6 +254,11 @@ class BookingConstants {
 
   /// Status change animation duration (milliseconds)
   static const int statusAnimationDuration = 400;
+
+  // ==================== LAYOUT ====================
+
+  /// My bookings header height
+  static const double myBookingsHeaderHeight = 180.0;
 
   // ==================== BOOKING TIMELINE STEPS ====================
 

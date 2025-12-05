@@ -45,8 +45,8 @@ class SettingsConstants {
   // Support contact
   static const String supportEmail = 'mohammedyasser2023@gmail.com';
 
-  // Note: Privacy Policy and Terms of Service are now in-app pages
-  // Routes defined in AppRouter: AppRouter.privacyPolicy, AppRouter.termsOfService
+  // Note: Privacy Policy and Terms of Service are in-app pages
+  // GoRouter route names: privacyPolicy, termsOfService
 
   // Messages
   static const String settingsUpdateSuccess = 'Settings updated successfully';

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// Field-related constants for field browsing and details
 ///
 /// Contains all hard-coded values used in field pages:
@@ -5,9 +7,54 @@
 /// - Image gallery settings
 /// - Booking button configurations
 /// - Labels and text
+/// - Gradient colors for UI elements
 class FieldConstants {
   // Prevent instantiation
   FieldConstants._();
+
+  // ==================== GRADIENT COLORS ====================
+
+  /// Header gradient start color (Deep Navy)
+  static const Color headerGradientStart = Color(0xFF1A1F3A);
+
+  /// Header gradient end color (Lighter Navy)
+  static const Color headerGradientEnd = Color(0xFF2C3E50);
+
+  /// Favorites gradient start color
+  static const Color favoritesGradientStart = Color(0xFFFF6B6B);
+
+  /// Favorites gradient end color
+  static const Color favoritesGradientEnd = Color(0xFFFF8E53);
+
+  /// Rating gradient start color (Orange)
+  static const Color ratingGradientStart = Color(0xFFFFA726);
+
+  /// Rating gradient end color (Light Orange)
+  static const Color ratingGradientEnd = Color(0xFFFFB74D);
+
+  /// Grass surface gradient start color
+  static const Color grassGradientStart = Color(0xFF66BB6A);
+
+  /// Grass surface gradient end color
+  static const Color grassGradientEnd = Color(0xFF81C784);
+
+  /// Indoor gradient start color
+  static const Color indoorGradientStart = Color(0xFF5C6BC0);
+
+  /// Indoor gradient end color
+  static const Color indoorGradientEnd = Color(0xFF7986CB);
+
+  /// Outdoor gradient start color
+  static const Color outdoorGradientStart = Color(0xFFFFB74D);
+
+  /// Outdoor gradient end color
+  static const Color outdoorGradientEnd = Color(0xFFFFD54F);
+
+  /// Default chip gradient start color (Blue)
+  static const Color defaultChipGradientStart = Color(0xFF42A5F5);
+
+  /// Default chip gradient end color (Light Blue)
+  static const Color defaultChipGradientEnd = Color(0xFF64B5F6);
 
   // ==================== UI DIMENSIONS ====================
 

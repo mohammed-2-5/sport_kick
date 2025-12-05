@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:spo_kick/core/routes/app_router.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
@@ -261,8 +260,7 @@ void main() {
           buildTestWidget(),
           navigatorObserver: mockNavigatorObserver,
           routes: {
-            AppRouter.login: (context) =>
-                const Scaffold(body: Text('Login Page')),
+            'login': (context) => const Scaffold(body: Text('Login Page')),
           },
         );
 

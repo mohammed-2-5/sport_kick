@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_subtitle_text.dart';
 
 /// City List Item Widget
 ///
@@ -30,34 +31,11 @@ class CityListItem extends StatelessWidget {
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
         ),
       ),
-      subtitle: _buildSubtitle(context),
+      subtitle: CitySubtitleText(city: city),
       secondary: Icon(
         Icons.location_city,
         color: isSelected ? AppColors.primary : AppColors.mediumGrey,
       ),
-    );
-  }
-
-  Widget? _buildSubtitle(BuildContext context) {
-    final subtitleParts = <String>[];
-
-    if (city.arabicName != null) {
-      subtitleParts.add(city.arabicName!);
-    }
-
-    if (city.fieldsCount != null && city.fieldsCount! > 0) {
-      subtitleParts.add('${city.fieldsCount} fields');
-    }
-
-    if (subtitleParts.isEmpty) {
-      return null;
-    }
-
-    return Text(
-      subtitleParts.join(' • '),
-      style: Theme.of(
-        context,
-      ).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
     );
   }
 }

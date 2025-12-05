@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
-import 'package:spo_kick/features/city/presentation/widgets/city_selector_dialog.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_selector_launcher.dart';
 
 /// City Switcher Button
 ///
@@ -17,10 +17,10 @@ class CitySwitcherButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CityCubit, CityState>(
       builder: (context, state) {
-        final city = _getCurrentCity(state);
+        final city = context.read<CityCubit>().resolveCityFromState(state);
 
         return TextButton.icon(
-          onPressed: () => _showCitySelector(context),
+          onPressed: () => CitySelectorLauncher.show(context),
           icon: const Icon(Icons.location_on, color: Colors.white, size: 20),
           label: Text(
             city?.name ?? 'Select City',
@@ -34,32 +34,6 @@ class CitySwitcherButton extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  CityEntity? _getCurrentCity(CityState state) {
-    if (state is CitySelected) {
-      return state.city;
-    }
-    if (state is CitySaved) {
-      return state.city;
-    }
-    if (state is CitiesLoaded && state.selectedCityId != null) {
-      return state.cities.firstWhere(
-        (city) => city.id == state.selectedCityId,
-        orElse: () => state.cities.first,
-      );
-    }
-    return currentCity;
-  }
-
-  void _showCitySelector(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => BlocProvider.value(
-        value: context.read<CityCubit>(),
-        child: const CitySelectorDialog(),
-      ),
     );
   }
 }

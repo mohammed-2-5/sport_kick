@@ -6,31 +6,19 @@ import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
-import 'package:spo_kick/features/city/presentation/widgets/city_card.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_selection_continue_button.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_selection_empty_view.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_selection_error_view.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_selection_grid.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_selection_loading_view.dart';
+import 'package:spo_kick/features/city/presentation/widgets/city_selection_saving_view.dart';
 
 /// City Selection Page
 ///
 /// Displays available cities for user selection on first launch.
 /// Shows cities in a responsive grid layout.
-class CitySelectionPage extends StatefulWidget {
+class CitySelectionPage extends StatelessWidget {
   const CitySelectionPage({super.key});
-
-  @override
-  State<CitySelectionPage> createState() => _CitySelectionPageState();
-}
-
-class _CitySelectionPageState extends State<CitySelectionPage> {
-  CityEntity? _selectedCity;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCities();
-  }
-
-  void _loadCities() {
-    context.read<CityCubit>().loadCities();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,219 +30,79 @@ class _CitySelectionPageState extends State<CitySelectionPage> {
         foregroundColor: Colors.white,
       ),
       body: BlocConsumer<CityCubit, CityState>(
-        listener: _handleStateChanges,
-        builder: (context, state) {
-          if (state is CitiesLoading) {
-            return _buildLoadingView();
+        listener: (context, state) {
+          if (state is CitySaved) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: AppColors.success,
+              ),
+            );
+            context.goNamed('home');
           }
-
           if (state is CityError) {
-            return _buildErrorView(state.message);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          final cubit = context.read<CityCubit>();
+          final cities = _resolveCities(state, cubit);
+          final selectedCityId = _resolveSelectedCityId(state, cubit);
+
+          if (state is CitiesLoading) {
+            return const CitySelectionLoadingView();
           }
 
-          if (state is CitiesLoaded) {
-            return _buildCityGrid(context, state.cities);
+          if (state is CityError && cubit.cachedCities.isEmpty) {
+            return CitySelectionErrorView(
+              message: state.message,
+              onRetry: cubit.loadCities,
+            );
           }
 
           if (state is CitySaving) {
-            return _buildSavingView();
+            return const CitySelectionSavingView();
           }
 
-          return _buildEmptyView();
+          if (cities.isEmpty) {
+            return const CitySelectionEmptyView();
+          }
+
+          return CitySelectionGrid(
+            cities: cities,
+            selectedCityId: selectedCityId,
+            onCitySelected: cubit.selectCity,
+          );
         },
       ),
-      bottomNavigationBar: _buildContinueButton(context),
-    );
-  }
-
-  Widget _buildLoadingView() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 16),
-          Text(CityConstants.loadingCities),
-        ],
+      bottomNavigationBar: BlocBuilder<CityCubit, CityState>(
+        builder: (context, state) {
+          final cubit = context.read<CityCubit>();
+          final selectedCityId = _resolveSelectedCityId(state, cubit);
+          return CitySelectionContinueButton(
+            isEnabled: selectedCityId != null,
+            onContinue: cubit.confirmSelection,
+          );
+        },
       ),
     );
   }
 
-  Widget _buildErrorView(String message) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(CityConstants.screenPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.error_outline, size: 64, color: AppColors.error),
-            const SizedBox(height: 16),
-            Text(
-              CityConstants.errorLoadingCities,
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              style: const TextStyle(color: AppColors.textSecondary),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            FilledButton.icon(
-              onPressed: _loadCities,
-              icon: const Icon(Icons.refresh),
-              label: const Text('Retry'),
-            ),
-          ],
-        ),
-      ),
-    );
+  List<CityEntity> _resolveCities(CityState state, CityCubit cubit) {
+    if (state is CitiesLoaded) return state.cities;
+    return cubit.cachedCities;
   }
 
-  Widget _buildEmptyView() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(CityConstants.screenPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.location_off,
-              size: 64,
-              color: AppColors.mediumGrey,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              CityConstants.noCitiesAvailable,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Please contact support for assistance',
-              style: TextStyle(color: AppColors.textSecondary),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSavingView() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 16),
-          Text('Saving your selection...'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCityGrid(BuildContext context, List<CityEntity> cities) {
-    if (cities.isEmpty) {
-      return _buildEmptyView();
-    }
-
-    final width = MediaQuery.of(context).size.width;
-    final crossAxisCount = _calculateCrossAxisCount(width);
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(CityConstants.screenPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            CityConstants.citySelectionSubtitle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: AppColors.textSecondary),
-          ),
-          const SizedBox(height: CityConstants.sectionSpacing),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              crossAxisSpacing: CityConstants.cardSpacing,
-              mainAxisSpacing: CityConstants.cardSpacing,
-              childAspectRatio: 0.9,
-            ),
-            itemCount: cities.length,
-            itemBuilder: (context, index) {
-              final city = cities[index];
-              final isSelected = _selectedCity?.id == city.id;
-
-              return CityCard(
-                city: city,
-                isSelected: isSelected,
-                onTap: () => _onCitySelected(city),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  int _calculateCrossAxisCount(double width) {
-    if (width > 900) return 4; // Desktop
-    if (width > 600) return 3; // Tablet
-    if (width > 400) return 2; // Standard phone
-    return 2; // Small phone (minimum 2 columns)
-  }
-
-  Widget _buildContinueButton(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(CityConstants.screenPadding),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: FilledButton(
-            onPressed: _selectedCity != null ? _onContinue : null,
-            child: const Text(CityConstants.continueButtonText),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _onCitySelected(CityEntity city) {
-    setState(() {
-      _selectedCity = city;
-    });
-  }
-
-  void _onContinue() {
-    if (_selectedCity != null) {
-      context.read<CityCubit>().saveCity(_selectedCity!);
-    }
-  }
-
-  void _handleStateChanges(BuildContext context, CityState state) {
-    if (state is CitySaved) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(state.message),
-          backgroundColor: AppColors.success,
-        ),
-      );
-
-      // Navigate to home after successful save
-      context.goNamed('home');
-    }
+  String? _resolveSelectedCityId(CityState state, CityCubit cubit) {
+    if (state is CitiesLoaded) return state.selectedCityId;
+    if (state is CitySelected) return state.city.id;
+    if (state is CitySaving) return state.city.id;
+    if (state is CitySaved) return state.city.id;
+    return cubit.selectedCity?.id;
   }
 }
