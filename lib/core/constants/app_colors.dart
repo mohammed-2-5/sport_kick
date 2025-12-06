@@ -306,4 +306,98 @@ class AppColors {
 
   /// Light Theme Accent (Electric Cyan)
   static const Color lightAccent = Color(0xFF00D9FF);
+
+  // ==================== USER THEME COLORS (PREMIUM UI) ====================
+
+  /// User Theme - Deep Navy (Primary Dark)
+  static const Color navyDeep = Color(0xFF1A1F3A);
+
+  /// User Theme - Light Navy (Primary Light)
+  static const Color navyLight = Color(0xFF2C3E50);
+
+  /// User Theme - Accent Cyan (Primary Accent)
+  static const Color accentCyan = Color(0xFF00D9FF);
+
+  /// User Theme - Accent Cyan Light (Hover/Active States)
+  static const Color accentCyanLight = Color(0xFF66E7FF);
+
+  /// User Theme - Accent Cyan Dark (Pressed States)
+  static const Color accentCyanDark = Color(0xFF00A7CC);
+
+  /// User Theme - Surface White (Cards)
+  static const Color surfaceWhite = Color(0xFFFFFFFF);
+
+  /// User Theme - Background Light (Page Background)
+  static const Color backgroundLight = Color(0xFFF8F9FA);
+
+  /// User Theme - Text on Navy
+  static const Color textOnNavy = Color(0xFFFFFFFF);
+
+  /// User Theme - Text on Navy Secondary (70% opacity)
+  static const Color textOnNavySecondary = Color(0xB3FFFFFF);
+
+  // ==================== GLASS COLORS ====================
+
+  /// Glass - White with 20% opacity
+  static const Color glassWhite = Color(0x33FFFFFF);
+
+  /// Glass - White border with 30% opacity
+  static const Color glassBorder = Color(0x4DFFFFFF);
+
+  /// Glass - White highlight with 10% opacity
+  static const Color glassHighlight = Color(0x1AFFFFFF);
+
+  // ==================== STATUS COLORS (VIBRANT FOR USER APP) ====================
+
+  /// Status - Success (Emerald)
+  static const Color statusSuccess = Color(0xFF10B981);
+
+  /// Status - Warning (Amber)
+  static const Color statusWarning = Color(0xFFF59E0B);
+
+  /// Status - Error (Red)
+  static const Color statusError = Color(0xFFEF4444);
+
+  /// Status - Info (Blue)
+  static const Color statusInfo = Color(0xFF3B82F6);
+
+  // ==================== ENHANCED GRADIENTS ====================
+
+  /// Navy Gradient (Header Background)
+  static const LinearGradient navyGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [navyDeep, navyLight],
+  );
+
+  /// Cyan Gradient (Primary Buttons)
+  static const LinearGradient cyanGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [accentCyan, accentCyanDark],
+  );
+
+  /// Cyan Glow Gradient (Button Shadows)
+  static const LinearGradient cyanGlowGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color(0x4D00D9FF), // 30% opacity
+      Color(0x0000D9FF), // 0% opacity
+    ],
+  );
+
+  /// Success Gradient
+  static const LinearGradient successGradientEnhanced = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF10B981), Color(0xFF059669)],
+  );
+
+  /// Warning Gradient
+  static const LinearGradient warningGradientEnhanced = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
+  );
 }
