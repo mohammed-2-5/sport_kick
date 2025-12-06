@@ -22,7 +22,9 @@ class LanguageSelectorDialog extends StatelessWidget {
           return RadioListTile<String>(
             title: Text(entry.value),
             value: entry.key,
+            // ignore: deprecated_member_use
             groupValue: preferences.language,
+            // ignore: deprecated_member_use
             onChanged: (value) {
               if (value != null) {
                 context.read<SettingsCubit>().updateLanguage(

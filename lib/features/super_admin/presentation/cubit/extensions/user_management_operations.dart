@@ -1,14 +1,22 @@
 import 'package:flutter/foundation.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/activate_user_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/deactivate_user_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/get_all_users_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
-/// Extension for user management operations.
+/// Mixin for user management operations.
 ///
 /// Handles:
 /// - Loading regular users
 /// - Activating/deactivating user accounts
 /// - Bulk user operations
-extension UserManagementOperations on SuperAdminCubit {
+mixin UserManagementOperations on Cubit<SuperAdminState> {
+  // Dependencies
+  GetAllUsersUseCase get getAllUsersUseCase;
+  ActivateUserUseCase get activateUserUseCase;
+  DeactivateUserUseCase get deactivateUserUseCase;
+
   /// Load list of all regular users.
   Future<void> loadUsers() async {
     debugPrint('🔄 [SuperAdminCubit] Loading users list...');

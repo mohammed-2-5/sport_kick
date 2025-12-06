@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:spo_kick/core/errors/failures.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
-import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
@@ -35,8 +35,6 @@ void main() {
   late List<UserEntity> tAdmins;
   late List<UserEntity> tUsers;
   late List<CityEntity> tCities;
-  late List<FieldEntity> tFields;
-  late FieldEntity tField;
 
   setUp(() {
     // Initialize mocks
@@ -148,22 +146,6 @@ void main() {
         updatedAt: now,
       ),
     ];
-
-    tField = FieldEntity(
-      id: 'field-1',
-      name: 'Test Field',
-      sportCategoryId: 'sport-1',
-      ownerId: 'admin-1',
-      city: 'Cairo',
-      address: '123 Test St',
-      pricePerHour: 150.0,
-      currency: 'EGP',
-      isActive: true,
-      createdAt: now,
-      updatedAt: now,
-    );
-
-    tFields = [tField];
 
     // Create cubit
     cubit = SuperAdminCubit(

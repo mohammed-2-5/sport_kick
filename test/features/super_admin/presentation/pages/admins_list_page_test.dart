@@ -39,6 +39,9 @@ void main() {
       () => mockSuperAdminCubit.getAllAdminsUseCase,
     ).thenReturn(mockGetAllAdminsUseCase);
 
+    // Stub loadAdmins
+    when(() => mockSuperAdminCubit.loadAdmins()).thenAnswer((_) async {});
+
     // Stub the use case to return empty list by default
     when(
       () => mockGetAllAdminsUseCase(),
@@ -47,7 +50,7 @@ void main() {
     // Default stream behavior
     when(
       () => mockSuperAdminCubit.stream,
-    ).thenAnswer((_) => Stream<SuperAdminState>.empty());
+    ).thenAnswer((_) => const Stream<SuperAdminState>.empty());
     when(() => mockSuperAdminCubit.close()).thenAnswer((_) async {});
 
     // Setup GetIt

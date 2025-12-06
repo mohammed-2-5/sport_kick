@@ -22,7 +22,9 @@ class CityListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return RadioListTile<bool>(
       value: true,
+      // ignore: deprecated_member_use
       groupValue: isSelected,
+      // ignore: deprecated_member_use
       onChanged: (_) => onTap(),
       activeColor: AppColors.primary,
       title: Text(

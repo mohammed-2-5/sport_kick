@@ -51,7 +51,9 @@ class ThemeSelectorDialog extends StatelessWidget {
     return RadioListTile<AppThemeMode>(
       title: Text(label),
       value: mode,
+      // ignore: deprecated_member_use
       groupValue: preferences.themeMode,
+      // ignore: deprecated_member_use
       onChanged: (value) {
         if (value != null) {
           context.read<SettingsCubit>().updateThemeMode(preferences, value);

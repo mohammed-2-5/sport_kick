@@ -15,6 +15,14 @@ import 'package:spo_kick/features/super_admin/domain/usecases/get_all_users_usec
 import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
+import 'extensions/admin_management_operations.dart';
+import 'extensions/booking_operations.dart';
+import 'extensions/city_operations.dart';
+import 'extensions/export_operations.dart';
+import 'extensions/field_management_operations.dart';
+import 'extensions/statistics_operations.dart';
+import 'extensions/user_management_operations.dart';
+
 // Export all extension methods so they're available to files that import this cubit
 export 'extensions/admin_management_operations.dart';
 export 'extensions/booking_operations.dart';
@@ -26,7 +34,7 @@ export 'extensions/user_management_operations.dart';
 
 /// Cubit for managing super admin state.
 ///
-/// Handles all super admin operations through extension methods:
+/// Handles all super admin operations through mixins:
 /// - Platform statistics (statistics_operations.dart)
 /// - Admin management (admin_management_operations.dart)
 /// - User management (user_management_operations.dart)
@@ -35,23 +43,44 @@ export 'extensions/user_management_operations.dart';
 /// - Booking management (booking_operations.dart)
 /// - Data export (export_operations.dart)
 ///
-/// All methods are organized into focused extensions for better maintainability.
-class SuperAdminCubit extends Cubit<SuperAdminState> {
+/// All methods are organized into focused mixins for better maintainability.
+class SuperAdminCubit extends Cubit<SuperAdminState>
+    with
+        AdminManagementOperations,
+        BookingOperations,
+        CityOperations,
+        ExportOperations,
+        FieldManagementOperations,
+        StatisticsOperations,
+        UserManagementOperations {
   // Use cases
+  @override
   final GetPlatformStatisticsUseCase getPlatformStatisticsUseCase;
+  @override
   final CreateAdminAccountUseCase createAdminAccountUseCase;
+  @override
   final CreateFieldUseCase createFieldUseCase;
+  @override
   final GetAllAdminsUseCase getAllAdminsUseCase;
+  @override
   final GetAllUsersUseCase getAllUsersUseCase;
+  @override
   final AssignFieldToAdminUseCase assignFieldToAdminUseCase;
+  @override
   final GetActiveCitiesUseCase getActiveCitiesUseCase;
+  @override
   final GetAllFieldsUseCase getAllFieldsUseCase;
+  @override
   final GetAllBookingsUseCase getAllBookingsUseCase;
+  @override
   final DeactivateUserUseCase deactivateUserUseCase;
+  @override
   final ActivateUserUseCase activateUserUseCase;
 
   // Services
+  @override
   final CsvExportService csvExportService;
+  @override
   final PdfExportService pdfExportService;
 
   SuperAdminCubit({

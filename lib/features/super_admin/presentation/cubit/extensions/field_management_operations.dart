@@ -1,17 +1,25 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/super_admin/domain/models/field_creation_data.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/assign_field_to_admin_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/create_field_usecase.dart';
+import 'package:spo_kick/features/fields/domain/usecases/get_all_fields_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/field_form_constants.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/validators/field_form_validator.dart';
 
-/// Extension for field management operations.
+/// Mixin for field management operations.
 ///
 /// Handles:
 /// - Creating new fields (with validation)
 /// - Assigning fields to admins
 /// - Loading all fields
-extension FieldManagementOperations on SuperAdminCubit {
+mixin FieldManagementOperations on Cubit<SuperAdminState> {
+  // Dependencies
+  CreateFieldUseCase get createFieldUseCase;
+  AssignFieldToAdminUseCase get assignFieldToAdminUseCase;
+  GetAllFieldsUseCase get getAllFieldsUseCase;
+
   /// Submit field creation with validation.
   ///
   /// Validates all data, transforms it, and creates the field.

@@ -85,6 +85,7 @@ class PdfExportService {
     await file.writeAsBytes(await pdf.save());
 
     // Share file
+    // ignore: deprecated_member_use
     await Share.shareXFiles([
       XFile(file.path),
     ], subject: 'Sport Kick Analytics Report');

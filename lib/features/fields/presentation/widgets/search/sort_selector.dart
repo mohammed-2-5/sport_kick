@@ -31,7 +31,9 @@ class SortSelector extends StatelessWidget {
           final isSelected = selectedSort == sortOption;
           return RadioListTile<SearchSortBy>(
             value: sortOption,
+            // ignore: deprecated_member_use
             groupValue: selectedSort,
+            // ignore: deprecated_member_use
             onChanged: (value) {
               if (value != null) {
                 onChanged(value);

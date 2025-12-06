@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/get_active_cities_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
-/// Extension for city management operations.
+/// Mixin for city management operations.
 ///
 /// Handles loading cities for field creation and management.
-extension CityOperations on SuperAdminCubit {
+mixin CityOperations on Cubit<SuperAdminState> {
+  // Dependencies
+  GetActiveCitiesUseCase get getActiveCitiesUseCase;
+
   /// Load list of active cities.
   Future<void> loadCities() async {
     debugPrint('🔄 [SuperAdminCubit] Loading cities...');

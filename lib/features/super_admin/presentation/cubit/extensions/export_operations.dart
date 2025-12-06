@@ -1,13 +1,19 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/services/csv_export_service.dart';
+import 'package:spo_kick/core/services/pdf_export_service.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
-/// Extension for data export operations.
+/// Mixin for data export operations.
 ///
 /// Handles exporting data to CSV and PDF formats for reporting.
-extension ExportOperations on SuperAdminCubit {
+mixin ExportOperations on Cubit<SuperAdminState> {
+  // Dependencies
+  CsvExportService get csvExportService;
+  PdfExportService get pdfExportService;
+
   /// Export users to CSV file.
   Future<void> exportUsersToCSV(List<UserEntity> users) async {
     debugPrint('🔄 [SuperAdminCubit] Exporting ${users.length} users to CSV');

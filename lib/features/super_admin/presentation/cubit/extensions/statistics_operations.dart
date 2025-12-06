@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
-/// Extension for platform statistics operations.
+/// Mixin for platform statistics operations.
 ///
 /// Handles loading and displaying platform-wide statistics.
-extension StatisticsOperations on SuperAdminCubit {
+mixin StatisticsOperations on Cubit<SuperAdminState> {
+  // Dependencies
+  GetPlatformStatisticsUseCase get getPlatformStatisticsUseCase;
+
   /// Load platform-wide statistics for dashboard.
   Future<void> loadPlatformStatistics() async {
     debugPrint('🔄 [SuperAdminCubit] Loading platform statistics...');

@@ -86,7 +86,21 @@ class AdminListBody extends StatelessWidget {
           ),
           Expanded(
             child: filteredAdmins.isEmpty
-                ? AdminListEmptyState(isSearchEmpty: isSearchEmpty)
+                ? LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
+                          ),
+                          child: AdminListEmptyState(
+                            isSearchEmpty: isSearchEmpty,
+                          ),
+                        ),
+                      );
+                    },
+                  )
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,

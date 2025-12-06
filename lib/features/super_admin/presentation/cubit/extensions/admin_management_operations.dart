@@ -1,14 +1,24 @@
 import 'package:flutter/foundation.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/activate_user_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/create_admin_account_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/deactivate_user_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
-/// Extension for admin management operations.
+/// Mixin for admin management operations.
 ///
 /// Handles:
 /// - Creating admin accounts
 /// - Loading admin lists
 /// - Bulk activate/deactivate operations
-extension AdminManagementOperations on SuperAdminCubit {
+mixin AdminManagementOperations on Cubit<SuperAdminState> {
+  // Dependencies
+  CreateAdminAccountUseCase get createAdminAccountUseCase;
+  GetAllAdminsUseCase get getAllAdminsUseCase;
+  ActivateUserUseCase get activateUserUseCase;
+  DeactivateUserUseCase get deactivateUserUseCase;
+
   /// Create a new admin account.
   ///
   /// Generates default password if not provided.

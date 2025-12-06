@@ -45,6 +45,7 @@ class CsvExportService {
     await file.writeAsString(csv);
 
     // Share file
+    // ignore: deprecated_member_use
     await Share.shareXFiles([
       XFile(file.path),
     ], subject: 'Exported $fileName CSV');
