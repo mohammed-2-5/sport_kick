@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/app_error_widget.dart';
-import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
+import 'package:spo_kick/features/owner/presentation/utils/delete_field_dialog.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field_detail_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field_detail_stats.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field_recent_bookings.dart';
@@ -52,12 +52,14 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: () => _navigateToEditField(),
+            onPressed: () =>
+                context.pushNamed('ownerEditField', extra: widget.field),
             tooltip: 'Edit field',
           ),
           IconButton(
             icon: const Icon(Icons.delete_outline),
-            onPressed: () => _showDeleteConfirmation(),
+            onPressed: () =>
+                showDeleteFieldDialog(context: context, field: widget.field),
             tooltip: 'Delete field',
           ),
           const SizedBox(width: 8),
@@ -66,22 +68,9 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
       body: BlocConsumer<OwnerCubit, OwnerState>(
         listener: (context, state) {
           if (state is OwnerError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: AppColors.error,
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
+            SnackbarHelper.showError(context, state.message);
           } else if (state is OwnerActionSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: AppColors.success,
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
-            // Reload bookings after action
+            SnackbarHelper.showSuccess(context, state.message);
             _loadFieldBookings();
           }
         },
@@ -130,40 +119,5 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
         },
       ),
     );
-  }
-
-  void _navigateToEditField() {
-    context.pushNamed('ownerEditField', extra: widget.field);
-  }
-
-  void _showDeleteConfirmation() {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete Field'),
-        content: Text(
-          'Are you sure you want to delete "${widget.field.name}"? '
-          'This action cannot be undone.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
-          ),
-          CustomButton(
-            text: 'Delete',
-            onPressed: () {
-              Navigator.pop(dialogContext);
-              _deleteField();
-            },
-            variant: ButtonVariant.primary,
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _deleteField() {
-    context.read<OwnerCubit>().deleteField(widget.field.id);
   }
 }

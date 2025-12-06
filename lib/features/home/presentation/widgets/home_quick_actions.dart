@@ -11,7 +11,7 @@ import 'package:spo_kick/features/home/presentation/constants/home_constants.dar
 /// - My Profile
 /// - Browse Fields
 /// - My Bookings
-/// - Favorites (coming soon)
+/// - Favorites
 class HomeQuickActions extends StatelessWidget {
   const HomeQuickActions({super.key});
 
@@ -96,14 +96,7 @@ class HomeQuickActions extends StatelessWidget {
         title: HomeConstants.favoritesTitle,
         subtitle: HomeConstants.favoritesSubtitle,
         gradient: AppGradients.warning,
-        onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(HomeConstants.favoritesComingSoonMessage),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        },
+        onTap: () => context.pushNamed('favorites'),
       ),
     ];
   }

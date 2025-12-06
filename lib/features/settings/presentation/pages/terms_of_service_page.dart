@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/legal_page_widgets.dart';
 
 /// Terms of Service Page
 ///
@@ -7,6 +7,9 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 /// Covers user agreements, booking policies, and legal obligations.
 class TermsOfServicePage extends StatelessWidget {
   const TermsOfServicePage({super.key});
+
+  static const String _contactEmail = 'mohammedyasser2023@gmail.com';
+  static const String _lastUpdated = 'December 1, 2025';
 
   @override
   Widget build(BuildContext context) {
@@ -19,253 +22,151 @@ class TermsOfServicePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(context),
-            const SizedBox(height: 24),
-            _buildSection(context, 'Acceptance of Terms', [
-              'By using Sport Kick, you agree to these Terms of Service',
-              'If you do not agree, please do not use our services',
-              'We reserve the right to modify these terms at any time',
-              'Continued use after changes constitutes acceptance',
-            ]),
-            _buildSection(context, 'User Accounts', [
-              'You must provide accurate and complete information when registering',
-              'You are responsible for maintaining the security of your account',
-              'You must be at least 13 years old to use our services',
-              'One person or business per account',
-              'You must not share your account credentials',
-              'Notify us immediately of any unauthorized account access',
-            ]),
-            _buildSection(context, 'Booking Policies', [
-              'All bookings are subject to field availability',
-              'Bookings may require owner approval before confirmation',
-              'You must arrive on time for your booking',
-              'Late arrivals may result in reduced playing time',
-              'No-shows may result in account restrictions',
-              'Prices are set by field owners and may vary',
-            ]),
-            _buildSection(context, 'Cancellation and Refunds', [
-              'Users can cancel bookings according to the cancellation policy',
-              'Cancellations made 24+ hours in advance may be eligible for full refund',
-              'Cancellations made less than 24 hours may incur fees',
-              'No-shows are not eligible for refunds',
-              'Refunds are processed according to payment method (3-7 business days)',
-              'Field owners reserve the right to cancel bookings due to maintenance or weather',
-            ]),
-            _buildSection(context, 'Payments', [
-              'All payments are processed securely through our payment partners',
-              'Prices are displayed in local currency (EGP)',
-              'Payment is required to confirm booking (unless pay-at-venue is available)',
-              'You authorize us to charge the payment method on file',
-              'Disputed charges must be reported within 7 days',
-              'We are not responsible for payment processing fees',
-            ]),
-            _buildSection(context, 'User Conduct', [
-              'You agree to use the app only for lawful purposes',
-              'You must not abuse, harass, or harm other users or staff',
-              'Respect field property and equipment',
-              'Follow all field rules and safety guidelines',
-              'Do not post false reviews or ratings',
-              'Do not attempt to circumvent booking system',
-            ]),
-            _buildSection(context, 'Field Owner Responsibilities', [
-              'Provide accurate field information and availability',
-              'Maintain field in safe and playable condition',
-              'Honor confirmed bookings unless emergency arises',
-              'Process booking approvals/rejections promptly',
-              'Provide refunds according to cancellation policy',
-              'Respond to user inquiries in a timely manner',
-            ]),
-            _buildSection(context, 'Liability and Disclaimers', [
-              'Sport Kick is a platform connecting users and field owners',
-              'We are not responsible for the condition or safety of fields',
-              'Users assume all risks associated with playing sports',
-              'We recommend users have appropriate health/accident insurance',
-              'Field owners are independent contractors, not our employees',
-              'We are not liable for injuries, accidents, or losses at fields',
-              'Maximum liability is limited to the amount paid for the booking',
-            ]),
-            _buildSection(context, 'Intellectual Property', [
-              'Sport Kick name, logo, and app design are our property',
-              'You may not copy, modify, or distribute our content',
-              'User-generated content (reviews, photos) may be used by us',
-              'You retain ownership of content you upload',
-              'You grant us license to use your content for promotional purposes',
-            ]),
-            _buildSection(context, 'Termination', [
-              'We reserve the right to suspend or terminate accounts',
-              'Violations of these terms may result in immediate termination',
-              'You can delete your account at any time',
-              'Upon termination, you lose access to all bookings and data',
-              'Outstanding payments remain due after termination',
-            ]),
-            _buildSection(context, 'Dispute Resolution', [
-              'Any disputes should first be reported to our support team',
-              'We will attempt to resolve disputes amicably',
-              'Unresolved disputes may be subject to arbitration',
-              'Egyptian law governs these terms',
-              'Jurisdiction is in Egyptian courts',
-            ]),
-            _buildSection(context, 'Changes to Services', [
-              'We may modify or discontinue features at any time',
-              'We are not liable for any service modifications',
-              'We will provide notice of significant changes when possible',
-            ]),
-            const SizedBox(height: 32),
-            _buildContactSection(context),
-            const SizedBox(height: 32),
-            _buildLastUpdated(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.description, color: AppColors.primary, size: 32),
-              const SizedBox(width: 12),
-              Text(
-                'Terms of Service',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Please read these terms carefully before using Sport Kick. '
-            'These terms govern your use of our platform and services.',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSection(
-    BuildContext context,
-    String title,
-    List<String> points,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 24),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        const SizedBox(height: 12),
-        ...points.map(
-          (point) => Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 6),
-                  child: Icon(Icons.circle, size: 8, color: AppColors.primary),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    point,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.textPrimary,
-                      height: 1.5,
-                    ),
-                  ),
-                ),
+            LegalPageHeader(
+              icon: Icons.description,
+              title: 'Terms of Service',
+              description:
+                  'Please read these terms carefully before using Sport Kick. '
+                  'These terms govern your use of our platform and services.',
+            ),
+            SizedBox(height: 24),
+            LegalSection(
+              title: 'Acceptance of Terms',
+              points: [
+                'By using Sport Kick, you agree to these Terms of Service',
+                'If you do not agree, please do not use our services',
+                'We reserve the right to modify these terms at any time',
+                'Continued use after changes constitutes acceptance',
               ],
             ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildContactSection(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.warning.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.contact_support,
-                color: AppColors.warning,
-                size: 24,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                'Questions or Concerns?',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.warning,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'If you have questions about these Terms of Service, please contact us:',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: AppColors.textPrimary),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              const Icon(Icons.email, size: 16, color: AppColors.warning),
-              const SizedBox(width: 8),
-              Text(
-                'mohammedyasser2023@gmail.com',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLastUpdated(BuildContext context) {
-    return Center(
-      child: Text(
-        'Last Updated: December 1, 2025',
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: AppColors.textSecondary,
-          fontStyle: FontStyle.italic,
+            LegalSection(
+              title: 'User Accounts',
+              points: [
+                'You must provide accurate and complete information when registering',
+                'You are responsible for maintaining the security of your account',
+                'You must be at least 13 years old to use our services',
+                'One person or business per account',
+                'You must not share your account credentials',
+                'Notify us immediately of any unauthorized account access',
+              ],
+            ),
+            LegalSection(
+              title: 'Booking Policies',
+              points: [
+                'All bookings are subject to field availability',
+                'Bookings may require owner approval before confirmation',
+                'You must arrive on time for your booking',
+                'Late arrivals may result in reduced playing time',
+                'No-shows may result in account restrictions',
+                'Prices are set by field owners and may vary',
+              ],
+            ),
+            LegalSection(
+              title: 'Cancellation and Refunds',
+              points: [
+                'Users can cancel bookings according to the cancellation policy',
+                'Cancellations made 24+ hours in advance may be eligible for full refund',
+                'Cancellations made less than 24 hours may incur fees',
+                'No-shows are not eligible for refunds',
+                'Refunds are processed according to payment method (3-7 business days)',
+                'Field owners reserve the right to cancel bookings due to maintenance or weather',
+              ],
+            ),
+            LegalSection(
+              title: 'Payments',
+              points: [
+                'All payments are processed securely through our payment partners',
+                'Prices are displayed in local currency (EGP)',
+                'Payment is required to confirm booking (unless pay-at-venue is available)',
+                'You authorize us to charge the payment method on file',
+                'Disputed charges must be reported within 7 days',
+                'We are not responsible for payment processing fees',
+              ],
+            ),
+            LegalSection(
+              title: 'User Conduct',
+              points: [
+                'You agree to use the app only for lawful purposes',
+                'You must not abuse, harass, or harm other users or staff',
+                'Respect field property and equipment',
+                'Follow all field rules and safety guidelines',
+                'Do not post false reviews or ratings',
+                'Do not attempt to circumvent booking system',
+              ],
+            ),
+            LegalSection(
+              title: 'Field Owner Responsibilities',
+              points: [
+                'Provide accurate field information and availability',
+                'Maintain field in safe and playable condition',
+                'Honor confirmed bookings unless emergency arises',
+                'Process booking approvals/rejections promptly',
+                'Provide refunds according to cancellation policy',
+                'Respond to user inquiries in a timely manner',
+              ],
+            ),
+            LegalSection(
+              title: 'Liability and Disclaimers',
+              points: [
+                'Sport Kick is a platform connecting users and field owners',
+                'We are not responsible for the condition or safety of fields',
+                'Users assume all risks associated with playing sports',
+                'We recommend users have appropriate health/accident insurance',
+                'Field owners are independent contractors, not our employees',
+                'We are not liable for injuries, accidents, or losses at fields',
+                'Maximum liability is limited to the amount paid for the booking',
+              ],
+            ),
+            LegalSection(
+              title: 'Intellectual Property',
+              points: [
+                'Sport Kick name, logo, and app design are our property',
+                'You may not copy, modify, or distribute our content',
+                'User-generated content (reviews, photos) may be used by us',
+                'You retain ownership of content you upload',
+                'You grant us license to use your content for promotional purposes',
+              ],
+            ),
+            LegalSection(
+              title: 'Termination',
+              points: [
+                'We reserve the right to suspend or terminate accounts',
+                'Violations of these terms may result in immediate termination',
+                'You can delete your account at any time',
+                'Upon termination, you lose access to all bookings and data',
+                'Outstanding payments remain due after termination',
+              ],
+            ),
+            LegalSection(
+              title: 'Dispute Resolution',
+              points: [
+                'Any disputes should first be reported to our support team',
+                'We will attempt to resolve disputes amicably',
+                'Unresolved disputes may be subject to arbitration',
+                'Egyptian law governs these terms',
+                'Jurisdiction is in Egyptian courts',
+              ],
+            ),
+            LegalSection(
+              title: 'Changes to Services',
+              points: [
+                'We may modify or discontinue features at any time',
+                'We are not liable for any service modifications',
+                'We will provide notice of significant changes when possible',
+              ],
+            ),
+            SizedBox(height: 32),
+            LegalContactSection(
+              email: _contactEmail,
+              description:
+                  'If you have questions about these Terms of Service, please contact us:',
+            ),
+            SizedBox(height: 32),
+            LegalLastUpdated(date: _lastUpdated),
+          ],
         ),
       ),
     );

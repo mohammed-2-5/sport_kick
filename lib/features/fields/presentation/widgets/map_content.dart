@@ -39,7 +39,7 @@ class _MapContentState extends State<MapContent> {
             initialZoom: _defaultZoom,
             minZoom: 5.0,
             maxZoom: 18.0,
-            onTap: (_, __) {
+            onTap: (tapPosition, point) {
               setState(() {
                 _selectedField = null;
               });

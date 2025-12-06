@@ -32,6 +32,44 @@ class OwnerCubit extends Cubit<OwnerState> {
     required this.deleteFieldUseCase,
   }) : super(const OwnerInitial());
 
+  /// Load all dashboard data (fields, bookings, revenue) in parallel
+  /// This is the single entry point for the dashboard page
+  Future<void> loadDashboardData(String ownerId) async {
+    debugPrint('🔄 [OwnerCubit] Loading dashboard data for owner: $ownerId');
+    emit(const OwnerLoading(message: 'Loading dashboard...'));
+
+    // Load all data
+    final fieldsResult = await getOwnerFieldsUseCase(ownerId: ownerId);
+    final bookingsResult = await getOwnerBookingsUseCase(ownerId: ownerId);
+    final revenueResult = await getOwnerRevenueUseCase(ownerId: ownerId);
+
+    // Check for any errors
+    String? errorMessage;
+    fieldsResult.fold((f) => errorMessage = f.message, (_) {});
+    if (errorMessage == null) {
+      bookingsResult.fold((f) => errorMessage = f.message, (_) {});
+    }
+    if (errorMessage == null) {
+      revenueResult.fold((f) => errorMessage = f.message, (_) {});
+    }
+
+    if (errorMessage != null) {
+      debugPrint('❌ [OwnerCubit] Error loading dashboard: $errorMessage');
+      emit(OwnerError(errorMessage!));
+      return;
+    }
+
+    // All succeeded - emit combined state
+    final fields = fieldsResult.getOrElse(() => []);
+    final bookings = bookingsResult.getOrElse(() => []);
+    final revenue = revenueResult.fold((_) => null, (r) => r);
+
+    debugPrint(
+      '✅ [OwnerCubit] Dashboard data loaded: ${fields.length} fields, ${bookings.length} bookings',
+    );
+    emit(OwnerDataLoaded(fields: fields, bookings: bookings, revenue: revenue));
+  }
+
   /// Load all fields owned by the owner
   Future<void> loadOwnerFields(String ownerId) async {
     debugPrint('🔄 [OwnerCubit] Loading fields for owner: $ownerId');

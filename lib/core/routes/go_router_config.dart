@@ -15,6 +15,8 @@ import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart
 import 'package:spo_kick/features/bookings/presentation/pages/booking_details_page.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/create_booking_page.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
+import 'package:spo_kick/features/business_hours/presentation/cubit/business_hours_cubit.dart';
+import 'package:spo_kick/features/business_hours/presentation/pages/manage_business_hours_page.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/pages/city_selection_page.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -409,6 +411,26 @@ class AppRouterConfig {
             ),
             state: state,
           ),
+        ),
+        GoRoute(
+          path: '/owner/fields/:fieldId/business-hours',
+          name: 'manageBusinessHours',
+          pageBuilder: (context, state) {
+            final fieldId = state.pathParameters['fieldId']!;
+            final extra = state.extra as Map<String, dynamic>?;
+            final fieldName = extra?['fieldName'] as String?;
+
+            return _buildSlidePage(
+              child: BlocProvider(
+                create: (_) => sl<BusinessHoursCubit>(),
+                child: ManageBusinessHoursPage(
+                  fieldId: fieldId,
+                  fieldName: fieldName,
+                ),
+              ),
+              state: state,
+            );
+          },
         ),
 
         // ==================== SUPER ADMIN ROUTES ====================

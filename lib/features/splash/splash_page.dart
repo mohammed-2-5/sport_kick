@@ -8,6 +8,7 @@ import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
+import 'package:spo_kick/features/splash/presentation/widgets/splash_logo.dart';
 
 /// Splash screen displayed when app starts.
 ///
@@ -160,7 +161,7 @@ class _SplashPageState extends State<SplashPage>
                       ),
                     );
                   },
-                  child: _buildLogo(),
+                  child: const SplashLogo(),
                 ),
 
                 const SizedBox(height: 24),
@@ -230,29 +231,6 @@ class _SplashPageState extends State<SplashPage>
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildLogo() {
-    return Container(
-      width: 140,
-      height: 140,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: const Icon(
-        Icons.sports_soccer,
-        size: 70,
-        color: AppColors.primary,
       ),
     );
   }

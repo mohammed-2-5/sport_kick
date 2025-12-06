@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_strings.dart';
+import 'package:spo_kick/features/auth/presentation/constants/auth_strings.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -88,7 +89,7 @@ class RegisterPage extends StatelessWidget {
 
                     // Title
                     Text(
-                      'Join ${AppStrings.appName}',
+                      '${AuthStrings.joinApp} ${AppStrings.appName}',
                       style: Theme.of(context).textTheme.headlineSmall
                           ?.copyWith(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
@@ -98,7 +99,7 @@ class RegisterPage extends StatelessWidget {
 
                     // Subtitle
                     Text(
-                      'Create an account to start booking sports fields',
+                      AuthStrings.registerSubtitle,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -117,14 +118,14 @@ class RegisterPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Already have an account? ',
+                          AppStrings.alreadyHaveAccount,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: const Text('Login'),
+                          child: const Text(AppStrings.login),
                         ),
                       ],
                     ),

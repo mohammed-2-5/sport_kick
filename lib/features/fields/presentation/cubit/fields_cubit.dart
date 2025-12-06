@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/fields/domain/usecases/get_all_fields_usecase.dart';
 import 'package:spo_kick/features/fields/domain/usecases/get_field_by_id_usecase.dart';
@@ -211,11 +212,13 @@ class FieldsCubit extends Cubit<FieldsState> {
   Future<void> filterByCategory(String? categoryId) async {
     final currentState = state;
 
-    print('🔍 [FILTER] filterByCategory called with categoryId: $categoryId');
+    debugPrint(
+      '🔍 [FILTER] filterByCategory called with categoryId: $categoryId',
+    );
 
     // Only filter if we have loaded fields
     if (currentState is! FieldsLoaded) {
-      print(
+      debugPrint(
         '⚠️ [FILTER] State is not FieldsLoaded, loading all fields first...',
       );
       await loadAllFields();
@@ -226,13 +229,13 @@ class FieldsCubit extends Cubit<FieldsState> {
       return;
     }
 
-    print(
+    debugPrint(
       '📊 [FILTER] Current state has ${currentState.fields.length} total fields',
     );
 
     if (categoryId == null) {
       // Clear filter - show all fields
-      print('🔄 [FILTER] Clearing category filter');
+      debugPrint('🔄 [FILTER] Clearing category filter');
       emit(currentState.copyWith(clearCategoryFilter: true));
       return;
     }
@@ -241,23 +244,23 @@ class FieldsCubit extends Cubit<FieldsState> {
     // The filteredFields getter will handle the actual filtering
     final newState = currentState.copyWith(selectedCategoryId: categoryId);
 
-    print('✅ [FILTER] Setting selectedCategoryId to: $categoryId');
-    print(
+    debugPrint('✅ [FILTER] Setting selectedCategoryId to: $categoryId');
+    debugPrint(
       '📋 [FILTER] Filtered fields count: ${newState.filteredFields.length}',
     );
 
     // Debug: Print all fields and their categories
     for (var field in currentState.fields) {
       final isMatch = field.sportCategoryId == categoryId;
-      print(
+      debugPrint(
         '   ${isMatch ? "✓" : "✗"} Field: ${field.name}, Category: ${field.sportCategoryId}',
       );
     }
 
     if (newState.filteredFields.isEmpty) {
-      print('⚠️ [FILTER] No fields found for category: $categoryId');
+      debugPrint('⚠️ [FILTER] No fields found for category: $categoryId');
     } else {
-      print(
+      debugPrint(
         '✅ [FILTER] Emitting state with ${newState.filteredFields.length} filtered fields',
       );
     }

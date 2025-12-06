@@ -4,11 +4,8 @@ import 'package:spo_kick/features/home/presentation/constants/home_constants.dar
 
 /// Upcoming features section widget for the home page.
 ///
-/// Displays an info card with a list of upcoming features:
-/// - Browse and search sports fields
-/// - Book time slots instantly
-/// - Secure online payments
-/// - Review and rate fields
+/// Displays an info card with upcoming features that are in development.
+/// Currently shows: Secure online payments integration.
 class HomeUpcomingFeatures extends StatelessWidget {
   const HomeUpcomingFeatures({super.key});
 
@@ -31,20 +28,8 @@ class HomeUpcomingFeatures extends StatelessWidget {
           _buildHeader(context),
           const SizedBox(height: HomeConstants.upcomingFeaturesTitleSpacing),
           const _FeatureItem(
-            icon: Icons.sports_soccer,
-            text: HomeConstants.featureBrowseFields,
-          ),
-          const _FeatureItem(
-            icon: Icons.book_online,
-            text: HomeConstants.featureBookSlots,
-          ),
-          const _FeatureItem(
             icon: Icons.payment,
             text: HomeConstants.featurePayments,
-          ),
-          const _FeatureItem(
-            icon: Icons.rate_review_outlined,
-            text: HomeConstants.featureReviews,
           ),
         ],
       ),

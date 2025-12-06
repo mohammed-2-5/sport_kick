@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/app_error_widget.dart';
 import 'package:spo_kick/core/widgets/empty_state_widget.dart';
@@ -11,8 +9,8 @@ import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/category_filters.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/field_card.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/field_filters_dialog.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/fields_list_content.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/fields_list_header.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/fields_search_bar.dart';
 
@@ -144,7 +142,7 @@ class _FieldsListViewState extends State<FieldsListView> {
                             },
                           );
                         }
-                        return _buildFieldsList(state.results);
+                        return FieldsListContent(fields: state.results);
                       }
 
                       if (state is FieldsLoaded) {
@@ -162,7 +160,7 @@ class _FieldsListViewState extends State<FieldsListView> {
                           );
                         }
 
-                        return _buildFieldsList(fields);
+                        return FieldsListContent(fields: fields);
                       }
 
                       return const SizedBox.shrink();
@@ -191,41 +189,6 @@ class _FieldsListViewState extends State<FieldsListView> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildFieldsList(List fields) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        await context.read<FieldsCubit>().refresh();
-      },
-      child: AnimationLimiter(
-        child: ListView.builder(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-          itemCount: fields.length,
-          itemBuilder: (context, index) {
-            final field = fields[index];
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 375),
-              child: SlideAnimation(
-                verticalOffset: 50.0,
-                child: FadeInAnimation(
-                  child: FieldCard(
-                    field: field,
-                    onTap: () {
-                      context.pushNamed(
-                        'fieldDetails',
-                        pathParameters: {'fieldId': field.id},
-                      );
-                    },
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -31,14 +31,10 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
   @override
   void initState() {
     super.initState();
-    _loadOwnerData();
-  }
-
-  void _loadOwnerData() {
+    // Load owner data using cubit
     final authState = context.read<AuthCubit>().state;
     if (authState is Authenticated) {
-      context.read<OwnerCubit>().loadOwnerFields(authState.user.id);
-      context.read<OwnerCubit>().loadOwnerRevenue(authState.user.id);
+      context.read<OwnerCubit>().loadDashboardData(authState.user.id);
     }
   }
 
@@ -51,13 +47,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
           if (authState is Unauthenticated) {
             context.goNamed('login');
           } else if (authState is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(authState.message),
-                backgroundColor: AppColors.error,
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
+            SnackbarHelper.showError(context, authState.message);
           }
         },
         builder: (context, authState) {
@@ -70,29 +60,27 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
           return BlocConsumer<OwnerCubit, OwnerState>(
             listener: (context, state) {
               if (state is OwnerError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: AppColors.error,
-                    behavior: SnackBarBehavior.floating,
-                  ),
-                );
+                SnackbarHelper.showError(context, state.message);
               } else if (state is OwnerActionSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: AppColors.success,
-                    behavior: SnackBarBehavior.floating,
-                  ),
-                );
+                SnackbarHelper.showSuccess(context, state.message);
                 // Refresh user data from AuthCubit after profile update
                 context.read<AuthCubit>().checkAuthStatus();
-                _loadOwnerData();
+                final authSt = context.read<AuthCubit>().state;
+                if (authSt is Authenticated) {
+                  context.read<OwnerCubit>().loadDashboardData(authSt.user.id);
+                }
               }
             },
             builder: (context, ownerState) {
               return RefreshIndicator(
-                onRefresh: () async => _loadOwnerData(),
+                onRefresh: () async {
+                  final authSt = context.read<AuthCubit>().state;
+                  if (authSt is Authenticated) {
+                    context.read<OwnerCubit>().loadDashboardData(
+                      authSt.user.id,
+                    );
+                  }
+                },
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(

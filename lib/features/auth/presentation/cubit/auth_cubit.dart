@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
@@ -76,11 +77,11 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) {
-        print('❌ Login Error: ${failure.message}');
+        debugPrint('❌ Login Error: ${failure.message}');
         emit(AuthError(failure.message));
       },
       (user) {
-        print('✅ Login Success: ${user.email}');
+        debugPrint('✅ Login Success: ${user.email}');
         emit(Authenticated(user));
       },
     );
@@ -111,11 +112,11 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) {
         // Print error to console for debugging
-        print('❌ Registration Error: ${failure.message}');
+        debugPrint('❌ Registration Error: ${failure.message}');
         emit(AuthError(failure.message));
       },
       (user) {
-        print('✅ Registration Success: ${user.email}');
+        debugPrint('✅ Registration Success: ${user.email}');
         emit(Authenticated(user));
       },
     );
@@ -151,12 +152,12 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) {
-        print('❌ Password Change Error: ${failure.message}');
+        debugPrint('❌ Password Change Error: ${failure.message}');
         emit(AuthError(failure.message));
         checkAuthStatus();
       },
       (_) {
-        print('✅ Password Change Success');
+        debugPrint('✅ Password Change Success');
         emit(const PasswordChanged());
         checkAuthStatus();
       },
@@ -183,13 +184,13 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) {
-        print('❌ Profile Update Error: ${failure.message}');
+        debugPrint('❌ Profile Update Error: ${failure.message}');
         emit(AuthError(failure.message));
         // Re-emit authenticated state with current user to restore UI
         checkAuthStatus();
       },
       (updatedUser) {
-        print('✅ Profile Update Success: ${updatedUser.displayName}');
+        debugPrint('✅ Profile Update Success: ${updatedUser.displayName}');
         emit(ProfileUpdated(updatedUser));
         emit(Authenticated(updatedUser));
       },

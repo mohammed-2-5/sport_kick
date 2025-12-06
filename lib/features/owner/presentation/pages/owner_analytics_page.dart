@@ -32,14 +32,10 @@ class _OwnerAnalyticsPageState extends State<OwnerAnalyticsPage> {
   @override
   void initState() {
     super.initState();
-    _loadData();
-  }
-
-  void _loadData() {
+    // Load analytics data using cubit
     final authState = context.read<AuthCubit>().state;
     if (authState is Authenticated) {
-      context.read<OwnerCubit>().loadOwnerFields(authState.user.id);
-      context.read<OwnerCubit>().loadOwnerBookings(ownerId: authState.user.id);
+      context.read<OwnerCubit>().loadDashboardData(authState.user.id);
     }
     context.read<FieldsCubit>().loadAllFields();
   }
@@ -56,7 +52,12 @@ class _OwnerAnalyticsPageState extends State<OwnerAnalyticsPage> {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: () async => _loadData(),
+        onRefresh: () async {
+          final authState = context.read<AuthCubit>().state;
+          if (authState is Authenticated) {
+            context.read<OwnerCubit>().loadDashboardData(authState.user.id);
+          }
+        },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.all(16),

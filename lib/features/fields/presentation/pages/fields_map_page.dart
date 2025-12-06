@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_state.dart';
+import 'package:spo_kick/features/fields/presentation/utils/show_map_filter_dialog.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/map_content.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/map_empty_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/map_error_state.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/map_filter_dialog.dart';
 
 /// Fields Map Page
 ///
@@ -68,7 +69,7 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.filter_list),
-                      onPressed: () => _showFilterDialog(context),
+                      onPressed: () => showMapFilterDialog(context),
                       tooltip: 'Filter',
                     ),
                     if (hasFilters)
@@ -95,12 +96,7 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
             if (state is MapLocationLoaded) {
               // Center map on user location
               _mapController.move(state.userLocation, 14.0);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Centered on your location'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
+              SnackbarHelper.showSuccess(context, 'Centered on your location');
             } else if (state is MapLocationPermissionDenied) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -115,12 +111,7 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
                 ),
               );
             } else if (state is MapLocationError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  duration: const Duration(seconds: 2),
-                ),
-              );
+              SnackbarHelper.showError(context, state.message);
             }
           },
           child: BlocBuilder<FieldsCubit, FieldsState>(
@@ -164,21 +155,6 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
             },
           ),
         ),
-      ),
-    );
-  }
-
-  /// Show filter dialog
-  void _showFilterDialog(BuildContext context) {
-    final mapCubit = context.read<MapCubit>();
-
-    showDialog(
-      context: context,
-      builder: (dialogContext) => MapFilterDialog(
-        initialFilters: mapCubit.filters,
-        onApply: (filters) {
-          mapCubit.updateFilters(filters);
-        },
       ),
     );
   }

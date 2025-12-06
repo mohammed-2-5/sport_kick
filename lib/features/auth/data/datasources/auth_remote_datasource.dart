@@ -106,8 +106,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     String? phone,
   }) async {
     try {
-      print('📝 Starting registration for: $email');
-      print('📝 Phone number: ${phone ?? "null"}');
+      debugPrint('📝 Starting registration for: $email');
+      debugPrint('📝 Phone number: ${phone ?? "null"}');
 
       // 1. Create auth user
       final response = await supabase.auth.signUp(
@@ -122,7 +122,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         );
       }
 
-      print('✅ Auth user created with ID: ${response.user!.id}');
+      debugPrint('✅ Auth user created with ID: ${response.user!.id}');
 
       // 2. Wait a moment for the database trigger to create the profile
       await Future.delayed(const Duration(milliseconds: 500));
@@ -130,14 +130,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // 3. Update profile with phone number
       final profileData = {'full_name': fullName, 'phone': phone};
 
-      print('📝 Updating profile with data: $profileData');
+      debugPrint('📝 Updating profile with data: $profileData');
 
       await supabase
           .from('profiles')
           .update(profileData)
           .eq('id', response.user!.id);
 
-      print('✅ Profile updated successfully');
+      debugPrint('✅ Profile updated successfully');
 
       // 4. Fetch the created profile
       final profile = await supabase
@@ -146,14 +146,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           .eq('id', response.user!.id)
           .single();
 
-      print('✅ Profile fetched: ${profile['phone']}');
+      debugPrint('✅ Profile fetched: ${profile['phone']}');
 
       return UserModel.fromJson(profile);
     } on AuthException catch (e) {
-      print('❌ Auth Exception: ${e.message}');
+      debugPrint('❌ Auth Exception: ${e.message}');
       throw app_exceptions.ServerException('Registration failed: ${e.message}');
     } catch (e) {
-      print('❌ Registration Exception: ${e.toString()}');
+      debugPrint('❌ Registration Exception: ${e.toString()}');
       throw app_exceptions.ServerException(
         'Registration failed: ${e.toString()}',
       );

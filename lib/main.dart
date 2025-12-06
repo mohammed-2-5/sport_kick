@@ -1,3 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +23,7 @@ SupabaseClient get supabase => Supabase.instance.client;
 ///
 /// Initializes:
 /// - Flutter framework bindings
+/// - Firebase (Core & Crashlytics)
 /// - Dependency injection (GetIt)
 /// - Hive local database
 /// - Supabase backend
@@ -30,6 +34,15 @@ void main() async {
 
   // Initialize app
   await _initializeApp();
+
+  // Setup Flutter error handling with Crashlytics
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  // Pass all uncaught asynchronous errors to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   // Run app
   runApp(const MyApp());
@@ -49,7 +62,18 @@ Future<void> _initializeApp() async {
     // await Hive.openBox(AppConstants.hiveBoxFields);
     // await Hive.openBox(AppConstants.hiveBoxBookings);
 
-    // 2. Initialize Supabase
+    // 2. Initialize Firebase
+    debugPrint('🔄 Initializing Firebase...');
+    await Firebase.initializeApp();
+
+    // Enable Crashlytics collection
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+
+    // Set user identifier for better crash tracking (optional)
+    // This will be set later when user logs in
+    debugPrint('✅ Firebase initialized successfully');
+
+    // 3. Initialize Supabase
     debugPrint('🔄 Initializing Supabase...');
     await Supabase.initialize(
       url: AppConstants.supabaseUrl,
@@ -63,10 +87,10 @@ Future<void> _initializeApp() async {
     );
     debugPrint('✅ Supabase initialized successfully');
 
-    // 3. Initialize dependency injection
+    // 4. Initialize dependency injection
     await di.initDependencies();
 
-    // 4. Set system UI styling
+    // 5. Set system UI styling
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -76,7 +100,7 @@ Future<void> _initializeApp() async {
       ),
     );
 
-    // 5. Set preferred orientations
+    // 6. Set preferred orientations
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

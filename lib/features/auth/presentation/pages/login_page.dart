@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_strings.dart';
+import 'package:spo_kick/features/auth/presentation/constants/auth_strings.dart';
+import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -45,32 +47,11 @@ class _LoginPageState extends State<LoginPage> {
               );
             } else if (state is AuthError) {
               // Print error to console
-              print('🔴 Login Error (UI): ${state.message}');
-
-              // Show error message
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Row(
-                    children: [
-                      const Icon(Icons.error_outline, color: Colors.white),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          'Login Failed: ${state.message}',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    ],
-                  ),
-                  backgroundColor: AppColors.error,
-                  behavior: SnackBarBehavior.floating,
-                  duration: const Duration(seconds: 6),
-                  action: SnackBarAction(
-                    label: 'Dismiss',
-                    textColor: Colors.white,
-                    onPressed: () {},
-                  ),
-                ),
+              debugPrint('🔴 Login Error (UI): ${state.message}');
+              // Show error message using SnackbarHelper
+              SnackbarHelper.showError(
+                context,
+                'Login Failed: ${state.message}',
               );
             }
           },
@@ -125,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     // Welcome Text
                     Text(
-                      'Welcome Back!',
+                      AppStrings.welcomeBack,
                       style: Theme.of(context).textTheme.headlineSmall
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
@@ -133,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 8),
 
                     Text(
-                      'Login to continue booking your favorite sports fields',
+                      AuthStrings.loginSubtitle,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -160,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            'OR',
+                            AuthStrings.or,
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(color: AppColors.textSecondary),
                           ),
@@ -176,14 +157,14 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Don't have an account? ",
+                          AppStrings.dontHaveAccount,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         TextButton(
                           onPressed: () {
                             context.pushNamed('register');
                           },
-                          child: const Text('Sign Up'),
+                          child: const Text(AppStrings.signUp),
                         ),
                       ],
                     ),

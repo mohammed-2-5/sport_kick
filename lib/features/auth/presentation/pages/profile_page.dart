@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/features/auth/presentation/utils/logout_dialog.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/edit_profile_dialog.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/profile_header.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/profile_info_card.dart';
@@ -22,21 +24,9 @@ class ProfilePage extends StatelessWidget {
           if (state is Unauthenticated) {
             context.goNamed('login');
           } else if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: AppColors.error,
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
+            SnackbarHelper.showError(context, state.message);
           } else if (state is ProfileUpdated) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Profile updated successfully'),
-                backgroundColor: AppColors.success,
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
+            SnackbarHelper.showSuccess(context, 'Profile updated successfully');
           }
         },
         builder: (context, state) {
@@ -57,7 +47,7 @@ class ProfilePage extends StatelessWidget {
                   onBackPressed: () => Navigator.pop(context),
                 ),
 
-                const SizedBox(height: 60), // Space for avatar
+                const SizedBox(height: 60),
                 // User Name & Role
                 Text(
                   user.displayName,
@@ -131,14 +121,17 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       CustomButton(
                         text: 'Edit Profile',
-                        onPressed: () => _showEditProfileDialog(context),
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (_) => const EditProfileDialog(),
+                        ),
                         variant: ButtonVariant.outline,
                         icon: Icons.edit_outlined,
                       ),
                       const SizedBox(height: 16),
                       CustomButton(
                         text: 'Logout',
-                        onPressed: () => _showLogoutConfirmation(context),
+                        onPressed: () => showLogoutConfirmation(context),
                         variant: ButtonVariant.text,
                         icon: Icons.logout,
                         textColor: AppColors.error,
@@ -155,40 +148,8 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  void _showEditProfileDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const EditProfileDialog(),
-    );
-  }
-
-  void _showLogoutConfirmation(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(dialogContext);
-              context.read<AuthCubit>().logout();
-            },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
-    );
-  }
-
   String _formatDate(DateTime date) {
-    final months = [
+    const months = [
       'Jan',
       'Feb',
       'Mar',

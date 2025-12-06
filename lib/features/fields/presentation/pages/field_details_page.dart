@@ -17,7 +17,7 @@ import 'package:spo_kick/features/fields/presentation/widgets/field_details_cont
 /// - Full description
 /// - Location and contact info
 /// - Facilities
-/// - Reviews (coming soon)
+/// - Reviews and ratings
 /// - Book now button
 class FieldDetailsPage extends StatelessWidget {
   final String fieldId;

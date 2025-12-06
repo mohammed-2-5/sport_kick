@@ -38,7 +38,9 @@
       "Bash(flutter test:*)",
       "Bash(sort:*)",
       "Bash(for file in lib/features/owner/data/datasources/owner_remote_datasource_impl.dart lib/features/owner/presentation/cubit/owner_cubit.dart lib/features/super_admin/presentation/pages/*.dart lib/features/owner/presentation/pages/*.dart)",
-      "Bash(do if [ -f \"$file\" ])"
+      "Bash(do if [ -f \"$file\" ])",
+      "Bash(Select-String \"owner_booking_section\" -Context 0,2)",
+      "Bash(Select-String \"error\" -Context 0,1)"
     ],
     "deny": [],
     "ask": []

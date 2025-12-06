@@ -46,10 +46,11 @@ class FieldModel extends FieldEntity {
       final size = json['size'] as String;
       if (size == '5-a-side') {
         capacity = 10;
-      } else if (size == '7-a-side')
+      } else if (size == '7-a-side') {
         capacity = 14;
-      else if (size == '11-a-side')
+      } else if (size == '11-a-side') {
         capacity = 22;
+      }
     }
 
     // Handle city: could be direct string, or from joined cities table

@@ -33,7 +33,7 @@ class BusinessHoursDaysList extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: businessHours.length,
-      separatorBuilder: (_, __) =>
+      separatorBuilder: (context, index) =>
           const SizedBox(height: BusinessHoursConstants.itemSpacing),
       itemBuilder: (context, index) {
         return BusinessHoursDayCard(

@@ -23,13 +23,13 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
         final bool hasRealData =
             state is FieldsLoaded && state.categories.isNotEmpty;
 
-        print(
+        debugPrint(
           '🎠 [CATEGORIES SLIDER] State: ${state.runtimeType}, hasRealData: $hasRealData',
         );
         if (state is FieldsLoaded) {
-          print('   Categories count: ${state.categories.length}');
+          debugPrint('   Categories count: ${state.categories.length}');
           for (var cat in state.categories) {
-            print('   - ${cat.name} (ID: ${cat.id})');
+            debugPrint('   - ${cat.name} (ID: ${cat.id})');
           }
         }
 
@@ -111,10 +111,10 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
     return GestureDetector(
       onTap: () {
         if (categoryId != null) {
-          print('🏷️ [CATEGORY TAP] Category: $name, ID: $categoryId');
+          debugPrint('🏷️ [CATEGORY TAP] Category: $name, ID: $categoryId');
           context.pushNamed('fieldsList', extra: {'categoryId': categoryId});
         } else {
-          print('🏷️ [CATEGORY TAP] Mock category: $name (no ID)');
+          debugPrint('🏷️ [CATEGORY TAP] Mock category: $name (no ID)');
           context.pushNamed('fieldsList');
         }
       },

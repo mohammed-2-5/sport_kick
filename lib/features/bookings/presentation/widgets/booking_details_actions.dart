@@ -5,6 +5,7 @@ import 'package:spo_kick/core/utils/error_handler.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Action buttons widget for booking details page.
 ///
@@ -44,12 +45,7 @@ class BookingDetailsActions extends StatelessWidget {
 
         // Contact Support Button
         OutlinedButton.icon(
-          onPressed: () {
-            ErrorHandler.showInfoSnackbar(
-              context,
-              'Support feature coming soon!',
-            );
-          },
+          onPressed: () => _contactSupport(context, booking),
           icon: const Icon(Icons.support_agent),
           label: const Text('Contact Support'),
           style: OutlinedButton.styleFrom(
@@ -115,5 +111,33 @@ class BookingDetailsActions extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _contactSupport(
+    BuildContext context,
+    BookingEntity booking,
+  ) async {
+    final emailUri = Uri(
+      scheme: 'mailto',
+      path: 'support@spokick.com',
+      query: 'subject=Booking Support - ${booking.id}',
+    );
+
+    try {
+      if (await canLaunchUrl(emailUri)) {
+        await launchUrl(emailUri);
+      } else {
+        if (context.mounted) {
+          ErrorHandler.showErrorSnackbar(
+            context,
+            'Could not open email client. Please contact support@spokick.com',
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ErrorHandler.showErrorSnackbar(context, 'Failed to open email client');
+      }
+    }
   }
 }

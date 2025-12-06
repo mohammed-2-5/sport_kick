@@ -29,7 +29,7 @@ class CitySelectorList extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       itemCount: cities.length,
-      separatorBuilder: (_, __) => const Divider(height: 1),
+      separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
         final city = cities[index];
         final isSelected = selectedCityId == city.id;

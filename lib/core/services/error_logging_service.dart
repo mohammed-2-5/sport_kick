@@ -1,10 +1,11 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// Centralized Error Logging Service
 ///
 /// Provides consistent error logging across the application.
-/// In production, this can be connected to crash reporting services
-/// like Firebase Crashlytics, Sentry, or custom logging backends.
+/// Integrated with Firebase Crashlytics for production error tracking.
 class ErrorLoggingService {
   static final ErrorLoggingService _instance = ErrorLoggingService._internal();
 
@@ -147,7 +148,7 @@ class ErrorLoggingService {
     debugPrint(buffer.toString());
   }
 
-  /// Log to remote service (Firebase Crashlytics, Sentry, etc.)
+  /// Log to remote service (Firebase Crashlytics)
   void _logToRemoteService(
     Object error,
     StackTrace? stackTrace,
@@ -155,91 +156,143 @@ class ErrorLoggingService {
     Map<String, dynamic>? additionalData,
     ErrorSeverity severity,
   ) {
-    // TODO: Implement Firebase Crashlytics for production error tracking
-    //
-    // Setup Steps:
-    // 1. Add dependencies to pubspec.yaml:
-    //    dependencies:
-    //      firebase_core: ^3.10.0
-    //      firebase_crashlytics: ^4.2.0
-    //
-    // 2. Add Firebase configuration files:
-    //    - Android: android/app/google-services.json
-    //    - iOS: ios/Runner/GoogleService-Info.plist
-    //
-    // 3. Initialize Firebase in main.dart:
-    //    await Firebase.initializeApp(
-    //      options: DefaultFirebaseOptions.currentPlatform,
-    //    );
-    //
-    // 4. Enable Crashlytics in main.dart:
-    //    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-    //    PlatformDispatcher.instance.onError = (error, stack) {
-    //      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    //      return true;
-    //    };
-    //
-    // 5. Uncomment the code below:
-    //
-    // try {
-    //   // Set custom keys for additional context
-    //   if (context != null) {
-    //     FirebaseCrashlytics.instance.setCustomKey('context', context);
-    //   }
-    //   if (additionalData != null) {
-    //     for (var entry in additionalData.entries) {
-    //       FirebaseCrashlytics.instance.setCustomKey(
-    //         entry.key,
-    //         entry.value.toString(),
-    //       );
-    //     }
-    //   }
-    //
-    //   // Record the error
-    //   FirebaseCrashlytics.instance.recordError(
-    //     error,
-    //     stackTrace,
-    //     reason: context,
-    //     fatal: severity == ErrorSeverity.fatal,
-    //   );
-    // } catch (e) {
-    //   debugPrint('[Crashlytics Error] Failed to log: $e');
-    // }
+    try {
+      // Set custom keys for additional context
+      if (context != null) {
+        FirebaseCrashlytics.instance.setCustomKey('context', context);
+      }
 
-    debugPrint('[Remote Logging Placeholder] Error logged: $error');
+      // Set severity level
+      FirebaseCrashlytics.instance.setCustomKey('severity', severity.name);
+
+      // Add all additional data as custom keys
+      if (additionalData != null) {
+        for (var entry in additionalData.entries) {
+          FirebaseCrashlytics.instance.setCustomKey(
+            entry.key,
+            entry.value.toString(),
+          );
+        }
+      }
+
+      // Record the error to Crashlytics
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
+        reason: context,
+        fatal: severity == ErrorSeverity.fatal,
+      );
+
+      debugPrint('[Crashlytics] Error logged successfully');
+    } catch (e) {
+      debugPrint('[Crashlytics Error] Failed to log error: $e');
+    }
   }
 
   /// Log to local storage for offline debugging
-  void _logToLocalStorage(
+  Future<void> _logToLocalStorage(
     Object error,
     StackTrace? stackTrace,
     String? context,
     Map<String, dynamic>? additionalData,
     ErrorSeverity severity,
-  ) {
-    // TODO: Implement local logging to file or database
-    // This can be useful for debugging issues that occur offline
-    // or for providing detailed logs when user reports a problem
+  ) async {
+    try {
+      // Open error logs box (lazy initialization)
+      if (!Hive.isBoxOpen('error_logs')) {
+        await Hive.openBox<Map>('error_logs');
+      }
 
-    // Example implementation:
-    // - Store in SQLite database
-    // - Write to log file
-    // - Keep last N errors in memory
+      final box = Hive.box<Map>('error_logs');
 
-    debugPrint('[Local Storage Placeholder] Error logged: $error');
+      // Create log entry
+      final logEntry = ErrorLogEntry(
+        timestamp: DateTime.now(),
+        error: error.toString(),
+        stackTrace: stackTrace?.toString(),
+        context: context,
+        additionalData: additionalData,
+        severity: severity,
+      );
+
+      // Store in Hive (keep last 100 entries to avoid excessive storage)
+      await box.add(logEntry.toJson());
+
+      // Clean up old entries if box exceeds limit
+      if (box.length > 100) {
+        final keysToDelete = box.keys.take(box.length - 100).toList();
+        await box.deleteAll(keysToDelete);
+      }
+
+      debugPrint('[Local Storage] Error logged successfully');
+    } catch (e) {
+      debugPrint('[Local Storage Error] Failed to log: $e');
+    }
   }
 
   /// Clear old logs (maintenance function)
   Future<void> clearOldLogs({int daysToKeep = 7}) async {
-    // TODO: Implement log cleanup for local storage
-    debugPrint('[Log Cleanup] Clearing logs older than $daysToKeep days');
+    try {
+      if (!Hive.isBoxOpen('error_logs')) {
+        await Hive.openBox<Map>('error_logs');
+      }
+
+      final box = Hive.box<Map>('error_logs');
+      final cutoffDate = DateTime.now().subtract(Duration(days: daysToKeep));
+
+      // Find and delete old entries
+      final keysToDelete = <dynamic>[];
+      for (var key in box.keys) {
+        final logData = box.get(key);
+        if (logData != null && logData['timestamp'] != null) {
+          final timestamp = DateTime.parse(logData['timestamp'] as String);
+          if (timestamp.isBefore(cutoffDate)) {
+            keysToDelete.add(key);
+          }
+        }
+      }
+
+      await box.deleteAll(keysToDelete);
+      debugPrint(
+        '[Log Cleanup] Cleared ${keysToDelete.length} logs older than $daysToKeep days',
+      );
+    } catch (e) {
+      debugPrint('[Log Cleanup Error] Failed to clear logs: $e');
+    }
   }
 
   /// Get recent logs for debugging (development only)
   Future<List<ErrorLogEntry>> getRecentLogs({int limit = 50}) async {
-    // TODO: Implement retrieval of recent logs from local storage
-    debugPrint('[Log Retrieval] Getting recent $limit logs');
-    return [];
+    try {
+      if (!Hive.isBoxOpen('error_logs')) {
+        await Hive.openBox<Map>('error_logs');
+      }
+
+      final box = Hive.box<Map>('error_logs');
+      final logs = <ErrorLogEntry>[];
+
+      // Get logs in reverse order (most recent first)
+      final keys = box.keys.toList().reversed.take(limit);
+      for (var key in keys) {
+        final logData = box.get(key);
+        if (logData != null) {
+          try {
+            final log = ErrorLogEntry.fromJson(
+              Map<String, dynamic>.from(logData),
+            );
+            logs.add(log);
+          } catch (e) {
+            debugPrint('[Log Retrieval] Failed to parse log entry: $e');
+          }
+        }
+      }
+
+      debugPrint('[Log Retrieval] Retrieved ${logs.length} recent logs');
+      return logs;
+    } catch (e) {
+      debugPrint('[Log Retrieval Error] Failed to get logs: $e');
+      return [];
+    }
   }
 }
 
