@@ -143,7 +143,9 @@ class _ManageBusinessHoursPageState extends State<ManageBusinessHoursPage> {
               },
               onApplyToAllDays: () async {
                 final confirmed = await ApplyToAllDaysDialog.show(context);
-                if (confirmed == true && mounted) {
+                if (!context.mounted) return;
+
+                if (confirmed == true) {
                   // Apply default 24/7 hours to all days
                   context
                       .read<BusinessHoursCubit>()
@@ -180,7 +182,9 @@ class _ManageBusinessHoursPageState extends State<ManageBusinessHoursPage> {
               },
               onApplyToAllDays: () async {
                 final confirmed = await ApplyToAllDaysDialog.show(context);
-                if (confirmed == true && mounted) {
+                if (!context.mounted) return;
+
+                if (confirmed == true) {
                   context
                       .read<BusinessHoursCubit>()
                       .initializeDefaultBusinessHours(widget.fieldId);

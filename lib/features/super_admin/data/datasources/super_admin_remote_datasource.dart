@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
-    show SupabaseClient, PostgrestException, AdminUserAttributes;
+    show SupabaseClient, PostgrestException;
 import 'package:spo_kick/core/errors/exceptions.dart';
 import 'package:spo_kick/features/super_admin/data/models/admin_invitation_model.dart';
 import 'package:spo_kick/features/super_admin/data/models/city_model.dart';

@@ -67,7 +67,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
             SnackbarHelper.showSuccess(context, state.message);
             // Reload to show updated state
             Future.delayed(const Duration(milliseconds: 500), () {
-              if (mounted) {
+              if (context.mounted) {
                 context.read<SettingsCubit>().loadPreferences(
                   state.preferences.userId,
                 );

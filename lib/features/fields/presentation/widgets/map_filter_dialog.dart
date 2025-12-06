@@ -71,7 +71,7 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
               title: const Text('Verified Fields Only'),
               subtitle: const Text('Show only verified fields'),
               value: _verifiedOnly,
-              activeColor: AppColors.primary,
+              activeThumbColor: AppColors.primary,
               contentPadding: EdgeInsets.zero,
               onChanged: (value) {
                 setState(() => _verifiedOnly = value);
@@ -84,7 +84,7 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
               title: const Text('Sort by Distance'),
               subtitle: const Text('Show nearest fields first'),
               value: _sortByDistance,
-              activeColor: AppColors.primary,
+              activeThumbColor: AppColors.primary,
               contentPadding: EdgeInsets.zero,
               onChanged: (value) {
                 setState(() => _sortByDistance = value);

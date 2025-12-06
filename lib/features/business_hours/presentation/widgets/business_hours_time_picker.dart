@@ -117,6 +117,8 @@ class BusinessHoursTimePicker extends StatelessWidget {
       },
     );
 
+    if (!context.mounted) return;
+
     if (picked != null) {
       // Check if the selected time meets constraints
       if (minTime != null && !isOpeningTime) {

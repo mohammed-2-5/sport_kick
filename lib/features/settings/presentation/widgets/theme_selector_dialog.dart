@@ -47,6 +47,7 @@ class ThemeSelectorDialog extends StatelessWidget {
     AppThemeMode mode,
     bool isSelected,
   ) {
+    // ignore: deprecated_member_use
     return RadioListTile<AppThemeMode>(
       title: Text(label),
       value: mode,

@@ -84,14 +84,13 @@ class AdvancedSearchFieldsUseCase {
 
       case SearchSortBy.popular:
         sorted.sort((a, b) {
-          final aBookings = a.totalBookings ?? 0;
-          final bBookings = b.totalBookings ?? 0;
+          final aBookings = a.totalBookings;
+          final bBookings = b.totalBookings;
           return bBookings.compareTo(aBookings); // Most bookings first
         });
         break;
 
       case SearchSortBy.relevance:
-      default:
         // Keep original order for relevance
         break;
     }
