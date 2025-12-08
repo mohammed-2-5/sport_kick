@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +24,10 @@ class MockCityCubit extends MockCubit<CityState> implements CityCubit {}
 void main() {
   late MockFieldsCubit mockFieldsCubit;
   late MockCityCubit mockCityCubit;
+
+  setUpAll(() {
+    registerFallbackValue(const FieldFilterOptions());
+  });
 
   final tFields = [
     FieldEntity(
@@ -101,23 +107,27 @@ void main() {
 
   group('Fields Flow Reality Test', () {
     testWidgets('Search "Alpha" updates list', (tester) async {
-      // Arrange: Initial state
-      when(() => mockFieldsCubit.state).thenReturn(
-        FieldsLoaded(
-          fields: tFields,
-          categories: tCategories,
-          searchQuery: null,
-        ),
+      final initialState = FieldsLoaded(
+        fields: tFields,
+        categories: tCategories,
+        searchQuery: null,
       );
+      final filteredState = FieldsLoaded(
+        fields: tFields,
+        categories: tCategories,
+        searchQuery: 'Alpha',
+      );
+
+      final controller = StreamController<FieldsState>.broadcast();
+      addTearDown(controller.close);
+
+      when(() => mockFieldsCubit.state).thenReturn(initialState);
+      when(() => mockFieldsCubit.stream).thenAnswer((_) => controller.stream);
+
+      controller.add(initialState);
 
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
-
-      // Verify initial list shows both
-      // Note: FieldsListBody likely shows FieldCard widgets.
-      // We assume FieldCard shows text name.
-      expect(find.text('Alpha Field'), findsOneWidget);
-      expect(find.text('Beta Field'), findsOneWidget);
 
       // Act: Search for "Alpha"
       final searchField = find.byType(TextField);
@@ -129,35 +139,12 @@ void main() {
       // The search logic calls `searchFields('Alpha')`.
       verify(() => mockFieldsCubit.searchFields('Alpha')).called(1);
 
-      // Update mock state to filtered
-      when(() => mockFieldsCubit.state).thenReturn(
-        FieldsLoaded(
-          fields: tFields,
-          categories: tCategories,
-          searchQuery: 'Alpha',
-        ),
-      );
+      controller.add(filteredState);
+      when(() => mockFieldsCubit.state).thenReturn(filteredState);
+      await tester.pumpAndSettle();
 
-      // Re-pump to see invalidation
-      // Note: FieldsListBody uses `state.filteredFields`.
-      // FieldsLoaded.filteredFields logic IS inside the state class.
-      // So if we emit state with searchQuery 'Alpha', `filteredFields` getter SHOULD return only Alpha.
-      // Let's verify that assumption.
-
-      // Trigger BlocListener or stream?
-      // Using `mockFieldsCubit.stream` in setUp is empty.
-      // We need to simulate stream emission or just rebuild if it was real?
-      // In widget test with MockCubit, usually we explicitly `emit` or allow `bloc_test` to handle it.
-      // But simpler: We check if `searchFields` was called.
-      // And we verify that IF state changes, UI updates.
-      // Let's pump with new state.
-
-      await tester
-          .pump(); // Rebuild with new state? No, MockCubit doesn't auto-emit unless we listen to controller.
-      // Let's just verify interaction for now, or use listenTo if we want full flow.
-      // "Reality Test" implies verifying UI *reacts*.
-      // We'll trust `FieldsLoaded.filteredFields` unit test for logic.
-      // Here we verify `searchFields` is called properly.
+      expect(find.text('Alpha Field'), findsOneWidget);
+      expect(find.text('Beta Field'), findsNothing);
     });
 
     testWidgets('Filter Dialog updates options', (tester) async {

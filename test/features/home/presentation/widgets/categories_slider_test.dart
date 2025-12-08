@@ -27,7 +27,6 @@ class TestHttpOverrides extends HttpOverrides {
 
 class _TestHttpClient extends Mock implements HttpClient {
   _TestHttpClient() {
-    registerFallbackValue((Uri uri) {});
     when(() => getUrl(any())).thenAnswer((_) async => _TestHttpClientRequest());
   }
 }
@@ -68,6 +67,8 @@ void main() {
   late MockGoRouter mockGoRouter;
 
   setUpAll(() {
+    registerFallbackValue(Uri.parse('https://example.com'));
+    registerFallbackValue(<String, String>{});
     HttpOverrides.global = TestHttpOverrides();
   });
 
@@ -75,6 +76,14 @@ void main() {
     Bloc.observer = const AppBlocObserver();
     mockFieldsCubit = MockFieldsCubit();
     mockGoRouter = MockGoRouter();
+    when(
+      () => mockGoRouter.pushNamed<Object?>(
+        any(),
+        pathParameters: any(named: 'pathParameters'),
+        queryParameters: any(named: 'queryParameters'),
+        extra: any(named: 'extra'),
+      ),
+    ).thenAnswer((_) async => null);
 
     // Default state: Empty
     when(() => mockFieldsCubit.state).thenReturn(const FieldsInitial());
@@ -169,7 +178,12 @@ void main() {
 
     // Verify navigation
     verify(
-      () => mockGoRouter.pushNamed('fieldsList', extra: any(named: 'extra')),
+      () => mockGoRouter.pushNamed<Object?>(
+        'fieldsList',
+        pathParameters: any(named: 'pathParameters'),
+        queryParameters: any(named: 'queryParameters'),
+        extra: any(named: 'extra'),
+      ),
     ).called(1);
   });
 }
