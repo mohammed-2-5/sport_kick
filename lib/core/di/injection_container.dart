@@ -144,6 +144,17 @@ import 'package:spo_kick/features/business_hours/presentation/cubit/business_hou
 
 import '../../features/auth/domain/usecases/update_profile_usecase.dart';
 
+// Splash Feature
+import 'package:spo_kick/features/splash/presentation/cubit/splash_cubit.dart';
+
+// Onboarding Feature
+import 'package:spo_kick/features/onboarding/data/datasources/onboarding_local_data_source.dart';
+import 'package:spo_kick/features/onboarding/data/repositories/onboarding_repository_impl.dart';
+import 'package:spo_kick/features/onboarding/domain/repositories/onboarding_repository.dart';
+import 'package:spo_kick/features/onboarding/domain/usecases/check_onboarding_status_usecase.dart';
+import 'package:spo_kick/features/onboarding/domain/usecases/complete_onboarding_usecase.dart';
+import 'package:spo_kick/features/onboarding/presentation/cubit/onboarding_cubit.dart';
+
 /// Service Locator instance.
 ///
 /// This is a global instance of GetIt used for dependency injection
@@ -205,6 +216,12 @@ Future<void> initDependencies() async {
 
   // Business Hours Feature
   _initBusinessHours();
+
+  // Splash Feature
+  _initSplash();
+
+  // Onboarding Feature
+  _initOnboarding();
 }
 
 /// Initialize external dependencies.
@@ -773,4 +790,39 @@ GetIt Registration Info:
 To check if a specific type is registered, use:
 -isDependencyRegistered<YourType>()
 ''';
+}
+// ==================== FEATURE: SPLASH ====================
+
+/// Initialize splash feature dependencies.
+void _initSplash() {
+  // Cubit
+  sl.registerFactory(
+    () => SplashCubit(
+      getCurrentUserUseCase: sl(),
+      checkOnboardingStatusUseCase: sl(),
+      getSelectedCityUseCase: sl(),
+    ),
+  );
+}
+
+// ==================== FEATURE: ONBOARDING ====================
+
+/// Initialize onboarding feature dependencies.
+void _initOnboarding() {
+  // Cubit
+  sl.registerFactory(() => OnboardingCubit(completeOnboardingUseCase: sl()));
+
+  // Use Cases
+  sl.registerLazySingleton(() => CheckOnboardingStatusUseCase(sl()));
+  sl.registerLazySingleton(() => CompleteOnboardingUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<OnboardingRepository>(
+    () => OnboardingRepositoryImpl(localDataSource: sl()),
+  );
+
+  // Data Sources
+  sl.registerLazySingleton<OnboardingLocalDataSource>(
+    () => OnboardingLocalDataSourceImpl(sharedPreferences: sl()),
+  );
 }

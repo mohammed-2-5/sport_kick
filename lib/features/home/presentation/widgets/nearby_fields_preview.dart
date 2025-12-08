@@ -123,7 +123,10 @@ class NearbyFieldsPreview extends StatelessWidget {
                   // Real Field Markers
                   BlocBuilder<FieldsCubit, FieldsState>(
                     builder: (context, state) {
-                      if (state is FieldsLoaded && state.fields.isNotEmpty) {
+                      if (state is FieldsLoaded) {
+                        if (state.fields.isEmpty) {
+                          return _buildEmptyState();
+                        }
                         final fields = state.fields.take(3).toList();
                         return Stack(
                           children: [
@@ -152,72 +155,17 @@ class NearbyFieldsPreview extends StatelessWidget {
                               bottom: 0,
                               left: 0,
                               right: 0,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 16,
-                                ),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.transparent,
-                                      Colors.black.withValues(alpha: 0.6),
-                                    ],
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.lightAccent,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: const Icon(
-                                        Icons.location_on,
-                                        color: Colors.white,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            '${state.fields.length} fields nearby',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          const Text(
-                                            'Tap to view on map',
-                                            style: TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.white,
-                                      size: 16,
-                                    ),
-                                  ],
-                                ),
+                              child: _buildInfoBar(
+                                context,
+                                state.fields.length,
                               ),
                             ),
                           ],
                         );
+                      } else if (state is FieldsEmpty || state is FieldsError) {
+                        return _buildEmptyState();
                       }
+
                       // Loading state
                       return const Center(
                         child: CircularProgressIndicator(
@@ -232,6 +180,77 @@ class NearbyFieldsPreview extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.map_outlined,
+            size: 48,
+            color: AppColors.lightTextSecondary.withValues(alpha: 0.5),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'No fields nearby',
+            style: TextStyle(
+              color: AppColors.lightTextPrimary,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoBar(BuildContext context, int count) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.transparent, Colors.black.withValues(alpha: 0.6)],
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: AppColors.lightAccent,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(Icons.location_on, color: Colors.white, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '$count fields nearby',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+                const Text(
+                  'Tap to view on map',
+                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
+        ],
+      ),
     );
   }
 

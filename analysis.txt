@@ -1,0 +1,31 @@
+Analyzing spo_kick...                                           
+
+warning - 'Share' is deprecated and shouldn't be used. Use SharePlus instead - lib\core\services\csv_export_service.dart:48:11 - deprecated_member_use
+warning - 'shareXFiles' is deprecated and shouldn't be used. Use SharePlus.instance.share() instead - lib\core\services\csv_export_service.dart:48:17 - deprecated_member_use
+warning - 'Share' is deprecated and shouldn't be used. Use SharePlus instead - lib\core\services\pdf_export_service.dart:88:11 - deprecated_member_use
+warning - 'shareXFiles' is deprecated and shouldn't be used. Use SharePlus.instance.share() instead - lib\core\services\pdf_export_service.dart:88:17 - deprecated_member_use
+warning - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\city\presentation\widgets\city_list_item.dart:25:7 - deprecated_member_use
+warning - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\city\presentation\widgets\city_list_item.dart:26:7 - deprecated_member_use
+   info - Unnecessary use of multiple underscores - lib\features\fields\presentation\widgets\map_field_info_card.dart:58:29 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\fields\presentation\widgets\map_field_info_card.dart:58:33 - unnecessary_underscores
+warning - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\fields\presentation\widgets\search\sort_selector.dart:34:13 - deprecated_member_use
+warning - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\fields\presentation\widgets\search\sort_selector.dart:35:13 - deprecated_member_use
+warning - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\settings\presentation\widgets\language_selector_dialog.dart:25:13 - deprecated_member_use
+warning - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\settings\presentation\widgets\language_selector_dialog.dart:26:13 - deprecated_member_use
+warning - 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\settings\presentation\widgets\theme_selector_dialog.dart:54:7 - deprecated_member_use
+warning - 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre - lib\features\settings\presentation\widgets\theme_selector_dialog.dart:55:7 - deprecated_member_use
+   info - The member 'getPlatformStatisticsUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:57:38 - annotate_overrides
+   info - The member 'createAdminAccountUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:58:35 - annotate_overrides
+   info - The member 'createFieldUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:59:28 - annotate_overrides
+   info - The member 'getAllAdminsUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:60:29 - annotate_overrides
+   info - The member 'getAllUsersUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:61:28 - annotate_overrides
+   info - The member 'assignFieldToAdminUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:62:35 - annotate_overrides
+   info - The member 'getActiveCitiesUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:63:32 - annotate_overrides
+   info - The member 'getAllFieldsUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:64:29 - annotate_overrides
+   info - The member 'getAllBookingsUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:65:31 - annotate_overrides
+   info - The member 'deactivateUserUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:66:31 - annotate_overrides
+   info - The member 'activateUserUseCase' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:67:29 - annotate_overrides
+   info - The member 'csvExportService' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:70:26 - annotate_overrides
+   info - The member 'pdfExportService' overrides an inherited member but isn't annotated with '@override' - lib\features\super_admin\presentation\cubit\super_admin_cubit.dart:71:26 - annotate_overrides
+warning - The value of the local variable 'mockNavigatorObserver' isn't used - test\features\super_admin\presentation\pages\super_admin_dashboard_page_test.dart:35:30 - unused_local_variable
+

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
-import 'package:spo_kick/features/reviews/presentation/widgets/reviews_header.dart';
-import 'package:spo_kick/features/reviews/presentation/widgets/reviews_list_content.dart';
+import 'package:spo_kick/features/reviews/presentation/widgets/all_reviews_body.dart';
 
 /// Page displaying all reviews for a specific field.
+///
+/// Uses [PremiumCurvedHeader] and [AllReviewsBody] for content.
 class AllReviewsPage extends StatelessWidget {
   final String fieldId;
   final String fieldName;
@@ -23,26 +25,24 @@ class AllReviewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reviews'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
-      body: BlocProvider(
-        create: (_) => sl<ReviewsCubit>()..loadFieldReviews(fieldId: fieldId),
-        child: Column(
+    return BlocProvider(
+      create: (_) => sl<ReviewsCubit>()..loadFieldReviews(fieldId: fieldId),
+      child: Scaffold(
+        backgroundColor: AppColors.lightBackground,
+        body: Column(
           children: [
-            // Header with field info and stats
-            ReviewsHeader(
-              fieldName: fieldName,
-              averageRating: averageRating,
-              totalReviews: totalReviews,
+            PremiumCurvedHeader(
+              title: 'Reviews',
+              subtitle: '$fieldName • ${totalReviews ?? 0} reviews',
+              showBackButton: true,
+              height: 180,
             ),
-
-            // Reviews list
             Expanded(
-              child: ReviewsListContent(fieldId: fieldId, fieldName: fieldName),
+              child: AllReviewsBody(
+                fieldId: fieldId,
+                fieldName: fieldName,
+                averageRating: averageRating,
+              ),
             ),
           ],
         ),

@@ -13,6 +13,7 @@ import 'package:spo_kick/core/constants/app_theme.dart';
 import 'package:spo_kick/core/di/injection_container.dart' as di;
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/routes/go_router_config.dart';
+import 'package:spo_kick/core/observers/app_bloc_observer.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 
@@ -43,6 +44,9 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
+  // Set Bloc Observer
+  Bloc.observer = const AppBlocObserver();
 
   // Run app
   runApp(const MyApp());
@@ -125,7 +129,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<AuthCubit>()),
+        BlocProvider(create: (context) => sl<AuthCubit>()..checkAuthStatus()),
         BlocProvider(create: (context) => sl<CityCubit>()),
       ],
       child: MaterialApp.router(

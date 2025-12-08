@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/widgets/app_error_widget.dart';
-import 'package:spo_kick/core/widgets/empty_state_widget.dart';
-import 'package:spo_kick/core/widgets/shimmer_loading.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/category_filters.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/field_filters_dialog.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/fields_list_content.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/fields_category_section.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/fields_list_body.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/fields_list_header.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/fields_search_bar.dart';
 
 /// Main view widget for the fields list page.
 ///
 /// Displays:
-/// - Custom header with search bar
+/// - Premium curved header with search bar
 /// - Category filter chips
 /// - List of fields with animations
 class FieldsListView extends StatefulWidget {
@@ -48,126 +44,27 @@ class _FieldsListViewState extends State<FieldsListView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CityCubit, CityState>(
-      listener: (context, cityState) {
-        // Update fields when city changes
-        if (cityState is CitySelected) {
-          context.read<FieldsCubit>().setCurrentCity(cityState.city.id);
-        } else if (cityState is CitySaved) {
-          context.read<FieldsCubit>().setCurrentCity(cityState.city.id);
-        }
-      },
+      listener: (context, state) => _handleCityChange(context, state),
       child: Scaffold(
         backgroundColor: AppColors.lightBackground,
-        body: Stack(
+        body: Column(
           children: [
-            Column(
-              children: [
-                // Custom Header
-                FieldsListHeader(
-                  searchBar: FieldsSearchBar(
-                    controller: _searchController,
-                    onClear: () {
-                      _searchController.clear();
-                      context.read<FieldsCubit>().clearFilters();
-                      setState(() {});
-                    },
-                    onFilter: _showFiltersDialog,
-                    onChanged: (value) {
-                      setState(() {});
-                      if (value.isEmpty) {
-                        context.read<FieldsCubit>().clearFilters();
-                      }
-                    },
-                    onSubmitted: (value) {
-                      if (value.trim().isNotEmpty) {
-                        context.read<FieldsCubit>().searchFields(value);
-                      }
-                    },
-                  ),
-                ),
-
-                // Category Filters
-                const SizedBox(height: 20),
-                BlocBuilder<FieldsCubit, FieldsState>(
-                  builder: (context, state) {
-                    if (state is! FieldsLoaded) {
-                      return const SizedBox.shrink();
-                    }
-                    return CategoryFilters(
-                      categories: state.categories,
-                      selectedCategoryId: _selectedCategoryId,
-                      onCategorySelected: (categoryId) {
-                        setState(() => _selectedCategoryId = categoryId);
-                        context.read<FieldsCubit>().filterByCategory(
-                          categoryId,
-                        );
-                      },
-                    );
-                  },
-                ),
-
-                // Fields List
-                Expanded(
-                  child: BlocBuilder<FieldsCubit, FieldsState>(
-                    builder: (context, state) {
-                      if (state is FieldsLoading) {
-                        return const FieldsListShimmer(itemCount: 5);
-                      }
-
-                      if (state is FieldsError) {
-                        return AppErrorWidget(
-                          message: state.message,
-                          onRetry: () {
-                            context.read<FieldsCubit>().loadAllFields();
-                          },
-                        );
-                      }
-
-                      if (state is FieldsEmpty) {
-                        return EmptyStateWidget.fields(
-                          actionText: 'Refresh',
-                          onAction: () {
-                            context.read<FieldsCubit>().refresh();
-                          },
-                        );
-                      }
-
-                      if (state is FieldsSearchResults) {
-                        if (state.isEmpty) {
-                          return EmptyStateWidget.searchResults(
-                            actionText: 'Clear Search',
-                            onAction: () {
-                              _searchController.clear();
-                              context.read<FieldsCubit>().clearFilters();
-                            },
-                          );
-                        }
-                        return FieldsListContent(fields: state.results);
-                      }
-
-                      if (state is FieldsLoaded) {
-                        final fields = state.filteredFields;
-
-                        if (fields.isEmpty) {
-                          return EmptyStateWidget.fields(
-                            message: 'No fields found in this city',
-                            actionText: 'Clear Filters',
-                            onAction: () {
-                              setState(() => _selectedCategoryId = null);
-                              _searchController.clear();
-                              context.read<FieldsCubit>().clearFilters();
-                            },
-                          );
-                        }
-
-                        return FieldsListContent(fields: fields);
-                      }
-
-                      return const SizedBox.shrink();
-                    },
-                  ),
-                ),
-              ],
+            FieldsListHeader(
+              searchController: _searchController,
+              onFilter: () => _showFiltersDialog(context),
+              onSearchChanged: (value) => _handleSearch(context, value),
+            ),
+            const SizedBox(height: 20),
+            FieldsCategorySection(
+              selectedCategoryId: _selectedCategoryId,
+              onCategorySelected: (id) => _handleCategoryChange(context, id),
+            ),
+            Expanded(
+              child: FieldsListBody(
+                onClearSearch: () => _clearSearch(context),
+                onClearCategory: () =>
+                    setState(() => _selectedCategoryId = null),
+              ),
             ),
           ],
         ),
@@ -175,16 +72,57 @@ class _FieldsListViewState extends State<FieldsListView> {
     );
   }
 
-  void _showFiltersDialog() {
+  void _handleCityChange(BuildContext context, CityState state) {
+    if (state is CitySelected) {
+      context.read<FieldsCubit>().setCurrentCity(state.city.id);
+    } else if (state is CitySaved) {
+      context.read<FieldsCubit>().setCurrentCity(state.city.id);
+    }
+  }
+
+  void _handleSearch(BuildContext context, String value) {
+    if (value.isEmpty) {
+      context.read<FieldsCubit>().clearFilters();
+    } else {
+      context.read<FieldsCubit>().searchFields(value);
+    }
+  }
+
+  void _handleCategoryChange(BuildContext context, String? categoryId) {
+    setState(() => _selectedCategoryId = categoryId);
+    context.read<FieldsCubit>().filterByCategory(categoryId);
+  }
+
+  void _clearSearch(BuildContext context) {
+    _searchController.clear();
+    context.read<FieldsCubit>().clearFilters();
+  }
+
+  void _showFiltersDialog(BuildContext context) {
+    // Get current filters from cubit state if possible
+    final state = context.read<FieldsCubit>().state;
+    FieldFilterOptions? currentFilters;
+    if (state is FieldsLoaded) {
+      currentFilters = state.filterOptions;
+    }
+
     showDialog(
       context: context,
-      builder: (context) => FieldFiltersDialog(
-        selectedCategoryId: _selectedCategoryId,
-        categories: const [], // Will be populated from state
-        onApplyFilters: (filters) {
+      builder: (_) => FieldFiltersDialog(
+        currentFilters: currentFilters,
+        categories:
+            const [], // TODO: Pass actual categories if needed for dropdown
+        onApplyFilters: (options) {
+          context.read<FieldsCubit>().applyFilters(options);
+
+          // Update local category selection to match
+          if (options.categoryId != _selectedCategoryId) {
+            setState(() => _selectedCategoryId = options.categoryId);
+          }
+
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Filters applied! Feature fully connected soon.'),
+              content: Text('Filters applied!'),
               behavior: SnackBarBehavior.floating,
             ),
           );

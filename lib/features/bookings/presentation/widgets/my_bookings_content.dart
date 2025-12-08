@@ -43,12 +43,14 @@ class MyBookingsContent extends StatelessWidget {
             emptyMessage: BookingConstants.noUpcomingMessage,
             onRefresh: onRefresh,
             isHistory: false,
+            onAction: onBrowseFields,
           ),
           MyBookingsTabView(
             bookings: bookingState.historyBookings,
             emptyMessage: BookingConstants.noHistoryMessage,
             onRefresh: onRefresh,
             isHistory: true,
+            onAction: onBrowseFields,
           ),
         ],
       );

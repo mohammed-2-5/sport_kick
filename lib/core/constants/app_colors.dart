@@ -16,7 +16,7 @@ class AppColors {
   // ==================== PRIMARY COLORS ====================
 
   /// Primary brand color - Main app color
-  static const Color primary = Color(0xFF2E7D32); // Football green
+  static const Color primary = Color(0xFF1565C0); // Medium Blue
 
   /// Primary color - Dark variant
   static const Color primaryDark = Color(0xFF1B5E20);
@@ -400,4 +400,10 @@ class AppColors {
     end: Alignment.bottomRight,
     colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
   );
+
+  /// Icon color
+  static const Color icon = Color(0xFF757575);
+
+  /// Surface color (Cards, Dialogs)
+  static const Color surface = Color(0xFFFFFFFF);
 }

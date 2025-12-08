@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/fields/domain/usecases/get_all_fields_usecase.dart';
 import 'package:spo_kick/features/fields/domain/usecases/get_field_by_id_usecase.dart';
@@ -184,87 +183,55 @@ class FieldsCubit extends Cubit<FieldsState> {
   ///
   /// Searches in field name, city, and address.
   /// Uses the current city ID for filtering if set.
-  Future<void> searchFields(String query) async {
-    if (query.trim().isEmpty) {
-      // If search is cleared, reload all fields
-      await loadAllFields();
-      return;
+  /// Search fields by query (Client-side filtering).
+  ///
+  /// Updates the search query in the state to filter the list.
+  void searchFields(String query) {
+    final currentState = state;
+    if (currentState is FieldsLoaded) {
+      emit(
+        currentState.copyWith(
+          searchQuery: query.isEmpty ? null : query,
+          clearSearchQuery: query.isEmpty,
+        ),
+      );
     }
+  }
 
-    emit(const FieldsLoading());
-
-    final result = await searchFieldsUseCase(query, cityId: _currentCityId);
-
-    result.fold(
-      (failure) {
-        emit(FieldsError(failure.message));
-      },
-      (fields) {
-        emit(FieldsSearchResults(results: fields, query: query));
-      },
-    );
+  /// Apply advanced filters.
+  ///
+  /// Updates the filter options in the state.
+  void applyFilters(FieldFilterOptions options) {
+    final currentState = state;
+    if (currentState is FieldsLoaded) {
+      emit(currentState.copyWith(filterOptions: options));
+    }
   }
 
   /// Filter fields by sport category.
   ///
   /// [categoryId] - Sport category ID, or null to show all
   /// Uses the current city ID for filtering if set.
-  Future<void> filterByCategory(String? categoryId) async {
+  /// Filter fields by sport category.
+  ///
+  /// Convenience method that updates the active [FieldFilterOptions].
+  void filterByCategory(String? categoryId) {
     final currentState = state;
+    if (currentState is! FieldsLoaded) return;
 
-    debugPrint(
-      '🔍 [FILTER] filterByCategory called with categoryId: $categoryId',
+    final currentOptions = currentState.filterOptions;
+
+    // Create new options with updated category (keeping other filters)
+    final newOptions = FieldFilterOptions(
+      categoryId: categoryId,
+      minPrice: currentOptions.minPrice,
+      maxPrice: currentOptions.maxPrice,
+      minRating: currentOptions.minRating,
+      isIndoor: currentOptions.isIndoor,
+      verifiedOnly: currentOptions.verifiedOnly,
     );
 
-    // Only filter if we have loaded fields
-    if (currentState is! FieldsLoaded) {
-      debugPrint(
-        '⚠️ [FILTER] State is not FieldsLoaded, loading all fields first...',
-      );
-      await loadAllFields();
-      // After loading, call filterByCategory again
-      if (categoryId != null) {
-        await filterByCategory(categoryId);
-      }
-      return;
-    }
-
-    debugPrint(
-      '📊 [FILTER] Current state has ${currentState.fields.length} total fields',
-    );
-
-    if (categoryId == null) {
-      // Clear filter - show all fields
-      debugPrint('🔄 [FILTER] Clearing category filter');
-      emit(currentState.copyWith(clearCategoryFilter: true));
-      return;
-    }
-
-    // Update the state with the selected category ID
-    // The filteredFields getter will handle the actual filtering
-    final newState = currentState.copyWith(selectedCategoryId: categoryId);
-
-    debugPrint('✅ [FILTER] Setting selectedCategoryId to: $categoryId');
-    debugPrint(
-      '📋 [FILTER] Filtered fields count: ${newState.filteredFields.length}',
-    );
-
-    // Debug: Print all fields and their categories
-    for (var field in currentState.fields) {
-      final isMatch = field.sportCategoryId == categoryId;
-      debugPrint(
-        '   ${isMatch ? "✓" : "✗"} Field: ${field.name}, Category: ${field.sportCategoryId}',
-      );
-    }
-
-    if (newState.filteredFields.isEmpty) {
-      debugPrint('⚠️ [FILTER] No fields found for category: $categoryId');
-    } else {
-      debugPrint(
-        '✅ [FILTER] Emitting state with ${newState.filteredFields.length} filtered fields',
-      );
-    }
-    emit(newState);
+    emit(currentState.copyWith(filterOptions: newOptions));
   }
 
   /// Clear all filters and reload all fields.

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/widgets/premium/premium_button_style.dart';
+
+export 'premium_button_style.dart';
 
 /// Premium button component with multiple styles and states.
 ///
@@ -10,6 +15,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 /// - Full-width variant
 /// - Disabled state
 /// - Scale animation on press
+/// - Haptic feedback
 ///
 /// Usage:
 /// ```dart
@@ -60,13 +66,16 @@ class _PremiumButtonState extends State<PremiumButton>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 150),
+      duration: AppAnimations.fast,
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.96,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _scaleAnimation =
+        Tween<double>(
+          begin: AppAnimations.scaleNormal,
+          end: AppAnimations.buttonPressScale,
+        ).animate(
+          CurvedAnimation(parent: _controller, curve: AppAnimations.easeInOut),
+        );
   }
 
   @override
@@ -101,7 +110,12 @@ class _PremiumButtonState extends State<PremiumButton>
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
       onTapCancel: _onTapCancel,
-      onTap: isDisabled ? null : widget.onPressed,
+      onTap: isDisabled
+          ? null
+          : () {
+              HapticFeedback.lightImpact();
+              widget.onPressed?.call();
+            },
       child: ScaleTransition(
         scale: _scaleAnimation,
         child: Container(
@@ -174,18 +188,11 @@ class _PremiumButtonState extends State<PremiumButton>
     switch (widget.style) {
       case PremiumButtonStyle.primary:
         return BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFF00D9FF), // Cyan
-              Color(0xFF00A7CC), // Darker Cyan
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          gradient: AppColors.cyanGradient,
           borderRadius: BorderRadius.circular(widget.borderRadius),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF00D9FF).withValues(alpha: 0.3),
+              color: AppColors.accentCyan.withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -194,14 +201,14 @@ class _PremiumButtonState extends State<PremiumButton>
 
       case PremiumButtonStyle.secondary:
         return BoxDecoration(
-          color: Colors.white,
+          color: AppColors.surfaceWhite,
           borderRadius: BorderRadius.circular(widget.borderRadius),
-          border: Border.all(color: const Color(0xFF00D9FF), width: 2),
-          boxShadow: [
+          border: Border.all(color: AppColors.accentCyan, width: 2),
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
+              color: AppColors.shadow,
               blurRadius: 12,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         );
@@ -228,152 +235,25 @@ class _PremiumButtonState extends State<PremiumButton>
 
     switch (widget.style) {
       case PremiumButtonStyle.primary:
-        return Colors.white;
+        return AppColors.textOnNavy;
       case PremiumButtonStyle.secondary:
-        return const Color(0xFF00D9FF);
+        return AppColors.accentCyan;
       case PremiumButtonStyle.outline:
         return AppColors.lightTextPrimary;
       case PremiumButtonStyle.text:
-        return const Color(0xFF00D9FF);
+        return AppColors.accentCyan;
     }
   }
 
   Color _getLoadingColor() {
     switch (widget.style) {
       case PremiumButtonStyle.primary:
-        return Colors.white;
+        return AppColors.textOnNavy;
       case PremiumButtonStyle.secondary:
       case PremiumButtonStyle.text:
-        return const Color(0xFF00D9FF);
+        return AppColors.accentCyan;
       case PremiumButtonStyle.outline:
         return AppColors.lightTextPrimary;
     }
-  }
-}
-
-/// Button style variants.
-enum PremiumButtonStyle {
-  /// Cyan gradient with white text and shadow
-  primary,
-
-  /// White background with cyan border
-  secondary,
-
-  /// Transparent with grey border
-  outline,
-
-  /// Text only with cyan color
-  text,
-}
-
-/// Small premium button variant.
-///
-/// Compact button for less prominent actions.
-class SmallPremiumButton extends StatelessWidget {
-  final String label;
-  final VoidCallback? onPressed;
-  final PremiumButtonStyle style;
-  final IconData? icon;
-
-  const SmallPremiumButton({
-    super.key,
-    required this.label,
-    this.onPressed,
-    this.style = PremiumButtonStyle.secondary,
-    this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return PremiumButton(
-      label: label,
-      onPressed: onPressed,
-      style: style,
-      icon: icon,
-      height: 40,
-      borderRadius: 10,
-    );
-  }
-}
-
-/// Icon-only premium button.
-///
-/// Circular button with just an icon.
-class PremiumIconButton extends StatefulWidget {
-  final IconData icon;
-  final VoidCallback? onPressed;
-  final Color? backgroundColor;
-  final Color? iconColor;
-  final double size;
-
-  const PremiumIconButton({
-    super.key,
-    required this.icon,
-    this.onPressed,
-    this.backgroundColor,
-    this.iconColor,
-    this.size = 48,
-  });
-
-  @override
-  State<PremiumIconButton> createState() => _PremiumIconButtonState();
-}
-
-class _PremiumIconButtonState extends State<PremiumIconButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 150),
-      vsync: this,
-    );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.92,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => _controller.forward(),
-      onTapUp: (_) => _controller.reverse(),
-      onTapCancel: () => _controller.reverse(),
-      onTap: widget.onPressed,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Container(
-          width: widget.size,
-          height: widget.size,
-          decoration: BoxDecoration(
-            color: widget.backgroundColor ?? const Color(0xFF00D9FF),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: (widget.backgroundColor ?? const Color(0xFF00D9FF))
-                    .withValues(alpha: 0.3),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Icon(
-            widget.icon,
-            color: widget.iconColor ?? Colors.white,
-            size: widget.size * 0.5,
-          ),
-        ),
-      ),
-    );
   }
 }

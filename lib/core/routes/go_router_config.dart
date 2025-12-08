@@ -43,7 +43,8 @@ import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dar
 import 'package:spo_kick/features/settings/presentation/pages/privacy_policy_page.dart';
 import 'package:spo_kick/features/settings/presentation/pages/terms_of_service_page.dart';
 import 'package:spo_kick/features/settings/presentation/pages/user_settings_page.dart';
-import 'package:spo_kick/features/splash/splash_page.dart';
+import 'package:spo_kick/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:spo_kick/features/splash/presentation/pages/splash_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/admin_details_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/admins_list_page.dart';
@@ -80,6 +81,12 @@ class AppRouterConfig {
           name: 'splash',
           pageBuilder: (context, state) =>
               _buildPage(child: const SplashPage(), state: state),
+        ),
+        GoRoute(
+          path: '/onboarding',
+          name: 'onboarding',
+          pageBuilder: (context, state) =>
+              _buildSlidePage(child: const OnboardingPage(), state: state),
         ),
         GoRoute(
           path: '/login',
@@ -176,8 +183,15 @@ class AppRouterConfig {
         GoRoute(
           path: '/fields',
           name: 'fieldsList',
-          pageBuilder: (context, state) =>
-              _buildSlidePage(child: const FieldsListPage(), state: state),
+          pageBuilder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>?;
+            final categoryId = extra?['categoryId'] as String?;
+
+            return _buildSlidePage(
+              child: FieldsListPage(categoryId: categoryId),
+              state: state,
+            );
+          },
         ),
         GoRoute(
           path: '/fields/:fieldId',

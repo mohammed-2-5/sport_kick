@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/widgets/premium/empty_states.dart';
 
-/// Empty state widget shown when user has no bookings at all.
+/// Empty state widget shown when user has no bookings.
 ///
-/// Displays an icon, message, and action button to browse fields.
+/// Uses [EmptyStates.noBookings] for consistent premium styling.
 class MyBookingsEmptyState extends StatelessWidget {
   final String message;
   final VoidCallback onBrowseFields;
@@ -16,34 +16,6 @@ class MyBookingsEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.event_note,
-            size: 80,
-            color: AppColors.textSecondary.withValues(alpha: 0.3),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            message,
-            style: const TextStyle(
-              fontSize: 16,
-              color: AppColors.textSecondary,
-            ),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: onBrowseFields,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Browse Fields'),
-          ),
-        ],
-      ),
-    );
+    return EmptyStates.noBookings(onBook: onBrowseFields);
   }
 }

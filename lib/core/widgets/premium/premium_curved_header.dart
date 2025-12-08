@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/home/presentation/widgets/curved_header_clipper.dart';
 
@@ -7,9 +8,9 @@ import 'package:spo_kick/features/home/presentation/widgets/curved_header_clippe
 /// Features:
 /// - Dark navy gradient background
 /// - Curved bottom edge using ClipPath
-/// - Optional back button
+/// - Optional back button with haptic feedback
 /// - Flexible content area
-/// - Smooth entrance animation
+/// - SafeArea handling
 ///
 /// Usage:
 /// ```dart
@@ -51,16 +52,7 @@ class PremiumCurvedHeader extends StatelessWidget {
           clipper: CurvedHeaderClipper(),
           child: Container(
             height: height,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF1A1F3A), // Deep Navy
-                  Color(0xFF2C3E50), // Lighter Navy
-                ],
-              ),
-            ),
+            decoration: const BoxDecoration(gradient: AppColors.navyGradient),
           ),
         ),
 
@@ -82,18 +74,23 @@ class PremiumCurvedHeader extends StatelessWidget {
                     if (showBackButton)
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.1),
+                          color: AppColors.glassHighlight,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
                           icon: const Icon(
                             Icons.arrow_back_ios_new,
-                            color: Colors.white,
+                            color: AppColors.textOnNavy,
                             size: 20,
                           ),
-                          onPressed:
-                              onBackPressed ??
-                              () => Navigator.of(context).pop(),
+                          onPressed: () {
+                            HapticFeedback.lightImpact();
+                            if (onBackPressed != null) {
+                              onBackPressed!();
+                            } else {
+                              Navigator.of(context).pop();
+                            }
+                          },
                         ),
                       ),
 
@@ -107,7 +104,7 @@ class PremiumCurvedHeader extends StatelessWidget {
                           Text(
                             title,
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: AppColors.textOnNavy,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               height: 1.2,
@@ -117,8 +114,8 @@ class PremiumCurvedHeader extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(
                               subtitle!,
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.7),
+                              style: const TextStyle(
+                                color: AppColors.textOnNavySecondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -146,118 +143,6 @@ class PremiumCurvedHeader extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Premium curved header with search bar.
-///
-/// Variation of PremiumCurvedHeader with built-in search field.
-class PremiumCurvedHeaderWithSearch extends StatelessWidget {
-  final String title;
-  final String? subtitle;
-  final String searchHint;
-  final TextEditingController? searchController;
-  final ValueChanged<String>? onSearchChanged;
-  final VoidCallback? onSearchTap;
-  final Widget? trailing;
-  final double height;
-
-  const PremiumCurvedHeaderWithSearch({
-    super.key,
-    required this.title,
-    this.subtitle,
-    this.searchHint = 'Search...',
-    this.searchController,
-    this.onSearchChanged,
-    this.onSearchTap,
-    this.trailing,
-    this.height = 240,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return PremiumCurvedHeader(
-      title: title,
-      subtitle: subtitle,
-      trailing: trailing,
-      height: height,
-      bottom: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: _SearchBar(
-          hint: searchHint,
-          controller: searchController,
-          onChanged: onSearchChanged,
-          onTap: onSearchTap,
-        ),
-      ),
-    );
-  }
-}
-
-/// Search bar widget for curved header.
-class _SearchBar extends StatelessWidget {
-  final String hint;
-  final TextEditingController? controller;
-  final ValueChanged<String>? onChanged;
-  final VoidCallback? onTap;
-
-  const _SearchBar({
-    required this.hint,
-    this.controller,
-    this.onChanged,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: controller,
-        onChanged: onChanged,
-        onTap: onTap,
-        readOnly: onTap != null,
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: const TextStyle(
-            color: AppColors.lightTextSecondary,
-            fontSize: 16,
-          ),
-          prefixIcon: const Icon(
-            Icons.search,
-            color: AppColors.lightTextSecondary,
-          ),
-          suffixIcon: controller?.text.isNotEmpty == true
-              ? IconButton(
-                  icon: const Icon(
-                    Icons.clear,
-                    color: AppColors.lightTextSecondary,
-                  ),
-                  onPressed: () {
-                    controller?.clear();
-                    onChanged?.call('');
-                  },
-                )
-              : null,
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 18,
-          ),
-        ),
-      ),
     );
   }
 }

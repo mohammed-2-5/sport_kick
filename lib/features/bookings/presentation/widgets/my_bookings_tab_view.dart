@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/widgets/premium/premium_empty_state.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_list_item.dart';
@@ -16,6 +17,7 @@ class MyBookingsTabView extends StatelessWidget {
   final String emptyMessage;
   final bool isHistory;
   final Future<void> Function() onRefresh;
+  final VoidCallback? onAction;
 
   const MyBookingsTabView({
     super.key,
@@ -23,6 +25,7 @@ class MyBookingsTabView extends StatelessWidget {
     required this.emptyMessage,
     required this.onRefresh,
     this.isHistory = false,
+    this.onAction,
   });
 
   @override
@@ -61,28 +64,12 @@ class MyBookingsTabView extends StatelessWidget {
 
   /// Builds empty state for the current tab
   Widget _buildEmptyState() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              isHistory ? Icons.history : Icons.event_available,
-              size: 64,
-              color: AppColors.textSecondary.withValues(alpha: 0.3),
-            ),
-            const SizedBox(height: BookingConstants.standardPadding),
-            Text(
-              emptyMessage,
-              style: const TextStyle(
-                fontSize: 16,
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return PremiumEmptyState(
+      icon: isHistory ? Icons.history : Icons.event_available,
+      title: isHistory ? 'No Past Bookings' : 'No Upcoming Bookings',
+      message: emptyMessage,
+      actionLabel: onAction != null ? 'Browse Fields' : null,
+      onAction: onAction,
     );
   }
 }

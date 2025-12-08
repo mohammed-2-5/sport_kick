@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 
 /// Advanced filters dialog for field search.
 ///
@@ -10,13 +11,13 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 /// - Indoor/Outdoor
 /// - Verified status
 class FieldFiltersDialog extends StatefulWidget {
-  final String? selectedCategoryId;
+  final FieldFilterOptions? currentFilters;
   final List<String> categories;
-  final Function(Map<String, dynamic>) onApplyFilters;
+  final Function(FieldFilterOptions) onApplyFilters;
 
   const FieldFiltersDialog({
     super.key,
-    this.selectedCategoryId,
+    this.currentFilters,
     required this.categories,
     required this.onApplyFilters,
   });
@@ -35,7 +36,20 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
   @override
   void initState() {
     super.initState();
-    _selectedCategory = widget.selectedCategoryId;
+    if (widget.currentFilters != null) {
+      _selectedCategory = widget.currentFilters!.categoryId;
+      _priceRange = RangeValues(
+        widget.currentFilters!.minPrice ?? 0,
+        widget.currentFilters!.maxPrice ?? 500,
+      );
+      _minRating = widget.currentFilters!.minRating ?? 0;
+      if (widget.currentFilters!.isIndoor != null) {
+        _indoorOutdoor = widget.currentFilters!.isIndoor!
+            ? 'indoor'
+            : 'outdoor';
+      }
+      _verifiedOnly = widget.currentFilters!.verifiedOnly;
+    }
   }
 
   void _resetFilters() {
@@ -49,20 +63,20 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
   }
 
   void _applyFilters() {
-    final filters = <String, dynamic>{
-      'categoryId': _selectedCategory,
-      'minPrice': _priceRange.start,
-      'maxPrice': _priceRange.end,
-      'minRating': _minRating,
-      'isIndoor': _indoorOutdoor == 'indoor'
+    final options = FieldFilterOptions(
+      categoryId: _selectedCategory,
+      minPrice: _priceRange.start > 0 ? _priceRange.start : null,
+      maxPrice: _priceRange.end < 500 ? _priceRange.end : null,
+      minRating: _minRating > 0 ? _minRating : null,
+      isIndoor: _indoorOutdoor == 'indoor'
           ? true
           : _indoorOutdoor == 'outdoor'
           ? false
           : null,
-      'verifiedOnly': _verifiedOnly,
-    };
+      verifiedOnly: _verifiedOnly,
+    );
 
-    widget.onApplyFilters(filters);
+    widget.onApplyFilters(options);
     Navigator.of(context).pop();
   }
 

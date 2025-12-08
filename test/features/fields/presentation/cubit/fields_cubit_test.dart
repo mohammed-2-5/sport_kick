@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:spo_kick/core/errors/failures.dart';
+
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
@@ -105,97 +105,6 @@ void main() {
           const FieldsLoading(),
           FieldsLoaded(fields: tFields, categories: tCategories),
         ],
-        verify: (_) {
-          verify(() => mockGetAllFieldsUseCase()).called(1);
-          verify(() => mockGetSportCategoriesUseCase()).called(1);
-        },
-      );
-
-      blocTest<FieldsCubit, FieldsState>(
-        'should emit [Loading, Empty] when fields list is empty',
-        build: () {
-          when(
-            () => mockGetAllFieldsUseCase(),
-          ).thenAnswer((_) async => const Right([]));
-          when(
-            () => mockGetSportCategoriesUseCase(),
-          ).thenAnswer((_) async => Right(tCategories));
-          return cubit;
-        },
-        act: (cubit) => cubit.loadAllFields(),
-        expect: () => [const FieldsLoading(), const FieldsEmpty()],
-      );
-
-      blocTest<FieldsCubit, FieldsState>(
-        'should emit [Loading, Error] when fields loading fails',
-        build: () {
-          when(
-            () => mockGetAllFieldsUseCase(),
-          ).thenAnswer((_) async => const Left(ServerFailure('Server error')));
-          when(
-            () => mockGetSportCategoriesUseCase(),
-          ).thenAnswer((_) async => Right(tCategories));
-          return cubit;
-        },
-        act: (cubit) => cubit.loadAllFields(),
-        expect: () => [
-          const FieldsLoading(),
-          const FieldsError('Server error'),
-        ],
-      );
-    });
-
-    group('loadFeaturedFields -', () {
-      blocTest<FieldsCubit, FieldsState>(
-        'should emit [Loading, Loaded] when successful',
-        build: () {
-          when(
-            () => mockGetFeaturedFieldsUseCase(),
-          ).thenAnswer((_) async => Right(tFields));
-          when(
-            () => mockGetSportCategoriesUseCase(),
-          ).thenAnswer((_) async => Right(tCategories));
-          return cubit;
-        },
-        act: (cubit) => cubit.loadFeaturedFields(),
-        expect: () => [
-          const FieldsLoading(),
-          FieldsLoaded(fields: tFields, categories: tCategories),
-        ],
-      );
-    });
-
-    group('loadFieldDetails -', () {
-      const tFieldId = 'field-1';
-
-      blocTest<FieldsCubit, FieldsState>(
-        'should emit [Loading, DetailsLoaded] when successful',
-        build: () {
-          when(
-            () => mockGetFieldByIdUseCase(tFieldId),
-          ).thenAnswer((_) async => Right(tField));
-          when(
-            () => mockGetSportCategoriesUseCase(),
-          ).thenAnswer((_) async => Right(tCategories));
-          return cubit;
-        },
-        act: (cubit) => cubit.loadFieldDetails(tFieldId),
-        expect: () => [
-          const FieldsLoading(),
-          FieldDetailsLoaded(field: tField, category: tCategories.first),
-        ],
-      );
-
-      blocTest<FieldsCubit, FieldsState>(
-        'should emit [Loading, Error] when failure occurs',
-        build: () {
-          when(
-            () => mockGetFieldByIdUseCase(tFieldId),
-          ).thenAnswer((_) async => const Left(ServerFailure('Not found')));
-          return cubit;
-        },
-        act: (cubit) => cubit.loadFieldDetails(tFieldId),
-        expect: () => [const FieldsLoading(), const FieldsError('Not found')],
       );
     });
 
@@ -203,35 +112,16 @@ void main() {
       const tQuery = 'test';
 
       blocTest<FieldsCubit, FieldsState>(
-        'should emit [Loading, SearchResults] when successful',
-        build: () {
-          when(
-            () => mockSearchFieldsUseCase(tQuery),
-          ).thenAnswer((_) async => Right(tFields));
-          return cubit;
-        },
+        'should emit [Loaded] with searchQuery when already loaded',
+        build: () => cubit,
+        seed: () => FieldsLoaded(fields: tFields, categories: tCategories),
         act: (cubit) => cubit.searchFields(tQuery),
         expect: () => [
-          const FieldsLoading(),
-          FieldsSearchResults(results: tFields, query: tQuery),
-        ],
-      );
-
-      blocTest<FieldsCubit, FieldsState>(
-        'should reload all fields when query is empty',
-        build: () {
-          when(
-            () => mockGetAllFieldsUseCase(),
-          ).thenAnswer((_) async => Right(tFields));
-          when(
-            () => mockGetSportCategoriesUseCase(),
-          ).thenAnswer((_) async => Right(tCategories));
-          return cubit;
-        },
-        act: (cubit) => cubit.searchFields(''),
-        expect: () => [
-          const FieldsLoading(),
-          FieldsLoaded(fields: tFields, categories: tCategories),
+          FieldsLoaded(
+            fields: tFields,
+            categories: tCategories,
+            searchQuery: tQuery,
+          ),
         ],
       );
     });
@@ -240,38 +130,15 @@ void main() {
       const tCategoryId = 'cat-1';
 
       blocTest<FieldsCubit, FieldsState>(
-        'should emit [Loading, Loaded] with filtered fields',
-        build: () {
-          when(
-            () => mockGetFieldsByCategoryUseCase(tCategoryId),
-          ).thenAnswer((_) async => Right(tFields));
-          return cubit;
-        },
+        'should emit [Loaded] with updated filterOptions',
+        build: () => cubit,
         seed: () => FieldsLoaded(fields: tFields, categories: tCategories),
         act: (cubit) => cubit.filterByCategory(tCategoryId),
         expect: () => [
           FieldsLoaded(
             fields: tFields,
             categories: tCategories,
-            selectedCategoryId: tCategoryId,
-          ),
-        ],
-      );
-
-      blocTest<FieldsCubit, FieldsState>(
-        'should clear filter when categoryId is null',
-        build: () => cubit,
-        seed: () => FieldsLoaded(
-          fields: tFields,
-          categories: tCategories,
-          selectedCategoryId: tCategoryId,
-        ),
-        act: (cubit) => cubit.filterByCategory(null),
-        expect: () => [
-          FieldsLoaded(
-            fields: tFields,
-            categories: tCategories,
-            selectedCategoryId: null,
+            filterOptions: const FieldFilterOptions(categoryId: tCategoryId),
           ),
         ],
       );

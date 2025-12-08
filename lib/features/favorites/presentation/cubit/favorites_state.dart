@@ -50,6 +50,13 @@ class FavoritesListLoaded extends FavoritesState {
 
   /// Check if favorites list is empty.
   bool get isEmpty => favoriteFieldIds.isEmpty;
+
+  /// Filter a list of fields to only include favorites.
+  List<T> filterFavorites<T>(List<T> fields, String Function(T) getId) {
+    return fields
+        .where((field) => favoriteFieldIds.contains(getId(field)))
+        .toList();
+  }
 }
 
 /// State when a field has been successfully toggled (added/removed).

@@ -1,106 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
+import 'package:spo_kick/core/widgets/premium/premium_search_bar.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/fields_favorites_button.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/fields_filter_button.dart';
 import 'package:spo_kick/features/home/presentation/widgets/city_dropdown_widget.dart';
-import 'package:spo_kick/features/home/presentation/widgets/curved_header_clipper.dart';
-import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 
 /// Custom header widget for fields list page.
 ///
-/// Displays:
-/// - Curved gradient background
+/// Uses [PremiumCurvedHeader] with:
 /// - Back button
-/// - City dropdown
+/// - City dropdown in trailing slot
 /// - Favorites button
-/// - Title
-/// - Floating search bar slot
+/// - Floating search bar with filter
 class FieldsListHeader extends StatelessWidget {
-  /// Widget to display in the search bar slot
-  final Widget searchBar;
+  /// Controller for the search field
+  final TextEditingController searchController;
 
-  const FieldsListHeader({super.key, required this.searchBar});
+  /// Callback when filter button is pressed
+  final VoidCallback? onFilter;
+
+  /// Callback when search text changes
+  final ValueChanged<String>? onSearchChanged;
+
+  const FieldsListHeader({
+    super.key,
+    required this.searchController,
+    this.onFilter,
+    this.onSearchChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        // Curved Background
-        ClipPath(
-          clipper: CurvedHeaderClipper(),
-          child: Container(
-            height: 200,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  FieldConstants.headerGradientStart,
-                  FieldConstants.headerGradientEnd,
-                ],
+    return PremiumCurvedHeader(
+      title: 'Browse Fields',
+      showBackButton: true,
+      height: 220,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CityDropdownWidget(),
+          const SizedBox(width: 8),
+          FieldsFavoritesButton(
+            onPressed: () => context.pushNamed('favorites'),
+          ),
+        ],
+      ),
+      bottom: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Row(
+          children: [
+            Expanded(
+              child: PremiumSearchBar(
+                hint: 'Search fields...',
+                controller: searchController,
+                onChanged: onSearchChanged,
               ),
             ),
-          ),
+            const SizedBox(width: 12),
+            FieldsFilterButton(onPressed: onFilter),
+          ],
         ),
-
-        // Content
-        SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                // Top Row: Back, City, Actions
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    const CityDropdownWidget(),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.favorite_border,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            context.pushNamed('favorites');
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                // Title
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text(
-                    'Browse Fields',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 40), // Space for search bar
-              ],
-            ),
-          ),
-        ),
-
-        // Floating Search Bar
-        Positioned(bottom: -25, left: 24, right: 24, child: searchBar),
-      ],
+      ),
     );
   }
 }

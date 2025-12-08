@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
@@ -31,39 +32,13 @@ class BookingListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: BookingConstants.standardPadding),
-      child: InkWell(
+      child: PremiumCard(
         onTap: () => _navigateToDetails(context),
-        borderRadius: BorderRadius.circular(BookingConstants.standardPadding),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.white,
-                _getStatusColor(booking.status).withValues(alpha: 0.03),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: _getStatusColor(booking.status).withValues(alpha: 0.3),
-              width: 2,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: _getStatusColor(booking.status).withValues(alpha: 0.2),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Column(children: [_buildHeader(), _buildContent(context)]),
-        ),
+        accentColor: _getStatusColor(booking.status),
+        showAccentBorder: true,
+        padding: EdgeInsets
+            .zero, // Handle padding internally for header/content split
+        child: Column(children: [_buildHeader(), _buildContent(context)]),
       ),
     );
   }
@@ -84,48 +59,46 @@ class BookingListItem extends StatelessWidget {
   /// Builds the status header with colored gradient background
   Widget _buildHeader() {
     return Container(
-      padding: const EdgeInsets.all(BookingConstants.standardPadding),
+      padding: const EdgeInsets.symmetric(
+        horizontal: BookingConstants.standardPadding,
+        vertical: 12,
+      ),
       decoration: BoxDecoration(
         gradient: _getStatusGradient(booking.status),
+        // No border radius needed at top as PremiumCard clips it,
+        // but explicit radius helps prevent anti-aliasing artifacts
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(18),
-          topRight: Radius.circular(18),
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: _getStatusColor(booking.status).withValues(alpha: 0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.3),
+              color: Colors.white.withValues(alpha: 0.25),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               _getStatusIcon(booking.status),
               color: Colors.white,
-              size: 20,
+              size: 18,
             ),
           ),
-          const SizedBox(width: BookingConstants.itemSpacing),
+          const SizedBox(width: 12),
           Text(
             booking.status.displayName.toUpperCase(),
             style: const TextStyle(
-              fontSize: 15,
+              fontSize: 14,
               fontWeight: FontWeight.w800,
               color: Colors.white,
-              letterSpacing: 0.8,
+              letterSpacing: 1.0,
             ),
           ),
           const Spacer(),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: Colors.white.withValues(alpha: 0.9),
               borderRadius: BorderRadius.circular(8),
@@ -156,7 +129,7 @@ class BookingListItem extends StatelessWidget {
           if (booking.fieldName != null) ...[
             _buildFieldInfo(),
             const SizedBox(height: BookingConstants.standardPadding),
-            const Divider(height: 1),
+            const Divider(height: 1, color: AppColors.lightGrey),
             const SizedBox(height: BookingConstants.standardPadding),
           ],
 
@@ -190,38 +163,57 @@ class BookingListItem extends StatelessWidget {
     return Row(
       children: [
         if (booking.fieldImage != null) ...[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              booking.fieldImage!,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                booking.fieldImage!,
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.sports_soccer,
-                  color: AppColors.primary,
-                  size: 24,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.sports_soccer,
+                    color: AppColors.primary,
+                    size: 24,
+                  ),
                 ),
               ),
             ),
           ),
-          const SizedBox(width: BookingConstants.itemSpacing),
+          const SizedBox(width: 12),
         ],
         Expanded(
-          child: Text(
-            booking.fieldName!,
-            style: const TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                booking.fieldName!,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              // Removed invalid reference to booking.location
+              // Use fieldName or subtitle if available in future
+            ],
           ),
         ),
         const Icon(
@@ -237,71 +229,79 @@ class BookingListItem extends StatelessWidget {
   Widget _buildDateTimeRow() {
     return Row(
       children: [
-        Container(
-          padding: const EdgeInsets.all(BookingConstants.smallPadding),
-          decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: const Icon(
-            Icons.calendar_today,
-            size: 16,
+        Expanded(
+          child: _buildInfoBadge(
+            icon: Icons.calendar_today,
+            text: booking.formattedDate,
             color: AppColors.primary,
           ),
         ),
-        const SizedBox(width: BookingConstants.itemSpacing),
-        Text(
-          booking.formattedDate,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        const Spacer(),
-        Container(
-          padding: const EdgeInsets.all(BookingConstants.smallPadding),
-          decoration: BoxDecoration(
-            color: AppColors.success.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: const Icon(
-            Icons.access_time,
-            size: 16,
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildInfoBadge(
+            icon: Icons.access_time,
+            text: booking.formattedTimeSlot,
             color: AppColors.success,
-          ),
-        ),
-        const SizedBox(width: BookingConstants.itemSpacing),
-        Text(
-          booking.formattedTimeSlot,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
           ),
         ),
       ],
     );
   }
 
+  Widget _buildInfoBadge({
+    required IconData icon,
+    required String text,
+    required Color color,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 14, color: color),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// Builds price container with total price
   Widget _buildPriceContainer() {
     return Container(
-      padding: const EdgeInsets.all(BookingConstants.itemSpacing),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
+        color: AppColors.backgroundLight,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.lightGrey),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Row(
             children: [
-              Icon(Icons.payments_outlined, size: 18, color: AppColors.primary),
-              SizedBox(width: BookingConstants.smallPadding),
+              Icon(
+                Icons.receipt_long,
+                size: 18,
+                color: AppColors.textSecondary,
+              ),
+              SizedBox(width: 8),
               Text(
-                BookingConstants.totalPriceLabel,
+                'Total Price',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -334,6 +334,10 @@ class BookingListItem extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.error,
           side: const BorderSide(color: AppColors.error),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       ),
     );
@@ -342,20 +346,28 @@ class BookingListItem extends StatelessWidget {
   /// Builds cancellation reason display
   Widget _buildCancellationReason() {
     return Container(
-      padding: const EdgeInsets.all(BookingConstants.itemSpacing),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.error.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline, size: 16, color: AppColors.error),
-          const SizedBox(width: BookingConstants.smallPadding),
+          const Padding(
+            padding: EdgeInsets.only(top: 2),
+            child: Icon(Icons.info_outline, size: 16, color: AppColors.error),
+          ),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
               booking.cancellationReason!,
-              style: const TextStyle(fontSize: 13, color: AppColors.error),
+              style: const TextStyle(
+                fontSize: 13,
+                color: AppColors.error,
+                height: 1.4,
+              ),
             ),
           ),
         ],
