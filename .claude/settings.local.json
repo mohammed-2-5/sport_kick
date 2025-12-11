@@ -41,7 +41,10 @@
       "Bash(do if [ -f \"$file\" ])",
       "Bash(Select-String \"owner_booking_section\" -Context 0,2)",
       "Bash(Select-String \"error\" -Context 0,1)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(Select-Object -First 15)",
+      "Bash(Select-String \"error|warning\" -Context 0,1)",
+      "Bash(Select-String -Pattern \"owner.*profile|error\" -Context 0,1)"
     ],
     "deny": [],
     "ask": []

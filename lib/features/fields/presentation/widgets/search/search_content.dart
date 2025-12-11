@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubit/search_cubit.dart';
 import '../../cubit/search_state.dart';
-import '../search_body.dart';
+import 'search_body.dart';
 
 /// Search content using SearchCubit state.
 class SearchContent extends StatelessWidget {

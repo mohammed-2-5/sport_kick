@@ -1,0 +1,331 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/snackbar_helper.dart';
+import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_dashboard/super_admin_dashboard_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_dashboard/super_admin_dashboard_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_activity_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_drawer.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_header.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_quick_actions.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_revenue_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_stats_grid.dart';
+
+/// Premium super admin dashboard view.
+///
+/// Features:
+/// - Gold-themed premium header
+/// - Platform statistics grid
+/// - Revenue card
+/// - Quick actions
+/// - Today's activity
+/// - Navigation drawer
+/// - All logic handled by SuperAdminDashboardCubit
+class PremiumSuperAdminDashboardView extends StatefulWidget {
+  const PremiumSuperAdminDashboardView({super.key});
+
+  @override
+  State<PremiumSuperAdminDashboardView> createState() =>
+      _PremiumSuperAdminDashboardViewState();
+}
+
+class _PremiumSuperAdminDashboardViewState
+    extends State<PremiumSuperAdminDashboardView> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<SuperAdminDashboardCubit>().loadDashboard();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<SuperAdminDashboardCubit, SuperAdminDashboardState>(
+      listener: (context, state) {
+        if (state is SuperAdminDashboardError) {
+          SnackbarHelper.showError(context, state.message);
+        }
+      },
+      builder: (context, state) {
+        final cubit = context.read<SuperAdminDashboardCubit>();
+
+        return Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: AppColors.backgroundLight,
+          drawer: _buildDrawer(context, state, cubit),
+          body: _buildBody(context, state, cubit),
+        );
+      },
+    );
+  }
+
+  Widget _buildDrawer(
+    BuildContext context,
+    SuperAdminDashboardState state,
+    SuperAdminDashboardCubit cubit,
+  ) {
+    if (state is! SuperAdminDashboardLoaded) {
+      return const SizedBox.shrink();
+    }
+
+    return PremiumSuperAdminDrawer(
+      adminName: state.adminName,
+      email: 'admin@sportkick.com',
+      selectedIndex: state.selectedNavIndex,
+      onItemTap: (index) {
+        Navigator.pop(context);
+        _handleDrawerNavigation(context, index);
+      },
+      onLogout: () => _handleLogout(context),
+    );
+  }
+
+  Widget _buildBody(
+    BuildContext context,
+    SuperAdminDashboardState state,
+    SuperAdminDashboardCubit cubit,
+  ) {
+    if (state is SuperAdminDashboardLoading) {
+      return const _LoadingState();
+    }
+
+    if (state is SuperAdminDashboardError) {
+      return _ErrorState(message: state.message, onRetry: cubit.loadDashboard);
+    }
+
+    if (state is SuperAdminDashboardLoaded) {
+      return RefreshIndicator(
+        onRefresh: cubit.refresh,
+        color: AppColors.goldAccent,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              // Header
+              PremiumSuperAdminHeader(
+                greeting: cubit.getGreeting(),
+                adminName: state.adminName,
+                date: cubit.getFormattedDate(),
+                onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
+                onNotificationTap: () {},
+                notificationCount: state.stats.pendingBookings,
+              ),
+
+              const SizedBox(height: 20),
+
+              // Stats grid
+              PremiumSuperAdminStatsGrid(
+                totalUsers: state.stats.totalUsers,
+                totalAdmins: state.stats.totalAdmins,
+                totalFields: state.stats.totalFields,
+                totalBookings: state.stats.totalBookings,
+                userGrowth: cubit.getUserGrowthPercentage(),
+                bookingGrowth: cubit.getBookingGrowthPercentage(),
+                onUsersTap: () => context.pushNamed('superAdminUsers'),
+                onAdminsTap: () => context.pushNamed('superAdminAdmins'),
+                onFieldsTap: () => context.pushNamed('superAdminFields'),
+                onBookingsTap: () => context.pushNamed('superAdminBookings'),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Revenue card
+              PremiumSuperAdminRevenueCard(
+                totalRevenue: cubit.formatCurrency(state.stats.totalRevenue),
+                monthlyRevenue: cubit.formatCurrency(
+                  state.stats.revenueThisMonth,
+                ),
+                weeklyRevenue: cubit.formatCurrency(
+                  state.stats.dailyRevenue.isNotEmpty
+                      ? state.stats.dailyRevenue.reduce((a, b) => a + b) * 1000
+                      : 0,
+                ),
+                growthPercentage: cubit.getRevenueGrowthPercentage(),
+                onTap: () => context.pushNamed('superAdminAnalytics'),
+              ),
+
+              const SizedBox(height: 24),
+
+              // Quick actions
+              PremiumSuperAdminQuickActions(
+                onManageUsers: () => context.pushNamed('superAdminUsers'),
+                onManageAdmins: () => context.pushNamed('superAdminAdmins'),
+                onManageFields: () => context.pushNamed('superAdminFields'),
+                onManageBookings: () => context.pushNamed('superAdminBookings'),
+                onManageCities: () => context.pushNamed('superAdminCities'),
+                onViewAnalytics: () => context.pushNamed('superAdminAnalytics'),
+                onViewReports: () => context.pushNamed('superAdminReports'),
+                onSettings: () => context.pushNamed('superAdminSettings'),
+              ),
+
+              const SizedBox(height: 24),
+
+              // Today's activity
+              PremiumSuperAdminActivityCard(
+                todayBookings: state.stats.bookingsThisMonth,
+                pendingBookings: state.stats.pendingBookings,
+                pendingFields:
+                    state.stats.totalFields - state.stats.activeFields,
+                activeUsers: state.stats.totalUsers,
+                onTap: () => context.pushNamed('superAdminBookings'),
+              ),
+
+              const SizedBox(height: 32),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return const SizedBox.shrink();
+  }
+
+  void _handleDrawerNavigation(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        // Already on dashboard
+        break;
+      case 1:
+        context.pushNamed('superAdminUsers');
+        break;
+      case 2:
+        context.pushNamed('superAdminAdmins');
+        break;
+      case 3:
+        context.pushNamed('superAdminFields');
+        break;
+      case 4:
+        context.pushNamed('superAdminBookings');
+        break;
+      case 5:
+        context.pushNamed('superAdminCities');
+        break;
+      case 6:
+        context.pushNamed('superAdminAnalytics');
+        break;
+      case 7:
+        context.pushNamed('superAdminReports');
+        break;
+      case 8:
+        context.pushNamed('superAdminSettings');
+        break;
+    }
+  }
+
+  void _handleLogout(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<AuthCubit>().logout();
+              context.goNamed('login');
+            },
+            child: const Text('Logout', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Loading state widget.
+class _LoadingState extends StatelessWidget {
+  const _LoadingState();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF1A1A2E), Color(0xFF16213E)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: const Center(
+        child: CircularProgressIndicator(color: AppColors.goldAccent),
+      ),
+    );
+  }
+}
+
+/// Error state widget.
+class _ErrorState extends StatelessWidget {
+  final String message;
+  final VoidCallback onRetry;
+
+  const _ErrorState({required this.message, required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF1A1A2E), Color(0xFF16213E)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.error_outline, size: 64, color: Colors.red.shade300),
+              const SizedBox(height: 16),
+              Text(
+                message,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 16, color: Colors.white),
+              ),
+              const SizedBox(height: 24),
+              GestureDetector(
+                onTap: onRetry,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.goldAccent, Color(0xFFD4A574)],
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.goldAccent.withValues(alpha: 0.4),
+                        blurRadius: 12,
+                      ),
+                    ],
+                  ),
+                  child: const Text(
+                    'Retry',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

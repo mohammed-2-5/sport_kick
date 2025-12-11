@@ -1,3 +1,5 @@
+import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
+
 /// Date formatting utility.
 ///
 /// Provides static methods for formatting dates in consistent formats
@@ -100,6 +102,39 @@ class DateFormatter {
           : '${difference.inMinutes} minutes ago';
     } else {
       return 'Just now';
+    }
+  }
+
+  /// Formats date according to user's preferred format.
+  ///
+  /// Supports:
+  /// - DD/MM/YYYY (e.g., 25/12/2025)
+  /// - MM/DD/YYYY (e.g., 12/25/2025)
+  /// - YYYY-MM-DD (e.g., 2025-12-25)
+  static String formatWithPreference(DateTime date, DateFormatOption format) {
+    final day = date.day.toString().padLeft(2, '0');
+    final month = date.month.toString().padLeft(2, '0');
+    final year = date.year.toString();
+
+    switch (format) {
+      case DateFormatOption.ddMMyyyy:
+        return '$day/$month/$year';
+      case DateFormatOption.mmDdYyyy:
+        return '$month/$day/$year';
+      case DateFormatOption.yyyyMmDd:
+        return '$year-$month-$day';
+    }
+  }
+
+  /// Returns display label for date format option.
+  static String getDateFormatLabel(DateFormatOption format) {
+    switch (format) {
+      case DateFormatOption.ddMMyyyy:
+        return 'DD/MM/YYYY';
+      case DateFormatOption.mmDdYyyy:
+        return 'MM/DD/YYYY';
+      case DateFormatOption.yyyyMmDd:
+        return 'YYYY-MM-DD';
     }
   }
 }

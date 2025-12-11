@@ -4,7 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
-import 'package:spo_kick/features/reviews/presentation/widgets/all_reviews_body.dart';
+import 'package:spo_kick/features/reviews/presentation/widgets/list/all_reviews_body.dart';
 
 /// Page displaying all reviews for a specific field.
 ///

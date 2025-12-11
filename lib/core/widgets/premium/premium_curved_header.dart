@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/home/presentation/widgets/curved_header_clipper.dart';
+import 'package:spo_kick/features/home/presentation/widgets/hero/curved_header_clipper.dart';
 
 /// Premium curved header component for user-facing screens.
 ///

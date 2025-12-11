@@ -1,15 +1,24 @@
-import 'dart:io';
-
 import 'package:csv/csv.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 
-/// Service for exporting data to CSV files
+// Conditional imports for web/mobile
+import 'csv_export_service_stub.dart'
+    if (dart.library.io) 'csv_export_service_mobile.dart'
+    if (dart.library.html) 'csv_export_service_web.dart'
+    as platform;
+
+/// Service for exporting data to CSV files.
+///
+/// Automatically uses platform-specific implementation:
+/// - Mobile/Desktop: Uses file system and share sheet
+/// - Web: Uses browser download
 class CsvExportService {
-  /// Export a list of users to a CSV file and share it
+  /// Export a list of users to a CSV file.
   Future<void> exportUsersToCsv(List<UserEntity> users, String fileName) async {
+    debugPrint('📊 [CsvExportService] Exporting ${users.length} users to CSV');
+
     final List<List<dynamic>> rows = [];
 
     // Add header row
@@ -39,15 +48,9 @@ class CsvExportService {
     // Convert to CSV string
     final String csv = const ListToCsvConverter().convert(rows);
 
-    // Save to file
-    final directory = await getTemporaryDirectory();
-    final file = File('${directory.path}/$fileName.csv');
-    await file.writeAsString(csv);
+    // Use platform-specific export
+    await platform.exportCsv(csv, '$fileName.csv');
 
-    // Share file
-    // ignore: deprecated_member_use
-    await Share.shareXFiles([
-      XFile(file.path),
-    ], subject: 'Exported $fileName CSV');
+    debugPrint('✅ [CsvExportService] CSV export completed');
   }
 }

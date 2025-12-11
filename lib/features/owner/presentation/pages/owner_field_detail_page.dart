@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/app_error_widget.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
+import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/delete_field_dialog.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/field_detail_header.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/field_detail_stats.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/field_recent_bookings.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/field/field_detail_header.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/field/field_detail_stats.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/field/field_recent_bookings.dart';
 
 /// Owner field detail page - shows detailed field information for owners.
 ///
@@ -47,76 +49,103 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Field Details'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () =>
-                context.pushNamed('ownerEditField', extra: widget.field),
-            tooltip: 'Edit field',
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete_outline),
-            onPressed: () =>
-                showDeleteFieldDialog(context: context, field: widget.field),
-            tooltip: 'Delete field',
-          ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: BlocConsumer<OwnerCubit, OwnerState>(
-        listener: (context, state) {
-          if (state is OwnerError) {
-            SnackbarHelper.showError(context, state.message);
-          } else if (state is OwnerActionSuccess) {
-            SnackbarHelper.showSuccess(context, state.message);
-            _loadFieldBookings();
-          }
-        },
-        builder: (context, state) {
-          return RefreshIndicator(
-            onRefresh: () async => _loadFieldBookings(),
-            child: CustomScrollView(
-              slivers: [
-                // Field Header (Image Gallery)
-                SliverToBoxAdapter(
-                  child: FieldDetailHeader(field: widget.field),
+      body: Column(
+        children: [
+          PremiumCurvedHeader(
+            title: 'Field Details',
+            subtitle: widget.field.name,
+            showBackButton: true,
+            height: 160,
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(left: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.glassHighlight,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-
-                // Field Statistics
-                SliverToBoxAdapter(
-                  child: FieldDetailStats(field: widget.field),
+                child: IconButton(
+                  icon: const Icon(Icons.edit, color: AppColors.textOnNavy),
+                  onPressed: () =>
+                      context.pushNamed('ownerEditField', extra: widget.field),
+                  tooltip: 'Edit field',
                 ),
-
-                // Recent Bookings Section
-                if (state is OwnerBookingsLoaded)
-                  SliverToBoxAdapter(
-                    child: FieldRecentBookings(
-                      fieldId: widget.field.id,
-                      bookings: state.bookings,
-                    ),
-                  )
-                else if (state is OwnerLoading)
-                  const SliverFillRemaining(
-                    child: LoadingIndicator.inline(
-                      message: 'Loading bookings...',
-                    ),
-                  )
-                else if (state is OwnerError)
-                  SliverFillRemaining(
-                    child: AppErrorWidget(
-                      message: state.message,
-                      onRetry: _loadFieldBookings,
-                    ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.glassHighlight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.delete_outline,
+                    color: AppColors.textOnNavy,
                   ),
+                  onPressed: () => showDeleteFieldDialog(
+                    context: context,
+                    field: widget.field,
+                  ),
+                  tooltip: 'Delete field',
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: BlocConsumer<OwnerCubit, OwnerState>(
+              listener: (context, state) {
+                if (state is OwnerError) {
+                  SnackbarHelper.showError(context, state.message);
+                } else if (state is OwnerActionSuccess) {
+                  SnackbarHelper.showSuccess(context, state.message);
+                  _loadFieldBookings();
+                }
+              },
+              builder: (context, state) {
+                return RefreshIndicator(
+                  onRefresh: () async => _loadFieldBookings(),
+                  child: CustomScrollView(
+                    slivers: [
+                      // Field Header (Image Gallery)
+                      SliverToBoxAdapter(
+                        child: FieldDetailHeader(field: widget.field),
+                      ),
 
-                // Bottom padding
-                const SliverToBoxAdapter(child: SizedBox(height: 24)),
-              ],
+                      // Field Statistics
+                      SliverToBoxAdapter(
+                        child: FieldDetailStats(field: widget.field),
+                      ),
+
+                      // Recent Bookings Section
+                      if (state is OwnerBookingsLoaded)
+                        SliverToBoxAdapter(
+                          child: FieldRecentBookings(
+                            fieldId: widget.field.id,
+                            bookings: state.bookings,
+                          ),
+                        )
+                      else if (state is OwnerLoading)
+                        const SliverFillRemaining(
+                          child: LoadingIndicator.inline(
+                            message: 'Loading bookings...',
+                          ),
+                        )
+                      else if (state is OwnerError)
+                        SliverFillRemaining(
+                          child: AppErrorWidget(
+                            message: state.message,
+                            onRetry: _loadFieldBookings,
+                          ),
+                        ),
+
+                      // Bottom padding
+                      const SliverToBoxAdapter(child: SizedBox(height: 24)),
+                    ],
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

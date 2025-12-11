@@ -4,8 +4,8 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_empty_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_search_bar.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/field_card.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/fields_statistics_section.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/field_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_statistics_section.dart';
 
 /// Main body widget for fields list.
 class FieldsListBody extends StatelessWidget {

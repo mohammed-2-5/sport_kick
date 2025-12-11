@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
-import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
-import 'package:spo_kick/features/bookings/presentation/widgets/create_booking_view.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_cubit.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_booking_flow_view.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
-/// Page for creating a new booking.
+/// Page for creating a new booking with premium wizard UI.
 ///
-/// Allows users to:
-/// - Select a date
-/// - View available time slots
-/// - Select a time slot
-/// - Confirm booking
+/// Features a multi-step booking flow:
+/// 1. Select Date - Horizontal date picker with time slot preview
+/// 2. Choose Time - Premium time slot grid with animations
+/// 3. Confirm - Summary with glassmorphism design
+/// 4. Success - Animated confirmation overlay
 class CreateBookingPage extends StatelessWidget {
   final FieldEntity field;
 
@@ -20,8 +20,8 @@ class CreateBookingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<BookingCubit>()..startBookingFlow(field.id),
-      child: CreateBookingView(field: field),
+      create: (_) => sl<BookingFlowCubit>()..initializeFlow(field),
+      child: PremiumBookingFlowView(field: field),
     );
   }
 }

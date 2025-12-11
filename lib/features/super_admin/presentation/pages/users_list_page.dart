@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/users_list_view.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/users_list/super_admin_users_list_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/premium_super_admin_users_list_view.dart';
 
-/// Users List Page
+/// Users List Page - Premium Design
 ///
-/// Displays all regular customer accounts with filtering, search, and bulk actions.
+/// Features:
+/// - Gold-themed premium header with glassmorphism
+/// - Search functionality with blur effect
+/// - Stats chips showing user counts
+/// - Filter chips (All, Active, Inactive)
+/// - Selection mode for bulk actions
+/// - Bulk activate/deactivate with confirmation
+/// - Premium user cards with status indicators
+/// - Responsive grid layout with staggered animations
+/// - Pull-to-refresh
+/// - Empty states with icons
+/// - Loading shimmer effect
+/// - All logic handled by SuperAdminUsersListCubit
 class UsersListPage extends StatelessWidget {
   const UsersListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<SuperAdminCubit>()..loadUsers(),
-      child: const UsersListView(),
+      create: (_) => sl<SuperAdminUsersListCubit>(),
+      child: const PremiumSuperAdminUsersListView(),
     );
   }
 }

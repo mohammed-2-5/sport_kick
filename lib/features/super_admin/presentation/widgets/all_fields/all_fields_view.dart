@@ -9,7 +9,7 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_sta
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_body.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_error_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_loading_state.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/field_filter_sheet.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/field_filter_sheet.dart';
 import 'package:spo_kick/features/super_admin/utils/field_filter_helper.dart';
 
 /// All Fields View - displays and manages the fields list with filtering.

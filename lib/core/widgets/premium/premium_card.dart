@@ -32,6 +32,8 @@ class PremiumCard extends StatefulWidget {
   final bool showAccentBorder;
   final BorderRadius? borderRadius;
   final List<BoxShadow>? boxShadow;
+  final Color? borderColor;
+  final double borderWidth;
 
   const PremiumCard({
     super.key,
@@ -42,6 +44,8 @@ class PremiumCard extends StatefulWidget {
     this.showAccentBorder = false,
     this.borderRadius,
     this.boxShadow,
+    this.borderColor,
+    this.borderWidth = 1.0,
   });
 
   @override
@@ -127,7 +131,12 @@ class _PremiumCardState extends State<PremiumCard>
                     offset: const Offset(0, 2),
                   ),
                 ],
-            border: widget.showAccentBorder && widget.accentColor != null
+            border: widget.borderColor != null
+                ? Border.all(
+                    color: widget.borderColor!,
+                    width: widget.borderWidth,
+                  )
+                : widget.showAccentBorder && widget.accentColor != null
                 ? Border(left: BorderSide(color: widget.accentColor!, width: 4))
                 : null,
           ),

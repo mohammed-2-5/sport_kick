@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/user_details/user_details_view.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_details_view.dart';
 
-/// User Details Page
+/// User Details Page - Premium Design
 ///
 /// Comprehensive view of a regular user account showing:
-/// - Profile information
-/// - Booking history
+/// - Profile information with premium header
+/// - Booking history with premium cards
 /// - Spending statistics
-/// - Actions (Deactivate/Activate)
+/// - Actions (Deactivate/Activate) with premium buttons
 class UserDetailsPage extends StatelessWidget {
   final UserEntity user;
 
@@ -21,7 +21,7 @@ class UserDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<SuperAdminCubit>()..loadAllBookings(),
-      child: UserDetailsView(user: user),
+      child: PremiumUserDetailsView(user: user),
     );
   }
 }

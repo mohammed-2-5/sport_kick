@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/comparison_empty_state.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/field_comparison_table.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/comparison/comparison_empty_state.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/comparison/field_comparison_table.dart';
 
 /// Field comparison page - compare multiple fields side-by-side.
 ///
@@ -14,15 +15,27 @@ class FieldComparisonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Compare Fields'), elevation: 0),
-      body: fields.isEmpty
-          ? const ComparisonEmptyState()
-          : SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SingleChildScrollView(
-                child: FieldComparisonTable(fields: fields),
-              ),
-            ),
+      body: Column(
+        children: [
+          PremiumCurvedHeader(
+            title: 'Compare Fields',
+            subtitle:
+                '${fields.length} ${fields.length == 1 ? 'field' : 'fields'} selected',
+            showBackButton: true,
+            height: 160,
+          ),
+          Expanded(
+            child: fields.isEmpty
+                ? const ComparisonEmptyState()
+                : SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SingleChildScrollView(
+                      child: FieldComparisonTable(fields: fields),
+                    ),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }

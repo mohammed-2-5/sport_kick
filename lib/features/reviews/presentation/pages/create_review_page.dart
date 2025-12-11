@@ -9,7 +9,7 @@ import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
-import 'package:spo_kick/features/reviews/presentation/widgets/create_review_body.dart';
+import 'package:spo_kick/features/reviews/presentation/widgets/create/create_review_body.dart';
 
 /// Page for creating or editing a review.
 ///

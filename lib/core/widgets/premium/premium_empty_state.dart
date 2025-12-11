@@ -77,7 +77,7 @@ class _PremiumEmptyStateState extends State<PremiumEmptyState>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/quick_action_card.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/dashboard/quick_action_card.dart';
 
 class DashboardQuickActions extends StatelessWidget {
   final VoidCallback onManualBooking;

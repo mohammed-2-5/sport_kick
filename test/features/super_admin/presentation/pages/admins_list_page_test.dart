@@ -7,7 +7,7 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/admins_list_page.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/admin_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_card.dart';
 import 'package:dartz/dartz.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_usecase.dart';
 

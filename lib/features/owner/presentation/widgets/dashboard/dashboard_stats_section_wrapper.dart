@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/dashboard_stats_section.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/dashboard/dashboard_stats_section.dart';
 
 /// Wrapper widget that handles loading state and data extraction for dashboard stats.
 class DashboardStatsSectionWrapper extends StatelessWidget {

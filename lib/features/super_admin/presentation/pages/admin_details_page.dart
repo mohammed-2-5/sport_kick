@@ -4,15 +4,15 @@ import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/admin_details/admin_details_view.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_admin_details_view.dart';
 
-/// Admin Details Page
+/// Admin Details Page - Premium Design
 ///
 /// Comprehensive view of a field owner (admin) account showing:
-/// - Profile information
-/// - Assigned fields
+/// - Profile information with premium header
+/// - Assigned fields with premium cards
 /// - Performance statistics
-/// - Actions (Assign Field, Deactivate/Activate)
+/// - Actions (Assign Field, Deactivate/Activate) with premium buttons
 class AdminDetailsPage extends StatelessWidget {
   final UserEntity admin;
 
@@ -25,7 +25,7 @@ class AdminDetailsPage extends StatelessWidget {
         BlocProvider(create: (_) => sl<FieldsCubit>()..loadAllFields()),
         BlocProvider(create: (_) => sl<SuperAdminCubit>()),
       ],
-      child: AdminDetailsView(admin: admin),
+      child: PremiumAdminDetailsView(admin: admin),
     );
   }
 }

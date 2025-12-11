@@ -10,7 +10,7 @@ import 'package:spo_kick/core/observers/app_bloc_observer.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
-import 'package:spo_kick/features/home/presentation/widgets/categories_slider.dart';
+import 'package:spo_kick/features/home/presentation/widgets/hero/categories_slider.dart';
 import 'package:go_router/go_router.dart';
 
 class MockFieldsCubit extends MockCubit<FieldsState> implements FieldsCubit {}

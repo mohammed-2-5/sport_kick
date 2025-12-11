@@ -10,7 +10,7 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_sta
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_list_body.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_list_error_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_list_loading_state.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/booking_filter_sheet.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/booking_filter_sheet.dart';
 import 'package:spo_kick/features/super_admin/utils/booking_filter_helper.dart';
 
 /// All Bookings View - displays and manages the bookings list with filtering.

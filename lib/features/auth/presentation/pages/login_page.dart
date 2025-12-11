@@ -7,7 +7,7 @@ import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/utils/auth_navigation_handler.dart';
-import 'package:spo_kick/features/auth/presentation/widgets/login_body.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/login/login_body.dart';
 
 /// Login Page
 ///

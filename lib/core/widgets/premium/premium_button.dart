@@ -122,17 +122,8 @@ class _PremiumButtonState extends State<PremiumButton>
           width: widget.fullWidth ? double.infinity : widget.width,
           height: widget.height,
           decoration: _getDecoration(isDisabled),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: isDisabled ? null : widget.onPressed,
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _buildContent(isDisabled),
-              ),
-            ),
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: _buildContent(isDisabled),
         ),
       ),
     );

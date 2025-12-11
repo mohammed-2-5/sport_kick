@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 
 /// Premium Text Field with animated label and interactions.
-/// Supports Form validation.
+///
+/// Features:
+/// - Animated focus border with color transition
+/// - Smooth shadow elevation on focus
+/// - Form validation support
+/// - Customizable prefix/suffix icons
+/// - Password visibility toggle
 class PremiumTextField extends StatefulWidget {
   final String label;
   final TextEditingController? controller;
@@ -107,7 +114,8 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
                 widget.onTap?.call();
               },
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
+                duration: AppAnimations.fast,
+                curve: AppAnimations.easeInOut,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),

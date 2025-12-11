@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_cubit.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/map_filter_dialog.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/map/map_filter_dialog.dart';
 
 /// Shows the map filter dialog.
 void showMapFilterDialog(BuildContext context) {

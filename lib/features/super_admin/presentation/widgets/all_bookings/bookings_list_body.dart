@@ -4,8 +4,8 @@ import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_list_empty_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_list_search_bar.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/booking_card.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/bookings_statistics_section.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/booking_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_statistics_section.dart';
 
 /// Main body widget for bookings list.
 class BookingsListBody extends StatelessWidget {

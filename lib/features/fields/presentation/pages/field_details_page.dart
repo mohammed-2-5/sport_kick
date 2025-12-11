@@ -5,21 +5,20 @@ import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/empty_states.dart';
 import 'package:spo_kick/features/favorites/presentation/cubit/favorites_cubit.dart';
+import 'package:spo_kick/features/fields/presentation/cubit/field_details_scroll_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/book_now_button.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/field_details_content.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/details/premium/premium_field_details_view.dart';
 
 /// Field details page - shows complete information about a field.
 ///
-/// Displays:
-/// - Image gallery with sliver app bar
-/// - Field name, rating, and price
-/// - Full description
-/// - Location and contact info
-/// - Facilities
-/// - Reviews and ratings
-/// - Book now button
+/// Premium features:
+/// - Hero image with parallax scroll
+/// - Floating glassmorphism header
+/// - Premium cards for all sections
+/// - Image gallery with zoom
+/// - Floating book now button
+/// - Staggered animations
 class FieldDetailsPage extends StatelessWidget {
   final String fieldId;
 
@@ -35,6 +34,7 @@ class FieldDetailsPage extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<FavoritesCubit>()..checkIsFavorite(fieldId),
         ),
+        BlocProvider(create: (context) => FieldDetailsScrollCubit()),
       ],
       child: Scaffold(
         backgroundColor: AppColors.lightBackground,
@@ -58,16 +58,9 @@ class FieldDetailsPage extends StatelessWidget {
     }
 
     if (state is FieldDetailsLoaded) {
-      return Stack(
-        children: [
-          FieldDetailsContent(field: state.field, category: state.category),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: BookNowButton(field: state.field),
-          ),
-        ],
+      return PremiumFieldDetailsView(
+        field: state.field,
+        category: state.category,
       );
     }
 

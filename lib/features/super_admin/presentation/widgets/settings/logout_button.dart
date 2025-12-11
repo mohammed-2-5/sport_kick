@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
@@ -37,9 +39,9 @@ class LogoutButton extends StatelessWidget {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
-              context.read<AuthCubit>().logout();
+              await _performLogout(context);
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Logout'),
@@ -47,5 +49,16 @@ class LogoutButton extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Logs out the current super admin, resets state, and returns to login.
+  Future<void> _performLogout(BuildContext context) async {
+    final authCubit = context.read<AuthCubit>();
+    final superAdminCubit = context.read<SuperAdminCubit?>();
+    final router = GoRouter.of(context);
+
+    superAdminCubit?.reset();
+    await authCubit.logout();
+    router.goNamed('login');
   }
 }

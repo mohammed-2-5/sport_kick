@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/settings/settings_section.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/settings/settings_tile.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/settings/coming_soon_dialog.dart';
@@ -16,22 +17,24 @@ class SecuritySection extends StatelessWidget {
           icon: Icons.lock,
           title: 'Change Password',
           subtitle: 'Update your login password',
-          onTap: () => showComingSoonDialog(context, 'Change Password'),
+          onTap: () => context.pushNamed('changePassword'),
         ),
         const Divider(height: 1, indent: 56),
-        SettingsTile(
-          icon: Icons.security,
-          title: 'Two-Factor Authentication',
-          subtitle: 'Add an extra layer of security',
-          onTap: () => showComingSoonDialog(context, '2FA Settings'),
-        ),
-        const Divider(height: 1, indent: 56),
+        // Login Activity - To be implemented
         SettingsTile(
           icon: Icons.history,
           title: 'Login Activity',
           subtitle: 'View recent login attempts',
           onTap: () => showComingSoonDialog(context, 'Login Activity'),
         ),
+        // Two-Factor Authentication - Future implementation
+        // const Divider(height: 1, indent: 56),
+        // SettingsTile(
+        //   icon: Icons.security,
+        //   title: 'Two-Factor Authentication',
+        //   subtitle: 'Add an extra layer of security',
+        //   onTap: () => showComingSoonDialog(context, '2FA Settings'),
+        // ),
       ],
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/statistics_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/statistics_card.dart';
 
 /// Main statistics grid for dashboard.
 ///

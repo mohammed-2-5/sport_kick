@@ -4,7 +4,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/settings/sett
 import 'package:spo_kick/features/super_admin/presentation/widgets/settings/coming_soon_dialog.dart';
 
 /// System preferences section widget for super admin settings page.
-/// Includes language, date format, currency, and notification settings.
+/// Includes date format, currency, and notification settings.
 class SystemPreferencesSection extends StatelessWidget {
   const SystemPreferencesSection({super.key});
 
@@ -12,20 +12,15 @@ class SystemPreferencesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SettingsSection(
       children: [
-        SettingsTile(
-          icon: Icons.language,
-          title: 'Language',
-          subtitle: 'English',
-          onTap: () => showComingSoonDialog(context, 'Language Selection'),
-        ),
-        const Divider(height: 1, indent: 56),
+        // Date Format - To be implemented
         SettingsTile(
           icon: Icons.calendar_today,
           title: 'Date Format',
-          subtitle: 'MMM d, yyyy',
+          subtitle: 'DD/MM/YYYY',
           onTap: () => showComingSoonDialog(context, 'Date Format Settings'),
         ),
         const Divider(height: 1, indent: 56),
+        // Currency - To be implemented
         SettingsTile(
           icon: Icons.attach_money,
           title: 'Currency',
@@ -33,12 +28,20 @@ class SystemPreferencesSection extends StatelessWidget {
           onTap: () => showComingSoonDialog(context, 'Currency Settings'),
         ),
         const Divider(height: 1, indent: 56),
+        // Notifications - To be implemented
         SettingsTile(
           icon: Icons.notifications,
           title: 'Notifications',
           subtitle: 'System alerts and updates',
           onTap: () => showComingSoonDialog(context, 'Notification Settings'),
         ),
+        // Language Selection - Future implementation
+        // SettingsTile(
+        //   icon: Icons.language,
+        //   title: 'Language',
+        //   subtitle: 'English',
+        //   onTap: () => showComingSoonDialog(context, 'Language Selection'),
+        // ),
       ],
     );
   }

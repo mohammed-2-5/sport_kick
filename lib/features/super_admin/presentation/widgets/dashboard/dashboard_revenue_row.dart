@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/statistics_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/statistics_card.dart';
 
 /// Revenue statistics row for dashboard.
 class DashboardRevenueRow extends StatelessWidget {

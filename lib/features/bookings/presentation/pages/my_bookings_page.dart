@@ -5,9 +5,9 @@ import 'package:spo_kick/core/utils/error_handler.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
-import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings_content.dart';
-import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings_header.dart';
-import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings_tab_selector.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_content.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_header.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_tab_selector.dart';
 
 /// Page displaying user's bookings with a premium curved header design.
 class MyBookingsPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _MyBookingsPageState extends State<MyBookingsPage>
         children: [
           Column(
             children: [
-              MyBookingsHeader(onBack: () => Navigator.pop(context)),
+              MyBookingsHeader(onBack: () => Navigator.of(context).maybePop()),
 
               MyBookingsTabSelector(tabController: _tabController),
 
@@ -57,7 +57,7 @@ class _MyBookingsPageState extends State<MyBookingsPage>
                     state: state,
                     tabController: _tabController,
                     onRefresh: _refreshBookings,
-                    onBrowseFields: () => Navigator.of(context).pop(),
+                    onBrowseFields: () => Navigator.of(context).maybePop(),
                   ),
                 ),
               ),

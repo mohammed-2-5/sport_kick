@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
+import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/add_edit_field_form.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/field_form/add_edit_field_form.dart';
 
 /// Add/Edit Field Form Page
 ///
@@ -64,9 +64,14 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
         }
       }
 
-      _selectedSurface =
-          widget.field!.surfaceType ?? OwnerConstants.surfaceTypes.first;
-      _selectedType = widget.field!.isIndoor ? 'Indoor' : 'Outdoor';
+      _selectedSurface = _validateDropdownValue(
+        widget.field!.surfaceType,
+        OwnerConstants.surfaceTypes,
+      );
+      _selectedType = _validateDropdownValue(
+        widget.field!.isIndoor ? 'Indoor' : 'Outdoor',
+        OwnerConstants.fieldTypes,
+      );
       _selectedFacilities = List.from(widget.field!.facilities);
     }
   }
@@ -84,75 +89,99 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
   @override
   Widget build(BuildContext context) {
     if (!_isEditing) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Add Field')),
-        body: const Center(
-          child: Text('Creating new fields is currently restricted to Admins.'),
+      return const Scaffold(
+        body: Column(
+          children: [
+            PremiumCurvedHeader(
+              title: 'Add Field',
+              subtitle: 'Create a new football field',
+              showBackButton: true,
+              height: 160,
+            ),
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(24.0),
+                  child: Text(
+                    'Creating new fields is currently restricted to Admins.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Field'),
-        centerTitle: true,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(gradient: AppGradients.primary),
-        ),
-      ),
-      body: BlocConsumer<OwnerCubit, OwnerState>(
-        listener: (context, state) {
-          if (state is OwnerActionSuccess) {
-            SnackbarHelper.showSuccess(context, state.message);
-            Navigator.pop(context);
-          } else if (state is OwnerError) {
-            SnackbarHelper.showError(context, state.message);
-          }
-        },
-        builder: (context, state) {
-          if (state is OwnerLoading) {
-            return const LoadingIndicator.fullScreen(
-              message: 'Updating field...',
-            );
-          }
-
-          return AddEditFieldForm(
-            formKey: _formKey,
-            nameController: _nameController,
-            descriptionController: _descriptionController,
-            addressController: _addressController,
-            cityController: _cityController,
-            priceController: _priceController,
-            selectedSize: _selectedSize,
-            selectedSurface: _selectedSurface,
-            selectedType: _selectedType,
-            selectedFacilities: _selectedFacilities,
+      body: Column(
+        children: [
+          PremiumCurvedHeader(
             title: 'Edit Field',
-            subtitle: 'Update details for ${widget.field!.name}',
-            onSave: _handleSave,
-            onSizeChanged: (value) => setState(() => _selectedSize = value!),
-            onSurfaceChanged: (value) =>
-                setState(() => _selectedSurface = value!),
-            onTypeChanged: (value) => setState(() => _selectedType = value!),
-            onFacilityToggled: (facility) {
-              setState(() {
-                if (_selectedFacilities.contains(facility)) {
-                  _selectedFacilities.remove(facility);
-                } else {
-                  _selectedFacilities.add(facility);
+            subtitle: 'Update ${widget.field!.name}',
+            showBackButton: true,
+            height: 160,
+          ),
+          Expanded(
+            child: BlocConsumer<OwnerCubit, OwnerState>(
+              listener: (context, state) {
+                if (state is OwnerActionSuccess) {
+                  SnackbarHelper.showSuccess(context, state.message);
+                  Navigator.pop(context);
+                } else if (state is OwnerError) {
+                  SnackbarHelper.showError(context, state.message);
                 }
-              });
-            },
-          );
-        },
+              },
+              builder: (context, state) {
+                if (state is OwnerLoading) {
+                  return const LoadingIndicator.fullScreen(
+                    message: 'Updating field...',
+                  );
+                }
+
+                return AddEditFieldForm(
+                  formKey: _formKey,
+                  nameController: _nameController,
+                  descriptionController: _descriptionController,
+                  addressController: _addressController,
+                  cityController: _cityController,
+                  priceController: _priceController,
+                  selectedSize: _selectedSize,
+                  selectedSurface: _selectedSurface,
+                  selectedType: _selectedType,
+                  selectedFacilities: _selectedFacilities,
+                  title: 'Edit Field',
+                  subtitle: 'Update details for ${widget.field!.name}',
+                  onSave: _handleSave,
+                  onSizeChanged: (value) =>
+                      setState(() => _selectedSize = value!),
+                  onSurfaceChanged: (value) =>
+                      setState(() => _selectedSurface = value!),
+                  onTypeChanged: (value) =>
+                      setState(() => _selectedType = value!),
+                  onFacilityToggled: (facility) {
+                    setState(() {
+                      if (_selectedFacilities.contains(facility)) {
+                        _selectedFacilities.remove(facility);
+                      } else {
+                        _selectedFacilities.add(facility);
+                      }
+                    });
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 
   void _handleSave() {
     if (_formKey.currentState!.validate()) {
-      final updates = {
+      final updates = <String, dynamic>{
         'name': _nameController.text,
         'description': _descriptionController.text,
         'address': _addressController.text,
@@ -166,5 +195,12 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
 
       context.read<OwnerCubit>().updateField(widget.field!.id, updates);
     }
+  }
+
+  String _validateDropdownValue(String? value, List<String> allowed) {
+    if (value != null && allowed.contains(value)) {
+      return value;
+    }
+    return allowed.first;
   }
 }

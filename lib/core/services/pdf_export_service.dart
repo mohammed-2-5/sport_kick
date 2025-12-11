@@ -1,11 +1,13 @@
-import 'dart:io';
-
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:share_plus/share_plus.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
+
+// Conditional imports for web/mobile
+import 'pdf_export_service_stub.dart'
+    if (dart.library.io) 'pdf_export_service_mobile.dart'
+    if (dart.library.html) 'pdf_export_service_web.dart'
+    as platform;
 
 /// Service for exporting data to PDF files
 class PdfExportService {
@@ -78,17 +80,12 @@ class PdfExportService {
       ),
     );
 
-    // Save to file
-    final directory = await getTemporaryDirectory();
+    // Save and export using platform-specific implementation
+    final bytes = await pdf.save();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    final file = File('${directory.path}/analytics_report_$timestamp.pdf');
-    await file.writeAsBytes(await pdf.save());
+    final fileName = 'analytics_report_$timestamp.pdf';
 
-    // Share file
-    // ignore: deprecated_member_use
-    await Share.shareXFiles([
-      XFile(file.path),
-    ], subject: 'Sport Kick Analytics Report');
+    await platform.exportPdf(bytes, fileName);
   }
 
   /// Build a statistics row for PDF

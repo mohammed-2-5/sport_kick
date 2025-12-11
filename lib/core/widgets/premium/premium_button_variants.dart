@@ -4,10 +4,10 @@ import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button_style.dart';
 
-/// Small premium button variant.
+/// Small premium button variant with tap animation.
 ///
 /// Compact button for less prominent actions.
-class SmallPremiumButton extends StatelessWidget {
+class SmallPremiumButton extends StatefulWidget {
   final String label;
   final VoidCallback? onPressed;
   final PremiumButtonStyle style;
@@ -22,62 +22,74 @@ class SmallPremiumButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    // Import PremiumButton lazily to avoid circular dependency
-    return _SmallButtonContent(
-      label: label,
-      onPressed: onPressed,
-      style: style,
-      icon: icon,
-    );
-  }
+  State<SmallPremiumButton> createState() => _SmallPremiumButtonState();
 }
 
-class _SmallButtonContent extends StatelessWidget {
-  final String label;
-  final VoidCallback? onPressed;
-  final PremiumButtonStyle style;
-  final IconData? icon;
+class _SmallPremiumButtonState extends State<SmallPremiumButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
 
-  const _SmallButtonContent({
-    required this.label,
-    this.onPressed,
-    required this.style,
-    this.icon,
-  });
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: AppAnimations.fast,
+      vsync: this,
+    );
+    _scaleAnimation =
+        Tween<double>(
+          begin: AppAnimations.scaleNormal,
+          end: AppAnimations.buttonPressScale,
+        ).animate(
+          CurvedAnimation(parent: _controller, curve: AppAnimations.easeInOut),
+        );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final isDisabled = onPressed == null;
+    final isDisabled = widget.onPressed == null;
 
     return GestureDetector(
+      onTapDown: isDisabled ? null : (_) => _controller.forward(),
+      onTapUp: isDisabled ? null : (_) => _controller.reverse(),
+      onTapCancel: isDisabled ? null : () => _controller.reverse(),
       onTap: isDisabled
           ? null
           : () {
               HapticFeedback.lightImpact();
-              onPressed?.call();
+              widget.onPressed?.call();
             },
-      child: Container(
-        height: 40,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: _getDecoration(isDisabled),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: _getTextColor(isDisabled), size: 16),
-              const SizedBox(width: 6),
-            ],
-            Text(
-              label,
-              style: TextStyle(
-                color: _getTextColor(isDisabled),
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: Container(
+          height: 40,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: _getDecoration(isDisabled),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (widget.icon != null) ...[
+                Icon(widget.icon, color: _getTextColor(isDisabled), size: 16),
+                const SizedBox(width: 6),
+              ],
+              Text(
+                widget.label,
+                style: TextStyle(
+                  color: _getTextColor(isDisabled),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -91,7 +103,7 @@ class _SmallButtonContent extends StatelessWidget {
       );
     }
 
-    switch (style) {
+    switch (widget.style) {
       case PremiumButtonStyle.primary:
         return BoxDecoration(
           gradient: AppColors.cyanGradient,
@@ -120,7 +132,7 @@ class _SmallButtonContent extends StatelessWidget {
   Color _getTextColor(bool isDisabled) {
     if (isDisabled) return AppColors.buttonDisabledText;
 
-    switch (style) {
+    switch (widget.style) {
       case PremiumButtonStyle.primary:
         return AppColors.textOnNavy;
       case PremiumButtonStyle.secondary:

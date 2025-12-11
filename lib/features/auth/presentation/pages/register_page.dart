@@ -6,7 +6,7 @@ import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/register_cubit.dart';
-import 'package:spo_kick/features/auth/presentation/widgets/register_body.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/register/register_body.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});

@@ -5,7 +5,8 @@ import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/utils/logout_dialog.dart';
-import 'package:spo_kick/features/auth/presentation/widgets/edit_profile_dialog.dart';
+import 'package:spo_kick/features/auth/presentation/utils/profile_utils.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/profile/edit_profile_dialog.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/profile_info_card.dart';
 
 /// Body content for Profile Page.
@@ -91,7 +92,7 @@ class ProfileBody extends StatelessWidget {
         ProfileInfoCard(
           icon: Icons.calendar_today_outlined,
           label: 'Member Since',
-          value: _formatDate(user.createdAt),
+          value: formatMemberSince(user.createdAt),
           iconColor: Colors.purple,
         ),
       ],
@@ -127,23 +128,5 @@ class ProfileBody extends StatelessWidget {
         child: const EditProfileDialog(),
       ),
     );
-  }
-
-  String _formatDate(DateTime date) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${months[date.month - 1]} ${date.day}, ${date.year}';
   }
 }

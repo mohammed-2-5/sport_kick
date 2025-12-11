@@ -10,7 +10,7 @@ import 'package:spo_kick/features/auth/presentation/pages/forgot_password_page.d
 import 'package:spo_kick/features/auth/presentation/pages/login_page.dart';
 import 'package:spo_kick/features/auth/presentation/pages/profile_page.dart';
 import 'package:spo_kick/features/auth/presentation/pages/register_page.dart';
-import 'package:spo_kick/features/auth/presentation/widgets/edit_profile_dialog.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/profile/edit_profile_dialog.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/booking_details_page.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/create_booking_page.dart';
@@ -36,6 +36,8 @@ import 'package:spo_kick/features/owner/presentation/pages/owner_dashboard_page.
 import 'package:spo_kick/features/owner/presentation/pages/owner_fields_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_profile_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_settings_page.dart';
+import 'package:spo_kick/features/owner/presentation/pages/owner_field_detail_page.dart';
+import 'package:spo_kick/features/owner/presentation/pages/owner_revenue_page.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/pages/all_reviews_page.dart';
 import 'package:spo_kick/features/reviews/presentation/pages/create_review_page.dart';
@@ -55,6 +57,7 @@ import 'package:spo_kick/features/super_admin/presentation/pages/create_admin_pa
 import 'package:spo_kick/features/super_admin/presentation/pages/create_field_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/platform_analytics_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_dashboard_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_reports_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_settings_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/user_details_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/users_list_page.dart';
@@ -372,8 +375,13 @@ class AppRouterConfig {
         GoRoute(
           path: '/owner/fields/add',
           name: 'ownerAddField',
-          pageBuilder: (context, state) =>
-              _buildSlidePage(child: const AddEditFieldPage(), state: state),
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: BlocProvider(
+              create: (_) => sl<OwnerCubit>(),
+              child: const AddEditFieldPage(),
+            ),
+            state: state,
+          ),
         ),
         GoRoute(
           path: '/owner/fields/edit',
@@ -387,7 +395,10 @@ class AppRouterConfig {
               );
             }
             return _buildSlidePage(
-              child: AddEditFieldPage(field: field),
+              child: BlocProvider(
+                create: (_) => sl<OwnerCubit>(),
+                child: AddEditFieldPage(field: field),
+              ),
               state: state,
             );
           },
@@ -445,6 +456,37 @@ class AppRouterConfig {
               state: state,
             );
           },
+        ),
+        GoRoute(
+          path: '/owner/fields/:fieldId',
+          name: 'ownerFieldDetail',
+          pageBuilder: (context, state) {
+            final field = state.extra as FieldEntity?;
+            if (field == null) {
+              return _buildPage(
+                child: const _ErrorPage(error: 'Field data is required'),
+                state: state,
+              );
+            }
+            return _buildSlidePage(
+              child: BlocProvider(
+                create: (_) => sl<OwnerCubit>(),
+                child: OwnerFieldDetailPage(field: field),
+              ),
+              state: state,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/owner/revenue',
+          name: 'ownerRevenue',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: BlocProvider(
+              create: (_) => sl<OwnerCubit>(),
+              child: const OwnerRevenuePage(),
+            ),
+            state: state,
+          ),
         ),
 
         // ==================== SUPER ADMIN ROUTES ====================
@@ -547,10 +589,15 @@ class AppRouterConfig {
           path: '/super-admin/settings',
           name: 'superAdminSettings',
           pageBuilder: (context, state) => _buildSlidePage(
-            child: BlocProvider(
-              create: (_) => sl<AuthCubit>(),
-              child: const SuperAdminSettingsPage(),
-            ),
+            child: const SuperAdminSettingsPage(),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: '/super-admin/reports',
+          name: 'superAdminReports',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: const SuperAdminReportsPage(),
             state: state,
           ),
         ),

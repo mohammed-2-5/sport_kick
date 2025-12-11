@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/super_admin_dashboard_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_dashboard/super_admin_dashboard_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_dashboard_view.dart';
 
 /// Super Admin Dashboard Page - Premium Design
 ///
-/// Displays comprehensive platform statistics:
-/// - User & Admin counts
-/// - Field statistics
-/// - Booking metrics & status breakdown
-/// - Revenue analytics with trends chart
-/// - 8 Quick action shortcuts
+/// Features:
+/// - Gold-themed premium header
+/// - Platform statistics grid
+/// - Revenue card with breakdown
+/// - Quick actions (8 management shortcuts)
+/// - Today's activity overview
+/// - Navigation drawer
+/// - All logic handled by SuperAdminDashboardCubit
 class SuperAdminDashboardPage extends StatelessWidget {
   const SuperAdminDashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SuperAdminDashboardView();
+    return BlocProvider(
+      create: (_) => sl<SuperAdminDashboardCubit>(),
+      child: const PremiumSuperAdminDashboardView(),
+    );
   }
 }

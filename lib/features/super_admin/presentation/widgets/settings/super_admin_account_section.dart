@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/settings/settings_section.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/settings/settings_tile.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/settings/coming_soon_dialog.dart';
 
 /// Account section widget for super admin settings page.
 /// Displays user profile information with edit options.
@@ -62,8 +62,7 @@ class SuperAdminAccountSection extends StatelessWidget {
                 ),
                 trailing: IconButton(
                   icon: const Icon(Icons.edit),
-                  onPressed: () =>
-                      showComingSoonDialog(context, 'Edit Profile'),
+                  onPressed: () => context.pushNamed('editProfile'),
                 ),
               ),
               const Divider(height: 1),
@@ -71,7 +70,7 @@ class SuperAdminAccountSection extends StatelessWidget {
                 icon: Icons.phone,
                 title: 'Phone',
                 subtitle: user.phone ?? 'Not set',
-                onTap: () => showComingSoonDialog(context, 'Edit Phone'),
+                onTap: () => context.pushNamed('editProfile'),
               ),
             ],
           );

@@ -12,6 +12,8 @@ import 'package:spo_kick/core/constants/app_constants.dart';
 import 'package:spo_kick/core/constants/app_theme.dart';
 import 'package:spo_kick/core/di/injection_container.dart' as di;
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/utils/app_logger.dart';
+import 'package:spo_kick/firebase_options.dart';
 import 'package:spo_kick/core/routes/go_router_config.dart';
 import 'package:spo_kick/core/observers/app_bloc_observer.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -36,14 +38,19 @@ void main() async {
   // Initialize app
   await _initializeApp();
 
-  // Setup Flutter error handling with Crashlytics
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-
-  // Pass all uncaught asynchronous errors to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
+  // Setup Flutter error handling with Crashlytics when available
+  if (!kIsWeb) {
+    try {
+      FlutterError.onError =
+          FirebaseCrashlytics.instance.recordFlutterFatalError;
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
+    } catch (_) {
+      // Crashlytics not available on this platform; fall back to default handlers.
+    }
+  }
 
   // Set Bloc Observer
   Bloc.observer = const AppBlocObserver();
@@ -67,18 +74,26 @@ Future<void> _initializeApp() async {
     // await Hive.openBox(AppConstants.hiveBoxBookings);
 
     // 2. Initialize Firebase
-    debugPrint('🔄 Initializing Firebase...');
-    await Firebase.initializeApp();
+    AppLogger.info('Initializing Firebase...', tag: 'INIT');
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-    // Enable Crashlytics collection
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-
-    // Set user identifier for better crash tracking (optional)
-    // This will be set later when user logs in
-    debugPrint('✅ Firebase initialized successfully');
+    if (!kIsWeb) {
+      try {
+        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+          true,
+        );
+      } catch (_) {
+        AppLogger.warn(
+          'Crashlytics not available on this platform; skipping enable step',
+          tag: 'INIT',
+        );
+      }
+    }
 
     // 3. Initialize Supabase
-    debugPrint('🔄 Initializing Supabase...');
+    AppLogger.info('Initializing Supabase...', tag: 'INIT');
     await Supabase.initialize(
       url: AppConstants.supabaseUrl,
       anonKey: AppConstants.supabaseAnonKey,
@@ -89,7 +104,7 @@ Future<void> _initializeApp() async {
       ),
       // Session persistence is enabled by default in Supabase Flutter
     );
-    debugPrint('✅ Supabase initialized successfully');
+    AppLogger.info('Supabase initialized', tag: 'INIT');
 
     // 4. Initialize dependency injection
     await di.initDependencies();
@@ -110,12 +125,18 @@ Future<void> _initializeApp() async {
       DeviceOrientation.portraitDown,
     ]);
 
-    debugPrint('✅ App initialization completed successfully');
+    AppLogger.info('App initialization completed successfully', tag: 'INIT');
   } catch (e, stackTrace) {
-    debugPrint('❌ App initialization failed: $e');
-    debugPrint('Stack trace: $stackTrace');
-    // In production, you might want to show an error screen
-    // or send error to crash reporting service
+    AppLogger.error(
+      'App initialization failed: $e',
+      tag: 'INIT',
+      error: e,
+      stackTrace: stackTrace,
+    );
+    FlutterError.reportError(
+      FlutterErrorDetails(exception: e, stack: stackTrace),
+    );
+    rethrow;
   }
 }
 

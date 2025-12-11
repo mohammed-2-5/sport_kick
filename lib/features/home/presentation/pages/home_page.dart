@@ -8,10 +8,10 @@ import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
-import 'package:spo_kick/features/home/presentation/widgets/explore_section.dart';
-import 'package:spo_kick/features/home/presentation/widgets/hero_search_section.dart';
-import 'package:spo_kick/features/home/presentation/widgets/nearby_fields_preview.dart';
-import 'package:spo_kick/features/home/presentation/widgets/upcoming_bookings_widget.dart';
+import 'package:spo_kick/features/home/presentation/widgets/explore/explore_section.dart';
+import 'package:spo_kick/features/home/presentation/widgets/hero/hero_search_section.dart';
+import 'package:spo_kick/features/home/presentation/widgets/fields/nearby_fields_preview.dart';
+import 'package:spo_kick/features/home/presentation/widgets/bookings/upcoming_bookings_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

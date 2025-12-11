@@ -1,0 +1,159 @@
+import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
+
+/// Premium filter chips for super admin admins list.
+///
+/// Features:
+/// - Active/Inactive/All filters
+/// - Glass effect design
+/// - Smooth animations
+class PremiumAdminsListFilters extends StatelessWidget {
+  final String? selectedFilter; // null = all, 'Active', 'Inactive'
+  final Function(String?) onFilterChanged;
+  final Map<String, int> stats;
+
+  const PremiumAdminsListFilters({
+    super.key,
+    required this.selectedFilter,
+    required this.onFilterChanged,
+    required this.stats,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceWhite,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          _FilterChip(
+            label: 'All',
+            count: stats['total'] ?? 0,
+            isSelected: selectedFilter == null,
+            onTap: () => onFilterChanged(null),
+          ),
+          _FilterChip(
+            label: 'Active',
+            count: stats['active'] ?? 0,
+            isSelected: selectedFilter == 'Active',
+            onTap: () => onFilterChanged('Active'),
+            color: Colors.green,
+          ),
+          _FilterChip(
+            label: 'Inactive',
+            count: stats['inactive'] ?? 0,
+            isSelected: selectedFilter == 'Inactive',
+            onTap: () => onFilterChanged('Inactive'),
+            color: Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Individual filter chip.
+class _FilterChip extends StatelessWidget {
+  final String label;
+  final int count;
+  final bool isSelected;
+  final VoidCallback onTap;
+  final Color? color;
+
+  const _FilterChip({
+    required this.label,
+    required this.count,
+    required this.isSelected,
+    required this.onTap,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            gradient: isSelected
+                ? LinearGradient(
+                    colors: [
+                      color ?? AppColors.premiumGold,
+                      (color ?? AppColors.premiumGold).withValues(alpha: 0.8),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  )
+                : null,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: (color ?? AppColors.premiumGold).withValues(
+                        alpha: 0.3,
+                      ),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                  color: isSelected ? Colors.white : AppColors.textSecondary,
+                ),
+              ),
+              if (count > 0) ...[
+                const SizedBox(height: 4),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? Colors.white.withValues(alpha: 0.3)
+                        : (color ?? AppColors.premiumGold).withValues(
+                            alpha: 0.1,
+                          ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    count.toString(),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: isSelected
+                          ? Colors.white
+                          : (color ?? AppColors.premiumGold),
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

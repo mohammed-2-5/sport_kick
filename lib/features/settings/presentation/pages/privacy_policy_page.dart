@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/settings/presentation/widgets/legal_page_widgets.dart';
+import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/legal/legal_page_widgets.dart';
 
 /// Privacy Policy Page
 ///
@@ -15,108 +16,114 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Privacy Policy'),
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildPrivacyHeader(context),
-            const SizedBox(height: 24),
-            const _PrivacySection(
-              title: 'Information We Collect',
-              points: [
-                'Account information (name, email, phone number)',
-                'Profile information you provide',
-                'Booking history and preferences',
-                'Location data when using the app',
-                'Device information and usage data',
-                'Payment information (processed securely by our payment provider)',
-              ],
+      body: Column(
+        children: [
+          const PremiumCurvedHeader(
+            title: 'Privacy Policy',
+            subtitle: 'How we protect your data',
+            showBackButton: true,
+            height: 160,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildPrivacyHeader(context),
+                  const SizedBox(height: 24),
+                  const _PrivacySection(
+                    title: 'Information We Collect',
+                    points: [
+                      'Account information (name, email, phone number)',
+                      'Profile information you provide',
+                      'Booking history and preferences',
+                      'Location data when using the app',
+                      'Device information and usage data',
+                      'Payment information (processed securely by our payment provider)',
+                    ],
+                  ),
+                  const _PrivacySection(
+                    title: 'How We Use Your Information',
+                    points: [
+                      'To provide and maintain our booking services',
+                      'To process your bookings and payments',
+                      'To communicate with you about bookings and updates',
+                      'To improve our services and user experience',
+                      'To prevent fraud and ensure security',
+                      'To comply with legal obligations',
+                    ],
+                  ),
+                  const _PrivacySection(
+                    title: 'Data Storage and Security',
+                    points: [
+                      'Your data is stored securely using Supabase (PostgreSQL database)',
+                      'We use industry-standard encryption for data transmission',
+                      'Payment information is handled by certified payment processors',
+                      'We implement regular security updates and monitoring',
+                      'Access to personal data is restricted to authorized personnel only',
+                    ],
+                  ),
+                  const _PrivacySection(
+                    title: 'Data Sharing',
+                    points: [
+                      'We do NOT sell your personal information to third parties',
+                      'Field owners can see your booking details (name, phone) for confirmed bookings',
+                      'We may share data with service providers (payment processors, analytics)',
+                      'We will share data if required by law or to protect rights and safety',
+                    ],
+                  ),
+                  const _PrivacySection(
+                    title: 'Your Rights',
+                    points: [
+                      'Access your personal data at any time through your profile',
+                      'Update or correct your information',
+                      'Delete your account and associated data',
+                      'Opt-out of marketing communications',
+                      'Export your booking history',
+                      'Withdraw consent for data processing (may limit service availability)',
+                    ],
+                  ),
+                  const _PrivacySection(
+                    title: 'Cookies and Tracking',
+                    points: [
+                      'We use cookies and similar technologies to improve user experience',
+                      'Analytics cookies help us understand app usage',
+                      'You can disable cookies in your device settings',
+                      'Some features may not work without cookies',
+                    ],
+                  ),
+                  const _PrivacySection(
+                    title: "Children's Privacy",
+                    points: [
+                      'Our service is not intended for children under 13',
+                      'We do not knowingly collect data from children',
+                      'If we learn we have collected child data, we will delete it',
+                      'Parents can contact us to request data deletion',
+                    ],
+                  ),
+                  const _PrivacySection(
+                    title: 'Changes to This Policy',
+                    points: [
+                      'We may update this privacy policy from time to time',
+                      'We will notify you of significant changes via email or app notification',
+                      'Continued use of the app after changes constitutes acceptance',
+                      'Last updated: $_effectiveDate',
+                    ],
+                  ),
+                  const SizedBox(height: 32),
+                  const LegalContactSection(
+                    email: _contactEmail,
+                    title: 'Contact Us',
+                    description:
+                        'If you have questions about this Privacy Policy or how we handle your data, please contact us:',
+                  ),
+                  const SizedBox(height: 32),
+                ],
+              ),
             ),
-            const _PrivacySection(
-              title: 'How We Use Your Information',
-              points: [
-                'To provide and maintain our booking services',
-                'To process your bookings and payments',
-                'To communicate with you about bookings and updates',
-                'To improve our services and user experience',
-                'To prevent fraud and ensure security',
-                'To comply with legal obligations',
-              ],
-            ),
-            const _PrivacySection(
-              title: 'Data Storage and Security',
-              points: [
-                'Your data is stored securely using Supabase (PostgreSQL database)',
-                'We use industry-standard encryption for data transmission',
-                'Payment information is handled by certified payment processors',
-                'We implement regular security updates and monitoring',
-                'Access to personal data is restricted to authorized personnel only',
-              ],
-            ),
-            const _PrivacySection(
-              title: 'Data Sharing',
-              points: [
-                'We do NOT sell your personal information to third parties',
-                'Field owners can see your booking details (name, phone) for confirmed bookings',
-                'We may share data with service providers (payment processors, analytics)',
-                'We will share data if required by law or to protect rights and safety',
-              ],
-            ),
-            const _PrivacySection(
-              title: 'Your Rights',
-              points: [
-                'Access your personal data at any time through your profile',
-                'Update or correct your information',
-                'Delete your account and associated data',
-                'Opt-out of marketing communications',
-                'Export your booking history',
-                'Withdraw consent for data processing (may limit service availability)',
-              ],
-            ),
-            const _PrivacySection(
-              title: 'Cookies and Tracking',
-              points: [
-                'We use cookies and similar technologies to improve user experience',
-                'Analytics cookies help us understand app usage',
-                'You can disable cookies in your device settings',
-                'Some features may not work without cookies',
-              ],
-            ),
-            const _PrivacySection(
-              title: "Children's Privacy",
-              points: [
-                'Our service is not intended for children under 13',
-                'We do not knowingly collect data from children',
-                'If we learn we have collected child data, we will delete it',
-                'Parents can contact us to request data deletion',
-              ],
-            ),
-            const _PrivacySection(
-              title: 'Changes to This Policy',
-              points: [
-                'We may update this privacy policy from time to time',
-                'We will notify you of significant changes via email or app notification',
-                'Continued use of the app after changes constitutes acceptance',
-                'Last updated: $_effectiveDate',
-              ],
-            ),
-            const SizedBox(height: 32),
-            const LegalContactSection(
-              email: _contactEmail,
-              title: 'Contact Us',
-              description:
-                  'If you have questions about this Privacy Policy or how we handle your data, please contact us:',
-            ),
-            const SizedBox(height: 32),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

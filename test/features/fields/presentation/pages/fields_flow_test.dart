@@ -11,8 +11,8 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/fields_list_view.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/field_filters_dialog.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/list/fields_list_view.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/list/field_filters_dialog.dart';
 
 // Mocks
 class MockFieldsCubit extends MockCubit<FieldsState> implements FieldsCubit {}

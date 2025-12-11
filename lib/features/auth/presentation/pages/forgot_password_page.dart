@@ -7,7 +7,7 @@ import 'package:spo_kick/features/auth/presentation/constants/auth_strings.dart'
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/forgot_password_cubit.dart';
-import 'package:spo_kick/features/auth/presentation/widgets/forgot_password_body.dart';
+import 'package:spo_kick/features/auth/presentation/widgets/forgot_password/forgot_password_body.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/forgot_password/forgot_password_success_screen.dart';
 
 class ForgotPasswordPage extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
-import 'package:spo_kick/features/settings/presentation/widgets/user_settings_body.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/layout/user_settings_body.dart';
 
 /// User Settings Page
 ///

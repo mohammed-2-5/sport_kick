@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/admin_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_card.dart';
 
 class SelectableAdminCard extends StatelessWidget {
   final UserEntity admin;

@@ -1,0 +1,66 @@
+import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+
+/// Premium form section card.
+///
+/// Features:
+/// - PremiumCard container
+/// - Section title with icon
+/// - Form fields grouped together
+class PremiumFormSection extends StatelessWidget {
+  final String title;
+  final IconData? icon;
+  final List<Widget> children;
+
+  const PremiumFormSection({
+    super.key,
+    required this.title,
+    this.icon,
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PremiumCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Section header
+          Row(
+            children: [
+              if (icon != null) ...[
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: AppColors.accentCyan.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(icon, color: AppColors.accentCyan, size: 18),
+                ),
+                const SizedBox(width: 12),
+              ],
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          // Form fields
+          ...children.asMap().entries.map((entry) {
+            final isLast = entry.key == children.length - 1;
+            return Column(
+              children: [entry.value, if (!isLast) const SizedBox(height: 16)],
+            );
+          }),
+        ],
+      ),
+    );
+  }
+}

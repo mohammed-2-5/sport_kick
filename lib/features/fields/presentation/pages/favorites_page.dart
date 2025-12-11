@@ -5,7 +5,7 @@ import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/favorites_view.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/favorites/favorites_view.dart';
 
 /// Favorites page - displays user's favorite fields.
 ///

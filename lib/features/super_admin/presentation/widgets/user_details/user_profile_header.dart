@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
+import 'package:spo_kick/features/super_admin/utils/user_card_utils.dart';
 
 /// Profile header widget for user details page
 class UserProfileHeader extends StatelessWidget {
@@ -29,7 +30,7 @@ class UserProfileHeader extends StatelessWidget {
             radius: AdminUIConstants.avatarSizeMedium,
             backgroundColor: Colors.white,
             child: Text(
-              _getInitials(user.fullName),
+              getInitials(user.fullName),
               style: const TextStyle(
                 fontSize: AdminUIConstants.fontSizeTitle,
                 fontWeight: AdminUIConstants.fontWeightBold,
@@ -167,15 +168,5 @@ class UserProfileHeader extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _getInitials(String? name) {
-    if (name == null || name.isEmpty) return '?';
-    final parts = name.trim().split(' ');
-    if (parts.isEmpty) return '?';
-    if (parts.length == 1) {
-      return parts[0][0].toUpperCase();
-    }
-    return '${parts[0][0]}${parts[parts.length - 1][0]}'.toUpperCase();
   }
 }

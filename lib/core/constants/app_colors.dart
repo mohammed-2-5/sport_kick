@@ -281,8 +281,14 @@ class AppColors {
   /// Premium Primary Accent (Muted Gold)
   static const Color premiumGold = Color(0xFFD4AF37);
 
+  /// Premium Primary Accent (Muted Gold - Darker)
+  static const Color premiumGoldDark = Color(0xFFB08C2F);
+
   /// Premium Secondary Accent (Soft Periwinkle)
   static const Color premiumPeriwinkle = Color(0xFFA5A6F6);
+
+  /// Premium Border (subtle outline for premium cards)
+  static const Color premiumBorder = Color(0xFF2A2A2A);
 
   /// Premium Text Primary (Off-White)
   static const Color premiumTextPrimary = Color(0xFFE1E1E1);
@@ -335,6 +341,17 @@ class AppColors {
 
   /// User Theme - Text on Navy Secondary (70% opacity)
   static const Color textOnNavySecondary = Color(0xB3FFFFFF);
+
+  // ==================== SUPER ADMIN GOLD ACCENT ====================
+
+  /// Gold Accent - Primary gold for super admin
+  static const Color goldAccent = Color(0xFFD4A574);
+
+  /// Gold Accent - Light variant
+  static const Color goldAccentLight = Color(0xFFE8C9A8);
+
+  /// Gold Accent - Dark variant
+  static const Color goldAccentDark = Color(0xFFB8875A);
 
   // ==================== GLASS COLORS ====================
 

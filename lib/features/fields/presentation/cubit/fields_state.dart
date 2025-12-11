@@ -126,7 +126,8 @@ class FieldsLoaded extends FieldsState {
   }
 
   /// Check if any filters are active.
-  bool get hasActiveFilters => filterOptions.isActive || searchQuery != null;
+  bool get hasActiveFilters =>
+      filterOptions.isActive || (searchQuery?.isNotEmpty ?? false);
 
   /// Get selected category name.
   String? get selectedCategoryName {

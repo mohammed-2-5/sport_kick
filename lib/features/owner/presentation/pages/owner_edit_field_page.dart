@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
-import 'package:spo_kick/core/widgets/custom_button.dart';
+import 'package:spo_kick/core/widgets/premium/premium_button.dart';
+import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/edit_field_form.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/field_form/edit_field_form.dart';
 
 /// Edit field page for owners.
 ///
@@ -67,81 +68,93 @@ class _OwnerEditFieldPageState extends State<OwnerEditFieldPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Field')),
-      body: BlocConsumer<OwnerCubit, OwnerState>(
-        listener: (context, state) {
-          if (state is OwnerError) {
-            SnackbarHelper.showError(context, state.message);
-          } else if (state is OwnerActionSuccess) {
-            SnackbarHelper.showSuccess(context, state.message);
-            // Navigate back after successful update
-            Navigator.pop(context);
-          }
-        },
-        builder: (context, state) {
-          final isLoading = state is OwnerLoading;
+      body: Column(
+        children: [
+          PremiumCurvedHeader(
+            title: 'Edit Field',
+            subtitle: 'Update ${widget.field.name}',
+            showBackButton: true,
+            height: 160,
+          ),
+          Expanded(
+            child: BlocConsumer<OwnerCubit, OwnerState>(
+              listener: (context, state) {
+                if (state is OwnerError) {
+                  SnackbarHelper.showError(context, state.message);
+                } else if (state is OwnerActionSuccess) {
+                  SnackbarHelper.showSuccess(context, state.message);
+                  Navigator.pop(context);
+                }
+              },
+              builder: (context, state) {
+                final isLoading = state is OwnerLoading;
 
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    EditFieldForm(
-                      nameController: _nameController,
-                      descriptionController: _descriptionController,
-                      addressController: _addressController,
-                      priceController: _priceController,
-                      selectedSize: _selectedSize,
-                      selectedSurface: _selectedSurface,
-                      isActive: _isActive,
-                      selectedFacilities: _selectedFacilities,
-                      onSizeChanged: (value) {
-                        setState(() {
-                          _selectedSize = value;
-                        });
-                      },
-                      onSurfaceChanged: (value) {
-                        setState(() {
-                          _selectedSurface = value;
-                        });
-                      },
-                      onActiveChanged: (value) {
-                        setState(() {
-                          _isActive = value;
-                        });
-                      },
-                      onFacilityToggled: (facility) {
-                        setState(() {
-                          if (_selectedFacilities.contains(facility)) {
-                            _selectedFacilities.remove(facility);
-                          } else {
-                            _selectedFacilities.add(facility);
-                          }
-                        });
-                      },
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          EditFieldForm(
+                            nameController: _nameController,
+                            descriptionController: _descriptionController,
+                            addressController: _addressController,
+                            priceController: _priceController,
+                            selectedSize: _selectedSize,
+                            selectedSurface: _selectedSurface,
+                            isActive: _isActive,
+                            selectedFacilities: _selectedFacilities,
+                            onSizeChanged: (value) {
+                              setState(() {
+                                _selectedSize = value;
+                              });
+                            },
+                            onSurfaceChanged: (value) {
+                              setState(() {
+                                _selectedSurface = value;
+                              });
+                            },
+                            onActiveChanged: (value) {
+                              setState(() {
+                                _isActive = value;
+                              });
+                            },
+                            onFacilityToggled: (facility) {
+                              setState(() {
+                                if (_selectedFacilities.contains(facility)) {
+                                  _selectedFacilities.remove(facility);
+                                } else {
+                                  _selectedFacilities.add(facility);
+                                }
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 32),
+                          PremiumButton(
+                            label: 'Save Changes',
+                            onPressed: isLoading ? null : _handleSubmit,
+                            loading: isLoading,
+                            icon: Icons.save,
+                            fullWidth: true,
+                          ),
+                          const SizedBox(height: 16),
+                          PremiumButton(
+                            label: 'Cancel',
+                            onPressed: () => Navigator.pop(context),
+                            style: PremiumButtonStyle.outline,
+                            fullWidth: true,
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 32),
-                    CustomButton(
-                      text: 'Save Changes',
-                      onPressed: isLoading ? null : _handleSubmit,
-                      isLoading: isLoading,
-                      icon: Icons.save,
-                    ),
-                    const SizedBox(height: 16),
-                    CustomButton(
-                      text: 'Cancel',
-                      onPressed: () => Navigator.pop(context),
-                      variant: ButtonVariant.outline,
-                    ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

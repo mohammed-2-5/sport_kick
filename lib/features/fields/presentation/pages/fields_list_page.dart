@@ -4,7 +4,7 @@ import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/utils/city_helper.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/fields_list_view.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/list/fields_list_view.dart';
 
 /// Fields list page - browse and search sports fields.
 ///

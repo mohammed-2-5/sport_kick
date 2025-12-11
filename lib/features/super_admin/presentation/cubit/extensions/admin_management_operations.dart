@@ -80,6 +80,44 @@ mixin AdminManagementOperations on Cubit<SuperAdminState> {
     );
   }
 
+  /// Toggle admin account status.
+  ///
+  /// Activates when [shouldActivate] is true, otherwise deactivates.
+  /// Reloads the admins list after completion.
+  Future<void> toggleAdminStatus(String adminId, bool shouldActivate) async {
+    debugPrint(
+      '🔄 [SuperAdminCubit] ${shouldActivate ? 'Activating' : 'Deactivating'} admin: $adminId',
+    );
+
+    emit(
+      SuperAdminLoading(
+        message: shouldActivate
+            ? 'Activating admin...'
+            : 'Deactivating admin...',
+      ),
+    );
+
+    final result = shouldActivate
+        ? await activateUserUseCase(userId: adminId)
+        : await deactivateUserUseCase(userId: adminId);
+
+    result.fold(
+      (failure) {
+        debugPrint(
+          '❌ [SuperAdminCubit] Error updating admin status: ${failure.message}',
+        );
+        emit(SuperAdminError(failure.message));
+      },
+      (_) {
+        final message = shouldActivate
+            ? 'Admin activated successfully'
+            : 'Admin deactivated successfully';
+        emit(BulkActionCompleted(message));
+        loadAdmins();
+      },
+    );
+  }
+
   /// Bulk activate multiple admins.
   Future<void> bulkActivateAdmins(List<String> adminIds) async {
     debugPrint(

@@ -1,0 +1,323 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/widgets/loading_indicator.dart';
+import 'package:spo_kick/core/widgets/premium/empty_states.dart';
+import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
+import 'package:spo_kick/features/reviews/presentation/cubit/reviews_state.dart';
+import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_filter_chips.dart';
+import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_review_card.dart';
+import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_star_rating_display.dart';
+
+/// Premium all reviews view with enhanced UI.
+///
+/// Features:
+/// - Rating overview card
+/// - Rating filter chips
+/// - Staggered review list
+/// - Pull to refresh
+/// - Empty states
+class PremiumAllReviewsView extends StatefulWidget {
+  final String fieldId;
+  final String fieldName;
+  final double? averageRating;
+  final String? currentUserId;
+
+  const PremiumAllReviewsView({
+    super.key,
+    required this.fieldId,
+    required this.fieldName,
+    this.averageRating,
+    this.currentUserId,
+  });
+
+  @override
+  State<PremiumAllReviewsView> createState() => _PremiumAllReviewsViewState();
+}
+
+class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
+  int? _selectedRating;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ReviewsCubit, ReviewsState>(
+      builder: (context, state) {
+        if (state is ReviewsLoading) {
+          return const LoadingIndicator.inline(message: 'Loading reviews...');
+        }
+
+        if (state is ReviewsError) {
+          return EmptyStates.error(
+            message: state.message,
+            onRetry: () => context.read<ReviewsCubit>().loadFieldReviews(
+              fieldId: widget.fieldId,
+            ),
+          );
+        }
+
+        if (state is ReviewsLoaded) {
+          if (state.reviews.isEmpty) {
+            return EmptyStates.noReviews(
+              onWrite: () => _navigateToCreateReview(context),
+            );
+          }
+
+          // Calculate rating breakdown
+          final ratingCounts = <int, int>{};
+          for (final review in state.reviews) {
+            ratingCounts[review.rating] =
+                (ratingCounts[review.rating] ?? 0) + 1;
+          }
+
+          // Filter reviews
+          final filteredReviews = _selectedRating == null
+              ? state.reviews
+              : state.reviews
+                    .where((r) => r.rating == _selectedRating)
+                    .toList();
+
+          // Calculate average
+          final avgRating =
+              widget.averageRating ??
+              (state.reviews.isNotEmpty
+                  ? state.reviews.map((r) => r.rating).reduce((a, b) => a + b) /
+                        state.reviews.length
+                  : 0.0);
+
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<ReviewsCubit>().loadFieldReviews(
+                fieldId: widget.fieldId,
+              );
+            },
+            color: AppColors.accentCyan,
+            child: CustomScrollView(
+              slivers: [
+                // Rating overview
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: PremiumRatingOverview(
+                      averageRating: avgRating,
+                      totalReviews: state.reviews.length,
+                      ratingBreakdown: ratingCounts,
+                    ),
+                  ),
+                ),
+
+                // Filter chips
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Filter by Rating',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      PremiumRatingFilterChips(
+                        selectedRating: _selectedRating,
+                        ratingCounts: ratingCounts,
+                        onRatingSelected: (rating) {
+                          setState(() => _selectedRating = rating);
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+
+                // Reviews list header
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          _selectedRating == null
+                              ? 'All Reviews (${state.reviews.length})'
+                              : '$_selectedRating Star Reviews (${filteredReviews.length})',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        if (_selectedRating != null)
+                          GestureDetector(
+                            onTap: () => setState(() => _selectedRating = null),
+                            child: const Text(
+                              'Clear',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.accentCyan,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
+                // Reviews list
+                if (filteredReviews.isEmpty)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.star_outline,
+                            size: 64,
+                            color: AppColors.textSecondary.withValues(
+                              alpha: 0.3,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No $_selectedRating star reviews yet',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    sliver: SliverAnimationLimiter(
+                      child: SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final review = filteredReviews[index];
+                          final isCurrentUser =
+                              widget.currentUserId != null &&
+                              review.userId == widget.currentUserId;
+
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: PremiumReviewCard(
+                                  review: review,
+                                  showActions: isCurrentUser,
+                                  onEdit: isCurrentUser
+                                      ? () => _navigateToEditReview(
+                                          context,
+                                          review.id,
+                                          review.rating,
+                                          review.comment,
+                                        )
+                                      : null,
+                                  onDelete: isCurrentUser
+                                      ? () => _showDeleteConfirmation(
+                                          context,
+                                          review.id,
+                                        )
+                                      : null,
+                                ),
+                              ),
+                            ),
+                          );
+                        }, childCount: filteredReviews.length),
+                      ),
+                    ),
+                  ),
+
+                // Bottom padding
+                const SliverToBoxAdapter(child: SizedBox(height: 100)),
+              ],
+            ),
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  void _navigateToCreateReview(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      '/create-review',
+      arguments: {'fieldId': widget.fieldId, 'fieldName': widget.fieldName},
+    );
+  }
+
+  void _navigateToEditReview(
+    BuildContext context,
+    String reviewId,
+    int rating,
+    String? comment,
+  ) {
+    Navigator.pushNamed(
+      context,
+      '/create-review',
+      arguments: {
+        'fieldId': widget.fieldId,
+        'fieldName': widget.fieldName,
+        'reviewId': reviewId,
+        'existingRating': rating,
+        'existingComment': comment,
+      },
+    );
+  }
+
+  void _showDeleteConfirmation(BuildContext context, String reviewId) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Delete Review?'),
+        content: const Text(
+          'This action cannot be undone. Are you sure you want to delete this review?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: AppColors.textSecondary),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<ReviewsCubit>().deleteReview(reviewId);
+            },
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Sliver animation limiter wrapper.
+class SliverAnimationLimiter extends StatelessWidget {
+  final Widget child;
+
+  const SliverAnimationLimiter({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimationLimiter(child: child);
+  }
+}

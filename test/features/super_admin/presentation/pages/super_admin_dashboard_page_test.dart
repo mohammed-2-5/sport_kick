@@ -12,7 +12,7 @@ import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_stati
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_dashboard_page.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/statistics_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/statistics_card.dart';
 
 import '../../../../helpers/test_helpers.dart';
 

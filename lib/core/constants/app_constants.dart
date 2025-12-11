@@ -282,4 +282,12 @@ class AppConstants {
 
   /// Support phone
   static const String supportPhone = '+20 123 456 7890';
+
+  // ==================== LOGGING ====================
+
+  /// Enables verbose debug logs (Bloc events/changes and debug statements).
+  static const bool enableVerboseLogs = true;
+
+  /// Enables ANSI colors in console logs (set false if terminal doesn't support colors).
+  static const bool enableColoredLogs = true;
 }

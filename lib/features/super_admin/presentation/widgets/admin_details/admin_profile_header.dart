@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
+import 'package:spo_kick/features/super_admin/utils/user_card_utils.dart';
 
 /// Profile header widget for admin details page
 class AdminProfileHeader extends StatelessWidget {
@@ -33,7 +34,7 @@ class AdminProfileHeader extends StatelessWidget {
             radius: AdminUIConstants.avatarSizeMedium,
             backgroundColor: Colors.white,
             child: Text(
-              _getInitials(admin.fullName),
+              getInitials(admin.fullName),
               style: TextStyle(
                 fontSize: AdminUIConstants.fontSizeTitle,
                 fontWeight: AdminUIConstants.fontWeightBold,
@@ -173,15 +174,5 @@ class AdminProfileHeader extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _getInitials(String? name) {
-    if (name == null || name.isEmpty) return '?';
-    final parts = name.trim().split(' ');
-    if (parts.isEmpty) return '?';
-    if (parts.length == 1) {
-      return parts[0][0].toUpperCase();
-    }
-    return '${parts[0][0]}${parts[parts.length - 1][0]}'.toUpperCase();
   }
 }

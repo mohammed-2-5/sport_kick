@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 
 class DashboardDrawer extends StatelessWidget {
   const DashboardDrawer({super.key});
@@ -112,10 +113,9 @@ class DashboardDrawer extends StatelessWidget {
             child: const Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(dialogContext);
-              context.read<AuthCubit>().logout();
-              context.goNamed('login');
+              await _performLogout(context);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
@@ -126,5 +126,16 @@ class DashboardDrawer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Logs out super admin, clears related cubit state, and redirects to login.
+  Future<void> _performLogout(BuildContext context) async {
+    final authCubit = context.read<AuthCubit>();
+    final superAdminCubit = context.read<SuperAdminCubit?>();
+    final router = GoRouter.of(context);
+
+    superAdminCubit?.reset();
+    await authCubit.logout();
+    router.goNamed('login');
   }
 }

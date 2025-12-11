@@ -1,0 +1,38 @@
+import 'package:equatable/equatable.dart';
+
+/// State for owner settings.
+final class OwnerSettingsState extends Equatable {
+  final bool emailNotifications;
+  final bool pushNotifications;
+  final bool bookingNotifications;
+  final bool autoApproveBookings;
+
+  const OwnerSettingsState({
+    this.emailNotifications = true,
+    this.pushNotifications = true,
+    this.bookingNotifications = true,
+    this.autoApproveBookings = false,
+  });
+
+  @override
+  List<Object?> get props => [
+    emailNotifications,
+    pushNotifications,
+    bookingNotifications,
+    autoApproveBookings,
+  ];
+
+  OwnerSettingsState copyWith({
+    bool? emailNotifications,
+    bool? pushNotifications,
+    bool? bookingNotifications,
+    bool? autoApproveBookings,
+  }) {
+    return OwnerSettingsState(
+      emailNotifications: emailNotifications ?? this.emailNotifications,
+      pushNotifications: pushNotifications ?? this.pushNotifications,
+      bookingNotifications: bookingNotifications ?? this.bookingNotifications,
+      autoApproveBookings: autoApproveBookings ?? this.autoApproveBookings,
+    );
+  }
+}

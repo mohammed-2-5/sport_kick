@@ -167,3 +167,19 @@ class BulkActionCompleted extends SuperAdminState {
   @override
   List<Object?> get props => [message];
 }
+
+/// Combined analytics data loaded successfully.
+class AnalyticsDataLoaded extends SuperAdminState {
+  final List<BookingEntity> bookings;
+  final List<FieldEntity> fields;
+  final PlatformStatisticsEntity? statistics;
+
+  const AnalyticsDataLoaded({
+    required this.bookings,
+    required this.fields,
+    this.statistics,
+  });
+
+  @override
+  List<Object?> get props => [bookings, fields, statistics];
+}

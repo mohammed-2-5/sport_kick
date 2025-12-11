@@ -8,7 +8,7 @@ import 'package:spo_kick/core/widgets/bulk_selection_app_bar.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/user_filter_sheet.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_filter_sheet.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/bulk_user_action_dialogs.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_body.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_error_state.dart';
