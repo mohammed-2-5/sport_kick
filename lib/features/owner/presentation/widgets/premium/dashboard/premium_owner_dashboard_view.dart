@@ -6,6 +6,7 @@ import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_state.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/dashboard_state_widgets.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/premium_owner_drawer.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/premium_owner_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/premium_owner_quick_actions.dart';
@@ -70,7 +71,7 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
 
     return PremiumOwnerDrawer(
       ownerName: state.ownerName,
-      email: '', // Would come from user entity
+      email: '',
       selectedIndex: state.selectedNavIndex,
       onItemTap: (index) {
         Navigator.pop(context);
@@ -86,11 +87,14 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
     OwnerDashboardCubit cubit,
   ) {
     if (state is OwnerDashboardLoading) {
-      return const _LoadingState();
+      return const DashboardLoadingState();
     }
 
     if (state is OwnerDashboardError) {
-      return _ErrorState(message: state.message, onRetry: cubit.loadDashboard);
+      return DashboardErrorState(
+        message: state.message,
+        onRetry: cubit.loadDashboard,
+      );
     }
 
     if (state is OwnerDashboardLoaded) {
@@ -101,7 +105,6 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              // Header
               PremiumOwnerHeader(
                 greeting: cubit.getGreeting(),
                 ownerName: state.ownerName,
@@ -110,10 +113,7 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                 onNotificationTap: () {},
                 notificationCount: state.stats.pendingBookings,
               ),
-
               const SizedBox(height: 20),
-
-              // Stats row
               PremiumOwnerStatsRow(
                 totalBookings: state.stats.totalBookings,
                 pendingBookings: state.stats.pendingBookings,
@@ -122,10 +122,7 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                 onBookingsTap: () => context.pushNamed('ownerBookings'),
                 onRevenueTap: () => context.pushNamed('ownerAnalytics'),
               ),
-
               const SizedBox(height: 24),
-
-              // Quick actions
               PremiumOwnerQuickActions(
                 onManualBooking: () =>
                     context.pushNamed('ownerCreateManualBooking'),
@@ -135,10 +132,7 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                 onSettings: () => context.pushNamed('ownerSettings'),
                 onProfile: () => context.pushNamed('ownerProfile'),
               ),
-
               const SizedBox(height: 24),
-
-              // Recent bookings
               PremiumOwnerRecentBookings(
                 bookings: state.recentBookings,
                 onViewAll: () => context.pushNamed('ownerBookings'),
@@ -149,7 +143,6 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                   );
                 },
               ),
-
               const SizedBox(height: 32),
             ],
           ),
@@ -163,7 +156,6 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
   void _handleDrawerNavigation(BuildContext context, int index) {
     switch (index) {
       case 0:
-        // Already on dashboard
         break;
       case 1:
         context.pushNamed('ownerBookings');
@@ -204,87 +196,6 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
             child: const Text('Logout', style: TextStyle(color: Colors.red)),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Loading state widget.
-class _LoadingState extends StatelessWidget {
-  const _LoadingState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: const Center(
-        child: CircularProgressIndicator(color: AppColors.accentCyan),
-      ),
-    );
-  }
-}
-
-/// Error state widget.
-class _ErrorState extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
-
-  const _ErrorState({required this.message, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.error_outline, size: 64, color: Colors.red.shade300),
-              const SizedBox(height: 16),
-              Text(
-                message,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
-              ),
-              const SizedBox(height: 24),
-              GestureDetector(
-                onTap: onRetry,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.accentCyan,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Text(
-                    'Retry',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

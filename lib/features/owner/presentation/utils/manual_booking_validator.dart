@@ -24,13 +24,13 @@ class ManualBookingValidator {
   }
 
   static String? validateStepTwo({
-    required String customerName,
-    required String customerPhone,
+    required String? customerName,
+    required String? customerPhone,
   }) {
-    if (customerName.isEmpty) {
+    if (customerName == null || customerName.isEmpty) {
       return 'Please enter customer name';
     }
-    if (customerPhone.isEmpty) {
+    if (customerPhone == null || customerPhone.isEmpty) {
       return 'Please enter customer phone';
     }
     return null;

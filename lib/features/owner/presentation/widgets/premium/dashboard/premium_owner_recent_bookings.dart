@@ -119,7 +119,7 @@ class _ViewAllButton extends StatelessWidget {
         HapticFeedback.lightImpact();
         onTap();
       },
-      child: Row(
+      child: const Row(
         children: [
           Text(
             'View All',
@@ -129,7 +129,7 @@ class _ViewAllButton extends StatelessWidget {
               color: AppColors.accentCyan,
             ),
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: 4),
           Icon(
             Icons.arrow_forward_rounded,
             size: 16,

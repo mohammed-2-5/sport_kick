@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,7 @@ import 'package:spo_kick/core/constants/app_constants.dart';
 import 'package:spo_kick/core/constants/app_theme.dart';
 import 'package:spo_kick/core/di/injection_container.dart' as di;
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/services/notification_service.dart';
 import 'package:spo_kick/core/utils/app_logger.dart';
 import 'package:spo_kick/firebase_options.dart';
 import 'package:spo_kick/core/routes/go_router_config.dart';
@@ -26,10 +28,11 @@ SupabaseClient get supabase => Supabase.instance.client;
 ///
 /// Initializes:
 /// - Flutter framework bindings
-/// - Firebase (Core & Crashlytics)
+/// - Firebase (Core, Crashlytics, Messaging)
 /// - Dependency injection (GetIt)
 /// - Hive local database
 /// - Supabase backend
+/// - Notification service
 /// - System UI styling
 void main() async {
   // Ensure Flutter is initialized
@@ -50,6 +53,11 @@ void main() async {
     } catch (_) {
       // Crashlytics not available on this platform; fall back to default handlers.
     }
+  }
+
+  // Set up background message handler for FCM (not supported on web)
+  if (!kIsWeb) {
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
 
   // Set Bloc Observer
@@ -109,7 +117,11 @@ Future<void> _initializeApp() async {
     // 4. Initialize dependency injection
     await di.initDependencies();
 
-    // 5. Set system UI styling
+    // 5. Initialize notification service
+    AppLogger.info('Initializing notification service...', tag: 'INIT');
+    await NotificationService.instance.initialize();
+
+    // 6. Set system UI styling
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -119,7 +131,7 @@ Future<void> _initializeApp() async {
       ),
     );
 
-    // 6. Set preferred orientations
+    // 7. Set preferred orientations
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

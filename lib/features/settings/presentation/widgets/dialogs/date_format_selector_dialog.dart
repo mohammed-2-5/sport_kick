@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
 import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/dialogs/date_format_option_tile.dart';
 
 /// Date Format Selector Dialog
 ///
@@ -18,56 +19,47 @@ class DateFormatSelectorDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildFormatOption(
-            context,
-            'DD/MM/YYYY',
-            'e.g., 25/12/2025',
-            DateFormatOption.ddMMyyyy,
-            preferences.dateFormat == DateFormatOption.ddMMyyyy,
+          DateFormatOptionTile(
+            label: 'DD/MM/YYYY',
+            example: 'e.g., 25/12/2025',
+            format: DateFormatOption.ddMMyyyy,
+            isSelected: preferences.dateFormat == DateFormatOption.ddMMyyyy,
+            onTap: () {
+              context.read<SettingsCubit>().updateDateFormat(
+                preferences,
+                DateFormatOption.ddMMyyyy,
+              );
+              Navigator.pop(context);
+            },
           ),
-          _buildFormatOption(
-            context,
-            'MM/DD/YYYY',
-            'e.g., 12/25/2025',
-            DateFormatOption.mmDdYyyy,
-            preferences.dateFormat == DateFormatOption.mmDdYyyy,
+          DateFormatOptionTile(
+            label: 'MM/DD/YYYY',
+            example: 'e.g., 12/25/2025',
+            format: DateFormatOption.mmDdYyyy,
+            isSelected: preferences.dateFormat == DateFormatOption.mmDdYyyy,
+            onTap: () {
+              context.read<SettingsCubit>().updateDateFormat(
+                preferences,
+                DateFormatOption.mmDdYyyy,
+              );
+              Navigator.pop(context);
+            },
           ),
-          _buildFormatOption(
-            context,
-            'YYYY-MM-DD',
-            'e.g., 2025-12-25',
-            DateFormatOption.yyyyMmDd,
-            preferences.dateFormat == DateFormatOption.yyyyMmDd,
+          DateFormatOptionTile(
+            label: 'YYYY-MM-DD',
+            example: 'e.g., 2025-12-25',
+            format: DateFormatOption.yyyyMmDd,
+            isSelected: preferences.dateFormat == DateFormatOption.yyyyMmDd,
+            onTap: () {
+              context.read<SettingsCubit>().updateDateFormat(
+                preferences,
+                DateFormatOption.yyyyMmDd,
+              );
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildFormatOption(
-    BuildContext context,
-    String label,
-    String example,
-    DateFormatOption format,
-    bool isSelected,
-  ) {
-    return RadioListTile<DateFormatOption>(
-      title: Text(label),
-      subtitle: Text(
-        example,
-        style: TextStyle(
-          fontSize: 12,
-          color: Theme.of(context).textTheme.bodySmall?.color,
-        ),
-      ),
-      value: format,
-      groupValue: preferences.dateFormat,
-      onChanged: (value) {
-        if (value != null) {
-          context.read<SettingsCubit>().updateDateFormat(preferences, value);
-          Navigator.pop(context);
-        }
-      },
     );
   }
 }

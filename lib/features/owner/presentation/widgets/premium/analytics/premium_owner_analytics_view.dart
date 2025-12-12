@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
@@ -137,11 +138,13 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
     final fields = state.fields;
 
     final confirmedBookings = bookings
-        .where((b) => b.status == 'confirmed')
+        .where((b) => b.status == BookingStatus.confirmed)
         .length;
-    final pendingBookings = bookings.where((b) => b.status == 'pending').length;
+    final pendingBookings = bookings
+        .where((b) => b.status == BookingStatus.pending)
+        .length;
     final canceledBookings = bookings
-        .where((b) => b.status == 'canceled')
+        .where((b) => b.status == BookingStatus.canceled)
         .length;
 
     final ratingsSum = fields.fold<double>(
@@ -151,7 +154,7 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
     final avgRating = fields.isEmpty ? 0.0 : ratingsSum / fields.length;
 
     final completedBookings = bookings
-        .where((b) => b.status == 'completed')
+        .where((b) => b.status == BookingStatus.completed)
         .length;
     final completionRate = bookings.isEmpty
         ? 0.0

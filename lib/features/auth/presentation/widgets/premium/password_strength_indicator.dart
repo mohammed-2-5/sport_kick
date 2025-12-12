@@ -52,7 +52,7 @@ class PasswordStrengthIndicator extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               'Password strength',
               style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
@@ -236,11 +236,13 @@ class CompactPasswordStrength extends StatelessWidget {
     if (password.length >= 8) strength++;
     if (password.length >= 12) strength++;
     if (password.contains(RegExp(r'[a-z]')) &&
-        password.contains(RegExp(r'[A-Z]')))
+        password.contains(RegExp(r'[A-Z]'))) {
       strength++;
+    }
     if (password.contains(RegExp(r'[0-9]')) ||
-        password.contains(RegExp(r'[!@#$%^&*()]')))
+        password.contains(RegExp(r'[!@#$%^&*()]'))) {
       strength++;
+    }
     return strength.clamp(0, 4);
   }
 

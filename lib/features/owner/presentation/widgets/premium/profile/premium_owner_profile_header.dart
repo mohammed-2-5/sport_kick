@@ -124,7 +124,7 @@ class PremiumOwnerProfileHeader extends StatelessWidget {
                               child: Image.network(
                                 avatarUrl!,
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) =>
+                                errorBuilder: (context, error, stackTrace) =>
                                     _buildAvatarFallback(),
                               ),
                             )

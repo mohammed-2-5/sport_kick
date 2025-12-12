@@ -160,7 +160,7 @@ class _ReviewSuccessOverlayState extends State<ReviewSuccessOverlay>
                       widget.isEdit
                           ? 'Your review has been updated successfully'
                           : 'Thank you for sharing your experience',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                         color: AppColors.textSecondary,
                       ),

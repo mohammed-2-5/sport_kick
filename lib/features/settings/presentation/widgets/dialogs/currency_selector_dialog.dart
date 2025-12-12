@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
 import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/dialogs/currency_option_tile.dart';
 
 /// Currency Selector Dialog
 ///
@@ -18,63 +19,60 @@ class CurrencySelectorDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildCurrencyOption(
-            context,
-            'Egyptian Pound',
-            'EGP (E£)',
-            CurrencyOption.egp,
-            preferences.currency == CurrencyOption.egp,
+          CurrencyOptionTile(
+            label: 'Egyptian Pound',
+            code: 'EGP (E£)',
+            currency: CurrencyOption.egp,
+            isSelected: preferences.currency == CurrencyOption.egp,
+            onTap: () {
+              context.read<SettingsCubit>().updateCurrency(
+                preferences,
+                CurrencyOption.egp,
+              );
+              Navigator.pop(context);
+            },
           ),
-          _buildCurrencyOption(
-            context,
-            'US Dollar',
-            'USD (\$)',
-            CurrencyOption.usd,
-            preferences.currency == CurrencyOption.usd,
+          CurrencyOptionTile(
+            label: 'US Dollar',
+            code: 'USD (\$)',
+            currency: CurrencyOption.usd,
+            isSelected: preferences.currency == CurrencyOption.usd,
+            onTap: () {
+              context.read<SettingsCubit>().updateCurrency(
+                preferences,
+                CurrencyOption.usd,
+              );
+              Navigator.pop(context);
+            },
           ),
-          _buildCurrencyOption(
-            context,
-            'Euro',
-            'EUR (€)',
-            CurrencyOption.eur,
-            preferences.currency == CurrencyOption.eur,
+          CurrencyOptionTile(
+            label: 'Euro',
+            code: 'EUR (€)',
+            currency: CurrencyOption.eur,
+            isSelected: preferences.currency == CurrencyOption.eur,
+            onTap: () {
+              context.read<SettingsCubit>().updateCurrency(
+                preferences,
+                CurrencyOption.eur,
+              );
+              Navigator.pop(context);
+            },
           ),
-          _buildCurrencyOption(
-            context,
-            'Saudi Riyal',
-            'SAR (﷼)',
-            CurrencyOption.sar,
-            preferences.currency == CurrencyOption.sar,
+          CurrencyOptionTile(
+            label: 'Saudi Riyal',
+            code: 'SAR (﷼)',
+            currency: CurrencyOption.sar,
+            isSelected: preferences.currency == CurrencyOption.sar,
+            onTap: () {
+              context.read<SettingsCubit>().updateCurrency(
+                preferences,
+                CurrencyOption.sar,
+              );
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildCurrencyOption(
-    BuildContext context,
-    String label,
-    String code,
-    CurrencyOption currency,
-    bool isSelected,
-  ) {
-    return RadioListTile<CurrencyOption>(
-      title: Text(label),
-      subtitle: Text(
-        code,
-        style: TextStyle(
-          fontSize: 12,
-          color: Theme.of(context).textTheme.bodySmall?.color,
-        ),
-      ),
-      value: currency,
-      groupValue: preferences.currency,
-      onChanged: (value) {
-        if (value != null) {
-          context.read<SettingsCubit>().updateCurrency(preferences, value);
-          Navigator.pop(context);
-        }
-      },
     );
   }
 }

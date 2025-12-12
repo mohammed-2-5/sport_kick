@@ -224,8 +224,8 @@ class _CustomerCard extends StatelessWidget {
             Container(
               width: 44,
               height: 44,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
                   colors: [AppColors.accentCyan, AppColors.accentCyanDark],
                 ),
                 shape: BoxShape.circle,

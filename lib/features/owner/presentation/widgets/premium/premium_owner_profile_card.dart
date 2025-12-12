@@ -41,9 +41,9 @@ class PremiumOwnerProfileCard extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [AppColors.accentCyan, AppColors.accentCyanDark],
                   ),
                 ),

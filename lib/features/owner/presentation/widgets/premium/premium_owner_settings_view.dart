@@ -7,6 +7,8 @@ import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_settings/owner_settings_cubit.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_settings/owner_settings_state.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/premium_owner_settings_section.dart';
 
 /// Premium owner settings view with enhanced UI.
@@ -27,13 +29,6 @@ class PremiumOwnerSettingsView extends StatefulWidget {
 }
 
 class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
-  // Settings state
-  bool _emailNotifications = true;
-  bool _pushNotifications = true;
-  bool _bookingNotifications = true;
-  bool _autoApproveBookings = false;
-  bool _instantNotifications = true;
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
@@ -42,48 +37,52 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           context.goNamed('login');
         }
       },
-      child: Scaffold(
-        backgroundColor: AppColors.backgroundLight,
-        body: CustomScrollView(
-          slivers: [
-            // Premium Header
-            const SliverToBoxAdapter(
-              child: PremiumCurvedHeader(
-                title: 'Settings',
-                subtitle: 'Customize your experience',
-                showBackButton: true,
-              ),
+      child: BlocBuilder<OwnerSettingsCubit, OwnerSettingsState>(
+        builder: (context, settingsState) {
+          return Scaffold(
+            backgroundColor: AppColors.backgroundLight,
+            body: CustomScrollView(
+              slivers: [
+                // Premium Header
+                const SliverToBoxAdapter(
+                  child: PremiumCurvedHeader(
+                    title: 'Settings',
+                    subtitle: 'Customize your experience',
+                    showBackButton: true,
+                  ),
+                ),
+
+                // Settings Content
+                SliverPadding(
+                  padding: const EdgeInsets.all(16),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate([
+                      // Account Section
+                      _buildAccountSection(),
+                      const SizedBox(height: 16),
+
+                      // Notifications Section
+                      _buildNotificationsSection(settingsState),
+                      const SizedBox(height: 16),
+
+                      // Booking Preferences Section
+                      _buildBookingPreferencesSection(settingsState),
+                      const SizedBox(height: 16),
+
+                      // About Section
+                      _buildAboutSection(),
+                      const SizedBox(height: 24),
+
+                      // Logout Button
+                      _buildLogoutButton(),
+                      const SizedBox(height: 32),
+                    ]),
+                  ),
+                ),
+              ],
             ),
-
-            // Settings Content
-            SliverPadding(
-              padding: const EdgeInsets.all(16),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  // Account Section
-                  _buildAccountSection(),
-                  const SizedBox(height: 16),
-
-                  // Notifications Section
-                  _buildNotificationsSection(),
-                  const SizedBox(height: 16),
-
-                  // Booking Preferences Section
-                  _buildBookingPreferencesSection(),
-                  const SizedBox(height: 16),
-
-                  // About Section
-                  _buildAboutSection(),
-                  const SizedBox(height: 24),
-
-                  // Logout Button
-                  _buildLogoutButton(),
-                  const SizedBox(height: 32),
-                ]),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -122,7 +121,8 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
     );
   }
 
-  Widget _buildNotificationsSection() {
+  Widget _buildNotificationsSection(OwnerSettingsState state) {
+    final cubit = context.read<OwnerSettingsCubit>();
     return PremiumOwnerSettingsSection(
       title: 'Notifications',
       icon: Icons.notifications_outlined,
@@ -131,47 +131,48 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           label: 'Email Notifications',
           description: 'Receive booking updates via email',
           icon: Icons.email_outlined,
-          value: _emailNotifications,
+          value: state.emailNotifications,
           onChanged: (value) {
             HapticFeedback.selectionClick();
-            setState(() => _emailNotifications = value);
+            cubit.toggleEmailNotifications(value);
           },
         ),
         OwnerSettingsToggle(
           label: 'Push Notifications',
           description: 'Receive instant push notifications',
           icon: Icons.phone_android,
-          value: _pushNotifications,
+          value: state.pushNotifications,
           onChanged: (value) {
             HapticFeedback.selectionClick();
-            setState(() => _pushNotifications = value);
+            cubit.togglePushNotifications(value);
           },
         ),
         OwnerSettingsToggle(
           label: 'Booking Alerts',
           description: 'Get notified for new bookings',
           icon: Icons.calendar_today_outlined,
-          value: _bookingNotifications,
+          value: state.bookingNotifications,
           onChanged: (value) {
             HapticFeedback.selectionClick();
-            setState(() => _bookingNotifications = value);
+            cubit.toggleBookingNotifications(value);
           },
         ),
         OwnerSettingsToggle(
           label: 'Instant Notifications',
           description: 'Receive notifications immediately',
           icon: Icons.bolt,
-          value: _instantNotifications,
+          value: state.instantNotifications,
           onChanged: (value) {
             HapticFeedback.selectionClick();
-            setState(() => _instantNotifications = value);
+            cubit.toggleInstantNotifications(value);
           },
         ),
       ],
     );
   }
 
-  Widget _buildBookingPreferencesSection() {
+  Widget _buildBookingPreferencesSection(OwnerSettingsState state) {
+    final cubit = context.read<OwnerSettingsCubit>();
     return PremiumOwnerSettingsSection(
       title: 'Booking Preferences',
       icon: Icons.settings_outlined,
@@ -180,10 +181,10 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           label: 'Auto-Approve Bookings',
           description: 'Automatically confirm new bookings',
           icon: Icons.check_circle_outline,
-          value: _autoApproveBookings,
+          value: state.autoApproveBookings,
           onChanged: (value) {
             HapticFeedback.selectionClick();
-            setState(() => _autoApproveBookings = value);
+            cubit.toggleAutoApproveBookings(value);
           },
         ),
         OwnerSettingsTile(

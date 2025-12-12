@@ -13,6 +13,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/setti
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_settings_section.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_settings_tile.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_settings_toggle.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_system_preferences_section.dart';
 
 /// Premium super admin settings view.
 ///
@@ -100,6 +101,10 @@ class PremiumSuperAdminSettingsView extends StatelessWidget {
               _PlatformSection(state: state, cubit: cubit),
               const SizedBox(height: 24),
 
+              // System Preferences (Date Format & Currency)
+              const PremiumSystemPreferencesSection(),
+              const SizedBox(height: 24),
+
               // Notifications
               _NotificationsSection(state: state, cubit: cubit),
               const SizedBox(height: 24),
@@ -137,14 +142,6 @@ class _PlatformSection extends StatelessWidget {
       icon: Icons.settings,
       isSaving: state.savingSection == 'platform',
       children: [
-        PremiumSettingsToggle(
-          label: 'Maintenance Mode',
-          description: 'Temporarily disable app access',
-          icon: Icons.construction,
-          iconColor: Colors.orange,
-          value: state.maintenanceMode,
-          onChanged: cubit.toggleMaintenanceMode,
-        ),
         PremiumSettingsToggle(
           label: 'Allow Registrations',
           description: 'Allow new user sign-ups',
@@ -223,14 +220,6 @@ class _SecuritySection extends StatelessWidget {
       icon: Icons.security,
       isSaving: state.savingSection == 'security',
       children: [
-        PremiumSettingsToggle(
-          label: 'Two-Factor Auth',
-          description: 'Add extra security layer',
-          icon: Icons.phonelink_lock,
-          iconColor: Colors.green,
-          value: state.twoFactorAuth,
-          onChanged: cubit.toggleTwoFactorAuth,
-        ),
         PremiumSettingsTile(
           label: 'Session Timeout',
           value: '${state.sessionTimeout} min',

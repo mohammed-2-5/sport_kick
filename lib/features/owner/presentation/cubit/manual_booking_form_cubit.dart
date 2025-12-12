@@ -31,7 +31,9 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
 
   /// Navigate to next step with validation.
   void nextStep() {
-    if (_data.currentStep == 0) {
+    final currentStep = _data.currentStep;
+
+    if (currentStep == 0) {
       final error = ManualBookingValidator.validateStepOne(
         field: _data.selectedField,
         date: _data.selectedDate,
@@ -45,19 +47,49 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
         return;
       }
 
-      final newData = _data.copyWith(currentStep: 1);
-      emit(ManualBookingFormStepChanged(data: newData, targetStep: 1));
+      _goToStep(1);
+    } else if (currentStep == 1) {
+      final error = ManualBookingValidator.validateStepTwo(
+        customerName: _data.customerName,
+        customerPhone: _data.customerPhone,
+      );
+
+      if (error != null) {
+        emit(ManualBookingFormValidationError(data: _data, message: error));
+        return;
+      }
+
+      _goToStep(2);
+    } else if (currentStep == 2) {
+      emit(ManualBookingFormReadyToSubmit(data: _data));
     }
   }
 
   /// Navigate to previous step.
   void previousStep() {
     if (_data.currentStep > 0) {
-      final newStep = _data.currentStep - 1;
-      final newData = _data.copyWith(currentStep: newStep);
-      emit(ManualBookingFormStepChanged(data: newData, targetStep: newStep));
+      _goToStep(_data.currentStep - 1);
     }
   }
+
+  /// Navigate to a specific step.
+  void goToStep(int step) {
+    if (step >= 0 && step <= 2 && step != _data.currentStep) {
+      _goToStep(step);
+    }
+  }
+
+  /// Internal helper to navigate to step.
+  void _goToStep(int step) {
+    final newData = _data.copyWith(currentStep: step);
+    emit(ManualBookingFormStepChanged(data: newData, targetStep: step));
+  }
+
+  /// Get current step index.
+  int get currentStep => _data.currentStep;
+
+  /// Get current form data.
+  ManualBookingFormData get formData => _data;
 
   /// Validate and prepare for submission.
   void prepareSubmission() {

@@ -127,7 +127,7 @@ class _LoadingShimmerState extends State<_LoadingShimmer>
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: [
+                  colors: const [
                     AppColors.shimmerBase,
                     AppColors.shimmerHighlight,
                     AppColors.shimmerBase,

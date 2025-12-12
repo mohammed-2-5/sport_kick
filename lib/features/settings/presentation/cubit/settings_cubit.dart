@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/services/notification_service.dart';
 import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
 import 'package:spo_kick/features/settings/domain/usecases/get_user_preferences_usecase.dart';
 import 'package:spo_kick/features/settings/domain/usecases/reset_preferences_usecase.dart';
@@ -91,9 +93,25 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future<void> togglePushNotifications(
     UserPreferencesEntity currentPreferences,
   ) async {
+    final newValue = !currentPreferences.pushNotificationsEnabled;
     final updatedPreferences = currentPreferences.copyWith(
-      pushNotificationsEnabled: !currentPreferences.pushNotificationsEnabled,
+      pushNotificationsEnabled: newValue,
     );
+
+    // Handle FCM topic subscription
+    try {
+      final notificationService = NotificationService.instance;
+      if (newValue) {
+        await notificationService.subscribeToTopic('customers');
+        debugPrint('[SettingsCubit] Subscribed to customers topic');
+      } else {
+        await notificationService.unsubscribeFromTopic('customers');
+        debugPrint('[SettingsCubit] Unsubscribed from customers topic');
+      }
+    } catch (e) {
+      debugPrint('[SettingsCubit] Error toggling push: $e');
+    }
+
     await updatePreference(currentPreferences, updatedPreferences);
   }
 

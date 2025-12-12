@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/widgets/premium/empty_states.dart';
-import 'package:spo_kick/core/widgets/shimmer_loading.dart';
+import 'package:spo_kick/core/widgets/fields_list_shimmer.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/fields_list_content.dart';

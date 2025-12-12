@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/services/notification_service.dart';
 import 'package:spo_kick/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/settings/super_admin_settings_state.dart';
 
@@ -73,7 +75,7 @@ class SuperAdminSettingsCubit extends Cubit<SuperAdminSettingsState> {
   }
 
   /// Toggle push notifications.
-  void togglePushNotifications(bool value) {
+  Future<void> togglePushNotifications(bool value) async {
     final currentState = state;
     if (currentState is SuperAdminSettingsLoaded) {
       emit(
@@ -82,12 +84,29 @@ class SuperAdminSettingsCubit extends Cubit<SuperAdminSettingsState> {
           savingSection: 'notifications',
         ),
       );
+
+      // Handle FCM topic subscription
+      try {
+        final notificationService = NotificationService.instance;
+        if (value) {
+          await notificationService.subscribeToTopic('super_admins');
+          debugPrint('[SuperAdminSettings] Subscribed to super_admins topic');
+        } else {
+          await notificationService.unsubscribeFromTopic('super_admins');
+          debugPrint(
+            '[SuperAdminSettings] Unsubscribed from super_admins topic',
+          );
+        }
+      } catch (e) {
+        debugPrint('[SuperAdminSettings] Error toggling push: $e');
+      }
+
       _simulateSave();
     }
   }
 
   /// Toggle admin alerts.
-  void toggleAdminAlerts(bool value) {
+  Future<void> toggleAdminAlerts(bool value) async {
     final currentState = state;
     if (currentState is SuperAdminSettingsLoaded) {
       emit(
@@ -96,6 +115,23 @@ class SuperAdminSettingsCubit extends Cubit<SuperAdminSettingsState> {
           savingSection: 'notifications',
         ),
       );
+
+      // Handle FCM topic subscription for admin alerts
+      try {
+        final notificationService = NotificationService.instance;
+        if (value) {
+          await notificationService.subscribeToTopic('admin_alerts');
+          debugPrint('[SuperAdminSettings] Subscribed to admin_alerts topic');
+        } else {
+          await notificationService.unsubscribeFromTopic('admin_alerts');
+          debugPrint(
+            '[SuperAdminSettings] Unsubscribed from admin_alerts topic',
+          );
+        }
+      } catch (e) {
+        debugPrint('[SuperAdminSettings] Error toggling admin alerts: $e');
+      }
+
       _simulateSave();
     }
   }

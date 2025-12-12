@@ -158,7 +158,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                   // Forgot password
                   GestureDetector(
                     onTap: () => context.pushNamed('forgot-password'),
-                    child: Text(
+                    child: const Text(
                       'Forgot Password?',
                       style: TextStyle(
                         fontSize: 14,

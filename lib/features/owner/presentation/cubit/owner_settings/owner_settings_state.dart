@@ -5,12 +5,14 @@ final class OwnerSettingsState extends Equatable {
   final bool emailNotifications;
   final bool pushNotifications;
   final bool bookingNotifications;
+  final bool instantNotifications;
   final bool autoApproveBookings;
 
   const OwnerSettingsState({
     this.emailNotifications = true,
     this.pushNotifications = true,
     this.bookingNotifications = true,
+    this.instantNotifications = true,
     this.autoApproveBookings = false,
   });
 
@@ -19,6 +21,7 @@ final class OwnerSettingsState extends Equatable {
     emailNotifications,
     pushNotifications,
     bookingNotifications,
+    instantNotifications,
     autoApproveBookings,
   ];
 
@@ -26,12 +29,14 @@ final class OwnerSettingsState extends Equatable {
     bool? emailNotifications,
     bool? pushNotifications,
     bool? bookingNotifications,
+    bool? instantNotifications,
     bool? autoApproveBookings,
   }) {
     return OwnerSettingsState(
       emailNotifications: emailNotifications ?? this.emailNotifications,
       pushNotifications: pushNotifications ?? this.pushNotifications,
       bookingNotifications: bookingNotifications ?? this.bookingNotifications,
+      instantNotifications: instantNotifications ?? this.instantNotifications,
       autoApproveBookings: autoApproveBookings ?? this.autoApproveBookings,
     );
   }

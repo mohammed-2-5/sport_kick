@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/services/notification_service.dart';
 import 'package:spo_kick/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/login_usecase.dart';
@@ -55,6 +56,8 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (user) {
         if (user != null) {
+          // Setup notifications for existing session
+          _setupNotifications(user);
           emit(Authenticated(user));
         } else {
           emit(const Unauthenticated());
@@ -82,6 +85,7 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (user) {
         debugPrint('✅ Login Success: ${user.email}');
+        _setupNotifications(user);
         emit(Authenticated(user));
       },
     );
@@ -117,6 +121,7 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (user) {
         debugPrint('✅ Registration Success: ${user.email}');
+        _setupNotifications(user);
         emit(Authenticated(user));
       },
     );
@@ -128,6 +133,12 @@ class AuthCubit extends Cubit<AuthState> {
   /// Emits [Unauthenticated] on success.
   /// Emits [AuthError] on failure.
   Future<void> logout() async {
+    // Clean up notifications before logout
+    final user = currentUser;
+    if (user != null) {
+      await _cleanupNotifications(user.id);
+    }
+
     emit(const AuthLoading());
 
     final result = await logoutUseCase();
@@ -220,6 +231,40 @@ class AuthCubit extends Cubit<AuthState> {
   void clearError() {
     if (state is AuthError) {
       emit(const Unauthenticated());
+    }
+  }
+
+  /// Sets up push notifications for the authenticated user.
+  Future<void> _setupNotifications(UserEntity user) async {
+    try {
+      final notificationService = NotificationService.instance;
+
+      // Save FCM token for this user
+      await notificationService.saveTokenForUser(user.id, user.role);
+
+      // Subscribe to role-specific topics
+      await notificationService.subscribeToRoleTopics(user.role);
+
+      debugPrint('[AuthCubit] Notifications setup for user: ${user.email}');
+    } catch (e) {
+      debugPrint('[AuthCubit] Error setting up notifications: $e');
+    }
+  }
+
+  /// Cleans up push notifications on logout.
+  Future<void> _cleanupNotifications(String userId) async {
+    try {
+      final notificationService = NotificationService.instance;
+
+      // Remove FCM token
+      await notificationService.removeTokenForUser(userId);
+
+      // Unsubscribe from all topics
+      await notificationService.unsubscribeFromAllTopics();
+
+      debugPrint('[AuthCubit] Notifications cleaned up for user: $userId');
+    } catch (e) {
+      debugPrint('[AuthCubit] Error cleaning up notifications: $e');
     }
   }
 }
