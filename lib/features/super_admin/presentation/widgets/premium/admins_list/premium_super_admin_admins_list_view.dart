@@ -47,7 +47,7 @@ class _PremiumSuperAdminAdminsListViewState
           if (state is SuperAdminAdminsListError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.message),
+                content: Text('Error: ${state.message}'),
                 backgroundColor: Colors.red,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(

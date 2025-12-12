@@ -80,8 +80,8 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
   });
 
-  tearDown(() {
-    GetIt.instance.reset();
+  tearDown(() async {
+    await GetIt.instance.reset();
   });
 
   Widget buildTestWidget() {

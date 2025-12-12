@@ -46,7 +46,10 @@ class _PremiumSuperAdminDashboardViewState
     return BlocConsumer<SuperAdminDashboardCubit, SuperAdminDashboardState>(
       listener: (context, state) {
         if (state is SuperAdminDashboardError) {
-          SnackbarHelper.showError(context, state.message);
+          SnackbarHelper.showError(
+            context,
+            'Error loading dashboard: ${state.message}',
+          );
         }
       },
       builder: (context, state) {
@@ -312,13 +315,20 @@ class _ErrorState extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Text(
-                    'Retry',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.refresh, size: 18, color: Colors.white),
+                      SizedBox(width: 8),
+                      Text(
+                        'Retry',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

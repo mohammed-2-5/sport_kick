@@ -1,72 +1,49 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
-import 'package:spo_kick/features/super_admin/presentation/pages/admins_list_page.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_card.dart';
-import 'package:dartz/dartz.dart';
-import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_usecase.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/admins_list/super_admin_admins_list_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/admins_list/super_admin_admins_list_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/premium_admin_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admins_list/premium_super_admin_admins_list_view.dart';
 
-import '../../../../helpers/test_helpers.dart';
-
-class MockSuperAdminCubit extends MockCubit<SuperAdminState>
-    implements SuperAdminCubit {}
-
-class MockGetAllAdminsUseCase extends Mock implements GetAllAdminsUseCase {}
-
-class FakeRoute extends Fake implements Route<dynamic> {}
+class MockSuperAdminAdminsListCubit extends MockCubit<SuperAdminAdminsListState>
+    implements SuperAdminAdminsListCubit {}
 
 void main() {
-  setUpAll(() {
-    registerFallbackValue(FakeRoute());
-  });
+  late MockSuperAdminAdminsListCubit mockAdminsListCubit;
 
-  late MockSuperAdminCubit mockSuperAdminCubit;
-  late MockNavigatorObserver mockNavigatorObserver;
-  late MockGetAllAdminsUseCase mockGetAllAdminsUseCase;
+  void setCubitState(SuperAdminAdminsListState state) {
+    when(() => mockAdminsListCubit.state).thenReturn(state);
+    whenListen(mockAdminsListCubit, Stream.value(state), initialState: state);
+  }
 
   setUp(() {
-    mockSuperAdminCubit = MockSuperAdminCubit();
-    mockNavigatorObserver = MockNavigatorObserver();
-    mockGetAllAdminsUseCase = MockGetAllAdminsUseCase();
-
-    // Stub the dependency used by the extension method
-    when(
-      () => mockSuperAdminCubit.getAllAdminsUseCase,
-    ).thenReturn(mockGetAllAdminsUseCase);
-
-    // Stub loadAdmins
-    when(() => mockSuperAdminCubit.loadAdmins()).thenAnswer((_) async {});
-
-    // Stub the use case to return empty list by default
-    when(
-      () => mockGetAllAdminsUseCase(),
-    ).thenAnswer((_) async => const Right([]));
-
-    // Default stream behavior
-    when(
-      () => mockSuperAdminCubit.stream,
-    ).thenAnswer((_) => const Stream<SuperAdminState>.empty());
-    when(() => mockSuperAdminCubit.close()).thenAnswer((_) async {});
-
-    // Setup GetIt
-    final getIt = GetIt.instance;
-    if (getIt.isRegistered<SuperAdminCubit>()) {
-      getIt.unregister<SuperAdminCubit>();
-    }
-    getIt.registerFactory<SuperAdminCubit>(() => mockSuperAdminCubit);
-  });
-
-  tearDown(() {
-    GetIt.instance.reset();
+    mockAdminsListCubit = MockSuperAdminAdminsListCubit();
+    setCubitState(const SuperAdminAdminsListLoading());
+    when(() => mockAdminsListCubit.loadAdmins()).thenAnswer((_) async {});
+    when(() => mockAdminsListCubit.refresh()).thenAnswer((_) async {});
+    when(() => mockAdminsListCubit.close()).thenAnswer((_) async {});
+    when(() => mockAdminsListCubit.getStats()).thenAnswer((_) {
+      final state = mockAdminsListCubit.state;
+      if (state is SuperAdminAdminsListLoaded) {
+        return {
+          'total': state.allAdmins.length,
+          'active': state.activeCount,
+          'inactive': state.inactiveCount,
+        };
+      }
+      return {'total': 0, 'active': 0, 'inactive': 0};
+    });
   });
 
   Widget buildTestWidget() {
-    return const AdminsListPage();
+    return BlocProvider<SuperAdminAdminsListCubit>.value(
+      value: mockAdminsListCubit,
+      child: const PremiumSuperAdminAdminsListView(),
+    );
   }
 
   group('AdminsListPage', () {
@@ -81,141 +58,65 @@ void main() {
     );
 
     testWidgets(
-      'should show loading indicator when state is SuperAdminLoading',
+      'shows loading placeholder when state is SuperAdminAdminsListLoading',
       (tester) async {
         // Arrange
-        whenListen(
-          mockSuperAdminCubit,
-          Stream.fromIterable([const SuperAdminLoading()]),
-          initialState: const SuperAdminLoading(),
-        );
+        setCubitState(const SuperAdminAdminsListLoading());
 
         // Act
-        await pumpApp(tester, buildTestWidget());
+        await tester.pumpWidget(MaterialApp(home: buildTestWidget()));
+        await tester.pump(); // settle initial frame
 
         // Assert
-        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        verify(() => mockAdminsListCubit.loadAdmins()).called(1);
+        expect(find.text('Create Admin'), findsOneWidget);
+        expect(find.byType(GridView), findsOneWidget); // shimmer grid
       },
     );
 
-    testWidgets('should show error message when state is SuperAdminError', (
+    testWidgets('shows error message when state is SuperAdminAdminsListError', (
       tester,
     ) async {
       // Arrange
       const errorMessage = 'Failed to load admins';
-      whenListen(
-        mockSuperAdminCubit,
-        Stream.fromIterable([const SuperAdminError(errorMessage)]),
-        initialState: const SuperAdminError(errorMessage),
-      );
+      setCubitState(const SuperAdminAdminsListError(errorMessage));
 
       // Act
-      await pumpApp(tester, buildTestWidget());
+      await tester.pumpWidget(MaterialApp(home: buildTestWidget()));
+      await tester.pump();
 
       // Assert
-      expect(find.text(errorMessage), findsOneWidget);
-      expect(find.text('Error loading admins'), findsOneWidget);
+      expect(find.text('Failed to load admins'), findsOneWidget);
       expect(find.text('Retry'), findsOneWidget);
     });
 
-    testWidgets('should show list of admins when state is AdminsListLoaded', (
-      tester,
-    ) async {
-      // Arrange
-      whenListen(
-        mockSuperAdminCubit,
-        Stream.fromIterable([
-          AdminsListLoaded([tAdmin]),
-        ]),
-        initialState: AdminsListLoaded([tAdmin]),
-      );
+    testWidgets(
+      'shows list of admins when state is SuperAdminAdminsListLoaded',
+      (tester) async {
+        // Arrange
+        setCubitState(SuperAdminAdminsListLoaded(allAdmins: [tAdmin]));
 
-      // Act
-      await pumpApp(tester, buildTestWidget());
+        // Act
+        await tester.pumpWidget(MaterialApp(home: buildTestWidget()));
+        await tester.pump();
 
-      // Assert
-      expect(find.byType(AdminCard), findsOneWidget);
-      expect(find.text('Admin User'), findsOneWidget);
-      expect(find.text('admin@example.com'), findsOneWidget);
-    });
+        // Assert
+        expect(find.byType(PremiumAdminCard), findsOneWidget);
+        expect(find.text('Admin User'), findsOneWidget);
+        expect(find.text('admin@example.com'), findsOneWidget);
+      },
+    );
 
     testWidgets('should show empty state when list is empty', (tester) async {
       // Arrange
-      whenListen(
-        mockSuperAdminCubit,
-        Stream.fromIterable([const AdminsListLoaded([])]),
-        initialState: const AdminsListLoaded([]),
-      );
+      setCubitState(const SuperAdminAdminsListLoaded(allAdmins: []));
 
       // Act
-      await pumpApp(tester, buildTestWidget());
+      await tester.pumpWidget(MaterialApp(home: buildTestWidget()));
 
       // Assert
-      expect(find.text('No Admins Yet'), findsOneWidget);
+      expect(find.text('No admins yet'), findsOneWidget);
       expect(find.byIcon(Icons.admin_panel_settings_outlined), findsOneWidget);
     });
-
-    testWidgets(
-      'should navigate to Create Admin page when FAB is pressed',
-      (tester) async {
-        // Arrange
-        whenListen(
-          mockSuperAdminCubit,
-          Stream.fromIterable([const AdminsListLoaded([])]),
-          initialState: const AdminsListLoaded([]),
-        );
-
-        // Act
-        await pumpApp(
-          tester,
-          buildTestWidget(),
-          navigatorObserver: mockNavigatorObserver,
-          routes: {
-            '/super-admin/create-admin': (context) =>
-                const Scaffold(body: Text('Create Admin Page')),
-          },
-        );
-
-        await tester.tap(find.byType(FloatingActionButton));
-        await tester.pumpAndSettle();
-
-        // Assert
-        verify(() => mockNavigatorObserver.didPush(any(), any()));
-      },
-      skip: true, // Navigation uses go_router, not Navigator
-    );
-
-    testWidgets(
-      'should navigate to Admin Details page when admin card is tapped',
-      (tester) async {
-        // Arrange
-        whenListen(
-          mockSuperAdminCubit,
-          Stream.fromIterable([
-            AdminsListLoaded([tAdmin]),
-          ]),
-          initialState: AdminsListLoaded([tAdmin]),
-        );
-
-        // Act
-        await pumpApp(
-          tester,
-          buildTestWidget(),
-          navigatorObserver: mockNavigatorObserver,
-          routes: {
-            '/super-admin/admin-details': (context) =>
-                const Scaffold(body: Text('Admin Details Page')),
-          },
-        );
-
-        // Tap on admin name text to trigger navigation
-        await tester.tap(find.text('Admin User'));
-        await tester.pumpAndSettle();
-
-        // Assert
-        verify(() => mockNavigatorObserver.didPush(any(), any()));
-      },
-      skip: true, // Navigation uses go_router, not Navigator
-    );
   });
 }
