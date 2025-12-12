@@ -1,9 +1,9 @@
 # Sport Kick - Project Status & Roadmap
 
 **Last Updated:** 2025-12-12
-**Current Status:** Phase 9 (Booking Flow Enhancement) - In Progress
+**Current Status:** Phase 9 (Booking Flow Enhancement) - 40% Complete (Phase 9.1-9.2 Done)
 
-## 🎯 **Overall Progress: 96% Complete**
+## 🎯 **Overall Progress: 97% Complete**
 
 ### ✅ Completed Phases:
 - ✅ Phase 1: Database & Domain Layer (100%)
@@ -15,18 +15,27 @@
 - ✅ Phase 5.3: New User Features (100%)
 - ✅ Phase 6: City Selection for Users (100%)
 - ✅ Code Quality Refactoring (100%) ✅ **COMPLETED 2025-12-12**
+- ✅ Phase 9.1: Database & Core (100%) ✅ **COMPLETED 2025-12-12**
+- ✅ Phase 9.2: Time Slots & Duration (100%) ✅ **COMPLETED 2025-12-12**
 
-### 🎉 Code Quality Achievements (2025-12-12):
-- Flutter analyze: **0 issues** (from 39)
-- 26+ new files created (widget extraction)
-- 41 old markdown files archived to `docs/archive/`
-- All oversized files under 300 lines
-- No deprecated APIs
+### 🎉 Phase 9.1-9.2 Achievements (2025-12-12):
+- **Database Migration:** Payment fields, duration support, cross-midnight hours
+- **New Enums:** PaymentStatus, PaymentMethod
+- **Entity Updates:** BookingEntity, FieldEntity, BusinessHoursEntity, TimeSlotEntity
+- **Cross-Midnight Support:** Time slots can now span midnight (e.g., 12 PM - 2 AM)
+- **Duration Selection:** 1 or 2 hour bookings with consecutive slot validation
+- **Booking Date Restriction:** First available date is tomorrow (not today)
+- Flutter analyze: **0 issues**
 
 ### ⏳ Pending/In Progress:
 - ⏳ Phase 7: Advanced Features (0% - Payments, Promotions)
-- 🔄 Phase 8: Production Ready (85% - Tests remaining)
-- 🔄 **Phase 9: Booking Flow Enhancement (In Progress)** ⬅️ **CURRENT**
+- 🔄 Phase 8: Production Ready (45% - Tests remaining)
+- 🔄 **Phase 9: Booking Flow Enhancement (40%)** ⬅️ **CURRENT**
+  - ✅ Phase 9.1: Database & Core (100%)
+  - ✅ Phase 9.2: Time Slots & Duration (100%)
+  - ⏳ Phase 9.3: Invoice & Payment System (0%)
+  - ⏳ Phase 9.4: UI Integration (0%)
+  - ⏳ Phase 9.5: Testing & Polish (0%)
 
 ---
 
@@ -971,51 +980,54 @@
 
 ### Phase 9: Booking Flow Enhancement (IN PROGRESS 🔄) ⬅️ CURRENT
 **Priority:** High
-**Status:** In Progress - 0%
+**Status:** In Progress - 40% (Phase 9.1-9.2 Complete)
 **Started:** 2025-12-12
 **Estimated Effort:** 5 phases
 
 #### 📋 Overview
 Complete overhaul of the booking flow with flexible hours, duration options, payment integration, and invoice system.
 
-#### 🎯 Phase 9.1: Database & Core (In Progress)
-**Status:** 🔄 In Progress
+#### ✅ Phase 9.1: Database & Core (COMPLETED)
+**Status:** ✅ Completed - 2025-12-12
 
 **Database Changes:**
-- [ ] Add payment fields to `fields` table (payment_phone, payment_method, payment_instructions)
-- [ ] Add payment fields to `bookings` table (duration_hours, payment_status, payment_proof_url, invoice_number)
-- [ ] Add `closes_next_day` to `business_hours` table for cross-midnight hours
-- [ ] Create Supabase storage bucket for payment proofs
+- [x] Add payment fields to `fields` table (payment_phone, payment_method, payment_instructions)
+- [x] Add payment fields to `bookings` table (duration_hours, payment_status, payment_proof_url, invoice_number)
+- [x] Add `closes_next_day` to `business_hours` table for cross-midnight hours
+- [x] Create migration file: `supabase/migrations/20251212_booking_flow_enhancement.sql`
+- [ ] Create Supabase storage bucket for payment proofs (run SQL manually)
 
 **Entity Updates:**
-- [ ] Update `BookingEntity` with payment/duration fields
-- [ ] Update `FieldEntity` with payment info fields
-- [ ] Create `PaymentStatus` enum (pending, uploaded, verified, rejected)
-- [ ] Create `PaymentMethod` enum (vodafone_cash, instapay)
+- [x] Update `BookingEntity` with payment/duration fields
+- [x] Update `FieldEntity` with payment info fields
+- [x] Create `PaymentStatus` enum (pending, uploaded, verified, rejected)
+- [x] Create `PaymentMethod` enum (vodafone_cash, instapay)
 
 **Model Updates:**
-- [ ] Update `BookingModel` with JSON serialization
-- [ ] Update `FieldModel` with JSON serialization
+- [x] Update `BookingModel` with JSON serialization
+- [x] Update `FieldModel` with JSON serialization
 
-#### 🎯 Phase 9.2: Time Slots & Duration
-**Status:** ⏳ Pending
+#### ✅ Phase 9.2: Time Slots & Duration (COMPLETED)
+**Status:** ✅ Completed - 2025-12-12
 
 **Time Slot Changes:**
-- [ ] Update `booking_remote_datasource.dart` to read from `business_hours` table
-- [ ] Support cross-midnight hours (12 PM - 2 AM shows 2 AM on next day)
-- [ ] Filter slots to show only operating hours per field
-- [ ] Handle late-night hours display (1:00 AM, 2:00 AM)
+- [x] Update `booking_time_slot_datasource.dart` to read from `business_hours` table
+- [x] Support cross-midnight hours (12 PM - 2 AM shows 2 AM on next day)
+- [x] Filter slots to show only operating hours per field
+- [x] Handle late-night hours display with "Late Night" period
+- [x] Add `isNextDay` field to `TimeSlotEntity` and `TimeSlotModel`
+- [x] Add `closesNextDay` field to `BusinessHoursEntity` and `BusinessHoursModel`
 
 **Duration Selection:**
-- [ ] Add duration selection (1 or 2 hours)
-- [ ] Validate consecutive slots for 2-hour bookings
-- [ ] Calculate total price for multi-hour bookings
-- [ ] Create `BookingDurationSelector` widget
+- [x] Add duration selection (1 or 2 hours) to `BookingFlowCubit`
+- [x] Add `selectedDuration` and `secondTimeSlot` to `BookingFlowActive` state
+- [x] Validate consecutive slots for 2-hour bookings
+- [x] Calculate total price for multi-hour bookings
+- [x] Add `canSelectSlot()` method for 2-hour booking validation
 
 **Date Restriction:**
-- [ ] Set minimum booking date to tomorrow (not today)
-- [ ] Update date picker constraints
-- [ ] Update helper text
+- [x] Set minimum booking date to tomorrow (not today) in `initializeFlow()`
+- [x] Update validation in `CreateBookingUseCase` to require tomorrow minimum
 
 #### 🎯 Phase 9.3: Invoice & Payment System
 **Status:** ⏳ Pending

@@ -63,6 +63,12 @@ class BookingFlowActive extends BookingFlowState {
   final bool isLoadingSlots;
   final String? slotsError;
 
+  /// Selected duration in hours (1 or 2)
+  final int selectedDuration;
+
+  /// Second time slot for 2-hour bookings (auto-calculated)
+  final TimeSlotEntity? secondTimeSlot;
+
   const BookingFlowActive({
     required this.currentStep,
     required this.fieldId,
@@ -73,6 +79,8 @@ class BookingFlowActive extends BookingFlowState {
     this.slotsByPeriod = const {},
     this.isLoadingSlots = false,
     this.slotsError,
+    this.selectedDuration = 1,
+    this.secondTimeSlot,
   });
 
   /// Check if user can proceed to next step.
@@ -97,6 +105,43 @@ class BookingFlowActive extends BookingFlowState {
   /// Calculate the progress percentage (0.0 - 1.0).
   double get progress => (currentStep.index + 1) / 3;
 
+  /// Get total price based on duration
+  double get totalPrice => pricePerHour * selectedDuration;
+
+  /// Get the end time for the booking (considers 2-hour bookings)
+  String? get endTime {
+    if (selectedTimeSlot == null) return null;
+    if (selectedDuration == 2 && secondTimeSlot != null) {
+      return secondTimeSlot!.endTime;
+    }
+    return selectedTimeSlot!.endTime;
+  }
+
+  /// Get the formatted time range for the booking
+  String get formattedTimeRange {
+    if (selectedTimeSlot == null) return '';
+    final suffix = selectedTimeSlot!.isNextDay ? ' (+1)' : '';
+    if (selectedDuration == 2 && secondTimeSlot != null) {
+      return '${selectedTimeSlot!.startTime} - ${secondTimeSlot!.endTime}$suffix';
+    }
+    return selectedTimeSlot!.formattedTime;
+  }
+
+  /// Check if the selected duration is valid for the selected slot
+  bool get isDurationValid {
+    if (selectedDuration == 1) return true;
+    // For 2-hour bookings, we need a valid second slot
+    return secondTimeSlot != null && secondTimeSlot!.isAvailable;
+  }
+
+  /// Get the actual booking date (considering next day slots)
+  DateTime get actualBookingDate {
+    if (selectedTimeSlot?.isNextDay ?? false) {
+      return selectedDate.add(const Duration(days: 1));
+    }
+    return selectedDate;
+  }
+
   BookingFlowActive copyWith({
     BookingFlowStep? currentStep,
     String? fieldId,
@@ -107,8 +152,11 @@ class BookingFlowActive extends BookingFlowState {
     Map<String, List<TimeSlotEntity>>? slotsByPeriod,
     bool? isLoadingSlots,
     String? slotsError,
+    int? selectedDuration,
+    TimeSlotEntity? secondTimeSlot,
     bool clearTimeSlot = false,
     bool clearError = false,
+    bool clearSecondSlot = false,
   }) {
     return BookingFlowActive(
       currentStep: currentStep ?? this.currentStep,
@@ -122,6 +170,10 @@ class BookingFlowActive extends BookingFlowState {
       slotsByPeriod: slotsByPeriod ?? this.slotsByPeriod,
       isLoadingSlots: isLoadingSlots ?? this.isLoadingSlots,
       slotsError: clearError ? null : (slotsError ?? this.slotsError),
+      selectedDuration: selectedDuration ?? this.selectedDuration,
+      secondTimeSlot: clearSecondSlot
+          ? null
+          : (secondTimeSlot ?? this.secondTimeSlot),
     );
   }
 
@@ -136,6 +188,8 @@ class BookingFlowActive extends BookingFlowState {
     slotsByPeriod,
     isLoadingSlots,
     slotsError,
+    selectedDuration,
+    secondTimeSlot,
   ];
 }
 
@@ -144,15 +198,25 @@ class BookingFlowSubmitting extends BookingFlowState {
   final String fieldId;
   final DateTime selectedDate;
   final TimeSlotEntity selectedTimeSlot;
+  final int durationHours;
+  final String endTime;
 
   const BookingFlowSubmitting({
     required this.fieldId,
     required this.selectedDate,
     required this.selectedTimeSlot,
+    required this.durationHours,
+    required this.endTime,
   });
 
   @override
-  List<Object?> get props => [fieldId, selectedDate, selectedTimeSlot];
+  List<Object?> get props => [
+    fieldId,
+    selectedDate,
+    selectedTimeSlot,
+    durationHours,
+    endTime,
+  ];
 }
 
 /// Booking completed successfully.

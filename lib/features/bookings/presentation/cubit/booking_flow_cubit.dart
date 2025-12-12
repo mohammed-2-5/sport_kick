@@ -28,10 +28,12 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
 
   /// Initialize the booking flow for a specific field.
   ///
-  /// Sets up the initial state and loads available time slots
-  /// for today's date.
+  /// Sets up the initial state and loads available time slots.
+  /// First available date is tomorrow (not today).
   Future<void> initializeFlow(FieldEntity field) async {
-    final today = DateTime.now();
+    // First available booking date is tomorrow
+    final tomorrow = DateTime.now().add(const Duration(days: 1));
+    final initialDate = DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
 
     emit(
       BookingFlowActive(
@@ -39,12 +41,13 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
         fieldId: field.id,
         fieldName: field.name,
         pricePerHour: field.pricePerHour,
-        selectedDate: today,
+        selectedDate: initialDate,
         isLoadingSlots: true,
+        selectedDuration: 1,
       ),
     );
 
-    await _loadTimeSlots(field.id, today);
+    await _loadTimeSlots(field.id, initialDate);
   }
 
   /// Select a new date and load time slots.
@@ -57,12 +60,29 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
       currentState.copyWith(
         selectedDate: date,
         clearTimeSlot: true,
+        clearSecondSlot: true,
         isLoadingSlots: true,
         clearError: true,
       ),
     );
 
     await _loadTimeSlots(currentState.fieldId, date);
+  }
+
+  /// Select booking duration (1 or 2 hours).
+  void selectDuration(int hours) {
+    final currentState = state;
+    if (currentState is! BookingFlowActive) return;
+    if (hours != 1 && hours != 2) return;
+
+    // Clear selected time slot when changing duration
+    emit(
+      currentState.copyWith(
+        selectedDuration: hours,
+        clearTimeSlot: true,
+        clearSecondSlot: true,
+      ),
+    );
   }
 
   /// Load available time slots for the given date.
@@ -98,7 +118,7 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
     );
   }
 
-  /// Group time slots by period (Morning, Afternoon, Evening).
+  /// Group time slots by period (Morning, Afternoon, Evening, Late Night).
   Map<String, List<TimeSlotEntity>> _groupSlotsByPeriod(
     List<TimeSlotEntity> slots,
   ) {
@@ -106,16 +126,22 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
       'Morning': [],
       'Afternoon': [],
       'Evening': [],
+      'Late Night': [],
     };
 
     for (final slot in slots) {
-      final hour = int.tryParse(slot.startTime.split(':')[0]) ?? 0;
-      if (hour < 12) {
-        grouped['Morning']!.add(slot);
-      } else if (hour < 17) {
-        grouped['Afternoon']!.add(slot);
+      // Late night slots are those on the next day (cross-midnight)
+      if (slot.isNextDay) {
+        grouped['Late Night']!.add(slot);
       } else {
-        grouped['Evening']!.add(slot);
+        final hour = int.tryParse(slot.startTime.split(':')[0]) ?? 0;
+        if (hour < 12) {
+          grouped['Morning']!.add(slot);
+        } else if (hour < 17) {
+          grouped['Afternoon']!.add(slot);
+        } else {
+          grouped['Evening']!.add(slot);
+        }
       }
     }
 
@@ -126,11 +152,85 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
   }
 
   /// Select a time slot.
+  ///
+  /// For 2-hour bookings, also finds and validates the consecutive slot.
   void selectTimeSlot(TimeSlotEntity slot) {
     final currentState = state;
     if (currentState is! BookingFlowActive) return;
 
-    emit(currentState.copyWith(selectedTimeSlot: slot));
+    // For 1-hour booking, just select the slot
+    if (currentState.selectedDuration == 1) {
+      emit(
+        currentState.copyWith(selectedTimeSlot: slot, clearSecondSlot: true),
+      );
+      return;
+    }
+
+    // For 2-hour booking, find the consecutive slot
+    final secondSlot = _findConsecutiveSlot(slot, currentState.slotsByPeriod);
+
+    if (secondSlot == null || !secondSlot.isAvailable) {
+      // Can't select this slot for 2-hour booking
+      emit(
+        currentState.copyWith(
+          slotsError: 'Consecutive slot not available for 2-hour booking',
+        ),
+      );
+      return;
+    }
+
+    emit(
+      currentState.copyWith(
+        selectedTimeSlot: slot,
+        secondTimeSlot: secondSlot,
+        clearError: true,
+      ),
+    );
+  }
+
+  /// Find the consecutive time slot for 2-hour bookings.
+  TimeSlotEntity? _findConsecutiveSlot(
+    TimeSlotEntity slot,
+    Map<String, List<TimeSlotEntity>> slotsByPeriod,
+  ) {
+    final startHour = int.parse(slot.startTime.split(':')[0]);
+    final nextHour = (startHour + 1) % 24;
+    final nextStartTime = '${nextHour.toString().padLeft(2, '0')}:00';
+
+    // Flatten all slots
+    final allSlots = slotsByPeriod.values.expand((s) => s).toList();
+
+    // Handle cross-midnight: if current slot is 23:00, next slot is 00:00 (next day)
+    final bool isNextSlotOnNextDay = slot.isNextDay || startHour == 23;
+
+    for (final s in allSlots) {
+      if (s.startTime == nextStartTime && s.isNextDay == isNextSlotOnNextDay) {
+        return s;
+      }
+      // Special case: 23:00 slot, look for 00:00 on next day
+      if (startHour == 23 &&
+          !slot.isNextDay &&
+          s.startTime == '00:00' &&
+          s.isNextDay) {
+        return s;
+      }
+    }
+
+    return null;
+  }
+
+  /// Check if a slot can be selected for the current duration.
+  bool canSelectSlot(TimeSlotEntity slot) {
+    final currentState = state;
+    if (currentState is! BookingFlowActive) return false;
+
+    if (currentState.selectedDuration == 1) {
+      return slot.isAvailable;
+    }
+
+    // For 2-hour booking, check if consecutive slot is also available
+    final secondSlot = _findConsecutiveSlot(slot, currentState.slotsByPeriod);
+    return slot.isAvailable && secondSlot != null && secondSlot.isAvailable;
   }
 
   /// Navigate to the next step.
@@ -175,21 +275,31 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
     if (currentState is! BookingFlowActive) return;
     if (currentState.selectedTimeSlot == null) return;
 
+    // Calculate end time based on duration
+    final endTime =
+        currentState.endTime ?? currentState.selectedTimeSlot!.endTime;
+
+    // Use actual booking date (considers next day for cross-midnight slots)
+    final bookingDate = currentState.actualBookingDate;
+
     emit(
       BookingFlowSubmitting(
         fieldId: currentState.fieldId,
-        selectedDate: currentState.selectedDate,
+        selectedDate: bookingDate,
         selectedTimeSlot: currentState.selectedTimeSlot!,
+        durationHours: currentState.selectedDuration,
+        endTime: endTime,
       ),
     );
 
     final result = await _createBookingUseCase(
       fieldId: currentState.fieldId,
-      date: currentState.selectedDate,
+      date: bookingDate,
       startTime: currentState.selectedTimeSlot!.startTime,
-      endTime: currentState.selectedTimeSlot!.endTime,
-      totalPrice: currentState.selectedTimeSlot!.price,
+      endTime: endTime,
+      totalPrice: currentState.totalPrice,
       notes: notes,
+      durationHours: currentState.selectedDuration,
     );
 
     result.fold(

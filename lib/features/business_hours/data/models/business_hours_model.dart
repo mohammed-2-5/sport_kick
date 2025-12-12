@@ -12,6 +12,7 @@ class BusinessHoursModel extends BusinessHoursEntity {
     required super.isOpen,
     super.openingTime,
     super.closingTime,
+    super.closesNextDay,
     required super.createdAt,
     required super.updatedAt,
   });
@@ -25,6 +26,7 @@ class BusinessHoursModel extends BusinessHoursEntity {
       isOpen: json['is_open'] as bool,
       openingTime: json['opening_time'] as String?,
       closingTime: json['closing_time'] as String?,
+      closesNextDay: json['closes_next_day'] as bool? ?? false,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
@@ -39,6 +41,7 @@ class BusinessHoursModel extends BusinessHoursEntity {
       'is_open': isOpen,
       'opening_time': openingTime,
       'closing_time': closingTime,
+      'closes_next_day': closesNextDay,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };
@@ -53,6 +56,7 @@ class BusinessHoursModel extends BusinessHoursEntity {
       isOpen: entity.isOpen,
       openingTime: entity.openingTime,
       closingTime: entity.closingTime,
+      closesNextDay: entity.closesNextDay,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     );
@@ -67,6 +71,7 @@ class BusinessHoursModel extends BusinessHoursEntity {
       isOpen: isOpen,
       openingTime: openingTime,
       closingTime: closingTime,
+      closesNextDay: closesNextDay,
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
@@ -81,6 +86,7 @@ class BusinessHoursModel extends BusinessHoursEntity {
     bool? isOpen,
     String? openingTime,
     String? closingTime,
+    bool? closesNextDay,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -91,6 +97,7 @@ class BusinessHoursModel extends BusinessHoursEntity {
       isOpen: isOpen ?? this.isOpen,
       openingTime: openingTime ?? this.openingTime,
       closingTime: closingTime ?? this.closingTime,
+      closesNextDay: closesNextDay ?? this.closesNextDay,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

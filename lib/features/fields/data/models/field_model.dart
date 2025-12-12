@@ -103,6 +103,12 @@ class FieldModel extends FieldEntity {
       totalBookings: json['total_bookings'] as int? ?? 0,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
+      // Payment fields
+      paymentPhone: json['payment_phone'] as String?,
+      paymentMethod: PaymentMethod.fromString(
+        json['payment_method'] as String?,
+      ),
+      paymentInstructions: json['payment_instructions'] as String?,
     );
   }
 
@@ -134,6 +140,11 @@ class FieldModel extends FieldEntity {
       'total_bookings': totalBookings,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
+      // Payment fields
+      if (paymentPhone != null) 'payment_phone': paymentPhone,
+      'payment_method': paymentMethod.dbValue,
+      if (paymentInstructions != null)
+        'payment_instructions': paymentInstructions,
     };
   }
 
@@ -164,6 +175,9 @@ class FieldModel extends FieldEntity {
     int? totalBookings,
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? paymentPhone,
+    PaymentMethod? paymentMethod,
+    String? paymentInstructions,
   }) {
     return FieldModel(
       id: id ?? this.id,
@@ -191,6 +205,9 @@ class FieldModel extends FieldEntity {
       totalBookings: totalBookings ?? this.totalBookings,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      paymentPhone: paymentPhone ?? this.paymentPhone,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+      paymentInstructions: paymentInstructions ?? this.paymentInstructions,
     );
   }
 
@@ -222,6 +239,9 @@ class FieldModel extends FieldEntity {
       totalBookings: entity.totalBookings,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
+      paymentPhone: entity.paymentPhone,
+      paymentMethod: entity.paymentMethod,
+      paymentInstructions: entity.paymentInstructions,
     );
   }
 }

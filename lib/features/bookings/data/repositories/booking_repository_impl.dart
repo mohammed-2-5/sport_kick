@@ -135,6 +135,7 @@ class BookingRepositoryImpl implements BookingRepository {
     required String endTime,
     required double totalPrice,
     String? notes,
+    int durationHours = 1,
   }) async {
     try {
       // Create booking model
@@ -150,6 +151,7 @@ class BookingRepositoryImpl implements BookingRepository {
         currency: 'EGP',
         notes: notes,
         createdAt: DateTime.now(),
+        durationHours: durationHours,
       );
 
       // Create booking

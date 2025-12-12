@@ -10,6 +10,7 @@ class TimeSlotModel extends TimeSlotEntity {
     required super.isAvailable,
     required super.price,
     required super.currency,
+    super.isNextDay,
   });
 
   /// Create model from JSON.
@@ -20,6 +21,7 @@ class TimeSlotModel extends TimeSlotEntity {
       isAvailable: json['is_available'] as bool? ?? true,
       price: (json['price'] as num).toDouble(),
       currency: json['currency'] as String? ?? 'EGP',
+      isNextDay: json['is_next_day'] as bool? ?? false,
     );
   }
 
@@ -31,6 +33,7 @@ class TimeSlotModel extends TimeSlotEntity {
       'is_available': isAvailable,
       'price': price,
       'currency': currency,
+      'is_next_day': isNextDay,
     };
   }
 
@@ -42,6 +45,7 @@ class TimeSlotModel extends TimeSlotEntity {
       isAvailable: entity.isAvailable,
       price: entity.price,
       currency: entity.currency,
+      isNextDay: entity.isNextDay,
     );
   }
 
@@ -53,6 +57,7 @@ class TimeSlotModel extends TimeSlotEntity {
       isAvailable: isAvailable,
       price: price,
       currency: currency,
+      isNextDay: isNextDay,
     );
   }
 
@@ -64,6 +69,7 @@ class TimeSlotModel extends TimeSlotEntity {
     bool? isAvailable,
     double? price,
     String? currency,
+    bool? isNextDay,
   }) {
     return TimeSlotModel(
       startTime: startTime ?? this.startTime,
@@ -71,6 +77,7 @@ class TimeSlotModel extends TimeSlotEntity {
       isAvailable: isAvailable ?? this.isAvailable,
       price: price ?? this.price,
       currency: currency ?? this.currency,
+      isNextDay: isNextDay ?? this.isNextDay,
     );
   }
 }

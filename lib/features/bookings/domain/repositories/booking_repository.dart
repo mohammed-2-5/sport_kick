@@ -30,6 +30,7 @@ abstract class BookingRepository {
     required String endTime,
     required double totalPrice,
     String? notes,
+    int durationHours = 1,
   });
 
   /// Cancel a booking.

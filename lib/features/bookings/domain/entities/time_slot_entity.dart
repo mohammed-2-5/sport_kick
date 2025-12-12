@@ -11,22 +11,44 @@ class TimeSlotEntity extends Equatable {
   final double price;
   final String currency;
 
+  /// Whether this slot is on the next day (for cross-midnight hours)
+  final bool isNextDay;
+
   const TimeSlotEntity({
     required this.startTime,
     required this.endTime,
     required this.isAvailable,
     required this.price,
     required this.currency,
+    this.isNextDay = false,
   });
 
   @override
-  List<Object?> get props => [startTime, endTime, isAvailable, price, currency];
+  List<Object?> get props => [
+    startTime,
+    endTime,
+    isAvailable,
+    price,
+    currency,
+    isNextDay,
+  ];
 
-  /// Get formatted time slot (e.g., "09:00 - 10:00")
-  String get formattedTime => '$startTime - $endTime';
+  /// Get formatted time slot (e.g., "09:00 - 10:00" or "01:00 - 02:00 (+1)")
+  String get formattedTime {
+    final suffix = isNextDay ? ' (+1)' : '';
+    return '$startTime - $endTime$suffix';
+  }
 
   /// Get formatted time range (alias for formattedTime)
   String get formattedTimeRange => formattedTime;
+
+  /// Get the actual date for this slot based on base date
+  DateTime getActualDate(DateTime baseDate) {
+    if (isNextDay) {
+      return baseDate.add(const Duration(days: 1));
+    }
+    return baseDate;
+  }
 
   /// Get formatted price (e.g., "200 EGP")
   String get formattedPrice => '${price.toStringAsFixed(0)} $currency';
@@ -46,11 +68,15 @@ class TimeSlotEntity extends Equatable {
   /// Check if slot is in the afternoon (12 PM - 6 PM)
   bool get isAfternoon => startHour >= 12 && startHour < 18;
 
-  /// Check if slot is in the evening (after 6 PM)
-  bool get isEvening => startHour >= 18;
+  /// Check if slot is in the evening (6 PM - 12 AM)
+  bool get isEvening => startHour >= 18 && !isNextDay;
 
-  /// Get period of day (Morning/Afternoon/Evening)
+  /// Check if slot is late night (after midnight, next day)
+  bool get isLateNight => isNextDay;
+
+  /// Get period of day (Morning/Afternoon/Evening/Late Night)
   String get periodOfDay {
+    if (isLateNight) return 'Late Night';
     if (isMorning) return 'Morning';
     if (isAfternoon) return 'Afternoon';
     return 'Evening';
@@ -66,6 +92,7 @@ class TimeSlotEntity extends Equatable {
     bool? isAvailable,
     double? price,
     String? currency,
+    bool? isNextDay,
   }) {
     return TimeSlotEntity(
       startTime: startTime ?? this.startTime,
@@ -73,6 +100,7 @@ class TimeSlotEntity extends Equatable {
       isAvailable: isAvailable ?? this.isAvailable,
       price: price ?? this.price,
       currency: currency ?? this.currency,
+      isNextDay: isNextDay ?? this.isNextDay,
     );
   }
 
@@ -109,11 +137,15 @@ class TimeSlotEntity extends Equatable {
       'Morning': [],
       'Afternoon': [],
       'Evening': [],
+      'Late Night': [],
     };
 
     for (final slot in slots) {
       grouped[slot.periodOfDay]!.add(slot);
     }
+
+    // Remove empty periods
+    grouped.removeWhere((key, value) => value.isEmpty);
 
     return grouped;
   }

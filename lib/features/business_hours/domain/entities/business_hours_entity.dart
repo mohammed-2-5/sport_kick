@@ -23,6 +23,9 @@ class BusinessHoursEntity extends Equatable {
   /// Closing time (null if closed)
   final String? closingTime;
 
+  /// Whether the closing time is on the next day (for late-night hours like 12 PM - 2 AM)
+  final bool closesNextDay;
+
   /// When this record was created
   final DateTime createdAt;
 
@@ -36,6 +39,7 @@ class BusinessHoursEntity extends Equatable {
     required this.isOpen,
     this.openingTime,
     this.closingTime,
+    this.closesNextDay = false,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -53,8 +57,12 @@ class BusinessHoursEntity extends Equatable {
     if (isOpen24Hours) return '24 Hours';
     if (openingTime == null || closingTime == null) return 'Closed';
 
-    return '${_formatTime(openingTime!)} - ${_formatTime(closingTime!)}';
+    final suffix = closesNextDay ? ' (+1)' : '';
+    return '${_formatTime(openingTime!)} - ${_formatTime(closingTime!)}$suffix';
   }
+
+  /// Returns true if this day has late-night hours that cross midnight
+  bool get isCrossMidnight => closesNextDay;
 
   /// Formats time from HH:mm:ss to HH:mm
   String _formatTime(String time) {
@@ -72,6 +80,7 @@ class BusinessHoursEntity extends Equatable {
     bool? isOpen,
     String? openingTime,
     String? closingTime,
+    bool? closesNextDay,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -82,6 +91,7 @@ class BusinessHoursEntity extends Equatable {
       isOpen: isOpen ?? this.isOpen,
       openingTime: openingTime ?? this.openingTime,
       closingTime: closingTime ?? this.closingTime,
+      closesNextDay: closesNextDay ?? this.closesNextDay,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -95,6 +105,7 @@ class BusinessHoursEntity extends Equatable {
     isOpen,
     openingTime,
     closingTime,
+    closesNextDay,
     createdAt,
     updatedAt,
   ];

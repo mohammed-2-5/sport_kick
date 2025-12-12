@@ -18,14 +18,18 @@ class CreateBookingUseCase {
     required String endTime,
     required double totalPrice,
     String? notes,
+    int durationHours = 1,
   }) async {
-    // Validate date is not in the past
+    // Validate date is not in the past (must be at least tomorrow)
     final today = DateTime.now();
     final bookingDate = DateTime(date.year, date.month, date.day);
     final todayDate = DateTime(today.year, today.month, today.day);
 
-    if (bookingDate.isBefore(todayDate)) {
-      return const Left(ValidationFailure('Cannot book a date in the past'));
+    if (bookingDate.isBefore(todayDate) ||
+        bookingDate.isAtSameMomentAs(todayDate)) {
+      return const Left(
+        ValidationFailure('Bookings must be at least 1 day in advance'),
+      );
     }
 
     // Validate time format
@@ -33,12 +37,19 @@ class CreateBookingUseCase {
       return const Left(ValidationFailure('Invalid time format'));
     }
 
-    // Validate start time is before end time
+    // Validate duration
+    if (durationHours != 1 && durationHours != 2) {
+      return const Left(ValidationFailure('Duration must be 1 or 2 hours'));
+    }
+
+    // Validate time consistency with duration
     final startHour = int.parse(startTime.split(':')[0]);
     final endHour = int.parse(endTime.split(':')[0]);
 
-    if (startHour >= endHour) {
-      return const Left(ValidationFailure('End time must be after start time'));
+    // Handle cross-midnight: endTime could be smaller than startTime (e.g., 23:00 - 01:00)
+    final expectedEndHour = (startHour + durationHours) % 24;
+    if (endHour != expectedEndHour) {
+      return const Left(ValidationFailure('End time does not match duration'));
     }
 
     // Validate totalPrice is positive
@@ -55,6 +66,7 @@ class CreateBookingUseCase {
       endTime: endTime,
       totalPrice: totalPrice,
       notes: notes,
+      durationHours: durationHours,
     );
   }
 
