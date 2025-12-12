@@ -12,6 +12,7 @@ import 'package:spo_kick/features/settings/presentation/widgets/sections/account
 import 'package:spo_kick/features/settings/presentation/widgets/sections/appearance_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/notifications_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/privacy_settings_section.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/sections/security_settings_section.dart';
 
 /// Body content for User Settings Page.
 ///
@@ -77,6 +78,8 @@ class UserSettingsBody extends StatelessWidget {
         PrivacySettingsSection(preferences: preferences),
         const SizedBox(height: SettingsConstants.sectionSpacing),
         const AccountSettingsSection(),
+        const SizedBox(height: SettingsConstants.sectionSpacing),
+        const SecuritySettingsSection(),
         const SizedBox(height: SettingsConstants.sectionSpacing),
         const AboutSettingsSection(),
       ],

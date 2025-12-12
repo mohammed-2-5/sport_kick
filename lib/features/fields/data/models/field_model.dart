@@ -1,4 +1,5 @@
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/payment_method.dart';
 
 /// Field model for data layer.
 ///
@@ -31,6 +32,9 @@ class FieldModel extends FieldEntity {
     super.totalBookings,
     required super.createdAt,
     required super.updatedAt,
+    super.paymentPhone,
+    super.paymentMethod,
+    super.paymentInstructions,
   });
 
   /// Create model from JSON (from Supabase response).

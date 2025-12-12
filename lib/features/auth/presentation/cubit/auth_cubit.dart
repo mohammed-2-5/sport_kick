@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/services/notification_service.dart';
+import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
 import 'package:spo_kick/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
+import 'package:spo_kick/features/auth/domain/usecases/log_login_activity_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/login_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:spo_kick/features/auth/domain/usecases/register_usecase.dart';
@@ -29,6 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
   final ChangePasswordUseCase changePasswordUseCase;
   final ResetPasswordUseCase resetPasswordUseCase;
   final UpdateProfileUseCase updateProfileUseCase;
+  final LogLoginActivityUseCase? logLoginActivityUseCase;
 
   AuthCubit({
     required this.loginUseCase,
@@ -38,6 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
     required this.changePasswordUseCase,
     required this.resetPasswordUseCase,
     required this.updateProfileUseCase,
+    this.logLoginActivityUseCase,
   }) : super(const AuthInitial());
 
   /// Checks if user is currently logged in.
@@ -81,10 +85,14 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) {
         debugPrint('❌ Login Error: ${failure.message}');
+        // Log failed login attempt (fire and forget)
+        _logLoginActivity(null, LoginStatus.failed);
         emit(AuthError(failure.message));
       },
       (user) {
         debugPrint('✅ Login Success: ${user.email}');
+        // Log successful login (fire and forget)
+        _logLoginActivity(user.id, LoginStatus.success);
         _setupNotifications(user);
         emit(Authenticated(user));
       },
@@ -266,5 +274,20 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       debugPrint('[AuthCubit] Error cleaning up notifications: $e');
     }
+  }
+
+  /// Logs login activity (fire and forget - does not block auth flow).
+  void _logLoginActivity(String? userId, LoginStatus status) {
+    if (logLoginActivityUseCase == null || userId == null) return;
+
+    // Fire and forget - don't await
+    logLoginActivityUseCase!(userId: userId, status: status).then(
+      (result) => result.fold(
+        (failure) => debugPrint(
+          '[AuthCubit] Failed to log activity: ${failure.message}',
+        ),
+        (_) => debugPrint('[AuthCubit] Login activity logged: $status'),
+      ),
+    );
   }
 }

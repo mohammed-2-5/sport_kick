@@ -158,6 +158,13 @@ class _PlatformSection extends StatelessWidget {
           value: state.requireEmailVerification,
           onChanged: cubit.toggleEmailVerification,
         ),
+        PremiumSettingsTile(
+          label: 'Operating Hours',
+          value: 'Configure defaults',
+          icon: Icons.access_time,
+          iconColor: AppColors.accentCyan,
+          onTap: () => context.pushNamed('platformOperatingHours'),
+        ),
       ],
     );
   }
@@ -236,12 +243,17 @@ class _SecuritySection extends StatelessWidget {
           onChanged: cubit.toggleLogFailedLogins,
         ),
         PremiumSettingsTile(
+          label: 'Login Activity',
+          value: 'View history',
+          icon: Icons.history,
+          iconColor: Colors.teal,
+          onTap: () => context.pushNamed('loginActivity'),
+        ),
+        PremiumSettingsTile(
           label: 'Change Password',
           icon: Icons.lock,
           iconColor: AppColors.premiumGold,
-          onTap: () {
-            // Navigate to change password
-          },
+          onTap: () => context.pushNamed('changePassword'),
         ),
       ],
     );

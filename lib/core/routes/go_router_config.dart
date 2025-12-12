@@ -61,6 +61,8 @@ import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_rep
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_settings_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/user_details_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/users_list_page.dart';
+import 'package:spo_kick/features/auth/presentation/pages/login_activity_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/platform_operating_hours_page.dart';
 
 /// GoRouter configuration for the Sport Kick application.
 ///
@@ -598,6 +600,20 @@ class AppRouterConfig {
           name: 'superAdminReports',
           pageBuilder: (context, state) => _buildSlidePage(
             child: const SuperAdminReportsPage(),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: '/login-activity',
+          name: 'loginActivity',
+          pageBuilder: (context, state) =>
+              _buildSlidePage(child: const LoginActivityPage(), state: state),
+        ),
+        GoRoute(
+          path: '/super-admin/operating-hours',
+          name: 'platformOperatingHours',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: const PlatformOperatingHoursPage(),
             state: state,
           ),
         ),

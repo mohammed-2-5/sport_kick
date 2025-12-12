@@ -1,7 +1,7 @@
 # Sport Kick - Project Status & Roadmap
 
 **Last Updated:** 2025-12-12
-**Current Status:** Phase 8 (Production Ready) - 85% Complete
+**Current Status:** Phase 9 (Booking Flow Enhancement) - In Progress
 
 ## 🎯 **Overall Progress: 96% Complete**
 
@@ -26,6 +26,7 @@
 ### ⏳ Pending/In Progress:
 - ⏳ Phase 7: Advanced Features (0% - Payments, Promotions)
 - 🔄 Phase 8: Production Ready (85% - Tests remaining)
+- 🔄 **Phase 9: Booking Flow Enhancement (In Progress)** ⬅️ **CURRENT**
 
 ---
 
@@ -965,6 +966,155 @@
   - Search by amenities
   - Search by price range
   - Search by availability
+
+---
+
+### Phase 9: Booking Flow Enhancement (IN PROGRESS 🔄) ⬅️ CURRENT
+**Priority:** High
+**Status:** In Progress - 0%
+**Started:** 2025-12-12
+**Estimated Effort:** 5 phases
+
+#### 📋 Overview
+Complete overhaul of the booking flow with flexible hours, duration options, payment integration, and invoice system.
+
+#### 🎯 Phase 9.1: Database & Core (In Progress)
+**Status:** 🔄 In Progress
+
+**Database Changes:**
+- [ ] Add payment fields to `fields` table (payment_phone, payment_method, payment_instructions)
+- [ ] Add payment fields to `bookings` table (duration_hours, payment_status, payment_proof_url, invoice_number)
+- [ ] Add `closes_next_day` to `business_hours` table for cross-midnight hours
+- [ ] Create Supabase storage bucket for payment proofs
+
+**Entity Updates:**
+- [ ] Update `BookingEntity` with payment/duration fields
+- [ ] Update `FieldEntity` with payment info fields
+- [ ] Create `PaymentStatus` enum (pending, uploaded, verified, rejected)
+- [ ] Create `PaymentMethod` enum (vodafone_cash, instapay)
+
+**Model Updates:**
+- [ ] Update `BookingModel` with JSON serialization
+- [ ] Update `FieldModel` with JSON serialization
+
+#### 🎯 Phase 9.2: Time Slots & Duration
+**Status:** ⏳ Pending
+
+**Time Slot Changes:**
+- [ ] Update `booking_remote_datasource.dart` to read from `business_hours` table
+- [ ] Support cross-midnight hours (12 PM - 2 AM shows 2 AM on next day)
+- [ ] Filter slots to show only operating hours per field
+- [ ] Handle late-night hours display (1:00 AM, 2:00 AM)
+
+**Duration Selection:**
+- [ ] Add duration selection (1 or 2 hours)
+- [ ] Validate consecutive slots for 2-hour bookings
+- [ ] Calculate total price for multi-hour bookings
+- [ ] Create `BookingDurationSelector` widget
+
+**Date Restriction:**
+- [ ] Set minimum booking date to tomorrow (not today)
+- [ ] Update date picker constraints
+- [ ] Update helper text
+
+#### 🎯 Phase 9.3: Invoice & Payment System
+**Status:** ⏳ Pending
+
+**Invoice System:**
+- [ ] Create `InvoiceEntity` with invoice number generation
+- [ ] Create invoice number format: `INV-YYYYMMDD-XXXX`
+- [ ] Create `BookingInvoicePage` for displaying invoice
+
+**Payment Integration:**
+- [ ] Add Vodafone Cash payment method
+- [ ] Add InstaPay payment method (basic)
+- [ ] Display owner's payment phone on invoice
+- [ ] Show payment instructions
+
+**Payment Proof Upload:**
+- [ ] Create `PaymentProofUpload` widget
+- [ ] Integrate with Supabase Storage
+- [ ] Create `UploadPaymentProofUseCase`
+- [ ] Update booking with proof URL
+
+#### 🎯 Phase 9.4: UI Integration
+**Status:** ⏳ Pending
+
+**Create Booking Flow Updates:**
+- [ ] Add duration selector to `create_booking_page.dart`
+- [ ] Update time slot selector for multi-slot selection
+- [ ] Update date selector with tomorrow minimum
+- [ ] Navigate to invoice page after booking creation
+
+**Invoice Page:**
+- [ ] Create `booking_invoice_page.dart`
+- [ ] Create `payment_details_section.dart` widget
+- [ ] Create `payment_proof_upload.dart` widget
+- [ ] Create `invoice_actions.dart` widget
+
+**Owner Booking Management:**
+- [ ] Show payment status badge on booking cards
+- [ ] Add "View Payment Proof" button (tap to fullscreen)
+- [ ] Add payment verification actions (verify/reject)
+- [ ] Update booking approval flow with payment check
+
+#### 🎯 Phase 9.5: Testing & Polish
+**Status:** ⏳ Pending
+
+**Testing:**
+- [ ] Test cross-midnight hours display
+- [ ] Test 2-hour consecutive booking validation
+- [ ] Test payment proof upload flow
+- [ ] Test invoice generation
+- [ ] Test date restriction (tomorrow minimum)
+
+**Polish:**
+- [ ] Error handling for all new features
+- [ ] Loading states for async operations
+- [ ] Success/error messages
+- [ ] UI consistency with premium theme
+
+#### 📊 Files to Create (Phase 9)
+```
+lib/features/bookings/domain/entities/
+├── payment_status.dart          # PaymentStatus enum
+├── invoice_entity.dart          # Invoice data structure
+
+lib/features/bookings/domain/usecases/
+├── upload_payment_proof_usecase.dart
+├── verify_payment_usecase.dart
+
+lib/features/bookings/presentation/widgets/
+├── duration/
+│   └── booking_duration_selector.dart
+├── invoice/
+│   ├── booking_invoice_card.dart
+│   ├── payment_details_section.dart
+│   ├── payment_proof_upload.dart
+│   └── invoice_actions.dart
+
+lib/features/bookings/presentation/pages/
+├── booking_invoice_page.dart
+
+lib/features/fields/domain/entities/
+├── payment_method.dart          # PaymentMethod enum
+```
+
+#### 📊 Files to Modify (Phase 9)
+```
+lib/features/bookings/domain/entities/booking_entity.dart
+lib/features/bookings/data/models/booking_model.dart
+lib/features/bookings/data/datasources/booking_remote_datasource.dart
+lib/features/bookings/presentation/cubit/booking_flow_cubit.dart
+lib/features/bookings/presentation/pages/create_booking_page.dart
+
+lib/features/fields/domain/entities/field_entity.dart
+lib/features/fields/data/models/field_model.dart
+
+lib/features/owner/presentation/widgets/owner_booking_card.dart
+
+supabase/migrations/ (new migration file)
+```
 
 ---
 

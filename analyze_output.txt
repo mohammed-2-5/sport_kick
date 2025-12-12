@@ -1,0 +1,24 @@
+   info - Use 'const' with the constructor to improve performance - lib\core\widgets\premium\skeletons\card_skeleton.dart:15:14 - prefer_const_constructors
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\core\widgets\premium\skeletons\card_skeleton.dart:17:19 - prefer_const_literals_to_create_immutables
+   info - Use 'const' with the constructor to improve performance - lib\core\widgets\premium\skeletons\card_skeleton.dart:24:11 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\widgets\premium\skeletons\card_skeleton.dart:26:20 - prefer_const_constructors
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\core\widgets\premium\skeletons\card_skeleton.dart:28:25 - prefer_const_literals_to_create_immutables
+   info - Use 'const' with the constructor to improve performance - lib\core\widgets\premium\skeletons\card_skeleton.dart:33:17 - prefer_const_constructors
+   info - Unnecessary use of multiple underscores - lib\core\widgets\premium\skeletons\stats_row_skeleton.dart:17:31 - unnecessary_underscores
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\widgets\premium\password_strength_indicator.dart:55:13 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\widgets\premium\password_strength_indicator.dart:57:22 - prefer_const_constructors
+   info - Statements in an if should be enclosed in a block - lib\features\auth\presentation\widgets\premium\password_strength_indicator.dart:240:7 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\features\auth\presentation\widgets\premium\password_strength_indicator.dart:243:7 - curly_braces_in_flow_control_structures
+   info - The type of the right operand ('String') isn't a subtype or a supertype of the left operand ('BookingStatus') - lib\features\owner\presentation\widgets\premium\analytics\premium_owner_analytics_view.dart:140:32 - unrelated_type_equality_checks
+   info - The type of the right operand ('String') isn't a subtype or a supertype of the left operand ('BookingStatus') - lib\features\owner\presentation\widgets\premium\analytics\premium_owner_analytics_view.dart:142:60 - unrelated_type_equality_checks
+   info - The type of the right operand ('String') isn't a subtype or a supertype of the left operand ('BookingStatus') - lib\features\owner\presentation\widgets\premium\analytics\premium_owner_analytics_view.dart:144:32 - unrelated_type_equality_checks
+   info - The type of the right operand ('String') isn't a subtype or a supertype of the left operand ('BookingStatus') - lib\features\owner\presentation\widgets\premium\analytics\premium_owner_analytics_view.dart:154:32 - unrelated_type_equality_checks
+   info - Unnecessary use of multiple underscores - lib\features\owner\presentation\widgets\premium\analytics\premium_performance_metrics.dart:75:31 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\owner\presentation\widgets\premium\analytics\premium_period_selector.dart:34:31 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\owner\presentation\widgets\premium\date_selector.dart:29:31 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\owner\presentation\widgets\premium\premium_manual_booking_view.dart:548:31 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\owner\presentation\widgets\premium\profile\premium_owner_profile_header.dart:127:51 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\owner\presentation\widgets\premium\profile\premium_owner_profile_header.dart:127:55 - unnecessary_underscores
+   info - Use 'const' with the constructor to improve performance - lib\features\reviews\presentation\widgets\premium\review_success_overlay.dart:163:30 - prefer_const_constructors
+
+22 issues found. (ran in 6.6s)

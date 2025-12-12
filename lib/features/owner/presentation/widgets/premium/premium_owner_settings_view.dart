@@ -69,6 +69,10 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                       _buildBookingPreferencesSection(settingsState),
                       const SizedBox(height: 16),
 
+                      // Security Section
+                      _buildSecuritySection(),
+                      const SizedBox(height: 16),
+
                       // About Section
                       _buildAboutSection(),
                       const SizedBox(height: 24),
@@ -203,6 +207,33 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           onTap: () {
             HapticFeedback.lightImpact();
             // Navigate to pricing settings
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSecuritySection() {
+    return PremiumOwnerSettingsSection(
+      title: 'Security',
+      icon: Icons.security_outlined,
+      children: [
+        OwnerSettingsTile(
+          label: 'Login Activity',
+          icon: Icons.history,
+          value: 'View history',
+          onTap: () {
+            HapticFeedback.lightImpact();
+            context.pushNamed('loginActivity');
+          },
+        ),
+        OwnerSettingsTile(
+          label: 'Active Sessions',
+          icon: Icons.devices,
+          value: 'Manage',
+          onTap: () {
+            HapticFeedback.lightImpact();
+            context.pushNamed('loginActivity');
           },
         ),
       ],

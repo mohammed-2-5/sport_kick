@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 import 'booking_status.dart';
+import 'payment_status.dart';
 
 /// Booking entity representing a field booking.
 ///
 /// Contains all information about a field booking including
-/// user, field, time slot, status, and pricing.
+/// user, field, time slot, status, pricing, and payment details.
 class BookingEntity extends Equatable {
   final String id;
   final String userId;
@@ -24,6 +25,17 @@ class BookingEntity extends Equatable {
   final DateTime? canceledAt;
   final String? cancellationReason;
   final String? notes;
+
+  // Duration fields
+  final int durationHours; // 1 or 2 hours
+
+  // Payment fields
+  final PaymentStatus paymentStatus;
+  final String? paymentProofUrl; // URL to payment screenshot
+  final DateTime? paymentUploadedAt;
+  final String? invoiceNumber; // Format: INV-YYYYMMDD-XXXX
+  final DateTime? paymentVerifiedAt;
+  final String? paymentRejectionReason;
 
   // Manual booking fields (for admin-created bookings)
   final bool isManual;
@@ -50,6 +62,13 @@ class BookingEntity extends Equatable {
     this.canceledAt,
     this.cancellationReason,
     this.notes,
+    this.durationHours = 1,
+    this.paymentStatus = PaymentStatus.pending,
+    this.paymentProofUrl,
+    this.paymentUploadedAt,
+    this.invoiceNumber,
+    this.paymentVerifiedAt,
+    this.paymentRejectionReason,
     this.isManual = false,
     this.createdBy,
     this.customerName,
@@ -76,6 +95,13 @@ class BookingEntity extends Equatable {
     canceledAt,
     cancellationReason,
     notes,
+    durationHours,
+    paymentStatus,
+    paymentProofUrl,
+    paymentUploadedAt,
+    invoiceNumber,
+    paymentVerifiedAt,
+    paymentRejectionReason,
     isManual,
     createdBy,
     customerName,
@@ -163,6 +189,22 @@ class BookingEntity extends Equatable {
     return end - start;
   }
 
+  /// Check if payment proof is uploaded
+  bool get hasPaymentProof =>
+      paymentProofUrl != null && paymentProofUrl!.isNotEmpty;
+
+  /// Check if payment needs user action
+  bool get paymentNeedsUserAction => paymentStatus.needsUserAction;
+
+  /// Check if payment needs owner action
+  bool get paymentNeedsOwnerAction => paymentStatus.needsOwnerAction;
+
+  /// Check if payment is complete
+  bool get isPaymentComplete => paymentStatus.isComplete;
+
+  /// Get payment status display text
+  String get paymentStatusText => paymentStatus.displayName;
+
   /// Create a copy with updated fields
   BookingEntity copyWith({
     String? id,
@@ -182,6 +224,13 @@ class BookingEntity extends Equatable {
     DateTime? canceledAt,
     String? cancellationReason,
     String? notes,
+    int? durationHours,
+    PaymentStatus? paymentStatus,
+    String? paymentProofUrl,
+    DateTime? paymentUploadedAt,
+    String? invoiceNumber,
+    DateTime? paymentVerifiedAt,
+    String? paymentRejectionReason,
     bool? isManual,
     String? createdBy,
     String? customerName,
@@ -206,6 +255,14 @@ class BookingEntity extends Equatable {
       canceledAt: canceledAt ?? this.canceledAt,
       cancellationReason: cancellationReason ?? this.cancellationReason,
       notes: notes ?? this.notes,
+      durationHours: durationHours ?? this.durationHours,
+      paymentStatus: paymentStatus ?? this.paymentStatus,
+      paymentProofUrl: paymentProofUrl ?? this.paymentProofUrl,
+      paymentUploadedAt: paymentUploadedAt ?? this.paymentUploadedAt,
+      invoiceNumber: invoiceNumber ?? this.invoiceNumber,
+      paymentVerifiedAt: paymentVerifiedAt ?? this.paymentVerifiedAt,
+      paymentRejectionReason:
+          paymentRejectionReason ?? this.paymentRejectionReason,
       isManual: isManual ?? this.isManual,
       createdBy: createdBy ?? this.createdBy,
       customerName: customerName ?? this.customerName,

@@ -167,6 +167,22 @@ import 'package:spo_kick/features/onboarding/domain/usecases/check_onboarding_st
 import 'package:spo_kick/features/onboarding/domain/usecases/complete_onboarding_usecase.dart';
 import 'package:spo_kick/features/onboarding/presentation/cubit/onboarding_cubit.dart';
 
+// Login Activity Feature
+import 'package:spo_kick/features/auth/data/datasources/login_activity_datasource.dart';
+import 'package:spo_kick/features/auth/data/repositories/login_activity_repository_impl.dart';
+import 'package:spo_kick/features/auth/domain/repositories/login_activity_repository.dart';
+import 'package:spo_kick/features/auth/domain/usecases/get_login_activity_usecase.dart';
+import 'package:spo_kick/features/auth/domain/usecases/log_login_activity_usecase.dart';
+import 'package:spo_kick/features/auth/presentation/cubit/login_activity_cubit.dart';
+
+// Platform Settings Feature
+import 'package:spo_kick/features/super_admin/data/datasources/platform_settings_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/repositories/platform_settings_repository_impl.dart';
+import 'package:spo_kick/features/super_admin/domain/repositories/platform_settings_repository.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_settings_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_platform_settings_usecase.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/platform_settings/platform_settings_cubit.dart';
+
 /// Service Locator instance.
 ///
 /// This is a global instance of GetIt used for dependency injection
@@ -234,6 +250,12 @@ Future<void> initDependencies() async {
 
   // Onboarding Feature
   _initOnboarding();
+
+  // Login Activity Feature
+  _initLoginActivity();
+
+  // Platform Settings Feature
+  _initPlatformSettings();
 }
 
 /// Initialize external dependencies.
@@ -305,6 +327,7 @@ void _initAuth() {
       changePasswordUseCase: sl(),
       resetPasswordUseCase: sl(),
       updateProfileUseCase: sl(),
+      logLoginActivityUseCase: sl(),
     ),
   );
 
@@ -929,5 +952,59 @@ void _initOnboarding() {
   // Data Sources
   sl.registerLazySingleton<OnboardingLocalDataSource>(
     () => OnboardingLocalDataSourceImpl(sharedPreferences: sl()),
+  );
+}
+
+// ==================== FEATURE: LOGIN ACTIVITY ====================
+
+/// Initialize login activity feature dependencies.
+void _initLoginActivity() {
+  // Cubit
+  sl.registerFactory(
+    () => LoginActivityCubit(getLoginActivity: sl(), getAllLoginActivity: sl()),
+  );
+
+  // Use Cases
+  sl.registerLazySingleton(() => GetLoginActivityUseCase(sl()));
+  sl.registerLazySingleton(() => GetAllLoginActivityUseCase(sl()));
+  sl.registerLazySingleton(() => LogLoginActivityUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<LoginActivityRepository>(
+    () => LoginActivityRepositoryImpl(sl()),
+  );
+
+  // Data Sources
+  sl.registerLazySingleton<LoginActivityDataSource>(
+    () => LoginActivityRemoteDataSource(sl()),
+  );
+}
+
+// ==================== FEATURE: PLATFORM SETTINGS ====================
+
+/// Initialize platform settings feature dependencies.
+void _initPlatformSettings() {
+  // Cubit
+  sl.registerFactory(
+    () => PlatformSettingsCubit(
+      getPlatformSettings: sl(),
+      updateOperatingHours: sl(),
+      updateEnforceHours: sl(),
+    ),
+  );
+
+  // Use Cases
+  sl.registerLazySingleton(() => GetPlatformSettingsUseCase(sl()));
+  sl.registerLazySingleton(() => UpdatePlatformOperatingHoursUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateEnforceOperatingHoursUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<PlatformSettingsRepository>(
+    () => PlatformSettingsRepositoryImpl(sl()),
+  );
+
+  // Data Sources
+  sl.registerLazySingleton<PlatformSettingsDataSource>(
+    () => PlatformSettingsRemoteDataSource(sl()),
   );
 }

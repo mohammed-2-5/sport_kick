@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'payment_method.dart';
+
 /// Field entity representing a sports field in the domain layer.
 ///
 /// This is the core business entity for fields, independent of external
@@ -80,6 +82,16 @@ class FieldEntity extends Equatable {
   /// Last update timestamp
   final DateTime updatedAt;
 
+  // Payment fields
+  /// Phone number for mobile wallet payments (Vodafone Cash, InstaPay)
+  final String? paymentPhone;
+
+  /// Payment method (vodafone_cash, instapay)
+  final PaymentMethod paymentMethod;
+
+  /// Custom payment instructions from field owner
+  final String? paymentInstructions;
+
   const FieldEntity({
     required this.id,
     this.ownerId,
@@ -106,6 +118,9 @@ class FieldEntity extends Equatable {
     this.totalBookings = 0,
     required this.createdAt,
     required this.updatedAt,
+    this.paymentPhone,
+    this.paymentMethod = PaymentMethod.vodafoneCash,
+    this.paymentInstructions,
   });
 
   /// Check if field has location coordinates
@@ -145,6 +160,13 @@ class FieldEntity extends Equatable {
     return 'Standard';
   }
 
+  /// Check if field has payment info configured
+  bool get hasPaymentInfo => paymentPhone != null && paymentPhone!.isNotEmpty;
+
+  /// Get payment instructions (custom or default template)
+  String get effectivePaymentInstructions =>
+      paymentInstructions ?? paymentMethod.instructionsTemplate;
+
   @override
   List<Object?> get props => [
     id,
@@ -172,5 +194,8 @@ class FieldEntity extends Equatable {
     totalBookings,
     createdAt,
     updatedAt,
+    paymentPhone,
+    paymentMethod,
+    paymentInstructions,
   ];
 }
