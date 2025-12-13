@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 /// Displays error icon, title, message and retry button.
 /// Can be reused across all features for consistent error handling UI.
 class GenericErrorState extends StatelessWidget {
-  /// Error message to display
+  /// Error message to display (optional if only title is needed)
   final String message;
 
-  /// Callback when retry button is pressed
-  final VoidCallback onRetry;
+  /// Callback when retry button is pressed (null hides the retry button)
+  final VoidCallback? onRetry;
 
   /// Title to display (defaults to 'Error')
   final String title;
@@ -24,8 +24,8 @@ class GenericErrorState extends StatelessWidget {
   final String retryText;
 
   const GenericErrorState({
-    required this.message,
-    required this.onRetry,
+    this.message = '',
+    this.onRetry,
     this.title = 'Error',
     this.icon = Icons.error_outline,
     this.iconColor = Colors.red,
@@ -45,18 +45,22 @@ class GenericErrorState extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          const SizedBox(height: 8),
-          Text(
-            message,
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh),
-            label: Text(retryText),
-          ),
+          if (message.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              message,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+          ],
+          if (onRetry != null) ...[
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: onRetry,
+              icon: const Icon(Icons.refresh),
+              label: Text(retryText),
+            ),
+          ],
         ],
       ),
     );

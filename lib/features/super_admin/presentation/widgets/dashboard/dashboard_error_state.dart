@@ -11,7 +11,6 @@ class DashboardErrorState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GenericErrorState(
-      message: '',
       onRetry: onRetry,
       title: 'Error loading dashboard',
       iconColor: AppColors.error,

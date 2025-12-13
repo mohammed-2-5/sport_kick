@@ -48,11 +48,11 @@ void main() {
 
     testWidgets('displays custom icon and color', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
             body: GenericErrorState(
               message: 'Error',
-              onRetry: null,
+              onRetry: () {},
               icon: Icons.warning,
               iconColor: Colors.orange,
             ),
@@ -82,6 +82,40 @@ void main() {
       );
 
       expect(find.text(customRetryText), findsOneWidget);
+    });
+
+    testWidgets('hides retry button when onRetry is null', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: GenericErrorState(
+              message: 'Error occurred',
+              title: 'Error',
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Retry'), findsNothing);
+      expect(find.byType(ElevatedButton), findsNothing);
+    });
+
+    testWidgets('hides message when empty', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: GenericErrorState(
+              title: 'Error loading data',
+              onRetry: () {},
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Error loading data'), findsOneWidget);
+      // Message should not be displayed
+      final textWidgets = tester.widgetList<Text>(find.byType(Text));
+      expect(textWidgets.length, 2); // Only title and retry button text
     });
   });
 }
