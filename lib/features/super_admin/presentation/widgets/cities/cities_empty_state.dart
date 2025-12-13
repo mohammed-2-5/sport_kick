@@ -7,11 +7,11 @@ class CitiesEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GenericEmptyState(
-      hasFilters: false,
+      hasFilters: true,
       icon: Icons.location_city_outlined,
       emptyTitle: 'No Cities Found',
       filteredTitle: 'No Cities Found',
-      emptySubtitle: 'Try changing the filter',
+      emptySubtitle: 'Cities will appear here once added',
       filteredSubtitle: 'Try changing the filter',
     );
   }

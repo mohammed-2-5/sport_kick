@@ -39,6 +39,9 @@ class GenericEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // If no custom icon provided:
+    // - With filters (search active): use search_off icon
+    // - Without filters (truly empty): use inbox_outlined as generic fallback
     final displayIcon = icon ??
         (hasFilters ? Icons.search_off : Icons.inbox_outlined);
     final displayIconSize = iconSize ?? (hasFilters ? 64.0 : 80.0);
