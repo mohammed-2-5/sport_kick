@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/widgets/generic_empty_state.dart';
 
 /// Empty state widget for bookings list.
 class BookingsListEmptyState extends StatelessWidget {
@@ -8,31 +9,14 @@ class BookingsListEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            hasFilters ? Icons.search_off : Icons.event_note_outlined,
-            size: 64,
-            color: Colors.grey[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            hasFilters ? 'No Results Found' : 'No bookings found',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            hasFilters
-                ? 'Try adjusting your search or filters'
-                : 'Bookings will appear here once made',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-          ),
-        ],
-      ),
+    return GenericEmptyState(
+      hasFilters: hasFilters,
+      icon: hasFilters ? null : Icons.event_note_outlined,
+      emptyTitle: 'No bookings found',
+      filteredTitle: 'No Results Found',
+      emptySubtitle: 'Bookings will appear here once made',
+      filteredSubtitle: 'Try adjusting your search or filters',
+      iconSize: 64.0,
     );
   }
 }
