@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/widgets/generic_empty_state.dart';
 
 class AdminListEmptyState extends StatelessWidget {
   final bool isSearchEmpty;
@@ -7,35 +8,13 @@ class AdminListEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            isSearchEmpty
-                ? Icons.admin_panel_settings_outlined
-                : Icons.search_off,
-            size: 80,
-            color: Colors.grey[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            isSearchEmpty ? 'No Admins Yet' : 'No Results Found',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            isSearchEmpty
-                ? 'Create your first field owner account'
-                : 'Try adjusting your filters',
-            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-          ),
-        ],
-      ),
+    return GenericEmptyState(
+      hasFilters: !isSearchEmpty,
+      icon: isSearchEmpty ? Icons.admin_panel_settings_outlined : null,
+      emptyTitle: 'No Admins Yet',
+      filteredTitle: 'No Results Found',
+      emptySubtitle: 'Create your first field owner account',
+      filteredSubtitle: 'Try adjusting your filters',
     );
   }
 }

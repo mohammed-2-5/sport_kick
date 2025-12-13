@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/widgets/generic_empty_state.dart';
 
 class FieldsListEmptyState extends StatelessWidget {
   final bool hasFilters;
@@ -7,34 +8,13 @@ class FieldsListEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            hasFilters ? Icons.search_off : Icons.sports_soccer_outlined,
-            size: 80,
-            color: Colors.grey[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            hasFilters ? 'No Results Found' : 'No Fields Yet',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            hasFilters
-                ? 'Try adjusting your filters'
-                : 'Fields will appear here once created',
-            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+    return GenericEmptyState(
+      hasFilters: hasFilters,
+      icon: hasFilters ? null : Icons.sports_soccer_outlined,
+      emptyTitle: 'No Fields Yet',
+      filteredTitle: 'No Results Found',
+      emptySubtitle: 'Fields will appear here once created',
+      filteredSubtitle: 'Try adjusting your filters',
     );
   }
 }
