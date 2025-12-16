@@ -11,6 +11,7 @@ import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/p
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/booking_success_overlay.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_booking_confirmation.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_date_selector.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_selection_step.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_slot_grid.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
@@ -35,7 +36,12 @@ class PremiumBookingFlowView extends StatelessWidget {
         if (state is BookingFlowSuccess) {
           return BookingSuccessOverlay(
             booking: state.booking,
+            field: field,
             onViewBookings: () => context.goNamed('myBookings'),
+            onViewInvoice: () => context.pushNamed(
+              'bookingInvoice',
+              extra: {'booking': state.booking, 'field': field},
+            ),
             onDone: () => context.pop(),
           );
         }
@@ -134,13 +140,18 @@ class PremiumBookingFlowView extends StatelessWidget {
         return _DateSelectionStep(state: state);
 
       case BookingFlowStep.selectTime:
-        return _TimeSelectionStep(state: state);
+        return PremiumTimeSelectionStep(
+          state: state,
+          pricePerHour: state.pricePerHour,
+        );
 
       case BookingFlowStep.confirm:
         return PremiumBookingConfirmation(
           fieldName: state.fieldName,
           selectedDate: state.selectedDate,
           selectedSlot: state.selectedTimeSlot!,
+          totalPrice: state.totalPrice,
+          durationHours: state.selectedDuration,
           onConfirm: () => context.read<BookingFlowCubit>().submitBooking(),
           onBack: () => context.read<BookingFlowCubit>().previousStep(),
           isSubmitting: false,
@@ -200,6 +211,8 @@ class _DateSelectionStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<BookingFlowCubit>();
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,112 +220,23 @@ class _DateSelectionStep extends StatelessWidget {
           const SizedBox(height: 8),
           PremiumDateSelector(
             selectedDate: state.selectedDate,
-            onDateSelected: (date) {
-              context.read<BookingFlowCubit>().selectDate(date);
-            },
+            onDateSelected: cubit.selectDate,
           ),
           const SizedBox(height: 24),
           PremiumTimeSlotGrid(
             slotsByPeriod: state.slotsByPeriod,
             selectedSlot: state.selectedTimeSlot,
-            onSlotSelected: (slot) {
-              context.read<BookingFlowCubit>().selectTimeSlot(slot);
-            },
+            secondSlot: state.secondTimeSlot,
+            selectedDuration: state.selectedDuration,
+            canSelectSlot: cubit.canSelectSlot,
+            onSlotSelected: cubit.selectTimeSlotIfValid,
             isLoading: state.isLoadingSlots,
             errorMessage: state.slotsError,
           ),
-          const SizedBox(height: 100), // Space for bottom bar
+          const SizedBox(height: 100),
         ],
       ),
     );
-  }
-}
-
-/// Time selection step content.
-class _TimeSelectionStep extends StatelessWidget {
-  final BookingFlowActive state;
-
-  const _TimeSelectionStep({required this.state});
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Selected date summary
-          Container(
-            margin: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.accentCyan.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.calendar_today,
-                  color: AppColors.accentCyan,
-                  size: 20,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  'Selected: ${_formatDate(state.selectedDate)}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.accentCyan,
-                  ),
-                ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () => context.read<BookingFlowCubit>().previousStep(),
-                  child: const Text(
-                    'Change',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.accentCyan,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-          PremiumTimeSlotGrid(
-            slotsByPeriod: state.slotsByPeriod,
-            selectedSlot: state.selectedTimeSlot,
-            onSlotSelected: (slot) {
-              context.read<BookingFlowCubit>().selectTimeSlot(slot);
-            },
-            isLoading: state.isLoadingSlots,
-            errorMessage: state.slotsError,
-          ),
-          const SizedBox(height: 100), // Space for bottom bar
-        ],
-      ),
-    );
-  }
-
-  String _formatDate(DateTime date) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return '${days[date.weekday - 1]}, ${months[date.month - 1]} ${date.day}';
   }
 }
 
@@ -347,15 +271,15 @@ class _BottomActionBar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      'Total',
-                      style: TextStyle(
+                    Text(
+                      'Total (${state.selectedDuration}h)',
+                      style: const TextStyle(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
                     ),
                     Text(
-                      state.selectedTimeSlot!.formattedPrice,
+                      '${state.totalPrice.toStringAsFixed(0)} EGP',
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w800,

@@ -52,6 +52,7 @@ class AdminDetailsCubit extends Cubit<AdminDetailsState> {
         final stats = AdminDetailsStats.fromFields(
           assignedFields,
           admin.createdAt,
+          admin.totalRevenue,
         );
 
         emit(
@@ -89,6 +90,7 @@ class AdminDetailsCubit extends Cubit<AdminDetailsState> {
         final stats = AdminDetailsStats.fromFields(
           assignedFields,
           currentState.admin.createdAt,
+          currentState.admin.totalRevenue,
         );
 
         emit(
@@ -219,6 +221,7 @@ class AdminDetailsCubit extends Cubit<AdminDetailsState> {
     final stats = AdminDetailsStats.fromFields(
       assignedFields,
       updatedAdmin.createdAt,
+      updatedAdmin.totalRevenue,
     );
 
     emit(

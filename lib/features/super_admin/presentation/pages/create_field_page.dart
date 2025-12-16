@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/models/location_data.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
@@ -38,6 +39,9 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
   String _selectedSurface = FieldFormConstants.defaultSurface;
   bool _isIndoor = FieldFormConstants.defaultIsIndoor;
   List<String> _selectedFacilities = [];
+  String? _paymentPhone = '01068700814';
+  String _paymentMethod = 'vodafone_cash';
+  LocationData? _selectedLocation;
 
   @override
   void dispose() {
@@ -122,6 +126,8 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
               selectedSurface: _selectedSurface,
               isIndoor: _isIndoor,
               selectedFacilities: _selectedFacilities,
+              paymentPhone: _paymentPhone,
+              paymentMethod: _paymentMethod,
               admins: admins,
               cities: cities,
               sportCategories: sportCategories,
@@ -140,6 +146,10 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
               onIndoorChanged: (v) => setState(() => _isIndoor = v),
               onFacilitiesChanged: (v) =>
                   setState(() => _selectedFacilities = v),
+              onPaymentPhoneChanged: (v) => setState(() => _paymentPhone = v),
+              onPaymentMethodChanged: (v) => setState(() => _paymentMethod = v),
+              selectedLocation: _selectedLocation,
+              onLocationChanged: (v) => setState(() => _selectedLocation = v),
               onSubmit: () {
                 // Only validate form fields, cubit handles rest
                 if (!_formKey.currentState!.validate()) return;
@@ -157,6 +167,8 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
                   surface: _selectedSurface,
                   isIndoor: _isIndoor,
                   facilities: _selectedFacilities,
+                  paymentPhone: _paymentPhone,
+                  paymentMethod: _paymentMethod,
                 );
 
                 // Cubit handles all validation and logic

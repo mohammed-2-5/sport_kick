@@ -13,6 +13,7 @@ class ManualBookingFormData extends Equatable {
   final DateTime? selectedDate;
   final String? selectedStartTime;
   final String? selectedEndTime;
+  final int durationHours; // 1 or 2 hours
   final double? totalPrice;
   final String? customerName;
   final String? customerPhone;
@@ -25,6 +26,7 @@ class ManualBookingFormData extends Equatable {
     this.selectedDate,
     this.selectedStartTime,
     this.selectedEndTime,
+    this.durationHours = 1, // Default 1 hour
     this.totalPrice,
     this.customerName,
     this.customerPhone,
@@ -38,6 +40,7 @@ class ManualBookingFormData extends Equatable {
     DateTime? selectedDate,
     String? selectedStartTime,
     String? selectedEndTime,
+    int? durationHours,
     double? totalPrice,
     String? customerName,
     String? customerPhone,
@@ -56,6 +59,7 @@ class ManualBookingFormData extends Equatable {
       selectedEndTime: clearEndTime
           ? null
           : (selectedEndTime ?? this.selectedEndTime),
+      durationHours: durationHours ?? this.durationHours,
       totalPrice: totalPrice ?? this.totalPrice,
       customerName: customerName ?? this.customerName,
       customerPhone: customerPhone ?? this.customerPhone,
@@ -71,6 +75,7 @@ class ManualBookingFormData extends Equatable {
     selectedDate,
     selectedStartTime,
     selectedEndTime,
+    durationHours,
     totalPrice,
     customerName,
     customerPhone,

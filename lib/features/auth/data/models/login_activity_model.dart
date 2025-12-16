@@ -15,10 +15,30 @@ class LoginActivityModel extends LoginActivityEntity {
     super.status,
     super.userAgent,
     super.isCurrentSession,
+    super.userName,
+    super.userEmail,
+    super.userRole,
   });
 
   /// Create from JSON map.
   factory LoginActivityModel.fromJson(Map<String, dynamic> json) {
+    // Parse user data from nested profiles join if available
+    String? userName;
+    String? userEmail;
+    String? userRole;
+
+    if (json['profiles'] != null && json['profiles'] is Map) {
+      final profile = json['profiles'] as Map<String, dynamic>;
+      userName = profile['full_name'] as String?;
+      userEmail = profile['email'] as String?;
+      userRole = profile['role'] as String?;
+    } else {
+      // Fallback: check if user data is at root level (from view)
+      userName = json['user_name'] as String? ?? json['full_name'] as String?;
+      userEmail = json['user_email'] as String? ?? json['email'] as String?;
+      userRole = json['user_role'] as String? ?? json['role'] as String?;
+    }
+
     return LoginActivityModel(
       id: json['id'] as String,
       userId: json['user_id'] as String,
@@ -30,6 +50,9 @@ class LoginActivityModel extends LoginActivityEntity {
       status: LoginStatus.fromString(json['status'] as String?),
       userAgent: json['user_agent'] as String?,
       isCurrentSession: json['is_current_session'] as bool? ?? false,
+      userName: userName,
+      userEmail: userEmail,
+      userRole: userRole,
     );
   }
 
@@ -74,6 +97,9 @@ class LoginActivityModel extends LoginActivityEntity {
       status: entity.status,
       userAgent: entity.userAgent,
       isCurrentSession: entity.isCurrentSession,
+      userName: entity.userName,
+      userEmail: entity.userEmail,
+      userRole: entity.userRole,
     );
   }
 }

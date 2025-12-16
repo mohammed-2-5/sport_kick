@@ -157,6 +157,12 @@ class _AllFieldsViewState extends State<AllFieldsView> {
         listener: (context, state) {
           if (state is SuperAdminError) {
             SnackbarHelper.showError(context, state.message);
+          } else if (state is FieldUpdated) {
+            SnackbarHelper.showSuccess(context, state.successMessage);
+          } else if (state is FieldDeleted) {
+            SnackbarHelper.showSuccess(context, state.successMessage);
+          } else if (state is FieldVerified) {
+            SnackbarHelper.showSuccess(context, state.successMessage);
           }
         },
         builder: (context, state) {

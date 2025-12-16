@@ -9,9 +9,19 @@ import 'package:spo_kick/features/super_admin/data/models/city_model.dart';
 /// Handles:
 /// - Fetching all cities
 /// - Fetching active cities only
+/// - Creating new cities
+/// - Updating existing cities
+/// - Deleting cities (soft/hard delete)
 abstract class SuperAdminCityManagementDataSource {
   Future<List<CityModel>> getAllCities();
   Future<List<CityModel>> getActiveCities();
+  Future<CityModel> createCity({required String name, bool isActive = true});
+  Future<CityModel> updateCity({
+    required String cityId,
+    String? name,
+    bool? isActive,
+  });
+  Future<void> deleteCity({required String cityId, required bool hardDelete});
 }
 
 /// Implementation of super admin city management data source.
@@ -85,6 +95,104 @@ class SuperAdminCityManagementDataSourceImpl
     } catch (e) {
       debugPrint('❌ [CityMgmtDataSource] Exception: $e');
       throw ServerException('Failed to load active cities: $e');
+    }
+  }
+
+  @override
+  Future<CityModel> createCity({
+    required String name,
+    bool isActive = true,
+  }) async {
+    try {
+      debugPrint('🏙️ [CityMgmtDataSource] Creating city: $name');
+
+      final response = await supabaseClient
+          .from('cities')
+          .insert({'name': name, 'is_active': isActive})
+          .select()
+          .single();
+
+      final city = CityModel.fromJson(response);
+      debugPrint('✅ [CityMgmtDataSource] City created: ${city.id}');
+      return city;
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [CityMgmtDataSource] PostgrestException: ${e.message}');
+      if (e.code == '23505') {
+        throw ValidationException('City "$name" already exists');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [CityMgmtDataSource] Exception: $e');
+      throw ServerException('Failed to create city: $e');
+    }
+  }
+
+  @override
+  Future<CityModel> updateCity({
+    required String cityId,
+    String? name,
+    bool? isActive,
+  }) async {
+    try {
+      debugPrint('🏙️ [CityMgmtDataSource] Updating city: $cityId');
+
+      final updates = <String, dynamic>{
+        'updated_at': DateTime.now().toIso8601String(),
+      };
+
+      if (name != null) updates['name'] = name;
+      if (isActive != null) updates['is_active'] = isActive;
+
+      final response = await supabaseClient
+          .from('cities')
+          .update(updates)
+          .eq('id', cityId)
+          .select()
+          .single();
+
+      final city = CityModel.fromJson(response);
+      debugPrint('✅ [CityMgmtDataSource] City updated: ${city.id}');
+      return city;
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [CityMgmtDataSource] PostgrestException: ${e.message}');
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [CityMgmtDataSource] Exception: $e');
+      throw ServerException('Failed to update city: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteCity({
+    required String cityId,
+    required bool hardDelete,
+  }) async {
+    try {
+      debugPrint(
+        '🏙️ [CityMgmtDataSource] ${hardDelete ? "Hard" : "Soft"} deleting city: $cityId',
+      );
+
+      if (hardDelete) {
+        await supabaseClient.from('cities').delete().eq('id', cityId);
+        debugPrint('✅ [CityMgmtDataSource] City permanently deleted');
+      } else {
+        await supabaseClient
+            .from('cities')
+            .update({'is_active': false})
+            .eq('id', cityId);
+        debugPrint('✅ [CityMgmtDataSource] City deactivated');
+      }
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [CityMgmtDataSource] PostgrestException: ${e.message}');
+      if (e.code == '23503') {
+        throw const ValidationException(
+          'Cannot delete city with existing fields. Deactivate instead.',
+        );
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [CityMgmtDataSource] Exception: $e');
+      throw ServerException('Failed to delete city: $e');
     }
   }
 }

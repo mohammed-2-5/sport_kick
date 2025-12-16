@@ -13,6 +13,7 @@ import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 class PremiumOwnerQuickActions extends StatelessWidget {
   final VoidCallback onManualBooking;
   final VoidCallback onViewBookings;
+  final VoidCallback onBookingTable;
   final VoidCallback onManageFields;
   final VoidCallback onAnalytics;
   final VoidCallback onSettings;
@@ -22,6 +23,7 @@ class PremiumOwnerQuickActions extends StatelessWidget {
     super.key,
     required this.onManualBooking,
     required this.onViewBookings,
+    required this.onBookingTable,
     required this.onManageFields,
     required this.onAnalytics,
     required this.onSettings,
@@ -43,6 +45,12 @@ class PremiumOwnerQuickActions extends StatelessWidget {
         icon: Icons.calendar_month_rounded,
         gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
         onTap: onViewBookings,
+      ),
+      _QuickAction(
+        label: 'Booking Table',
+        icon: Icons.table_chart_rounded,
+        gradient: const [Color(0xFF14B8A6), Color(0xFF0D9488)],
+        onTap: onBookingTable,
       ),
       _QuickAction(
         label: 'Manage Fields',

@@ -7,8 +7,13 @@ import 'package:spo_kick/features/bookings/data/models/booking_model.dart';
 ///
 /// Handles:
 /// - Getting all bookings across all fields (platform-wide)
+/// - Auto-completing expired bookings via RPC
 abstract class BookingAdminOperationsDataSource {
   Future<List<BookingModel>> getAllBookings();
+
+  /// Call Supabase RPC to auto-complete passed bookings.
+  /// Returns the number of bookings that were updated.
+  Future<int> completePassedBookings();
 }
 
 /// Implementation of booking admin operations data source.
@@ -43,6 +48,29 @@ class BookingAdminOperationsDataSourceImpl
     } catch (e) {
       debugPrint('❌ Exception in getAllBookings: $e');
       throw ServerException('Failed to load all bookings: $e');
+    }
+  }
+
+  @override
+  Future<int> completePassedBookings() async {
+    try {
+      debugPrint('🔄 Calling RPC to complete passed bookings...');
+
+      // Call the Supabase RPC function
+      final response = await supabaseClient.rpc('complete_passed_bookings');
+
+      final count = response as int? ?? 0;
+      debugPrint('✅ Auto-completed $count bookings');
+
+      return count;
+    } on PostgrestException catch (e) {
+      debugPrint(
+        '❌ PostgrestException in completePassedBookings: ${e.message}',
+      );
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ Exception in completePassedBookings: $e');
+      throw ServerException('Failed to complete passed bookings: $e');
     }
   }
 }

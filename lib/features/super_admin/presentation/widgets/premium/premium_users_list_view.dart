@@ -300,7 +300,7 @@ class _PremiumUsersListViewState extends State<PremiumUsersListView> {
         if (_isSelectionMode) {
           _toggleSelection(user.id);
         } else {
-          context.pushNamed('userDetails', pathParameters: {'id': user.id});
+          context.pushNamed('superAdminUserDetails', extra: user);
         }
       },
       onSelectionChanged: (selected) => _toggleSelection(user.id),

@@ -104,6 +104,45 @@ class CitiesLoaded extends SuperAdminState {
   List<Object?> get props => [cities];
 }
 
+/// City created successfully.
+class CityCreated extends SuperAdminState {
+  final CityEntity city;
+
+  const CityCreated(this.city);
+
+  @override
+  List<Object?> get props => [city];
+
+  String get successMessage => 'City "${city.name}" created successfully!';
+}
+
+/// City updated successfully.
+class CityUpdated extends SuperAdminState {
+  final CityEntity city;
+
+  const CityUpdated(this.city);
+
+  @override
+  List<Object?> get props => [city];
+
+  String get successMessage => 'City "${city.name}" updated successfully!';
+}
+
+/// City deleted successfully.
+class CityDeleted extends SuperAdminState {
+  final String cityId;
+  final bool wasHardDelete;
+
+  const CityDeleted({required this.cityId, required this.wasHardDelete});
+
+  @override
+  List<Object?> get props => [cityId, wasHardDelete];
+
+  String get successMessage => wasHardDelete
+      ? 'City permanently deleted'
+      : 'City deactivated successfully';
+}
+
 /// User deactivated successfully.
 class UserDeactivated extends SuperAdminState {
   final String userId;
@@ -182,4 +221,73 @@ class AnalyticsDataLoaded extends SuperAdminState {
 
   @override
   List<Object?> get props => [bookings, fields, statistics];
+}
+
+/// Field updated successfully.
+class FieldUpdated extends SuperAdminState {
+  final FieldEntity field;
+
+  const FieldUpdated(this.field);
+
+  @override
+  List<Object?> get props => [field];
+
+  String get successMessage => 'Field "${field.name}" updated successfully!';
+}
+
+/// Field deleted successfully.
+class FieldDeleted extends SuperAdminState {
+  final String fieldId;
+  final bool wasHardDelete;
+
+  const FieldDeleted({required this.fieldId, required this.wasHardDelete});
+
+  @override
+  List<Object?> get props => [fieldId, wasHardDelete];
+
+  String get successMessage => wasHardDelete
+      ? 'Field permanently deleted'
+      : 'Field deactivated successfully';
+}
+
+/// Field verification status changed.
+class FieldVerified extends SuperAdminState {
+  final String fieldId;
+  final bool isVerified;
+
+  const FieldVerified({required this.fieldId, required this.isVerified});
+
+  @override
+  List<Object?> get props => [fieldId, isVerified];
+
+  String get successMessage =>
+      isVerified ? 'Field verified successfully' : 'Field verification removed';
+}
+
+/// Booking status updated successfully.
+class BookingStatusUpdated extends SuperAdminState {
+  final String bookingId;
+  final String newStatus;
+
+  const BookingStatusUpdated({
+    required this.bookingId,
+    required this.newStatus,
+  });
+
+  @override
+  List<Object?> get props => [bookingId, newStatus];
+
+  String get successMessage => 'Booking status updated to $newStatus';
+}
+
+/// Booking cancelled successfully.
+class BookingCancelled extends SuperAdminState {
+  final String bookingId;
+
+  const BookingCancelled({required this.bookingId});
+
+  @override
+  List<Object?> get props => [bookingId];
+
+  String get successMessage => 'Booking cancelled successfully';
 }

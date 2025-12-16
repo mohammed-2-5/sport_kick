@@ -35,6 +35,8 @@ class BookingModel extends BookingEntity {
     super.paymentRejectionReason,
     super.isManual,
     super.createdBy,
+    super.createdByName,
+    super.createdByEmail,
     super.customerName,
     super.customerPhone,
     super.customerEmail,
@@ -85,10 +87,35 @@ class BookingModel extends BookingEntity {
       // Manual booking fields
       isManual: json['is_manual'] as bool? ?? false,
       createdBy: json['created_by'] as String?,
+      // Parse creator profile from nested join if available
+      createdByName: _parseCreatorName(json),
+      createdByEmail: _parseCreatorEmail(json),
       customerName: json['customer_name'] as String?,
       customerPhone: json['customer_phone'] as String?,
       customerEmail: json['customer_email'] as String?,
     );
+  }
+
+  /// Parse creator name from nested profile join or direct fields
+  static String? _parseCreatorName(Map<String, dynamic> json) {
+    // Check nested creator_profile (from join)
+    if (json['creator_profile'] is Map) {
+      final profile = json['creator_profile'] as Map<String, dynamic>;
+      return profile['full_name'] as String?;
+    }
+    // Fallback to direct field
+    return json['created_by_name'] as String?;
+  }
+
+  /// Parse creator email from nested profile join or direct fields
+  static String? _parseCreatorEmail(Map<String, dynamic> json) {
+    // Check nested creator_profile (from join)
+    if (json['creator_profile'] is Map) {
+      final profile = json['creator_profile'] as Map<String, dynamic>;
+      return profile['email'] as String?;
+    }
+    // Fallback to direct field
+    return json['created_by_email'] as String?;
   }
 
   /// Convert model to JSON (for Supabase).

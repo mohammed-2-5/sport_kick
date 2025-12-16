@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dartz/dartz.dart';
 import 'package:spo_kick/core/errors/failures.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -77,4 +79,36 @@ abstract class BookingRepository {
     String? customerEmail,
     String? notes,
   });
+
+  /// Upload payment proof for a booking.
+  ///
+  /// Uploads the image to storage and updates the booking with the proof URL.
+  /// Uses bytes for cross-platform support (web and mobile).
+  Future<Either<Failure, BookingEntity>> uploadPaymentProof({
+    required String bookingId,
+    required Uint8List imageBytes,
+    required String fileName,
+  });
+
+  /// Verify payment proof (for field owners).
+  ///
+  /// Marks the payment as verified and optionally confirms the booking.
+  Future<Either<Failure, BookingEntity>> verifyPaymentProof({
+    required String bookingId,
+  });
+
+  /// Reject payment proof (for field owners).
+  ///
+  /// Marks the payment as rejected with a reason.
+  Future<Either<Failure, BookingEntity>> rejectPaymentProof({
+    required String bookingId,
+    required String reason,
+  });
+
+  /// Auto-complete expired bookings.
+  ///
+  /// Calls Supabase RPC to update all 'confirmed' bookings
+  /// where the date + end_time has passed to 'completed' status.
+  /// Returns the number of bookings that were updated.
+  Future<Either<Failure, int>> completePassedBookings();
 }

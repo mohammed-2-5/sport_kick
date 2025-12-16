@@ -21,6 +21,11 @@ abstract class BookingUserOperationsDataSource {
     String userId,
     BookingStatus status,
   );
+  Future<BookingModel> uploadPaymentProof({
+    required String bookingId,
+    required Uint8List imageBytes,
+    required String fileName,
+  });
 }
 
 /// Implementation of booking user operations data source.
@@ -220,6 +225,70 @@ class BookingUserOperationsDataSourceImpl
       throw ServerException('Database error: ${e.message}');
     } catch (e) {
       throw ServerException('Failed to load bookings: $e');
+    }
+  }
+
+  @override
+  Future<BookingModel> uploadPaymentProof({
+    required String bookingId,
+    required Uint8List imageBytes,
+    required String fileName,
+  }) async {
+    try {
+      debugPrint('📤 Uploading payment proof for booking: $bookingId');
+
+      // Generate unique file name
+      final uniqueFileName =
+          'payment_proof_${bookingId}_${DateTime.now().millisecondsSinceEpoch}_$fileName';
+      final storagePath = 'payment_proofs/$_currentUserId/$uniqueFileName';
+
+      // Upload to Supabase Storage using bytes (cross-platform)
+      await supabaseClient.storage
+          .from('payment_proofs')
+          .uploadBinary(storagePath, imageBytes);
+
+      // Get public URL
+      final publicUrl = supabaseClient.storage
+          .from('payment_proofs')
+          .getPublicUrl(storagePath);
+
+      debugPrint('✅ Payment proof uploaded: $publicUrl');
+
+      // Update booking with proof URL
+      final response = await supabaseClient
+          .from('bookings')
+          .update({
+            'payment_proof_url': publicUrl,
+            'payment_status': 'uploaded',
+            'payment_uploaded_at': DateTime.now().toIso8601String(),
+          })
+          .eq('id', bookingId)
+          .eq('user_id', _currentUserId)
+          .select('*, field:fields(name, images)')
+          .single();
+
+      final json = response;
+
+      // Extract field details
+      final fieldData = json['field'] as Map<String, dynamic>?;
+      if (fieldData != null) {
+        json['field_name'] = fieldData['name'];
+        final images = fieldData['images'] as List?;
+        json['field_image'] = (images != null && images.isNotEmpty)
+            ? images.first
+            : null;
+      }
+
+      return BookingModel.fromJson(json);
+    } on StorageException catch (e) {
+      throw ServerException('Failed to upload image: ${e.message}');
+    } on PostgrestException catch (e) {
+      if (e.code == 'PGRST116') {
+        throw const NotFoundException('Booking not found');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      throw ServerException('Failed to upload payment proof: $e');
     }
   }
 }

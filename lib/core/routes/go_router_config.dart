@@ -11,8 +11,10 @@ import 'package:spo_kick/features/auth/presentation/pages/login_page.dart';
 import 'package:spo_kick/features/auth/presentation/pages/profile_page.dart';
 import 'package:spo_kick/features/auth/presentation/pages/register_page.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/edit_profile_dialog.dart';
+import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/booking_details_page.dart';
+import 'package:spo_kick/features/bookings/presentation/pages/booking_invoice_page.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/create_booking_page.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
 import 'package:spo_kick/features/business_hours/presentation/cubit/business_hours_cubit.dart';
@@ -38,6 +40,8 @@ import 'package:spo_kick/features/owner/presentation/pages/owner_profile_page.da
 import 'package:spo_kick/features/owner/presentation/pages/owner_settings_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_field_detail_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/owner_revenue_page.dart';
+import 'package:spo_kick/features/owner/presentation/pages/owner_booking_detail_page.dart';
+import 'package:spo_kick/features/owner/presentation/pages/booking_table_page.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/pages/all_reviews_page.dart';
 import 'package:spo_kick/features/reviews/presentation/pages/create_review_page.dart';
@@ -55,14 +59,21 @@ import 'package:spo_kick/features/super_admin/presentation/pages/all_fields_page
 import 'package:spo_kick/features/super_admin/presentation/pages/cities_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/create_admin_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/create_field_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/edit_field_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/platform_analytics_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_dashboard_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_login_activity_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_reports_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/manage_sport_categories_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/manage_reviews_page.dart';
+import 'package:spo_kick/features/super_admin/presentation/pages/manage_notifications_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/super_admin_settings_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/user_details_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/users_list_page.dart';
 import 'package:spo_kick/features/auth/presentation/pages/login_activity_page.dart';
 import 'package:spo_kick/features/super_admin/presentation/pages/platform_operating_hours_page.dart';
+import 'package:spo_kick/features/notifications/presentation/cubit/notification_cubit.dart';
+import 'package:spo_kick/features/notifications/presentation/pages/notification_list_page.dart';
 
 /// GoRouter configuration for the Sport Kick application.
 ///
@@ -276,6 +287,30 @@ class AppRouterConfig {
             );
           },
         ),
+        GoRoute(
+          path: '/booking-invoice',
+          name: 'bookingInvoice',
+          pageBuilder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>?;
+            if (extra == null ||
+                !extra.containsKey('booking') ||
+                !extra.containsKey('field')) {
+              return _buildPage(
+                child: const _ErrorPage(
+                  error: 'Booking and field data are required',
+                ),
+                state: state,
+              );
+            }
+            return _buildSlidePage(
+              child: BookingInvoicePage(
+                booking: extra['booking'] as BookingEntity,
+                field: extra['field'] as FieldEntity,
+              ),
+              state: state,
+            );
+          },
+        ),
 
         // ==================== REVIEWS ROUTES ====================
         GoRoute(
@@ -356,12 +391,39 @@ class AppRouterConfig {
           ),
         ),
         GoRoute(
+          path: '/owner/booking-table',
+          name: 'ownerBookingTable',
+          pageBuilder: (context, state) =>
+              _buildSlidePage(child: const BookingTablePage(), state: state),
+        ),
+        GoRoute(
           path: '/owner/bookings/manual',
           name: 'ownerCreateManualBooking',
-          pageBuilder: (context, state) => _buildSlidePage(
-            child: const CreateManualBookingPage(),
-            state: state,
-          ),
+          pageBuilder: (context, state) {
+            // Get optional initial data from booking table
+            final initialData = state.extra as Map<String, dynamic>?;
+            return _buildSlidePage(
+              child: CreateManualBookingPage(initialData: initialData),
+              state: state,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/owner/bookings/detail',
+          name: 'ownerBookingDetail',
+          pageBuilder: (context, state) {
+            final booking = state.extra as BookingEntity?;
+            if (booking == null) {
+              return _buildPage(
+                child: const _ErrorPage(error: 'Booking is required'),
+                state: state,
+              );
+            }
+            return _buildSlidePage(
+              child: OwnerBookingDetailPage(booking: booking),
+              state: state,
+            );
+          },
         ),
         GoRoute(
           path: '/owner/fields',
@@ -491,6 +553,19 @@ class AppRouterConfig {
           ),
         ),
 
+        // ==================== NOTIFICATIONS ROUTES ====================
+        GoRoute(
+          path: '/notifications',
+          name: 'notifications',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: BlocProvider(
+              create: (_) => sl<NotificationCubit>(),
+              child: const NotificationListPage(),
+            ),
+            state: state,
+          ),
+        ),
+
         // ==================== SUPER ADMIN ROUTES ====================
         GoRoute(
           path: '/super-admin/dashboard',
@@ -514,6 +589,23 @@ class AppRouterConfig {
           name: 'superAdminCreateField',
           pageBuilder: (context, state) =>
               _buildSlidePage(child: const CreateFieldPage(), state: state),
+        ),
+        GoRoute(
+          path: '/super-admin/edit-field',
+          name: 'superAdminEditField',
+          pageBuilder: (context, state) {
+            final field = state.extra as FieldEntity?;
+            if (field == null) {
+              return _buildPage(
+                child: const _ErrorPage(error: 'Field data is required'),
+                state: state,
+              );
+            }
+            return _buildSlidePage(
+              child: EditFieldPage(field: field),
+              state: state,
+            );
+          },
         ),
         GoRoute(
           path: '/super-admin/admins',
@@ -608,6 +700,36 @@ class AppRouterConfig {
           name: 'loginActivity',
           pageBuilder: (context, state) =>
               _buildSlidePage(child: const LoginActivityPage(), state: state),
+        ),
+        GoRoute(
+          path: '/super-admin/login-activity',
+          name: 'superAdminLoginActivity',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: const SuperAdminLoginActivityPage(),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: '/super-admin/sport-categories',
+          name: 'manageSportCategories',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: const ManageSportCategoriesPage(),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: '/super-admin/reviews',
+          name: 'manageReviews',
+          pageBuilder: (context, state) =>
+              _buildSlidePage(child: const ManageReviewsPage(), state: state),
+        ),
+        GoRoute(
+          path: '/super-admin/notifications',
+          name: 'manageNotifications',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: const ManageNotificationsPage(),
+            state: state,
+          ),
         ),
         GoRoute(
           path: '/super-admin/operating-hours',

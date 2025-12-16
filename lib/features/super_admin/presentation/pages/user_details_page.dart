@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/user_details/user_details_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_details_view.dart';
 
@@ -19,8 +20,11 @@ class UserDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<SuperAdminCubit>()..loadAllBookings(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => sl<UserDetailsCubit>()),
+        BlocProvider(create: (_) => sl<SuperAdminCubit>()..loadAllBookings()),
+      ],
       child: PremiumUserDetailsView(user: user),
     );
   }

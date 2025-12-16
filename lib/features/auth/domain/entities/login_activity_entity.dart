@@ -76,6 +76,9 @@ class LoginActivityEntity extends Equatable {
   final LoginStatus status;
   final String? userAgent;
   final bool isCurrentSession;
+  final String? userName;
+  final String? userEmail;
+  final String? userRole;
 
   const LoginActivityEntity({
     required this.id,
@@ -88,6 +91,9 @@ class LoginActivityEntity extends Equatable {
     this.status = LoginStatus.success,
     this.userAgent,
     this.isCurrentSession = false,
+    this.userName,
+    this.userEmail,
+    this.userRole,
   });
 
   @override
@@ -102,6 +108,9 @@ class LoginActivityEntity extends Equatable {
     status,
     userAgent,
     isCurrentSession,
+    userName,
+    userEmail,
+    userRole,
   ];
 
   LoginActivityEntity copyWith({
@@ -115,6 +124,9 @@ class LoginActivityEntity extends Equatable {
     LoginStatus? status,
     String? userAgent,
     bool? isCurrentSession,
+    String? userName,
+    String? userEmail,
+    String? userRole,
   }) {
     return LoginActivityEntity(
       id: id ?? this.id,
@@ -127,6 +139,9 @@ class LoginActivityEntity extends Equatable {
       status: status ?? this.status,
       userAgent: userAgent ?? this.userAgent,
       isCurrentSession: isCurrentSession ?? this.isCurrentSession,
+      userName: userName ?? this.userName,
+      userEmail: userEmail ?? this.userEmail,
+      userRole: userRole ?? this.userRole,
     );
   }
 }

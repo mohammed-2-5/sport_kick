@@ -142,8 +142,13 @@ class AdminDetailsStats extends Equatable {
   factory AdminDetailsStats.fromFields(
     List<FieldEntity> fields,
     DateTime memberSince,
+    double totalRevenue,
   ) {
     final active = fields.where((f) => f.isActive).length;
+    final totalBookings = fields.fold<int>(
+      0,
+      (sum, f) => sum + f.totalBookings,
+    );
 
     double totalRating = 0;
     int ratingCount = 0;
@@ -158,8 +163,8 @@ class AdminDetailsStats extends Equatable {
     return AdminDetailsStats(
       totalFields: fields.length,
       activeFields: active,
-      totalBookings: 0, // Would come from bookings data
-      totalRevenue: 0, // Would come from revenue data
+      totalBookings: totalBookings,
+      totalRevenue: totalRevenue,
       memberDays: DateTime.now().difference(memberSince).inDays,
       averageRating: ratingCount > 0 ? totalRating / ratingCount : 0,
     );

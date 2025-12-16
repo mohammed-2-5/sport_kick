@@ -13,6 +13,14 @@ import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_use
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_bookings_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_users_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_field_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/delete_field_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/verify_field_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/create_city_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_city_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/delete_city_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/update_booking_status_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/cancel_booking_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 
 import 'extensions/admin_management_operations.dart';
@@ -69,13 +77,29 @@ class SuperAdminCubit extends Cubit<SuperAdminState>
   @override
   final GetActiveCitiesUseCase getActiveCitiesUseCase;
   @override
+  final CreateCityUseCase createCityUseCase;
+  @override
+  final UpdateCityUseCase updateCityUseCase;
+  @override
+  final DeleteCityUseCase deleteCityUseCase;
+  @override
   final GetAllFieldsUseCase getAllFieldsUseCase;
   @override
   final GetAllBookingsUseCase getAllBookingsUseCase;
   @override
+  final UpdateBookingStatusUseCase updateBookingStatusUseCase;
+  @override
+  final CancelBookingUseCase cancelBookingUseCase;
+  @override
   final DeactivateUserUseCase deactivateUserUseCase;
   @override
   final ActivateUserUseCase activateUserUseCase;
+  @override
+  final UpdateFieldUseCase updateFieldUseCase;
+  @override
+  final DeleteFieldUseCase deleteFieldUseCase;
+  @override
+  final VerifyFieldUseCase verifyFieldUseCase;
 
   // Services
   @override
@@ -91,10 +115,18 @@ class SuperAdminCubit extends Cubit<SuperAdminState>
     required this.getAllUsersUseCase,
     required this.assignFieldToAdminUseCase,
     required this.getActiveCitiesUseCase,
+    required this.createCityUseCase,
+    required this.updateCityUseCase,
+    required this.deleteCityUseCase,
     required this.getAllFieldsUseCase,
     required this.getAllBookingsUseCase,
+    required this.updateBookingStatusUseCase,
+    required this.cancelBookingUseCase,
     required this.deactivateUserUseCase,
     required this.activateUserUseCase,
+    required this.updateFieldUseCase,
+    required this.deleteFieldUseCase,
+    required this.verifyFieldUseCase,
     required this.csvExportService,
     required this.pdfExportService,
   }) : super(const SuperAdminInitial());

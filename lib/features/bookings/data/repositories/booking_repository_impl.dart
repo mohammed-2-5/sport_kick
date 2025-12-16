@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dartz/dartz.dart';
 import 'package:spo_kick/core/errors/exceptions.dart';
 import 'package:spo_kick/core/errors/failures.dart';
@@ -383,5 +385,101 @@ class BookingRepositoryImpl implements BookingRepository {
   /// Clear cache (for testing or manual refresh).
   void clearCache() {
     _invalidateCache();
+  }
+
+  @override
+  Future<Either<Failure, BookingEntity>> uploadPaymentProof({
+    required String bookingId,
+    required Uint8List imageBytes,
+    required String fileName,
+  }) async {
+    try {
+      final booking = await remoteDataSource.uploadPaymentProof(
+        bookingId: bookingId,
+        imageBytes: imageBytes,
+        fileName: fileName,
+      );
+
+      // Invalidate cache (payment status changed)
+      _invalidateCache();
+
+      return Right(booking);
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on AuthenticationException catch (e) {
+      return Left(AuthenticationFailure(e.message));
+    } on NetworkException catch (e) {
+      return Left(NetworkFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure('Unexpected error: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BookingEntity>> verifyPaymentProof({
+    required String bookingId,
+  }) async {
+    try {
+      final booking = await remoteDataSource.verifyPaymentProof(
+        bookingId: bookingId,
+      );
+
+      // Invalidate cache (payment status changed)
+      _invalidateCache();
+
+      return Right(booking);
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on AuthenticationException catch (e) {
+      return Left(AuthenticationFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure('Unexpected error: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BookingEntity>> rejectPaymentProof({
+    required String bookingId,
+    required String reason,
+  }) async {
+    try {
+      final booking = await remoteDataSource.rejectPaymentProof(
+        bookingId: bookingId,
+        reason: reason,
+      );
+
+      // Invalidate cache (payment status changed)
+      _invalidateCache();
+
+      return Right(booking);
+    } on NotFoundException catch (e) {
+      return Left(NotFoundFailure(e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on AuthenticationException catch (e) {
+      return Left(AuthenticationFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure('Unexpected error: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> completePassedBookings() async {
+    try {
+      final count = await remoteDataSource.completePassedBookings();
+
+      // Invalidate cache (booking statuses may have changed)
+      _invalidateCache();
+
+      return Right(count);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure('Failed to complete passed bookings: $e'));
+    }
   }
 }

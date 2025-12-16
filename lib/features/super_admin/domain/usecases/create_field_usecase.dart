@@ -50,6 +50,8 @@ class CreateFieldUseCase {
   /// - [images]: List of image URLs (default: empty)
   /// - [videoUrl]: Video URL (optional)
   /// - [facilities]: List of facilities (default: empty)
+  /// - [paymentPhone]: Payment phone number (optional, defaults to 01068700814)
+  /// - [paymentMethod]: Payment method: vodafone_cash or instapay (default: vodafone_cash)
   ///
   /// Returns:
   /// - [Right(FieldEntity)]: Field created successfully
@@ -77,6 +79,8 @@ class CreateFieldUseCase {
     List<String> images = const [],
     String? videoUrl,
     List<String> facilities = const [],
+    String? paymentPhone,
+    String paymentMethod = 'vodafone_cash',
   }) async {
     return await repository.createField(
       ownerId: ownerId,
@@ -95,6 +99,8 @@ class CreateFieldUseCase {
       images: images,
       videoUrl: videoUrl,
       facilities: facilities,
+      paymentPhone: paymentPhone,
+      paymentMethod: paymentMethod,
     );
   }
 }

@@ -17,12 +17,50 @@ class UserModel extends UserEntity {
     super.passwordChanged,
     required super.createdAt,
     required super.updatedAt,
+    super.selectedCityId,
+    super.fieldsCount,
+    super.totalRevenue,
   });
 
   /// Creates a [UserModel] from JSON data.
   ///
   /// This is typically used when receiving data from Supabase.
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    // Parse fields count from nested array if present
+    int fieldsCount = 0;
+    double totalRevenue = 0.0;
+
+    if (json['fields'] != null && json['fields'] is List) {
+      final fieldsList = json['fields'] as List;
+      fieldsCount = fieldsList.length;
+
+      // Calculate revenue from bookings in each field
+      for (final field in fieldsList) {
+        if (field is Map<String, dynamic> && field['bookings'] != null) {
+          final bookings = field['bookings'] as List;
+          for (final booking in bookings) {
+            if (booking is Map<String, dynamic>) {
+              final status = booking['status'] as String?;
+              // Only count confirmed and completed bookings for revenue
+              if (status == 'confirmed' || status == 'completed') {
+                final price = booking['total_price'];
+                if (price != null) {
+                  totalRevenue += (price as num).toDouble();
+                }
+              }
+            }
+          }
+        }
+      }
+    } else if (json['fields_count'] != null) {
+      fieldsCount = json['fields_count'] as int;
+    }
+
+    // Fallback: if total_revenue is directly provided
+    if (json['total_revenue'] != null) {
+      totalRevenue = (json['total_revenue'] as num).toDouble();
+    }
+
     return UserModel(
       id: json['id'] as String,
       email: json['email'] as String,
@@ -37,6 +75,9 @@ class UserModel extends UserEntity {
       passwordChanged: json['password_changed'] as bool? ?? false,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
+      selectedCityId: json['selected_city_id'] as String?,
+      fieldsCount: fieldsCount,
+      totalRevenue: totalRevenue,
     );
   }
 
@@ -56,6 +97,7 @@ class UserModel extends UserEntity {
       'password_changed': passwordChanged,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
+      if (selectedCityId != null) 'selected_city_id': selectedCityId,
     };
   }
 
@@ -78,6 +120,9 @@ class UserModel extends UserEntity {
       passwordChanged: entity.passwordChanged,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
+      selectedCityId: entity.selectedCityId,
+      fieldsCount: entity.fieldsCount,
+      totalRevenue: entity.totalRevenue,
     );
   }
 
@@ -95,6 +140,9 @@ class UserModel extends UserEntity {
     bool? passwordChanged,
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? selectedCityId,
+    int? fieldsCount,
+    double? totalRevenue,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -108,6 +156,9 @@ class UserModel extends UserEntity {
       passwordChanged: passwordChanged ?? this.passwordChanged,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      selectedCityId: selectedCityId ?? this.selectedCityId,
+      fieldsCount: fieldsCount ?? this.fieldsCount,
+      totalRevenue: totalRevenue ?? this.totalRevenue,
     );
   }
 }

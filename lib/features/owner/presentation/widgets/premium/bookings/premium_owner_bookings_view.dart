@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_state.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking/payment_proof_viewer.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking/payment_verification_dialog.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/premium_owner_bookings_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/premium_owner_bookings_tabs.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/premium_owner_bookings_list.dart';
@@ -14,6 +18,7 @@ import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/pr
 /// - Tab-based filtering
 /// - Pull-to-refresh
 /// - Approve/Reject actions
+/// - Payment verification actions
 /// - Search functionality
 class PremiumOwnerBookingsView extends StatefulWidget {
   const PremiumOwnerBookingsView({super.key});
@@ -55,7 +60,6 @@ class _PremiumOwnerBookingsViewState extends State<PremiumOwnerBookingsView> {
 
           return Column(
             children: [
-              // Header with search and stats
               PremiumOwnerBookingsHeader(
                 searchQuery: state is OwnerBookingsLoaded
                     ? state.searchQuery
@@ -64,10 +68,7 @@ class _PremiumOwnerBookingsViewState extends State<PremiumOwnerBookingsView> {
                 onClearSearch: () => cubit.clearSearch(),
                 stats: stats,
               ),
-
               const SizedBox(height: 20),
-
-              // Tab bar for filtering
               PremiumOwnerBookingsTabs(
                 selectedIndex: state is OwnerBookingsLoaded
                     ? state.selectedTabIndex
@@ -75,23 +76,26 @@ class _PremiumOwnerBookingsViewState extends State<PremiumOwnerBookingsView> {
                 onTabChanged: (index) => cubit.changeTab(index),
                 stats: stats,
               ),
-
               const SizedBox(height: 20),
-
-              // Bookings list
-              Expanded(child: _buildContent(context, state, cubit)),
+              Expanded(
+                child: _BookingsContent(state: state, cubit: cubit),
+              ),
             ],
           );
         },
       ),
     );
   }
+}
 
-  Widget _buildContent(
-    BuildContext context,
-    OwnerBookingsState state,
-    OwnerBookingsCubit cubit,
-  ) {
+class _BookingsContent extends StatelessWidget {
+  final OwnerBookingsState state;
+  final OwnerBookingsCubit cubit;
+
+  const _BookingsContent({required this.state, required this.cubit});
+
+  @override
+  Widget build(BuildContext context) {
     if (state is OwnerBookingsLoading) {
       return PremiumOwnerBookingsList(
         bookings: const [],
@@ -104,58 +108,45 @@ class _PremiumOwnerBookingsViewState extends State<PremiumOwnerBookingsView> {
     }
 
     if (state is OwnerBookingsLoaded) {
-      final filteredBookings = state.filteredBookings;
+      final loadedState = state as OwnerBookingsLoaded;
+      final filteredBookings = loadedState.filteredBookings;
 
       return PremiumOwnerBookingsList(
         bookings: filteredBookings,
         isLoading: false,
-        isRefreshing: state.isRefreshing,
+        isRefreshing: loadedState.isRefreshing,
         onRefresh: () => cubit.refresh(),
-        onApprove: (id) => _handleApprove(context, cubit, id),
-        onReject: (id) => _handleReject(context, cubit, id),
-        emptyMessage: _getEmptyMessage(state),
+        onTap: (booking) => _handleBookingTap(context, booking),
+        onApprove: (id) => _handleApprove(context, id),
+        onReject: (id) => _handleReject(context, id),
+        onViewPaymentProof: (booking) =>
+            _handleViewPaymentProof(context, booking),
+        onVerifyPayment: (id) => _handleVerifyPayment(context, id),
+        onRejectPayment: (id) => _handleRejectPayment(context, id),
+        emptyMessage: _getEmptyMessage(loadedState),
       );
     }
 
-    // Error state - show empty with error message
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.error_outline, size: 64, color: Colors.red),
-          const SizedBox(height: 16),
-          const Text(
-            'Failed to load bookings',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () => cubit.loadBookings(),
-            icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.accentCyan,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-        ],
-      ),
+    return _ErrorState(onRetry: () => cubit.loadBookings());
+  }
+
+  Future<void> _handleBookingTap(
+    BuildContext context,
+    BookingEntity booking,
+  ) async {
+    final result = await context.pushNamed<bool>(
+      'ownerBookingDetail',
+      extra: booking,
     );
+    if (result == true && context.mounted) {
+      cubit.refresh();
+    }
   }
 
   String _getEmptyMessage(OwnerBookingsLoaded state) {
     if (state.searchQuery.isNotEmpty) {
       return 'No bookings match your search';
     }
-
     switch (state.selectedTabIndex) {
       case 1:
         return 'No pending bookings';
@@ -168,11 +159,7 @@ class _PremiumOwnerBookingsViewState extends State<PremiumOwnerBookingsView> {
     }
   }
 
-  Future<void> _handleApprove(
-    BuildContext context,
-    OwnerBookingsCubit cubit,
-    String bookingId,
-  ) async {
+  Future<void> _handleApprove(BuildContext context, String bookingId) async {
     final confirmed = await _showConfirmDialog(
       context,
       title: 'Approve Booking',
@@ -180,17 +167,12 @@ class _PremiumOwnerBookingsViewState extends State<PremiumOwnerBookingsView> {
       confirmText: 'Approve',
       confirmColor: Colors.green,
     );
-
     if (confirmed) {
       await cubit.approveBooking(bookingId);
     }
   }
 
-  Future<void> _handleReject(
-    BuildContext context,
-    OwnerBookingsCubit cubit,
-    String bookingId,
-  ) async {
+  Future<void> _handleReject(BuildContext context, String bookingId) async {
     final confirmed = await _showConfirmDialog(
       context,
       title: 'Reject Booking',
@@ -198,9 +180,62 @@ class _PremiumOwnerBookingsViewState extends State<PremiumOwnerBookingsView> {
       confirmText: 'Reject',
       confirmColor: Colors.red,
     );
-
     if (confirmed) {
       await cubit.rejectBooking(bookingId);
+    }
+  }
+
+  void _handleViewPaymentProof(BuildContext context, BookingEntity booking) {
+    if (booking.paymentProofUrl != null) {
+      PaymentProofViewer.show(
+        context,
+        imageUrl: booking.paymentProofUrl!,
+        bookingId: booking.id,
+      );
+    }
+  }
+
+  Future<void> _handleVerifyPayment(
+    BuildContext context,
+    String bookingId,
+  ) async {
+    final confirmed = await PaymentVerificationDialog.showVerifyDialog(context);
+    if (confirmed == true) {
+      await cubit.verifyPayment(bookingId);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Payment verified successfully'),
+            backgroundColor: AppColors.success,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _handleRejectPayment(
+    BuildContext context,
+    String bookingId,
+  ) async {
+    final reason = await PaymentVerificationDialog.showRejectDialog(context);
+    if (reason != null && reason.isNotEmpty) {
+      await cubit.rejectPayment(bookingId, reason);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Payment rejected'),
+            backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        );
+      }
     }
   }
 
@@ -252,7 +287,47 @@ class _PremiumOwnerBookingsViewState extends State<PremiumOwnerBookingsView> {
         ],
       ),
     );
-
     return result ?? false;
+  }
+}
+
+class _ErrorState extends StatelessWidget {
+  final VoidCallback onRetry;
+
+  const _ErrorState({required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.error_outline, size: 64, color: Colors.red),
+          const SizedBox(height: 16),
+          const Text(
+            'Failed to load bookings',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            onPressed: onRetry,
+            icon: const Icon(Icons.refresh),
+            label: const Text('Retry'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.accentCyan,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

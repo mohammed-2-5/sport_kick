@@ -21,11 +21,19 @@ void main() {
   late MockGetAllUsersUseCase mockGetAllUsersUseCase;
   late MockAssignFieldToAdminUseCase mockAssignFieldToAdminUseCase;
   late MockGetActiveCitiesUseCase mockGetActiveCitiesUseCase;
+  late MockCreateCityUseCase mockCreateCityUseCase;
+  late MockUpdateCityUseCase mockUpdateCityUseCase;
+  late MockDeleteCityUseCase mockDeleteCityUseCase;
   late MockGetAllFieldsUseCase mockGetAllFieldsUseCase;
   late MockGetAllBookingsUseCase mockGetAllBookingsUseCase;
   late MockDeactivateUserUseCase mockDeactivateUserUseCase;
   late MockActivateUserUseCase mockActivateUserUseCase;
   late MockCreateFieldUseCase mockCreateFieldUseCase;
+  late MockSuperAdminUpdateFieldUseCase mockUpdateFieldUseCase;
+  late MockSuperAdminDeleteFieldUseCase mockDeleteFieldUseCase;
+  late MockVerifyFieldUseCase mockVerifyFieldUseCase;
+  late MockUpdateBookingStatusUseCase mockUpdateBookingStatusUseCase;
+  late MockCancelBookingUseCase mockCancelBookingUseCase;
   late MockCsvExportService mockCsvExportService;
   late MockPdfExportService mockPdfExportService;
 
@@ -44,11 +52,19 @@ void main() {
     mockGetAllUsersUseCase = MockGetAllUsersUseCase();
     mockAssignFieldToAdminUseCase = MockAssignFieldToAdminUseCase();
     mockGetActiveCitiesUseCase = MockGetActiveCitiesUseCase();
+    mockCreateCityUseCase = MockCreateCityUseCase();
+    mockUpdateCityUseCase = MockUpdateCityUseCase();
+    mockDeleteCityUseCase = MockDeleteCityUseCase();
     mockGetAllFieldsUseCase = MockGetAllFieldsUseCase();
     mockGetAllBookingsUseCase = MockGetAllBookingsUseCase();
     mockDeactivateUserUseCase = MockDeactivateUserUseCase();
     mockActivateUserUseCase = MockActivateUserUseCase();
     mockCreateFieldUseCase = MockCreateFieldUseCase();
+    mockUpdateFieldUseCase = MockSuperAdminUpdateFieldUseCase();
+    mockDeleteFieldUseCase = MockSuperAdminDeleteFieldUseCase();
+    mockVerifyFieldUseCase = MockVerifyFieldUseCase();
+    mockUpdateBookingStatusUseCase = MockUpdateBookingStatusUseCase();
+    mockCancelBookingUseCase = MockCancelBookingUseCase();
     mockCsvExportService = MockCsvExportService();
     mockPdfExportService = MockPdfExportService();
 
@@ -155,11 +171,19 @@ void main() {
       getAllUsersUseCase: mockGetAllUsersUseCase,
       assignFieldToAdminUseCase: mockAssignFieldToAdminUseCase,
       getActiveCitiesUseCase: mockGetActiveCitiesUseCase,
+      createCityUseCase: mockCreateCityUseCase,
+      updateCityUseCase: mockUpdateCityUseCase,
+      deleteCityUseCase: mockDeleteCityUseCase,
       getAllFieldsUseCase: mockGetAllFieldsUseCase,
       getAllBookingsUseCase: mockGetAllBookingsUseCase,
+      updateBookingStatusUseCase: mockUpdateBookingStatusUseCase,
+      cancelBookingUseCase: mockCancelBookingUseCase,
       deactivateUserUseCase: mockDeactivateUserUseCase,
       activateUserUseCase: mockActivateUserUseCase,
       createFieldUseCase: mockCreateFieldUseCase,
+      updateFieldUseCase: mockUpdateFieldUseCase,
+      deleteFieldUseCase: mockDeleteFieldUseCase,
+      verifyFieldUseCase: mockVerifyFieldUseCase,
       csvExportService: mockCsvExportService,
       pdfExportService: mockPdfExportService,
     );

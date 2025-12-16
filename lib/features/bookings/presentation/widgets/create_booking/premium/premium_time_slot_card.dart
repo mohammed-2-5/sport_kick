@@ -3,23 +3,29 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/next_day_badge.dart';
 
 /// Premium time slot card with selection animation.
 ///
 /// Features:
 /// - Tap animation with scale effect
 /// - Selected state with gradient and glow
-/// - Unavailable state with visual indication
-/// - Price display
+/// - Second slot highlight for 2-hour bookings
+/// - Disabled state for slots that can't accommodate duration
+/// - Next day badge for after-midnight slots
 class PremiumTimeSlotCard extends StatefulWidget {
   final TimeSlotEntity slot;
   final bool isSelected;
+  final bool isSecondSlot;
+  final bool isDisabledForDuration;
   final VoidCallback? onTap;
 
   const PremiumTimeSlotCard({
     super.key,
     required this.slot,
     required this.isSelected,
+    this.isSecondSlot = false,
+    this.isDisabledForDuration = false,
     this.onTap,
   });
 
@@ -51,20 +57,22 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
     super.dispose();
   }
 
+  bool get _isAvailable =>
+      widget.slot.isAvailable && !widget.isDisabledForDuration;
+  bool get _showAsSelected => widget.isSelected || widget.isSecondSlot;
+
   @override
   Widget build(BuildContext context) {
-    final isAvailable = widget.slot.isAvailable;
-
     return GestureDetector(
-      onTapDown: isAvailable ? (_) => _controller.forward() : null,
-      onTapUp: isAvailable ? (_) => _controller.reverse() : null,
-      onTapCancel: isAvailable ? () => _controller.reverse() : null,
-      onTap: () {
-        if (isAvailable) {
-          HapticFeedback.selectionClick();
-          widget.onTap?.call();
-        }
-      },
+      onTapDown: _isAvailable ? (_) => _controller.forward() : null,
+      onTapUp: _isAvailable ? (_) => _controller.reverse() : null,
+      onTapCancel: _isAvailable ? () => _controller.reverse() : null,
+      onTap: _isAvailable
+          ? () {
+              HapticFeedback.selectionClick();
+              widget.onTap?.call();
+            }
+          : null,
       child: AnimatedBuilder(
         animation: _scaleAnimation,
         builder: (context, child) {
@@ -74,119 +82,229 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
           duration: AppAnimations.fast,
           width: 110,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          decoration: BoxDecoration(
-            gradient: widget.isSelected
-                ? const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
-                  )
-                : null,
-            color: widget.isSelected
-                ? null
-                : isAvailable
-                ? Colors.white
-                : AppColors.backgroundLight,
-            borderRadius: BorderRadius.circular(14),
-            border: widget.isSelected
-                ? null
-                : Border.all(
-                    color: isAvailable ? AppColors.border : AppColors.lightGrey,
-                    width: 1,
-                  ),
-            boxShadow: widget.isSelected
-                ? [
-                    BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.4),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ]
-                : isAvailable
-                ? [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.04),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]
-                : null,
-          ),
+          decoration: _buildDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Time Range
-              Text(
-                widget.slot.formattedTimeRange,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: widget.isSelected
-                      ? Colors.white
-                      : isAvailable
-                      ? AppColors.textPrimary
-                      : AppColors.textSecondary,
-                ),
+              _TimeDisplay(
+                slot: widget.slot,
+                isSelected: _showAsSelected,
+                isAvailable: _isAvailable,
               ),
               const SizedBox(height: 6),
-              // Price or Status
-              if (isAvailable)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: widget.isSelected
-                        ? Colors.white.withValues(alpha: 0.2)
-                        : AppColors.success.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    widget.slot.formattedPrice,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: widget.isSelected
-                          ? Colors.white
-                          : AppColors.success,
-                    ),
-                  ),
-                )
-              else
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.block, size: 12, color: AppColors.error),
-                      SizedBox(width: 4),
-                      Text(
-                        'Booked',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.error,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              // Selected checkmark
-              if (widget.isSelected) ...[
+              _StatusDisplay(
+                slot: widget.slot,
+                isSelected: _showAsSelected,
+                isAvailable: _isAvailable,
+                isDisabledForDuration: widget.isDisabledForDuration,
+              ),
+              if (_showAsSelected) ...[
                 const SizedBox(height: 6),
-                const Icon(Icons.check_circle, color: Colors.white, size: 18),
+                Icon(
+                  widget.isSecondSlot ? Icons.link : Icons.check_circle,
+                  color: Colors.white,
+                  size: 18,
+                ),
               ],
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  BoxDecoration _buildDecoration() {
+    if (_showAsSelected) {
+      return BoxDecoration(
+        gradient: widget.isSecondSlot
+            ? LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColors.accentCyan.withValues(alpha: 0.8),
+                  AppColors.accentCyanDark.withValues(alpha: 0.8),
+                ],
+              )
+            : const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+              ),
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.accentCyan.withValues(alpha: 0.4),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      );
+    }
+
+    if (!_isAvailable) {
+      return BoxDecoration(
+        color: AppColors.backgroundLight,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.lightGrey),
+      );
+    }
+
+    return BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: AppColors.border),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.04),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    );
+  }
+}
+
+class _TimeDisplay extends StatelessWidget {
+  final TimeSlotEntity slot;
+  final bool isSelected;
+  final bool isAvailable;
+
+  const _TimeDisplay({
+    required this.slot,
+    required this.isSelected,
+    required this.isAvailable,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          '${slot.startTime} - ${slot.endTime}',
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+            color: isSelected
+                ? Colors.white
+                : isAvailable
+                ? AppColors.textPrimary
+                : AppColors.textSecondary,
+          ),
+        ),
+        if (slot.isNextDay) ...[const SizedBox(width: 4), const NextDayBadge()],
+      ],
+    );
+  }
+}
+
+class _StatusDisplay extends StatelessWidget {
+  final TimeSlotEntity slot;
+  final bool isSelected;
+  final bool isAvailable;
+  final bool isDisabledForDuration;
+
+  const _StatusDisplay({
+    required this.slot,
+    required this.isSelected,
+    required this.isAvailable,
+    required this.isDisabledForDuration,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (!slot.isAvailable) {
+      return _BookedBadge();
+    }
+
+    if (isDisabledForDuration) {
+      return _DurationUnavailableBadge();
+    }
+
+    return _PriceBadge(slot: slot, isSelected: isSelected);
+  }
+}
+
+class _PriceBadge extends StatelessWidget {
+  final TimeSlotEntity slot;
+  final bool isSelected;
+
+  const _PriceBadge({required this.slot, required this.isSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: isSelected
+            ? Colors.white.withValues(alpha: 0.2)
+            : AppColors.success.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        slot.formattedPrice,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: isSelected ? Colors.white : AppColors.success,
+        ),
+      ),
+    );
+  }
+}
+
+class _BookedBadge extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppColors.error.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: const Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.block, size: 12, color: AppColors.error),
+          SizedBox(width: 4),
+          Text(
+            'Booked',
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.error,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DurationUnavailableBadge extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppColors.warning.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: const Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.timer_off_outlined, size: 12, color: AppColors.warning),
+          SizedBox(width: 4),
+          Text(
+            '2h N/A',
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.warning,
+            ),
+          ),
+        ],
       ),
     );
   }

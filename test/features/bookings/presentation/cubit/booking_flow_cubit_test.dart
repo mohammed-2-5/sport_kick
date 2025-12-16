@@ -37,7 +37,7 @@ void main() {
     updatedAt: DateTime(2024, 1, 1),
   );
 
-  final testSlot = TimeSlotEntity(
+  const testSlot = TimeSlotEntity(
     startTime: '10:00',
     endTime: '11:00',
     isAvailable: true,
@@ -46,7 +46,7 @@ void main() {
     isNextDay: false,
   );
 
-  final testSlot2 = TimeSlotEntity(
+  const testSlot2 = TimeSlotEntity(
     startTime: '11:00',
     endTime: '12:00',
     isAvailable: true,
@@ -55,14 +55,14 @@ void main() {
     isNextDay: false,
   );
 
-  final unavailableSlot = TimeSlotEntity(
-    startTime: '14:00',
-    endTime: '15:00',
-    isAvailable: false,
-    price: 100,
-    currency: 'EGP',
-    isNextDay: false,
-  );
+  // const unavailableSlot = TimeSlotEntity(
+  //   startTime: '14:00',
+  //   endTime: '15:00',
+  //   isAvailable: false,
+  //   price: 100,
+  //   currency: 'EGP',
+  //   isNextDay: false,
+  // );
 
   final testBooking = BookingEntity(
     id: 'booking-1',
@@ -106,7 +106,7 @@ void main() {
             fieldId: any(named: 'fieldId'),
             date: any(named: 'date'),
           ),
-        ).thenAnswer((_) async => Right([testSlot, testSlot2]));
+        ).thenAnswer((_) async => const Right([testSlot, testSlot2]));
         return cubit;
       },
       act: (cubit) => cubit.initializeFlow(testField),
@@ -165,7 +165,7 @@ void main() {
             fieldId: any(named: 'fieldId'),
             date: any(named: 'date'),
           ),
-        ).thenAnswer((_) async => Right([testSlot]));
+        ).thenAnswer((_) async => const Right([testSlot]));
         return cubit;
       },
       seed: () => initialState,
@@ -225,7 +225,7 @@ void main() {
       fieldName: 'Test Field',
       pricePerHour: 100,
       selectedDate: DateTime(2024, 12, 15),
-      slotsByPeriod: {
+      slotsByPeriod: const {
         'Morning': [testSlot, testSlot2],
       },
       selectedDuration: 1,

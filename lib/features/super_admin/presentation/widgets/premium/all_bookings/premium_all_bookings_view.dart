@@ -10,6 +10,8 @@ import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/booking_actions_sheet.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/cancel_booking_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/premium_all_booking_card.dart';
 
 /// Premium All Bookings view with tabbed filtering.
@@ -21,6 +23,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_b
 /// - Stats row with booking counts
 /// - Staggered booking cards list
 /// - Pull-to-refresh
+/// - Booking actions (confirm, complete, cancel)
 /// - Empty and error states
 class PremiumAllBookingsView extends StatefulWidget {
   const PremiumAllBookingsView({super.key});
@@ -65,6 +68,39 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
     });
   }
 
+  void _showBookingActions(BookingEntity booking) {
+    BookingActionsSheet.show(
+      context: context,
+      booking: booking,
+      onConfirm: () {
+        context.read<SuperAdminCubit>().updateBookingStatus(
+          bookingId: booking.id,
+          status: BookingStatus.confirmed,
+        );
+      },
+      onComplete: () {
+        context.read<SuperAdminCubit>().updateBookingStatus(
+          bookingId: booking.id,
+          status: BookingStatus.completed,
+        );
+      },
+      onCancel: () => _showCancelDialog(booking),
+    );
+  }
+
+  void _showCancelDialog(BookingEntity booking) {
+    CancelBookingDialog.show(
+      context: context,
+      booking: booking,
+      onConfirm: (reason) {
+        context.read<SuperAdminCubit>().cancelBooking(
+          bookingId: booking.id,
+          reason: reason,
+        );
+      },
+    );
+  }
+
   List<BookingEntity> _filterBookings(
     List<BookingEntity> bookings,
     BookingStatus? statusFilter,
@@ -97,6 +133,10 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
       listener: (context, state) {
         if (state is SuperAdminError) {
           SnackbarHelper.showError(context, state.message);
+        } else if (state is BookingStatusUpdated) {
+          SnackbarHelper.showSuccess(context, state.successMessage);
+        } else if (state is BookingCancelled) {
+          SnackbarHelper.showSuccess(context, state.successMessage);
         }
       },
       builder: (context, state) {
@@ -234,7 +274,10 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
           controller: _tabController,
           children: _tabs.map((tab) {
             final filteredBookings = _filterBookings(bookings, tab.status);
-            return _BookingsList(bookings: filteredBookings);
+            return _BookingsList(
+              bookings: filteredBookings,
+              onBookingTap: _showBookingActions,
+            );
           }).toList(),
         ),
       ),
@@ -294,8 +337,9 @@ class _PremiumTabBar extends StatelessWidget {
 /// Bookings list widget.
 class _BookingsList extends StatelessWidget {
   final List<BookingEntity> bookings;
+  final void Function(BookingEntity booking)? onBookingTap;
 
-  const _BookingsList({required this.bookings});
+  const _BookingsList({required this.bookings, this.onBookingTap});
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +369,7 @@ class _BookingsList extends StatelessWidget {
                   status: booking.status,
                   isManual: booking.isManual,
                   onTap: () {
-                    // Navigate to booking details
+                    onBookingTap?.call(booking);
                   },
                 ),
               ),

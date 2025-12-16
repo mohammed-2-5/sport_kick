@@ -277,4 +277,28 @@ class BookingConstants {
 
   /// History tab index
   static const int historyTabIndex = 1;
+
+  // ==================== DURATION SELECTOR ====================
+
+  /// Available booking durations (in hours)
+  static const List<int> availableDurations = [1, 2];
+
+  /// Duration selector title
+  static const String durationSelectorTitle = 'Booking Duration';
+
+  /// Duration recommended label
+  static const String durationRecommendedLabel = 'Recommended';
+
+  /// Duration best value label
+  static const String durationBestValueLabel = 'Best Value';
+
+  /// Duration unavailable message
+  static const String durationUnavailableMessage =
+      'Not available for this time slot';
+
+  /// Duration chip height
+  static const double durationChipHeight = 80.0;
+
+  /// Duration chip border radius
+  static const double durationChipBorderRadius = 16.0;
 }

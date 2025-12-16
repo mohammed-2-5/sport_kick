@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/super_admin/domain/models/field_creation_data.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/assign_field_to_admin_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/create_field_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_field_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/delete_field_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/verify_field_usecase.dart';
 import 'package:spo_kick/features/fields/domain/usecases/get_all_fields_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/field_form_constants.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
@@ -19,6 +22,9 @@ mixin FieldManagementOperations on Cubit<SuperAdminState> {
   CreateFieldUseCase get createFieldUseCase;
   AssignFieldToAdminUseCase get assignFieldToAdminUseCase;
   GetAllFieldsUseCase get getAllFieldsUseCase;
+  UpdateFieldUseCase get updateFieldUseCase;
+  DeleteFieldUseCase get deleteFieldUseCase;
+  VerifyFieldUseCase get verifyFieldUseCase;
 
   /// Submit field creation with validation.
   ///
@@ -76,6 +82,8 @@ mixin FieldManagementOperations on Cubit<SuperAdminState> {
       capacity: capacity,
       isIndoor: data.isIndoor,
       facilities: data.facilities,
+      paymentPhone: data.paymentPhone,
+      paymentMethod: data.paymentMethod,
     );
   }
 
@@ -152,6 +160,8 @@ mixin FieldManagementOperations on Cubit<SuperAdminState> {
     List<String> images = const [],
     String? videoUrl,
     List<String> facilities = const [],
+    String? paymentPhone,
+    String paymentMethod = 'vodafone_cash',
   }) async {
     debugPrint('🔄 [SuperAdminCubit] Creating field...');
     debugPrint('   Name: $name');
@@ -177,6 +187,8 @@ mixin FieldManagementOperations on Cubit<SuperAdminState> {
       images: images,
       videoUrl: videoUrl,
       facilities: facilities,
+      paymentPhone: paymentPhone,
+      paymentMethod: paymentMethod,
     );
 
     result.fold(
@@ -191,6 +203,138 @@ mixin FieldManagementOperations on Cubit<SuperAdminState> {
         debugPrint('   Field ID: ${field.id}');
         debugPrint('   Name: ${field.name}');
         emit(FieldCreated(field));
+      },
+    );
+  }
+
+  /// Update an existing field.
+  Future<void> updateField({
+    required String fieldId,
+    String? name,
+    String? address,
+    String? description,
+    double? pricePerHour,
+    double? latitude,
+    double? longitude,
+    String? ownerId,
+    String? sportCategoryId,
+    String? surfaceType,
+    bool? isIndoor,
+    bool? isVerified,
+    bool? isActive,
+    List<String>? facilities,
+    String? paymentPhone,
+    String? paymentMethod,
+  }) async {
+    debugPrint('🔄 [SuperAdminCubit] Updating field: $fieldId');
+    emit(const SuperAdminLoading(message: 'Updating field...'));
+
+    final result = await updateFieldUseCase(
+      fieldId: fieldId,
+      name: name,
+      address: address,
+      description: description,
+      pricePerHour: pricePerHour,
+      latitude: latitude,
+      longitude: longitude,
+      ownerId: ownerId,
+      sportCategoryId: sportCategoryId,
+      surfaceType: surfaceType,
+      isIndoor: isIndoor,
+      isVerified: isVerified,
+      isActive: isActive,
+      facilities: facilities,
+      paymentPhone: paymentPhone,
+      paymentMethod: paymentMethod,
+    );
+
+    result.fold(
+      (failure) {
+        debugPrint(
+          '❌ [SuperAdminCubit] Error updating field: ${failure.message}',
+        );
+        emit(SuperAdminError(failure.message));
+      },
+      (updatedField) {
+        debugPrint('✅ [SuperAdminCubit] Field updated successfully!');
+        emit(FieldUpdated(updatedField));
+        loadAllFields();
+      },
+    );
+  }
+
+  /// Delete a field (soft or hard delete).
+  Future<void> deleteField({
+    required String fieldId,
+    required bool hardDelete,
+  }) async {
+    debugPrint(
+      '🔄 [SuperAdminCubit] Deleting field: $fieldId (hard=$hardDelete)',
+    );
+    emit(
+      SuperAdminLoading(
+        message: hardDelete
+            ? 'Permanently deleting field...'
+            : 'Deactivating field...',
+      ),
+    );
+
+    final result = await deleteFieldUseCase(
+      fieldId: fieldId,
+      deleteType: hardDelete ? DeleteType.hard : DeleteType.soft,
+    );
+
+    result.fold(
+      (failure) {
+        debugPrint(
+          '❌ [SuperAdminCubit] Error deleting field: ${failure.message}',
+        );
+        emit(SuperAdminError(failure.message));
+      },
+      (_) {
+        final message = hardDelete
+            ? 'Field permanently deleted'
+            : 'Field deactivated successfully';
+        debugPrint('✅ [SuperAdminCubit] $message');
+        emit(FieldDeleted(fieldId: fieldId, wasHardDelete: hardDelete));
+        loadAllFields();
+      },
+    );
+  }
+
+  /// Verify or unverify a field.
+  Future<void> verifyField({
+    required String fieldId,
+    required bool isVerified,
+  }) async {
+    debugPrint(
+      '🔄 [SuperAdminCubit] ${isVerified ? 'Verifying' : 'Unverifying'} field: $fieldId',
+    );
+    emit(
+      SuperAdminLoading(
+        message: isVerified ? 'Verifying field...' : 'Removing verification...',
+      ),
+    );
+
+    final result = await verifyFieldUseCase(
+      fieldId: fieldId,
+      isVerified: isVerified,
+    );
+
+    result.fold(
+      (failure) {
+        debugPrint(
+          '❌ [SuperAdminCubit] Error verifying field: ${failure.message}',
+        );
+        emit(SuperAdminError(failure.message));
+      },
+      (_) {
+        final message = isVerified
+            ? 'Field verified successfully'
+            : 'Verification removed';
+        debugPrint('✅ [SuperAdminCubit] $message');
+        emit(FieldVerified(fieldId: fieldId, isVerified: isVerified));
+        loadAllFields();
       },
     );
   }

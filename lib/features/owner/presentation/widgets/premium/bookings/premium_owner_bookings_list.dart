@@ -10,6 +10,7 @@ import 'package:spo_kick/features/owner/presentation/widgets/premium/premium_own
 /// - Pull-to-refresh
 /// - Empty state
 /// - Loading shimmer
+/// - Payment verification actions
 class PremiumOwnerBookingsList extends StatelessWidget {
   final List<BookingEntity> bookings;
   final bool isLoading;
@@ -17,6 +18,10 @@ class PremiumOwnerBookingsList extends StatelessWidget {
   final VoidCallback onRefresh;
   final Function(String) onApprove;
   final Function(String) onReject;
+  final Function(BookingEntity)? onTap;
+  final Function(BookingEntity)? onViewPaymentProof;
+  final Function(String)? onVerifyPayment;
+  final Function(String)? onRejectPayment;
   final String emptyMessage;
 
   const PremiumOwnerBookingsList({
@@ -27,6 +32,10 @@ class PremiumOwnerBookingsList extends StatelessWidget {
     required this.onRefresh,
     required this.onApprove,
     required this.onReject,
+    this.onTap,
+    this.onViewPaymentProof,
+    this.onVerifyPayment,
+    this.onRejectPayment,
     this.emptyMessage = 'No bookings found',
   });
 
@@ -65,8 +74,18 @@ class PremiumOwnerBookingsList extends StatelessWidget {
             },
             child: PremiumOwnerBookingCard(
               booking: booking,
+              onTap: onTap != null ? () => onTap!(booking) : null,
               onApprove: () => onApprove(booking.id),
               onReject: () => onReject(booking.id),
+              onViewPaymentProof: onViewPaymentProof != null
+                  ? () => onViewPaymentProof!(booking)
+                  : null,
+              onVerifyPayment: onVerifyPayment != null
+                  ? () => onVerifyPayment!(booking.id)
+                  : null,
+              onRejectPayment: onRejectPayment != null
+                  ? () => onRejectPayment!(booking.id)
+                  : null,
             ),
           );
         },

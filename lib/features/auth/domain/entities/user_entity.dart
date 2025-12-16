@@ -39,6 +39,15 @@ class UserEntity extends Equatable {
   /// Last update timestamp
   final DateTime updatedAt;
 
+  /// Selected city ID (FK to cities table)
+  final String? selectedCityId;
+
+  /// Number of fields owned by this admin (for admin stats display)
+  final int fieldsCount;
+
+  /// Total revenue generated (for admin stats display)
+  final double totalRevenue;
+
   const UserEntity({
     required this.id,
     required this.email,
@@ -51,6 +60,9 @@ class UserEntity extends Equatable {
     this.passwordChanged = false,
     required this.createdAt,
     required this.updatedAt,
+    this.selectedCityId,
+    this.fieldsCount = 0,
+    this.totalRevenue = 0.0,
   });
 
   /// Creates a copy of this user with the given fields replaced with new values
@@ -66,6 +78,9 @@ class UserEntity extends Equatable {
     bool? passwordChanged,
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? selectedCityId,
+    int? fieldsCount,
+    double? totalRevenue,
   }) {
     return UserEntity(
       id: id ?? this.id,
@@ -79,6 +94,9 @@ class UserEntity extends Equatable {
       passwordChanged: passwordChanged ?? this.passwordChanged,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      selectedCityId: selectedCityId ?? this.selectedCityId,
+      fieldsCount: fieldsCount ?? this.fieldsCount,
+      totalRevenue: totalRevenue ?? this.totalRevenue,
     );
   }
 
@@ -119,6 +137,9 @@ class UserEntity extends Equatable {
     passwordChanged,
     createdAt,
     updatedAt,
+    selectedCityId,
+    fieldsCount,
+    totalRevenue,
   ];
 
   @override

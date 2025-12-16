@@ -60,7 +60,7 @@ void main() {
 
       // Look for bottom navigation
       final bottomNav = find.byType(BottomNavigationBar);
-      final navBar = find.byType(NavigationBar);
+      // final navBar = find.byType(NavigationBar);
 
       if (bottomNav.evaluate().isNotEmpty) {
         // Find navigation items and tap

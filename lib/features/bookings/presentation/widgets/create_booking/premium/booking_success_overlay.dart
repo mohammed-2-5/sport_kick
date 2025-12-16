@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// Animated success overlay displayed after booking confirmation.
 ///
@@ -14,13 +15,17 @@ import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 /// - Navigation actions
 class BookingSuccessOverlay extends StatefulWidget {
   final BookingEntity booking;
+  final FieldEntity? field;
   final VoidCallback onViewBookings;
+  final VoidCallback onViewInvoice;
   final VoidCallback onDone;
 
   const BookingSuccessOverlay({
     super.key,
     required this.booking,
+    this.field,
     required this.onViewBookings,
+    required this.onViewInvoice,
     required this.onDone,
   });
 
@@ -136,130 +141,184 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                   _Particle(controller: _particleController, index: index),
             ),
 
-            // Main content
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(32),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Spacer(),
-
-                    // Success Icon
-                    AnimatedBuilder(
-                      animation: _checkController,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          scale: _checkScaleAnimation.value,
-                          child: Opacity(
-                            opacity: _checkOpacityAnimation.value,
-                            child: Container(
-                              width: 120,
-                              height: 120,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    AppColors.success,
-                                    AppColors.success.withValues(alpha: 0.8),
-                                  ],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.success.withValues(
-                                      alpha: 0.4,
-                                    ),
-                                    blurRadius: 30,
-                                    spreadRadius: 5,
-                                  ),
-                                ],
-                              ),
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                                size: 60 * _circleAnimation.value,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+            // Main content - scrollable to prevent overflow
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(32),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight - 64,
                     ),
-
-                    const SizedBox(height: 32),
-
-                    // Content
-                    AnimatedBuilder(
-                      animation: _contentController,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(0, _contentSlideAnimation.value),
-                          child: Opacity(
-                            opacity: _contentOpacityAnimation.value,
-                            child: child,
-                          ),
-                        );
-                      },
+                    child: IntrinsicHeight(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Text(
-                            'Booking Confirmed!',
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w800,
-                              color: AppColors.textPrimary,
-                            ),
+                          // Success Icon
+                          AnimatedBuilder(
+                            animation: _checkController,
+                            builder: (context, child) {
+                              return Transform.scale(
+                                scale: _checkScaleAnimation.value,
+                                child: Opacity(
+                                  opacity: _checkOpacityAnimation.value,
+                                  child: Container(
+                                    width: 120,
+                                    height: 120,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          AppColors.success,
+                                          AppColors.success.withValues(
+                                            alpha: 0.8,
+                                          ),
+                                        ],
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppColors.success.withValues(
+                                            alpha: 0.4,
+                                          ),
+                                          blurRadius: 30,
+                                          spreadRadius: 5,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 60 * _circleAnimation.value,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                          const SizedBox(height: 12),
-                          const Text(
-                            'Your booking has been successfully placed.\nYou will receive a confirmation shortly.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: AppColors.textSecondary,
-                              height: 1.5,
-                            ),
-                          ),
+
                           const SizedBox(height: 32),
 
-                          // Booking ID Card
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: AppColors.backgroundLight,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
+                          // Content
+                          AnimatedBuilder(
+                            animation: _contentController,
+                            builder: (context, child) {
+                              return Transform.translate(
+                                offset: Offset(0, _contentSlideAnimation.value),
+                                child: Opacity(
+                                  opacity: _contentOpacityAnimation.value,
+                                  child: child,
+                                ),
+                              );
+                            },
                             child: Column(
                               children: [
-                                const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.confirmation_number,
-                                      color: AppColors.accentCyan,
-                                      size: 20,
-                                    ),
-                                    SizedBox(width: 8),
-                                    Text(
-                                      'Booking ID',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.textSecondary,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  '#${widget.booking.id.substring(0, 8).toUpperCase()}',
-                                  style: const TextStyle(
-                                    fontSize: 20,
+                                const Text(
+                                  'Booking Confirmed!',
+                                  style: TextStyle(
+                                    fontSize: 28,
                                     fontWeight: FontWeight.w800,
                                     color: AppColors.textPrimary,
-                                    letterSpacing: 1,
                                   ),
+                                ),
+                                const SizedBox(height: 12),
+                                const Text(
+                                  'Your booking has been successfully placed.\nYou will receive a confirmation shortly.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors.textSecondary,
+                                    height: 1.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 32),
+
+                                // Booking ID Card
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.backgroundLight,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.confirmation_number,
+                                            color: AppColors.accentCyan,
+                                            size: 20,
+                                          ),
+                                          SizedBox(width: 8),
+                                          Text(
+                                            'Booking ID',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.textSecondary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        '#${widget.booking.id.substring(0, 8).toUpperCase()}',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w800,
+                                          color: AppColors.textPrimary,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 24),
+
+                          // Actions
+                          AnimatedBuilder(
+                            animation: _contentController,
+                            builder: (context, child) {
+                              return Opacity(
+                                opacity: _contentOpacityAnimation.value,
+                                child: child,
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                // Primary: View Invoice (for payment)
+                                if (widget.field != null) ...[
+                                  PremiumButton(
+                                    label: 'View Invoice & Pay',
+                                    onPressed: widget.onViewInvoice,
+                                    fullWidth: true,
+                                    icon: Icons.receipt_long_rounded,
+                                  ),
+                                  const SizedBox(height: 12),
+                                ],
+                                PremiumButton(
+                                  label: 'View My Bookings',
+                                  onPressed: widget.onViewBookings,
+                                  fullWidth: true,
+                                  icon: Icons.list_alt,
+                                  style: widget.field != null
+                                      ? PremiumButtonStyle.outline
+                                      : PremiumButtonStyle.primary,
+                                ),
+                                const SizedBox(height: 12),
+                                PremiumButton(
+                                  label: 'Done',
+                                  onPressed: widget.onDone,
+                                  fullWidth: true,
+                                  style: PremiumButtonStyle.outline,
                                 ),
                               ],
                             ),
@@ -267,41 +326,9 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                         ],
                       ),
                     ),
-
-                    const Spacer(),
-
-                    // Actions
-                    AnimatedBuilder(
-                      animation: _contentController,
-                      builder: (context, child) {
-                        return Opacity(
-                          opacity: _contentOpacityAnimation.value,
-                          child: child,
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          PremiumButton(
-                            label: 'View My Bookings',
-                            onPressed: widget.onViewBookings,
-                            fullWidth: true,
-                            icon: Icons.list_alt,
-                          ),
-                          const SizedBox(height: 12),
-                          PremiumButton(
-                            label: 'Done',
-                            onPressed: widget.onDone,
-                            fullWidth: true,
-                            style: PremiumButtonStyle.outline,
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 32),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
           ],
         ),

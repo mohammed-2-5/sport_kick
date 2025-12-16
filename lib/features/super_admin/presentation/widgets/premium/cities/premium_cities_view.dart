@@ -7,6 +7,10 @@ import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/city_actions_sheet.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/create_city_dialog.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/delete_city_dialog.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/edit_city_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/premium_cities_stats_bar.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/premium_city_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/premium_city_filter_chips.dart';
@@ -19,6 +23,8 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/citie
 /// - Filter chips with count badges
 /// - Staggered city cards list
 /// - Pull-to-refresh
+/// - FAB for creating new cities
+/// - CRUD operations via dialogs
 /// - Empty state with illustration
 /// - Error state with retry
 class PremiumCitiesView extends StatefulWidget {
@@ -40,18 +46,86 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
     return cities;
   }
 
+  void _showCreateCityDialog() {
+    CreateCityDialog.show(
+      context: context,
+      onSubmit: (name, isActive) {
+        context.read<SuperAdminCubit>().createCity(
+          name: name,
+          isActive: isActive,
+        );
+      },
+    );
+  }
+
+  void _showEditCityDialog(CityEntity city) {
+    EditCityDialog.show(
+      context: context,
+      city: city,
+      onSubmit: (name, isActive) {
+        context.read<SuperAdminCubit>().updateCity(
+          cityId: city.id,
+          name: name != city.name ? name : null,
+          isActive: isActive != city.isActive ? isActive : null,
+        );
+      },
+    );
+  }
+
+  void _showDeleteCityDialog(CityEntity city) {
+    DeleteCityDialog.show(
+      context: context,
+      city: city,
+      onConfirm: (hardDelete) {
+        context.read<SuperAdminCubit>().deleteCity(
+          cityId: city.id,
+          hardDelete: hardDelete,
+        );
+      },
+    );
+  }
+
+  void _showCityActions(CityEntity city) {
+    CityActionsSheet.show(
+      context: context,
+      city: city,
+      onEdit: () => _showEditCityDialog(city),
+      onToggleStatus: () {
+        context.read<SuperAdminCubit>().updateCity(
+          cityId: city.id,
+          isActive: !city.isActive,
+        );
+      },
+      onDelete: () => _showDeleteCityDialog(city),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SuperAdminCubit, SuperAdminState>(
       listener: (context, state) {
         if (state is SuperAdminError) {
           SnackbarHelper.showError(context, state.message);
+        } else if (state is CityCreated) {
+          SnackbarHelper.showSuccess(context, state.successMessage);
+        } else if (state is CityUpdated) {
+          SnackbarHelper.showSuccess(context, state.successMessage);
+        } else if (state is CityDeleted) {
+          SnackbarHelper.showSuccess(context, state.successMessage);
         }
       },
       builder: (context, state) {
         return Scaffold(
           backgroundColor: AppColors.backgroundLight,
           body: _buildBody(context, state),
+          floatingActionButton: state is CitiesLoaded
+              ? FloatingActionButton.extended(
+                  onPressed: _showCreateCityDialog,
+                  backgroundColor: AppColors.navyDeep,
+                  icon: const Icon(Icons.add_location_alt_rounded),
+                  label: const Text('Add City'),
+                )
+              : null,
         );
       },
     );
@@ -155,14 +229,13 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
                           name: city.name,
                           fieldsCount: city.fieldsCount,
                           isActive: city.isActive,
-                          onTap: () {
-                            // Navigate to city details
-                          },
-                          onEdit: () {
-                            // Edit city
-                          },
+                          onTap: () => _showCityActions(city),
+                          onEdit: () => _showEditCityDialog(city),
                           onToggleStatus: () {
-                            // Toggle city status
+                            context.read<SuperAdminCubit>().updateCity(
+                              cityId: city.id,
+                              isActive: !city.isActive,
+                            );
                           },
                         ),
                       ),
@@ -172,8 +245,8 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
               ),
             ),
 
-          // Bottom padding
-          const SliverToBoxAdapter(child: SizedBox(height: 32)),
+          // Bottom padding for FAB
+          const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
       ),
     );

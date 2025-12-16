@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/models/location_data.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
@@ -9,6 +10,8 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_form_section_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_form_text_field.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_indoor_switch.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_location_selector.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_payment_selector.dart';
 
 /// Form body for creating a new field.
 ///
@@ -18,6 +21,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/
 /// - Location
 /// - Field details
 /// - Pricing
+/// - Payment Settings
 /// - Facilities
 class CreateFieldFormBody extends StatelessWidget {
   /// Form key for validation
@@ -37,6 +41,8 @@ class CreateFieldFormBody extends StatelessWidget {
   final String selectedSurface;
   final bool isIndoor;
   final List<String> selectedFacilities;
+  final String? paymentPhone;
+  final String paymentMethod;
 
   /// Available options
   final List<UserEntity> admins;
@@ -59,7 +65,12 @@ class CreateFieldFormBody extends StatelessWidget {
   final ValueChanged<String> onSurfaceChanged;
   final ValueChanged<bool> onIndoorChanged;
   final ValueChanged<List<String>> onFacilitiesChanged;
+  final ValueChanged<String?> onPaymentPhoneChanged;
+  final ValueChanged<String> onPaymentMethodChanged;
   final VoidCallback onSubmit;
+  final LocationData? selectedLocation;
+  final ValueChanged<LocationData?> onLocationChanged;
+  final String submitButtonLabel;
 
   const CreateFieldFormBody({
     required this.formKey,
@@ -74,6 +85,8 @@ class CreateFieldFormBody extends StatelessWidget {
     required this.selectedSurface,
     required this.isIndoor,
     required this.selectedFacilities,
+    required this.paymentPhone,
+    required this.paymentMethod,
     required this.admins,
     required this.cities,
     required this.sportCategories,
@@ -90,7 +103,12 @@ class CreateFieldFormBody extends StatelessWidget {
     required this.onSurfaceChanged,
     required this.onIndoorChanged,
     required this.onFacilitiesChanged,
+    required this.onPaymentPhoneChanged,
+    required this.onPaymentMethodChanged,
     required this.onSubmit,
+    required this.selectedLocation,
+    required this.onLocationChanged,
+    this.submitButtonLabel = 'Create Field',
     super.key,
   });
 
@@ -149,11 +167,10 @@ class CreateFieldFormBody extends StatelessWidget {
             icon: Icons.location_on_outlined,
           ),
           const SizedBox(height: 12),
-          FieldFormTextField(
-            controller: addressController,
-            label: 'Address',
-            hint: 'Street address',
-            icon: Icons.home_outlined,
+          FieldLocationSelector(
+            addressController: addressController,
+            selectedLocation: selectedLocation,
+            onLocationChanged: onLocationChanged,
             validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
           ),
           const SizedBox(height: 16),
@@ -239,6 +256,21 @@ class CreateFieldFormBody extends StatelessWidget {
 
           const SizedBox(height: 24),
 
+          // Payment Settings Section
+          const FieldFormSectionHeader(
+            title: 'Payment Settings',
+            icon: Icons.payment_rounded,
+          ),
+          const SizedBox(height: 12),
+          FieldPaymentSelector(
+            paymentPhone: paymentPhone,
+            paymentMethod: paymentMethod,
+            onPhoneChanged: onPaymentPhoneChanged,
+            onMethodChanged: onPaymentMethodChanged,
+          ),
+
+          const SizedBox(height: 24),
+
           // Facilities Section
           const FieldFormSectionHeader(
             title: 'Facilities',
@@ -255,9 +287,11 @@ class CreateFieldFormBody extends StatelessWidget {
 
           // Submit Button
           CustomButton(
-            text: 'Create Field',
+            text: submitButtonLabel,
             onPressed: onSubmit,
-            icon: Icons.add_rounded,
+            icon: submitButtonLabel.contains('Update')
+                ? Icons.save_rounded
+                : Icons.add_rounded,
           ),
           const SizedBox(height: 16),
         ],

@@ -5,6 +5,7 @@ import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 
 /// Repository interface for super admin operations.
 ///
@@ -119,6 +120,50 @@ abstract class SuperAdminRepository {
   /// - [Left(Failure)]: Error occurred
   Future<Either<Failure, List<CityEntity>>> getActiveCities();
 
+  /// Create a new city.
+  ///
+  /// Parameters:
+  /// - [name]: City name
+  /// - [isActive]: Whether the city is active (default: true)
+  ///
+  /// Returns:
+  /// - [Right(CityEntity)]: City created successfully
+  /// - [Left(Failure)]: Error occurred
+  Future<Either<Failure, CityEntity>> createCity({
+    required String name,
+    bool isActive = true,
+  });
+
+  /// Update an existing city.
+  ///
+  /// Parameters:
+  /// - [cityId]: ID of the city to update
+  /// - [name]: New city name (optional)
+  /// - [isActive]: New active status (optional)
+  ///
+  /// Returns:
+  /// - [Right(CityEntity)]: City updated successfully
+  /// - [Left(Failure)]: Error occurred
+  Future<Either<Failure, CityEntity>> updateCity({
+    required String cityId,
+    String? name,
+    bool? isActive,
+  });
+
+  /// Delete a city.
+  ///
+  /// Parameters:
+  /// - [cityId]: ID of the city to delete
+  /// - [hardDelete]: If true, permanently deletes; if false, sets is_active to false
+  ///
+  /// Returns:
+  /// - [Right(void)]: City deleted successfully
+  /// - [Left(Failure)]: Error occurred
+  Future<Either<Failure, void>> deleteCity({
+    required String cityId,
+    required bool hardDelete,
+  });
+
   /// Deactivate a user account.
   ///
   /// Sets is_active = false for the user.
@@ -195,5 +240,118 @@ abstract class SuperAdminRepository {
     List<String> images = const [],
     String? videoUrl,
     List<String> facilities = const [],
+    String? paymentPhone,
+    String paymentMethod = 'vodafone_cash',
+  });
+
+  /// Update an existing field.
+  ///
+  /// Only specified (non-null) parameters are updated.
+  ///
+  /// Returns:
+  /// - [Right(FieldEntity)]: Updated field
+  /// - [Left(Failure)]: Error occurred
+  Future<Either<Failure, FieldEntity>> updateField({
+    required String fieldId,
+    String? name,
+    String? address,
+    String? description,
+    double? pricePerHour,
+    double? latitude,
+    double? longitude,
+    String? ownerId,
+    String? sportCategoryId,
+    String? surfaceType,
+    bool? isIndoor,
+    bool? isVerified,
+    bool? isActive,
+    List<String>? facilities,
+    String? paymentPhone,
+    String? paymentMethod,
+  });
+
+  /// Delete a field.
+  ///
+  /// Parameters:
+  /// - [fieldId]: ID of the field to delete
+  /// - [hardDelete]: If true, permanently deletes. If false, sets is_active = false.
+  ///
+  /// Returns:
+  /// - [Right(void)]: Deletion successful
+  /// - [Left(Failure)]: Error occurred
+  Future<Either<Failure, void>> deleteField({
+    required String fieldId,
+    required bool hardDelete,
+  });
+
+  /// Verify or unverify a field.
+  ///
+  /// Verified fields show a badge and get higher visibility.
+  ///
+  /// Returns:
+  /// - [Right(void)]: Status updated
+  /// - [Left(Failure)]: Error occurred
+  Future<Either<Failure, void>> verifyField({
+    required String fieldId,
+    required bool isVerified,
+  });
+
+  // ============================================================================
+  // SPORT CATEGORIES MANAGEMENT
+  // ============================================================================
+
+  /// Get all sport categories.
+  ///
+  /// Returns all categories regardless of active status.
+  ///
+  /// Returns:
+  /// - [Right(List<SportCategoryEntity>)]: List of categories
+  /// - [Left(Failure)]: Error occurred
+  Future<Either<Failure, List<SportCategoryEntity>>> getAllSportCategories();
+
+  /// Create a new sport category.
+  ///
+  /// Parameters:
+  /// - [name]: Category name (e.g., "Football", "Basketball")
+  /// - [icon]: Optional icon identifier
+  /// - [description]: Optional description
+  ///
+  /// Returns:
+  /// - [Right(SportCategoryEntity)]: Created category
+  /// - [Left(Failure)]: Error occurred (e.g., duplicate name)
+  Future<Either<Failure, SportCategoryEntity>> createSportCategory({
+    required String name,
+    String? icon,
+    String? description,
+  });
+
+  /// Update an existing sport category.
+  ///
+  /// Parameters:
+  /// - [categoryId]: ID of category to update
+  /// - [name]: Optional new name
+  /// - [icon]: Optional new icon
+  /// - [description]: Optional new description
+  ///
+  /// Returns:
+  /// - [Right(SportCategoryEntity)]: Updated category
+  /// - [Left(Failure)]: Error occurred
+  Future<Either<Failure, SportCategoryEntity>> updateSportCategory({
+    required String categoryId,
+    String? name,
+    String? icon,
+    String? description,
+  });
+
+  /// Delete a sport category.
+  ///
+  /// Parameters:
+  /// - [categoryId]: ID of category to delete
+  ///
+  /// Returns:
+  /// - [Right(void)]: Category deleted
+  /// - [Left(Failure)]: Error occurred (e.g., category in use)
+  Future<Either<Failure, void>> deleteSportCategory({
+    required String categoryId,
   });
 }

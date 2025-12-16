@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_empty_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_search_bar.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/field_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_statistics_section.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/dialogs/delete_options_dialog.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/fields/field_actions_sheet.dart';
 
 /// Main body widget for fields list.
 class FieldsListBody extends StatelessWidget {
@@ -28,6 +31,33 @@ class FieldsListBody extends StatelessWidget {
     super.key,
   });
 
+  void _showFieldActions(BuildContext context, FieldEntity field) {
+    final cubit = context.read<SuperAdminCubit>();
+
+    FieldActionsSheet.show(
+      context: context,
+      field: field,
+      onEdit: () {
+        context.pushNamed('superAdminEditField', extra: field);
+      },
+      onToggleVerify: () {
+        cubit.verifyField(fieldId: field.id, isVerified: !field.isVerified);
+      },
+      onDelete: () {
+        DeleteOptionsDialog.show(
+          context: context,
+          fieldName: field.name,
+          onSoftDelete: () {
+            cubit.deleteField(fieldId: field.id, hardDelete: false);
+          },
+          onHardDelete: () {
+            cubit.deleteField(fieldId: field.id, hardDelete: true);
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -49,11 +79,24 @@ class FieldsListBody extends StatelessWidget {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(
-                '${filteredFields.length} field${filteredFields.length != 1 ? 's' : ''} found',
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${filteredFields.length} field${filteredFields.length != 1 ? 's' : ''} found',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+                    ),
+                  ),
+                  Text(
+                    'Long press for actions',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey[400],
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -65,13 +108,16 @@ class FieldsListBody extends StatelessWidget {
             SliverPadding(
               padding: const EdgeInsets.all(16),
               sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => Padding(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final field = filteredFields[index];
+                  return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
-                    child: FieldCard(field: filteredFields[index]),
-                  ),
-                  childCount: filteredFields.length,
-                ),
+                    child: FieldCard(
+                      field: field,
+                      onLongPress: () => _showFieldActions(context, field),
+                    ),
+                  );
+                }, childCount: filteredFields.length),
               ),
             ),
         ],

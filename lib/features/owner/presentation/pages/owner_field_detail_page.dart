@@ -12,6 +12,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/delete_field_dialog.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/field/business_hours_display_card.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_detail_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_detail_stats.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_recent_bookings.dart';
@@ -113,6 +114,17 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
                       // Field Statistics
                       SliverToBoxAdapter(
                         child: FieldDetailStats(field: widget.field),
+                      ),
+
+                      // Business Hours
+                      SliverToBoxAdapter(
+                        child: BusinessHoursDisplayCard(
+                          fieldId: widget.field.id,
+                          onManage: () => context.pushNamed(
+                            'manageBusinessHours',
+                            extra: widget.field.id,
+                          ),
+                        ),
                       ),
 
                       // Recent Bookings Section

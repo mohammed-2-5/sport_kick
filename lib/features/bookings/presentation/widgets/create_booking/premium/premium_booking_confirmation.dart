@@ -9,12 +9,14 @@ import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart
 /// Displays a summary of the booking with:
 /// - Field information
 /// - Selected date and time
-/// - Price breakdown
+/// - Price breakdown with duration
 /// - Confirm button with loading state
 class PremiumBookingConfirmation extends StatelessWidget {
   final String fieldName;
   final DateTime selectedDate;
   final TimeSlotEntity selectedSlot;
+  final double totalPrice;
+  final int durationHours;
   final VoidCallback onConfirm;
   final VoidCallback onBack;
   final bool isSubmitting;
@@ -24,6 +26,8 @@ class PremiumBookingConfirmation extends StatelessWidget {
     required this.fieldName,
     required this.selectedDate,
     required this.selectedSlot,
+    required this.totalPrice,
+    required this.durationHours,
     required this.onConfirm,
     required this.onBack,
     this.isSubmitting = false,
@@ -60,12 +64,17 @@ class PremiumBookingConfirmation extends StatelessWidget {
             fieldName: fieldName,
             selectedDate: selectedDate,
             selectedSlot: selectedSlot,
+            durationHours: durationHours,
           ),
 
           const SizedBox(height: 24),
 
           // Price Breakdown
-          _PriceBreakdownCard(selectedSlot: selectedSlot),
+          _PriceBreakdownCard(
+            selectedSlot: selectedSlot,
+            totalPrice: totalPrice,
+            durationHours: durationHours,
+          ),
 
           const SizedBox(height: 32),
 
@@ -132,11 +141,13 @@ class _BookingSummaryCard extends StatelessWidget {
   final String fieldName;
   final DateTime selectedDate;
   final TimeSlotEntity selectedSlot;
+  final int durationHours;
 
   const _BookingSummaryCard({
     required this.fieldName,
     required this.selectedDate,
     required this.selectedSlot,
+    required this.durationHours,
   });
 
   @override
@@ -253,6 +264,15 @@ class _BookingSummaryCard extends StatelessWidget {
                         value: selectedSlot.formattedTimeRange,
                       ),
                     ),
+                    Container(width: 1, height: 40, color: Colors.white24),
+                    Expanded(
+                      child: _InfoItem(
+                        icon: Icons.timer_outlined,
+                        label: 'Duration',
+                        value:
+                            '$durationHours ${durationHours == 1 ? 'Hour' : 'Hours'}',
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -309,8 +329,16 @@ class _InfoItem extends StatelessWidget {
 /// Price breakdown card.
 class _PriceBreakdownCard extends StatelessWidget {
   final TimeSlotEntity selectedSlot;
+  final double totalPrice;
+  final int durationHours;
 
-  const _PriceBreakdownCard({required this.selectedSlot});
+  const _PriceBreakdownCard({
+    required this.selectedSlot,
+    required this.totalPrice,
+    required this.durationHours,
+  });
+
+  double get _pricePerHour => totalPrice / durationHours;
 
   @override
   Widget build(BuildContext context) {
@@ -341,14 +369,13 @@ class _PriceBreakdownCard extends StatelessWidget {
           const SizedBox(height: 16),
           _PriceRow(
             label: 'Duration',
-            value:
-                '${selectedSlot.durationInHours} hour${selectedSlot.durationInHours > 1 ? 's' : ''}',
+            value: '$durationHours ${durationHours == 1 ? 'hour' : 'hours'}',
           ),
           const SizedBox(height: 12),
           _PriceRow(
             label: 'Rate per hour',
             value:
-                '${(selectedSlot.price / selectedSlot.durationInHours).toStringAsFixed(0)} ${selectedSlot.currency}',
+                '${_pricePerHour.toStringAsFixed(0)} ${selectedSlot.currency}',
           ),
           const SizedBox(height: 16),
           const Divider(height: 1),
@@ -383,7 +410,7 @@ class _PriceBreakdownCard extends StatelessWidget {
                   ],
                 ),
                 child: Text(
-                  selectedSlot.formattedPrice,
+                  '${totalPrice.toStringAsFixed(0)} ${selectedSlot.currency}',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,

@@ -17,6 +17,11 @@ abstract class BookingOwnerOperationsDataSource {
     String bookingId,
     BookingStatus status,
   );
+  Future<BookingModel> verifyPaymentProof({required String bookingId});
+  Future<BookingModel> rejectPaymentProof({
+    required String bookingId,
+    required String reason,
+  });
 }
 
 /// Implementation of booking owner operations data source.
@@ -195,6 +200,92 @@ class BookingOwnerOperationsDataSourceImpl
       throw ServerException('Database error: ${e.message}');
     } catch (e) {
       throw ServerException('Failed to update booking: $e');
+    }
+  }
+
+  @override
+  Future<BookingModel> verifyPaymentProof({required String bookingId}) async {
+    try {
+      debugPrint('✅ Verifying payment for booking: $bookingId');
+
+      // Update payment status to verified and confirm booking
+      final response = await supabaseClient
+          .from('bookings')
+          .update({
+            'payment_status': 'verified',
+            'payment_verified_at': DateTime.now().toIso8601String(),
+            'status': 'confirmed', // Auto-confirm when payment is verified
+            'confirmed_at': DateTime.now().toIso8601String(),
+          })
+          .eq('id', bookingId)
+          .select('*, field:fields(name, images)')
+          .single();
+
+      final json = response;
+
+      // Extract field details
+      final fieldData = json['field'] as Map<String, dynamic>?;
+      if (fieldData != null) {
+        json['field_name'] = fieldData['name'];
+        final images = fieldData['images'] as List?;
+        json['field_image'] = (images != null && images.isNotEmpty)
+            ? images.first
+            : null;
+      }
+
+      debugPrint('✅ Payment verified successfully');
+      return BookingModel.fromJson(json);
+    } on PostgrestException catch (e) {
+      if (e.code == 'PGRST116') {
+        throw const NotFoundException('Booking not found');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      throw ServerException('Failed to verify payment: $e');
+    }
+  }
+
+  @override
+  Future<BookingModel> rejectPaymentProof({
+    required String bookingId,
+    required String reason,
+  }) async {
+    try {
+      debugPrint('❌ Rejecting payment for booking: $bookingId');
+      debugPrint('   Reason: $reason');
+
+      // Update payment status to rejected
+      final response = await supabaseClient
+          .from('bookings')
+          .update({
+            'payment_status': 'rejected',
+            'payment_rejection_reason': reason,
+          })
+          .eq('id', bookingId)
+          .select('*, field:fields(name, images)')
+          .single();
+
+      final json = response;
+
+      // Extract field details
+      final fieldData = json['field'] as Map<String, dynamic>?;
+      if (fieldData != null) {
+        json['field_name'] = fieldData['name'];
+        final images = fieldData['images'] as List?;
+        json['field_image'] = (images != null && images.isNotEmpty)
+            ? images.first
+            : null;
+      }
+
+      debugPrint('✅ Payment rejection recorded');
+      return BookingModel.fromJson(json);
+    } on PostgrestException catch (e) {
+      if (e.code == 'PGRST116') {
+        throw const NotFoundException('Booking not found');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      throw ServerException('Failed to reject payment: $e');
     }
   }
 }

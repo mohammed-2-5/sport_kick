@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:spo_kick/features/notifications/presentation/cubit/notification_cubit.dart';
+import 'package:spo_kick/features/notifications/presentation/cubit/notification_state.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_state.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/dashboard_state_widgets.dart';
@@ -32,11 +35,19 @@ class PremiumOwnerDashboardView extends StatefulWidget {
 
 class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late NotificationCubit _notificationCubit;
 
   @override
   void initState() {
     super.initState();
     context.read<OwnerDashboardCubit>().loadDashboard();
+    _notificationCubit = sl<NotificationCubit>()..loadNotifications();
+  }
+
+  @override
+  void dispose() {
+    _notificationCubit.close();
+    super.dispose();
   }
 
   @override
@@ -105,13 +116,21 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              PremiumOwnerHeader(
-                greeting: cubit.getGreeting(),
-                ownerName: state.ownerName,
-                date: cubit.getFormattedDate(),
-                onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
-                onNotificationTap: () {},
-                notificationCount: state.stats.pendingBookings,
+              BlocBuilder<NotificationCubit, NotificationState>(
+                bloc: _notificationCubit,
+                builder: (context, notificationState) {
+                  final unreadCount = notificationState is NotificationLoaded
+                      ? notificationState.unreadCount
+                      : 0;
+                  return PremiumOwnerHeader(
+                    greeting: cubit.getGreeting(),
+                    ownerName: state.ownerName,
+                    date: cubit.getFormattedDate(),
+                    onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
+                    onNotificationTap: () => context.pushNamed('notifications'),
+                    notificationCount: unreadCount,
+                  );
+                },
               ),
               const SizedBox(height: 20),
               PremiumOwnerStatsRow(
@@ -127,6 +146,7 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                 onManualBooking: () =>
                     context.pushNamed('ownerCreateManualBooking'),
                 onViewBookings: () => context.pushNamed('ownerBookings'),
+                onBookingTable: () => context.pushNamed('ownerBookingTable'),
                 onManageFields: () => context.pushNamed('ownerFields'),
                 onAnalytics: () => context.pushNamed('ownerAnalytics'),
                 onSettings: () => context.pushNamed('ownerSettings'),

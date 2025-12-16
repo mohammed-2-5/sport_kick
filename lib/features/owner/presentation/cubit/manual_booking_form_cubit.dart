@@ -9,8 +9,45 @@ import 'package:spo_kick/features/owner/presentation/utils/manual_booking_valida
 /// - Step navigation with validation
 /// - Form data management
 /// - End time auto-calculation
+/// - Optional initialization from booking table
 class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
   ManualBookingFormCubit() : super(const ManualBookingFormInitial());
+
+  /// Initialize form with data from booking table.
+  ///
+  /// Expects map with keys:
+  /// - 'fieldId': String
+  /// - 'fieldName': String
+  /// - 'selectedDate': DateTime
+  /// - 'selectedTime': String (HH:mm format)
+  void initializeWithData(Map<String, dynamic>? initialData) {
+    if (initialData == null) return;
+
+    try {
+      final date = initialData['selectedDate'] as DateTime?;
+      final startTime = initialData['selectedTime'] as String?;
+
+      // Calculate end time (1 hour after start)
+      String? endTime;
+      if (startTime != null) {
+        final hour = int.parse(startTime.split(':')[0]);
+        if (hour < 23) {
+          endTime = '${(hour + 1).toString().padLeft(2, '0')}:00';
+        }
+      }
+
+      // Store fieldId/fieldName for later use when fields are loaded
+      final newData = _data.copyWith(
+        selectedDate: date,
+        selectedStartTime: startTime,
+        selectedEndTime: endTime,
+      );
+
+      emit(ManualBookingFormInitial(data: newData));
+    } catch (e) {
+      // Silently fail initialization, user can fill manually
+    }
+  }
 
   ManualBookingFormData get _data {
     final currentState = state;
@@ -96,10 +133,15 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
     emit(ManualBookingFormReadyToSubmit(data: _data));
   }
 
-  /// Update selected field (clears time selections).
+  /// Update selected field (clears time selections and recalculates price).
   void setField(FieldEntity? field) {
+    final price = field != null
+        ? field.pricePerHour * _data.durationHours
+        : null;
+
     final newData = _data.copyWith(
       selectedField: field,
+      totalPrice: price,
       clearStartTime: true,
       clearEndTime: true,
     );
@@ -116,13 +158,19 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
     emit(ManualBookingFormInitial(data: newData));
   }
 
-  /// Update start time and auto-calculate end time.
+  /// Update start time and auto-calculate end time based on duration.
   void setStartTime(String? time) {
     String? endTime;
     if (time != null) {
       final hour = int.parse(time.split(':')[0]);
-      if (hour < 23) {
-        endTime = '${(hour + 1).toString().padLeft(2, '0')}:00';
+      final minute = int.parse(time.split(':')[1]);
+
+      // Calculate end time based on duration (1 or 2 hours)
+      final endHour = hour + _data.durationHours;
+
+      if (endHour < 24) {
+        endTime =
+            '${endHour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
       }
     }
     final newData = _data.copyWith(
@@ -138,7 +186,37 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
     emit(ManualBookingFormInitial(data: newData));
   }
 
-  /// Update total price.
+  /// Update duration (1 or 2 hours) and recalculate price and end time.
+  void setDuration(int hours) {
+    if (hours != 1 && hours != 2) return; // Only 1 or 2 hours allowed
+
+    // Recalculate price based on field price per hour
+    final price = _data.selectedField != null
+        ? _data.selectedField!.pricePerHour * hours
+        : null;
+
+    // Recalculate end time if start time exists
+    String? endTime = _data.selectedEndTime;
+    if (_data.selectedStartTime != null) {
+      final hour = int.parse(_data.selectedStartTime!.split(':')[0]);
+      final minute = int.parse(_data.selectedStartTime!.split(':')[1]);
+      final endHour = hour + hours;
+
+      if (endHour < 24) {
+        endTime =
+            '${endHour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+      }
+    }
+
+    final newData = _data.copyWith(
+      durationHours: hours,
+      totalPrice: price,
+      selectedEndTime: endTime,
+    );
+    emit(ManualBookingFormInitial(data: newData));
+  }
+
+  /// Update total price (kept for backwards compatibility, but not used in UI).
   void setPrice(double? price) {
     final newData = _data.copyWith(totalPrice: price);
     emit(ManualBookingFormInitial(data: newData));

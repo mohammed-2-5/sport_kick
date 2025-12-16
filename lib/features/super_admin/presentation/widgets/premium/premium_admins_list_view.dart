@@ -319,7 +319,7 @@ class _PremiumAdminsListViewState extends State<PremiumAdminsListView> {
         if (_isSelectionMode) {
           _toggleSelection(admin.id);
         } else {
-          context.pushNamed('adminDetails', pathParameters: {'id': admin.id});
+          context.pushNamed('superAdminAdminDetails', extra: admin);
         }
       },
       onSelectionChanged: (selected) => _toggleSelection(admin.id),

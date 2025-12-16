@@ -51,6 +51,7 @@ import 'package:spo_kick/features/bookings/domain/usecases/get_booking_by_id_use
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_user_bookings_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/update_booking_status_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/upload_payment_proof_usecase.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_cubit.dart';
 
@@ -58,6 +59,7 @@ import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_cubit
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_city_management_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_field_management_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_remote_datasource_facade.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_sport_category_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_statistics_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_user_management_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/repositories/super_admin_repository_impl.dart';
@@ -68,10 +70,15 @@ import 'package:spo_kick/features/super_admin/domain/usecases/create_admin_accou
 import 'package:spo_kick/features/super_admin/domain/usecases/create_field_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/deactivate_user_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_active_cities_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/create_city_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_city_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/delete_city_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_bookings_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_users_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/admin_details/admin_details_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/user_details/user_details_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_dashboard/super_admin_dashboard_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/users_list/super_admin_users_list_cubit.dart';
@@ -79,6 +86,17 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/admins_list/sup
 import 'package:spo_kick/features/super_admin/presentation/cubit/admin_form/admin_form_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/reports/reports_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/settings/super_admin_settings_cubit.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_field_usecase.dart'
+    as superadmin;
+import 'package:spo_kick/features/super_admin/domain/usecases/delete_field_usecase.dart'
+    as superadmin;
+import 'package:spo_kick/features/super_admin/domain/usecases/verify_field_usecase.dart'
+    as superadmin;
+import 'package:spo_kick/features/super_admin/domain/usecases/get_all_sport_categories_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/create_sport_category_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_sport_category_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/delete_sport_category_usecase.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/sport_categories_cubit.dart';
 
 // Settings Feature
 import 'package:spo_kick/features/settings/data/datasources/settings_local_data_source.dart';
@@ -183,6 +201,12 @@ import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_setti
 import 'package:spo_kick/features/super_admin/domain/usecases/update_platform_settings_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/platform_settings/platform_settings_cubit.dart';
 
+// Notifications Feature
+import 'package:spo_kick/features/notifications/data/datasources/notification_remote_datasource.dart';
+import 'package:spo_kick/features/notifications/data/repositories/notification_repository_impl.dart';
+import 'package:spo_kick/features/notifications/domain/repositories/notification_repository.dart';
+import 'package:spo_kick/features/notifications/presentation/cubit/notification_cubit.dart';
+
 /// Service Locator instance.
 ///
 /// This is a global instance of GetIt used for dependency injection
@@ -256,6 +280,9 @@ Future<void> initDependencies() async {
 
   // Platform Settings Feature
   _initPlatformSettings();
+
+  // Notifications Feature
+  _initNotifications();
 }
 
 /// Initialize external dependencies.
@@ -432,6 +459,7 @@ void _initBookings() {
   sl.registerLazySingleton(() => CancelBookingUseCase(sl()));
   sl.registerLazySingleton(() => GetOwnerBookingsUseCase(sl()));
   sl.registerLazySingleton(() => UpdateBookingStatusUseCase(sl()));
+  sl.registerLazySingleton(() => UploadPaymentProofUseCase(sl()));
 
   // Repository
   sl.registerLazySingleton<BookingRepository>(
@@ -486,12 +514,37 @@ void _initSuperAdmin() {
       getAllUsersUseCase: sl(),
       assignFieldToAdminUseCase: sl(),
       getActiveCitiesUseCase: sl(),
+      createCityUseCase: sl(),
+      updateCityUseCase: sl(),
+      deleteCityUseCase: sl(),
       getAllFieldsUseCase: sl(),
       getAllBookingsUseCase: sl(),
+      updateBookingStatusUseCase: sl(),
+      cancelBookingUseCase: sl(),
       deactivateUserUseCase: sl(),
       activateUserUseCase: sl(),
+      updateFieldUseCase: sl(instanceName: 'superAdminUpdateField'),
+      deleteFieldUseCase: sl(instanceName: 'superAdminDeleteField'),
+      verifyFieldUseCase: sl(instanceName: 'superAdminVerifyField'),
       csvExportService: sl(),
       pdfExportService: sl(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => AdminDetailsCubit(
+      getAllFieldsUseCase: sl(),
+      assignFieldToAdminUseCase: sl(),
+      activateUserUseCase: sl(),
+      deactivateUserUseCase: sl(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => UserDetailsCubit(
+      getAllBookingsUseCase: sl(),
+      activateUserUseCase: sl(),
+      deactivateUserUseCase: sl(),
     ),
   );
 
@@ -540,7 +593,21 @@ void _initSuperAdmin() {
     ),
   );
 
-  // Use Cases
+  // Sport Categories Cubit
+  sl.registerFactory(
+    () => SportCategoriesCubit(
+      getAllSportCategoriesUseCase: sl(),
+      createSportCategoryUseCase: sl(),
+      updateSportCategoryUseCase: sl(),
+      deleteSportCategoryUseCase: sl(),
+    ),
+  );
+
+  // Sport Category Use Cases
+  sl.registerLazySingleton(() => GetAllSportCategoriesUseCase(sl()));
+  sl.registerLazySingleton(() => CreateSportCategoryUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateSportCategoryUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteSportCategoryUseCase(sl()));
   sl.registerLazySingleton(() => GetPlatformStatisticsUseCase(sl()));
   sl.registerLazySingleton(() => CreateAdminAccountUseCase(sl()));
   sl.registerLazySingleton(() => CreateFieldUseCase(sl()));
@@ -548,9 +615,26 @@ void _initSuperAdmin() {
   sl.registerLazySingleton(() => GetAllUsersUseCase(sl()));
   sl.registerLazySingleton(() => AssignFieldToAdminUseCase(sl()));
   sl.registerLazySingleton(() => GetActiveCitiesUseCase(sl()));
+  sl.registerLazySingleton(() => CreateCityUseCase(repository: sl()));
+  sl.registerLazySingleton(() => UpdateCityUseCase(repository: sl()));
+  sl.registerLazySingleton(() => DeleteCityUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetAllBookingsUseCase(sl()));
   sl.registerLazySingleton(() => DeactivateUserUseCase(sl()));
   sl.registerLazySingleton(() => ActivateUserUseCase(sl()));
+
+  // Super Admin Field CRUD Use Cases
+  sl.registerLazySingleton(
+    () => superadmin.UpdateFieldUseCase(sl<SuperAdminRepository>()),
+    instanceName: 'superAdminUpdateField',
+  );
+  sl.registerLazySingleton(
+    () => superadmin.DeleteFieldUseCase(sl<SuperAdminRepository>()),
+    instanceName: 'superAdminDeleteField',
+  );
+  sl.registerLazySingleton(
+    () => superadmin.VerifyFieldUseCase(sl<SuperAdminRepository>()),
+    instanceName: 'superAdminVerifyField',
+  );
 
   // Repository
   sl.registerLazySingleton<SuperAdminRepository>(
@@ -574,6 +658,10 @@ void _initSuperAdmin() {
     () => SuperAdminCityManagementDataSourceImpl(supabaseClient: sl()),
   );
 
+  sl.registerLazySingleton<SuperAdminSportCategoryDatasource>(
+    () => SuperAdminSportCategoryDatasource(supabaseClient: sl()),
+  );
+
   // Data Sources - Facade for backward compatibility
   sl.registerLazySingleton<SuperAdminRemoteDataSource>(
     () => SuperAdminRemoteDataSourceFacade(
@@ -581,6 +669,7 @@ void _initSuperAdmin() {
       userManagementDataSource: sl(),
       fieldManagementDataSource: sl(),
       cityManagementDataSource: sl(),
+      sportCategoryDataSource: sl(),
     ),
   );
 }
@@ -624,6 +713,7 @@ void _initOwner() {
       getCurrentUserUseCase: sl(),
       getOwnerBookingsUseCase: sl(),
       updateBookingStatusUseCase: sl(),
+      bookingRepository: sl(),
     ),
   );
 
@@ -1006,5 +1096,28 @@ void _initPlatformSettings() {
   // Data Sources
   sl.registerLazySingleton<PlatformSettingsDataSource>(
     () => PlatformSettingsRemoteDataSource(sl()),
+  );
+}
+
+// ==================== FEATURE: NOTIFICATIONS ====================
+
+/// Initialize notifications feature dependencies.
+///
+/// Registers all dependencies for push notifications:
+/// - NotificationCubit for state management
+/// - Repository for data access
+/// - Remote data source for Supabase interactions
+void _initNotifications() {
+  // Cubit
+  sl.registerFactory(() => NotificationCubit(repository: sl()));
+
+  // Repository
+  sl.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepositoryImpl(remoteDataSource: sl()),
+  );
+
+  // Data Sources
+  sl.registerLazySingleton<NotificationRemoteDataSource>(
+    () => NotificationRemoteDataSourceImpl(supabase: sl()),
   );
 }

@@ -18,6 +18,7 @@ class PremiumSuperAdminQuickActions extends StatelessWidget {
   final VoidCallback onManageCities;
   final VoidCallback onViewAnalytics;
   final VoidCallback onViewReports;
+
   final VoidCallback onSettings;
 
   const PremiumSuperAdminQuickActions({
@@ -74,7 +75,7 @@ class PremiumSuperAdminQuickActions extends StatelessWidget {
       _QuickAction(
         label: 'Reports',
         icon: Icons.assessment_rounded,
-        gradient: const [Color(0xFF14B8A6), Color(0xFF0D9488)],
+        gradient: const [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
         onTap: onViewReports,
       ),
       _QuickAction(

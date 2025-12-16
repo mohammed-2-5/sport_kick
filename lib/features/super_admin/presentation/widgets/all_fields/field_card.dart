@@ -7,8 +7,9 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/me
 /// Field card widget for displaying field information
 class FieldCard extends StatelessWidget {
   final FieldEntity field;
+  final VoidCallback? onLongPress;
 
-  const FieldCard({super.key, required this.field});
+  const FieldCard({super.key, required this.field, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class FieldCard extends StatelessWidget {
             pathParameters: {'fieldId': field.id},
           );
         },
+        onLongPress: onLongPress,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),

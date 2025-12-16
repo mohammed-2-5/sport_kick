@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
+import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field_form/field_facilities_selector.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field_form/field_form_dropdown.dart';
@@ -21,6 +23,7 @@ class AddEditFieldForm extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onSave;
+  final VoidCallback? onManageBusinessHours;
   final ValueChanged<String?> onSizeChanged;
   final ValueChanged<String?> onSurfaceChanged;
   final ValueChanged<String?> onTypeChanged;
@@ -41,6 +44,7 @@ class AddEditFieldForm extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onSave,
+    this.onManageBusinessHours,
     required this.onSizeChanged,
     required this.onSurfaceChanged,
     required this.onTypeChanged,
@@ -209,7 +213,74 @@ class AddEditFieldForm extends StatelessWidget {
             onFacilityToggled: onFacilityToggled,
           ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
+
+          // Business Hours Section
+          if (onManageBusinessHours != null) ...[
+            const FieldFormSectionHeader(
+              title: 'Business Hours',
+              icon: Icons.schedule_rounded,
+            ),
+            const SizedBox(height: 16),
+            PremiumCard(
+              onTap: onManageBusinessHours,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.schedule_rounded,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Manage Business Hours',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Set working hours for each day of the week',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.textSecondary,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+
+          const SizedBox(height: 8),
 
           // Save Button
           CustomButton(

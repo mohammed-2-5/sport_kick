@@ -115,14 +115,15 @@ class PremiumAdminsListContent extends StatelessWidget {
       email: admin.email,
       phone: admin.phone,
       isActive: admin.isActive,
-      fieldsCount: 0, // Would come from admin data
+      fieldsCount: admin.fieldsCount,
+      revenue: admin.totalRevenue,
       isSelected: selectedIds.contains(admin.id),
       isSelectable: isSelectionMode,
       onTap: () {
         if (isSelectionMode) {
           onToggleSelection(admin.id);
         } else {
-          context.pushNamed('adminDetails', pathParameters: {'id': admin.id});
+          context.pushNamed('superAdminAdminDetails', extra: admin);
         }
       },
       onSelectionChanged: (selected) => onToggleSelection(admin.id),

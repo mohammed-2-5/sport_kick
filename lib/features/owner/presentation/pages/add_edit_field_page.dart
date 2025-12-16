@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -155,6 +156,10 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
                   title: 'Edit Field',
                   subtitle: 'Update details for ${widget.field!.name}',
                   onSave: _handleSave,
+                  onManageBusinessHours: () => context.pushNamed(
+                    'manageBusinessHours',
+                    extra: widget.field!.id,
+                  ),
                   onSizeChanged: (value) =>
                       setState(() => _selectedSize = value!),
                   onSurfaceChanged: (value) =>

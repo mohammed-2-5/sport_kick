@@ -16,6 +16,8 @@ class FieldCreationData extends Equatable {
   final String surface;
   final bool isIndoor;
   final List<String> facilities;
+  final String? paymentPhone;
+  final String paymentMethod;
 
   const FieldCreationData({
     required this.adminId,
@@ -29,6 +31,8 @@ class FieldCreationData extends Equatable {
     required this.surface,
     required this.isIndoor,
     required this.facilities,
+    this.paymentPhone,
+    this.paymentMethod = 'vodafone_cash',
   });
 
   @override
@@ -44,5 +48,7 @@ class FieldCreationData extends Equatable {
     surface,
     isIndoor,
     facilities,
+    paymentPhone,
+    paymentMethod,
   ];
 }

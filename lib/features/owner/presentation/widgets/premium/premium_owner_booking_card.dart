@@ -3,21 +3,26 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking/payment_status_badge.dart';
 
-/// Premium owner booking card.
+/// Premium owner booking card with payment status.
 ///
 /// Features:
 /// - PremiumCard container
 /// - Status badge with gradient
-/// - Field info
+/// - Payment status badge
 /// - Customer info
 /// - Time slot display
-/// - Action buttons
+/// - Action buttons for booking and payment
 class PremiumOwnerBookingCard extends StatelessWidget {
   final BookingEntity booking;
   final VoidCallback? onApprove;
   final VoidCallback? onReject;
   final VoidCallback? onTap;
+  final VoidCallback? onViewPaymentProof;
+  final VoidCallback? onVerifyPayment;
+  final VoidCallback? onRejectPayment;
 
   const PremiumOwnerBookingCard({
     super.key,
@@ -25,6 +30,9 @@ class PremiumOwnerBookingCard extends StatelessWidget {
     this.onApprove,
     this.onReject,
     this.onTap,
+    this.onViewPaymentProof,
+    this.onVerifyPayment,
+    this.onRejectPayment,
   });
 
   @override
@@ -36,98 +44,29 @@ class PremiumOwnerBookingCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header with status
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        booking.fieldName ?? 'Unknown Field',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        booking.userName ?? 'Unknown User',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: AppColors.textSecondary.withValues(alpha: 0.8),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                _StatusBadge(status: booking.status),
-              ],
-            ),
+            _CardHeader(booking: booking),
             const SizedBox(height: 16),
             const Divider(height: 1),
             const SizedBox(height: 16),
-            // Date and time
-            Row(
-              children: [
-                Icon(
-                  Icons.calendar_today,
-                  size: 16,
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  booking.formattedDate,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Icon(
-                  Icons.access_time,
-                  size: 16,
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  '${booking.startTime} - ${booking.endTime}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
-            ),
-            // Action buttons for pending bookings
+            _DateTimeRow(booking: booking),
+            const SizedBox(height: 12),
+            _PaymentRow(booking: booking),
+            if (booking.hasPaymentProof) ...[
+              const SizedBox(height: 12),
+              _ViewProofButton(onPressed: onViewPaymentProof),
+            ],
+            if (booking.paymentStatus == PaymentStatus.uploaded) ...[
+              const SizedBox(height: 12),
+              _PaymentActions(
+                onVerify: onVerifyPayment,
+                onReject: onRejectPayment,
+              ),
+            ],
             if (booking.status == BookingStatus.pending &&
+                booking.paymentStatus != PaymentStatus.uploaded &&
                 (onApprove != null || onReject != null)) ...[
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  if (onReject != null)
-                    Expanded(
-                      child: _ActionButton(
-                        label: 'Reject',
-                        icon: Icons.close,
-                        color: Colors.red,
-                        onTap: onReject!,
-                      ),
-                    ),
-                  if (onReject != null && onApprove != null)
-                    const SizedBox(width: 12),
-                  if (onApprove != null)
-                    Expanded(
-                      child: _ActionButton(
-                        label: 'Approve',
-                        icon: Icons.check,
-                        color: Colors.green,
-                        onTap: onApprove!,
-                      ),
-                    ),
-                ],
-              ),
+              _BookingActions(onApprove: onApprove, onReject: onReject),
             ],
           ],
         ),
@@ -136,7 +75,220 @@ class PremiumOwnerBookingCard extends StatelessWidget {
   }
 }
 
-/// Status badge widget.
+class _CardHeader extends StatelessWidget {
+  final BookingEntity booking;
+
+  const _CardHeader({required this.booking});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                booking.fieldName ?? 'Unknown Field',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                booking.userName ?? 'Unknown User',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.textSecondary.withValues(alpha: 0.8),
+                ),
+              ),
+            ],
+          ),
+        ),
+        _StatusBadge(status: booking.status),
+      ],
+    );
+  }
+}
+
+class _DateTimeRow extends StatelessWidget {
+  final BookingEntity booking;
+
+  const _DateTimeRow({required this.booking});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          Icons.calendar_today,
+          size: 16,
+          color: AppColors.textSecondary.withValues(alpha: 0.7),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          booking.formattedDate,
+          style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+        ),
+        const SizedBox(width: 16),
+        Icon(
+          Icons.access_time,
+          size: 16,
+          color: AppColors.textSecondary.withValues(alpha: 0.7),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          '${booking.startTime} - ${booking.endTime}',
+          style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+        ),
+      ],
+    );
+  }
+}
+
+class _PaymentRow extends StatelessWidget {
+  final BookingEntity booking;
+
+  const _PaymentRow({required this.booking});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          Icons.payment_rounded,
+          size: 16,
+          color: AppColors.textSecondary.withValues(alpha: 0.7),
+        ),
+        const SizedBox(width: 8),
+        const Text(
+          'Payment:',
+          style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+        ),
+        const SizedBox(width: 8),
+        PaymentStatusBadge(status: booking.paymentStatus, isCompact: true),
+        const Spacer(),
+        Text(
+          '${booking.totalPrice.toStringAsFixed(0)} EGP',
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: AppColors.success,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ViewProofButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+
+  const _ViewProofButton({this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton.icon(
+        onPressed: onPressed,
+        icon: const Icon(Icons.receipt_long_outlined, size: 16),
+        label: const Text('View Proof'),
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.info,
+          side: BorderSide(color: AppColors.info.withValues(alpha: 0.5)),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PaymentActions extends StatelessWidget {
+  final VoidCallback? onVerify;
+  final VoidCallback? onReject;
+
+  const _PaymentActions({this.onVerify, this.onReject});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: onReject,
+            icon: const Icon(Icons.close_rounded, size: 16),
+            label: const Text('Reject'),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: AppColors.error,
+              side: BorderSide(color: AppColors.error.withValues(alpha: 0.5)),
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: onVerify,
+            icon: const Icon(Icons.check_rounded, size: 16),
+            label: const Text('Verify'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.success,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _BookingActions extends StatelessWidget {
+  final VoidCallback? onApprove;
+  final VoidCallback? onReject;
+
+  const _BookingActions({this.onApprove, this.onReject});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        if (onReject != null)
+          Expanded(
+            child: _ActionButton(
+              label: 'Reject',
+              icon: Icons.close,
+              color: Colors.red,
+              onTap: onReject!,
+            ),
+          ),
+        if (onReject != null && onApprove != null) const SizedBox(width: 12),
+        if (onApprove != null)
+          Expanded(
+            child: _ActionButton(
+              label: 'Approve',
+              icon: Icons.check,
+              color: Colors.green,
+              onTap: onApprove!,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
 class _StatusBadge extends StatelessWidget {
   final BookingStatus status;
 
@@ -187,7 +339,6 @@ class _StatusBadge extends StatelessWidget {
   }
 }
 
-/// Action button for booking actions.
 class _ActionButton extends StatelessWidget {
   final String label;
   final IconData icon;

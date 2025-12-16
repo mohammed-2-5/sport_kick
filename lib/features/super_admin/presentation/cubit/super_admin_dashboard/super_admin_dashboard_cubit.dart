@@ -105,11 +105,11 @@ class SuperAdminDashboardCubit extends Cubit<SuperAdminDashboardState> {
   /// Formats currency value.
   String formatCurrency(double value) {
     if (value >= 1000000) {
-      return '${(value / 1000000).toStringAsFixed(1)}M SAR';
+      return '${(value / 1000000).toStringAsFixed(1)}M EGP';
     } else if (value >= 1000) {
-      return '${(value / 1000).toStringAsFixed(1)}K SAR';
+      return '${(value / 1000).toStringAsFixed(1)}K EGP';
     }
-    return '${value.toStringAsFixed(0)} SAR';
+    return '${value.toStringAsFixed(0)} EGP';
   }
 
   /// Formats number with suffix.

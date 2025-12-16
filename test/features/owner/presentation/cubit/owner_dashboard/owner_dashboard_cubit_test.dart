@@ -153,9 +153,9 @@ void main() {
   });
 
   group('changeNavIndex', () {
-    final loadedState = OwnerDashboardLoaded(
+    const loadedState = OwnerDashboardLoaded(
       ownerName: 'Test Owner',
-      stats: const OwnerDashboardStats(),
+      stats: OwnerDashboardStats(),
     );
 
     blocTest<OwnerDashboardCubit, OwnerDashboardState>(
@@ -181,9 +181,9 @@ void main() {
   });
 
   group('drawer operations', () {
-    final loadedState = OwnerDashboardLoaded(
+    const loadedState = OwnerDashboardLoaded(
       ownerName: 'Test Owner',
-      stats: const OwnerDashboardStats(),
+      stats: OwnerDashboardStats(),
     );
 
     blocTest<OwnerDashboardCubit, OwnerDashboardState>(
@@ -280,7 +280,7 @@ void main() {
     });
 
     test('fromData handles empty data', () {
-      final stats = OwnerDashboardStats.fromData([], []);
+      final stats = OwnerDashboardStats.fromData(const [], const []);
 
       expect(stats.totalFields, 0);
       expect(stats.totalBookings, 0);

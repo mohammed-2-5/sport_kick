@@ -345,6 +345,12 @@ SELECT
   b.customer_email,
   b.created_at,
   b.updated_at,
+  -- Payment fields (added 2025-12-13)
+  b.payment_status,
+  b.payment_proof_url,
+  b.payment_uploaded_at,
+  b.payment_rejection_reason,
+  b.duration_hours,
   -- Field details
   f.name as field_name,
   f.images[1] as field_image,
@@ -360,7 +366,7 @@ LEFT JOIN fields f ON f.id = b.field_id
 LEFT JOIN cities c ON c.id = f.city_id
 LEFT JOIN profiles p ON p.id = b.user_id;
 
-COMMENT ON VIEW user_bookings_with_details IS 'Complete booking information with field and user details';
+COMMENT ON VIEW user_bookings_with_details IS 'Complete booking information with field, user, and payment details';
 
 -- View 2: Admin Statistics (for each admin/field owner)
 DROP VIEW IF EXISTS admin_statistics CASCADE;

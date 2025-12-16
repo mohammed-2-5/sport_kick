@@ -207,12 +207,24 @@ class _PremiumSuperAdminDashboardViewState
         context.pushNamed('superAdminCities');
         break;
       case 6:
-        context.pushNamed('superAdminAnalytics');
+        context.pushNamed('manageSportCategories');
         break;
       case 7:
-        context.pushNamed('superAdminReports');
+        context.pushNamed('manageReviews');
         break;
       case 8:
+        context.pushNamed('manageNotifications');
+        break;
+      case 9:
+        context.pushNamed('superAdminAnalytics');
+        break;
+      case 10:
+        context.pushNamed('superAdminReports');
+        break;
+      case 11:
+        context.pushNamed('superAdminLoginActivity');
+        break;
+      case 12:
         context.pushNamed('superAdminSettings');
         break;
     }

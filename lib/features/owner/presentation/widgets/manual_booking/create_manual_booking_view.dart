@@ -12,8 +12,12 @@ import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/step
 /// Create Manual Booking View - 2-step flow form for creating manual bookings.
 ///
 /// Uses [ManualBookingFormCubit] for form state management and step navigation.
+///
+/// Optional [initialData] can pre-fill field, date, and time from booking table.
 class CreateManualBookingView extends StatefulWidget {
-  const CreateManualBookingView({super.key});
+  final Map<String, dynamic>? initialData;
+
+  const CreateManualBookingView({super.key, this.initialData});
 
   @override
   State<CreateManualBookingView> createState() =>
@@ -71,7 +75,8 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ManualBookingFormCubit(),
+      create: (_) =>
+          ManualBookingFormCubit()..initializeWithData(widget.initialData),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Create Manual Booking'),
@@ -167,6 +172,7 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
       selectedDate: data.selectedDate,
       selectedStartTime: data.selectedStartTime,
       selectedEndTime: data.selectedEndTime,
+      durationHours: data.durationHours,
       totalPrice: data.totalPrice,
       onFieldChanged: (field) {
         formCubit.setField(field);
@@ -186,9 +192,9 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
           );
         }
       },
+      onDurationChanged: formCubit.setDuration,
       onStartTimeChanged: formCubit.setStartTime,
       onEndTimeChanged: formCubit.setEndTime,
-      onPriceChanged: formCubit.setPrice,
     );
   }
 

@@ -25,7 +25,10 @@ class FieldEntity extends Equatable {
   /// Full address
   final String address;
 
-  /// City
+  /// City ID (FK to cities table)
+  final String? cityId;
+
+  /// City name
   final String city;
 
   /// Geographic coordinates - latitude
@@ -99,6 +102,7 @@ class FieldEntity extends Equatable {
     required this.name,
     this.description,
     required this.address,
+    this.cityId,
     required this.city,
     this.latitude,
     this.longitude,
@@ -175,6 +179,7 @@ class FieldEntity extends Equatable {
     name,
     description,
     address,
+    cityId,
     city,
     latitude,
     longitude,

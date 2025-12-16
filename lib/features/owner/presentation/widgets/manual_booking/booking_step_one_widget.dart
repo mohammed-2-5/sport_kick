@@ -8,37 +8,41 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/owner/presentation/constants/owner_ui_constants.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/duration_selector.dart';
 
 /// Step 1 of manual booking flow: Booking Details
 ///
 /// Handles selection of:
 /// - Field
 /// - Date
-/// - Start/End Time
-/// - Total Price
+/// - Duration (1 or 2 hours)
+/// - Start Time
+/// - Auto-calculated Total Price
 class BookingStepOneWidget extends StatelessWidget {
   final FieldEntity? selectedField;
   final DateTime? selectedDate;
   final String? selectedStartTime;
   final String? selectedEndTime;
+  final int durationHours;
   final double? totalPrice;
   final ValueChanged<FieldEntity?> onFieldChanged;
   final ValueChanged<DateTime?> onDateChanged;
+  final ValueChanged<int> onDurationChanged;
   final ValueChanged<String?> onStartTimeChanged;
   final ValueChanged<String?> onEndTimeChanged;
-  final ValueChanged<double?> onPriceChanged;
 
   const BookingStepOneWidget({
     required this.selectedField,
     required this.selectedDate,
     required this.selectedStartTime,
     required this.selectedEndTime,
+    required this.durationHours,
     required this.totalPrice,
     required this.onFieldChanged,
     required this.onDateChanged,
+    required this.onDurationChanged,
     required this.onStartTimeChanged,
     required this.onEndTimeChanged,
-    required this.onPriceChanged,
     super.key,
   });
 
@@ -179,59 +183,121 @@ class BookingStepOneWidget extends StatelessWidget {
 
                 const SizedBox(height: OwnerUIConstants.spacingLarge),
 
-                // Time slot selection
+                // Duration selection
                 Text(
-                  'Time Slot',
+                  'Booking Duration',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildTimeDropdown(
-                        context,
-                        'Start Time',
-                        selectedStartTime,
-                        onStartTimeChanged,
-                      ),
-                    ),
-                    const SizedBox(width: OwnerUIConstants.spacingMedium),
-                    Expanded(
-                      child: _buildTimeDropdown(
-                        context,
-                        'End Time',
-                        selectedEndTime,
-                        onEndTimeChanged,
-                      ),
-                    ),
-                  ],
+                DurationSelector(
+                  selectedDuration: durationHours,
+                  onDurationChanged: onDurationChanged,
                 ),
 
                 const SizedBox(height: OwnerUIConstants.spacingLarge),
 
-                // Price input
+                // Time slot selection
                 Text(
-                  'Total Price (EGP)',
+                  'Start Time',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 12),
-                TextFormField(
-                  initialValue: totalPrice?.toString() ?? '',
-                  decoration: InputDecoration(
-                    hintText: 'Enter price',
-                    prefixIcon: const Icon(Icons.monetization_on),
-                    border: OutlineInputBorder(
+                _buildTimeDropdown(
+                  context,
+                  'Select start time',
+                  selectedStartTime,
+                  onStartTimeChanged,
+                ),
+
+                // End time display (auto-calculated)
+                if (selectedEndTime != null) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.navyDeep.withValues(alpha: 0.05),
                       borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppColors.navyDeep.withValues(alpha: 0.2),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.info_outline,
+                          color: AppColors.navyDeep,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'End time: $selectedEndTime ($durationHours hour${durationHours > 1 ? 's' : ''})',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.navyDeep,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    onPriceChanged(double.tryParse(value));
-                  },
+                ],
+
+                const SizedBox(height: OwnerUIConstants.spacingLarge),
+
+                // Calculated price display
+                Text(
+                  'Total Price',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.goldAccent.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: AppColors.goldAccent.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.monetization_on,
+                        color: AppColors.goldAccent,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            totalPrice != null
+                                ? '${totalPrice!.toStringAsFixed(0)} EGP'
+                                : 'Select field to see price',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.navyDeep,
+                            ),
+                          ),
+                          if (selectedField != null && totalPrice != null)
+                            Text(
+                              '${selectedField!.pricePerHour.toStringAsFixed(0)} EGP/hour × $durationHours hour${durationHours > 1 ? 's' : ''}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
 
                 const SizedBox(height: OwnerUIConstants.spacingLarge),

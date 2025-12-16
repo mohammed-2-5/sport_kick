@@ -71,9 +71,9 @@ COMMENT ON COLUMN business_hours.closes_next_day IS 'If TRUE, closing_time is on
 -- =====================================================
 
 -- Note: Run this in Supabase Dashboard or via Supabase CLI
--- INSERT INTO storage.buckets (id, name, public)
--- VALUES ('payment_proofs', 'payment_proofs', false)
--- ON CONFLICT (id) DO NOTHING;
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('payment_proofs', 'payment_proofs', false)
+ON CONFLICT (id) DO NOTHING;
 
 -- =====================================================
 -- 5. CREATE INDEXES FOR PERFORMANCE

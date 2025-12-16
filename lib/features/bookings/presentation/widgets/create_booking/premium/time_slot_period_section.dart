@@ -12,6 +12,9 @@ class TimeSlotPeriodSection extends StatelessWidget {
   final String period;
   final List<TimeSlotEntity> slots;
   final TimeSlotEntity? selectedSlot;
+  final TimeSlotEntity? secondSlot;
+  final int selectedDuration;
+  final bool Function(TimeSlotEntity) canSelectSlot;
   final ValueChanged<TimeSlotEntity> onSlotSelected;
 
   const TimeSlotPeriodSection({
@@ -20,6 +23,9 @@ class TimeSlotPeriodSection extends StatelessWidget {
     required this.slots,
     required this.selectedSlot,
     required this.onSlotSelected,
+    this.secondSlot,
+    this.selectedDuration = 1,
+    required this.canSelectSlot,
   });
 
   @override
@@ -29,83 +35,68 @@ class TimeSlotPeriodSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: _getPeriodColor().withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(
-                    _getPeriodIcon(),
-                    size: 18,
-                    color: _getPeriodColor(),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  period,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    '${slots.where((s) => s.isAvailable).length} available',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          _PeriodHeader(
+            period: period,
+            availableCount: slots.where((s) => s.isAvailable).length,
           ),
           const SizedBox(height: 12),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: slots.asMap().entries.map((entry) {
-                final index = entry.key;
-                final slot = entry.value;
-                final isSelected = selectedSlot == slot;
+          _SlotsHorizontalList(
+            slots: slots,
+            selectedSlot: selectedSlot,
+            secondSlot: secondSlot,
+            selectedDuration: selectedDuration,
+            canSelectSlot: canSelectSlot,
+            onSlotSelected: onSlotSelected,
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 375),
-                  child: SlideAnimation(
-                    horizontalOffset: 50.0,
-                    child: FadeInAnimation(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: PremiumTimeSlotCard(
-                          slot: slot,
-                          isSelected: isSelected,
-                          onTap: slot.isAvailable
-                              ? () => onSlotSelected(slot)
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+class _PeriodHeader extends StatelessWidget {
+  final String period;
+  final int availableCount;
+
+  const _PeriodHeader({required this.period, required this.availableCount});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: _getPeriodColor().withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(_getPeriodIcon(), size: 18, color: _getPeriodColor()),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            period,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: AppColors.backgroundLight,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              '$availableCount available',
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textSecondary,
+              ),
             ),
           ),
         ],
@@ -121,6 +112,8 @@ class TimeSlotPeriodSection extends StatelessWidget {
         return Icons.wb_sunny;
       case 'Evening':
         return Icons.nightlight_outlined;
+      case 'Late Night':
+        return Icons.bedtime_outlined;
       default:
         return Icons.schedule;
     }
@@ -129,13 +122,71 @@ class TimeSlotPeriodSection extends StatelessWidget {
   Color _getPeriodColor() {
     switch (period) {
       case 'Morning':
-        return const Color(0xFFFFB347); // Orange
+        return const Color(0xFFFFB347);
       case 'Afternoon':
-        return const Color(0xFFFFD700); // Gold
+        return const Color(0xFFFFD700);
       case 'Evening':
-        return const Color(0xFF6B5B95); // Purple
+        return const Color(0xFF6B5B95);
+      case 'Late Night':
+        return const Color(0xFF2C3E50);
       default:
         return AppColors.accentCyan;
     }
+  }
+}
+
+class _SlotsHorizontalList extends StatelessWidget {
+  final List<TimeSlotEntity> slots;
+  final TimeSlotEntity? selectedSlot;
+  final TimeSlotEntity? secondSlot;
+  final int selectedDuration;
+  final bool Function(TimeSlotEntity) canSelectSlot;
+  final ValueChanged<TimeSlotEntity> onSlotSelected;
+
+  const _SlotsHorizontalList({
+    required this.slots,
+    required this.selectedSlot,
+    required this.secondSlot,
+    required this.selectedDuration,
+    required this.canSelectSlot,
+    required this.onSlotSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: slots.asMap().entries.map((entry) {
+          final index = entry.key;
+          final slot = entry.value;
+          final isSelected = selectedSlot == slot;
+          final isSecondSlot = secondSlot == slot;
+          final isDisabledForDuration =
+              selectedDuration == 2 && slot.isAvailable && !canSelectSlot(slot);
+
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            duration: const Duration(milliseconds: 375),
+            child: SlideAnimation(
+              horizontalOffset: 50.0,
+              child: FadeInAnimation(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: PremiumTimeSlotCard(
+                    slot: slot,
+                    isSelected: isSelected,
+                    isSecondSlot: isSecondSlot,
+                    isDisabledForDuration: isDisabledForDuration,
+                    onTap: () => onSlotSelected(slot),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
   }
 }

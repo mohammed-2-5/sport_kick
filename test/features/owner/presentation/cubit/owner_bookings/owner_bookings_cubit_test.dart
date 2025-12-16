@@ -7,6 +7,7 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/features/bookings/domain/repositories/booking_repository.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/update_booking_status_usecase.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit.dart';
@@ -21,11 +22,14 @@ class MockGetOwnerBookingsUseCase extends Mock
 class MockUpdateBookingStatusUseCase extends Mock
     implements UpdateBookingStatusUseCase {}
 
+class MockBookingRepository extends Mock implements BookingRepository {}
+
 void main() {
   late OwnerBookingsCubit cubit;
   late MockGetCurrentUserUseCase mockGetCurrentUser;
   late MockGetOwnerBookingsUseCase mockGetBookings;
   late MockUpdateBookingStatusUseCase mockUpdateStatus;
+  late MockBookingRepository mockBookingRepository;
 
   // Test data
   final testUser = UserEntity(
@@ -73,11 +77,13 @@ void main() {
     mockGetCurrentUser = MockGetCurrentUserUseCase();
     mockGetBookings = MockGetOwnerBookingsUseCase();
     mockUpdateStatus = MockUpdateBookingStatusUseCase();
+    mockBookingRepository = MockBookingRepository();
 
     cubit = OwnerBookingsCubit(
       getCurrentUserUseCase: mockGetCurrentUser,
       getOwnerBookingsUseCase: mockGetBookings,
       updateBookingStatusUseCase: mockUpdateStatus,
+      bookingRepository: mockBookingRepository,
     );
   });
 

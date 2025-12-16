@@ -101,10 +101,28 @@ class BusinessHoursRemoteDataSourceImpl
   @override
   Future<void> initializeDefaultBusinessHours(String fieldId) async {
     try {
-      await supabaseClient.rpc(
-        'initialize_default_business_hours',
-        params: {'p_field_id': fieldId},
+      // Use upsert to set default hours for all 7 days (0=Sunday, 6=Saturday)
+      // Default: Open 09:00 - 22:00 for all days
+      // This will either insert new rows or update existing ones
+      final now = DateTime.now().toIso8601String();
+      final defaultHours = List.generate(
+        7,
+        (dayOfWeek) => {
+          'field_id': fieldId,
+          'day_of_week': dayOfWeek,
+          'is_open': true,
+          'opening_time': '09:00:00',
+          'closing_time': '22:00:00',
+          'closes_next_day': false,
+          'updated_at': now,
+        },
       );
+
+      // Use upsert instead of insert to avoid duplicate key errors
+      // The unique constraint on (field_id, day_of_week) ensures proper upsert behavior
+      await supabaseClient
+          .from('business_hours')
+          .upsert(defaultHours, onConflict: 'field_id,day_of_week');
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

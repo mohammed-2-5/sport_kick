@@ -233,6 +233,34 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
     return slot.isAvailable && secondSlot != null && secondSlot.isAvailable;
   }
 
+  /// Select time slot if valid for current duration.
+  /// This method validates and selects in one call for UI simplicity.
+  void selectTimeSlotIfValid(TimeSlotEntity slot) {
+    if (canSelectSlot(slot)) {
+      selectTimeSlot(slot);
+    }
+  }
+
+  /// Check if any slot can accommodate a 2-hour booking.
+  bool get isTwoHourAvailable {
+    final currentState = state;
+    if (currentState is! BookingFlowActive) return false;
+
+    final allSlots = currentState.slotsByPeriod.values
+        .expand((s) => s)
+        .toList();
+
+    for (final slot in allSlots) {
+      if (!slot.isAvailable) continue;
+
+      final secondSlot = _findConsecutiveSlot(slot, currentState.slotsByPeriod);
+      if (secondSlot != null && secondSlot.isAvailable) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// Navigate to the next step.
   void nextStep() {
     final currentState = state;

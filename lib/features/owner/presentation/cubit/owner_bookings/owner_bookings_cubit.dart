@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/features/bookings/domain/repositories/booking_repository.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/update_booking_status_usecase.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_state.dart';
@@ -13,18 +14,22 @@ import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_
 /// - Search functionality
 /// - Tab switching
 /// - Approve/Reject actions
+/// - Payment verification actions
 class OwnerBookingsCubit extends Cubit<OwnerBookingsState> {
   final GetCurrentUserUseCase _getCurrentUserUseCase;
   final GetOwnerBookingsUseCase _getOwnerBookingsUseCase;
   final UpdateBookingStatusUseCase _updateBookingStatusUseCase;
+  final BookingRepository _bookingRepository;
 
   OwnerBookingsCubit({
     required GetCurrentUserUseCase getCurrentUserUseCase,
     required GetOwnerBookingsUseCase getOwnerBookingsUseCase,
     required UpdateBookingStatusUseCase updateBookingStatusUseCase,
+    required BookingRepository bookingRepository,
   }) : _getCurrentUserUseCase = getCurrentUserUseCase,
        _getOwnerBookingsUseCase = getOwnerBookingsUseCase,
        _updateBookingStatusUseCase = updateBookingStatusUseCase,
+       _bookingRepository = bookingRepository,
        super(const OwnerBookingsLoading());
 
   /// Load all bookings.
@@ -32,6 +37,9 @@ class OwnerBookingsCubit extends Cubit<OwnerBookingsState> {
     emit(const OwnerBookingsLoading());
 
     try {
+      // Auto-complete any expired bookings first (silent, non-blocking)
+      await _bookingRepository.completePassedBookings();
+
       // Get current user
       final userResult = await _getCurrentUserUseCase();
       String ownerId = '';
@@ -136,9 +144,33 @@ class OwnerBookingsCubit extends Cubit<OwnerBookingsState> {
     result.fold((failure) => emit(OwnerBookingsError(failure.message)), (
       _,
     ) async {
-      // Reload bookings after successful update
       await loadBookings();
     });
+  }
+
+  /// Verify payment proof.
+  Future<void> verifyPayment(String bookingId) async {
+    final result = await _bookingRepository.verifyPaymentProof(
+      bookingId: bookingId,
+    );
+
+    result.fold(
+      (failure) => emit(OwnerBookingsError(failure.message)),
+      (_) async => await loadBookings(),
+    );
+  }
+
+  /// Reject payment proof with reason.
+  Future<void> rejectPayment(String bookingId, String reason) async {
+    final result = await _bookingRepository.rejectPaymentProof(
+      bookingId: bookingId,
+      reason: reason,
+    );
+
+    result.fold(
+      (failure) => emit(OwnerBookingsError(failure.message)),
+      (_) async => await loadBookings(),
+    );
   }
 
   /// Get stats for the current filter.

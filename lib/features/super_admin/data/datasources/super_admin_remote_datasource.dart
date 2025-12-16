@@ -53,7 +53,35 @@ abstract class SuperAdminRemoteDataSource {
     List<String> images,
     String? videoUrl,
     List<String> facilities,
+    String? paymentPhone,
+    String paymentMethod,
   });
+
+  /// Update an existing field.
+  Future<FieldModel> updateField({
+    required String fieldId,
+    String? name,
+    String? address,
+    String? description,
+    double? pricePerHour,
+    double? latitude,
+    double? longitude,
+    String? ownerId,
+    String? sportCategoryId,
+    String? surfaceType,
+    bool? isIndoor,
+    bool? isVerified,
+    bool? isActive,
+    List<String>? facilities,
+    String? paymentPhone,
+    String? paymentMethod,
+  });
+
+  /// Delete a field (soft or hard delete).
+  Future<void> deleteField({required String fieldId, required bool hardDelete});
+
+  /// Verify or unverify a field.
+  Future<void> verifyField({required String fieldId, required bool isVerified});
 }
 
 /// Implementation of super admin remote data source.
@@ -417,6 +445,8 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
     List<String> images = const [],
     String? videoUrl,
     List<String> facilities = const [],
+    String? paymentPhone,
+    String paymentMethod = 'vodafone_cash',
   }) async {
     try {
       final currentUserId = _currentUserId;
@@ -471,6 +501,8 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
         'images': images,
         'amenities': facilities,
         'is_active': true,
+        'payment_phone': paymentPhone ?? '01068700814',
+        'payment_method': paymentMethod,
         'created_at': DateTime.now().toIso8601String(),
         'updated_at': DateTime.now().toIso8601String(),
       };
@@ -596,5 +628,139 @@ class SuperAdminRemoteDataSourceImpl implements SuperAdminRemoteDataSource {
     final year = DateTime.now().year;
     final random = Random().nextInt(900) + 100; // 3-digit random number
     return 'FieldAdmin$year@$random';
+  }
+
+  @override
+  Future<FieldModel> updateField({
+    required String fieldId,
+    String? name,
+    String? address,
+    String? description,
+    double? pricePerHour,
+    double? latitude,
+    double? longitude,
+    String? ownerId,
+    String? sportCategoryId,
+    String? surfaceType,
+    bool? isIndoor,
+    bool? isVerified,
+    bool? isActive,
+    List<String>? facilities,
+    String? paymentPhone,
+    String? paymentMethod,
+  }) async {
+    try {
+      debugPrint('✏️ [SuperAdminDataSource] Updating field: $fieldId');
+
+      // Build update data with only non-null values
+      final Map<String, dynamic> updateData = {
+        'updated_at': DateTime.now().toIso8601String(),
+      };
+
+      if (name != null) updateData['name'] = name;
+      if (address != null) updateData['address'] = address;
+      if (description != null) updateData['description'] = description;
+      if (pricePerHour != null) updateData['price_per_hour'] = pricePerHour;
+      if (latitude != null) updateData['latitude'] = latitude;
+      if (longitude != null) updateData['longitude'] = longitude;
+      if (ownerId != null) updateData['owner_id'] = ownerId;
+      if (sportCategoryId != null) {
+        updateData['sport_category_id'] = sportCategoryId;
+      }
+      if (surfaceType != null) updateData['surface_type'] = surfaceType;
+      if (isIndoor != null) updateData['is_indoor'] = isIndoor;
+      if (isVerified != null) updateData['is_verified'] = isVerified;
+      if (isActive != null) updateData['is_active'] = isActive;
+      if (facilities != null) updateData['amenities'] = facilities;
+      if (paymentPhone != null) updateData['payment_phone'] = paymentPhone;
+      if (paymentMethod != null) updateData['payment_method'] = paymentMethod;
+
+      final response = await supabaseClient
+          .from('fields')
+          .update(updateData)
+          .eq('id', fieldId)
+          .select()
+          .single();
+
+      debugPrint('✅ [SuperAdminDataSource] Field updated successfully');
+      return FieldModel.fromJson(response);
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [SuperAdminDataSource] PostgrestException: ${e.message}');
+      if (e.code == 'PGRST116') {
+        throw NotFoundException('Field not found: $fieldId');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [SuperAdminDataSource] Exception: $e');
+      throw ServerException('Failed to update field: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteField({
+    required String fieldId,
+    required bool hardDelete,
+  }) async {
+    try {
+      debugPrint(
+        '🗑️ [SuperAdminDataSource] Deleting field: $fieldId (hard=$hardDelete)',
+      );
+
+      if (hardDelete) {
+        // Hard delete - permanently remove from database
+        await supabaseClient.from('fields').delete().eq('id', fieldId);
+        debugPrint('✅ Field permanently deleted');
+      } else {
+        // Soft delete - set is_active to false
+        await supabaseClient
+            .from('fields')
+            .update({
+              'is_active': false,
+              'updated_at': DateTime.now().toIso8601String(),
+            })
+            .eq('id', fieldId);
+        debugPrint('✅ Field deactivated (soft delete)');
+      }
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [SuperAdminDataSource] PostgrestException: ${e.message}');
+      if (e.code == 'PGRST116') {
+        throw NotFoundException('Field not found: $fieldId');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [SuperAdminDataSource] Exception: $e');
+      throw ServerException('Failed to delete field: $e');
+    }
+  }
+
+  @override
+  Future<void> verifyField({
+    required String fieldId,
+    required bool isVerified,
+  }) async {
+    try {
+      debugPrint(
+        '${isVerified ? '✅' : '❌'} [SuperAdminDataSource] Setting field verification: $fieldId = $isVerified',
+      );
+
+      await supabaseClient
+          .from('fields')
+          .update({
+            'is_verified': isVerified,
+            'updated_at': DateTime.now().toIso8601String(),
+          })
+          .eq('id', fieldId);
+
+      debugPrint('✅ Field verification updated');
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [SuperAdminDataSource] PostgrestException: ${e.message}');
+      if (e.code == 'PGRST116') {
+        throw NotFoundException('Field not found: $fieldId');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [SuperAdminDataSource] Exception: $e');
+      throw ServerException('Failed to verify field: $e');
+    }
   }
 }

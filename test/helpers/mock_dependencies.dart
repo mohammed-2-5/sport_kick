@@ -28,10 +28,18 @@ import 'package:spo_kick/features/super_admin/domain/usecases/create_admin_accou
 import 'package:spo_kick/features/super_admin/domain/usecases/create_field_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/deactivate_user_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_active_cities_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/create_city_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_city_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/delete_city_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_admins_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_bookings_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_all_users_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_platform_statistics_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/update_field_usecase.dart'
+    as super_admin_update;
+import 'package:spo_kick/features/super_admin/domain/usecases/delete_field_usecase.dart'
+    as super_admin_delete;
+import 'package:spo_kick/features/super_admin/domain/usecases/verify_field_usecase.dart';
 import 'package:spo_kick/features/owner/domain/usecases/approve_booking_usecase.dart';
 import 'package:spo_kick/features/owner/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/owner/domain/usecases/get_owner_fields_usecase.dart';
@@ -115,6 +123,26 @@ class MockGetAllFieldsUseCase extends Mock implements GetAllFieldsUseCase {}
 
 /// Mock GetAllBookingsUseCase
 class MockGetAllBookingsUseCase extends Mock implements GetAllBookingsUseCase {}
+
+/// Mock Super Admin UpdateFieldUseCase
+class MockSuperAdminUpdateFieldUseCase extends Mock
+    implements super_admin_update.UpdateFieldUseCase {}
+
+/// Mock Super Admin DeleteFieldUseCase
+class MockSuperAdminDeleteFieldUseCase extends Mock
+    implements super_admin_delete.DeleteFieldUseCase {}
+
+/// Mock VerifyFieldUseCase
+class MockVerifyFieldUseCase extends Mock implements VerifyFieldUseCase {}
+
+/// Mock CreateCityUseCase
+class MockCreateCityUseCase extends Mock implements CreateCityUseCase {}
+
+/// Mock UpdateCityUseCase
+class MockUpdateCityUseCase extends Mock implements UpdateCityUseCase {}
+
+/// Mock DeleteCityUseCase
+class MockDeleteCityUseCase extends Mock implements DeleteCityUseCase {}
 
 // ============================================================================
 // MOCK USE CASES - Owner

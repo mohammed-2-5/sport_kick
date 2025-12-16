@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -189,9 +190,11 @@ class _PremiumAllFieldsViewState extends State<PremiumAllFieldsView> {
                           reviewCount: field.totalReviews,
                           isActive: field.isActive,
                           isVerified: field.isVerified,
-                          onTap: () {
-                            // Navigate to field details
-                          },
+                          onTap: () => context.pushNamed(
+                            'ownerFieldDetail',
+                            pathParameters: {'fieldId': field.id},
+                            extra: field,
+                          ),
                         ),
                       ),
                     ),

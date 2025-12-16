@@ -27,6 +27,8 @@ abstract class SuperAdminFieldManagementDataSource {
     List<String> images,
     String? videoUrl,
     List<String> facilities,
+    String? paymentPhone,
+    String paymentMethod,
   });
 
   Future<void> assignFieldToAdmin({
@@ -34,6 +36,32 @@ abstract class SuperAdminFieldManagementDataSource {
     required String fieldId,
     String? notes,
   });
+
+  /// Update an existing field.
+  Future<FieldModel> updateField({
+    required String fieldId,
+    String? name,
+    String? address,
+    String? description,
+    double? pricePerHour,
+    double? latitude,
+    double? longitude,
+    String? ownerId,
+    String? sportCategoryId,
+    String? surfaceType,
+    bool? isIndoor,
+    bool? isVerified,
+    bool? isActive,
+    List<String>? facilities,
+    String? paymentPhone,
+    String? paymentMethod,
+  });
+
+  /// Delete a field (soft or hard delete).
+  Future<void> deleteField({required String fieldId, required bool hardDelete});
+
+  /// Verify or unverify a field.
+  Future<void> verifyField({required String fieldId, required bool isVerified});
 }
 
 /// Implementation of super admin field management data source.
@@ -119,6 +147,8 @@ class SuperAdminFieldManagementDataSourceImpl
     List<String> images = const [],
     String? videoUrl,
     List<String> facilities = const [],
+    String? paymentPhone,
+    String paymentMethod = 'vodafone_cash',
   }) async {
     try {
       final currentUserId = _currentUserId;
@@ -173,6 +203,8 @@ class SuperAdminFieldManagementDataSourceImpl
         'images': images,
         'amenities': facilities,
         'is_active': true,
+        'payment_phone': paymentPhone ?? '01068700814',
+        'payment_method': paymentMethod,
         'created_at': DateTime.now().toIso8601String(),
         'updated_at': DateTime.now().toIso8601String(),
       };
@@ -233,5 +265,136 @@ class SuperAdminFieldManagementDataSourceImpl
     if (capacity <= 10) return '5-a-side';
     if (capacity <= 14) return '7-a-side';
     return '11-a-side';
+  }
+
+  @override
+  Future<FieldModel> updateField({
+    required String fieldId,
+    String? name,
+    String? address,
+    String? description,
+    double? pricePerHour,
+    double? latitude,
+    double? longitude,
+    String? ownerId,
+    String? sportCategoryId,
+    String? surfaceType,
+    bool? isIndoor,
+    bool? isVerified,
+    bool? isActive,
+    List<String>? facilities,
+    String? paymentPhone,
+    String? paymentMethod,
+  }) async {
+    try {
+      debugPrint('✏️ [FieldMgmtDataSource] Updating field: $fieldId');
+
+      final Map<String, dynamic> updateData = {
+        'updated_at': DateTime.now().toIso8601String(),
+      };
+
+      if (name != null) updateData['name'] = name;
+      if (address != null) updateData['address'] = address;
+      if (description != null) updateData['description'] = description;
+      if (pricePerHour != null) updateData['price_per_hour'] = pricePerHour;
+      if (latitude != null) updateData['latitude'] = latitude;
+      if (longitude != null) updateData['longitude'] = longitude;
+      if (ownerId != null) updateData['owner_id'] = ownerId;
+      if (sportCategoryId != null) {
+        updateData['sport_category_id'] = sportCategoryId;
+      }
+      if (surfaceType != null) updateData['surface_type'] = surfaceType;
+      if (isIndoor != null) updateData['is_indoor'] = isIndoor;
+      if (isVerified != null) updateData['is_verified'] = isVerified;
+      if (isActive != null) updateData['is_active'] = isActive;
+      if (facilities != null) updateData['amenities'] = facilities;
+      if (paymentPhone != null) updateData['payment_phone'] = paymentPhone;
+      if (paymentMethod != null) updateData['payment_method'] = paymentMethod;
+
+      final response = await supabaseClient
+          .from('fields')
+          .update(updateData)
+          .eq('id', fieldId)
+          .select()
+          .single();
+
+      debugPrint('✅ [FieldMgmtDataSource] Field updated');
+      return FieldModel.fromJson(response);
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [FieldMgmtDataSource] PostgrestException: ${e.message}');
+      if (e.code == 'PGRST116') {
+        throw NotFoundException('Field not found: $fieldId');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [FieldMgmtDataSource] Exception: $e');
+      throw ServerException('Failed to update field: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteField({
+    required String fieldId,
+    required bool hardDelete,
+  }) async {
+    try {
+      debugPrint(
+        '🗑️ [FieldMgmtDataSource] Deleting field: $fieldId (hard=$hardDelete)',
+      );
+
+      if (hardDelete) {
+        await supabaseClient.from('fields').delete().eq('id', fieldId);
+        debugPrint('✅ Field permanently deleted');
+      } else {
+        await supabaseClient
+            .from('fields')
+            .update({
+              'is_active': false,
+              'updated_at': DateTime.now().toIso8601String(),
+            })
+            .eq('id', fieldId);
+        debugPrint('✅ Field deactivated');
+      }
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [FieldMgmtDataSource] PostgrestException: ${e.message}');
+      if (e.code == 'PGRST116') {
+        throw NotFoundException('Field not found: $fieldId');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [FieldMgmtDataSource] Exception: $e');
+      throw ServerException('Failed to delete field: $e');
+    }
+  }
+
+  @override
+  Future<void> verifyField({
+    required String fieldId,
+    required bool isVerified,
+  }) async {
+    try {
+      debugPrint(
+        '${isVerified ? '✅' : '❌'} [FieldMgmtDataSource] Verify field: $fieldId = $isVerified',
+      );
+
+      await supabaseClient
+          .from('fields')
+          .update({
+            'is_verified': isVerified,
+            'updated_at': DateTime.now().toIso8601String(),
+          })
+          .eq('id', fieldId);
+
+      debugPrint('✅ Field verification updated');
+    } on PostgrestException catch (e) {
+      debugPrint('❌ [FieldMgmtDataSource] PostgrestException: ${e.message}');
+      if (e.code == 'PGRST116') {
+        throw NotFoundException('Field not found: $fieldId');
+      }
+      throw ServerException('Database error: ${e.message}');
+    } catch (e) {
+      debugPrint('❌ [FieldMgmtDataSource] Exception: $e');
+      throw ServerException('Failed to verify field: $e');
+    }
   }
 }

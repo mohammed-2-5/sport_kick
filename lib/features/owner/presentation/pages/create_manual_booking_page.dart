@@ -10,8 +10,16 @@ import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/crea
 /// 2-step flow for creating manual bookings (admin for walk-in customers):
 /// - Step 1: Select field, date, time slot, and price
 /// - Step 2: Enter customer information (name, phone, email, notes)
+///
+/// Optional [initialData] can pre-fill field, date, and time:
+/// - 'fieldId': String - pre-selected field ID
+/// - 'fieldName': String - pre-selected field name
+/// - 'selectedDate': DateTime - pre-selected date
+/// - 'selectedTime': String - pre-selected time (HH:mm format)
 class CreateManualBookingPage extends StatelessWidget {
-  const CreateManualBookingPage({super.key});
+  final Map<String, dynamic>? initialData;
+
+  const CreateManualBookingPage({super.key, this.initialData});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +28,7 @@ class CreateManualBookingPage extends StatelessWidget {
         BlocProvider(create: (_) => sl<FieldsCubit>()..loadAllFields()),
         BlocProvider(create: (_) => sl<BookingCubit>()),
       ],
-      child: const CreateManualBookingView(),
+      child: CreateManualBookingView(initialData: initialData),
     );
   }
 }

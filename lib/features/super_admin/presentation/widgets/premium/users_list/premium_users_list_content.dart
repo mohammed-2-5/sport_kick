@@ -122,7 +122,7 @@ class PremiumUsersListContent extends StatelessWidget {
         if (isSelectionMode) {
           onToggleSelection(user.id);
         } else {
-          context.pushNamed('userDetails', pathParameters: {'id': user.id});
+          context.pushNamed('superAdminUserDetails', extra: user);
         }
       },
       onSelectionChanged: (selected) => onToggleSelection(user.id),

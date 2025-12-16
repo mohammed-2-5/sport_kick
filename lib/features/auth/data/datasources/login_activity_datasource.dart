@@ -95,6 +95,7 @@ class LoginActivityRemoteDataSource implements LoginActivityDataSource {
     String? statusFilter,
   }) async {
     try {
+      // First get login activities
       final baseQuery = _client.from('login_activity').select();
 
       final filteredQuery = statusFilter != null
@@ -105,9 +106,41 @@ class LoginActivityRemoteDataSource implements LoginActivityDataSource {
           .order('timestamp', ascending: false)
           .range(offset, offset + limit - 1);
 
-      return (response as List)
-          .map((json) => LoginActivityModel.fromJson(json))
+      final activities = response as List;
+
+      // Get unique user IDs
+      final userIds = activities
+          .map((a) => a['user_id'] as String)
+          .toSet()
           .toList();
+
+      // Fetch profiles for these users
+      Map<String, Map<String, dynamic>> profilesMap = {};
+      if (userIds.isNotEmpty) {
+        final profilesResponse = await _client
+            .from('profiles')
+            .select('id, full_name, email, role')
+            .inFilter('id', userIds);
+
+        for (final profile in profilesResponse as List) {
+          profilesMap[profile['id'] as String] = profile;
+        }
+      }
+
+      // Merge profile data into activities
+      return activities.map((json) {
+        final userId = json['user_id'] as String;
+        final profile = profilesMap[userId];
+
+        // Add profile data to json
+        if (profile != null) {
+          json['user_name'] = profile['full_name'];
+          json['user_email'] = profile['email'];
+          json['user_role'] = profile['role'];
+        }
+
+        return LoginActivityModel.fromJson(json);
+      }).toList();
     } catch (e) {
       debugPrint('[LoginActivityDS] Error getting all activity: $e');
       rethrow;

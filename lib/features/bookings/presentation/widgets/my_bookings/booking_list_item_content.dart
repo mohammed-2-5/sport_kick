@@ -7,21 +7,26 @@ import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/book
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item_cancellation_reason.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item_date_time.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item_field_info.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item_payment_status.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item_price.dart';
 
 /// Content section of the booking list item.
 ///
-/// Displays field info, date/time, price, and actions.
+/// Displays field info, date/time, price, payment status, and actions.
 class BookingListItemContent extends StatelessWidget {
   final BookingEntity booking;
   final bool isHistory;
   final VoidCallback onCancelPressed;
+  final VoidCallback? onPayNowPressed;
+  final VoidCallback? onViewProofPressed;
 
   const BookingListItemContent({
     super.key,
     required this.booking,
     required this.isHistory,
     required this.onCancelPressed,
+    this.onPayNowPressed,
+    this.onViewProofPressed,
   });
 
   @override
@@ -46,6 +51,15 @@ class BookingListItemContent extends StatelessWidget {
           ),
           const SizedBox(height: BookingConstants.standardPadding),
           BookingListItemPrice(formattedPrice: booking.formattedPrice),
+          if (!isHistory && booking.status != BookingStatus.canceled) ...[
+            const SizedBox(height: BookingConstants.itemSpacing),
+            BookingListItemPaymentStatus(
+              paymentStatus: booking.paymentStatus,
+              hasPaymentProof: booking.hasPaymentProof,
+              onPayNowPressed: onPayNowPressed,
+              onViewProofPressed: onViewProofPressed,
+            ),
+          ],
           if (booking.canCancel && !isHistory) ...[
             const SizedBox(height: BookingConstants.itemSpacing),
             BookingListItemCancelButton(onPressed: onCancelPressed),

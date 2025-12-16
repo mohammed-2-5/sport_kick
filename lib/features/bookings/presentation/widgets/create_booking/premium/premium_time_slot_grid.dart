@@ -7,13 +7,17 @@ import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/p
 /// Premium time slot grid with period sections and animations.
 ///
 /// Features:
-/// - Organized by period (Morning, Afternoon, Evening)
+/// - Organized by period (Morning, Afternoon, Evening, Late Night)
 /// - Staggered entrance animations
 /// - Beautiful card design with selection state
+/// - Duration-aware slot highlighting
 /// - Loading shimmer state
 class PremiumTimeSlotGrid extends StatelessWidget {
   final Map<String, List<TimeSlotEntity>> slotsByPeriod;
   final TimeSlotEntity? selectedSlot;
+  final TimeSlotEntity? secondSlot;
+  final int selectedDuration;
+  final bool Function(TimeSlotEntity) canSelectSlot;
   final ValueChanged<TimeSlotEntity> onSlotSelected;
   final bool isLoading;
   final String? errorMessage;
@@ -23,45 +27,33 @@ class PremiumTimeSlotGrid extends StatelessWidget {
     required this.slotsByPeriod,
     required this.selectedSlot,
     required this.onSlotSelected,
+    required this.canSelectSlot,
+    this.secondSlot,
+    this.selectedDuration = 1,
     this.isLoading = false,
     this.errorMessage,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const _LoadingState();
-    }
-
-    if (errorMessage != null) {
-      return _ErrorState(message: errorMessage!);
-    }
-
-    if (slotsByPeriod.isEmpty) {
-      return const _EmptyState();
-    }
+    if (isLoading) return const _LoadingState();
+    if (errorMessage != null) return _ErrorState(message: errorMessage!);
+    if (slotsByPeriod.isEmpty) return const _EmptyState();
 
     return AnimationLimiter(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Available Time Slots',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ),
+          const _SectionTitle(),
           const SizedBox(height: 16),
           ...slotsByPeriod.entries.map((entry) {
             return TimeSlotPeriodSection(
               period: entry.key,
               slots: entry.value,
               selectedSlot: selectedSlot,
+              secondSlot: secondSlot,
+              selectedDuration: selectedDuration,
+              canSelectSlot: canSelectSlot,
               onSlotSelected: onSlotSelected,
             );
           }),
@@ -71,7 +63,25 @@ class PremiumTimeSlotGrid extends StatelessWidget {
   }
 }
 
-/// Loading shimmer state.
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Text(
+        'Available Time Slots',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: AppColors.textPrimary,
+        ),
+      ),
+    );
+  }
+}
+
 class _LoadingState extends StatelessWidget {
   const _LoadingState();
 
@@ -82,14 +92,7 @@ class _LoadingState extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Available Time Slots',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
-            ),
-          ),
+          const _SectionTitle(),
           const SizedBox(height: 16),
           ...List.generate(3, (sectionIndex) {
             return Column(
@@ -115,7 +118,6 @@ class _LoadingState extends StatelessWidget {
   }
 }
 
-/// Shimmer placeholder box.
 class _ShimmerBox extends StatefulWidget {
   final double width;
   final double height;
@@ -178,7 +180,6 @@ class _ShimmerBoxState extends State<_ShimmerBox>
   }
 }
 
-/// Empty state when no slots available.
 class _EmptyState extends StatelessWidget {
   const _EmptyState();
 
@@ -228,7 +229,6 @@ class _EmptyState extends StatelessWidget {
   }
 }
 
-/// Error state display.
 class _ErrorState extends StatelessWidget {
   final String message;
 

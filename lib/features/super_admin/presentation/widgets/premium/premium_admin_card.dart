@@ -238,7 +238,7 @@ class PremiumAdminCard extends StatelessWidget {
               const SizedBox(width: 12),
               _StatChip(
                 icon: Icons.attach_money,
-                label: '\$${revenue?.toStringAsFixed(0) ?? '0'}',
+                label: '${revenue?.toStringAsFixed(0) ?? '0'} EGP',
                 color: Colors.green,
               ),
               if (phone != null) ...[

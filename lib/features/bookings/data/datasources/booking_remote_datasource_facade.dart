@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:spo_kick/features/bookings/data/datasources/booking_admin_operations_datasource.dart';
 import 'package:spo_kick/features/bookings/data/datasources/booking_owner_operations_datasource.dart';
 import 'package:spo_kick/features/bookings/data/datasources/booking_time_slot_datasource.dart';
@@ -38,6 +40,22 @@ abstract class BookingRemoteDataSource {
   Future<List<BookingModel>> getOwnerBookings();
   Future<List<BookingModel>> getAllBookings();
   Future<BookingModel> createManualBooking(BookingModel booking);
+
+  // Payment operations
+  Future<BookingModel> uploadPaymentProof({
+    required String bookingId,
+    required Uint8List imageBytes,
+    required String fileName,
+  });
+  Future<BookingModel> verifyPaymentProof({required String bookingId});
+  Future<BookingModel> rejectPaymentProof({
+    required String bookingId,
+    required String reason,
+  });
+
+  /// Auto-complete expired bookings via RPC.
+  /// Returns the count of updated bookings.
+  Future<int> completePassedBookings();
 }
 
 /// Implementation of the facade that delegates to specialized datasources.
@@ -125,5 +143,41 @@ class BookingRemoteDataSourceFacade implements BookingRemoteDataSource {
   @override
   Future<List<BookingModel>> getAllBookings() {
     return _adminOperationsDataSource.getAllBookings();
+  }
+
+  // ==================== Payment Operations ====================
+
+  @override
+  Future<BookingModel> uploadPaymentProof({
+    required String bookingId,
+    required Uint8List imageBytes,
+    required String fileName,
+  }) {
+    return _userOperationsDataSource.uploadPaymentProof(
+      bookingId: bookingId,
+      imageBytes: imageBytes,
+      fileName: fileName,
+    );
+  }
+
+  @override
+  Future<BookingModel> verifyPaymentProof({required String bookingId}) {
+    return _ownerOperationsDataSource.verifyPaymentProof(bookingId: bookingId);
+  }
+
+  @override
+  Future<BookingModel> rejectPaymentProof({
+    required String bookingId,
+    required String reason,
+  }) {
+    return _ownerOperationsDataSource.rejectPaymentProof(
+      bookingId: bookingId,
+      reason: reason,
+    );
+  }
+
+  @override
+  Future<int> completePassedBookings() {
+    return _adminOperationsDataSource.completePassedBookings();
   }
 }

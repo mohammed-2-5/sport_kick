@@ -119,11 +119,21 @@ class SuperAdminUserManagementDataSourceImpl
   @override
   Future<List<UserModel>> getAllAdmins() async {
     try {
-      debugPrint('👥 [UserMgmtDataSource] Fetching all admins...');
+      debugPrint(
+        '👥 [UserMgmtDataSource] Fetching all admins with fields and revenue...',
+      );
 
+      // Query profiles with nested fields and their bookings for revenue calculation
+      // Revenue = sum of total_price for confirmed/completed bookings
       final response = await supabaseClient
           .from('profiles')
-          .select()
+          .select('''
+            *,
+            fields:fields(
+              id,
+              bookings:bookings(total_price, status)
+            )
+          ''')
           .inFilter('role', ['admin', 'super_admin'])
           .order('created_at', ascending: false);
 
@@ -131,7 +141,9 @@ class SuperAdminUserManagementDataSourceImpl
           .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
           .toList();
 
-      debugPrint('✅ [UserMgmtDataSource] Loaded ${admins.length} admins');
+      debugPrint(
+        '✅ [UserMgmtDataSource] Loaded ${admins.length} admins with revenue data',
+      );
       return admins;
     } on PostgrestException catch (e) {
       debugPrint('❌ [UserMgmtDataSource] PostgrestException: ${e.message}');
@@ -173,6 +185,15 @@ class SuperAdminUserManagementDataSourceImpl
     try {
       debugPrint('🚫 [UserMgmtDataSource] Deactivating user: $userId');
 
+      // Check if user is an admin (has fields)
+      final fieldsResponse = await supabaseClient
+          .from('fields')
+          .select('id')
+          .eq('owner_id', userId);
+
+      final fieldsCount = (fieldsResponse as List).length;
+
+      // Deactivate the user
       await supabaseClient
           .from('profiles')
           .update({
@@ -181,7 +202,19 @@ class SuperAdminUserManagementDataSourceImpl
           })
           .eq('id', userId);
 
-      debugPrint('✅ User deactivated');
+      // Also deactivate all fields owned by this admin
+      if (fieldsCount > 0) {
+        await supabaseClient
+            .from('fields')
+            .update({
+              'is_active': false,
+              'updated_at': DateTime.now().toIso8601String(),
+            })
+            .eq('owner_id', userId);
+        debugPrint('✅ User and $fieldsCount fields deactivated');
+      } else {
+        debugPrint('✅ User deactivated (no fields owned)');
+      }
     } on PostgrestException catch (e) {
       debugPrint('❌ [UserMgmtDataSource] PostgrestException: ${e.message}');
       throw ServerException('Database error: ${e.message}');
@@ -196,6 +229,15 @@ class SuperAdminUserManagementDataSourceImpl
     try {
       debugPrint('✅ [UserMgmtDataSource] Activating user: $userId');
 
+      // Check if user is an admin (has fields)
+      final fieldsResponse = await supabaseClient
+          .from('fields')
+          .select('id')
+          .eq('owner_id', userId);
+
+      final fieldsCount = (fieldsResponse as List).length;
+
+      // Activate the user
       await supabaseClient
           .from('profiles')
           .update({
@@ -204,7 +246,19 @@ class SuperAdminUserManagementDataSourceImpl
           })
           .eq('id', userId);
 
-      debugPrint('✅ User activated');
+      // Also activate all fields owned by this admin
+      if (fieldsCount > 0) {
+        await supabaseClient
+            .from('fields')
+            .update({
+              'is_active': true,
+              'updated_at': DateTime.now().toIso8601String(),
+            })
+            .eq('owner_id', userId);
+        debugPrint('✅ User and $fieldsCount fields activated');
+      } else {
+        debugPrint('✅ User activated (no fields owned)');
+      }
     } on PostgrestException catch (e) {
       debugPrint('❌ [UserMgmtDataSource] PostgrestException: ${e.message}');
       throw ServerException('Database error: ${e.message}');

@@ -40,6 +40,8 @@ class BookingEntity extends Equatable {
   // Manual booking fields (for admin-created bookings)
   final bool isManual;
   final String? createdBy; // Admin user ID who created the manual booking
+  final String? createdByName; // Admin name who created the manual booking
+  final String? createdByEmail; // Admin email who created the manual booking
   final String? customerName; // For walk-in customers
   final String? customerPhone; // For walk-in customers
   final String? customerEmail; // For walk-in customers (optional)
@@ -71,6 +73,8 @@ class BookingEntity extends Equatable {
     this.paymentRejectionReason,
     this.isManual = false,
     this.createdBy,
+    this.createdByName,
+    this.createdByEmail,
     this.customerName,
     this.customerPhone,
     this.customerEmail,
@@ -104,6 +108,8 @@ class BookingEntity extends Equatable {
     paymentRejectionReason,
     isManual,
     createdBy,
+    createdByName,
+    createdByEmail,
     customerName,
     customerPhone,
     customerEmail,
