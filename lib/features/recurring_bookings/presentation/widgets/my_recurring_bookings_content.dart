@@ -212,7 +212,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            Text(
+            const Text(
               'Reserve your favorite weekly slot and never miss a game!',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14, color: AppColors.textSecondary),

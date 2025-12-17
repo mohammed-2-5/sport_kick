@@ -140,7 +140,7 @@ class RecurringRequestCard extends StatelessWidget {
                     child: Image.network(
                       request.userAvatarUrl!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const Icon(
+                      errorBuilder: (_, _, _) => const Icon(
                         Icons.person_rounded,
                         color: AppColors.accentCyan,
                       ),
@@ -164,7 +164,7 @@ class RecurringRequestCard extends StatelessWidget {
                 if (request.userPhone != null)
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.phone_outlined,
                         size: 12,
                         color: AppColors.textSecondary,
@@ -172,7 +172,7 @@ class RecurringRequestCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         request.userPhone!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           color: AppColors.textSecondary,
                         ),
@@ -257,7 +257,7 @@ class RecurringRequestCard extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
         ),
         const SizedBox(height: 2),
         Text(

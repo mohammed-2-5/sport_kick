@@ -4,16 +4,8 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 /// Dialog for verifying or rejecting payment proofs.
 ///
 /// Shows confirmation for verify action and requires reason for rejection.
-class PaymentVerificationDialog extends StatelessWidget {
-  final bool isVerify;
-  final VoidCallback onConfirm;
-  final ValueChanged<String>? onRejectWithReason;
-
-  const PaymentVerificationDialog._({
-    required this.isVerify,
-    required this.onConfirm,
-    this.onRejectWithReason,
-  });
+class PaymentVerificationDialog {
+  PaymentVerificationDialog._();
 
   /// Show verification confirmation dialog.
   static Future<bool?> showVerifyDialog(BuildContext context) {
@@ -30,9 +22,6 @@ class PaymentVerificationDialog extends StatelessWidget {
       builder: (context) => _RejectReasonDialog(),
     );
   }
-
-  @override
-  Widget build(BuildContext context) => const SizedBox.shrink();
 }
 
 class _VerifyConfirmationDialog extends StatelessWidget {

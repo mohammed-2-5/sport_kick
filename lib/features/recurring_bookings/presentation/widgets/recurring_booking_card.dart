@@ -205,7 +205,7 @@ class RecurringBookingCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               'Completed Sessions',
               style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
@@ -265,7 +265,7 @@ class RecurringBookingCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Next Booking',
                   style: TextStyle(
                     fontSize: 11,
@@ -342,7 +342,7 @@ class RecurringBookingCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.hourglass_empty_rounded,
             color: AppColors.goldAccent,
             size: 20,
@@ -374,11 +374,11 @@ class RecurringBookingCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
               Icon(Icons.block_rounded, color: AppColors.error, size: 20),
-              const SizedBox(width: 10),
-              const Text(
+              SizedBox(width: 10),
+              Text(
                 'Request Rejected',
                 style: TextStyle(
                   fontSize: 13,
@@ -392,7 +392,10 @@ class RecurringBookingCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               booking.rejectionReason!,
-              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.textSecondary,
+              ),
             ),
           ],
         ],

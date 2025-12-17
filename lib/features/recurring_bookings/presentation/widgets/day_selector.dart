@@ -38,7 +38,7 @@ class DaySelector extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text(
+        const Text(
           'Choose the day you want to reserve every week',
           style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
         ),
@@ -113,7 +113,7 @@ class _DayChip extends StatelessWidget {
               Container(
                 width: 6,
                 height: 6,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.accentCyan,
                   shape: BoxShape.circle,
                 ),

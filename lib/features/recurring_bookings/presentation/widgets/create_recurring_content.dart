@@ -159,11 +159,11 @@ class CreateRecurringContent extends StatelessWidget {
                     width: 64,
                     height: 64,
                     fit: BoxFit.cover,
-                    placeholder: (_, __) => Container(
+                    placeholder: (_, _) => Container(
                       color: AppColors.navyDeep.withValues(alpha: 0.1),
                       child: const Icon(Icons.sports_soccer),
                     ),
-                    errorWidget: (_, __, ___) => Container(
+                    errorWidget: (_, _, _) => Container(
                       color: AppColors.navyDeep.withValues(alpha: 0.1),
                       child: const Icon(Icons.sports_soccer),
                     ),

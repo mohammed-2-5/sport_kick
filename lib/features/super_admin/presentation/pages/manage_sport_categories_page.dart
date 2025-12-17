@@ -46,6 +46,7 @@ class _ManageSportCategoriesView extends StatelessWidget {
             );
             // Reload after showing success message
             Future.delayed(const Duration(milliseconds: 500), () {
+              if (!context.mounted) return;
               context.read<SportCategoriesCubit>().loadCategories();
             });
           } else if (state is SportCategoriesError) {

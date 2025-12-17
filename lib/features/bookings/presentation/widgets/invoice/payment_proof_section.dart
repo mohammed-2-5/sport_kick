@@ -71,7 +71,7 @@ class PaymentProofSection extends StatelessWidget {
       builder: (context) => _ImageSourceBottomSheet(),
     );
 
-    if (source == null) return;
+    if (!context.mounted || source == null) return;
 
     final pickedFile = await picker.pickImage(
       source: source,
@@ -80,16 +80,18 @@ class PaymentProofSection extends StatelessWidget {
       imageQuality: 85,
     );
 
-    if (pickedFile != null && context.mounted) {
-      // Read bytes from XFile (works on both web and mobile)
-      final bytes = await pickedFile.readAsBytes();
-      final fileName = pickedFile.name;
+    if (!context.mounted || pickedFile == null) return;
 
-      context.read<PaymentProofCubit>().selectImage(
-        imageBytes: bytes,
-        fileName: fileName,
-      );
-    }
+    // Read bytes from XFile (works on both web and mobile)
+    final bytes = await pickedFile.readAsBytes();
+    final fileName = pickedFile.name;
+
+    if (!context.mounted) return;
+
+    context.read<PaymentProofCubit>().selectImage(
+      imageBytes: bytes,
+      fileName: fileName,
+    );
   }
 }
 

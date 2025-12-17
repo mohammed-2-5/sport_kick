@@ -28,7 +28,7 @@ class RecurringDurationSelector extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text(
+        const Text(
           'How long do you want to play each week?',
           style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
         ),
@@ -143,14 +143,14 @@ class _DurationCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             // Per week label
-            Text(
+            const Text(
               'per week',
               style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
             ),
             // Selection indicator
             if (isSelected) ...[
               const SizedBox(height: 8),
-              Icon(
+              const Icon(
                 Icons.check_circle_rounded,
                 size: 20,
                 color: AppColors.accentCyan,
