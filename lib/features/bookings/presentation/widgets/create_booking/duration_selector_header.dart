@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+
+/// Header widget for the duration selector section.
+class DurationSelectorHeader extends StatelessWidget {
+  const DurationSelectorHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: BookingConstants.standardPadding,
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.timer_outlined, color: AppColors.accentCyan, size: 20),
+          SizedBox(width: 8),
+          Text(
+            BookingConstants.durationSelectorTitle,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textPrimary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

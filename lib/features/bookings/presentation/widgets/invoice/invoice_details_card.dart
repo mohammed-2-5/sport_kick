@@ -1,0 +1,216 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+
+/// Card displaying invoice and booking details.
+class InvoiceDetailsCard extends StatelessWidget {
+  final BookingEntity booking;
+  final FieldEntity field;
+
+  const InvoiceDetailsCard({
+    super.key,
+    required this.booking,
+    required this.field,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PremiumCard(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Invoice Header
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Invoice Details',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              if (booking.invoiceNumber != null)
+                GestureDetector(
+                  onTap: () =>
+                      _copyToClipboard(context, booking.invoiceNumber!),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.accentCyan.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          booking.invoiceNumber!,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.accentCyan,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(
+                          Icons.copy_rounded,
+                          size: 14,
+                          color: AppColors.accentCyan,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          const Divider(height: 1, color: AppColors.border),
+          const SizedBox(height: 16),
+
+          // Field Name
+          _DetailRow(
+            icon: Icons.sports_soccer_rounded,
+            label: 'Field',
+            value: field.name,
+          ),
+          const SizedBox(height: 12),
+
+          // Date
+          _DetailRow(
+            icon: Icons.calendar_today_rounded,
+            label: 'Date',
+            value: booking.formattedDate,
+          ),
+          const SizedBox(height: 12),
+
+          // Time
+          _DetailRow(
+            icon: Icons.access_time_rounded,
+            label: 'Time',
+            value: booking.formattedTimeSlot,
+          ),
+          const SizedBox(height: 12),
+
+          // Duration
+          _DetailRow(
+            icon: Icons.timer_outlined,
+            label: 'Duration',
+            value:
+                '${booking.durationHours} ${booking.durationHours == 1 ? 'hour' : 'hours'}',
+          ),
+          const SizedBox(height: 16),
+          const Divider(height: 1, color: AppColors.border),
+          const SizedBox(height: 16),
+
+          // Total Amount
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Total Amount',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  gradient: AppColors.cyanGradient,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  booking.formattedPrice,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _copyToClipboard(BuildContext context, String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    HapticFeedback.lightImpact();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Invoice number copied: $text'),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+}
+
+/// A single detail row with icon, label, and value.
+class _DetailRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const _DetailRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundLight,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, size: 18, color: AppColors.textSecondary),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
