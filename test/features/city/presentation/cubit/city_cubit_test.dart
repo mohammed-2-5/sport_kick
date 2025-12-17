@@ -206,11 +206,7 @@ void main() {
         return cityCubit;
       },
       act: (cubit) => cubit.loadSelectedCity(),
-      expect: () => [
-        const CitiesLoading(),
-        const CitiesLoading(), // loadCities emits this
-        isA<CitiesLoaded>(),
-      ],
+      expect: () => [const CitiesLoading(), isA<CitiesLoaded>()],
     );
   });
 

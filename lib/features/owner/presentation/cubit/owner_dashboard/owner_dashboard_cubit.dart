@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_state.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_pending_recurring_requests_usecase.dart';
 
 import '../../../domain/usecases/get_owner_fields_usecase.dart';
 
@@ -16,14 +17,17 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
   final GetCurrentUserUseCase _getCurrentUserUseCase;
   final GetOwnerFieldsUseCase _getOwnerFieldsUseCase;
   final GetOwnerBookingsUseCase _getOwnerBookingsUseCase;
+  final GetPendingRecurringRequestsUseCase? _getPendingRecurringRequestsUseCase;
 
   OwnerDashboardCubit({
     required GetCurrentUserUseCase getCurrentUserUseCase,
     required GetOwnerFieldsUseCase getOwnerFieldsUseCase,
     required GetOwnerBookingsUseCase getOwnerBookingsUseCase,
+    GetPendingRecurringRequestsUseCase? getPendingRecurringRequestsUseCase,
   }) : _getCurrentUserUseCase = getCurrentUserUseCase,
        _getOwnerFieldsUseCase = getOwnerFieldsUseCase,
        _getOwnerBookingsUseCase = getOwnerBookingsUseCase,
+       _getPendingRecurringRequestsUseCase = getPendingRecurringRequestsUseCase,
        super(const OwnerDashboardLoading());
 
   /// Load all dashboard data.
@@ -50,6 +54,17 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
       final fieldsResult = await _getOwnerFieldsUseCase(ownerId: ownerId);
       final bookingsResult = await _getOwnerBookingsUseCase();
 
+      // Fetch pending recurring count
+      int pendingRecurringCount = 0;
+      final pendingUseCase = _getPendingRecurringRequestsUseCase;
+      if (pendingUseCase != null) {
+        final recurringResult = await pendingUseCase();
+        recurringResult.fold(
+          (_) => pendingRecurringCount = 0,
+          (requests) => pendingRecurringCount = requests.length,
+        );
+      }
+
       fieldsResult.fold(
         (failure) => emit(OwnerDashboardError(failure.message)),
         (fields) {
@@ -65,6 +80,7 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
                   fields: fields,
                   recentBookings: recentBookings,
                   stats: stats,
+                  pendingRecurringCount: pendingRecurringCount,
                 ),
               );
             },

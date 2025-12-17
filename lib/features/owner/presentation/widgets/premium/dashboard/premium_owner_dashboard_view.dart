@@ -84,6 +84,7 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
       ownerName: state.ownerName,
       email: '',
       selectedIndex: state.selectedNavIndex,
+      pendingRecurringCount: state.pendingRecurringCount,
       onItemTap: (index) {
         Navigator.pop(context);
         _handleDrawerNavigation(context, index);
@@ -148,9 +149,12 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                 onViewBookings: () => context.pushNamed('ownerBookings'),
                 onBookingTable: () => context.pushNamed('ownerBookingTable'),
                 onManageFields: () => context.pushNamed('ownerFields'),
+                onRecurringRequests: () =>
+                    context.pushNamed('ownerRecurringRequests'),
                 onAnalytics: () => context.pushNamed('ownerAnalytics'),
                 onSettings: () => context.pushNamed('ownerSettings'),
                 onProfile: () => context.pushNamed('ownerProfile'),
+                pendingRecurringCount: state.pendingRecurringCount,
               ),
               const SizedBox(height: 24),
               PremiumOwnerRecentBookings(
@@ -187,9 +191,12 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
         context.pushNamed('ownerAnalytics');
         break;
       case 4:
-        context.pushNamed('ownerProfile');
+        context.pushNamed('ownerRecurringRequests');
         break;
       case 5:
+        context.pushNamed('ownerProfile');
+        break;
+      case 6:
         context.pushNamed('ownerSettings');
         break;
     }

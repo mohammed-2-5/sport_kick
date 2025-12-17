@@ -256,7 +256,7 @@ class _PremiumFieldDetailsViewState extends State<PremiumFieldDetailsView> {
   }
 }
 
-/// Floating Book Now button with glassmorphism.
+/// Floating Book Now button with glassmorphism and weekly subscription option.
 class _BookNowFloatingButton extends StatelessWidget {
   final FieldEntity field;
 
@@ -265,15 +265,96 @@ class _BookNowFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.white.withValues(alpha: 0),
+            Colors.white.withValues(alpha: 0.9),
+            Colors.white,
+          ],
+        ),
+      ),
       child: SafeArea(
-        child: GlassFloatingButton(
-          label: 'Book Now',
-          icon: Icons.calendar_today,
-          onPressed: () {
-            context.pushNamed('createBooking', extra: field);
-          },
-          accentColor: AppColors.accentCyan,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Weekly subscription option
+            GestureDetector(
+              onTap: () => context.pushNamed('createRecurring', extra: field),
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.goldAccent.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: AppColors.goldAccent.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: AppColors.goldAccent.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(
+                        Icons.event_repeat_rounded,
+                        size: 18,
+                        color: AppColors.goldAccent,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Reserve Weekly Slot',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.navyDeep,
+                            ),
+                          ),
+                          Text(
+                            'Auto-book same time every week',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 14,
+                      color: AppColors.goldAccent,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Main book now button
+            GlassFloatingButton(
+              label: 'Book Now',
+              icon: Icons.calendar_today,
+              onPressed: () {
+                context.pushNamed('createBooking', extra: field);
+              },
+              accentColor: AppColors.accentCyan,
+            ),
+          ],
         ),
       ),
     );

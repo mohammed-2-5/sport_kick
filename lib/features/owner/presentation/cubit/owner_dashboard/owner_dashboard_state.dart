@@ -29,6 +29,7 @@ final class OwnerDashboardLoaded extends OwnerDashboardState {
   final int selectedNavIndex;
   final bool isDrawerOpen;
   final bool isRefreshing;
+  final int pendingRecurringCount;
 
   const OwnerDashboardLoaded({
     required this.ownerName,
@@ -38,6 +39,7 @@ final class OwnerDashboardLoaded extends OwnerDashboardState {
     this.selectedNavIndex = 0,
     this.isDrawerOpen = false,
     this.isRefreshing = false,
+    this.pendingRecurringCount = 0,
   });
 
   OwnerDashboardLoaded copyWith({
@@ -48,6 +50,7 @@ final class OwnerDashboardLoaded extends OwnerDashboardState {
     int? selectedNavIndex,
     bool? isDrawerOpen,
     bool? isRefreshing,
+    int? pendingRecurringCount,
   }) {
     return OwnerDashboardLoaded(
       ownerName: ownerName ?? this.ownerName,
@@ -57,6 +60,8 @@ final class OwnerDashboardLoaded extends OwnerDashboardState {
       selectedNavIndex: selectedNavIndex ?? this.selectedNavIndex,
       isDrawerOpen: isDrawerOpen ?? this.isDrawerOpen,
       isRefreshing: isRefreshing ?? this.isRefreshing,
+      pendingRecurringCount:
+          pendingRecurringCount ?? this.pendingRecurringCount,
     );
   }
 
@@ -69,6 +74,7 @@ final class OwnerDashboardLoaded extends OwnerDashboardState {
     selectedNavIndex,
     isDrawerOpen,
     isRefreshing,
+    pendingRecurringCount,
   ];
 }
 

@@ -207,6 +207,22 @@ import 'package:spo_kick/features/notifications/data/repositories/notification_r
 import 'package:spo_kick/features/notifications/domain/repositories/notification_repository.dart';
 import 'package:spo_kick/features/notifications/presentation/cubit/notification_cubit.dart';
 
+// Recurring Bookings Feature
+import 'package:spo_kick/features/recurring_bookings/data/datasources/recurring_booking_remote_datasource.dart';
+import 'package:spo_kick/features/recurring_bookings/data/repositories/recurring_booking_repository_impl.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/repositories/recurring_booking_repository.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/create_recurring_request_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/cancel_recurring_booking_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_my_recurring_bookings_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/approve_recurring_booking_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/reject_recurring_booking_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_pending_recurring_requests_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_reserved_slots_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_cubit.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/cubit/create_recurring_cubit.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/cubit/recurring_requests_cubit.dart';
+import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+
 /// Service Locator instance.
 ///
 /// This is a global instance of GetIt used for dependency injection
@@ -283,6 +299,9 @@ Future<void> initDependencies() async {
 
   // Notifications Feature
   _initNotifications();
+
+  // Recurring Bookings Feature
+  _initRecurringBookings();
 }
 
 /// Initialize external dependencies.
@@ -704,6 +723,7 @@ void _initOwner() {
       getCurrentUserUseCase: sl(),
       getOwnerFieldsUseCase: sl(),
       getOwnerBookingsUseCase: sl(),
+      getPendingRecurringRequestsUseCase: sl(),
     ),
   );
 
@@ -1119,5 +1139,60 @@ void _initNotifications() {
   // Data Sources
   sl.registerLazySingleton<NotificationRemoteDataSource>(
     () => NotificationRemoteDataSourceImpl(supabase: sl()),
+  );
+}
+
+// ==================== FEATURE: RECURRING BOOKINGS ====================
+
+/// Initialize recurring bookings feature dependencies.
+///
+/// Registers all dependencies for weekly recurring booking subscriptions:
+/// - Cubits for user subscriptions, creating subscriptions, and owner requests
+/// - Use cases for business logic
+/// - Repository for data access
+/// - Remote data source for Supabase interactions
+void _initRecurringBookings() {
+  // Cubits
+  sl.registerFactory(
+    () => MyRecurringBookingsCubit(
+      getMyRecurringBookingsUseCase: sl(),
+      cancelRecurringBookingUseCase: sl(),
+    ),
+  );
+
+  sl.registerFactoryParam<CreateRecurringCubit, FieldEntity, void>(
+    (field, _) => CreateRecurringCubit(
+      createRecurringRequestUseCase: sl(),
+      getReservedSlotsUseCase: sl(),
+      field: field,
+    ),
+  );
+
+  sl.registerFactory(
+    () => RecurringRequestsCubit(
+      getPendingRequestsUseCase: sl(),
+      approveUseCase: sl(),
+      rejectUseCase: sl(),
+      repository: sl(),
+    ),
+  );
+
+  // Use Cases
+  sl.registerLazySingleton(() => CreateRecurringRequestUseCase(sl()));
+  sl.registerLazySingleton(() => CancelRecurringBookingUseCase(sl()));
+  sl.registerLazySingleton(() => GetMyRecurringBookingsUseCase(sl()));
+  sl.registerLazySingleton(() => ApproveRecurringBookingUseCase(sl()));
+  sl.registerLazySingleton(() => RejectRecurringBookingUseCase(sl()));
+  sl.registerLazySingleton(() => GetPendingRecurringRequestsUseCase(sl()));
+  sl.registerLazySingleton(() => GetReservedSlotsUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<RecurringBookingRepository>(
+    () => RecurringBookingRepositoryImpl(sl()),
+  );
+
+  // Data Sources
+  sl.registerLazySingleton<RecurringBookingRemoteDataSource>(
+    () => RecurringBookingRemoteDataSourceImpl(sl()),
   );
 }

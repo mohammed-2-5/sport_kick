@@ -136,6 +136,9 @@ void main() {
         when(
           () => mockGetOwnerFields(ownerId: any(named: 'ownerId')),
         ).thenAnswer((_) async => const Left(ServerFailure('Fields error')));
+        when(
+          () => mockGetOwnerBookings(),
+        ).thenAnswer((_) async => Right([testBooking]));
         return cubit;
       },
       act: (cubit) => cubit.loadDashboard(),

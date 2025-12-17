@@ -16,6 +16,7 @@ class PremiumOwnerDrawer extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemTap;
   final VoidCallback onLogout;
+  final int pendingRecurringCount;
 
   const PremiumOwnerDrawer({
     super.key,
@@ -25,6 +26,7 @@ class PremiumOwnerDrawer extends StatelessWidget {
     required this.selectedIndex,
     required this.onItemTap,
     required this.onLogout,
+    this.pendingRecurringCount = 0,
   });
 
   @override
@@ -65,18 +67,25 @@ class PremiumOwnerDrawer extends StatelessWidget {
                   isSelected: selectedIndex == 3,
                   onTap: () => onItemTap(3),
                 ),
+                _DrawerItem(
+                  icon: Icons.event_repeat_rounded,
+                  label: 'Subscriptions',
+                  isSelected: selectedIndex == 4,
+                  onTap: () => onItemTap(4),
+                  badgeCount: pendingRecurringCount,
+                ),
                 const Divider(height: 32),
                 _DrawerItem(
                   icon: Icons.person_rounded,
                   label: 'Profile',
-                  isSelected: selectedIndex == 4,
-                  onTap: () => onItemTap(4),
+                  isSelected: selectedIndex == 5,
+                  onTap: () => onItemTap(5),
                 ),
                 _DrawerItem(
                   icon: Icons.settings_rounded,
                   label: 'Settings',
-                  isSelected: selectedIndex == 5,
-                  onTap: () => onItemTap(5),
+                  isSelected: selectedIndex == 6,
+                  onTap: () => onItemTap(6),
                 ),
               ],
             ),

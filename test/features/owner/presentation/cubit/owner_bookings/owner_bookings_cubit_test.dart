@@ -73,11 +73,20 @@ void main() {
 
   final allBookings = [pendingBooking, confirmedBooking];
 
+  setUpAll(() {
+    registerFallbackValue(BookingStatus.pending);
+  });
+
   setUp(() {
     mockGetCurrentUser = MockGetCurrentUserUseCase();
     mockGetBookings = MockGetOwnerBookingsUseCase();
     mockUpdateStatus = MockUpdateBookingStatusUseCase();
     mockBookingRepository = MockBookingRepository();
+
+    // Mock completePassedBookings to return success
+    when(
+      () => mockBookingRepository.completePassedBookings(),
+    ).thenAnswer((_) async => const Right(0));
 
     cubit = OwnerBookingsCubit(
       getCurrentUserUseCase: mockGetCurrentUser,
@@ -165,8 +174,18 @@ void main() {
 
     blocTest<OwnerBookingsCubit, OwnerBookingsState>(
       'tab 0 shows all bookings (no filter)',
-      build: () => cubit,
-      seed: () => loadedState,
+      build: () {
+        when(
+          () => mockBookingRepository.completePassedBookings(),
+        ).thenAnswer((_) async => const Right(0));
+        return OwnerBookingsCubit(
+          getCurrentUserUseCase: mockGetCurrentUser,
+          getOwnerBookingsUseCase: mockGetBookings,
+          updateBookingStatusUseCase: mockUpdateStatus,
+          bookingRepository: mockBookingRepository,
+        );
+      },
+      seed: () => loadedState.copyWith(selectedTabIndex: 1),
       act: (cubit) => cubit.changeTab(0),
       expect: () => [
         isA<OwnerBookingsLoaded>()
@@ -177,7 +196,17 @@ void main() {
 
     blocTest<OwnerBookingsCubit, OwnerBookingsState>(
       'tab 1 filters by pending',
-      build: () => cubit,
+      build: () {
+        when(
+          () => mockBookingRepository.completePassedBookings(),
+        ).thenAnswer((_) async => const Right(0));
+        return OwnerBookingsCubit(
+          getCurrentUserUseCase: mockGetCurrentUser,
+          getOwnerBookingsUseCase: mockGetBookings,
+          updateBookingStatusUseCase: mockUpdateStatus,
+          bookingRepository: mockBookingRepository,
+        );
+      },
       seed: () => loadedState,
       act: (cubit) => cubit.changeTab(1),
       expect: () => [
@@ -189,7 +218,17 @@ void main() {
 
     blocTest<OwnerBookingsCubit, OwnerBookingsState>(
       'tab 2 filters by confirmed',
-      build: () => cubit,
+      build: () {
+        when(
+          () => mockBookingRepository.completePassedBookings(),
+        ).thenAnswer((_) async => const Right(0));
+        return OwnerBookingsCubit(
+          getCurrentUserUseCase: mockGetCurrentUser,
+          getOwnerBookingsUseCase: mockGetBookings,
+          updateBookingStatusUseCase: mockUpdateStatus,
+          bookingRepository: mockBookingRepository,
+        );
+      },
       seed: () => loadedState,
       act: (cubit) => cubit.changeTab(2),
       expect: () => [
@@ -207,7 +246,17 @@ void main() {
 
     blocTest<OwnerBookingsCubit, OwnerBookingsState>(
       'updates search query',
-      build: () => cubit,
+      build: () {
+        when(
+          () => mockBookingRepository.completePassedBookings(),
+        ).thenAnswer((_) async => const Right(0));
+        return OwnerBookingsCubit(
+          getCurrentUserUseCase: mockGetCurrentUser,
+          getOwnerBookingsUseCase: mockGetBookings,
+          updateBookingStatusUseCase: mockUpdateStatus,
+          bookingRepository: mockBookingRepository,
+        );
+      },
       seed: () => loadedState,
       act: (cubit) => cubit.search('john'),
       expect: () => [
@@ -221,7 +270,17 @@ void main() {
 
     blocTest<OwnerBookingsCubit, OwnerBookingsState>(
       'clearSearch clears query',
-      build: () => cubit,
+      build: () {
+        when(
+          () => mockBookingRepository.completePassedBookings(),
+        ).thenAnswer((_) async => const Right(0));
+        return OwnerBookingsCubit(
+          getCurrentUserUseCase: mockGetCurrentUser,
+          getOwnerBookingsUseCase: mockGetBookings,
+          updateBookingStatusUseCase: mockUpdateStatus,
+          bookingRepository: mockBookingRepository,
+        );
+      },
       seed: () => loadedState.copyWith(searchQuery: 'john'),
       act: (cubit) => cubit.clearSearch(),
       expect: () => [

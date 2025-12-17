@@ -74,6 +74,11 @@ import 'package:spo_kick/features/auth/presentation/pages/login_activity_page.da
 import 'package:spo_kick/features/super_admin/presentation/pages/platform_operating_hours_page.dart';
 import 'package:spo_kick/features/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:spo_kick/features/notifications/presentation/pages/notification_list_page.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_cubit.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/cubit/recurring_requests_cubit.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/pages/my_recurring_bookings_page.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/pages/create_recurring_page.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/pages/recurring_requests_page.dart';
 
 /// GoRouter configuration for the Sport Kick application.
 ///
@@ -307,6 +312,37 @@ class AppRouterConfig {
                 booking: extra['booking'] as BookingEntity,
                 field: extra['field'] as FieldEntity,
               ),
+              state: state,
+            );
+          },
+        ),
+
+        // ==================== RECURRING BOOKINGS ROUTES ====================
+        GoRoute(
+          path: '/myRecurringBookings',
+          name: 'myRecurringBookings',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: BlocProvider(
+              create: (_) =>
+                  sl<MyRecurringBookingsCubit>()..loadRecurringBookings(),
+              child: const MyRecurringBookingsPage(),
+            ),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: '/createRecurring',
+          name: 'createRecurring',
+          pageBuilder: (context, state) {
+            final field = state.extra as FieldEntity?;
+            if (field == null) {
+              return _buildPage(
+                child: const _ErrorPage(error: 'Field data is required'),
+                state: state,
+              );
+            }
+            return _buildSlidePage(
+              child: CreateRecurringPage(field: field),
               state: state,
             );
           },
@@ -548,6 +584,17 @@ class AppRouterConfig {
             child: BlocProvider(
               create: (_) => sl<OwnerCubit>(),
               child: const OwnerRevenuePage(),
+            ),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: '/owner/recurring-requests',
+          name: 'ownerRecurringRequests',
+          pageBuilder: (context, state) => _buildSlidePage(
+            child: BlocProvider(
+              create: (_) => sl<RecurringRequestsCubit>()..loadData(),
+              child: const RecurringRequestsPage(),
             ),
             state: state,
           ),

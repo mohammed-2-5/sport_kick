@@ -10,6 +10,7 @@ import 'package:spo_kick/features/settings/presentation/cubit/settings_state.dar
 import 'package:spo_kick/features/settings/presentation/widgets/sections/about_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/account_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/appearance_settings_section.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/sections/bookings_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/notifications_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/privacy_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/security_settings_section.dart';
@@ -71,6 +72,8 @@ class UserSettingsBody extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(SettingsConstants.screenPadding),
       children: [
+        const BookingsSettingsSection(),
+        const SizedBox(height: SettingsConstants.sectionSpacing),
         AppearanceSettingsSection(preferences: preferences),
         const SizedBox(height: SettingsConstants.sectionSpacing),
         NotificationsSettingsSection(preferences: preferences),

@@ -15,9 +15,11 @@ class PremiumOwnerQuickActions extends StatelessWidget {
   final VoidCallback onViewBookings;
   final VoidCallback onBookingTable;
   final VoidCallback onManageFields;
+  final VoidCallback onRecurringRequests;
   final VoidCallback onAnalytics;
   final VoidCallback onSettings;
   final VoidCallback onProfile;
+  final int pendingRecurringCount;
 
   const PremiumOwnerQuickActions({
     super.key,
@@ -25,9 +27,11 @@ class PremiumOwnerQuickActions extends StatelessWidget {
     required this.onViewBookings,
     required this.onBookingTable,
     required this.onManageFields,
+    required this.onRecurringRequests,
     required this.onAnalytics,
     required this.onSettings,
     required this.onProfile,
+    this.pendingRecurringCount = 0,
   });
 
   @override
@@ -59,9 +63,16 @@ class PremiumOwnerQuickActions extends StatelessWidget {
         onTap: onManageFields,
       ),
       _QuickAction(
+        label: 'Subscriptions',
+        icon: Icons.event_repeat_rounded,
+        gradient: const [Color(0xFFF59E0B), Color(0xFFD97706)],
+        onTap: onRecurringRequests,
+        badgeCount: pendingRecurringCount,
+      ),
+      _QuickAction(
         label: 'Analytics',
         icon: Icons.analytics_rounded,
-        gradient: const [Color(0xFFF59E0B), Color(0xFFEF4444)],
+        gradient: const [Color(0xFFEF4444), Color(0xFFDC2626)],
         onTap: onAnalytics,
       ),
       _QuickAction(
@@ -159,6 +170,7 @@ class _QuickAction {
   final List<Color> gradient;
   final VoidCallback onTap;
   final bool isPrimary;
+  final int badgeCount;
 
   const _QuickAction({
     required this.label,
@@ -166,6 +178,7 @@ class _QuickAction {
     required this.gradient,
     required this.onTap,
     this.isPrimary = false,
+    this.badgeCount = 0,
   });
 }
 
@@ -180,40 +193,72 @@ class _QuickActionCard extends StatelessWidget {
     return PremiumCard(
       onTap: action.onTap,
       padding: const EdgeInsets.all(14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          // Icon
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: action.gradient,
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: action.gradient.first.withValues(alpha: 0.4),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Icon
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: action.gradient,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: action.gradient.first.withValues(alpha: 0.4),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: Icon(action.icon, color: Colors.white, size: 20),
+                child: Icon(action.icon, color: Colors.white, size: 20),
+              ),
+              const Spacer(),
+              // Label
+              Text(
+                action.label,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
           ),
-          const Spacer(),
-          // Label
-          Text(
-            action.label,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+          // Badge
+          if (action.badgeCount > 0)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.red.withValues(alpha: 0.4),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Text(
+                  action.badgeCount > 99 ? '99+' : action.badgeCount.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );
