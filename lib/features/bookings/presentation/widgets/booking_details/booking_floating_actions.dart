@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/glass_container.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_details_actions_cubit.dart';
@@ -97,14 +98,18 @@ class _CancelButtonState extends State<_CancelButton>
             borderRadius: BorderRadius.circular(14),
             border: Border.all(color: AppColors.error, width: 1.5),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.cancel_outlined, color: AppColors.error, size: 20),
-              SizedBox(width: 8),
+              const Icon(
+                Icons.cancel_outlined,
+                color: AppColors.error,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
               Text(
-                'Cancel',
-                style: TextStyle(
+                context.l10n.cancel,
+                style: const TextStyle(
                   color: AppColors.error,
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
@@ -159,6 +164,7 @@ class _ContactSupportButtonState extends State<_ContactSupportButton>
       onTap: () {
         HapticFeedback.lightImpact();
         context.read<BookingDetailsActionsCubit>().contactSupport(
+          context,
           widget.bookingId,
         );
       },
@@ -175,18 +181,18 @@ class _ContactSupportButtonState extends State<_ContactSupportButton>
           child: Container(
             height: 52,
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.support_agent,
                   color: AppColors.accentCyan,
                   size: 20,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
-                  'Contact Support',
-                  style: TextStyle(
+                  context.l10n.contactSupport,
+                  style: const TextStyle(
                     color: AppColors.accentCyan,
                     fontSize: 15,
                     fontWeight: FontWeight.w700,

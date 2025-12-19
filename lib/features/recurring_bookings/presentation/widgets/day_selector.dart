@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Widget for selecting a day of the week for recurring booking.
 class DaySelector extends StatelessWidget {
@@ -29,18 +30,19 @@ class DaySelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Select Day',
-          style: TextStyle(
-            fontSize: 16,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.navyDeep,
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
+        Text(
           'Choose the day you want to reserve every week',
-          style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+          style: AppTextStyles.labelMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         const SizedBox(height: 16),
         Row(
@@ -102,8 +104,7 @@ class _DayChip extends StatelessWidget {
           children: [
             Text(
               shortName,
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 color: _textColor,
               ),

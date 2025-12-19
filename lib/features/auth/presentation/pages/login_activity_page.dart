@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -45,10 +46,10 @@ class _LoginActivityContent extends StatelessWidget {
       backgroundColor: AppColors.backgroundLight,
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: PremiumCurvedHeader(
-              title: 'Login Activity',
-              subtitle: 'Your recent login history',
+              title: context.l10n.loginActivityTitle,
+              subtitle: context.l10n.loginActivitySubtitle,
               showBackButton: true,
             ),
           ),
@@ -129,7 +130,7 @@ class _ErrorState extends StatelessWidget {
             TextButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Retry'),
+              label: Text(context.l10n.retry),
             ),
           ],
         ),

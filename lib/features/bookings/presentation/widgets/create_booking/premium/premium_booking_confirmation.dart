@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 
@@ -40,18 +41,18 @@ class PremiumBookingConfirmation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Confirm Your Booking',
-            style: TextStyle(
+          Text(
+            context.l10n.confirmYourBooking,
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w800,
               color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Please review your booking details before confirming.',
-            style: TextStyle(
+          Text(
+            context.l10n.reviewBookingDetails,
+            style: const TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary,
               height: 1.5,
@@ -88,14 +89,18 @@ class PremiumBookingConfirmation extends StatelessWidget {
                 color: AppColors.accentCyan.withValues(alpha: 0.2),
               ),
             ),
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.info_outline, color: AppColors.accentCyan, size: 20),
-                SizedBox(width: 12),
+                const Icon(
+                  Icons.info_outline,
+                  color: AppColors.accentCyan,
+                  size: 20,
+                ),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'By confirming, you agree to our booking terms and cancellation policy.',
-                    style: TextStyle(
+                    context.l10n.bookingTermsNotice,
+                    style: const TextStyle(
                       fontSize: 13,
                       color: AppColors.textSecondary,
                       height: 1.4,
@@ -113,7 +118,7 @@ class PremiumBookingConfirmation extends StatelessWidget {
             children: [
               Expanded(
                 child: PremiumButton(
-                  label: 'Back',
+                  label: context.l10n.back,
                   onPressed: onBack,
                   style: PremiumButtonStyle.outline,
                 ),
@@ -122,7 +127,7 @@ class PremiumBookingConfirmation extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: PremiumButton(
-                  label: 'Confirm Booking',
+                  label: context.l10n.confirmBooking,
                   onPressed: onConfirm,
                   loading: isSubmitting,
                   icon: Icons.check_circle_outline,
@@ -152,6 +157,7 @@ class _BookingSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).toString();
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -233,7 +239,7 @@ class _BookingSummaryCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Football Field',
+                            context.l10n.footballField,
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.white.withValues(alpha: 0.7),
@@ -252,15 +258,18 @@ class _BookingSummaryCard extends StatelessWidget {
                     Expanded(
                       child: _InfoItem(
                         icon: Icons.calendar_today,
-                        label: 'Date',
-                        value: DateFormat('EEE, MMM d').format(selectedDate),
+                        label: context.l10n.bookingDate,
+                        value: DateFormat(
+                          'EEE, MMM d',
+                          locale,
+                        ).format(selectedDate),
                       ),
                     ),
                     Container(width: 1, height: 40, color: Colors.white24),
                     Expanded(
                       child: _InfoItem(
                         icon: Icons.access_time,
-                        label: 'Time',
+                        label: context.l10n.bookingTime,
                         value: selectedSlot.formattedTimeRange,
                       ),
                     ),
@@ -268,9 +277,8 @@ class _BookingSummaryCard extends StatelessWidget {
                     Expanded(
                       child: _InfoItem(
                         icon: Icons.timer_outlined,
-                        label: 'Duration',
-                        value:
-                            '$durationHours ${durationHours == 1 ? 'Hour' : 'Hours'}',
+                        label: context.l10n.durationLabel,
+                        value: context.l10n.durationHours(durationHours),
                       ),
                     ),
                   ],
@@ -342,6 +350,7 @@ class _PriceBreakdownCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -358,9 +367,9 @@ class _PriceBreakdownCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Price Breakdown',
-            style: TextStyle(
+          Text(
+            l10n.priceBreakdown,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
@@ -368,12 +377,12 @@ class _PriceBreakdownCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _PriceRow(
-            label: 'Duration',
-            value: '$durationHours ${durationHours == 1 ? 'hour' : 'hours'}',
+            label: l10n.durationLabel,
+            value: l10n.durationHours(durationHours),
           ),
           const SizedBox(height: 12),
           _PriceRow(
-            label: 'Rate per hour',
+            label: l10n.ratePerHour,
             value:
                 '${_pricePerHour.toStringAsFixed(0)} ${selectedSlot.currency}',
           ),
@@ -383,9 +392,9 @@ class _PriceBreakdownCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Total',
-                style: TextStyle(
+              Text(
+                l10n.totalPrice,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,

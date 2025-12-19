@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/edit_profile_dialog.dart';
 import 'package:spo_kick/features/settings/presentation/constants/settings_constants.dart';
@@ -16,21 +17,32 @@ class AccountSettingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsSection(
-      title: 'Account',
+      title: context.l10n.account,
       icon: Icons.person_outline,
       children: [
         SettingsTile(
+          leading: const Icon(
+            Icons.account_circle_outlined,
+            color: AppColors.accentCyan,
+          ),
+          title: context.l10n.profile,
+          subtitle: 'View your profile details',
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.pushNamed('profile'),
+        ),
+        const SizedBox(height: SettingsConstants.itemSpacing),
+        SettingsTile(
           leading: const Icon(Icons.edit, color: AppColors.info),
-          title: 'Edit Profile',
-          subtitle: 'Update your personal information',
+          title: context.l10n.editProfile,
+          subtitle: context.l10n.editProfileDesc,
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _showEditProfileDialog(context),
         ),
         const SizedBox(height: SettingsConstants.itemSpacing),
         SettingsTile(
           leading: const Icon(Icons.lock_reset, color: AppColors.primary),
-          title: 'Change Password',
-          subtitle: 'Update your account password',
+          title: context.l10n.changePassword,
+          subtitle: context.l10n.changePasswordDesc,
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
             context.pushNamed('changePassword');

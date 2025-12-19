@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/filter_widgets.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Advanced filters dialog for field search.
 ///
@@ -111,9 +112,9 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          'Filters',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        Text(
+          context.l10n.filtersTitle,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         IconButton(
           icon: const Icon(Icons.close),
@@ -167,7 +168,7 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
               ),
               side: const BorderSide(color: AppColors.primary),
             ),
-            child: const Text('Reset'),
+            child: Text(context.l10n.reset),
           ),
         ),
         const SizedBox(width: 12),
@@ -183,7 +184,7 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text('Apply Filters'),
+            child: Text(context.l10n.applyFilters),
           ),
         ),
       ],

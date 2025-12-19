@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// A choice chip widget for filter dialogs.
 ///
@@ -98,7 +100,7 @@ class PriceRangeFilter extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FilterSectionTitle(title: 'Price Range (per hour)'),
+        FilterSectionTitle(title: context.l10n.priceRange),
         const SizedBox(height: 8),
         RangeSlider(
           values: priceRange,
@@ -106,8 +108,8 @@ class PriceRangeFilter extends StatelessWidget {
           max: max,
           divisions: 10,
           labels: RangeLabels(
-            '${priceRange.start.round()} EGP',
-            '${priceRange.end.round()} EGP',
+            LocaleFormatters.formatNumber(context, priceRange.start.round()),
+            LocaleFormatters.formatNumber(context, priceRange.end.round()),
           ),
           activeColor: AppColors.primary,
           onChanged: onChanged,
@@ -116,14 +118,14 @@ class PriceRangeFilter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${priceRange.start.round()} EGP',
+              '${LocaleFormatters.formatNumber(context, priceRange.start.round())} EGP/${context.l10n.perHour}',
               style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary,
               ),
             ),
             Text(
-              '${priceRange.end.round()} EGP',
+              '${LocaleFormatters.formatNumber(context, priceRange.end.round())} EGP/${context.l10n.perHour}',
               style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary,
@@ -152,22 +154,28 @@ class RatingFilter extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FilterSectionTitle(title: 'Minimum Rating'),
+        FilterSectionTitle(title: context.l10n.minimumRating),
         const SizedBox(height: 8),
         Slider(
           value: minRating,
           min: 0,
           max: 5,
           divisions: 10,
-          label: minRating == 0 ? 'Any' : '${minRating.toStringAsFixed(1)} ⭐',
+          label: minRating == 0
+              ? context.l10n.anyOption
+              : LocaleFormatters.formatNumber(
+                  context,
+                  minRating,
+                  decimalDigits: 1,
+                ),
           activeColor: AppColors.warning,
           onChanged: onChanged,
         ),
         Center(
           child: Text(
             minRating == 0
-                ? 'Any rating'
-                : '${minRating.toStringAsFixed(1)} stars and above',
+                ? context.l10n.anyOption
+                : '${LocaleFormatters.formatNumber(context, minRating, decimalDigits: 1)}+',
             style: const TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary,
@@ -195,13 +203,13 @@ class LocationTypeFilter extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FilterSectionTitle(title: 'Location Type'),
+        FilterSectionTitle(title: context.l10n.location),
         const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
               child: FilterChoiceChip(
-                label: 'Any',
+                label: context.l10n.anyOption,
                 isSelected: selectedType == null,
                 onSelected: () => onChanged(null),
               ),
@@ -209,7 +217,7 @@ class LocationTypeFilter extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: FilterChoiceChip(
-                label: 'Indoor',
+                label: context.l10n.indoor,
                 icon: Icons.home,
                 isSelected: selectedType == 'indoor',
                 onSelected: () => onChanged('indoor'),
@@ -218,7 +226,7 @@ class LocationTypeFilter extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: FilterChoiceChip(
-                label: 'Outdoor',
+                label: context.l10n.outdoor,
                 icon: Icons.wb_sunny,
                 isSelected: selectedType == 'outdoor',
                 onSelected: () => onChanged('outdoor'),
@@ -247,15 +255,15 @@ class VerificationFilter extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FilterSectionTitle(title: 'Verification'),
+        FilterSectionTitle(title: context.l10n.verified),
         const SizedBox(height: 8),
         CheckboxListTile(
           value: verifiedOnly,
           onChanged: (value) => onChanged(value ?? false),
-          title: const Text('Show verified fields only'),
-          subtitle: const Text(
-            'Verified fields are confirmed by our team',
-            style: TextStyle(fontSize: 12),
+          title: Text(context.l10n.verifiedFieldsOnly),
+          subtitle: Text(
+            context.l10n.verifiedFieldsDescription,
+            style: const TextStyle(fontSize: 12),
           ),
           activeColor: AppColors.success,
           contentPadding: EdgeInsets.zero,

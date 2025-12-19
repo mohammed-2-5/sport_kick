@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/premium_owner_field_card.dart';
 
@@ -188,7 +189,7 @@ class _EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Add your first field to get started',
+            context.l10n.addFirstField,
             style: TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary.withValues(alpha: 0.7),

@@ -4,6 +4,8 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/search_empty_results.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Search results list widget.
 /// Displays search results with count header and field cards.
@@ -30,7 +32,12 @@ class SearchResultsList extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-            '${results.length} result${results.length == 1 ? '' : 's'} for "$query"',
+            context.l10n
+                .searchResultsForQuery(results.length, query)
+                .replaceFirst(
+                  results.length.toString(),
+                  LocaleFormatters.formatNumber(context, results.length),
+                ),
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/first_login_banner.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/change_password_fields.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/password_requirements_list.dart';
@@ -35,7 +35,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AuthConstants.formPadding),
+      padding: const EdgeInsets.all(24),
       child: Form(
         key: widget.formKey,
         child: Column(
@@ -43,24 +43,24 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           children: [
             if (widget.isFirstLogin) ...[
               const FirstLoginBanner(),
-              const SizedBox(height: AuthConstants.formFieldSpacing * 2),
+              const SizedBox(height: 32),
             ],
 
             // Header
             Text(
-              AuthConstants.changePasswordSubtitle,
+              context.l10n.changePasswordDesc,
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
             ),
-            const SizedBox(height: AuthConstants.formFieldSpacing * 2),
+            const SizedBox(height: 32),
 
             // Current Password (skip if first login)
             if (!widget.isFirstLogin) ...[
               CurrentPasswordField(
                 controller: widget.currentPasswordController,
               ),
-              const SizedBox(height: AuthConstants.formFieldSpacing),
+              const SizedBox(height: 16),
             ],
 
             // New Password
@@ -72,14 +72,14 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
             PasswordRequirementsList(
               password: widget.newPasswordController.text,
             ),
-            const SizedBox(height: AuthConstants.formFieldSpacing),
+            const SizedBox(height: 16),
 
             // Confirm Password
             ConfirmPasswordField(
               controller: widget.confirmPasswordController,
               newPasswordController: widget.newPasswordController,
             ),
-            const SizedBox(height: AuthConstants.formFieldSpacing * 2),
+            const SizedBox(height: 32),
 
             // Submit Button
             ChangePasswordSubmitButton(onPressed: widget.onSubmit),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card_facilities.dart';
@@ -8,6 +9,7 @@ import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card_
 import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card_info.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card_price.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card_rating.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Card widget for displaying a field in a list.
 ///
@@ -28,6 +30,13 @@ class FieldCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final priceText =
+        '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}';
+    final ratingText = LocaleFormatters.formatNumber(
+      context,
+      field.averageRating ?? 0,
+      decimalDigits: 1,
+    );
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
@@ -92,12 +101,12 @@ class FieldCard extends StatelessWidget {
                           // Rating badge or "New" badge
                           FieldCardRating(
                             hasReviews: field.hasReviews,
-                            ratingDisplay: field.ratingDisplay,
+                            ratingDisplay: ratingText,
                             totalReviews: field.totalReviews,
                           ),
 
                           // Price badge
-                          FieldCardPrice(formattedPrice: field.formattedPrice),
+                          FieldCardPrice(formattedPrice: priceText),
                         ],
                       ),
 

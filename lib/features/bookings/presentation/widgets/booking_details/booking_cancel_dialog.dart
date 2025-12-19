@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_text_field.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
@@ -55,9 +57,11 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
             ),
           ),
           const SizedBox(width: 12),
-          const Text(
-            BookingConstants.cancelBookingLabel,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+          Text(
+            context.l10n.cancelBooking,
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),
@@ -65,15 +69,17 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            BookingConstants.cancelConfirmationMessage,
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          Text(
+            context.l10n.cancelBookingConfirm,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
           const SizedBox(height: BookingConstants.standardPadding),
           PremiumTextField(
-            label: 'Reason (optional)',
+            label: context.l10n.cancelReasonOptional,
             controller: _reasonController,
-            hintText: 'Why are you canceling?',
+            hintText: context.l10n.cancelReasonPlaceholder,
             maxLines: 3,
             prefixIcon: Icons.edit_note,
           ),
@@ -82,16 +88,16 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text(
-            'Keep Booking',
-            style: TextStyle(
+          child: Text(
+            context.l10n.keepBooking,
+            style: const TextStyle(
               color: AppColors.textSecondary,
               fontWeight: FontWeight.w600,
             ),
           ),
         ),
         PremiumButton(
-          label: BookingConstants.cancelBookingLabel,
+          label: context.l10n.cancelBooking,
           onPressed: _cancelBooking,
           style: PremiumButtonStyle.primary,
           height: 44,
@@ -106,7 +112,7 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
     context.read<BookingCubit>().cancelBooking(
       bookingId: widget.bookingId,
       reason: _reasonController.text.isEmpty
-          ? 'Canceled by user'
+          ? context.l10n.canceledByUser
           : _reasonController.text,
     );
   }

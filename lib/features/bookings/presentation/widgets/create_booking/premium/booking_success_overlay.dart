@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -215,19 +216,19 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                             },
                             child: Column(
                               children: [
-                                const Text(
-                                  'Booking Confirmed!',
-                                  style: TextStyle(
+                                Text(
+                                  context.l10n.bookingConfirmedTitle,
+                                  style: const TextStyle(
                                     fontSize: 28,
                                     fontWeight: FontWeight.w800,
                                     color: AppColors.textPrimary,
                                   ),
                                 ),
                                 const SizedBox(height: 12),
-                                const Text(
-                                  'Your booking has been successfully placed.\nYou will receive a confirmation shortly.',
+                                Text(
+                                  context.l10n.bookingConfirmedDescription,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 15,
                                     color: AppColors.textSecondary,
                                     height: 1.5,
@@ -244,19 +245,19 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                   ),
                                   child: Column(
                                     children: [
-                                      const Row(
+                                      Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.confirmation_number,
                                             color: AppColors.accentCyan,
                                             size: 20,
                                           ),
-                                          SizedBox(width: 8),
+                                          const SizedBox(width: 8),
                                           Text(
-                                            'Booking ID',
-                                            style: TextStyle(
+                                            context.l10n.bookingId,
+                                            style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.textSecondary,
@@ -297,7 +298,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                 // Primary: View Invoice (for payment)
                                 if (widget.field != null) ...[
                                   PremiumButton(
-                                    label: 'View Invoice & Pay',
+                                    label: context.l10n.viewInvoiceAndPay,
                                     onPressed: widget.onViewInvoice,
                                     fullWidth: true,
                                     icon: Icons.receipt_long_rounded,
@@ -305,7 +306,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                   const SizedBox(height: 12),
                                 ],
                                 PremiumButton(
-                                  label: 'View My Bookings',
+                                  label: context.l10n.viewMyBookings,
                                   onPressed: widget.onViewBookings,
                                   fullWidth: true,
                                   icon: Icons.list_alt,
@@ -315,7 +316,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                 ),
                                 const SizedBox(height: 12),
                                 PremiumButton(
-                                  label: 'Done',
+                                  label: context.l10n.done,
                                   onPressed: widget.onDone,
                                   fullWidth: true,
                                   style: PremiumButtonStyle.outline,

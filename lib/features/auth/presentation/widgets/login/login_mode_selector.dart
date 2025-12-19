@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class LoginModeSelector extends StatelessWidget {
   final String currentMode;
@@ -27,7 +28,7 @@ class LoginModeSelector extends StatelessWidget {
             child: LoginModeButton(
               mode: 'user',
               icon: Icons.person_outline,
-              label: 'Login as User',
+              label: context.l10n.loginAsUser,
               isSelected: currentMode == 'user',
               onSelected: onModeChanged,
             ),
@@ -37,7 +38,7 @@ class LoginModeSelector extends StatelessWidget {
             child: LoginModeButton(
               mode: 'admin',
               icon: Icons.admin_panel_settings_outlined,
-              label: 'Login as Admin',
+              label: context.l10n.loginAsAdmin,
               isSelected: currentMode == 'admin',
               onSelected: onModeChanged,
             ),

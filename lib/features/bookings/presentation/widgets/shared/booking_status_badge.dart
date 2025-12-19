@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/features/bookings/presentation/utils/booking_status_utils.dart';
 
 /// Premium status badge with glow effect for bookings.
 ///
@@ -32,7 +33,7 @@ class BookingStatusBadge extends StatelessWidget {
           Icon(_icon, color: _foregroundColor, size: 16),
           const SizedBox(width: 6),
           Text(
-            status.displayName,
+            BookingStatusUtils.getStatusLabel(context, status),
             style: TextStyle(
               color: _foregroundColor,
               fontWeight: FontWeight.w600,

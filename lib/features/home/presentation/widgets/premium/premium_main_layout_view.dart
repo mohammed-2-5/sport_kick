@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
-import 'package:spo_kick/features/auth/presentation/pages/profile_page.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
@@ -12,6 +11,8 @@ import 'package:spo_kick/features/home/presentation/cubit/navigation/navigation_
 import 'package:spo_kick/features/home/presentation/pages/home_page.dart';
 import 'package:spo_kick/features/home/presentation/widgets/premium/navigation/premium_bottom_nav_bar.dart';
 import 'package:spo_kick/features/home/presentation/widgets/premium/navigation/premium_floating_action_button.dart';
+import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:spo_kick/features/settings/presentation/pages/user_settings_page.dart';
 
 /// Premium main layout view with glassmorphism navigation.
 ///
@@ -82,8 +83,11 @@ class _MainContent extends StatelessWidget {
           child: const MyBookingsPage(),
         ),
 
-        // Profile
-        const ProfilePage(),
+        // Settings
+        BlocProvider(
+          create: (_) => sl<SettingsCubit>(),
+          child: const UserSettingsPage(),
+        ),
       ],
     );
   }

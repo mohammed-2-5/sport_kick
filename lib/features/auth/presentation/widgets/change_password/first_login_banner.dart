@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// First login banner widget.
 ///
@@ -15,7 +15,7 @@ class FirstLoginBanner extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.infoLight,
-        borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.info),
       ),
       child: Row(
@@ -24,7 +24,7 @@ class FirstLoginBanner extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              AuthConstants.firstLoginMsg,
+              context.l10n.firstLoginMessage,
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(color: AppColors.info),

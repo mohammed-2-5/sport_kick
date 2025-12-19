@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 
 /// Dialog for confirming city deletion.
@@ -96,19 +97,16 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Delete City',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  style: AppTextStyles.titleLarge.copyWith(
                     color: AppColors.white,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   widget.city.name,
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.white.withValues(alpha: 0.9),
                   ),
                 ),
@@ -149,10 +147,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'This action may be irreversible',
-                        style: TextStyle(
-                          fontSize: 14,
+                        style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.warning,
                         ),
@@ -162,8 +159,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                         widget.city.fieldsCount > 0
                             ? 'This city has ${widget.city.fieldsCount} field${widget.city.fieldsCount != 1 ? 's' : ''} associated with it.'
                             : 'This city has no fields associated with it.',
-                        style: const TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -272,8 +268,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        fontSize: 15,
+                      style: AppTextStyles.labelLarge.copyWith(
                         fontWeight: FontWeight.w600,
                         color: disabled
                             ? AppColors.mediumGrey
@@ -283,8 +278,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.labelSmall.copyWith(
                         color: disabled
                             ? AppColors.mediumGrey
                             : AppColors.textSecondary,

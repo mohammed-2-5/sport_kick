@@ -6,6 +6,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/field_image_gallery.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/field_share_button.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Sliver app bar for field details page.
 ///
@@ -58,8 +59,8 @@ class FieldDetailsFavoriteButton extends StatelessWidget {
             context.read<FavoritesCubit>().toggleFavorite(field.id, isFavorite);
           },
           tooltip: isFavorite
-              ? FieldConstants.removeFromFavoritesLabel
-              : FieldConstants.addToFavoritesLabel,
+              ? context.l10n.removeFromFavorites
+              : context.l10n.addToFavorites,
         );
       },
     );

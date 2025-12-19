@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class MyBookingsTabSelector extends StatelessWidget {
   final TabController tabController;
@@ -39,24 +39,52 @@ class MyBookingsTabSelector extends StatelessWidget {
             fontSize: 14,
           ),
           padding: const EdgeInsets.all(6),
-          tabs: const [
+          tabs: [
             Tab(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.event_available, size: 20),
-                  SizedBox(width: 8),
-                  Text(BookingConstants.upcomingTabLabel),
+                  const Icon(Icons.event_available, size: 18),
+                  const SizedBox(width: 6),
+                  Flexible(
+                    child: Text(
+                      context.l10n.statusUpcoming,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),
             Tab(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.history, size: 20),
-                  SizedBox(width: 8),
-                  Text(BookingConstants.historyTabLabel),
+                  const Icon(Icons.history, size: 18),
+                  const SizedBox(width: 6),
+                  Flexible(
+                    child: Text(
+                      context.l10n.historyTab,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Tab(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.event_repeat_rounded, size: 18),
+                  const SizedBox(width: 6),
+                  Flexible(
+                    child: Text(
+                      context.l10n.recurringTab,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),

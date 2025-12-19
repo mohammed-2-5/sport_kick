@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+
+import '../../constants/auth_constants.dart';
 
 /// Admin login header widget.
 ///
@@ -26,7 +28,7 @@ class AdminLoginHeader extends StatelessWidget {
         ),
         const SizedBox(height: AuthConstants.formFieldSpacing),
         Text(
-          AuthConstants.adminLoginTitle,
+          context.l10n.adminPortalTitle,
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             color: AppColors.primary,
             fontWeight: FontWeight.bold,
@@ -35,7 +37,7 @@ class AdminLoginHeader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          AuthConstants.adminLoginSubtitle,
+          context.l10n.adminPortalSubtitle,
           style: Theme.of(
             context,
           ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),

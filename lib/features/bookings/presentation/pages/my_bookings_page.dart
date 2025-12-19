@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/error_handler.dart';
-import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_content.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_header.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_tab_selector.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_cubit.dart';
 
 /// Page displaying user's bookings with a premium curved header design.
 class MyBookingsPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _MyBookingsPageState extends State<MyBookingsPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -35,6 +36,9 @@ class _MyBookingsPageState extends State<MyBookingsPage>
 
   Future<void> _refreshBookings() async {
     await context.read<BookingCubit>().refreshBookings();
+    // Also refresh recurring bookings if the cubit exists
+    if (!mounted) return;
+    context.read<MyRecurringBookingsCubit>().refresh();
   }
 
   @override
@@ -72,10 +76,7 @@ class _MyBookingsPageState extends State<MyBookingsPage>
     if (state is BookingError) {
       ErrorHandler.showErrorSnackbar(context, state.message);
     } else if (state is BookingCanceled) {
-      ErrorHandler.showSuccessSnackbar(
-        context,
-        BookingConstants.bookingCancelledMessage,
-      );
+      ErrorHandler.showSuccessSnackbar(context, context.l10n.bookingCancelled);
       context.read<BookingCubit>().refreshBookings();
     }
   }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Empty state widget displayed when owner has no fields.
 class OwnerFieldsEmptyState extends StatelessWidget {
@@ -30,15 +31,14 @@ class OwnerFieldsEmptyState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            const Text(
-              'No Fields Yet',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+            const Text('No Fields Yet', style: AppTextStyles.headlineSmall),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Start by adding your first football field',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 15, color: AppColors.textSecondary),
+              style: AppTextStyles.labelLarge.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
             const SizedBox(height: 32),
             Container(

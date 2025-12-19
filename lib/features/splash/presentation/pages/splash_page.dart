@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_strings.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import '../cubit/splash_cubit.dart';
 import '../cubit/splash_state.dart';
 import '../widgets/splash_logo.dart';
@@ -128,7 +128,7 @@ class _SplashViewState extends State<SplashView>
                       );
                     },
                     child: Text(
-                      AppStrings.appName,
+                      context.l10n.appName,
                       style: AppTextStyles.displaySmall.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -146,7 +146,7 @@ class _SplashViewState extends State<SplashView>
                       );
                     },
                     child: Text(
-                      AppStrings.appTagline,
+                      context.l10n.appTagline,
                       style: AppTextStyles.bodyLarge.copyWith(
                         color: Colors.white.withValues(alpha: 0.9),
                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/users_list/super_admin_users_list_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/users_list/super_admin_users_list_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/premium_users_list_header.dart';
@@ -175,11 +176,9 @@ class _PremiumSuperAdminUsersListViewState
         children: [
           const Icon(Icons.error_outline, size: 64, color: Colors.red),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Failed to load users',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.titleMedium.copyWith(
               color: AppColors.textPrimary,
             ),
           ),
@@ -265,13 +264,12 @@ class _PremiumSuperAdminUsersListViewState
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-        ),
+        title: Text(title, style: AppTextStyles.titleLarge),
         content: Text(
           message,
-          style: const TextStyle(fontSize: 15, color: AppColors.textSecondary),
+          style: AppTextStyles.labelLarge.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         actions: [
           TextButton(

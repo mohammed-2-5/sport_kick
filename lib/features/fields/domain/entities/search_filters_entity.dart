@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Search Filters Entity
 ///
@@ -106,20 +107,20 @@ enum SearchSortBy {
 
 /// Extension for user-friendly names
 extension SearchSortByExtension on SearchSortBy {
-  String get displayName {
+  String displayName(AppLocalizations l10n) {
     switch (this) {
       case SearchSortBy.relevance:
-        return 'Relevance';
+        return l10n.sortRelevance;
       case SearchSortBy.priceLowToHigh:
-        return 'Price: Low to High';
+        return l10n.sortPriceLowToHigh;
       case SearchSortBy.priceHighToLow:
-        return 'Price: High to Low';
+        return l10n.sortPriceHighToLow;
       case SearchSortBy.rating:
-        return 'Highest Rated';
+        return l10n.sortRating;
       case SearchSortBy.newest:
-        return 'Newest First';
+        return l10n.sortNewest;
       case SearchSortBy.popular:
-        return 'Most Popular';
+        return l10n.sortPopular;
     }
   }
 

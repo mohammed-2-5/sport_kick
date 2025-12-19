@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_star_rating_selector.dart';
@@ -68,19 +69,15 @@ class PremiumReviewForm extends StatelessWidget {
                     children: [
                       Text(
                         isEditing ? 'Editing review for' : 'Reviewing',
-                        style: const TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.labelMedium.copyWith(
                           color: AppColors.textSecondary,
-                          fontWeight: FontWeight.w500,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         fieldName,
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -105,18 +102,18 @@ class PremiumReviewForm extends StatelessWidget {
           const SizedBox(height: 32),
 
           // Comment field
-          const Text(
+          Text(
             'Your Review (Optional)',
-            style: TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Share your experience to help others',
-            style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+            style: AppTextStyles.labelMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
           const SizedBox(height: 12),
 
@@ -151,8 +148,7 @@ class PremiumReviewForm extends StatelessWidget {
                     isEditing
                         ? 'You can update your rating and comment anytime'
                         : 'Your review helps others find the best fields',
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.textSecondary.withValues(alpha: 0.6),
                     ),
                     textAlign: TextAlign.center,
@@ -221,19 +217,14 @@ class _CommentFieldState extends State<_CommentField> {
             controller: widget.controller,
             maxLines: 6,
             maxLength: _maxLength,
-            style: const TextStyle(
-              fontSize: 15,
-              height: 1.6,
-              color: AppColors.textPrimary,
-            ),
+            style: AppTextStyles.bodyMedium.copyWith(height: 1.6),
             decoration: InputDecoration(
               hintText:
                   'Share details about your experience...\n\n'
                   '- How was the field condition?\n'
                   '- Were the facilities good?\n'
                   '- Would you recommend it?',
-              hintStyle: TextStyle(
-                fontSize: 14,
+              hintStyle: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.6),
                 height: 1.5,
               ),
@@ -246,8 +237,7 @@ class _CommentFieldState extends State<_CommentField> {
         const SizedBox(height: 8),
         Text(
           '$currentLength / $_maxLength',
-          style: TextStyle(
-            fontSize: 12,
+          style: AppTextStyles.labelMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: isNearLimit
                 ? (currentLength >= _maxLength ? Colors.red : Colors.orange)

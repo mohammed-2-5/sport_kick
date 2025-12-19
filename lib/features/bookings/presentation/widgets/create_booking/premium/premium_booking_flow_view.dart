@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/error_handler.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -14,6 +15,7 @@ import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/p
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_selection_step.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_slot_grid.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Premium booking flow view with wizard-style navigation.
 ///
@@ -58,7 +60,7 @@ class PremiumBookingFlowView extends StatelessWidget {
 
         // Submitting state
         if (state is BookingFlowSubmitting) {
-          return _buildSubmittingState();
+          return _buildSubmittingState(context);
         }
 
         // Initial or loading
@@ -80,7 +82,7 @@ class PremiumBookingFlowView extends StatelessWidget {
         children: [
           // Header
           PremiumCurvedHeader(
-            title: _getHeaderTitle(state.currentStep),
+            title: _getHeaderTitle(context, state.currentStep),
             subtitle: field.name,
             showBackButton: true,
             onBackPressed: () => _handleBack(context, state),
@@ -113,16 +115,17 @@ class PremiumBookingFlowView extends StatelessWidget {
     );
   }
 
-  String _getHeaderTitle(BookingFlowStep step) {
+  String _getHeaderTitle(BuildContext context, BookingFlowStep step) {
+    final l10n = context.l10n;
     switch (step) {
       case BookingFlowStep.selectDate:
-        return 'Book Field';
+        return l10n.bookFieldTitle;
       case BookingFlowStep.selectTime:
-        return 'Choose Time';
+        return l10n.chooseTime;
       case BookingFlowStep.confirm:
-        return 'Confirm Booking';
+        return l10n.confirmBooking;
       case BookingFlowStep.success:
-        return 'Success';
+        return l10n.success;
     }
   }
 
@@ -162,30 +165,33 @@ class PremiumBookingFlowView extends StatelessWidget {
     }
   }
 
-  Widget _buildSubmittingState() {
-    return const Scaffold(
+  Widget _buildSubmittingState(BuildContext context) {
+    return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(
+            const CircularProgressIndicator(
               color: AppColors.accentCyan,
               strokeWidth: 3,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
-              'Creating your booking...',
-              style: TextStyle(
+              context.l10n.creatingBooking,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              'Please wait a moment',
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              context.l10n.pleaseWaitMoment,
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textSecondary,
+              ),
             ),
           ],
         ),
@@ -249,6 +255,7 @@ class _BottomActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -272,7 +279,7 @@ class _BottomActionBar extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Total (${state.selectedDuration}h)',
+                      l10n.totalWithHours(state.selectedDuration),
                       style: const TextStyle(
                         fontSize: 12,
                         color: AppColors.textSecondary,
@@ -294,7 +301,7 @@ class _BottomActionBar extends StatelessWidget {
             Expanded(
               flex: state.selectedTimeSlot != null ? 1 : 2,
               child: PremiumButton(
-                label: _getButtonLabel(),
+                label: _getButtonLabel(l10n),
                 onPressed: state.canProceed ? onNext : null,
                 icon: Icons.arrow_forward,
                 fullWidth: true,
@@ -306,18 +313,18 @@ class _BottomActionBar extends StatelessWidget {
     );
   }
 
-  String _getButtonLabel() {
+  String _getButtonLabel(AppLocalizations l10n) {
     if (!state.canProceed) {
-      return 'Select a Time Slot';
+      return l10n.selectTimeSlotPrompt;
     }
 
     switch (state.currentStep) {
       case BookingFlowStep.selectDate:
-        return 'Continue';
+        return l10n.continueLabel;
       case BookingFlowStep.selectTime:
-        return 'Review Booking';
+        return l10n.reviewBooking;
       default:
-        return 'Continue';
+        return l10n.continueLabel;
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_cubit.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Empty state widget for the map page.
 class MapEmptyState extends StatelessWidget {
@@ -22,8 +23,8 @@ class MapEmptyState extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             hasFilters
-                ? 'No fields match your filters'
-                : 'No fields with location data available',
+                ? context.l10n.noFieldsMatchFilters
+                : context.l10n.noFieldsWithLocation,
             style: const TextStyle(fontSize: 16),
             textAlign: TextAlign.center,
           ),
@@ -33,7 +34,7 @@ class MapEmptyState extends StatelessWidget {
               onPressed: () {
                 context.read<MapCubit>().clearFilters();
               },
-              child: const Text('Clear Filters'),
+              child: Text(context.l10n.clearFilters),
             ),
           ],
         ],

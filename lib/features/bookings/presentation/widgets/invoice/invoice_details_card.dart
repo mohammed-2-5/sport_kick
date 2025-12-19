@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -27,9 +29,9 @@ class InvoiceDetailsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Invoice Details',
-                style: TextStyle(
+              Text(
+                context.l10n.invoiceDetails,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -79,7 +81,7 @@ class InvoiceDetailsCard extends StatelessWidget {
           // Field Name
           _DetailRow(
             icon: Icons.sports_soccer_rounded,
-            label: 'Field',
+            label: context.l10n.field,
             value: field.name,
           ),
           const SizedBox(height: 12),
@@ -87,25 +89,29 @@ class InvoiceDetailsCard extends StatelessWidget {
           // Date
           _DetailRow(
             icon: Icons.calendar_today_rounded,
-            label: 'Date',
-            value: booking.formattedDate,
+            label: context.l10n.bookingDate,
+            value: LocaleFormatters.formatDate(context, booking.date),
           ),
           const SizedBox(height: 12),
 
           // Time
           _DetailRow(
             icon: Icons.access_time_rounded,
-            label: 'Time',
-            value: booking.formattedTimeSlot,
+            label: context.l10n.bookingTime,
+            value: LocaleFormatters.formatTimeRange(
+              context,
+              startTime: booking.startTime,
+              endTime: booking.endTime,
+              baseDate: booking.date,
+            ),
           ),
           const SizedBox(height: 12),
 
           // Duration
           _DetailRow(
             icon: Icons.timer_outlined,
-            label: 'Duration',
-            value:
-                '${booking.durationHours} ${booking.durationHours == 1 ? 'hour' : 'hours'}',
+            label: context.l10n.durationLabel,
+            value: context.l10n.durationHours(booking.durationHours),
           ),
           const SizedBox(height: 16),
           const Divider(height: 1, color: AppColors.border),
@@ -115,9 +121,9 @@ class InvoiceDetailsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Total Amount',
-                style: TextStyle(
+              Text(
+                context.l10n.totalAmount,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
@@ -133,7 +139,12 @@ class InvoiceDetailsCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  booking.formattedPrice,
+                  LocaleFormatters.formatPrice(
+                    context,
+                    amount: booking.totalPrice,
+                    currency: booking.currency,
+                    decimalDigits: 0,
+                  ),
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
@@ -154,7 +165,7 @@ class InvoiceDetailsCard extends StatelessWidget {
     HapticFeedback.lightImpact();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Invoice number copied: $text'),
+        content: Text(context.l10n.invoiceCopied(text)),
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 2),
       ),

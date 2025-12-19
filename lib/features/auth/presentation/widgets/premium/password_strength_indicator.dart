@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Password strength indicator with animated bars.
 ///
@@ -21,7 +23,8 @@ class PasswordStrengthIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strength = _calculateStrength(password);
-    final strengthInfo = _getStrengthInfo(strength);
+    final l10n = context.l10n;
+    final strengthInfo = _getStrengthInfo(strength, l10n);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,9 +55,12 @@ class PasswordStrengthIndicator extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Password strength',
-              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+            Text(
+              l10n.passwordStrength,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.textSecondary,
+              ),
             ),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
@@ -75,23 +81,23 @@ class PasswordStrengthIndicator extends StatelessWidget {
         if (showRequirements && password.isNotEmpty) ...[
           const SizedBox(height: 12),
           _RequirementItem(
-            label: 'At least 8 characters',
+            label: l10n.requirement8Chars,
             isMet: password.length >= 8,
           ),
           _RequirementItem(
-            label: 'Contains uppercase letter',
+            label: l10n.requirementUppercase,
             isMet: password.contains(RegExp(r'[A-Z]')),
           ),
           _RequirementItem(
-            label: 'Contains lowercase letter',
+            label: l10n.requirementLowercase,
             isMet: password.contains(RegExp(r'[a-z]')),
           ),
           _RequirementItem(
-            label: 'Contains number',
+            label: l10n.requirementNumber,
             isMet: password.contains(RegExp(r'[0-9]')),
           ),
           _RequirementItem(
-            label: 'Contains special character',
+            label: l10n.requirementSpecialChar,
             isMet: password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]')),
           ),
         ],
@@ -123,18 +129,18 @@ class PasswordStrengthIndicator extends StatelessWidget {
     return strength.clamp(0, 4);
   }
 
-  _StrengthInfo _getStrengthInfo(int strength) {
+  _StrengthInfo _getStrengthInfo(int strength, AppLocalizations l10n) {
     switch (strength) {
       case 0:
         return _StrengthInfo('', Colors.grey);
       case 1:
-        return _StrengthInfo('Weak', Colors.red);
+        return _StrengthInfo(l10n.passwordStrengthWeak, Colors.red);
       case 2:
-        return _StrengthInfo('Fair', Colors.orange);
+        return _StrengthInfo(l10n.passwordStrengthFair, Colors.orange);
       case 3:
-        return _StrengthInfo('Good', Colors.lightGreen);
+        return _StrengthInfo(l10n.passwordStrengthGood, Colors.lightGreen);
       case 4:
-        return _StrengthInfo('Strong', Colors.green);
+        return _StrengthInfo(l10n.passwordStrengthStrong, Colors.green);
       default:
         return _StrengthInfo('', Colors.grey);
     }

@@ -5,6 +5,7 @@ import 'package:spo_kick/core/widgets/premium/premium_search_bar.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/fields_favorites_button.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/fields_filter_button.dart';
 import 'package:spo_kick/features/home/presentation/widgets/hero/city_dropdown_widget.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Custom header widget for fields list page.
 ///
@@ -33,7 +34,7 @@ class FieldsListHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PremiumCurvedHeader(
-      title: 'Browse Fields',
+      title: context.l10n.browseFields,
       showBackButton: true,
       height: 220,
       trailing: Row(
@@ -52,7 +53,7 @@ class FieldsListHeader extends StatelessWidget {
           children: [
             Expanded(
               child: PremiumSearchBar(
-                hint: 'Search fields...',
+                hint: context.l10n.searchFields,
                 controller: searchController,
                 onChanged: onSearchChanged,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 
@@ -8,12 +9,14 @@ class TimeSlotCard extends StatelessWidget {
   final TimeSlotEntity slot;
   final bool isSelected;
   final VoidCallback? onTap;
+  final String? periodLabel;
 
   const TimeSlotCard({
     super.key,
     required this.slot,
     required this.isSelected,
     this.onTap,
+    this.periodLabel,
   });
 
   @override
@@ -50,7 +53,12 @@ class TimeSlotCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      slot.formattedTimeRange,
+                      LocaleFormatters.formatTimeRange(
+                        context,
+                        startTime: slot.startTime,
+                        endTime: slot.endTime,
+                        isEndNextDay: slot.isNextDay,
+                      ),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -61,7 +69,7 @@ class TimeSlotCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      slot.period,
+                      periodLabel ?? slot.period,
                       style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.textSecondary,

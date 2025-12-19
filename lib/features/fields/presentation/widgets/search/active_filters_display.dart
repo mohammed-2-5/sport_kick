@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/fields/domain/entities/search_filters_entity.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 
 /// Active Filters Display
 ///
@@ -32,7 +35,8 @@ class ActiveFiltersDisplay extends StatelessWidget {
       chips.add(
         _buildFilterChip(
           context,
-          label: '$min - $max EGP',
+          label:
+              '${LocaleFormatters.formatNumber(context, min)} - ${LocaleFormatters.formatNumber(context, max)} EGP/${context.l10n.perHour}',
           icon: Icons.attach_money,
           onRemove: () {
             onFilterRemoved(filters.copyWith(clearPriceRange: true));
@@ -60,7 +64,7 @@ class ActiveFiltersDisplay extends StatelessWidget {
       chips.add(
         _buildFilterChip(
           context,
-          label: 'Category',
+          label: context.l10n.category,
           icon: Icons.sports_soccer,
           onRemove: () {
             onFilterRemoved(filters.copyWith(clearCategory: true));
@@ -75,7 +79,7 @@ class ActiveFiltersDisplay extends StatelessWidget {
         chips.add(
           _buildFilterChip(
             context,
-            label: amenity,
+            label: FacilityLocalizer.localize(context, amenity),
             icon: Icons.star,
             onRemove: () {
               final updated = List<String>.from(filters.amenities!);
@@ -106,7 +110,7 @@ class ActiveFiltersDisplay extends StatelessWidget {
           TextButton.icon(
             onPressed: onClearAll,
             icon: const Icon(Icons.clear_all, size: 16),
-            label: const Text('Clear'),
+            label: Text(context.l10n.clearAll),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.error,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

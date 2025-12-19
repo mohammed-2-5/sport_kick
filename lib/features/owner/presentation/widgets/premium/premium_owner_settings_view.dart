@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -44,10 +45,10 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
             body: CustomScrollView(
               slivers: [
                 // Premium Header
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: PremiumCurvedHeader(
-                    title: 'Settings',
-                    subtitle: 'Customize your experience',
+                    title: context.l10n.settingsTitle,
+                    subtitle: context.l10n.settingsSubtitle,
                     showBackButton: true,
                   ),
                 ),
@@ -93,11 +94,11 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
 
   Widget _buildAccountSection() {
     return PremiumOwnerSettingsSection(
-      title: 'Account',
+      title: context.l10n.accountSection,
       icon: Icons.person_outline,
       children: [
         OwnerSettingsTile(
-          label: 'Edit Profile',
+          label: context.l10n.editProfile,
           icon: Icons.edit_outlined,
           onTap: () {
             HapticFeedback.lightImpact();
@@ -105,7 +106,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
         OwnerSettingsTile(
-          label: 'Change Password',
+          label: context.l10n.changePassword,
           icon: Icons.lock_outline,
           onTap: () {
             HapticFeedback.lightImpact();
@@ -113,7 +114,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
         OwnerSettingsTile(
-          label: 'Business Hours',
+          label: context.l10n.businessHours,
           icon: Icons.access_time,
           onTap: () {
             HapticFeedback.lightImpact();
@@ -128,12 +129,12 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
   Widget _buildNotificationsSection(OwnerSettingsState state) {
     final cubit = context.read<OwnerSettingsCubit>();
     return PremiumOwnerSettingsSection(
-      title: 'Notifications',
+      title: context.l10n.notificationsSection,
       icon: Icons.notifications_outlined,
       children: [
         OwnerSettingsToggle(
-          label: 'Email Notifications',
-          description: 'Receive booking updates via email',
+          label: context.l10n.emailNotifications,
+          description: context.l10n.emailNotificationsDesc,
           icon: Icons.email_outlined,
           value: state.emailNotifications,
           onChanged: (value) {
@@ -142,8 +143,8 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
         OwnerSettingsToggle(
-          label: 'Push Notifications',
-          description: 'Receive instant push notifications',
+          label: context.l10n.pushNotifications,
+          description: context.l10n.pushNotificationsDesc,
           icon: Icons.phone_android,
           value: state.pushNotifications,
           onChanged: (value) {
@@ -152,8 +153,8 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
         OwnerSettingsToggle(
-          label: 'Booking Alerts',
-          description: 'Get notified for new bookings',
+          label: context.l10n.bookingAlerts,
+          description: context.l10n.bookingAlertsDesc,
           icon: Icons.calendar_today_outlined,
           value: state.bookingNotifications,
           onChanged: (value) {
@@ -162,8 +163,8 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
         OwnerSettingsToggle(
-          label: 'Instant Notifications',
-          description: 'Receive notifications immediately',
+          label: context.l10n.instantNotifications,
+          description: context.l10n.instantNotificationsDesc,
           icon: Icons.bolt,
           value: state.instantNotifications,
           onChanged: (value) {
@@ -178,12 +179,12 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
   Widget _buildBookingPreferencesSection(OwnerSettingsState state) {
     final cubit = context.read<OwnerSettingsCubit>();
     return PremiumOwnerSettingsSection(
-      title: 'Booking Preferences',
+      title: context.l10n.bookingPreferencesSection,
       icon: Icons.settings_outlined,
       children: [
         OwnerSettingsToggle(
-          label: 'Auto-Approve Bookings',
-          description: 'Automatically confirm new bookings',
+          label: context.l10n.autoApproveBookings,
+          description: context.l10n.autoApproveBookingsDesc,
           icon: Icons.check_circle_outline,
           value: state.autoApproveBookings,
           onChanged: (value) {
@@ -192,18 +193,18 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
         OwnerSettingsTile(
-          label: 'Booking Rules',
+          label: context.l10n.bookingRules,
           icon: Icons.rule,
-          value: 'Configure',
+          value: context.l10n.configure,
           onTap: () {
             HapticFeedback.lightImpact();
             // Navigate to booking rules
           },
         ),
         OwnerSettingsTile(
-          label: 'Pricing Settings',
+          label: context.l10n.pricingSettings,
           icon: Icons.attach_money,
-          value: 'Manage',
+          value: context.l10n.manage,
           onTap: () {
             HapticFeedback.lightImpact();
             // Navigate to pricing settings
@@ -215,22 +216,22 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
 
   Widget _buildSecuritySection() {
     return PremiumOwnerSettingsSection(
-      title: 'Security',
+      title: context.l10n.securitySection,
       icon: Icons.security_outlined,
       children: [
         OwnerSettingsTile(
-          label: 'Login Activity',
+          label: context.l10n.loginActivity,
           icon: Icons.history,
-          value: 'View history',
+          value: context.l10n.viewHistory,
           onTap: () {
             HapticFeedback.lightImpact();
             context.pushNamed('loginActivity');
           },
         ),
         OwnerSettingsTile(
-          label: 'Active Sessions',
+          label: context.l10n.activeSessions,
           icon: Icons.devices,
-          value: 'Manage',
+          value: context.l10n.manage,
           onTap: () {
             HapticFeedback.lightImpact();
             context.pushNamed('loginActivity');
@@ -242,11 +243,11 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
 
   Widget _buildAboutSection() {
     return PremiumOwnerSettingsSection(
-      title: 'About',
+      title: context.l10n.aboutSection,
       icon: Icons.info_outline,
       children: [
         OwnerSettingsTile(
-          label: 'Privacy Policy',
+          label: context.l10n.privacyPolicy,
           icon: Icons.privacy_tip_outlined,
           onTap: () {
             HapticFeedback.lightImpact();
@@ -254,7 +255,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
         OwnerSettingsTile(
-          label: 'Terms of Service',
+          label: context.l10n.termsOfService,
           icon: Icons.description_outlined,
           onTap: () {
             HapticFeedback.lightImpact();
@@ -262,7 +263,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
         OwnerSettingsTile(
-          label: 'App Version',
+          label: context.l10n.appVersion,
           icon: Icons.info_outline,
           value: '1.0.0',
           showArrow: false,
@@ -274,7 +275,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
 
   Widget _buildLogoutButton() {
     return PremiumButton(
-      label: 'Logout',
+      label: context.l10n.logoutTitle,
       onPressed: _handleLogout,
       style: PremiumButtonStyle.outline,
       icon: Icons.logout,
@@ -288,19 +289,22 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
+        title: Text(context.l10n.logoutTitle),
+        content: Text(context.l10n.logoutMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               context.read<AuthCubit>().logout();
             },
-            child: const Text('Logout', style: TextStyle(color: Colors.red)),
+            child: Text(
+              context.l10n.logoutTitle,
+              style: const TextStyle(color: Colors.red),
+            ),
           ),
         ],
       ),
@@ -350,21 +354,21 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                     child: const Icon(Icons.access_time, color: Colors.white),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Business Hours',
-                          style: TextStyle(
+                          context.l10n.businessHoursSheetTitle,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
                             color: AppColors.textPrimary,
                           ),
                         ),
                         Text(
-                          'Set your operating hours',
-                          style: TextStyle(
+                          context.l10n.businessHoursSheetSubtitle,
+                          style: const TextStyle(
                             fontSize: 13,
                             color: AppColors.textSecondary,
                           ),
@@ -401,9 +405,9 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Text(
-                      'Business Hours per Field',
-                      style: TextStyle(
+                    Text(
+                      context.l10n.businessHoursPerField,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
@@ -411,8 +415,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Business hours are set individually for each field. '
-                      'Go to your Fields list and select a field to manage its operating hours.',
+                      context.l10n.businessHoursPerFieldDesc,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
@@ -429,7 +432,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                           context.pushNamed('ownerFields');
                         },
                         icon: const Icon(Icons.list_alt),
-                        label: const Text('Go to My Fields'),
+                        label: Text(context.l10n.goToMyFields),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.accentCyan,
                           foregroundColor: Colors.white,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Info card widget displayed when a field is selected on the map.
 class MapFieldInfoCard extends StatelessWidget {
@@ -33,10 +35,10 @@ class MapFieldInfoCard extends StatelessWidget {
           Row(
             children: [
               // Field Image
-              _buildFieldImage(),
+              _buildFieldImage(context),
               const SizedBox(width: 16),
               // Field Info
-              Expanded(child: _buildFieldInfo()),
+              Expanded(child: _buildFieldInfo(context)),
             ],
           ),
           const SizedBox(height: 16),
@@ -46,7 +48,7 @@ class MapFieldInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFieldImage() {
+  Widget _buildFieldImage(BuildContext context) {
     if (field.images.isNotEmpty) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(12),
@@ -89,7 +91,7 @@ class MapFieldInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFieldInfo() {
+  Widget _buildFieldInfo(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -128,7 +130,11 @@ class MapFieldInfoCard extends StatelessWidget {
               const Icon(Icons.star, size: 14, color: Colors.amber),
               const SizedBox(width: 4),
               Text(
-                field.ratingDisplay,
+                LocaleFormatters.formatNumber(
+                  context,
+                  field.averageRating ?? 0,
+                  decimalDigits: 1,
+                ),
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -137,7 +143,7 @@ class MapFieldInfoCard extends StatelessWidget {
               const SizedBox(width: 8),
             ],
             Text(
-              field.formattedPrice,
+              '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
@@ -157,7 +163,7 @@ class MapFieldInfoCard extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: onClose,
             icon: const Icon(Icons.close, size: 18),
-            label: const Text('Close'),
+            label: Text(context.l10n.close),
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.textSecondary,
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -175,7 +181,7 @@ class MapFieldInfoCard extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.info_outline, size: 18),
-            label: const Text('View Details'),
+            label: Text(context.l10n.viewDetails),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,

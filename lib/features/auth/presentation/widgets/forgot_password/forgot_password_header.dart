@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Forgot password header widget.
 ///
@@ -18,15 +18,11 @@ class ForgotPasswordHeader extends StatelessWidget {
             color: AppColors.info.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
-          child: const Icon(
-            Icons.lock_reset,
-            size: AuthConstants.logoSize,
-            color: AppColors.info,
-          ),
+          child: const Icon(Icons.lock_reset, size: 80, color: AppColors.info),
         ),
-        const SizedBox(height: AuthConstants.formFieldSpacing),
+        const SizedBox(height: 16),
         Text(
-          AuthConstants.forgotPasswordTitle,
+          context.l10n.resetPasswordTitle,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -35,7 +31,7 @@ class ForgotPasswordHeader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          AuthConstants.forgotPasswordSubtitle,
+          context.l10n.resetPasswordSubtitle,
           style: Theme.of(
             context,
           ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),

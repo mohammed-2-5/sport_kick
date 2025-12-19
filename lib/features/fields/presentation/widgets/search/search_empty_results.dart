@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Empty search results widget.
 ///
@@ -25,14 +27,18 @@ class SearchEmptyResults extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'No fields found for "$query"',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              context.l10n.noFieldsFoundForQuery(query),
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Try searching with different keywords',
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+            Text(
+              context.l10n.searchTryDifferentKeywords,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

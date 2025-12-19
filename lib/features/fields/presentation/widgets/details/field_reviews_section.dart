@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
-import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_state.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/rating/rating_stars.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/list/review_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Reviews section widget for field details.
 ///
@@ -31,9 +33,11 @@ class FieldReviewsSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                FieldConstants.reviewsTitle,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                context.l10n.reviews,
+                style: AppTextStyles.titleMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               if (field.hasReviews)
                 TextButton(
@@ -48,11 +52,11 @@ class FieldReviewsSection extends StatelessWidget {
                       },
                     );
                   },
-                  child: const Text('See all'),
+                  child: Text(context.l10n.seeAll),
                 ),
             ],
           ),
-          const SizedBox(height: FieldConstants.itemSpacing),
+          const SizedBox(height: 12),
 
           // Rating summary
           if (field.hasReviews)
@@ -70,7 +74,11 @@ class FieldReviewsSection extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        field.averageRating?.toStringAsFixed(1) ?? 'N/A',
+                        LocaleFormatters.formatNumber(
+                          context,
+                          field.averageRating ?? 0,
+                          decimalDigits: 1,
+                        ),
                         style: const TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.bold,
@@ -86,18 +94,18 @@ class FieldReviewsSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${field.totalReviews} ${field.totalReviews == 1 ? 'Review' : 'Reviews'}',
+                          context.l10n
+                              .reviewsSummary(field.totalReviews)
+                              .replaceFirst(
+                                field.totalReviews.toString(),
+                                LocaleFormatters.formatNumber(
+                                  context,
+                                  field.totalReviews,
+                                ),
+                              ),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Based on customer experiences',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600],
                           ),
                         ),
                       ],
@@ -113,14 +121,14 @@ class FieldReviewsSection extends StatelessWidget {
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(Icons.rate_review_outlined, color: Colors.grey),
-                  SizedBox(width: 12),
+                  const Icon(Icons.rate_review_outlined, color: Colors.grey),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'No reviews yet. Be the first to review!',
-                      style: TextStyle(color: Colors.grey),
+                      context.l10n.noReviews,
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ],
@@ -147,7 +155,7 @@ class FieldReviewsSection extends StatelessWidget {
                       }
                     },
                     icon: const Icon(Icons.edit),
-                    label: const Text('Write a Review'),
+                    label: Text(context.l10n.writeReview),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       side: const BorderSide(color: AppColors.primary),
@@ -188,14 +196,17 @@ class FieldReviewsSection extends StatelessWidget {
                         color: AppColors.errorLight,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          Icon(Icons.error_outline, color: AppColors.error),
-                          SizedBox(width: 12),
+                          const Icon(
+                            Icons.error_outline,
+                            color: AppColors.error,
+                          ),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Failed to load reviews',
-                              style: TextStyle(color: AppColors.error),
+                              context.l10n.failedToLoadReviews,
+                              style: const TextStyle(color: AppColors.error),
                             ),
                           ),
                         ],

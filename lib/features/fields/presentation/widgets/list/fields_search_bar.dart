@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Floating search bar widget for fields list.
 ///
@@ -40,7 +41,7 @@ class FieldsSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          hintText: 'Search fields, cities...',
+          hintText: context.l10n.searchByNameCityAddress,
           hintStyle: TextStyle(
             color: AppColors.lightTextSecondary.withValues(alpha: 0.6),
             fontSize: 15,

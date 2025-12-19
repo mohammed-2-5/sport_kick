@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/initials_avatar.dart';
 
@@ -25,7 +26,7 @@ class ProfileHeader extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         PremiumCurvedHeader(
-          title: 'My Profile',
+          title: context.l10n.myProfile,
           showBackButton: true,
           onBackPressed: onBackPressed,
           height: 220,

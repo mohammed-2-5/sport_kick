@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -462,8 +463,7 @@ class _StatChip extends StatelessWidget {
         children: [
           Text(
             '$count',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w700,
               color: color,
             ),
@@ -471,8 +471,7 @@ class _StatChip extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w500,
               color: color.withValues(alpha: 0.8),
             ),
@@ -527,10 +526,8 @@ class _LoadingView extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             message,
-            style: const TextStyle(
-              fontSize: 15,
+            style: AppTextStyles.labelLarge.copyWith(
               color: AppColors.textSecondary,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -568,19 +565,16 @@ class _ErrorView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'Failed to load bookings',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
@@ -635,18 +629,18 @@ class _EmptyState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'No bookings found',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Try adjusting your search\nor filters',
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
-import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class CreateBookingAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -15,9 +15,12 @@ class CreateBookingAppBar extends StatelessWidget
       flexibleSpace: Container(
         decoration: const BoxDecoration(gradient: AppGradients.primary),
       ),
-      title: const Text(
-        BookingConstants.bookFieldTitle,
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+      title: Text(
+        context.l10n.bookFieldTitle,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
       iconTheme: const IconThemeData(color: Colors.white),
       elevation: 0,

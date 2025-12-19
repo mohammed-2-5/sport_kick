@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class ForgotPasswordSendButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -10,19 +10,19 @@ class ForgotPasswordSendButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AuthConstants.buttonHeight,
+      height: 50,
       child: ElevatedButton.icon(
         onPressed: onPressed,
         icon: const Icon(Icons.send),
-        label: const Text(
-          AuthConstants.sendResetLinkLabel,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        label: Text(
+          context.l10n.resetPassword,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
       ),

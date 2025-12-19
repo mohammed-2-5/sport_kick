@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Description section widget for field details.
 ///
@@ -22,9 +23,9 @@ class FieldDescriptionSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Description',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            context.l10n.about,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: FieldConstants.itemSpacing),
           Text(

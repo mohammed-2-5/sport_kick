@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/utils/validators.dart';
+import 'package:spo_kick/core/constants/app_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/core/widgets/custom_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -43,7 +44,7 @@ class _RegisterFormState extends State<RegisterForm> {
     if (_passwordController.text != _confirmPasswordController.text) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
+      ).showSnackBar(SnackBar(content: Text(context.l10n.passwordsDoNotMatch)));
       return;
     }
 
@@ -67,13 +68,21 @@ class _RegisterFormState extends State<RegisterForm> {
         children: [
           // Full Name Field
           CustomTextField(
-            label: 'Full Name',
-            hint: 'Enter your full name',
+            label: context.l10n.fullName,
+            hint: context.l10n.enterFullName,
             controller: _fullNameController,
             type: TextFieldType.text,
             keyboardType: TextInputType.name,
             prefixIcon: Icons.person_outline,
-            validator: Validators.required,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return context.l10n.fieldRequired;
+              }
+              if (value.trim().length < 2) {
+                return context.l10n.nameTooShort;
+              }
+              return null;
+            },
             textInputAction: TextInputAction.next,
           ),
 
@@ -81,13 +90,23 @@ class _RegisterFormState extends State<RegisterForm> {
 
           // Email Field
           CustomTextField(
-            label: 'Email',
-            hint: 'Enter your email',
+            label: context.l10n.email,
+            hint: context.l10n.enterYourEmail,
             controller: _emailController,
             type: TextFieldType.email,
             keyboardType: TextInputType.emailAddress,
             prefixIcon: Icons.email_outlined,
-            validator: Validators.email,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return context.l10n.fieldRequired;
+              }
+              final trimmed = value.trim();
+              final regex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
+              if (!regex.hasMatch(trimmed)) {
+                return context.l10n.invalidEmail;
+              }
+              return null;
+            },
             textInputAction: TextInputAction.next,
           ),
 
@@ -95,8 +114,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
           // Phone Field (Optional)
           CustomTextField(
-            label: 'Phone Number (Optional)',
-            hint: 'Enter your phone number',
+            label: context.l10n.phoneOptional,
+            hint: context.l10n.enterPhoneNumber,
             controller: _phoneController,
             type: TextFieldType.phone,
             keyboardType: TextInputType.phone,
@@ -106,7 +125,13 @@ class _RegisterFormState extends State<RegisterForm> {
               if (value == null || value.isEmpty) {
                 return null; // Valid - optional field
               }
-              return Validators.egyptianPhone(value);
+              final cleaned = value.replaceAll(RegExp(r'[\s\-]'), '');
+              if (cleaned.length != AppConstants.phoneNumberLength ||
+                  !RegExp(r'^\d+$').hasMatch(cleaned) ||
+                  !cleaned.startsWith('01')) {
+                return context.l10n.invalidPhone;
+              }
+              return null;
             },
             textInputAction: TextInputAction.next,
           ),
@@ -115,12 +140,20 @@ class _RegisterFormState extends State<RegisterForm> {
 
           // Password Field
           CustomTextField(
-            label: 'Password',
-            hint: 'Create a password',
+            label: context.l10n.password,
+            hint: context.l10n.createPassword,
             controller: _passwordController,
             type: TextFieldType.password,
             prefixIcon: Icons.lock_outline,
-            validator: Validators.password,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return context.l10n.fieldRequired;
+              }
+              if (value.length < AppConstants.minPasswordLength) {
+                return context.l10n.passwordTooShort;
+              }
+              return null;
+            },
             textInputAction: TextInputAction.next,
           ),
 
@@ -128,17 +161,17 @@ class _RegisterFormState extends State<RegisterForm> {
 
           // Confirm Password Field
           CustomTextField(
-            label: 'Confirm Password',
-            hint: 'Re-enter your password',
+            label: context.l10n.confirmPassword,
+            hint: context.l10n.reenterPassword,
             controller: _confirmPasswordController,
             type: TextFieldType.password,
             prefixIcon: Icons.lock_outline,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please confirm your password';
+                return context.l10n.pleaseConfirmPassword;
               }
               if (value != _passwordController.text) {
-                return 'Passwords do not match';
+                return context.l10n.passwordsDoNotMatch;
               }
               return null; // Valid
             },
@@ -150,7 +183,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
           // Password Requirements Text
           Text(
-            'Password must be at least 6 characters',
+            context.l10n.passwordRequirementText,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
@@ -160,7 +193,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
           // Register Button
           CustomButton(
-            text: 'Create Account',
+            text: context.l10n.createAccount,
             onPressed: _handleRegister,
             variant: ButtonVariant.primary,
           ),
@@ -169,7 +202,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
           // Terms and Privacy Text
           Text(
-            'By creating an account, you agree to our Terms of Service and Privacy Policy',
+            context.l10n.termsAndPrivacyNote,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),

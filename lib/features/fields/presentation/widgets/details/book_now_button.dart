@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
-import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Bottom Book Now Button widget.
 ///
@@ -29,7 +29,7 @@ class BookNowButton extends StatelessWidget {
       ),
       child: SafeArea(
         child: CustomButton(
-          text: FieldConstants.bookNowLabel,
+          text: context.l10n.bookNow,
           onPressed: () {
             // Navigate to create booking page
             context.pushNamed('createBooking', extra: field);

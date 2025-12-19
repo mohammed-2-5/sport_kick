@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// Statistics section for field detail page.
@@ -21,10 +22,7 @@ class FieldDetailStats extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Statistics',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
+          const Text('Statistics', style: AppTextStyles.titleMedium),
           const SizedBox(height: 16),
           Row(
             children: [
@@ -94,8 +92,7 @@ class _StatCard extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   color: color,
                   fontWeight: FontWeight.w600,
                 ),
@@ -103,14 +100,7 @@ class _StatCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
+          Text(value, style: AppTextStyles.titleLarge.copyWith(color: color)),
         ],
       ),
     );

@@ -51,6 +51,7 @@ abstract class SuperAdminRemoteDataSource {
 
   Future<void> deactivateUser(String userId);
   Future<void> activateUser(String userId);
+  Future<String> resetAdminPassword(String adminId);
   Future<FieldModel> createField({
     required String ownerId,
     required String sportCategoryId,
@@ -186,6 +187,11 @@ class SuperAdminRemoteDataSourceFacade implements SuperAdminRemoteDataSource {
   @override
   Future<void> deactivateUser(String userId) {
     return _userManagementDataSource.deactivateUser(userId);
+  }
+
+  @override
+  Future<String> resetAdminPassword(String adminId) {
+    return _userManagementDataSource.resetAdminPassword(adminId);
   }
 
   // ==================== Field Management Operations ====================

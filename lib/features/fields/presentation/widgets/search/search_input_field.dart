@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Search input widget for the search page.
 /// Provides styled text field with search and clear functionality.
@@ -37,7 +38,7 @@ class SearchInputField extends StatelessWidget {
         controller: controller,
         focusNode: focusNode,
         decoration: InputDecoration(
-          hintText: 'Search by name, city, or address...',
+          hintText: context.l10n.searchByNameCityAddress,
           prefixIcon: const Icon(Icons.search, color: AppColors.primary),
           suffixIcon: controller.text.isNotEmpty
               ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)

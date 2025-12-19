@@ -9,22 +9,27 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 /// Features:
 /// - Status toggle button
 /// - Assign field button
+/// - Reset password button
 /// - Gold theme styling
 /// - Tap animations
 class PremiumAdminActionButtons extends StatelessWidget {
   final UserEntity admin;
   final bool isTogglingStatus;
   final bool isAssigningField;
+  final bool isResettingPassword;
   final VoidCallback onToggleStatus;
   final VoidCallback onAssignField;
+  final VoidCallback onResetPassword;
 
   const PremiumAdminActionButtons({
     super.key,
     required this.admin,
     required this.isTogglingStatus,
     required this.isAssigningField,
+    required this.isResettingPassword,
     required this.onToggleStatus,
     required this.onAssignField,
+    required this.onResetPassword,
   });
 
   @override
@@ -33,25 +38,44 @@ class PremiumAdminActionButtons extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: PremiumCard(
         padding: const EdgeInsets.all(16),
-        child: Row(
+        child: Column(
           children: [
-            Expanded(
-              child: _ActionButton(
-                label: admin.isActive ? 'Deactivate' : 'Activate',
-                icon: admin.isActive ? Icons.block : Icons.check_circle_outline,
-                color: admin.isActive ? Colors.orange : Colors.green,
-                isLoading: isTogglingStatus,
-                onTap: onToggleStatus,
-              ),
+            // First row: Activate/Deactivate and Assign Field
+            Row(
+              children: [
+                Expanded(
+                  child: _ActionButton(
+                    label: admin.isActive ? 'Deactivate' : 'Activate',
+                    icon: admin.isActive
+                        ? Icons.block
+                        : Icons.check_circle_outline,
+                    color: admin.isActive ? Colors.orange : Colors.green,
+                    isLoading: isTogglingStatus,
+                    onTap: onToggleStatus,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _ActionButton(
+                    label: 'Assign Field',
+                    icon: Icons.add_business,
+                    color: AppColors.premiumGold,
+                    isLoading: isAssigningField,
+                    onTap: onAssignField,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
-            Expanded(
+            const SizedBox(height: 12),
+            // Second row: Reset Password (full width)
+            SizedBox(
+              width: double.infinity,
               child: _ActionButton(
-                label: 'Assign Field',
-                icon: Icons.add_business,
-                color: AppColors.premiumGold,
-                isLoading: isAssigningField,
-                onTap: onAssignField,
+                label: 'Reset Password',
+                icon: Icons.lock_reset,
+                color: Colors.blue,
+                isLoading: isResettingPassword,
+                onTap: onResetPassword,
               ),
             ),
           ],

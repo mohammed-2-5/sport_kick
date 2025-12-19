@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/search_filters_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Sort Selector Widget
 ///
@@ -21,7 +22,7 @@ class SortSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Sort By',
+          context.l10n.sortBy,
           style: Theme.of(
             context,
           ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -50,7 +51,7 @@ class SortSelector extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  sortOption.displayName,
+                  sortOption.displayName(context.l10n),
                   style: TextStyle(
                     color: isSelected
                         ? AppColors.primary

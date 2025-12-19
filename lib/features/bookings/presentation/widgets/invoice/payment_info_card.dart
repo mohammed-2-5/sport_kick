@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/payment_method.dart';
@@ -47,9 +48,9 @@ class PaymentInfoCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    const Text(
-                      'Send payment to this number',
-                      style: TextStyle(
+                    Text(
+                      context.l10n.sendPaymentToNumber,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
@@ -98,9 +99,9 @@ class PaymentInfoCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Payment Phone',
-                            style: TextStyle(
+                          Text(
+                            context.l10n.paymentPhone,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.textSecondary,
                             ),
@@ -127,18 +128,18 @@ class PaymentInfoCard extends StatelessWidget {
                         color: AppColors.accentCyan.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.copy_rounded,
                             size: 16,
                             color: AppColors.accentCyan,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
-                            'Copy',
-                            style: TextStyle(
+                            context.l10n.copy,
+                            style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: AppColors.accentCyan,
@@ -158,18 +159,21 @@ class PaymentInfoCard extends StatelessWidget {
                 color: AppColors.warningLight,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.warning_amber_rounded,
                     color: AppColors.warning,
                     size: 24,
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'Payment phone not configured. Please contact the field owner.',
-                      style: TextStyle(fontSize: 13, color: AppColors.warning),
+                      context.l10n.paymentPhoneMissing,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.warning,
+                      ),
                     ),
                   ),
                 ],
@@ -192,17 +196,17 @@ class PaymentInfoCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.info_outline_rounded,
                       color: AppColors.info,
                       size: 18,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
-                      'Payment Instructions',
-                      style: TextStyle(
+                      context.l10n.paymentInstructions,
+                      style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         color: AppColors.info,
@@ -255,7 +259,7 @@ class PaymentInfoCard extends StatelessWidget {
       HapticFeedback.lightImpact();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Phone number copied: ${field.paymentPhone}'),
+          content: Text(context.l10n.phoneCopied(field.paymentPhone!)),
           behavior: SnackBarBehavior.floating,
           duration: const Duration(seconds: 2),
         ),

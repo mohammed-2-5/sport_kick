@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -22,11 +23,11 @@ class ProfileBody extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 60),
-        _buildUserInfo(),
+        _buildUserInfo(context),
         const SizedBox(height: 32),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: _buildInfoCards(),
+          child: _buildInfoCards(context),
         ),
         const SizedBox(height: 32),
         Padding(
@@ -38,7 +39,7 @@ class ProfileBody extends StatelessWidget {
     );
   }
 
-  Widget _buildUserInfo() {
+  Widget _buildUserInfo(BuildContext context) {
     return Column(
       children: [
         Text(
@@ -56,26 +57,30 @@ class ProfileBody extends StatelessWidget {
             color: AppColors.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Text(
-            user.role.toUpperCase(),
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primary,
-              letterSpacing: 1.0,
-            ),
+          child: Builder(
+            builder: (context) {
+              return Text(
+                _roleLabel(context),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                  letterSpacing: 1.0,
+                ),
+              );
+            },
           ),
         ),
       ],
     );
   }
 
-  Widget _buildInfoCards() {
+  Widget _buildInfoCards(BuildContext context) {
     return Column(
       children: [
         ProfileInfoCard(
           icon: Icons.email_outlined,
-          label: 'Email',
+          label: context.l10n.email,
           value: user.email,
           iconColor: Colors.blue,
         ),
@@ -83,7 +88,7 @@ class ProfileBody extends StatelessWidget {
         if (user.phone != null && user.phone!.isNotEmpty) ...[
           ProfileInfoCard(
             icon: Icons.phone_outlined,
-            label: 'Phone',
+            label: context.l10n.phone,
             value: user.phone!,
             iconColor: AppColors.success,
           ),
@@ -91,8 +96,8 @@ class ProfileBody extends StatelessWidget {
         ],
         ProfileInfoCard(
           icon: Icons.calendar_today_outlined,
-          label: 'Member Since',
-          value: formatMemberSince(user.createdAt),
+          label: context.l10n.memberSince,
+          value: formatMemberSince(context, user.createdAt),
           iconColor: Colors.purple,
         ),
       ],
@@ -104,14 +109,14 @@ class ProfileBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PremiumButton(
-          label: 'Edit Profile',
+          label: context.l10n.editProfile,
           onPressed: () => _showEditDialog(context),
           style: PremiumButtonStyle.outline,
           icon: Icons.edit_outlined,
         ),
         const SizedBox(height: 16),
         PremiumButton(
-          label: 'Logout',
+          label: context.l10n.logout,
           onPressed: () => showLogoutConfirmation(context),
           style: PremiumButtonStyle.text,
           icon: Icons.logout,
@@ -128,5 +133,16 @@ class ProfileBody extends StatelessWidget {
         child: const EditProfileDialog(),
       ),
     );
+  }
+
+  String _roleLabel(BuildContext context) {
+    switch (user.role) {
+      case 'admin':
+        return context.l10n.roleAdmin;
+      case 'super_admin':
+        return context.l10n.roleSuperAdmin;
+      default:
+        return context.l10n.roleUser;
+    }
   }
 }

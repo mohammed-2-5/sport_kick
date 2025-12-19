@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Field details widget for booking header.
 class BookingFieldDetails extends StatelessWidget {
@@ -31,7 +32,12 @@ class BookingFieldDetails extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          '$city • $formattedPrice/hour',
+          city,
+          style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '${context.l10n.pricePerHour}: $formattedPrice',
           style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
         ),
       ],

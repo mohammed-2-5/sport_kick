@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/entities/recurring_booking_entity.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/recurring_status_badge.dart';
 
@@ -93,9 +94,8 @@ class RecurringBookingCard extends StatelessWidget {
               children: [
                 Text(
                   booking.fieldName,
-                  style: const TextStyle(
+                  style: AppTextStyles.titleMedium.copyWith(
                     color: Colors.white,
-                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                   maxLines: 1,
@@ -104,9 +104,8 @@ class RecurringBookingCard extends StatelessWidget {
                 if (booking.cityName != null)
                   Text(
                     booking.cityName!,
-                    style: TextStyle(
+                    style: AppTextStyles.labelMedium.copyWith(
                       color: Colors.white.withValues(alpha: 0.7),
-                      fontSize: 13,
                     ),
                   ),
               ],
@@ -183,8 +182,7 @@ class RecurringBookingCard extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: color,
             ),
@@ -205,14 +203,10 @@ class RecurringBookingCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Completed Sessions',
-              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-            ),
+            const Text('Completed Sessions', style: AppTextStyles.caption),
             Text(
               '${booking.completedBookingsCount} / ${booking.totalBookingsCount}',
-              style: const TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.navyDeep,
               ),
@@ -265,17 +259,15 @@ class RecurringBookingCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Next Booking',
-                  style: TextStyle(
-                    fontSize: 11,
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
                 Text(
                   dateFormat.format(booking.nextBookingDate!),
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.navyDeep,
                   ),
@@ -291,8 +283,7 @@ class RecurringBookingCard extends StatelessWidget {
             ),
             child: Text(
               isPaid ? 'Paid' : 'Pay Now',
-              style: const TextStyle(
-                fontSize: 11,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -351,8 +342,7 @@ class RecurringBookingCard extends StatelessWidget {
           Expanded(
             child: Text(
               'Waiting for owner approval. You\'ll be notified once approved.',
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.caption.copyWith(
                 color: AppColors.goldAccent.withValues(alpha: 0.9),
               ),
             ),
@@ -374,14 +364,13 @@ class RecurringBookingCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.block_rounded, color: AppColors.error, size: 20),
-              SizedBox(width: 10),
+              const Icon(Icons.block_rounded, color: AppColors.error, size: 20),
+              const SizedBox(width: 10),
               Text(
                 'Request Rejected',
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.labelMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppColors.error,
                 ),
@@ -390,13 +379,7 @@ class RecurringBookingCard extends StatelessWidget {
           ),
           if (booking.rejectionReason != null) ...[
             const SizedBox(height: 8),
-            Text(
-              booking.rejectionReason!,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-              ),
-            ),
+            Text(booking.rejectionReason!, style: AppTextStyles.caption),
           ],
         ],
       ),

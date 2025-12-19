@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_empty_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_loading_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_tab_view.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/recurring_tab_view.dart';
 
 class MyBookingsContent extends StatelessWidget {
   final BookingState state;
@@ -29,7 +30,7 @@ class MyBookingsContent extends StatelessWidget {
 
     if (bookingState is BookingsEmpty) {
       return MyBookingsEmptyState(
-        message: bookingState.message ?? BookingConstants.noBookingsMessage,
+        message: bookingState.message ?? context.l10n.noBookingsYet,
         onBrowseFields: onBrowseFields,
       );
     }
@@ -40,18 +41,19 @@ class MyBookingsContent extends StatelessWidget {
         children: [
           MyBookingsTabView(
             bookings: bookingState.upcomingBookings,
-            emptyMessage: BookingConstants.noUpcomingMessage,
+            emptyMessage: context.l10n.noUpcomingBookings,
             onRefresh: onRefresh,
             isHistory: false,
             onAction: onBrowseFields,
           ),
           MyBookingsTabView(
             bookings: bookingState.historyBookings,
-            emptyMessage: BookingConstants.noHistoryMessage,
+            emptyMessage: context.l10n.noBookingHistory,
             onRefresh: onRefresh,
             isHistory: true,
             onAction: onBrowseFields,
           ),
+          RecurringTabView(onRefresh: onRefresh, onCreateNew: onBrowseFields),
         ],
       );
     }

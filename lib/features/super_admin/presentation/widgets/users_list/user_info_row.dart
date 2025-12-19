@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Simple row displaying an icon and a single line of text.
 class UserInfoRow extends StatelessWidget {
@@ -22,7 +23,7 @@ class UserInfoRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+            style: AppTextStyles.labelMedium.copyWith(color: Colors.grey[700]),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

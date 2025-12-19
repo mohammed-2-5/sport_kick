@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class AdminListEmptyState extends StatelessWidget {
   final bool isSearchEmpty;
@@ -32,7 +33,7 @@ class AdminListEmptyState extends StatelessWidget {
             isSearchEmpty
                 ? 'Create your first field owner account'
                 : 'Try adjusting your filters',
-            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
           ),
         ],
       ),

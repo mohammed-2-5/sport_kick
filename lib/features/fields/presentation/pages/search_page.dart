@@ -10,6 +10,7 @@ import 'package:spo_kick/features/city/presentation/widgets/city_switcher_button
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/search_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/utils/city_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 import '../widgets/search/search_content.dart';
 
@@ -77,7 +78,7 @@ class _SearchPageState extends State<SearchPage> {
           body: Column(
             children: [
               PremiumCurvedHeader(
-                title: 'Search Fields',
+                title: context.l10n.searchFieldsTitle,
                 showBackButton: true,
                 height: 200,
                 trailing: const CitySwitcherButton(),
@@ -85,7 +86,7 @@ class _SearchPageState extends State<SearchPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Builder(
                     builder: (context) => PremiumSearchBar(
-                      hint: 'Search by name, city, or address...',
+                      hint: context.l10n.searchByNameCityAddress,
                       controller: _searchController,
                       onChanged: (query) {
                         context.read<SearchCubit>().search(query);

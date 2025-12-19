@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -12,6 +13,8 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_admin_profile_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_admin_stats_grid.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_assign_field_dialog.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_password_reset_success_dialog.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_reset_password_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_status_toggle_dialog.dart';
 
 /// Premium admin details view.
@@ -54,6 +57,20 @@ class _PremiumAdminDetailsViewState extends State<PremiumAdminDetailsView> {
           SnackbarHelper.showSuccess(context, state.message);
           // Refresh data
           context.read<AdminDetailsCubit>().initialize(state.admin);
+        } else if (state is AdminPasswordReset) {
+          // Show success dialog with new password
+          showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => PremiumPasswordResetSuccessDialog(
+              admin: state.admin,
+              newPassword: state.newPassword,
+              onDone: () {
+                Navigator.of(context).pop();
+                context.read<AdminDetailsCubit>().initialize(state.admin);
+              },
+            ),
+          );
         }
       },
       builder: (context, state) {
@@ -86,6 +103,16 @@ class _PremiumAdminDetailsViewState extends State<PremiumAdminDetailsView> {
                 onCancel: () =>
                     context.read<AdminDetailsCubit>().hideStatusToggleDialog(),
               ),
+
+            // Reset password dialog
+            if (state is AdminDetailsLoaded && state.showResetPasswordDialog)
+              PremiumResetPasswordDialog(
+                admin: state.admin,
+                onConfirm: () =>
+                    context.read<AdminDetailsCubit>().resetAdminPassword(),
+                onCancel: () =>
+                    context.read<AdminDetailsCubit>().hideResetPasswordDialog(),
+              ),
           ],
         );
       },
@@ -110,6 +137,7 @@ class _PremiumAdminDetailsViewState extends State<PremiumAdminDetailsView> {
     final assignedFields = _getAssignedFieldsFromState(state);
     final isTogglingStatus = _getIsTogglingStatus(state);
     final isAssigningField = _getIsAssigningField(state);
+    final isResettingPassword = _getIsResettingPassword(state);
     final cubit = context.read<AdminDetailsCubit>();
 
     return RefreshIndicator(
@@ -152,8 +180,10 @@ class _PremiumAdminDetailsViewState extends State<PremiumAdminDetailsView> {
                   admin: admin,
                   isTogglingStatus: isTogglingStatus,
                   isAssigningField: isAssigningField,
+                  isResettingPassword: isResettingPassword,
                   onToggleStatus: () => cubit.showStatusToggleDialog(),
                   onAssignField: () => cubit.showAssignFieldDialog(),
+                  onResetPassword: () => cubit.showResetPasswordDialog(),
                 ),
                 const SizedBox(height: 24),
 
@@ -204,6 +234,11 @@ class _PremiumAdminDetailsViewState extends State<PremiumAdminDetailsView> {
 
   bool _getIsAssigningField(AdminDetailsState state) {
     if (state is AdminDetailsLoaded) return state.isAssigningField;
+    return false;
+  }
+
+  bool _getIsResettingPassword(AdminDetailsState state) {
+    if (state is AdminDetailsLoaded) return state.isResettingPassword;
     return false;
   }
 }
@@ -305,7 +340,7 @@ class _ErrorState extends StatelessWidget {
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+                style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
               ),
               const SizedBox(height: 24),
               GestureDetector(
@@ -324,11 +359,9 @@ class _ErrorState extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Retry',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                    style: AppTextStyles.labelLarge.copyWith(
                       color: Colors.white,
                     ),
                   ),

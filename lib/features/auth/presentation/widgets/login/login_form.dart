@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/utils/validators.dart';
+import 'package:spo_kick/core/constants/app_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/core/widgets/custom_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -75,13 +76,22 @@ class LoginFormState extends State<LoginForm> {
 
           // Email Field
           CustomTextField(
-            label: 'Email',
-            hint: 'Enter your email',
+            label: context.l10n.email,
+            hint: context.l10n.enterYourEmail,
             controller: _emailController,
             type: TextFieldType.email,
             keyboardType: TextInputType.emailAddress,
             prefixIcon: Icons.email_outlined,
-            validator: Validators.email,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return context.l10n.fieldRequired;
+              }
+              final regex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
+              if (!regex.hasMatch(value.trim())) {
+                return context.l10n.invalidEmail;
+              }
+              return null;
+            },
             textInputAction: TextInputAction.next,
           ),
 
@@ -89,12 +99,20 @@ class LoginFormState extends State<LoginForm> {
 
           // Password Field
           CustomTextField(
-            label: 'Password',
-            hint: 'Enter your password',
+            label: context.l10n.password,
+            hint: context.l10n.enterPassword,
             controller: _passwordController,
             type: TextFieldType.password,
             prefixIcon: Icons.lock_outline,
-            validator: Validators.password,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return context.l10n.fieldRequired;
+              }
+              if (value.length < AppConstants.minPasswordLength) {
+                return context.l10n.passwordTooShort;
+              }
+              return null;
+            },
             textInputAction: TextInputAction.done,
             onSubmitted: (_) => _handleLogin(),
           ),
@@ -108,7 +126,7 @@ class LoginFormState extends State<LoginForm> {
               onPressed: () {
                 _showForgotPasswordDialog(context);
               },
-              child: const Text('Forgot Password?'),
+              child: Text(context.l10n.forgotPassword),
             ),
           ),
 
@@ -116,7 +134,7 @@ class LoginFormState extends State<LoginForm> {
 
           // Login Button
           CustomButton(
-            text: 'Login',
+            text: context.l10n.login,
             onPressed: _handleLogin,
             variant: ButtonVariant.primary,
           ),
@@ -131,34 +149,49 @@ class LoginFormState extends State<LoginForm> {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Reset Password'),
+        title: Text(context.l10n.resetPasswordTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Enter your email address and we\'ll send you a link to reset your password.',
-            ),
+            Text(context.l10n.resetPasswordSubtitle),
             const SizedBox(height: 16),
             CustomTextField(
-              label: 'Email',
-              hint: 'Enter your email',
+              label: context.l10n.email,
+              hint: context.l10n.enterYourEmail,
               controller: emailController,
               type: TextFieldType.email,
               keyboardType: TextInputType.emailAddress,
-              validator: Validators.email,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return context.l10n.fieldRequired;
+                }
+                final regex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
+                if (!regex.hasMatch(value.trim())) {
+                  return context.l10n.invalidEmail;
+                }
+                return null;
+              },
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           CustomButton(
-            text: 'Send Reset Link',
+            text: context.l10n.resetPassword,
             onPressed: () {
               final email = emailController.text.trim();
-              final emailError = Validators.email(email);
+              String? emailError;
+              if (email.isEmpty) {
+                emailError = context.l10n.fieldRequired;
+              } else {
+                final regex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
+                if (!regex.hasMatch(email)) {
+                  emailError = context.l10n.invalidEmail;
+                }
+              }
               if (emailError != null) {
                 ScaffoldMessenger.of(
                   context,
@@ -173,9 +206,7 @@ class LoginFormState extends State<LoginForm> {
               context.read<AuthCubit>().resetPassword(email);
 
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Password reset link sent! Check your email.'),
-                ),
+                SnackBar(content: Text(context.l10n.resetEmailSentMessage)),
               );
             },
             variant: ButtonVariant.primary,

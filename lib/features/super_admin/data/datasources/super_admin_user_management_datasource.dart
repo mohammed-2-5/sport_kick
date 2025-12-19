@@ -23,6 +23,7 @@ abstract class SuperAdminUserManagementDataSource {
   Future<List<UserModel>> getAllUsers();
   Future<void> deactivateUser(String userId);
   Future<void> activateUser(String userId);
+  Future<String> resetAdminPassword(String adminId);
 }
 
 /// Implementation of super admin user management data source.
@@ -265,6 +266,65 @@ class SuperAdminUserManagementDataSourceImpl
     } catch (e) {
       debugPrint('❌ [UserMgmtDataSource] Exception: $e');
       throw ServerException('Failed to activate user: $e');
+    }
+  }
+
+  @override
+  Future<String> resetAdminPassword(String adminId) async {
+    try {
+      debugPrint('🔐 [UserMgmtDataSource] Resetting admin password: $adminId');
+
+      final newPassword = _generateDefaultPassword();
+      debugPrint('   Generated new password (local): $newPassword');
+
+      final response = await supabaseClient.functions.invoke(
+        'reset-admin-password',
+        body: {'adminId': adminId},
+      );
+
+      if (response.data == null) {
+        debugPrint('❌ [UserMgmtDataSource] Empty response from function');
+        throw const ServerException(
+          'Empty response from reset-password function',
+        );
+      }
+
+      final data = response.data as Map<String, dynamic>;
+
+      if (data['error'] != null) {
+        final String message = data['error'].toString();
+        debugPrint('❌ [UserMgmtDataSource] Edge Function error: $message');
+
+        if (message.toLowerCase().contains('not found')) {
+          throw const NotFoundException('Admin not found');
+        }
+        if (message.toLowerCase().contains('not an admin') ||
+            message.toLowerCase().contains('real email')) {
+          throw ValidationException(message);
+        }
+        throw ServerException('Failed to reset password: $message');
+      }
+
+      final returnedPassword = data['newPassword'] as String?;
+      if (returnedPassword == null) {
+        debugPrint('❌ [UserMgmtDataSource] No password in response');
+        throw const ServerException('No password returned from function');
+      }
+
+      debugPrint('✅ [UserMgmtDataSource] Admin password reset successfully');
+      return returnedPassword;
+    } on NotFoundException {
+      rethrow;
+    } on ValidationException {
+      rethrow;
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      debugPrint('❌ [UserMgmtDataSource] Exception: $e');
+      if (e.toString().contains('not found')) {
+        throw const NotFoundException('Admin not found');
+      }
+      throw ServerException('Failed to reset admin password: $e');
     }
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -90,23 +91,23 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
   @override
   Widget build(BuildContext context) {
     if (!_isEditing) {
-      return const Scaffold(
+      return Scaffold(
         body: Column(
           children: [
             PremiumCurvedHeader(
-              title: 'Add Field',
-              subtitle: 'Create a new football field',
+              title: context.l10n.addFieldTitle,
+              subtitle: context.l10n.addFieldSubtitle,
               showBackButton: true,
               height: 160,
             ),
             Expanded(
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.all(24.0),
                   child: Text(
-                    'Creating new fields is currently restricted to Admins.',
+                    context.l10n.createFieldRestrictedMessage,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ),
               ),
@@ -120,8 +121,8 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
       body: Column(
         children: [
           PremiumCurvedHeader(
-            title: 'Edit Field',
-            subtitle: 'Update ${widget.field!.name}',
+            title: context.l10n.editFieldTitle,
+            subtitle: context.l10n.updateFieldTitle(widget.field!.name),
             showBackButton: true,
             height: 160,
           ),
@@ -137,8 +138,8 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
               },
               builder: (context, state) {
                 if (state is OwnerLoading) {
-                  return const LoadingIndicator.fullScreen(
-                    message: 'Updating field...',
+                  return LoadingIndicator.fullScreen(
+                    message: context.l10n.updatingFieldMessage,
                   );
                 }
 
@@ -153,8 +154,10 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
                   selectedSurface: _selectedSurface,
                   selectedType: _selectedType,
                   selectedFacilities: _selectedFacilities,
-                  title: 'Edit Field',
-                  subtitle: 'Update details for ${widget.field!.name}',
+                  title: context.l10n.editFieldTitle,
+                  subtitle: context.l10n.updateFieldDetailsSubtitle(
+                    widget.field!.name,
+                  ),
                   onSave: _handleSave,
                   onManageBusinessHours: () => context.pushNamed(
                     'manageBusinessHours',

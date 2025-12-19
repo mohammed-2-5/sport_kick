@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Individual duration option card with premium styling.
 ///
@@ -74,11 +76,11 @@ class _DurationOptionCardState extends State<DurationOptionCard>
   }
 
   double get _totalPrice => widget.pricePerHour * widget.duration;
-  String get _durationLabel => widget.duration == 1 ? '1 Hour' : '2 Hours';
   String get _formattedPrice => '${_totalPrice.toStringAsFixed(0)} EGP';
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return GestureDetector(
       onTapDown: widget.isAvailable ? (_) => _controller.forward() : null,
       onTapUp: widget.isAvailable ? (_) => _controller.reverse() : null,
@@ -102,7 +104,7 @@ class _DurationOptionCardState extends State<DurationOptionCard>
           decoration: _buildDecoration(),
           child: Stack(
             children: [
-              _buildContent(),
+              _buildContent(l10n),
               if (widget.badgeText != null && widget.isAvailable) _buildBadge(),
               if (widget.isSelected) _buildSelectedIndicator(),
             ],
@@ -155,7 +157,7 @@ class _DurationOptionCardState extends State<DurationOptionCard>
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(AppLocalizations l10n) {
     final textColor = widget.isSelected
         ? Colors.white
         : widget.isAvailable
@@ -180,7 +182,7 @@ class _DurationOptionCardState extends State<DurationOptionCard>
               Icon(Icons.schedule_rounded, size: 18, color: textColor),
               const SizedBox(width: 6),
               Text(
-                _durationLabel,
+                l10n.durationHours(widget.duration),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,

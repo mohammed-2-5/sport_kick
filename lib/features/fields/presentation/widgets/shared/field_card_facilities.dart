@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 
 /// Facilities display widget for field card.
 ///
@@ -29,17 +30,18 @@ class FieldCardFacilities extends StatelessWidget {
       runSpacing: 6,
       children: facilities
           .take(maxFacilities)
-          .map((facility) => _buildFacilityChip(facility))
+          .map((facility) => _buildFacilityChip(context, facility))
           .toList(),
     );
   }
 
   /// Builds a single facility chip with gradient background and icon
-  Widget _buildFacilityChip(String facility) {
+  Widget _buildFacilityChip(BuildContext context, String facility) {
     final facilityGradients = _getFacilityGradients();
     final gradient =
         facilityGradients[facility] ??
         [AppColors.primary, AppColors.primaryLight];
+    final displayName = FacilityLocalizer.localize(context, facility);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -60,7 +62,7 @@ class FieldCardFacilities extends StatelessWidget {
           Icon(_getFacilityIcon(facility), size: 12, color: Colors.white),
           const SizedBox(width: 4),
           Text(
-            facility,
+            displayName,
             style: const TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w600,

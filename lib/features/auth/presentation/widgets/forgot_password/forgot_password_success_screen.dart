@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
 
 /// Forgot password success screen widget.
@@ -37,7 +38,7 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
             ),
             const SizedBox(height: AuthConstants.formFieldSpacing * 2),
             Text(
-              AuthConstants.resetEmailSentTitle,
+              context.l10n.resetEmailSentTitle,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.bold,
@@ -46,7 +47,7 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
             ),
             const SizedBox(height: AuthConstants.formFieldSpacing),
             Text(
-              AuthConstants.resetEmailSentMsg,
+              context.l10n.resetEmailSentMessage,
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
@@ -84,9 +85,12 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: onBackToLogin,
                 icon: const Icon(Icons.login),
-                label: const Text(
-                  AuthConstants.backToLoginLabel,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                label: Text(
+                  context.l10n.backToLogin,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,

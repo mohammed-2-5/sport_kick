@@ -48,9 +48,16 @@ class BookingListItemContent extends StatelessWidget {
           BookingListItemDateTime(
             formattedDate: booking.formattedDate,
             formattedTimeSlot: booking.formattedTimeSlot,
+            date: booking.date,
+            startTime: booking.startTime,
+            endTime: booking.endTime,
           ),
           const SizedBox(height: BookingConstants.standardPadding),
-          BookingListItemPrice(formattedPrice: booking.formattedPrice),
+          BookingListItemPrice(
+            formattedPrice: booking.formattedPrice,
+            amount: booking.totalPrice,
+            currency: booking.currency,
+          ),
           if (!isHistory && booking.status != BookingStatus.canceled) ...[
             const SizedBox(height: BookingConstants.itemSpacing),
             BookingListItemPaymentStatus(

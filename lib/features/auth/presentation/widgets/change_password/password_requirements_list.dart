@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/utils/password_validator.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/password_requirement_item.dart';
 
@@ -15,6 +15,7 @@ class PasswordRequirementsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final hasMinLength = PasswordValidator.hasMinLength(password);
     final hasUppercase = PasswordValidator.hasUppercase(password);
     final hasLowercase = PasswordValidator.hasLowercase(password);
@@ -24,7 +25,7 @@ class PasswordRequirementsList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AuthConstants.passwordRequirementsTitle,
+          l10n.passwordRequirementsTitle,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: AppColors.textSecondary,
             fontWeight: FontWeight.bold,
@@ -32,21 +33,18 @@ class PasswordRequirementsList extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         PasswordRequirementItem(
-          text: AuthConstants.requirement8Chars,
+          text: l10n.requirement8Chars,
           isMet: hasMinLength,
         ),
         PasswordRequirementItem(
-          text: AuthConstants.requirementUppercase,
+          text: l10n.requirementUppercase,
           isMet: hasUppercase,
         ),
         PasswordRequirementItem(
-          text: AuthConstants.requirementLowercase,
+          text: l10n.requirementLowercase,
           isMet: hasLowercase,
         ),
-        PasswordRequirementItem(
-          text: AuthConstants.requirementNumber,
-          isMet: hasNumber,
-        ),
+        PasswordRequirementItem(text: l10n.requirementNumber, isMet: hasNumber),
       ],
     );
   }

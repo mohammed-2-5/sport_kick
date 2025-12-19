@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
 
@@ -12,9 +13,11 @@ class BookingStatsCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Booking Statistics',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: AppTextStyles.appBarTitle.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 16),
         BlocBuilder<OwnerCubit, OwnerState>(

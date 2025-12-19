@@ -1,24 +1,92 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 
-/// Application text styles.
+/// Application text styles with responsive scaling.
 ///
 /// Defines all text styles used in the app for consistency.
-/// Based on Material Design 3 typography scale.
+/// Based on Material Design 3 typography scale with responsive scaling.
 ///
 /// Usage:
 /// ```dart
+/// // Static usage (base size):
 /// Text('Hello', style: AppTextStyles.headlineLarge)
+///
+/// // Responsive usage (scales with screen):
+/// Text('Hello', style: context.responsive.headlineLarge)
+/// Text('Hello', style: AppTextStyles.headlineLarge.responsive(context))
 /// ```
 class AppTextStyles {
   // Prevent instantiation
   AppTextStyles._();
 
-  /// Base font family for the app
-  static const String _fontFamily = 'Roboto';
+  // ==================== FONT FAMILIES ====================
 
-  /// Alternative font family for headings (optional)
-  static const String _headingFontFamily = 'Roboto';
+  /// Primary font family for body text and general UI
+  /// Cairo - Supports both Arabic and English (bilingual)
+  static const String fontFamily = 'Cairo';
+
+  /// Font family for headings (English-focused, premium look)
+  /// Poppins - Modern, clean sans-serif
+  static const String headingFontFamily = 'Poppins';
+
+  /// Arabic-specific font family (same as primary for RTL support)
+  static const String arabicFontFamily = 'Cairo';
+
+  // ==================== RESPONSIVE SCALING ====================
+
+  /// Design base width (typically iPhone 14 width)
+  static const double _designWidth = 375.0;
+
+  /// Minimum scale factor (prevents text from being too small)
+  static const double _minScale = 0.85;
+
+  /// Maximum scale factor (prevents text from being too large)
+  static const double _maxScale = 1.3;
+
+  /// Tablet breakpoint width
+  static const double tabletBreakpoint = 600.0;
+
+  /// Desktop breakpoint width
+  static const double desktopBreakpoint = 1200.0;
+
+  /// Get device type based on screen width
+  static DeviceType getDeviceType(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    if (width >= desktopBreakpoint) return DeviceType.desktop;
+    if (width >= tabletBreakpoint) return DeviceType.tablet;
+    return DeviceType.mobile;
+  }
+
+  /// Calculate responsive scale factor based on screen width
+  static double getScaleFactor(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final textScaleFactor = MediaQuery.textScalerOf(context).scale(1.0);
+
+    // Calculate base scale from screen width
+    double scale = screenWidth / _designWidth;
+
+    // Apply device-specific adjustments
+    final deviceType = getDeviceType(context);
+    switch (deviceType) {
+      case DeviceType.tablet:
+        scale = scale * 0.85; // Slightly smaller on tablets
+        break;
+      case DeviceType.desktop:
+        scale = scale * 0.7; // Smaller on desktop
+        break;
+      case DeviceType.mobile:
+        break; // Use calculated scale
+    }
+
+    // Clamp to min/max and respect user's text scale preference
+    return (scale.clamp(_minScale, _maxScale)) * min(textScaleFactor, 1.2);
+  }
+
+  /// Get responsive font size
+  static double responsiveFontSize(BuildContext context, double baseSize) {
+    return baseSize * getScaleFactor(context);
+  }
 
   // ==================== DISPLAY STYLES ====================
   // Used for the largest, most prominent text (rarely used)
@@ -26,7 +94,7 @@ class AppTextStyles {
   /// Display Large - 57sp
   /// Use for: Hero sections, splash screens
   static const TextStyle displayLarge = TextStyle(
-    fontFamily: _headingFontFamily,
+    fontFamily: headingFontFamily,
     fontSize: 57,
     fontWeight: FontWeight.w400,
     letterSpacing: -0.25,
@@ -37,7 +105,7 @@ class AppTextStyles {
   /// Display Medium - 45sp
   /// Use for: Large marketing text, special announcements
   static const TextStyle displayMedium = TextStyle(
-    fontFamily: _headingFontFamily,
+    fontFamily: headingFontFamily,
     fontSize: 45,
     fontWeight: FontWeight.w400,
     letterSpacing: 0,
@@ -48,7 +116,7 @@ class AppTextStyles {
   /// Display Small - 36sp
   /// Use for: Prominent UI elements
   static const TextStyle displaySmall = TextStyle(
-    fontFamily: _headingFontFamily,
+    fontFamily: headingFontFamily,
     fontSize: 36,
     fontWeight: FontWeight.w400,
     letterSpacing: 0,
@@ -62,7 +130,7 @@ class AppTextStyles {
   /// Headline Large - 32sp
   /// Use for: Main screen titles
   static const TextStyle headlineLarge = TextStyle(
-    fontFamily: _headingFontFamily,
+    fontFamily: headingFontFamily,
     fontSize: 32,
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
@@ -73,7 +141,7 @@ class AppTextStyles {
   /// Headline Medium - 28sp
   /// Use for: Section headers, dialog titles
   static const TextStyle headlineMedium = TextStyle(
-    fontFamily: _headingFontFamily,
+    fontFamily: headingFontFamily,
     fontSize: 28,
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
@@ -84,7 +152,7 @@ class AppTextStyles {
   /// Headline Small - 24sp
   /// Use for: Smaller section headers, card titles
   static const TextStyle headlineSmall = TextStyle(
-    fontFamily: _headingFontFamily,
+    fontFamily: headingFontFamily,
     fontSize: 24,
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
@@ -98,7 +166,7 @@ class AppTextStyles {
   /// Title Large - 22sp
   /// Use for: Prominent list items, emphasized content
   static const TextStyle titleLarge = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 22,
     fontWeight: FontWeight.w500,
     letterSpacing: 0,
@@ -109,7 +177,7 @@ class AppTextStyles {
   /// Title Medium - 16sp
   /// Use for: List item titles, card headers
   static const TextStyle titleMedium = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 16,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.15,
@@ -120,7 +188,7 @@ class AppTextStyles {
   /// Title Small - 14sp
   /// Use for: Smaller titles, button text
   static const TextStyle titleSmall = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
@@ -134,7 +202,7 @@ class AppTextStyles {
   /// Body Large - 16sp
   /// Use for: Longer paragraphs, main content
   static const TextStyle bodyLarge = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 16,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
@@ -145,7 +213,7 @@ class AppTextStyles {
   /// Body Medium - 14sp
   /// Use for: Standard body text, descriptions
   static const TextStyle bodyMedium = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.25,
@@ -156,7 +224,7 @@ class AppTextStyles {
   /// Body Small - 12sp
   /// Use for: Supporting text, captions
   static const TextStyle bodySmall = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.4,
@@ -170,7 +238,7 @@ class AppTextStyles {
   /// Label Large - 14sp
   /// Use for: Large buttons, prominent labels
   static const TextStyle labelLarge = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
@@ -181,7 +249,7 @@ class AppTextStyles {
   /// Label Medium - 12sp
   /// Use for: Standard buttons, tabs, chips
   static const TextStyle labelMedium = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
@@ -192,7 +260,7 @@ class AppTextStyles {
   /// Label Small - 11sp
   /// Use for: Small buttons, tags, badges
   static const TextStyle labelSmall = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 11,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
@@ -204,7 +272,7 @@ class AppTextStyles {
 
   /// Button text style for primary buttons
   static const TextStyle button = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 16,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
@@ -217,7 +285,7 @@ class AppTextStyles {
 
   /// Button text style for small buttons
   static const TextStyle buttonSmall = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.4,
@@ -227,7 +295,7 @@ class AppTextStyles {
 
   /// Price text style - Large, bold prices
   static const TextStyle price = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 24,
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
@@ -237,7 +305,7 @@ class AppTextStyles {
 
   /// Price text style - Medium prices
   static const TextStyle priceMedium = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 18,
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
@@ -247,7 +315,7 @@ class AppTextStyles {
 
   /// Price text style - Small prices
   static const TextStyle priceSmall = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
@@ -257,7 +325,7 @@ class AppTextStyles {
 
   /// Caption text style - For image captions, hints
   static const TextStyle caption = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.4,
@@ -267,7 +335,7 @@ class AppTextStyles {
 
   /// Overline text style - For category labels, timestamps
   static const TextStyle overline = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w500,
     letterSpacing: 1.0,
@@ -277,7 +345,7 @@ class AppTextStyles {
 
   /// Link text style - For clickable text
   static const TextStyle link = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.25,
@@ -288,7 +356,7 @@ class AppTextStyles {
 
   /// Error text style - For error messages
   static const TextStyle error = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.4,
@@ -298,7 +366,7 @@ class AppTextStyles {
 
   /// Success text style - For success messages
   static const TextStyle success = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.4,
@@ -308,7 +376,7 @@ class AppTextStyles {
 
   /// Input hint text style - For text field hints
   static const TextStyle inputHint = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 16,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
@@ -318,7 +386,7 @@ class AppTextStyles {
 
   /// Input text style - For text field content
   static const TextStyle inputText = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 16,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
@@ -328,7 +396,7 @@ class AppTextStyles {
 
   /// Input label text style - For floating labels
   static const TextStyle inputLabel = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.4,
@@ -338,7 +406,7 @@ class AppTextStyles {
 
   /// AppBar title text style
   static const TextStyle appBarTitle = TextStyle(
-    fontFamily: _headingFontFamily,
+    fontFamily: headingFontFamily,
     fontSize: 20,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.15,
@@ -348,7 +416,7 @@ class AppTextStyles {
 
   /// Tab text style - For tab labels
   static const TextStyle tab = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
@@ -358,7 +426,7 @@ class AppTextStyles {
 
   /// Chip text style - For chip labels
   static const TextStyle chip = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
@@ -368,7 +436,7 @@ class AppTextStyles {
 
   /// Badge text style - For notification badges
   static const TextStyle badge = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 10,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
@@ -378,7 +446,7 @@ class AppTextStyles {
 
   /// Rating text style - For rating numbers
   static const TextStyle rating = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: fontFamily,
     fontSize: 16,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.15,
@@ -429,4 +497,100 @@ class AppTextStyles {
   static TextStyle italic(TextStyle style) {
     return style.copyWith(fontStyle: FontStyle.italic);
   }
+}
+
+// ==================== DEVICE TYPE ENUM ====================
+
+/// Device type for responsive design
+enum DeviceType { mobile, tablet, desktop }
+
+// ==================== RESPONSIVE EXTENSION ====================
+
+/// Extension to make any TextStyle responsive
+extension ResponsiveTextStyle on TextStyle {
+  /// Get responsive version of this text style
+  TextStyle responsive(BuildContext context) {
+    final scale = AppTextStyles.getScaleFactor(context);
+    return copyWith(fontSize: (fontSize ?? 14) * scale);
+  }
+
+  /// Get responsive version with custom scale
+  TextStyle responsiveScale(BuildContext context, double customScale) {
+    final baseScale = AppTextStyles.getScaleFactor(context);
+    return copyWith(fontSize: (fontSize ?? 14) * baseScale * customScale);
+  }
+}
+
+/// Extension on BuildContext for easy access to responsive text styles
+extension ResponsiveTextStyles on BuildContext {
+  /// Get responsive text styles helper
+  ResponsiveStylesHelper get responsive => ResponsiveStylesHelper(this);
+
+  /// Get device type
+  DeviceType get deviceType => AppTextStyles.getDeviceType(this);
+
+  /// Check if device is mobile
+  bool get isMobile => deviceType == DeviceType.mobile;
+
+  /// Check if device is tablet
+  bool get isTablet => deviceType == DeviceType.tablet;
+
+  /// Check if device is desktop
+  bool get isDesktop => deviceType == DeviceType.desktop;
+}
+
+/// Helper class for responsive text styles
+/// Usage: context.responsive.headlineLarge
+class ResponsiveStylesHelper {
+  final BuildContext _context;
+  const ResponsiveStylesHelper(this._context);
+
+  // Display styles
+  TextStyle get displayLarge => AppTextStyles.displayLarge.responsive(_context);
+  TextStyle get displayMedium =>
+      AppTextStyles.displayMedium.responsive(_context);
+  TextStyle get displaySmall => AppTextStyles.displaySmall.responsive(_context);
+
+  // Headline styles
+  TextStyle get headlineLarge =>
+      AppTextStyles.headlineLarge.responsive(_context);
+  TextStyle get headlineMedium =>
+      AppTextStyles.headlineMedium.responsive(_context);
+  TextStyle get headlineSmall =>
+      AppTextStyles.headlineSmall.responsive(_context);
+
+  // Title styles
+  TextStyle get titleLarge => AppTextStyles.titleLarge.responsive(_context);
+  TextStyle get titleMedium => AppTextStyles.titleMedium.responsive(_context);
+  TextStyle get titleSmall => AppTextStyles.titleSmall.responsive(_context);
+
+  // Body styles
+  TextStyle get bodyLarge => AppTextStyles.bodyLarge.responsive(_context);
+  TextStyle get bodyMedium => AppTextStyles.bodyMedium.responsive(_context);
+  TextStyle get bodySmall => AppTextStyles.bodySmall.responsive(_context);
+
+  // Label styles
+  TextStyle get labelLarge => AppTextStyles.labelLarge.responsive(_context);
+  TextStyle get labelMedium => AppTextStyles.labelMedium.responsive(_context);
+  TextStyle get labelSmall => AppTextStyles.labelSmall.responsive(_context);
+
+  // Custom styles
+  TextStyle get button => AppTextStyles.button.responsive(_context);
+  TextStyle get buttonSmall => AppTextStyles.buttonSmall.responsive(_context);
+  TextStyle get price => AppTextStyles.price.responsive(_context);
+  TextStyle get priceMedium => AppTextStyles.priceMedium.responsive(_context);
+  TextStyle get priceSmall => AppTextStyles.priceSmall.responsive(_context);
+  TextStyle get caption => AppTextStyles.caption.responsive(_context);
+  TextStyle get overline => AppTextStyles.overline.responsive(_context);
+  TextStyle get link => AppTextStyles.link.responsive(_context);
+  TextStyle get error => AppTextStyles.error.responsive(_context);
+  TextStyle get success => AppTextStyles.success.responsive(_context);
+  TextStyle get inputHint => AppTextStyles.inputHint.responsive(_context);
+  TextStyle get inputText => AppTextStyles.inputText.responsive(_context);
+  TextStyle get inputLabel => AppTextStyles.inputLabel.responsive(_context);
+  TextStyle get appBarTitle => AppTextStyles.appBarTitle.responsive(_context);
+  TextStyle get tab => AppTextStyles.tab.responsive(_context);
+  TextStyle get chip => AppTextStyles.chip.responsive(_context);
+  TextStyle get badge => AppTextStyles.badge.responsive(_context);
+  TextStyle get rating => AppTextStyles.rating.responsive(_context);
 }

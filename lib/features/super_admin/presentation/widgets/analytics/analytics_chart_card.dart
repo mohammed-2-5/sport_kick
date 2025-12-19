@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Chart card wrapper widget for analytics charts
 class AnalyticsChartCard extends StatelessWidget {
@@ -51,7 +52,9 @@ class AnalyticsChartCard extends StatelessWidget {
                       ),
                       Text(
                         subtitle,
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        style: AppTextStyles.labelMedium.copyWith(
+                          color: Colors.grey[600],
+                        ),
                       ),
                     ],
                   ),
@@ -105,7 +108,9 @@ class ChartLegendItem extends StatelessWidget {
                 ),
                 Text(
                   value.toString(),
-                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                  style: AppTextStyles.caption.copyWith(
+                    color: Colors.grey[600],
+                  ),
                 ),
               ],
             ),

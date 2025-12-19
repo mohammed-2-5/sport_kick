@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/search_tip_item.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Search tips widget.
 ///
@@ -39,13 +40,16 @@ class SearchTips extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Recent Searches',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Text(
+                  context.l10n.recentSearches,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 TextButton(
                   onPressed: onClearHistory,
-                  child: const Text('Clear All'),
+                  child: Text(context.l10n.clearAll),
                 ),
               ],
             ),
@@ -79,14 +83,17 @@ class SearchTips extends StatelessWidget {
                   color: AppColors.primary.withValues(alpha: 0.5),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Search for fields',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Text(
+                  context.l10n.searchForFields,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Find fields by name, city, or address',
-                  style: TextStyle(
+                Text(
+                  context.l10n.searchByNameCityAddressDescription,
+                  style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
                   ),
@@ -96,22 +103,22 @@ class SearchTips extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const SearchTipItem(
+          SearchTipItem(
             icon: Icons.sports_soccer,
-            title: 'Field Name',
-            example: 'e.g., "Cairo Stadium", "Zamalek Arena"',
+            title: context.l10n.searchTipFieldNameTitle,
+            example: context.l10n.searchTipFieldNameExample,
           ),
           const SizedBox(height: 16),
-          const SearchTipItem(
+          SearchTipItem(
             icon: Icons.location_city,
-            title: 'City',
-            example: 'e.g., "Cairo", "Alexandria", "Giza"',
+            title: context.l10n.searchTipCityTitle,
+            example: context.l10n.searchTipCityExample,
           ),
           const SizedBox(height: 16),
-          const SearchTipItem(
+          SearchTipItem(
             icon: Icons.location_on,
-            title: 'Address',
-            example: 'e.g., "Nasr City", "Zamalek"',
+            title: context.l10n.searchTipAddressTitle,
+            example: context.l10n.searchTipAddressExample,
           ),
         ],
       ),

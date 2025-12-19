@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium field card with glassmorphism and animations.
 ///
@@ -283,8 +284,7 @@ class _SportBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             sportType,
-            style: const TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.badge.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.navyDeep,
             ),
@@ -329,8 +329,7 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: const TextStyle(
-          fontSize: 11,
+        style: AppTextStyles.badge.copyWith(
           fontWeight: FontWeight.w700,
           color: Colors.white,
         ),
@@ -361,8 +360,7 @@ class _RatingBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             rating.toStringAsFixed(1),
-            style: const TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
             ),
@@ -370,8 +368,7 @@ class _RatingBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             '($reviewCount)',
-            style: TextStyle(
-              fontSize: 10,
+            style: AppTextStyles.badge.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.8),
             ),
           ),
@@ -406,9 +403,7 @@ class _ContentSection extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
+                  style: AppTextStyles.titleMedium.copyWith(
                     color: AppColors.textPrimary,
                   ),
                   maxLines: 1,
@@ -426,8 +421,7 @@ class _ContentSection extends StatelessWidget {
                     Expanded(
                       child: Text(
                         cityName,
-                        style: TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.labelMedium.copyWith(
                           color: AppColors.textSecondary.withValues(alpha: 0.8),
                         ),
                         maxLines: 1,
@@ -453,8 +447,7 @@ class _ContentSection extends StatelessWidget {
               children: [
                 Text(
                   '\$${pricePerHour.toStringAsFixed(0)}',
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
                   ),

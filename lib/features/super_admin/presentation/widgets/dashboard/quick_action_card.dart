@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Quick action card widget for dashboard actions
 ///
@@ -62,8 +63,7 @@ class QuickActionCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
@@ -73,7 +73,9 @@ class QuickActionCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                    style: AppTextStyles.caption.copyWith(
+                      color: Colors.grey[600],
+                    ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

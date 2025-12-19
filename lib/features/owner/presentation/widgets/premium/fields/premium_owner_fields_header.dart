@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+
 /// Premium header for owner fields page.
 ///
 /// Features:
@@ -48,22 +50,25 @@ class PremiumOwnerFieldsHeader extends StatelessWidget {
             children: [
               _BackButton(onTap: () => Navigator.pop(context)),
               const SizedBox(width: 16),
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Manage Fields',
-                      style: TextStyle(
+                      context.l10n.manageFields,
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
-                      'View and manage all your fields',
-                      style: TextStyle(fontSize: 13, color: Colors.white70),
+                      context.l10n.manageFieldsSubtitle,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.white70,
+                      ),
                     ),
                   ],
                 ),
@@ -77,6 +82,7 @@ class PremiumOwnerFieldsHeader extends StatelessWidget {
             query: searchQuery,
             onChanged: onSearchChanged,
             onClear: onClearSearch,
+            hintText: context.l10n.searchFieldsHint,
           ),
 
           const SizedBox(height: 16),
@@ -86,16 +92,19 @@ class PremiumOwnerFieldsHeader extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _StatChip(label: 'Total', count: stats['total'] ?? 0),
+                _StatChip(
+                  label: context.l10n.total,
+                  count: stats['total'] ?? 0,
+                ),
                 const SizedBox(width: 8),
                 _StatChip(
-                  label: 'Active',
+                  label: context.l10n.active,
                   count: stats['active'] ?? 0,
                   color: Colors.green,
                 ),
                 const SizedBox(width: 8),
                 _StatChip(
-                  label: 'Inactive',
+                  label: context.l10n.inactive,
                   count: stats['inactive'] ?? 0,
                   color: Colors.grey,
                 ),
@@ -189,11 +198,13 @@ class _SearchBar extends StatelessWidget {
   final String query;
   final Function(String) onChanged;
   final VoidCallback onClear;
+  final String hintText;
 
   const _SearchBar({
     required this.query,
     required this.onChanged,
     required this.onClear,
+    required this.hintText,
   });
 
   @override
@@ -212,7 +223,7 @@ class _SearchBar extends StatelessWidget {
             onChanged: onChanged,
             style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
-              hintText: 'Search by name or location...',
+              hintText: hintText,
               hintStyle: TextStyle(
                 color: Colors.white.withValues(alpha: 0.5),
                 fontSize: 14,

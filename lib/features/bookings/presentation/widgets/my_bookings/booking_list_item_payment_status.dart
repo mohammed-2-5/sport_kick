@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
 
 /// Payment status badge widget for booking list items.
@@ -37,9 +39,9 @@ class BookingListItemPaymentStatus extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Payment Status',
-                  style: TextStyle(
+                Text(
+                  context.l10n.paymentStatusLabel,
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: AppColors.textSecondary,
@@ -47,7 +49,7 @@ class BookingListItemPaymentStatus extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  paymentStatus.displayName,
+                  _statusLabel(context),
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -104,6 +106,20 @@ class BookingListItemPaymentStatus extends StatelessWidget {
         return AppColors.success;
       case PaymentStatus.rejected:
         return AppColors.error;
+    }
+  }
+
+  String _statusLabel(BuildContext context) {
+    final l10n = context.l10n;
+    switch (paymentStatus) {
+      case PaymentStatus.pending:
+        return l10n.paymentStatusPending;
+      case PaymentStatus.uploaded:
+        return l10n.paymentStatusUploaded;
+      case PaymentStatus.verified:
+        return l10n.paymentStatusVerified;
+      case PaymentStatus.rejected:
+        return l10n.paymentStatusRejected;
     }
   }
 }
@@ -176,7 +192,7 @@ class _PaymentActionButton extends StatelessWidget {
 
     if (paymentStatus.needsUserAction) {
       return _ActionButton(
-        label: 'Pay Now',
+        label: context.l10n.payNow,
         icon: Icons.payment,
         color: AppColors.primary,
         onPressed: onPayNowPressed,
@@ -185,7 +201,7 @@ class _PaymentActionButton extends StatelessWidget {
 
     if (hasPaymentProof) {
       return _ActionButton(
-        label: 'View',
+        label: context.l10n.view,
         icon: Icons.visibility,
         color: AppColors.info,
         onPressed: onViewProofPressed,
@@ -223,7 +239,7 @@ class _ActionButton extends StatelessWidget {
       icon: Icon(icon, size: 16),
       label: Text(
         label,
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+        style: AppTextStyles.labelMedium.copyWith(fontWeight: FontWeight.w600),
       ),
     );
   }

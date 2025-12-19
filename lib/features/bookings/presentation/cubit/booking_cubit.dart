@@ -92,11 +92,7 @@ class BookingCubit extends Cubit<BookingState> {
       },
       (timeSlots) {
         if (timeSlots.isEmpty) {
-          emit(
-            const BookingsEmpty(
-              message: 'No time slots available for this date.',
-            ),
-          );
+          emit(const BookingsEmpty());
         } else {
           emit(
             TimeSlotsLoaded(
@@ -227,7 +223,7 @@ class BookingCubit extends Cubit<BookingState> {
       },
       (bookings) {
         if (bookings.isEmpty) {
-          emit(const BookingsEmpty(message: 'You have no bookings yet.'));
+          emit(const BookingsEmpty());
         } else {
           emit(BookingsLoaded(bookings));
         }
@@ -292,7 +288,7 @@ class BookingCubit extends Cubit<BookingState> {
       (bookings) {
         debugPrint('✅ [BookingCubit] Loaded ${bookings.length} owner bookings');
         if (bookings.isEmpty) {
-          emit(const BookingsEmpty(message: 'No bookings found.'));
+          emit(const BookingsEmpty());
         } else {
           emit(BookingsLoaded(bookings));
         }

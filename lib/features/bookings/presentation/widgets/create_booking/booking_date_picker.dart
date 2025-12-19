@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 
 /// Date selection widget for booking flow.
@@ -22,9 +23,9 @@ class BookingDatePicker extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          BookingConstants.selectDateLabel,
-          style: TextStyle(
+        Text(
+          context.l10n.selectDate,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
@@ -52,9 +53,11 @@ class BookingDatePicker extends StatelessWidget {
                 ),
                 const SizedBox(width: BookingConstants.itemSpacing),
                 Text(
-                  DateFormat(
-                    BookingConstants.fullDateFormat,
-                  ).format(selectedDate),
+                  LocaleFormatters.formatDate(
+                    context,
+                    selectedDate,
+                    pattern: 'yMMMMEEEEd',
+                  ),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

@@ -1,0 +1,16 @@
+Analyzing spo_kick...                                           
+
+warning - Duplicate import - lib\features\fields\presentation\pages\search_page.dart:14:8 - duplicate_import
+warning - Duplicate import - lib\features\fields\presentation\pages\search_page.dart:14:8 - duplicate_import
+  error - The getter 'all' isn't defined for the type 'AppLocalizations' - lib\features\fields\presentation\widgets\list\category_filters.dart:39:35 - undefined_getter
+  error - The getter 'all' isn't defined for the type 'AppLocalizations' - lib\features\fields\presentation\widgets\list\category_filters.dart:39:35 - undefined_getter
+  error - Undefined name 'context' - lib\features\fields\presentation\widgets\map\map_field_info_card.dart:134:19 - undefined_identifier
+  error - Undefined name 'context' - lib\features\fields\presentation\widgets\map\map_field_info_card.dart:134:19 - undefined_identifier
+  error - Undefined name 'context' - lib\features\fields\presentation\widgets\map\map_field_info_card.dart:146:47 - undefined_identifier
+  error - Undefined name 'context' - lib\features\fields\presentation\widgets\map\map_field_info_card.dart:146:47 - undefined_identifier
+  error - Undefined name 'context' - lib\features\fields\presentation\widgets\map\map_field_info_card.dart:146:131 - undefined_identifier
+  error - Undefined name 'context' - lib\features\fields\presentation\widgets\map\map_field_info_card.dart:146:131 - undefined_identifier
+warning - Duplicate import - lib\features\fields\presentation\widgets\shared\field_card.dart:13:8 - duplicate_import
+  error - Undefined name 'context' - lib\features\fields\presentation\widgets\shared\field_card_image.dart:133:15 - undefined_identifier
+  error - Undefined name 'context' - lib\features\fields\presentation\widgets\shared\field_card_image.dart:133:15 - undefined_identifier
+

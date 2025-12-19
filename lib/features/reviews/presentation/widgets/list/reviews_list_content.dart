@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_state.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/list/review_card.dart';
@@ -90,7 +91,7 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
                 const SizedBox(height: 16),
                 Text(
                   state.message,
-                  style: const TextStyle(fontSize: 16),
+                  style: AppTextStyles.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
@@ -122,12 +123,14 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
                   const SizedBox(height: 16),
                   const Text(
                     'No reviews yet',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: AppTextStyles.titleMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Be the first to review ${widget.fieldName}',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: Colors.grey[600],
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],

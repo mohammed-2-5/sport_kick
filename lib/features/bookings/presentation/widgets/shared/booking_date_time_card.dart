@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 
@@ -20,9 +22,9 @@ class BookingDateTimeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            BookingConstants.dateTimeLabel,
-            style: TextStyle(
+          Text(
+            context.l10n.dateTimeLabel,
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -30,16 +32,21 @@ class BookingDateTimeCard extends StatelessWidget {
           ),
           const SizedBox(height: BookingConstants.standardPadding),
           _DateRow(
-            label: BookingConstants.dateLabel,
-            value: booking.formattedDate,
+            label: context.l10n.bookingDate,
+            value: LocaleFormatters.formatDate(context, booking.date),
             icon: Icons.calendar_today,
           ),
           const SizedBox(height: BookingConstants.standardPadding),
           Row(
             children: [
               _DateRow(
-                label: BookingConstants.timeSlotLabel,
-                value: booking.formattedTimeSlot,
+                label: context.l10n.timeSlot,
+                value: LocaleFormatters.formatTimeRange(
+                  context,
+                  startTime: booking.startTime,
+                  endTime: booking.endTime,
+                  baseDate: booking.date,
+                ),
                 icon: Icons.access_time,
               ),
               const Spacer(),
@@ -53,7 +60,7 @@ class BookingDateTimeCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  '${booking.durationInHours}h',
+                  context.l10n.durationHours(booking.durationInHours),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
@@ -27,7 +28,7 @@ class _OwnerRevenueViewState extends State<OwnerRevenueView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Revenue Analytics'),
+        title: Text(context.l10n.revenueAnalytics),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
@@ -42,7 +43,7 @@ class _OwnerRevenueViewState extends State<OwnerRevenueView> {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _refreshData,
-            tooltip: 'Refresh',
+            tooltip: context.l10n.refreshFields,
           ),
         ],
       ),
@@ -93,26 +94,27 @@ class _DateRangeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return PopupMenuButton<int>(
       icon: const Icon(Icons.date_range),
-      tooltip: 'Select Date Range',
+      tooltip: l10n.selectDate,
       onSelected: onDateRangeChanged,
       itemBuilder: (context) => [
-        const PopupMenuItem(
+        PopupMenuItem(
           value: AnalyticsConstants.last7Days,
-          child: Text(AnalyticsConstants.last7DaysLabel),
+          child: Text(l10n.last7Days),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: AnalyticsConstants.last30Days,
-          child: Text(AnalyticsConstants.last30DaysLabel),
+          child: Text(l10n.last30Days),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: AnalyticsConstants.last90Days,
-          child: Text(AnalyticsConstants.last90DaysLabel),
+          child: Text(l10n.last90Days),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: AnalyticsConstants.lastYear,
-          child: Text(AnalyticsConstants.lastYearLabel),
+          child: Text(l10n.lastYear),
         ),
       ],
     );

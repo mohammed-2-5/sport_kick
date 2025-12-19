@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 
@@ -30,9 +31,9 @@ class BookingUserNotesCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
-                'Notes',
-                style: TextStyle(
+              Text(
+                context.l10n.bookingNotes,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,

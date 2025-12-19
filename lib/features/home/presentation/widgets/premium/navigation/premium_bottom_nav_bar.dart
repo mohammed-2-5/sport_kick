@@ -82,9 +82,9 @@ class PremiumBottomNavBar extends StatelessWidget {
                   onTap: () => onTap(2),
                 ),
                 PremiumNavItem(
-                  icon: Icons.person_outline_rounded,
-                  activeIcon: Icons.person_rounded,
-                  label: 'Profile',
+                  icon: Icons.settings_outlined,
+                  activeIcon: Icons.settings_rounded,
+                  label: 'Settings',
                   isSelected: currentIndex == 3,
                   onTap: () => onTap(3),
                 ),

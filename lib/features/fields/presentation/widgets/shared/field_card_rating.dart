@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Rating display widget for field card.
 ///
@@ -25,14 +27,14 @@ class FieldCardRating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (hasReviews) {
-      return _buildRatingBadge();
+      return _buildRatingBadge(context);
     } else {
-      return _buildNewBadge();
+      return _buildNewBadge(context);
     }
   }
 
   /// Builds the rating badge with gradient background when reviews exist
-  Widget _buildRatingBadge() {
+  Widget _buildRatingBadge(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
@@ -63,7 +65,7 @@ class FieldCardRating extends StatelessWidget {
           ),
           const SizedBox(width: 3),
           Text(
-            '($totalReviews)',
+            '(${LocaleFormatters.formatNumber(context, totalReviews)})',
             style: TextStyle(
               fontSize: 11,
               color: Colors.white.withValues(alpha: 0.9),
@@ -75,7 +77,7 @@ class FieldCardRating extends StatelessWidget {
   }
 
   /// Builds the "New" badge when no reviews exist
-  Widget _buildNewBadge() {
+  Widget _buildNewBadge(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
@@ -91,15 +93,24 @@ class FieldCardRating extends StatelessWidget {
             color: AppColors.textSecondary,
           ),
           SizedBox(width: 4),
-          Text(
-            'New',
-            style: TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondary,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          _NewLabel(),
         ],
+      ),
+    );
+  }
+}
+
+class _NewLabel extends StatelessWidget {
+  const _NewLabel();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      context.l10n.newLabel,
+      style: const TextStyle(
+        fontSize: 12,
+        color: AppColors.textSecondary,
+        fontWeight: FontWeight.w600,
       ),
     );
   }

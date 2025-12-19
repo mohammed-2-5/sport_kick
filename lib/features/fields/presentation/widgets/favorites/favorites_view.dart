@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:spo_kick/features/favorites/presentation/cubit/favorites_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/favorites/favorites_body.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// View widget for displaying favorites content.
 ///
@@ -21,9 +22,9 @@ class FavoritesView extends StatelessWidget {
   void _handleStateChange(BuildContext context, FavoritesState state) {
     if (state is FavoriteToggled && !state.isFavorite) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Removed from favorites'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Text(context.l10n.removedFromFavorites),
+          duration: const Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
         ),
       );

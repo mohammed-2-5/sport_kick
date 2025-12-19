@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
 
 /// Owner Revenue by Field Chart
@@ -13,9 +14,10 @@ class OwnerRevenueByFieldChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return _ChartCard(
-      title: AnalyticsConstants.revenueByFieldTitle,
-      subtitle: AnalyticsConstants.revenueByFieldSubtitle,
+      title: l10n.revenueByFieldTitle,
+      subtitle: l10n.revenueByFieldSubtitle,
       icon: Icons.bar_chart,
       color: Theme.of(context).colorScheme.primary,
       child: SizedBox(
@@ -33,10 +35,10 @@ class OwnerRevenueByFieldChart extends StatelessWidget {
 
   Widget _buildBarChart(BuildContext context) {
     if (revenueByField.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
-          AnalyticsConstants.noDataMessage,
-          style: TextStyle(color: Colors.grey),
+          context.l10n.noDataAvailablePeriod,
+          style: const TextStyle(color: Colors.grey),
         ),
       );
     }

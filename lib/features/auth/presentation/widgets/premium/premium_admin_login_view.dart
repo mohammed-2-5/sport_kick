@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Premium admin login view.
 ///
@@ -79,7 +81,7 @@ class _PremiumAdminLoginViewState extends State<PremiumAdminLoginView>
           } else if (state.user.isAdmin) {
             context.goNamed('ownerDashboard');
           } else {
-            SnackbarHelper.showError(context, 'Access denied. Admin only.');
+            SnackbarHelper.showError(context, context.l10n.adminAccessDenied);
             context.read<AuthCubit>().logout();
           }
         }
@@ -153,6 +155,7 @@ class _PremiumAdminLoginViewState extends State<PremiumAdminLoginView>
 class _AdminLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       children: [
         Container(
@@ -180,9 +183,9 @@ class _AdminLogo extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        const Text(
-          'Admin Portal',
-          style: TextStyle(
+        Text(
+          l10n.adminPortalTitle,
+          style: const TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w700,
             color: Colors.white,
@@ -190,7 +193,7 @@ class _AdminLogo extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Sign in to access the dashboard',
+          l10n.adminPortalLoginSubtitle,
           style: TextStyle(
             fontSize: 15,
             color: Colors.white.withValues(alpha: 0.7),
@@ -223,6 +226,7 @@ class _LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -237,18 +241,18 @@ class _LoginForm extends StatelessWidget {
           children: [
             // Email field
             _FormField(
-              label: 'Email',
-              hint: 'admin@example.com',
+              label: l10n.email,
+              hint: l10n.enterYourEmail,
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icons.email_outlined,
-              validator: _validateEmail,
+              validator: (value) => _validateEmail(value, l10n),
             ),
             const SizedBox(height: 20),
             // Password field
             _FormField(
-              label: 'Password',
-              hint: '••••••••',
+              label: l10n.password,
+              hint: l10n.enterPassword,
               controller: passwordController,
               obscureText: obscurePassword,
               prefixIcon: Icons.lock_outline,
@@ -260,7 +264,7 @@ class _LoginForm extends StatelessWidget {
                 ),
                 onPressed: onTogglePassword,
               ),
-              validator: _validatePassword,
+              validator: (value) => _validatePassword(value, l10n),
             ),
             const SizedBox(height: 28),
             // Login button
@@ -271,23 +275,23 @@ class _LoginForm extends StatelessWidget {
     );
   }
 
-  String? _validateEmail(String? value) {
+  String? _validateEmail(String? value, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return 'Email is required';
+      return l10n.fieldRequired;
     }
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(value.trim())) {
-      return 'Enter a valid email';
+      return l10n.enterValidEmail;
     }
     return null;
   }
 
-  String? _validatePassword(String? value) {
+  String? _validatePassword(String? value, AppLocalizations l10n) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return l10n.fieldRequired;
     }
     if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+      return l10n.passwordMinChars;
     }
     return null;
   }
@@ -421,14 +425,14 @@ class _LoginButton extends StatelessWidget {
                     color: Colors.white,
                   ),
                 )
-              : const Row(
+              : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.login, color: Colors.white, size: 20),
-                    SizedBox(width: 8),
+                    const Icon(Icons.login, color: Colors.white, size: 20),
+                    const SizedBox(width: 8),
                     Text(
-                      'Sign In',
-                      style: TextStyle(
+                      context.l10n.signIn,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -461,7 +465,7 @@ class _BackToUserLogin extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-            'Back to User Login',
+            context.l10n.backToUserLogin,
             style: TextStyle(
               fontSize: 14,
               color: Colors.white.withValues(alpha: 0.7),

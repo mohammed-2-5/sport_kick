@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Field information section widget.
 ///
@@ -30,7 +33,9 @@ class FieldInfoSection extends StatelessWidget {
           // Name
           Text(
             field.name,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: AppTextStyles.headlineSmall.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
 
           const SizedBox(height: 8),
@@ -167,7 +172,7 @@ class FieldInfoSection extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            'Price per hour',
+                            context.l10n.ratePerHour,
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.white.withValues(alpha: 0.9),
@@ -178,7 +183,7 @@ class FieldInfoSection extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        field.formattedPrice,
+                        '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -209,17 +214,17 @@ class FieldInfoSection extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.people_outline_rounded,
                             color: AppColors.info,
                             size: 18,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
-                            'Capacity',
-                            style: TextStyle(
+                            context.l10n.fieldSize,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.info,
                               fontWeight: FontWeight.w500,
@@ -254,7 +259,7 @@ class FieldInfoSection extends StatelessWidget {
               ],
               _buildInfoChip(
                 field.isIndoor ? Icons.home : Icons.wb_sunny,
-                field.isIndoor ? 'Indoor' : 'Outdoor',
+                field.isIndoor ? context.l10n.indoor : context.l10n.outdoor,
               ),
             ],
           ),

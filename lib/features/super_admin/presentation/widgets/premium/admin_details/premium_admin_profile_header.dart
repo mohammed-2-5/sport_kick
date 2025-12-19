@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 
 /// Premium admin profile header with gold theme.
@@ -75,9 +76,7 @@ class PremiumAdminProfileHeader extends StatelessWidget {
                           ? Center(
                               child: Text(
                                 admin.initials,
-                                style: const TextStyle(
-                                  fontSize: 34,
-                                  fontWeight: FontWeight.w700,
+                                style: AppTextStyles.headlineMedium.copyWith(
                                   color: Colors.white,
                                 ),
                               ),
@@ -133,9 +132,7 @@ class PremiumAdminProfileHeader extends StatelessWidget {
               // Name
               Text(
                 admin.displayName,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
+                style: AppTextStyles.headlineSmall.copyWith(
                   color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
@@ -146,8 +143,7 @@ class PremiumAdminProfileHeader extends StatelessWidget {
               // Email
               Text(
                 admin.email,
-                style: TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodyMedium.copyWith(
                   color: Colors.white.withValues(alpha: 0.7),
                 ),
               ),
@@ -156,8 +152,7 @@ class PremiumAdminProfileHeader extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   admin.phone!,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.labelMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.6),
                   ),
                 ),
@@ -190,8 +185,7 @@ class PremiumAdminProfileHeader extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         'Since $memberSince',
-                        style: TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.labelMedium.copyWith(
                           color: Colors.white.withValues(alpha: 0.7),
                         ),
                       ),
@@ -235,8 +229,7 @@ class _AdminStatusBadge extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             isActive ? 'Active' : 'Inactive',
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: isActive ? Colors.green.shade300 : Colors.grey.shade300,
             ),

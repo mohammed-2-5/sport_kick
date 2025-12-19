@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/dashboard/stat_card.dart';
@@ -34,17 +37,19 @@ class DashboardStatsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Overview',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        Text(
+          context.l10n.overview,
+          style: AppTextStyles.appBarTitle.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 16),
         Row(
           children: [
             Expanded(
               child: StatCard(
-                title: 'Total Bookings',
-                value: totalBookings.toString(),
+                title: context.l10n.totalBookings,
+                value: LocaleFormatters.formatNumber(context, totalBookings),
                 icon: Icons.calendar_month_rounded,
                 gradient: const LinearGradient(
                   colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
@@ -54,8 +59,8 @@ class DashboardStatsSection extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: StatCard(
-                title: 'Pending',
-                value: pendingBookings.toString(),
+                title: context.l10n.pendingBookingsLabel,
+                value: LocaleFormatters.formatNumber(context, pendingBookings),
                 icon: Icons.pending_actions_rounded,
                 gradient: const LinearGradient(
                   colors: [Color(0xFFFFA726), Color(0xFFFFB74D)],
@@ -69,8 +74,8 @@ class DashboardStatsSection extends StatelessWidget {
           children: [
             Expanded(
               child: StatCard(
-                title: 'My Fields',
-                value: totalFields.toString(),
+                title: context.l10n.myFields,
+                value: LocaleFormatters.formatNumber(context, totalFields),
                 icon: Icons.sports_soccer_rounded,
                 gradient: const LinearGradient(
                   colors: [Color(0xFF42A5F5), Color(0xFF64B5F6)],
@@ -80,8 +85,13 @@ class DashboardStatsSection extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: StatCard(
-                title: 'Revenue',
-                value: '\$${revenue.toStringAsFixed(0)}',
+                title: context.l10n.revenue,
+                value: LocaleFormatters.formatPrice(
+                  context,
+                  amount: revenue,
+                  currency: 'EGP',
+                  decimalDigits: 0,
+                ),
                 icon: Icons.attach_money_rounded,
                 gradient: AppGradients.primary,
               ),

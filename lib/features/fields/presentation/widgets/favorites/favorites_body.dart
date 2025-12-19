@@ -8,6 +8,7 @@ import 'package:spo_kick/features/favorites/presentation/cubit/favorites_state.d
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/favorites/favorites_list.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Content body for favorites - handles all state combinations.
 ///
@@ -21,7 +22,7 @@ class FavoritesBody extends StatelessWidget {
       builder: (context, favoritesState) {
         // Loading state
         if (favoritesState is FavoritesLoading) {
-          return const LoadingIndicator.inline(message: 'Loading favorites...');
+          return LoadingIndicator.inline(message: context.l10n.loading);
         }
 
         // Error state
@@ -34,7 +35,7 @@ class FavoritesBody extends StatelessWidget {
 
         // Toggled state - reload
         if (favoritesState is FavoriteToggled) {
-          return const LoadingIndicator.inline(message: 'Updating...');
+          return LoadingIndicator.inline(message: context.l10n.loading);
         }
 
         // List loaded state
@@ -63,7 +64,7 @@ class _FavoritesFieldsLoader extends StatelessWidget {
     return BlocBuilder<FieldsCubit, FieldsState>(
       builder: (context, fieldsState) {
         if (fieldsState is FieldsLoading) {
-          return const LoadingIndicator.inline(message: 'Loading fields...');
+          return LoadingIndicator.inline(message: context.l10n.loadingFields);
         }
 
         if (fieldsState is FieldsError) {
@@ -93,7 +94,7 @@ class _FavoritesFieldsLoader extends StatelessWidget {
           );
         }
 
-        return const LoadingIndicator.inline(message: 'Loading...');
+        return LoadingIndicator.inline(message: context.l10n.loading);
       },
     );
   }

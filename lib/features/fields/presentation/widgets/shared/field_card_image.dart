@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Image section of the field card with hero animation, gradient overlay,
 /// and optional popular badge.
@@ -48,14 +49,14 @@ class FieldCardImage extends StatelessWidget {
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      return _buildPlaceholder();
+                      return _buildPlaceholder(context);
                     },
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return _buildPlaceholder();
+                      return _buildPlaceholder(context);
                     },
                   )
-                : _buildPlaceholder(),
+                : _buildPlaceholder(context),
           ),
 
           // Gradient Overlay
@@ -65,7 +66,7 @@ class FieldCardImage extends StatelessWidget {
           ),
 
           // Popular Badge
-          if (isPopular) _buildPopularBadge(),
+          if (isPopular) _buildPopularBadge(context),
         ],
       ),
     );
@@ -73,19 +74,26 @@ class FieldCardImage extends StatelessWidget {
 
   /// Builds the placeholder widget shown when no image is available
   /// or when image is loading/failed
-  Widget _buildPlaceholder() {
+  Widget _buildPlaceholder(BuildContext context) {
     return Container(
       height: FieldConstants.fieldCardImageHeight + 20,
       width: double.infinity,
       color: AppColors.surfaceVariant,
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.sports_soccer, size: 48, color: AppColors.textSecondary),
-          SizedBox(height: 8),
+          const Icon(
+            Icons.sports_soccer,
+            size: 48,
+            color: AppColors.textSecondary,
+          ),
+          const SizedBox(height: 8),
           Text(
-            'No Image',
-            style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
+            context.l10n.noImage,
+            style: const TextStyle(
+              color: AppColors.textSecondary,
+              fontSize: 12,
+            ),
           ),
         ],
       ),
@@ -93,7 +101,7 @@ class FieldCardImage extends StatelessWidget {
   }
 
   /// Builds the popular/trending badge positioned at top-left
-  Widget _buildPopularBadge() {
+  Widget _buildPopularBadge(BuildContext context) {
     return Positioned(
       top: 12,
       left: 12,
@@ -112,18 +120,18 @@ class FieldCardImage extends StatelessWidget {
             ),
           ],
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
+            const Icon(
               Icons.local_fire_department_rounded,
               size: 14,
               color: Colors.white,
             ),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             Text(
-              'TRENDING',
-              style: TextStyle(
+              context.l10n.trending,
+              style: const TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

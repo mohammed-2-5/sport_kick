@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Field information section displaying name, location, and verified badge.
 ///
@@ -47,7 +48,7 @@ class FieldCardInfo extends StatelessWidget {
             ),
             if (isVerified) ...[
               const SizedBox(width: 8),
-              _buildVerifiedBadge(),
+              _buildVerifiedBadge(context),
             ],
           ],
         ),
@@ -65,7 +66,7 @@ class FieldCardInfo extends StatelessWidget {
             const SizedBox(width: 4),
             Expanded(
               child: Text(
-                '$city • $fieldSize',
+                '$city - $fieldSize',
                 style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.textSecondary,
@@ -81,7 +82,7 @@ class FieldCardInfo extends StatelessWidget {
   }
 
   /// Builds the verified badge with gradient background
-  Widget _buildVerifiedBadge() {
+  Widget _buildVerifiedBadge(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
@@ -97,14 +98,14 @@ class FieldCardInfo extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.verified, size: 14, color: Colors.white),
-          SizedBox(width: 4),
+          const Icon(Icons.verified, size: 14, color: Colors.white),
+          const SizedBox(width: 4),
           Text(
-            'Verified',
-            style: TextStyle(
+            context.l10n.verified,
+            style: const TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.bold,
               color: Colors.white,

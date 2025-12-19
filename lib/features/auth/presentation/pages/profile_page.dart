@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -22,9 +23,7 @@ class ProfilePage extends StatelessWidget {
         listener: (context, state) => _handleStateChange(context, state),
         builder: (context, state) {
           if (state is! Authenticated) {
-            return const Center(
-              child: Text('Please login to view your profile'),
-            );
+            return Center(child: Text(context.l10n.pleaseLoginToViewProfile));
           }
 
           final user = state.user;
@@ -52,7 +51,7 @@ class ProfilePage extends StatelessWidget {
     } else if (state is AuthError) {
       SnackbarHelper.showError(context, state.message);
     } else if (state is ProfileUpdated) {
-      SnackbarHelper.showSuccess(context, 'Profile updated successfully');
+      SnackbarHelper.showSuccess(context, context.l10n.profileUpdated);
     }
   }
 }

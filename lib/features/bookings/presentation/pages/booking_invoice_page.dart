@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
+import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/upload_payment_proof_usecase.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/payment_proof_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/invoice/invoice_details_card.dart';
@@ -82,8 +84,9 @@ class _BookingInvoiceViewState extends State<_BookingInvoiceView> {
           children: [
             // Header
             PremiumCurvedHeader(
-              title: 'Invoice',
-              subtitle: _currentBooking.invoiceNumber ?? 'Payment Required',
+              title: context.l10n.invoiceTitle,
+              subtitle:
+                  _currentBooking.invoiceNumber ?? context.l10n.paymentRequired,
               showBackButton: true,
               onBackPressed: () => context.pop(),
               height: 140,
@@ -138,32 +141,33 @@ class _InvoiceStatusBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = booking.paymentStatus;
+    final l10n = context.l10n;
     final Color backgroundColor;
     final Color textColor;
     final IconData icon;
     final String message;
 
-    switch (status.colorName) {
-      case 'success':
+    switch (status) {
+      case PaymentStatus.verified:
         backgroundColor = AppColors.successLight;
         textColor = AppColors.success;
         icon = Icons.check_circle_rounded;
-        message = 'Payment Verified';
-      case 'info':
+        message = l10n.paymentVerified;
+      case PaymentStatus.uploaded:
         backgroundColor = AppColors.infoLight;
         textColor = AppColors.info;
         icon = Icons.hourglass_empty_rounded;
-        message = 'Awaiting Verification';
-      case 'error':
+        message = l10n.paymentAwaitingVerification;
+      case PaymentStatus.rejected:
         backgroundColor = AppColors.errorLight;
         textColor = AppColors.error;
         icon = Icons.error_rounded;
-        message = booking.paymentRejectionReason ?? 'Payment Rejected';
-      default:
+        message = booking.paymentRejectionReason ?? l10n.paymentRejected;
+      case PaymentStatus.pending:
         backgroundColor = AppColors.warningLight;
         textColor = AppColors.warning;
         icon = Icons.payment_rounded;
-        message = 'Payment Required';
+        message = l10n.paymentRequired;
     }
 
     return Container(
@@ -181,7 +185,7 @@ class _InvoiceStatusBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  status.displayName,
+                  _statusLabel(context),
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -203,6 +207,20 @@ class _InvoiceStatusBanner extends StatelessWidget {
       ),
     );
   }
+
+  String _statusLabel(BuildContext context) {
+    final l10n = context.l10n;
+    switch (booking.paymentStatus) {
+      case PaymentStatus.pending:
+        return l10n.paymentStatusPending;
+      case PaymentStatus.uploaded:
+        return l10n.paymentStatusUploaded;
+      case PaymentStatus.verified:
+        return l10n.paymentStatusVerified;
+      case PaymentStatus.rejected:
+        return l10n.paymentStatusRejected;
+    }
+  }
 }
 
 /// Action buttons based on payment status.
@@ -218,14 +236,14 @@ class _ActionButtons extends StatelessWidget {
       return Column(
         children: [
           PremiumButton(
-            label: 'View My Bookings',
+            label: context.l10n.viewMyBookings,
             onPressed: () => context.goNamed('myBookings'),
             fullWidth: true,
             icon: Icons.list_alt_rounded,
           ),
           const SizedBox(height: 12),
           PremiumButton(
-            label: 'Back to Home',
+            label: context.l10n.backToHome,
             onPressed: () => context.go('/'),
             fullWidth: true,
             style: PremiumButtonStyle.outline,
@@ -255,10 +273,10 @@ class _ActionButtons extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Your payment proof has been submitted. The field owner will verify it shortly.',
-                    style: TextStyle(
+                    context.l10n.paymentProofSubmittedMessage,
+                    style: const TextStyle(
                       fontSize: 13,
                       color: AppColors.textSecondary,
                       height: 1.4,
@@ -270,7 +288,7 @@ class _ActionButtons extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           PremiumButton(
-            label: 'View My Bookings',
+            label: context.l10n.viewMyBookings,
             onPressed: () => context.goNamed('myBookings'),
             fullWidth: true,
             icon: Icons.list_alt_rounded,
@@ -283,14 +301,14 @@ class _ActionButtons extends StatelessWidget {
     return Column(
       children: [
         PremiumButton(
-          label: 'View My Bookings',
+          label: context.l10n.viewMyBookings,
           onPressed: () => context.goNamed('myBookings'),
           fullWidth: true,
           icon: Icons.list_alt_rounded,
         ),
         const SizedBox(height: 12),
         PremiumButton(
-          label: 'Back to Home',
+          label: context.l10n.backToHome,
           onPressed: () => context.go('/'),
           fullWidth: true,
           style: PremiumButtonStyle.outline,

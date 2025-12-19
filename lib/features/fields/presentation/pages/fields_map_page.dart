@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
@@ -35,8 +36,8 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
         body: Column(
           children: [
             PremiumCurvedHeader(
-              title: 'Fields Map',
-              subtitle: 'Explore nearby football fields',
+              title: context.l10n.fieldsMapTitle,
+              subtitle: context.l10n.fieldsMapSubtitle,
               showBackButton: true,
               height: 160,
               actions: [
@@ -67,7 +68,7 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
                         onPressed: isLoading
                             ? null
                             : () => context.read<MapCubit>().getUserLocation(),
-                        tooltip: 'My Location',
+                        tooltip: context.l10n.myLocation,
                       ),
                     );
                   },
@@ -93,7 +94,7 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
                               color: AppColors.textOnNavy,
                             ),
                             onPressed: () => showMapFilterDialog(context),
-                            tooltip: 'Filter',
+                            tooltip: context.l10n.filterFields,
                           ),
                         ),
                         if (hasFilters)
@@ -123,7 +124,7 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
                     _mapController.move(state.userLocation, 14.0);
                     SnackbarHelper.showSuccess(
                       context,
-                      'Centered on your location',
+                      context.l10n.mapCenteredOnLocation,
                     );
                   } else if (state is MapLocationPermissionDenied) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -131,7 +132,7 @@ class _FieldsMapPageState extends State<FieldsMapPage> {
                         content: Text(state.message),
                         duration: const Duration(seconds: 3),
                         action: SnackBarAction(
-                          label: 'Settings',
+                          label: context.l10n.settings,
                           onPressed: () {
                             // Could open app settings here
                           },

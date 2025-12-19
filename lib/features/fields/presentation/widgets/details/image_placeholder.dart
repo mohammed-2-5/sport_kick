@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Placeholder widget for when no images are available.
 class ImagePlaceholder extends StatelessWidget {
@@ -23,7 +24,7 @@ class ImagePlaceholder extends StatelessWidget {
             ),
             const SizedBox(height: FieldConstants.standardPadding),
             Text(
-              message ?? 'No Images Available',
+              message ?? context.l10n.noImage,
               style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontSize: 16,

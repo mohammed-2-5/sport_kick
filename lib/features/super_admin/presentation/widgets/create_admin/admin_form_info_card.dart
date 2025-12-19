@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class AdminFormInfoCard extends StatelessWidget {
   const AdminFormInfoCard({super.key});
@@ -30,7 +31,9 @@ class AdminFormInfoCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'A secure password will be generated automatically. The admin must change it on first login.',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                  style: AppTextStyles.labelMedium.copyWith(
+                    color: Colors.grey[700],
+                  ),
                 ),
               ],
             ),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium reviews preview section.
 ///
@@ -37,9 +38,9 @@ class PremiumReviewsPreview extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'No Reviews Yet',
-              style: TextStyle(
+            Text(
+              context.l10n.noReviews,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,

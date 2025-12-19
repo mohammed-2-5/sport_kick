@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
+import 'package:spo_kick/core/widgets/language_switcher_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/register_cubit.dart';
@@ -36,9 +38,9 @@ class RegisterPage extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is AuthLoading) {
-              return const LoadingIndicator(
+              return LoadingIndicator(
                 variant: LoadingVariant.fullScreen,
-                message: 'Creating account...',
+                message: context.l10n.creatingAccount,
               );
             }
             return const _RegisterPageContent();
@@ -54,15 +56,16 @@ class _RegisterPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         PremiumCurvedHeader(
-          title: 'Join Now',
-          subtitle: 'Create your account',
+          title: context.l10n.joinNow,
+          subtitle: context.l10n.createYourAccount,
           height: 160,
           showBackButton: true,
+          trailing: const LanguageSwitcherButton(dark: true),
         ),
-        Expanded(child: SingleChildScrollView(child: RegisterBody())),
+        const Expanded(child: SingleChildScrollView(child: RegisterBody())),
       ],
     );
   }

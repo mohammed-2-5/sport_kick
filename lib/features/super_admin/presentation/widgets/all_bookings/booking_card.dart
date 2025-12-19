@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/booking_status_badge.dart';
 
@@ -72,7 +73,7 @@ class BookingCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         booking.userName!,
-                        style: const TextStyle(fontSize: 14),
+                        style: AppTextStyles.bodyMedium,
                       ),
                     ),
                   ],
@@ -91,14 +92,14 @@ class BookingCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     DateFormat('MMM dd, yyyy').format(booking.date),
-                    style: const TextStyle(fontSize: 14),
+                    style: AppTextStyles.bodyMedium,
                   ),
                   const SizedBox(width: 16),
                   const Icon(Icons.access_time, size: 16, color: Colors.grey),
                   const SizedBox(width: 8),
                   Text(
                     booking.formattedTimeSlot,
-                    style: const TextStyle(fontSize: 14),
+                    style: AppTextStyles.bodyMedium,
                   ),
                 ],
               ),

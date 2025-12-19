@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/core/widgets/custom_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -61,9 +62,9 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
       },
       child: AlertDialog(
         backgroundColor: AppColors.lightSurface,
-        title: const Text(
-          'Edit Profile',
-          style: TextStyle(
+        title: Text(
+          context.l10n.editProfile,
+          style: const TextStyle(
             color: AppColors.lightTextPrimary,
             fontWeight: FontWeight.bold,
           ),
@@ -77,12 +78,12 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
               children: [
                 CustomTextField(
                   controller: _nameController,
-                  label: 'Full Name',
-                  hint: 'Enter your full name',
+                  label: context.l10n.fullName,
+                  hint: context.l10n.enterFullName,
                   prefixIcon: Icons.person_outline,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
+                      return context.l10n.enterName;
                     }
                     return null;
                   },
@@ -90,8 +91,8 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _phoneController,
-                  label: 'Phone Number',
-                  hint: 'Enter your phone number',
+                  label: context.l10n.phone,
+                  hint: context.l10n.enterPhoneNumber,
                   prefixIcon: Icons.phone_outlined,
                   keyboardType: TextInputType.phone,
                 ),
@@ -102,12 +103,12 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           BlocBuilder<AuthCubit, AuthState>(
             builder: (context, state) {
               return CustomButton(
-                text: 'Save',
+                text: context.l10n.save,
                 onPressed: state is AuthLoading ? null : _submit,
                 isLoading: state is AuthLoading,
                 variant: ButtonVariant.primary,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Login Activity Empty State Widget
 ///
@@ -29,9 +30,9 @@ class LoginActivityEmptyState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'No Login Activity',
-              style: TextStyle(
+            Text(
+              context.l10n.noLoginActivityTitle,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
@@ -39,7 +40,7 @@ class LoginActivityEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Your login history will appear here',
+              context.l10n.noLoginActivitySubtitle,
               style: TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary.withValues(alpha: 0.8),

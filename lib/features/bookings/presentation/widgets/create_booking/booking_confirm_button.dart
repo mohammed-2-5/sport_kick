@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
@@ -41,9 +42,12 @@ class BookingConfirmButton extends StatelessWidget {
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   )
-                : const Text(
-                    BookingConstants.confirmBookingLabel,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                : Text(
+                    context.l10n.confirmBooking,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
           ),
         );

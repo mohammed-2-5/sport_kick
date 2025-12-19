@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
 
 /// Auth navigation handler.
 ///
@@ -32,12 +32,10 @@ class AuthNavigationHandler {
       } else {
         // User selected admin but doesn't have admin role
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Access Denied: You don\'t have admin privileges. Redirecting to user dashboard.',
-            ),
+          SnackBar(
+            content: Text(context.l10n.adminAccessDenied),
             backgroundColor: AppColors.error,
-            duration: Duration(seconds: 4),
+            duration: const Duration(seconds: 4),
           ),
         );
         // Navigate to home anyway
@@ -60,10 +58,10 @@ class AuthNavigationHandler {
     // Validate admin role
     if (user.role != 'admin' && user.role != 'super_admin') {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(AuthConstants.adminAccessDeniedMsg),
+        SnackBar(
+          content: Text(context.l10n.adminAccessDenied),
           backgroundColor: AppColors.error,
-          duration: Duration(seconds: 4),
+          duration: const Duration(seconds: 4),
         ),
       );
       return false; // Signal to logout

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/utils/password_validator.dart';
 
 class CurrentPasswordField extends StatefulWidget {
@@ -21,7 +21,7 @@ class _CurrentPasswordFieldState extends State<CurrentPasswordField> {
       controller: widget.controller,
       obscureText: _obscure,
       decoration: InputDecoration(
-        labelText: AuthConstants.currentPasswordLabel,
+        labelText: context.l10n.currentPassword,
         prefixIcon: const Icon(Icons.lock_outlined),
         suffixIcon: IconButton(
           icon: Icon(
@@ -35,13 +35,11 @@ class _CurrentPasswordFieldState extends State<CurrentPasswordField> {
             });
           },
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return AuthConstants.currentPasswordRequiredMsg;
+          return context.l10n.fieldRequired;
         }
         return null;
       },
@@ -72,7 +70,7 @@ class _NewPasswordFieldState extends State<NewPasswordField> {
       controller: widget.controller,
       obscureText: _obscure,
       decoration: InputDecoration(
-        labelText: AuthConstants.newPasswordLabel,
+        labelText: context.l10n.newPassword,
         prefixIcon: const Icon(Icons.lock_reset),
         suffixIcon: IconButton(
           icon: Icon(
@@ -86,11 +84,10 @@ class _NewPasswordFieldState extends State<NewPasswordField> {
             });
           },
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      validator: PasswordValidator.validateNewPassword,
+      validator: (value) =>
+          PasswordValidator.validateNewPassword(value, context: context),
       onChanged: (value) {
         widget.onChanged(value);
         setState(() {}); // refresh strength indicators inside this field if any
@@ -122,7 +119,7 @@ class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
       controller: widget.controller,
       obscureText: _obscure,
       decoration: InputDecoration(
-        labelText: AuthConstants.confirmPasswordLabel,
+        labelText: context.l10n.confirmPassword,
         prefixIcon: const Icon(Icons.lock_outlined),
         suffixIcon: IconButton(
           icon: Icon(
@@ -136,16 +133,14 @@ class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
             });
           },
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return AuthConstants.confirmPasswordRequiredMsg;
+          return context.l10n.fieldRequired;
         }
         if (value != widget.newPasswordController.text) {
-          return AuthConstants.passwordMismatchMsg;
+          return context.l10n.passwordsDoNotMatch;
         }
         return null;
       },
@@ -161,19 +156,19 @@ class ChangePasswordSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AuthConstants.buttonHeight,
+      height: 50,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: const Text(
-          AuthConstants.changePasswordButtonLabel,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        child: Text(
+          context.l10n.changePassword,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
     );

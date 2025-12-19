@@ -284,6 +284,33 @@ class SuperAdminRepositoryImpl implements SuperAdminRepository {
   }
 
   @override
+  Future<Either<Failure, String>> resetAdminPassword({
+    required String adminId,
+  }) async {
+    try {
+      debugPrint('🔐 [SuperAdminRepository] Resetting admin password...');
+      final newPassword = await remoteDataSource.resetAdminPassword(adminId);
+      debugPrint('✅ [SuperAdminRepository] Password reset successfully');
+      return Right(newPassword);
+    } on NotFoundException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] NotFoundException: ${e.message}');
+      return Left(NotFoundFailure(e.message));
+    } on ValidationException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] ValidationException: ${e.message}');
+      return Left(ValidationFailure(e.message));
+    } on ServerException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] ServerException: ${e.message}');
+      return Left(ServerFailure(e.message));
+    } on AuthenticationException catch (e) {
+      debugPrint('❌ [SuperAdminRepository] AuthException: ${e.message}');
+      return Left(AuthenticationFailure(e.message));
+    } catch (e) {
+      debugPrint('❌ [SuperAdminRepository] Unexpected error: $e');
+      return Left(ServerFailure('Unexpected error: $e'));
+    }
+  }
+
+  @override
   Future<Either<Failure, FieldEntity>> createField({
     required String ownerId,
     required String sportCategoryId,

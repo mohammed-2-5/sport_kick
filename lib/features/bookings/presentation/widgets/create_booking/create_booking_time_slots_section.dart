@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
-import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/shared/booking_empty_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/booking_time_slot_selector.dart';
@@ -35,7 +35,7 @@ class CreateBookingTimeSlotsSection extends StatelessWidget {
     } else if (bookingState is TimeSlotsLoaded) {
       if (!bookingState.hasAvailableSlots) {
         return BookingEmptyState(
-          message: BookingConstants.noAvailableSlotsMessage,
+          message: context.l10n.noSlotsAvailable,
           onSelectDatePressed: () => onSelectDate(selectedDate),
         );
       }
@@ -46,8 +46,7 @@ class CreateBookingTimeSlotsSection extends StatelessWidget {
       );
     } else if (bookingState is BookingsEmpty) {
       return BookingEmptyState(
-        message:
-            bookingState.message ?? BookingConstants.noAvailableSlotsMessage,
+        message: bookingState.message ?? context.l10n.noSlotsAvailable,
         onSelectDatePressed: () => onSelectDate(selectedDate),
       );
     }

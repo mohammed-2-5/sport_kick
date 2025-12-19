@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Loading state widget for dashboard pages.
 ///
@@ -58,7 +59,7 @@ class DashboardErrorState extends StatelessWidget {
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+                style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
               ),
               const SizedBox(height: 24),
               GestureDetector(
@@ -72,10 +73,9 @@ class DashboardErrorState extends StatelessWidget {
                     color: AppColors.accentCyan,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Retry',
-                    style: TextStyle(
-                      fontSize: 15,
+                    style: AppTextStyles.labelLarge.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),

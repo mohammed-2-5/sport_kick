@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/category_chip.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Category filter chips widget for fields list.
 ///
@@ -35,7 +36,7 @@ class CategoryFilters extends StatelessWidget {
           if (index == 0) {
             // "All" chip
             return CategoryChip(
-              label: 'All',
+              label: context.l10n.anyOption,
               icon: '🏟️',
               isSelected: selectedCategoryId == null,
               onTap: () => onCategorySelected(null),

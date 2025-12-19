@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/dashboard/quick_action_card.dart';
 
 class DashboardQuickActions extends StatelessWidget {
@@ -22,9 +24,11 @@ class DashboardQuickActions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Quick Actions',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        Text(
+          context.l10n.quickActions,
+          style: AppTextStyles.appBarTitle.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 16),
 
@@ -55,20 +59,22 @@ class DashboardQuickActions extends StatelessWidget {
                   child: const Icon(Icons.add_circle_outline, size: 28),
                 ),
                 const SizedBox(width: 16),
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Create Manual Booking',
-                      style: TextStyle(
+                      context.l10n.createManualBooking,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      'For walk-in customers',
-                      style: TextStyle(fontSize: 13, color: Colors.white70),
+                      context.l10n.forWalkInCustomers,
+                      style: AppTextStyles.labelMedium.copyWith(
+                        color: Colors.white70,
+                      ),
                     ),
                   ],
                 ),
@@ -82,7 +88,7 @@ class DashboardQuickActions extends StatelessWidget {
           children: [
             Expanded(
               child: QuickActionCard(
-                title: 'Manage\nBookings',
+                title: context.l10n.manageBookings,
                 icon: Icons.list_alt_rounded,
                 gradient: const LinearGradient(
                   colors: [Color(0xFFFF6B6B), Color(0xFFFF8E53)],
@@ -93,7 +99,7 @@ class DashboardQuickActions extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: QuickActionCard(
-                title: 'Manage\nFields',
+                title: context.l10n.manageFields,
                 icon: Icons.stadium_rounded,
                 gradient: const LinearGradient(
                   colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
@@ -108,7 +114,7 @@ class DashboardQuickActions extends StatelessWidget {
           children: [
             Expanded(
               child: QuickActionCard(
-                title: 'Analytics',
+                title: context.l10n.analytics,
                 icon: Icons.bar_chart_rounded,
                 gradient: const LinearGradient(
                   colors: [Color(0xFF26A69A), Color(0xFF4DB6AC)],
@@ -119,7 +125,7 @@ class DashboardQuickActions extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: QuickActionCard(
-                title: 'Settings',
+                title: context.l10n.settings,
                 icon: Icons.settings_rounded,
                 gradient: const LinearGradient(
                   colors: [Color(0xFFAB47BC), Color(0xFFBA68C8)],

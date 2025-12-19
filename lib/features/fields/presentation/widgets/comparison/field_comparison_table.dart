@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 
 class FieldComparisonTable extends StatelessWidget {
   final List<FieldEntity> fields;
@@ -15,10 +18,10 @@ class FieldComparisonTable extends StatelessWidget {
         AppColors.primaryLight.withValues(alpha: 0.1),
       ),
       columns: [
-        const DataColumn(
+        DataColumn(
           label: Text(
-            'Feature',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            context.l10n.feature,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
         ),
         ...fields.map(
@@ -42,8 +45,11 @@ class FieldComparisonTable extends StatelessWidget {
         // Image Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Image', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.image,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
               (field) => DataCell(
@@ -74,13 +80,16 @@ class FieldComparisonTable extends StatelessWidget {
         // Price Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Price/Hour', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.pricePerHour,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
               (field) => DataCell(
                 Text(
-                  field.formattedPrice,
+                  '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
                   style: const TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
@@ -94,8 +103,11 @@ class FieldComparisonTable extends StatelessWidget {
         // Rating Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Rating', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.rating,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
               (field) => DataCell(
@@ -104,7 +116,13 @@ class FieldComparisonTable extends StatelessWidget {
                     const Icon(Icons.star, size: 16, color: AppColors.warning),
                     const SizedBox(width: 4),
                     Text(
-                      field.hasReviews ? field.ratingDisplay : 'N/A',
+                      field.hasReviews
+                          ? LocaleFormatters.formatNumber(
+                              context,
+                              field.averageRating ?? 0,
+                              decimalDigits: 1,
+                            )
+                          : context.l10n.noReviews,
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -117,12 +135,22 @@ class FieldComparisonTable extends StatelessWidget {
         // Reviews Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Reviews', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.reviews,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
               (field) => DataCell(
-                Text(field.hasReviews ? '${field.totalReviews}' : 'No reviews'),
+                Text(
+                  field.hasReviews
+                      ? LocaleFormatters.formatNumber(
+                          context,
+                          field.totalReviews,
+                        )
+                      : context.l10n.noReviews,
+                ),
               ),
             ),
           ],
@@ -131,8 +159,11 @@ class FieldComparisonTable extends StatelessWidget {
         // Capacity Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Capacity', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.fieldSize,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map((field) => DataCell(Text(field.fieldSize))),
           ],
@@ -141,11 +172,15 @@ class FieldComparisonTable extends StatelessWidget {
         // Surface Type Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Surface', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.surface,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
-              (field) => DataCell(Text(field.surfaceType ?? 'Not specified')),
+              (field) =>
+                  DataCell(Text(field.surfaceType ?? context.l10n.noneListed)),
             ),
           ],
         ),
@@ -153,8 +188,11 @@ class FieldComparisonTable extends StatelessWidget {
         // Location Type Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Location', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.location,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
               (field) => DataCell(
@@ -166,7 +204,11 @@ class FieldComparisonTable extends StatelessWidget {
                       color: AppColors.primary,
                     ),
                     const SizedBox(width: 4),
-                    Text(field.isIndoor ? 'Indoor' : 'Outdoor'),
+                    Text(
+                      field.isIndoor
+                          ? context.l10n.indoor
+                          : context.l10n.outdoor,
+                    ),
                   ],
                 ),
               ),
@@ -177,8 +219,11 @@ class FieldComparisonTable extends StatelessWidget {
         // City Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('City', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.city,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
               (field) => DataCell(
@@ -201,8 +246,11 @@ class FieldComparisonTable extends StatelessWidget {
         // Verified Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Verified', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.verified,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
               (field) => DataCell(
@@ -219,8 +267,11 @@ class FieldComparisonTable extends StatelessWidget {
         // Facilities Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Facilities', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.facilities,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
               (field) => DataCell(
@@ -228,8 +279,13 @@ class FieldComparisonTable extends StatelessWidget {
                   width: 150,
                   child: Text(
                     field.hasFacilities
-                        ? field.facilities.take(3).join(', ')
-                        : 'None listed',
+                        ? field.facilities
+                              .take(3)
+                              .map(
+                                (f) => FacilityLocalizer.localize(context, f),
+                              )
+                              .join(', ')
+                        : context.l10n.noneListed,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 12),
@@ -243,11 +299,18 @@ class FieldComparisonTable extends StatelessWidget {
         // Total Bookings Row
         DataRow(
           cells: [
-            const DataCell(
-              Text('Popularity', style: TextStyle(fontWeight: FontWeight.w600)),
+            DataCell(
+              Text(
+                context.l10n.popularity,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             ...fields.map(
-              (field) => DataCell(Text('${field.totalBookings} bookings')),
+              (field) => DataCell(
+                Text(
+                  '${LocaleFormatters.formatNumber(context, field.totalBookings)} ${context.l10n.bookings}',
+                ),
+              ),
             ),
           ],
         ),

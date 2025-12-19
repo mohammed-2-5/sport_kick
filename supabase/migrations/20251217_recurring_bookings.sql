@@ -183,8 +183,8 @@ BEGIN
     WHERE field_id = p_field_id
       AND day_of_week = p_day_of_week
       AND is_open = true
-      AND open_time <= p_start_time
-      AND close_time >= v_end_time
+      AND opening_time <= p_start_time
+      AND closing_time >= v_end_time
   ) INTO v_within_business_hours;
 
   IF NOT v_within_business_hours THEN
@@ -288,7 +288,7 @@ BEGIN
     rb.id,
     rb.field_id,
     f.name AS field_name,
-    f.image_url AS field_image_url,
+    f.images[1] AS field_image_url,
     c.name AS city_name,
     rb.day_of_week,
     rb.start_time,
@@ -299,15 +299,15 @@ BEGIN
     rb.rejection_reason,
     rb.started_at,
     rb.created_at,
-    (SELECT MIN(b.date) FROM bookings b
+    (SELECT MIN(b.booking_date) FROM bookings b
      WHERE b.recurring_booking_id = rb.id
-       AND b.date >= CURRENT_DATE
+       AND b.booking_date >= CURRENT_DATE
        AND b.status != 'canceled') AS next_booking_date,
     (SELECT b.payment_status != 'pending' FROM bookings b
      WHERE b.recurring_booking_id = rb.id
-       AND b.date >= CURRENT_DATE
+       AND b.booking_date >= CURRENT_DATE
        AND b.status != 'canceled'
-     ORDER BY b.date ASC LIMIT 1) AS next_booking_paid,
+     ORDER BY b.booking_date ASC LIMIT 1) AS next_booking_paid,
     (SELECT COUNT(*) FROM bookings b WHERE b.recurring_booking_id = rb.id) AS total_bookings_count,
     (SELECT COUNT(*) FROM bookings b
      WHERE b.recurring_booking_id = rb.id AND b.status = 'completed') AS completed_bookings_count
@@ -381,7 +381,7 @@ BEGIN
   -- Generate 4 weeks of bookings
   FOR i IN 0..3 LOOP
     INSERT INTO bookings (
-      user_id, field_id, date, start_time, end_time,
+      user_id, field_id, booking_date, start_time, end_time,
       duration_hours, total_price, status, payment_status,
       recurring_booking_id, created_at
     ) VALUES (
@@ -563,7 +563,7 @@ BEGIN
     SELECT COUNT(*) INTO v_future_count
     FROM bookings
     WHERE recurring_booking_id = NEW.recurring_booking_id
-      AND date > CURRENT_DATE
+      AND booking_date > CURRENT_DATE
       AND status IN ('pending', 'confirmed');
 
     -- If less than 4 future bookings, generate the next one
@@ -574,7 +574,7 @@ BEGIN
 
       -- Create the booking
       INSERT INTO bookings (
-        user_id, field_id, date, start_time, end_time,
+        user_id, field_id, booking_date, start_time, end_time,
         duration_hours, total_price, status, payment_status,
         recurring_booking_id, created_at
       ) VALUES (
@@ -627,7 +627,7 @@ BEGIN
     WHERE rb.status = 'active'
       AND b.status = 'pending'
       AND b.payment_status = 'pending'
-      AND b.date < CURRENT_DATE
+      AND b.booking_date < CURRENT_DATE
   LOOP
     -- Cancel the recurring booking
     UPDATE recurring_bookings SET

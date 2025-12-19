@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/login_activity_cubit.dart';
@@ -239,21 +240,19 @@ class _LoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(
+          const CircularProgressIndicator(
             color: AppColors.goldAccent,
             strokeWidth: 3,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             'Loading login activity...',
-            style: TextStyle(
-              fontSize: 15,
+            style: AppTextStyles.labelLarge.copyWith(
               color: AppColors.textSecondary,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -291,19 +290,16 @@ class _ErrorView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'Failed to load activity',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
@@ -358,18 +354,18 @@ class _EmptyState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'No login activity',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'No login events match\nyour filter criteria',
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
 
 /// Error state widget for analytics pages.
@@ -26,7 +27,7 @@ class AnalyticsErrorState extends StatelessWidget {
           ),
           const SizedBox(height: AnalyticsConstants.sectionSpacing),
           Text(
-            'Error loading analytics',
+            context.l10n.somethingWentWrong,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -43,7 +44,7 @@ class AnalyticsErrorState extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
           ),
         ],
       ),

@@ -6,6 +6,7 @@ import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/search_results_list.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/search_tips.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Body content for search page based on state.
 ///
@@ -31,7 +32,7 @@ class SearchBody extends StatelessWidget {
     return BlocBuilder<FieldsCubit, FieldsState>(
       builder: (context, state) {
         if (state is FieldsLoading) {
-          return const LoadingIndicator.inline(message: 'Searching fields...');
+          return LoadingIndicator.inline(message: context.l10n.loadingFields);
         }
 
         if (state is FieldsError) {

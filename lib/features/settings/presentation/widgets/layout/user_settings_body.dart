@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/empty_states.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -66,7 +67,7 @@ class UserSettingsBody extends StatelessWidget {
         : null;
 
     if (preferences == null) {
-      return const Center(child: Text('No preferences loaded'));
+      return Center(child: Text(context.l10n.noPreferencesLoaded));
     }
 
     return ListView(

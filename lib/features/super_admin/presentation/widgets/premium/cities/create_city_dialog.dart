@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Dialog for creating a new city.
 ///
@@ -105,22 +106,22 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
             ),
           ),
           const SizedBox(width: 16),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Add New City',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  style: AppTextStyles.titleLarge.copyWith(
                     color: AppColors.white,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   'Create a new city for the platform',
-                  style: TextStyle(fontSize: 13, color: AppColors.textOnNavy),
+                  style: AppTextStyles.labelMedium.copyWith(
+                    color: AppColors.textOnNavy,
+                  ),
                 ),
               ],
             ),
@@ -140,10 +141,9 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'City Name',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -213,10 +213,9 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Active Status',
-                        style: TextStyle(
-                          fontSize: 14,
+                        style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
                         ),
@@ -225,8 +224,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                         _isActive
                             ? 'City will be visible to users'
                             : 'City will be hidden from users',
-                        style: const TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),

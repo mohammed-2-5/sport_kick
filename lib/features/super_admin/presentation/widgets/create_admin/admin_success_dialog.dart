@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_admin/credential_field.dart';
 
@@ -41,7 +42,7 @@ class AdminSuccessDialog extends StatelessWidget {
           children: [
             const Text(
               'Admin account has been created successfully. Please save these credentials:',
-              style: TextStyle(fontSize: 14),
+              style: AppTextStyles.bodyMedium,
             ),
             const SizedBox(height: 20),
             CredentialField(

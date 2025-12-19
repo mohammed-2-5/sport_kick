@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart' hide DeviceType;
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
 
 /// Premium card for displaying login activity.
@@ -75,16 +76,13 @@ class PremiumLoginActivityCard extends StatelessWidget {
               if (userName != null)
                 Text(
                   userName!,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
+                  style: AppTextStyles.titleMedium.copyWith(
                     color: AppColors.textPrimary,
                   ),
                 ),
               Text(
                 activity.deviceName ?? activity.deviceType.displayName,
-                style: TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodyMedium.copyWith(
                   color: userName != null
                       ? AppColors.textSecondary
                       : AppColors.textPrimary,
@@ -152,8 +150,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               _formatTimestamp(activity.timestamp),
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
               ),
             ),
@@ -166,10 +163,9 @@ class PremiumLoginActivityCard extends StatelessWidget {
               color: AppColors.accentCyan.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(6),
             ),
-            child: const Text(
+            child: Text(
               'Current Session',
-              style: TextStyle(
-                fontSize: 11,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.accentCyan,
               ),
@@ -284,8 +280,7 @@ class _StatusBadge extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             status.displayName,
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: _getColor(),
             ),
@@ -329,13 +324,14 @@ class _DetailRow extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           '$label: ',
-          style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+          style: AppTextStyles.labelMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),

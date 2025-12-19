@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium field list item with enhanced animations and styling.
 ///
@@ -27,6 +30,8 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
 
   @override
   Widget build(BuildContext context) {
+    final priceText =
+        '${LocaleFormatters.formatPrice(context, amount: widget.field.pricePerHour, currency: widget.field.currency, decimalDigits: 0)}/${context.l10n.perHour}';
     return AnimatedScale(
       scale: _isPressed ? 0.97 : 1.0,
       duration: const Duration(milliseconds: 100),
@@ -77,18 +82,18 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                               ),
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.verified,
                                   size: 14,
                                   color: AppColors.accentCyan,
                                 ),
-                                SizedBox(width: 4),
+                                const SizedBox(width: 4),
                                 Text(
-                                  'Verified',
-                                  style: TextStyle(
+                                  context.l10n.verified,
+                                  style: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.accentCyan,
@@ -113,7 +118,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            '${widget.field.city} • ${widget.field.address}',
+                            '${widget.field.city} - ${widget.field.address}',
                             style: const TextStyle(
                               fontSize: 13,
                               color: AppColors.textSecondary,
@@ -153,7 +158,11 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  widget.field.ratingDisplay,
+                                  LocaleFormatters.formatNumber(
+                                    context,
+                                    widget.field.averageRating ?? 0,
+                                    decimalDigits: 1,
+                                  ),
                                   style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w800,
@@ -175,9 +184,9 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Text(
-                              'New',
-                              style: TextStyle(
+                            child: Text(
+                              context.l10n.newLabel,
+                              style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.accentCyan,
@@ -212,7 +221,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                             ],
                           ),
                           child: Text(
-                            widget.field.formattedPrice,
+                            priceText,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w900,
@@ -233,7 +242,12 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                         children: widget.field.facilities
                             .take(3)
                             .map(
-                              (facility) => _FacilityChip(facility: facility),
+                              (facility) => _FacilityChip(
+                                facility: FacilityLocalizer.localize(
+                                  context,
+                                  facility,
+                                ),
+                              ),
                             )
                             .toList(),
                       ),
@@ -342,18 +356,18 @@ class _ImageSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.local_fire_department,
                       size: 14,
                       color: Colors.white,
                     ),
-                    SizedBox(width: 4),
+                    const SizedBox(width: 4),
                     Text(
-                      'Popular',
-                      style: TextStyle(
+                      context.l10n.popular,
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,

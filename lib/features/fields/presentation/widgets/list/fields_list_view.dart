@@ -9,6 +9,7 @@ import 'package:spo_kick/features/fields/presentation/widgets/list/field_filters
 import 'package:spo_kick/features/fields/presentation/widgets/list/fields_category_section.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/fields_list_body.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/fields_list_header.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Main view widget for the fields list page.
 ///
@@ -122,8 +123,8 @@ class _FieldsListViewState extends State<FieldsListView> {
           }
 
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Filters applied!'),
+            SnackBar(
+              content: Text(context.l10n.filtersApplied),
               behavior: SnackBarBehavior.floating,
             ),
           );

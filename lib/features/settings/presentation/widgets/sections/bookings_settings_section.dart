@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/settings/presentation/constants/settings_constants.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/shared/settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/shared/settings_tile.dart';
@@ -17,7 +18,7 @@ class BookingsSettingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsSection(
-      title: 'Bookings',
+      title: context.l10n.bookingsSettings,
       icon: Icons.calendar_month_outlined,
       children: [
         SettingsTile(
@@ -34,8 +35,8 @@ class BookingsSettingsSection extends StatelessWidget {
               size: 20,
             ),
           ),
-          title: 'My Bookings',
-          subtitle: 'View your booking history',
+          title: context.l10n.bookingsHistory,
+          subtitle: context.l10n.bookingsHistoryDesc,
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.pushNamed('myBookings'),
         ),
@@ -54,8 +55,8 @@ class BookingsSettingsSection extends StatelessWidget {
               size: 20,
             ),
           ),
-          title: 'Weekly Subscriptions',
-          subtitle: 'Manage your recurring bookings',
+          title: context.l10n.weeklySubscriptions,
+          subtitle: context.l10n.weeklySubscriptionsDesc,
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -65,9 +66,9 @@ class BookingsSettingsSection extends StatelessWidget {
                   color: AppColors.goldAccent.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Text(
-                  'NEW',
-                  style: TextStyle(
+                child: Text(
+                  context.l10n.newLabel,
+                  style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                     color: AppColors.goldAccent,
@@ -95,8 +96,8 @@ class BookingsSettingsSection extends StatelessWidget {
               size: 20,
             ),
           ),
-          title: 'Favorites',
-          subtitle: 'View your favorite fields',
+          title: context.l10n.favoritesTitle,
+          subtitle: context.l10n.favoritesDesc,
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.pushNamed('favorites'),
         ),

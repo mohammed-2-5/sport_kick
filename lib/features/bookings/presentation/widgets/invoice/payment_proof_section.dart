@@ -3,7 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -123,38 +125,41 @@ class _ImageSourceBottomSheet extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Select Payment Proof',
-                style: TextStyle(
+              Text(
+                context.l10n.selectPaymentProof,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Choose how to upload your payment screenshot',
-                style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              Text(
+                context.l10n.choosePaymentUploadMethod,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: AppColors.textSecondary,
+                ),
               ),
               const SizedBox(height: 24),
               _SourceOption(
                 icon: Icons.photo_camera_rounded,
-                label: 'Take Photo',
-                description: 'Capture payment screenshot',
+                label: context.l10n.takePhoto,
+                description: context.l10n.capturePaymentScreenshot,
                 onTap: () => Navigator.pop(context, ImageSource.camera),
               ),
               const Divider(height: 1, indent: 70),
               _SourceOption(
                 icon: Icons.photo_library_rounded,
-                label: 'Choose from Gallery',
-                description: 'Select existing screenshot',
+                label: context.l10n.chooseFromGallery,
+                description: context.l10n.selectExistingScreenshot,
                 onTap: () => Navigator.pop(context, ImageSource.gallery),
               ),
               const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: PremiumButton(
-                  label: 'Cancel',
+                  label: context.l10n.cancel,
                   onPressed: () => Navigator.pop(context),
                   style: PremiumButtonStyle.outline,
                   fullWidth: true,
@@ -247,17 +252,17 @@ class _UploadProofCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.receipt_long_rounded,
                 color: AppColors.accentCyan,
                 size: 24,
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Text(
-                'Payment Proof',
-                style: TextStyle(
+                context.l10n.paymentProof,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -326,18 +331,18 @@ class _UploadProofCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Upload Payment Screenshot',
-                    style: TextStyle(
+                  Text(
+                    context.l10n.uploadPaymentScreenshot,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Tap to take a photo or select from gallery',
-                    style: TextStyle(
+                  Text(
+                    context.l10n.paymentUploadHint,
+                    style: const TextStyle(
                       fontSize: 13,
                       color: AppColors.textSecondary,
                     ),
@@ -372,17 +377,17 @@ class _SelectedProofCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.receipt_long_rounded,
                 color: AppColors.accentCyan,
                 size: 24,
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Text(
-                'Payment Proof',
-                style: TextStyle(
+                context.l10n.paymentProof,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -422,7 +427,7 @@ class _SelectedProofCard extends StatelessWidget {
             children: [
               Expanded(
                 child: PremiumButton(
-                  label: 'Change',
+                  label: context.l10n.change,
                   onPressed: onCancel,
                   style: PremiumButtonStyle.outline,
                   fullWidth: true,
@@ -431,7 +436,7 @@ class _SelectedProofCard extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: PremiumButton(
-                  label: 'Upload',
+                  label: context.l10n.upload,
                   onPressed: onUpload,
                   icon: Icons.cloud_upload_rounded,
                   fullWidth: true,
@@ -451,31 +456,34 @@ class _UploadingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PremiumCard(
-      padding: EdgeInsets.all(20),
+    return PremiumCard(
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          SizedBox(height: 20),
-          CircularProgressIndicator(
+          const SizedBox(height: 20),
+          const CircularProgressIndicator(
             color: AppColors.accentCyan,
             strokeWidth: 3,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
-            'Uploading Payment Proof...',
-            style: TextStyle(
+            context.l10n.uploadingPaymentProof,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
-            'Please wait while we upload your screenshot',
-            style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+            context.l10n.paymentUploadWait,
+            style: const TextStyle(
+              fontSize: 13,
+              color: AppColors.textSecondary,
+            ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -503,10 +511,10 @@ class _ExistingPaymentProofCard extends StatelessWidget {
                 size: 24,
               ),
               const SizedBox(width: 12),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Payment Proof',
-                  style: TextStyle(
+                  context.l10n.paymentProof,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -522,9 +530,9 @@ class _ExistingPaymentProofCard extends StatelessWidget {
                   color: AppColors.infoLight,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text(
-                  'Uploaded',
-                  style: TextStyle(
+                child: Text(
+                  context.l10n.uploadedLabel,
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: AppColors.info,
@@ -587,18 +595,21 @@ class _ExistingPaymentProofCard extends StatelessWidget {
                       color: Colors.black.withValues(alpha: 0.6),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.fullscreen_rounded,
                           color: Colors.white,
                           size: 16,
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         Text(
-                          'Tap to view',
-                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          context.l10n.tapToView,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),
@@ -611,7 +622,9 @@ class _ExistingPaymentProofCard extends StatelessWidget {
           if (booking.paymentUploadedAt != null) ...[
             const SizedBox(height: 12),
             Text(
-              'Uploaded on ${_formatDateTime(booking.paymentUploadedAt!)}',
+              context.l10n.uploadedOn(
+                _formatDateTime(context, booking.paymentUploadedAt!),
+              ),
               style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.textSecondary,
@@ -623,24 +636,11 @@ class _ExistingPaymentProofCard extends StatelessWidget {
     );
   }
 
-  String _formatDateTime(DateTime dateTime) {
-    final months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    final hour = dateTime.hour > 12 ? dateTime.hour - 12 : dateTime.hour;
-    final period = dateTime.hour >= 12 ? 'PM' : 'AM';
-    return '${months[dateTime.month - 1]} ${dateTime.day}, ${dateTime.year} at $hour:${dateTime.minute.toString().padLeft(2, '0')} $period';
+  String _formatDateTime(BuildContext context, DateTime dateTime) {
+    final locale = Localizations.localeOf(context).toString();
+    final date = DateFormat.yMMMd(locale).format(dateTime);
+    final time = DateFormat.Hm(locale).format(dateTime);
+    return '$date $time';
   }
 
   void _showFullImage(BuildContext context, String imageUrl) {
@@ -665,9 +665,9 @@ class _FullScreenImage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          'Payment Proof',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          context.l10n.paymentProof,
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: InteractiveViewer(
@@ -713,24 +713,29 @@ class _VerifiedPaymentCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Payment Verified',
-            style: TextStyle(
+          Text(
+            context.l10n.paymentVerified,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: AppColors.success,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Your payment has been verified by the field owner. Enjoy your game!',
-            style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+          Text(
+            context.l10n.paymentVerifiedMessage,
+            style: const TextStyle(
+              fontSize: 13,
+              color: AppColors.textSecondary,
+            ),
             textAlign: TextAlign.center,
           ),
           if (booking.paymentVerifiedAt != null) ...[
             const SizedBox(height: 8),
             Text(
-              'Verified on ${_formatDate(booking.paymentVerifiedAt!)}',
+              context.l10n.verifiedOn(
+                _formatDate(context, booking.paymentVerifiedAt!),
+              ),
               style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.textSecondary,
@@ -742,21 +747,8 @@ class _VerifiedPaymentCard extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime date) {
-    final months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${months[date.month - 1]} ${date.day}, ${date.year}';
+  String _formatDate(BuildContext context, DateTime date) {
+    final locale = Localizations.localeOf(context).toString();
+    return DateFormat.yMMMd(locale).format(date);
   }
 }

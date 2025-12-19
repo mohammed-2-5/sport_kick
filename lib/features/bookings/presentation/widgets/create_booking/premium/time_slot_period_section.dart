@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_slot_card.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Section displaying time slots for a specific period.
 ///
@@ -28,8 +30,24 @@ class TimeSlotPeriodSection extends StatelessWidget {
     required this.canSelectSlot,
   });
 
+  String _displayLabel(AppLocalizations l10n) {
+    switch (period) {
+      case 'Morning':
+        return l10n.morning;
+      case 'Afternoon':
+        return l10n.afternoon;
+      case 'Evening':
+        return l10n.evening;
+      case 'Late Night':
+        return l10n.lateNight;
+      default:
+        return period;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
       child: Column(
@@ -38,6 +56,10 @@ class TimeSlotPeriodSection extends StatelessWidget {
           _PeriodHeader(
             period: period,
             availableCount: slots.where((s) => s.isAvailable).length,
+            displayLabel: _displayLabel(l10n),
+            availableText: l10n.availableCount(
+              slots.where((s) => s.isAvailable).length,
+            ),
           ),
           const SizedBox(height: 12),
           _SlotsHorizontalList(
@@ -57,8 +79,15 @@ class TimeSlotPeriodSection extends StatelessWidget {
 class _PeriodHeader extends StatelessWidget {
   final String period;
   final int availableCount;
+  final String displayLabel;
+  final String availableText;
 
-  const _PeriodHeader({required this.period, required this.availableCount});
+  const _PeriodHeader({
+    required this.period,
+    required this.availableCount,
+    required this.displayLabel,
+    required this.availableText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +105,7 @@ class _PeriodHeader extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           Text(
-            period,
+            displayLabel,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -91,7 +120,7 @@ class _PeriodHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              '$availableCount available',
+              availableText,
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,

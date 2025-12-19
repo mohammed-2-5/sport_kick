@@ -69,7 +69,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         context.read<AuthCubit>().logout();
       }
     } else if (state is AuthError) {
-      SnackbarHelper.showError(context, 'Login Failed: ${state.message}');
+      SnackbarHelper.showError(context, state.message);
     }
   }
 

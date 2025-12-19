@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
@@ -42,9 +43,9 @@ class BookingPriceCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
-                BookingConstants.priceBreakdownLabel,
-                style: TextStyle(
+              Text(
+                context.l10n.priceBreakdown,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -54,8 +55,7 @@ class BookingPriceCard extends StatelessWidget {
           ),
           const SizedBox(height: BookingConstants.standardPadding),
           BookingPriceRow(
-            label:
-                '${booking.durationInHours} ${booking.durationInHours > 1 ? BookingConstants.hoursSuffix : BookingConstants.hourSuffix}',
+            label: context.l10n.durationHours(booking.durationInHours),
             value: '${hourlyRate.toStringAsFixed(0)} ${booking.currency}/hr',
           ),
           const Padding(

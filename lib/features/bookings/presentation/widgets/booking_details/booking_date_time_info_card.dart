@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_duration_badge.dart';
@@ -23,9 +25,9 @@ class BookingDateTimeInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Date & Time',
-            style: TextStyle(
+          Text(
+            context.l10n.dateTimeLabel,
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
@@ -34,15 +36,20 @@ class BookingDateTimeInfoCard extends StatelessWidget {
           const SizedBox(height: BookingConstants.standardPadding),
           BookingInfoRow(
             icon: Icons.calendar_today,
-            title: BookingConstants.dateLabel,
-            value: booking.formattedDate,
+            title: context.l10n.bookingDate,
+            value: LocaleFormatters.formatDate(context, booking.date),
             iconColor: AppColors.primary,
           ),
           const SizedBox(height: BookingConstants.standardPadding),
           BookingInfoRow(
             icon: Icons.access_time,
-            title: 'Time Slot',
-            value: booking.formattedTimeSlot,
+            title: context.l10n.timeSlot,
+            value: LocaleFormatters.formatTimeRange(
+              context,
+              startTime: booking.startTime,
+              endTime: booking.endTime,
+              baseDate: booking.date,
+            ),
             iconColor: AppColors.accentCyan,
             trailing: BookingDurationBadge(
               durationInHours: booking.durationInHours,

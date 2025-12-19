@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Owner Revenue Metrics Widget
 ///
@@ -18,11 +20,12 @@ class OwnerRevenueMetrics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Key Metrics',
+          l10n.overview,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -40,40 +43,61 @@ class OwnerRevenueMetrics extends StatelessWidget {
               childAspectRatio: 1.5,
               children: [
                 _MetricCard(
-                  title: AnalyticsConstants.totalRevenueLabel,
-                  value: '${revenue.totalRevenue.toStringAsFixed(0)} EGP',
+                  title: l10n.totalRevenueLabel,
+                  value: LocaleFormatters.formatPrice(
+                    context,
+                    amount: revenue.totalRevenue,
+                    currency: 'EGP',
+                    decimalDigits: 0,
+                  ),
                   icon: Icons.attach_money,
                   color: AppColors.success,
                 ),
                 _MetricCard(
-                  title: AnalyticsConstants.monthlyRevenueLabel,
-                  value: '${revenue.monthlyRevenue.toStringAsFixed(0)} EGP',
+                  title: l10n.monthlyRevenueLabel,
+                  value: LocaleFormatters.formatPrice(
+                    context,
+                    amount: revenue.monthlyRevenue,
+                    currency: 'EGP',
+                    decimalDigits: 0,
+                  ),
                   icon: Icons.calendar_today,
                   color: AppColors.info,
                 ),
                 _MetricCard(
-                  title: AnalyticsConstants.averageBookingLabel,
-                  value:
-                      '${revenue.averageRevenuePerBooking.toStringAsFixed(0)} EGP',
+                  title: l10n.averageBookingLabel,
+                  value: LocaleFormatters.formatPrice(
+                    context,
+                    amount: revenue.averageRevenuePerBooking,
+                    currency: 'EGP',
+                    decimalDigits: 0,
+                  ),
                   icon: Icons.trending_up,
                   color: AppColors.warning,
                 ),
                 _MetricCard(
-                  title: AnalyticsConstants.totalBookingsLabel,
-                  value: revenue.totalBookings.toString(),
+                  title: l10n.totalBookingsLabel,
+                  value: LocaleFormatters.formatNumber(
+                    context,
+                    revenue.totalBookings,
+                  ),
                   icon: Icons.event_available,
                   color: AppColors.primary,
                 ),
                 _MetricCard(
-                  title: AnalyticsConstants.pendingBookingsLabel,
-                  value: revenue.pendingBookings.toString(),
+                  title: l10n.pendingBookingsLabel,
+                  value: LocaleFormatters.formatNumber(
+                    context,
+                    revenue.pendingBookings,
+                  ),
                   icon: Icons.pending_actions,
                   color: AppColors.bookingPending,
                 ),
                 if (crossAxisCount == 3)
                   _MetricCard(
-                    title: AnalyticsConstants.revenueGrowthLabel,
-                    value: '${revenue.revenueGrowthRate.toStringAsFixed(1)}%',
+                    title: l10n.revenueGrowthLabel,
+                    value:
+                        '${LocaleFormatters.formatNumber(context, revenue.revenueGrowthRate, decimalDigits: 1)}%',
                     icon: Icons.show_chart,
                     color: AppColors.secondary,
                   ),

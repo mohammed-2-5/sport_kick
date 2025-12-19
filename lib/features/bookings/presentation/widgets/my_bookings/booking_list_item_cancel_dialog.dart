@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 
 /// Cancel booking confirmation dialog widget.
@@ -48,22 +50,22 @@ class _BookingListItemCancelDialogState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(BookingConstants.cancelBookingLabel),
+      title: Text(context.l10n.cancelBooking),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            BookingConstants.cancelConfirmationMessage,
-            style: TextStyle(fontSize: 14),
+          Text(
+            context.l10n.cancelBookingConfirm,
+            style: AppTextStyles.bodyMedium,
           ),
           const SizedBox(height: BookingConstants.standardPadding),
           TextField(
             controller: _reasonController,
-            decoration: const InputDecoration(
-              labelText: 'Reason (optional)',
-              hintText: 'Why are you canceling?',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: context.l10n.cancelReasonOptional,
+              hintText: context.l10n.cancelReasonPlaceholder,
+              border: const OutlineInputBorder(),
             ),
             maxLines: 3,
           ),
@@ -72,17 +74,17 @@ class _BookingListItemCancelDialogState
       actions: [
         TextButton(
           onPressed: widget.onKeepBooking,
-          child: const Text('Keep Booking'),
+          child: Text(context.l10n.keepBooking),
         ),
         ElevatedButton(
           onPressed: () {
             final reason = _reasonController.text.isEmpty
-                ? 'Canceled by user'
+                ? context.l10n.canceledByUser
                 : _reasonController.text;
             widget.onCancelBooking(reason);
           },
           style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-          child: const Text(BookingConstants.cancelBookingLabel),
+          child: Text(context.l10n.cancelBooking),
         ),
       ],
     );

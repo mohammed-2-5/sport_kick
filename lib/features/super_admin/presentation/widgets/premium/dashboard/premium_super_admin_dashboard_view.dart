@@ -12,6 +12,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashb
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_quick_actions.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_revenue_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_stats_grid.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium super admin dashboard view.
 ///
@@ -305,7 +306,7 @@ class _ErrorState extends StatelessWidget {
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+                style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
               ),
               const SizedBox(height: 24),
               GestureDetector(
@@ -327,16 +328,14 @@ class _ErrorState extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.refresh, size: 18, color: Colors.white),
-                      SizedBox(width: 8),
+                      const Icon(Icons.refresh, size: 18, color: Colors.white),
+                      const SizedBox(width: 8),
                       Text(
                         'Retry',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                        style: AppTextStyles.labelLarge.copyWith(
                           color: Colors.white,
                         ),
                       ),

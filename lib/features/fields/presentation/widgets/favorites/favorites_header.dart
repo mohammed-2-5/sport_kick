@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Favorites header widget with gradient background.
 ///
@@ -55,9 +57,9 @@ class FavoritesHeader extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'MY FAVORITES',
-                    style: TextStyle(
+                  Text(
+                    context.l10n.myFavorites,
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
@@ -66,7 +68,12 @@ class FavoritesHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '$count field${count == 1 ? '' : 's'} saved',
+                    context.l10n
+                        .favoritesSavedCount(count)
+                        .replaceFirst(
+                          count.toString(),
+                          LocaleFormatters.formatNumber(context, count),
+                        ),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -83,7 +90,7 @@ class FavoritesHeader extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                '$count',
+                LocaleFormatters.formatNumber(context, count),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

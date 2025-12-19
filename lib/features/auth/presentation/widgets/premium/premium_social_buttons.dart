@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium social login buttons.
 ///
@@ -37,7 +38,7 @@ class PremiumSocialButtons extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                'or continue with',
+                context.l10n.orContinueWith,
                 style: TextStyle(
                   fontSize: 13,
                   color: Colors.white.withValues(alpha: 0.6),
@@ -61,7 +62,7 @@ class PremiumSocialButtons extends StatelessWidget {
             Expanded(
               child: _SocialButton(
                 icon: _GoogleIcon(),
-                label: 'Google',
+                label: context.l10n.google,
                 onPressed: onGooglePressed,
                 isLoading: isLoading,
               ),
@@ -74,7 +75,7 @@ class PremiumSocialButtons extends StatelessWidget {
                   color: Color(0xFF1877F2),
                   size: 24,
                 ),
-                label: 'Facebook',
+                label: context.l10n.facebook,
                 onPressed: onFacebookPressed,
                 isLoading: isLoading,
               ),

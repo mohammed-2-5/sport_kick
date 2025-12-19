@@ -34,7 +34,7 @@ class BookingStatusBanner extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           Text(
-            status.displayName.toUpperCase(),
+            BookingStatusUtils.getStatusLabel(context, status).toUpperCase(),
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w800,

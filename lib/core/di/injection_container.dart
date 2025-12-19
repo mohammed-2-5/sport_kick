@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'package:spo_kick/core/localization/app_locale_cubit.dart';
 import 'package:spo_kick/core/network/network_info.dart';
 import 'package:spo_kick/core/services/csv_export_service.dart';
 import 'package:spo_kick/core/services/error_logging_service.dart';
@@ -69,6 +70,7 @@ import 'package:spo_kick/features/super_admin/domain/usecases/assign_field_to_ad
 import 'package:spo_kick/features/super_admin/domain/usecases/create_admin_account_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/create_field_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/deactivate_user_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/reset_admin_password_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/get_active_cities_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/create_city_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/update_city_usecase.dart';
@@ -351,6 +353,9 @@ Future<void> _initCore() async {
 
   // Error Logging Service
   sl.registerLazySingleton<ErrorLoggingService>(() => ErrorLoggingService());
+
+  // Localization - app locale
+  sl.registerLazySingleton<AppLocaleCubit>(() => AppLocaleCubit(sl()));
 }
 
 // ==================== FEATURE: AUTH ====================
@@ -556,6 +561,7 @@ void _initSuperAdmin() {
       assignFieldToAdminUseCase: sl(),
       activateUserUseCase: sl(),
       deactivateUserUseCase: sl(),
+      resetAdminPasswordUseCase: sl(),
     ),
   );
 
@@ -640,6 +646,7 @@ void _initSuperAdmin() {
   sl.registerLazySingleton(() => GetAllBookingsUseCase(sl()));
   sl.registerLazySingleton(() => DeactivateUserUseCase(sl()));
   sl.registerLazySingleton(() => ActivateUserUseCase(sl()));
+  sl.registerLazySingleton(() => ResetAdminPasswordUseCase(sl()));
 
   // Super Admin Field CRUD Use Cases
   sl.registerLazySingleton(

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -286,11 +287,9 @@ class _SecuritySection extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
+            Text(
               'Session Timeout',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
@@ -387,15 +386,14 @@ class _LogoutButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.logout, color: Colors.red, size: 20),
-            SizedBox(width: 8),
+            const Icon(Icons.logout, color: Colors.red, size: 20),
+            const SizedBox(width: 8),
             Text(
               'Logout',
-              style: TextStyle(
-                fontSize: 16,
+              style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.red,
               ),
@@ -415,15 +413,15 @@ class _LoadingOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black54,
-      child: const Center(
+      child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircularProgressIndicator(color: AppColors.premiumGold),
-            SizedBox(height: 16),
+            const CircularProgressIndicator(color: AppColors.premiumGold),
+            const SizedBox(height: 16),
             Text(
               'Logging out...',
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
             ),
           ],
         ),

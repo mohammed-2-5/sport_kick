@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Empty state widget for favorites page.
 ///
@@ -55,14 +56,14 @@ class FavoritesEmptyState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            const Text(
-              'No favorites yet',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              context.l10n.noFavoritesYet,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'Tap the heart icon on any field to save it here\nfor quick access later',
-              style: TextStyle(
+            Text(
+              context.l10n.favoritesHint,
+              style: const TextStyle(
                 fontSize: 15,
                 color: AppColors.textSecondary,
                 height: 1.5,
@@ -87,18 +88,18 @@ class FavoritesEmptyState extends StatelessWidget {
                       horizontal: 32,
                       vertical: 16,
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.explore_rounded,
                           color: Colors.white,
                           size: 24,
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Text(
-                          'Explore Fields',
-                          style: TextStyle(
+                          context.l10n.exploreFields,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,

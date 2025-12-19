@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 
 /// Logout button widget for owner settings page.
@@ -13,7 +14,7 @@ class OwnerLogoutButton extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: () => _showLogoutDialog(context),
         icon: const Icon(Icons.logout),
-        label: const Text('Logout'),
+        label: Text(context.l10n.logoutTitle),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.red,
           foregroundColor: Colors.white,
@@ -30,21 +31,21 @@ class OwnerLogoutButton extends StatelessWidget {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.logout, color: Colors.red),
-            SizedBox(width: 12),
-            Text('Logout'),
+            const Icon(Icons.logout, color: Colors.red),
+            const SizedBox(width: 12),
+            Text(context.l10n.logoutTitle),
           ],
         ),
-        content: const Text(
-          'Are you sure you want to logout from your account?',
-          style: TextStyle(fontSize: 15),
+        content: Text(
+          context.l10n.logoutMessage,
+          style: const TextStyle(fontSize: 15),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -55,7 +56,7 @@ class OwnerLogoutButton extends StatelessWidget {
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Logout'),
+            child: Text(context.l10n.logoutTitle),
           ),
         ],
       ),

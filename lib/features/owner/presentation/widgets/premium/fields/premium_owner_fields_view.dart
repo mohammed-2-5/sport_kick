@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_state.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/fields/premium_owner_fields_header.dart';
@@ -128,9 +129,9 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
         children: [
           const Icon(Icons.error_outline, size: 64, color: Colors.red),
           const SizedBox(height: 16),
-          const Text(
-            'Failed to load fields',
-            style: TextStyle(
+          Text(
+            context.l10n.failedToLoadFields,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -140,7 +141,7 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
           ElevatedButton.icon(
             onPressed: () => cubit.loadFields(),
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.accentCyan,
               foregroundColor: Colors.white,
@@ -179,18 +180,18 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
             ),
           ],
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
+            const Icon(
               Icons.add_circle_outline_rounded,
               color: Colors.white,
               size: 24,
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
-              'Add Field',
-              style: TextStyle(
+              context.l10n.addField,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
@@ -204,16 +205,16 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
 
   String _getEmptyMessage(OwnerFieldsLoaded state) {
     if (state.searchQuery.isNotEmpty) {
-      return 'No fields match your search';
+      return context.l10n.noFieldsMatchSearch;
     }
 
     if (state.activeFilter != null) {
       return state.activeFilter == true
-          ? 'No active fields'
-          : 'No inactive fields';
+          ? context.l10n.noActiveFields
+          : context.l10n.noInactiveFields;
     }
 
-    return 'No fields yet';
+    return context.l10n.noFields;
   }
 
   Future<void> _handleDelete(
@@ -226,20 +227,20 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Delete Field',
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+        title: Text(
+          context.l10n.deleteFieldTitle,
+          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
         ),
         content: Text(
-          'Are you sure you want to delete "$fieldName"? This action cannot be undone.',
+          context.l10n.deleteFieldMessage(fieldName),
           style: const TextStyle(fontSize: 15, color: AppColors.textSecondary),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text(
-              'Cancel',
-              style: TextStyle(
+            child: Text(
+              context.l10n.cancel,
+              style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,
               ),
@@ -255,9 +256,9 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             ),
-            child: const Text(
-              'Delete',
-              style: TextStyle(fontWeight: FontWeight.w600),
+            child: Text(
+              context.l10n.delete,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// Header section for field detail page showing image gallery and basic info.
@@ -68,9 +69,8 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
                           ),
                           child: Text(
                             '${_currentImageIndex + 1}/${widget.field.images.length}',
-                            style: const TextStyle(
+                            style: AppTextStyles.bodyMedium.copyWith(
                               color: Colors.white,
-                              fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -128,13 +128,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.field.name,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Text(widget.field.name, style: AppTextStyles.headlineSmall),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -147,8 +141,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
                   Expanded(
                     child: Text(
                       '${widget.field.address}, ${widget.field.city}',
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -182,15 +175,11 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
               if (widget.field.description != null &&
                   widget.field.description!.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                const Text(
-                  'Description',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
+                const Text('Description', style: AppTextStyles.titleMedium),
                 const SizedBox(height: 8),
                 Text(
                   widget.field.description!,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.5,
                   ),
@@ -198,10 +187,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
               ],
               if (widget.field.hasFacilities) ...[
                 const SizedBox(height: 16),
-                const Text(
-                  'Facilities',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
+                const Text('Facilities', style: AppTextStyles.titleMedium),
                 const SizedBox(height: 8),
                 Wrap(
                   spacing: 8,
@@ -231,15 +217,21 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
   Widget _buildImagePlaceholder() {
     return Container(
       color: AppColors.surfaceVariant,
-      child: const Center(
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.sports_soccer, size: 48, color: AppColors.textSecondary),
-            SizedBox(height: 8),
+            const Icon(
+              Icons.sports_soccer,
+              size: 48,
+              color: AppColors.textSecondary,
+            ),
+            const SizedBox(height: 8),
             Text(
               'No Images',
-              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
           ],
         ),
@@ -262,8 +254,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
           const SizedBox(width: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               color: color,
               fontWeight: FontWeight.w600,
             ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_state.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Filter dialog for the map page.
 ///
@@ -54,9 +57,11 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Filter Fields',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Text(
+                  context.l10n.filtersTitle,
+                  style: AppTextStyles.appBarTitle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
@@ -68,8 +73,8 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
 
             // Verified Only
             SwitchListTile(
-              title: const Text('Verified Fields Only'),
-              subtitle: const Text('Show only verified fields'),
+              title: Text(context.l10n.verifiedFieldsOnly),
+              subtitle: Text(context.l10n.verifiedFieldsDescription),
               value: _verifiedOnly,
               activeThumbColor: AppColors.primary,
               contentPadding: EdgeInsets.zero,
@@ -81,8 +86,8 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
 
             // Sort by Distance
             SwitchListTile(
-              title: const Text('Sort by Distance'),
-              subtitle: const Text('Show nearest fields first'),
+              title: Text(context.l10n.sortByDistance),
+              subtitle: Text(context.l10n.sortByDistanceDescription),
               value: _sortByDistance,
               activeThumbColor: AppColors.primary,
               contentPadding: EdgeInsets.zero,
@@ -93,9 +98,9 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
             const Divider(),
 
             // Minimum Rating
-            const Text(
-              'Minimum Rating',
-              style: TextStyle(fontWeight: FontWeight.w600),
+            Text(
+              context.l10n.minimumRating,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
             Wrap(
@@ -103,7 +108,11 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
               children: [null, 3.0, 3.5, 4.0, 4.5].map((rating) {
                 final isSelected = _minRating == rating;
                 return FilterChip(
-                  label: Text(rating == null ? 'Any' : '$rating+'),
+                  label: Text(
+                    rating == null
+                        ? context.l10n.anyOption
+                        : '${LocaleFormatters.formatNumber(context, rating, decimalDigits: rating % 1 == 0 ? 0 : 1)}+',
+                  ),
                   selected: isSelected,
                   onSelected: (_) {
                     setState(() => _minRating = rating);
@@ -116,9 +125,9 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
             const SizedBox(height: 16),
 
             // Maximum Price
-            const Text(
-              'Maximum Price (per hour)',
-              style: TextStyle(fontWeight: FontWeight.w600),
+            Text(
+              context.l10n.maximumPricePerHour,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
             Wrap(
@@ -126,7 +135,11 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
               children: [null, 100.0, 200.0, 300.0, 500.0].map((price) {
                 final isSelected = _maxPrice == price;
                 return FilterChip(
-                  label: Text(price == null ? 'Any' : '${price.toInt()} EGP'),
+                  label: Text(
+                    price == null
+                        ? context.l10n.anyOption
+                        : '${LocaleFormatters.formatNumber(context, price, decimalDigits: 0)} EGP/${context.l10n.perHour}',
+                  ),
                   selected: isSelected,
                   onSelected: (_) {
                     setState(() => _maxPrice = price);
@@ -139,17 +152,29 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
             const SizedBox(height: 16),
 
             // Surface Type
-            const Text(
-              'Surface Type',
-              style: TextStyle(fontWeight: FontWeight.w600),
+            Text(
+              context.l10n.surfaceType,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
               children: [null, 'Grass', 'Turf', 'Indoor'].map((surface) {
                 final isSelected = _surfaceType == surface;
+                final label = () {
+                  switch (surface) {
+                    case 'Grass':
+                      return context.l10n.surfaceGrass;
+                    case 'Turf':
+                      return context.l10n.surfaceTurf;
+                    case 'Indoor':
+                      return context.l10n.indoor;
+                    default:
+                      return context.l10n.anyOption;
+                  }
+                }();
                 return FilterChip(
-                  label: Text(surface ?? 'Any'),
+                  label: Text(label),
                   selected: isSelected,
                   onSelected: (_) {
                     setState(() => _surfaceType = surface);
@@ -175,7 +200,7 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
                         _sortByDistance = false;
                       });
                     },
-                    child: const Text('Clear All'),
+                    child: Text(context.l10n.clearAll),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -198,7 +223,7 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('Apply Filters'),
+                    child: Text(context.l10n.applyFilters),
                   ),
                 ),
               ],

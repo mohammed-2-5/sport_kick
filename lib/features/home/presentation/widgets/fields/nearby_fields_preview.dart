@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 
@@ -17,11 +18,9 @@ class NearbyFieldsPreview extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Nearby Fields',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                style: AppTextStyles.titleMedium.copyWith(
                   color: AppColors.lightTextPrimary,
                 ),
               ),
@@ -194,12 +193,11 @@ class NearbyFieldsPreview extends StatelessWidget {
             color: AppColors.lightTextSecondary.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'No fields nearby',
-            style: TextStyle(
+            style: AppTextStyles.bodyLarge.copyWith(
               color: AppColors.lightTextPrimary,
               fontWeight: FontWeight.w600,
-              fontSize: 16,
             ),
           ),
         ],
@@ -235,15 +233,13 @@ class NearbyFieldsPreview extends StatelessWidget {
               children: [
                 Text(
                   '$count fields nearby',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
+                  style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
                 ),
-                const Text(
+                Text(
                   'Tap to view on map',
-                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: Colors.white70,
+                  ),
                 ),
               ],
             ),
@@ -316,9 +312,8 @@ class NearbyFieldsPreview extends StatelessWidget {
             ),
             child: Text(
               label,
-              style: const TextStyle(
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.lightTextPrimary,
-                fontSize: 11,
                 fontWeight: FontWeight.bold,
               ),
               maxLines: 1,

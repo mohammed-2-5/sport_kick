@@ -1,5 +1,7 @@
+import 'package:flutter/widgets.dart';
 import 'package:spo_kick/core/constants/app_constants.dart';
 import 'package:spo_kick/core/constants/app_strings.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Form validation utilities.
 ///
@@ -25,9 +27,10 @@ class Validators {
   /// - Valid email format (RFC 5322 simplified)
   ///
   /// Returns: Error message or null if valid
-  static String? email(String? value) {
+  static String? email(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
 
     // Email regex pattern (simplified RFC 5322)
@@ -36,7 +39,7 @@ class Validators {
     final regex = RegExp(pattern);
 
     if (!regex.hasMatch(value.trim())) {
-      return AppStrings.invalidEmail;
+      return l10n?.invalidEmail ?? AppStrings.invalidEmail;
     }
 
     return null;
@@ -52,17 +55,19 @@ class Validators {
   /// - Maximum length (from AppConstants.maxPasswordLength)
   ///
   /// Returns: Error message or null if valid
-  static String? password(String? value) {
+  static String? password(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     if (value == null || value.isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
 
     if (value.length < AppConstants.minPasswordLength) {
-      return AppStrings.passwordTooShort;
+      return l10n?.passwordTooShort ?? AppStrings.passwordTooShort;
     }
 
     if (value.length > AppConstants.maxPasswordLength) {
-      return 'Password must be less than ${AppConstants.maxPasswordLength} characters';
+      return l10n?.passwordTooLong(AppConstants.maxPasswordLength) ??
+          'Password must be less than ${AppConstants.maxPasswordLength} characters';
     }
 
     return null;
@@ -78,31 +83,36 @@ class Validators {
   /// - At least one special character
   ///
   /// Returns: Error message or null if valid
-  static String? strongPassword(String? value) {
+  static String? strongPassword(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     // First check basic password validation
-    final basicValidation = password(value);
+    final basicValidation = password(value, context: context);
     if (basicValidation != null) {
       return basicValidation;
     }
 
     // Check for uppercase
     if (!value!.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
+      return l10n?.passwordNeedUppercase ??
+          'Password must contain at least one uppercase letter';
     }
 
     // Check for lowercase
     if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
+      return l10n?.passwordNeedLowercase ??
+          'Password must contain at least one lowercase letter';
     }
 
     // Check for number
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number';
+      return l10n?.passwordNeedNumber ??
+          'Password must contain at least one number';
     }
 
     // Check for special character
     if (!value.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character';
+      return l10n?.passwordNeedSpecial ??
+          'Password must contain at least one special character';
     }
 
     return null;
@@ -118,14 +128,18 @@ class Validators {
   ///   validator: Validators.confirmPassword(passwordController.text),
   /// )
   /// ```
-  static String? Function(String?) confirmPassword(String password) {
+  static String? Function(String?) confirmPassword(
+    String password, {
+    BuildContext? context,
+  }) {
+    final l10n = context?.l10n;
     return (String? value) {
       if (value == null || value.isEmpty) {
-        return AppStrings.fieldRequired;
+        return l10n?.fieldRequired ?? AppStrings.fieldRequired;
       }
 
       if (value != password) {
-        return AppStrings.passwordsDoNotMatch;
+        return l10n?.passwordsDoNotMatch ?? AppStrings.passwordsDoNotMatch;
       }
 
       return null;
@@ -143,19 +157,21 @@ class Validators {
   /// - Contains only letters and spaces
   ///
   /// Returns: Error message or null if valid
-  static String? name(String? value) {
+  static String? name(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
 
     final trimmed = value.trim();
 
     if (trimmed.length < AppConstants.minNameLength) {
-      return AppStrings.nameTooShort;
+      return l10n?.nameTooShort ?? AppStrings.nameTooShort;
     }
 
     if (trimmed.length > AppConstants.maxNameLength) {
-      return 'Name must be less than ${AppConstants.maxNameLength} characters';
+      return l10n?.nameTooLong(AppConstants.maxNameLength) ??
+          'Name must be less than ${AppConstants.maxNameLength} characters';
     }
 
     // Allow letters, spaces, hyphens, apostrophes
@@ -163,7 +179,8 @@ class Validators {
     final regex = RegExp(pattern);
 
     if (!regex.hasMatch(trimmed)) {
-      return 'Name can only contain letters and spaces';
+      return l10n?.nameLettersOnly ??
+          'Name can only contain letters and spaces';
     }
 
     return null;
@@ -179,9 +196,10 @@ class Validators {
   /// - Starts with 01
   ///
   /// Returns: Error message or null if valid
-  static String? egyptianPhone(String? value) {
+  static String? egyptianPhone(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
 
     // Remove any spaces or dashes
@@ -189,17 +207,17 @@ class Validators {
 
     // Must be 11 digits
     if (cleaned.length != AppConstants.phoneNumberLength) {
-      return 'Phone number must be 11 digits';
+      return l10n?.phoneMustBe11Digits ?? 'Phone number must be 11 digits';
     }
 
     // Must be all digits
     if (!RegExp(r'^\d+$').hasMatch(cleaned)) {
-      return 'Phone number can only contain digits';
+      return l10n?.phoneDigitsOnly ?? 'Phone number can only contain digits';
     }
 
     // Must start with 01
     if (!cleaned.startsWith('01')) {
-      return 'Phone number must start with 01';
+      return l10n?.phoneMustStartWith01 ?? 'Phone number must start with 01';
     }
 
     return null;
@@ -213,9 +231,10 @@ class Validators {
   /// - Between 10 and 15 digits
   ///
   /// Returns: Error message or null if valid
-  static String? internationalPhone(String? value) {
+  static String? internationalPhone(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
 
     // Remove spaces and dashes
@@ -226,7 +245,7 @@ class Validators {
     final regex = RegExp(pattern);
 
     if (!regex.hasMatch(cleaned)) {
-      return AppStrings.invalidPhone;
+      return l10n?.invalidPhone ?? AppStrings.invalidPhone;
     }
 
     return null;
@@ -242,22 +261,28 @@ class Validators {
   /// - Optional: within min/max range
   ///
   /// Returns: Error message or null if valid
-  static String? number(String? value, {double? min, double? max}) {
+  static String? number(
+    String? value, {
+    double? min,
+    double? max,
+    BuildContext? context,
+  }) {
+    final l10n = context?.l10n;
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
 
     final number = double.tryParse(value);
     if (number == null) {
-      return 'Please enter a valid number';
+      return l10n?.enterValidNumber ?? 'Please enter a valid number';
     }
 
     if (min != null && number < min) {
-      return 'Number must be at least $min';
+      return l10n?.numberAtLeast(min) ?? 'Number must be at least $min';
     }
 
     if (max != null && number > max) {
-      return 'Number must be at most $max';
+      return l10n?.numberAtMost(max) ?? 'Number must be at most $max';
     }
 
     return null;
@@ -271,22 +296,28 @@ class Validators {
   /// - Optional: within min/max range
   ///
   /// Returns: Error message or null if valid
-  static String? integer(String? value, {int? min, int? max}) {
+  static String? integer(
+    String? value, {
+    int? min,
+    int? max,
+    BuildContext? context,
+  }) {
+    final l10n = context?.l10n;
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
 
     final number = int.tryParse(value);
     if (number == null) {
-      return 'Please enter a valid whole number';
+      return l10n?.enterValidInteger ?? 'Please enter a valid whole number';
     }
 
     if (min != null && number < min) {
-      return 'Number must be at least $min';
+      return l10n?.numberAtLeast(min) ?? 'Number must be at least $min';
     }
 
     if (max != null && number > max) {
-      return 'Number must be at most $max';
+      return l10n?.numberAtMost(max) ?? 'Number must be at most $max';
     }
 
     return null;
@@ -301,9 +332,10 @@ class Validators {
   /// - Not just whitespace
   ///
   /// Returns: Error message or null if valid
-  static String? required(String? value) {
+  static String? required(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
     return null;
   }
@@ -320,14 +352,19 @@ class Validators {
   ///   validator: Validators.minLength(3),
   /// )
   /// ```
-  static String? Function(String?) minLength(int length) {
+  static String? Function(String?) minLength(
+    int length, {
+    BuildContext? context,
+  }) {
+    final l10n = context?.l10n;
     return (String? value) {
       if (value == null || value.isEmpty) {
-        return AppStrings.fieldRequired;
+        return l10n?.fieldRequired ?? AppStrings.fieldRequired;
       }
 
       if (value.length < length) {
-        return 'Must be at least $length characters';
+        return l10n?.minLengthChars(length) ??
+            'Must be at least $length characters';
       }
 
       return null;
@@ -337,10 +374,15 @@ class Validators {
   /// Validate maximum length.
   ///
   /// Returns a validator function that checks maximum length.
-  static String? Function(String?) maxLength(int length) {
+  static String? Function(String?) maxLength(
+    int length, {
+    BuildContext? context,
+  }) {
+    final l10n = context?.l10n;
     return (String? value) {
       if (value != null && value.length > length) {
-        return 'Must be at most $length characters';
+        return l10n?.maxLengthChars(length) ??
+            'Must be at most $length characters';
       }
       return null;
     };
@@ -349,14 +391,19 @@ class Validators {
   /// Validate exact length.
   ///
   /// Returns a validator function that checks exact length.
-  static String? Function(String?) exactLength(int length) {
+  static String? Function(String?) exactLength(
+    int length, {
+    BuildContext? context,
+  }) {
+    final l10n = context?.l10n;
     return (String? value) {
       if (value == null || value.isEmpty) {
-        return AppStrings.fieldRequired;
+        return l10n?.fieldRequired ?? AppStrings.fieldRequired;
       }
 
       if (value.length != length) {
-        return 'Must be exactly $length characters';
+        return l10n?.exactLengthChars(length) ??
+            'Must be exactly $length characters';
       }
 
       return null;
@@ -372,9 +419,10 @@ class Validators {
   /// - Valid URL format
   ///
   /// Returns: Error message or null if valid
-  static String? url(String? value) {
+  static String? url(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.fieldRequired;
+      return l10n?.fieldRequired ?? AppStrings.fieldRequired;
     }
 
     const pattern =
@@ -382,7 +430,7 @@ class Validators {
     final regex = RegExp(pattern);
 
     if (!regex.hasMatch(value.trim())) {
-      return 'Please enter a valid URL';
+      return l10n?.enterValidUrl ?? 'Please enter a valid URL';
     }
 
     return null;

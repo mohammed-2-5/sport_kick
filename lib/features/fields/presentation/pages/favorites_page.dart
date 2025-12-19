@@ -6,6 +6,7 @@ import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/favorites/favorites_view.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Favorites page - displays user's favorite fields.
 ///
@@ -27,19 +28,19 @@ class FavoritesPage extends StatelessWidget {
         ),
         BlocProvider(create: (context) => sl<FieldsCubit>()..loadAllFields()),
       ],
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: AppColors.lightBackground,
         body: Column(
           children: [
             // Premium Header
             PremiumCurvedHeader(
-              title: 'My Favorites',
-              subtitle: 'Fields you love',
+              title: context.l10n.myFavorites,
+              subtitle: context.l10n.favoritesSubtitle,
               showBackButton: true,
               height: 180,
             ),
             // Content
-            Expanded(child: FavoritesView()),
+            const Expanded(child: FavoritesView()),
           ],
         ),
       ),

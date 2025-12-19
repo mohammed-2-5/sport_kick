@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/premium/premium_auth_text_field.dart';
@@ -64,7 +65,7 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Enter your email address and we\'ll send you a link to reset your password.',
+                    context.l10n.resetPasswordSubtitle,
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.white.withValues(alpha: 0.8),
@@ -80,8 +81,8 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
 
           // Email field
           PremiumAuthTextField(
-            label: 'Email Address',
-            hintText: 'Enter your registered email',
+            label: context.l10n.emailAddress,
+            hintText: context.l10n.enterYourEmail,
             controller: _emailController,
             prefixIcon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
@@ -89,12 +90,12 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
             isDark: true,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Email is required';
+                return context.l10n.fieldRequired;
               }
               if (!RegExp(
                 r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
               ).hasMatch(value)) {
-                return 'Please enter a valid email';
+                return context.l10n.enterValidEmail;
               }
               return null;
             },
@@ -104,7 +105,7 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
 
           // Submit button
           PremiumButton(
-            label: 'Send Reset Link',
+            label: context.l10n.sendResetLink,
             onPressed: _onSubmit,
             icon: Icons.send,
             fullWidth: true,
@@ -126,7 +127,7 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Back to Login',
+                    context.l10n.backToLogin,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white.withValues(alpha: 0.7),
@@ -231,9 +232,9 @@ class _PremiumForgotPasswordSuccessState
             // Title
             FadeTransition(
               opacity: _opacityAnimation,
-              child: const Text(
-                'Check Your Email',
-                style: TextStyle(
+              child: Text(
+                context.l10n.resetEmailSentTitle,
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w800,
                   color: Colors.white,
@@ -247,7 +248,7 @@ class _PremiumForgotPasswordSuccessState
             FadeTransition(
               opacity: _opacityAnimation,
               child: Text(
-                'We\'ve sent a password reset link to:',
+                context.l10n.resetEmailSentMessage,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.white.withValues(alpha: 0.7),
@@ -287,7 +288,7 @@ class _PremiumForgotPasswordSuccessState
             FadeTransition(
               opacity: _opacityAnimation,
               child: Text(
-                'Please check your inbox and click the link to reset your password. The link will expire in 1 hour.',
+                context.l10n.resetLinkExpires,
                 style: TextStyle(
                   fontSize: 13,
                   color: Colors.white.withValues(alpha: 0.6),
@@ -305,7 +306,7 @@ class _PremiumForgotPasswordSuccessState
               child: SizedBox(
                 width: 200,
                 child: PremiumButton(
-                  label: 'Back to Login',
+                  label: context.l10n.backToLogin,
                   onPressed: widget.onBackToLogin,
                   icon: Icons.login,
                 ),
@@ -318,7 +319,7 @@ class _PremiumForgotPasswordSuccessState
             FadeTransition(
               opacity: _opacityAnimation,
               child: Text(
-                "Didn't receive the email? Check spam folder.",
+                context.l10n.checkSpamFolder,
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.white.withValues(alpha: 0.5),

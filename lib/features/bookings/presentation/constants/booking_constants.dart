@@ -278,6 +278,15 @@ class BookingConstants {
   /// History tab index
   static const int historyTabIndex = 1;
 
+  /// Recurring tab index
+  static const int recurringTabIndex = 2;
+
+  /// Recurring tab label
+  static const String recurringTabLabel = 'Recurring';
+
+  /// No recurring subscriptions message
+  static const String noRecurringMessage = 'No recurring subscriptions';
+
   // ==================== DURATION SELECTOR ====================
 
   /// Available booking durations (in hours)

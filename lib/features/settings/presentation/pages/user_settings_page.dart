@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -34,16 +35,16 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.lightBackground,
       body: Column(
         children: [
           PremiumCurvedHeader(
-            title: 'Settings',
-            showBackButton: true,
+            title: context.l10n.settings,
+            showBackButton: false,
             height: 160,
           ),
-          Expanded(child: UserSettingsBody()),
+          const Expanded(child: UserSettingsBody()),
         ],
       ),
     );

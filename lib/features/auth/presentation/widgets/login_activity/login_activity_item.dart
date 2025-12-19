@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
+
+import '../../../../../l10n/app_localizations.dart';
 
 /// Login Activity Item Widget
 ///
@@ -110,13 +113,14 @@ class _ActivityDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             Text(
-              activity.deviceName ?? activity.deviceType.displayName,
+              activity.deviceName ?? _deviceLabel(context, activity.deviceType),
               style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
@@ -131,9 +135,9 @@ class _ActivityDetails extends StatelessWidget {
                   color: AppColors.success,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text(
-                  'Current',
-                  style: TextStyle(
+                child: Text(
+                  l10n.currentSession,
+                  style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
@@ -145,7 +149,7 @@ class _ActivityDetails extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          _formatTimestamp(activity.timestamp),
+          _formatTimestamp(context, activity.timestamp),
           style: TextStyle(
             fontSize: 13,
             color: AppColors.textSecondary.withValues(alpha: 0.8),
@@ -175,20 +179,36 @@ class _ActivityDetails extends StatelessWidget {
     );
   }
 
-  String _formatTimestamp(DateTime timestamp) {
+  String _deviceLabel(BuildContext context, DeviceType type) {
+    final l10n = context.l10n;
+    switch (type) {
+      case DeviceType.mobile:
+        return l10n.deviceTypeMobile;
+      case DeviceType.web:
+        return l10n.deviceTypeWeb;
+      case DeviceType.desktop:
+        return l10n.deviceTypeDesktop;
+    }
+  }
+
+  String _formatTimestamp(BuildContext context, DateTime timestamp) {
+    final l10n = context.l10n;
     final now = DateTime.now();
     final difference = now.difference(timestamp);
 
     if (difference.inMinutes < 1) {
-      return 'Just now';
+      return l10n.justNow;
     } else if (difference.inHours < 1) {
-      return '${difference.inMinutes} min ago';
+      return l10n.minutesAgo(difference.inMinutes);
     } else if (difference.inDays < 1) {
-      return '${difference.inHours} hours ago';
+      return l10n.hoursAgo(difference.inHours);
     } else if (difference.inDays < 7) {
-      return '${difference.inDays} days ago';
+      return l10n.daysAgo(difference.inDays);
     } else {
-      return DateFormat('MMM d, yyyy • HH:mm').format(timestamp);
+      final locale = Localizations.localeOf(context).toString();
+      final date = DateFormat.yMMMd(locale).format(timestamp);
+      final time = DateFormat.Hm(locale).format(timestamp);
+      return l10n.loginDateTimeFormat(date, time);
     }
   }
 }
@@ -201,6 +221,7 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -208,7 +229,7 @@ class _StatusBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        status.displayName,
+        _statusLabel(l10n),
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -226,6 +247,17 @@ class _StatusBadge extends StatelessWidget {
         return Colors.red;
       case LoginStatus.blocked:
         return Colors.orange;
+    }
+  }
+
+  String _statusLabel(AppLocalizations l10n) {
+    switch (status) {
+      case LoginStatus.success:
+        return l10n.loginStatusSuccess;
+      case LoginStatus.failed:
+        return l10n.loginStatusFailed;
+      case LoginStatus.blocked:
+        return l10n.loginStatusBlocked;
     }
   }
 }

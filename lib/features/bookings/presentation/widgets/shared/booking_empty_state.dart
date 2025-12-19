@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Empty state widget shown when no time slots are available.
 ///
@@ -40,7 +41,7 @@ class BookingEmptyState extends StatelessWidget {
             TextButton.icon(
               onPressed: onSelectDatePressed,
               icon: const Icon(Icons.calendar_today),
-              label: const Text('Choose Another Date'),
+              label: Text(context.l10n.chooseAnotherDate),
             ),
           ],
         ),

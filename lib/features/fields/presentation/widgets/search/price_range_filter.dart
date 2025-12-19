@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/constants/search_constants.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Price Range Filter Widget
 ///
@@ -26,13 +28,13 @@ class PriceRangeFilter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Price Range',
+              context.l10n.priceRange,
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             Text(
-              '${minPrice.toInt()} - ${maxPrice.toInt()} EGP/hour',
+              '${LocaleFormatters.formatNumber(context, minPrice, decimalDigits: 0)} - ${LocaleFormatters.formatNumber(context, maxPrice, decimalDigits: 0)} EGP/${context.l10n.perHour}',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
@@ -47,7 +49,10 @@ class PriceRangeFilter extends StatelessWidget {
           max: SearchConstants.maxPriceValue,
           divisions: (SearchConstants.maxPriceValue / SearchConstants.priceStep)
               .round(),
-          labels: RangeLabels('${minPrice.toInt()}', '${maxPrice.toInt()}'),
+          labels: RangeLabels(
+            LocaleFormatters.formatNumber(context, minPrice, decimalDigits: 0),
+            LocaleFormatters.formatNumber(context, maxPrice, decimalDigits: 0),
+          ),
           onChanged: onChanged,
           activeColor: AppColors.primary,
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/time_slot_period_section.dart';
 
@@ -68,11 +69,11 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Text(
-        'Available Time Slots',
-        style: TextStyle(
+        context.l10n.availableTimeSlots,
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
@@ -204,19 +205,19 @@ class _EmptyState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'No Available Slots',
-              style: TextStyle(
+            Text(
+              context.l10n.noSlotsAvailable,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'All time slots for this date are booked.\nTry selecting a different date.',
+            Text(
+              context.l10n.allSlotsBookedMessage,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary,
                 height: 1.5,
@@ -255,9 +256,9 @@ class _ErrorState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Something went wrong',
-              style: TextStyle(
+            Text(
+              context.l10n.somethingWentWrong,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,

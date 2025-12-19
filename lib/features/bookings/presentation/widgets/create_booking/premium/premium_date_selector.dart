@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 
 /// Premium horizontal date selector with scrollable date cards.
@@ -82,6 +83,7 @@ class _PremiumDateSelectorState extends State<PremiumDateSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).toString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -90,16 +92,16 @@ class _PremiumDateSelectorState extends State<PremiumDateSelector> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Select Date',
-                style: TextStyle(
+              Text(
+                context.l10n.selectDate,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
               ),
               Text(
-                DateFormat('MMMM yyyy').format(widget.selectedDate),
+                DateFormat('MMMM yyyy', locale).format(widget.selectedDate),
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -190,6 +192,7 @@ class _DateCardState extends State<_DateCard>
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).toString();
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) => _controller.reverse(),
@@ -241,7 +244,7 @@ class _DateCardState extends State<_DateCard>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                DateFormat('EEE').format(widget.date).toUpperCase(),
+                DateFormat('EEE', locale).format(widget.date).toUpperCase(),
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/utils/error_handler.dart';
 import 'package:spo_kick/core/widgets/premium/empty_states.dart';
-import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_details_actions_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
@@ -70,10 +70,7 @@ class BookingDetailsBody extends StatelessWidget {
     if (state is BookingError) {
       ErrorHandler.showErrorSnackbar(context, state.message);
     } else if (state is BookingCanceled) {
-      ErrorHandler.showSuccessSnackbar(
-        context,
-        BookingConstants.bookingCancelledMessage,
-      );
+      ErrorHandler.showSuccessSnackbar(context, context.l10n.bookingCancelled);
       Navigator.of(context).pop(true);
     }
   }

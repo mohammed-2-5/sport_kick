@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/reviews/domain/entities/review_entity.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/rating/rating_stars.dart';
 
@@ -44,10 +45,9 @@ class ReviewCard extends StatelessWidget {
                   child: review.userAvatar == null
                       ? Text(
                           review.userInitials,
-                          style: const TextStyle(
+                          style: AppTextStyles.titleMedium.copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
                           ),
                         )
                       : null,
@@ -63,17 +63,15 @@ class ReviewCard extends StatelessWidget {
                         children: [
                           Text(
                             review.userName ?? 'Anonymous',
-                            style: const TextStyle(
+                            style: AppTextStyles.bodyMedium.copyWith(
                               fontWeight: FontWeight.bold,
-                              fontSize: 15,
                             ),
                           ),
                           if (review.wasEdited) ...[
                             const SizedBox(width: 6),
                             Text(
                               '(edited)',
-                              style: TextStyle(
-                                fontSize: 12,
+                              style: AppTextStyles.caption.copyWith(
                                 color: Colors.grey[600],
                                 fontStyle: FontStyle.italic,
                               ),
@@ -84,7 +82,9 @@ class ReviewCard extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         review.formattedDate,
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        style: AppTextStyles.caption.copyWith(
+                          color: Colors.grey[600],
+                        ),
                       ),
                     ],
                   ),
@@ -131,7 +131,7 @@ class ReviewCard extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 review.comment!,
-                style: const TextStyle(fontSize: 14, height: 1.5),
+                style: AppTextStyles.bodyMedium.copyWith(height: 1.5),
               ),
             ],
 
@@ -144,10 +144,9 @@ class ReviewCard extends StatelessWidget {
                   color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
+                child: Text(
                   'Recent Review',
-                  style: TextStyle(
-                    fontSize: 11,
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
                   ),

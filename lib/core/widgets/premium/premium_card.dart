@@ -142,9 +142,10 @@ class _PremiumCardState extends State<PremiumCard>
           ),
           child: ClipRRect(
             borderRadius: borderRadius,
-            child: widget.padding != null
-                ? Padding(padding: widget.padding!, child: widget.child)
-                : widget.child,
+            child: Padding(
+              padding: widget.padding ?? const EdgeInsets.all(12),
+              child: widget.child,
+            ),
           ),
         ),
       ),

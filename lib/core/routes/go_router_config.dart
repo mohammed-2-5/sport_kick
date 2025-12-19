@@ -79,6 +79,8 @@ import 'package:spo_kick/features/recurring_bookings/presentation/cubit/recurrin
 import 'package:spo_kick/features/recurring_bookings/presentation/pages/my_recurring_bookings_page.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/pages/create_recurring_page.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/pages/recurring_requests_page.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/pages/recurring_booking_detail_page.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/entities/recurring_booking_entity.dart';
 
 /// GoRouter configuration for the Sport Kick application.
 ///
@@ -91,7 +93,7 @@ class AppRouterConfig {
   /// Create and configure the GoRouter instance
   static GoRouter createRouter() {
     return GoRouter(
-      debugLogDiagnostics: true,
+      debugLogDiagnostics: false,
       initialLocation: '/',
       errorBuilder: (context, state) =>
           _ErrorPage(error: state.error?.toString() ?? 'Unknown error'),
@@ -271,8 +273,16 @@ class AppRouterConfig {
           path: '/my-bookings',
           name: 'myBookings',
           pageBuilder: (context, state) => _buildSlidePage(
-            child: BlocProvider(
-              create: (_) => sl<BookingCubit>()..loadUserBookings(),
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (_) => sl<BookingCubit>()..loadUserBookings(),
+                ),
+                BlocProvider(
+                  create: (_) =>
+                      sl<MyRecurringBookingsCubit>()..loadRecurringBookings(),
+                ),
+              ],
               child: const MyBookingsPage(),
             ),
             state: state,
@@ -343,6 +353,25 @@ class AppRouterConfig {
             }
             return _buildSlidePage(
               child: CreateRecurringPage(field: field),
+              state: state,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/recurringBooking/:id',
+          name: 'recurringBookingDetail',
+          pageBuilder: (context, state) {
+            final booking = state.extra as RecurringBookingEntity?;
+            if (booking == null) {
+              return _buildPage(
+                child: const _ErrorPage(
+                  error: 'Recurring booking data is required',
+                ),
+                state: state,
+              );
+            }
+            return _buildSlidePage(
+              child: RecurringBookingDetailPage(booking: booking),
               state: state,
             );
           },

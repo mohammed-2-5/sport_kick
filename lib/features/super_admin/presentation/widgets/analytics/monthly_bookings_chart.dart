@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Monthly bookings bar chart
 class MonthlyBookingsChart extends StatelessWidget {
@@ -65,7 +66,7 @@ class MonthlyBookingsChart extends StatelessWidget {
                     getTitlesWidget: (value, meta) {
                       return Text(
                         value.toInt().toString(),
-                        style: const TextStyle(fontSize: 10),
+                        style: AppTextStyles.badge,
                       );
                     },
                   ),
@@ -93,10 +94,7 @@ class MonthlyBookingsChart extends StatelessWidget {
                         'Nov',
                         'Dec',
                       ];
-                      return Text(
-                        months[month],
-                        style: const TextStyle(fontSize: 10),
-                      );
+                      return Text(months[month], style: AppTextStyles.badge);
                     },
                   ),
                 ),

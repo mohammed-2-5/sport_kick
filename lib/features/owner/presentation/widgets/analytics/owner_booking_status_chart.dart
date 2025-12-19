@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
 
@@ -17,16 +18,17 @@ class OwnerBookingStatusChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return _ChartCard(
-      title: AnalyticsConstants.bookingStatusTitle,
-      subtitle: AnalyticsConstants.bookingStatusSubtitle,
+      title: l10n.bookingStatusTitle,
+      subtitle: l10n.bookingStatusSubtitle,
       icon: Icons.pie_chart,
       color: AppColors.info,
       child: SizedBox(
         height: AnalyticsConstants.pieChartHeight,
         child: Row(
           children: [
-            Expanded(flex: 3, child: _buildPieChart()),
+            Expanded(flex: 3, child: _buildPieChart(context)),
             Expanded(flex: 2, child: _buildLegend(context)),
           ],
         ),
@@ -34,14 +36,14 @@ class OwnerBookingStatusChart extends StatelessWidget {
     );
   }
 
-  Widget _buildPieChart() {
+  Widget _buildPieChart(BuildContext context) {
     final sections = _createPieSections();
 
     if (sections.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
-          AnalyticsConstants.noDataMessage,
-          style: TextStyle(color: Colors.grey),
+          context.l10n.noDataAvailablePeriod,
+          style: const TextStyle(color: Colors.grey),
         ),
       );
     }
@@ -132,25 +134,26 @@ class OwnerBookingStatusChart extends StatelessWidget {
   }
 
   Widget _buildLegend(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _LegendItem(
           color: AnalyticsConstants.statusPieColors[0],
-          label: 'Confirmed',
+          label: l10n.statusConfirmed,
           value: revenue.monthlyBookings.toString(),
         ),
         const SizedBox(height: 8),
         _LegendItem(
           color: AnalyticsConstants.statusPieColors[1],
-          label: 'Pending',
+          label: l10n.statusPending,
           value: revenue.pendingBookings.toString(),
         ),
         const SizedBox(height: 8),
         _LegendItem(
           color: AnalyticsConstants.statusPieColors[2],
-          label: 'Completed',
+          label: l10n.statusCompleted,
           value:
               (revenue.totalBookings -
                       revenue.monthlyBookings -

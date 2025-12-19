@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium login mode switcher (User/Admin).
 ///
@@ -20,6 +21,7 @@ class PremiumModeSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
@@ -30,13 +32,13 @@ class PremiumModeSwitcher extends StatelessWidget {
       child: Row(
         children: [
           _ModeOption(
-            label: 'User',
+            label: l10n.user,
             icon: Icons.person_outline,
             isSelected: currentMode == 'user',
             onTap: () => onModeChanged('user'),
           ),
           _ModeOption(
-            label: 'Field Owner',
+            label: l10n.fieldOwner,
             icon: Icons.business_outlined,
             isSelected: currentMode == 'admin',
             onTap: () => onModeChanged('admin'),
@@ -163,6 +165,7 @@ class PremiumModeIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isAdmin = mode == 'admin';
+    final l10n = context.l10n;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -193,7 +196,7 @@ class PremiumModeIndicator extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            isAdmin ? 'Field Owner' : 'User',
+            isAdmin ? l10n.fieldOwner : l10n.user,
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w700,

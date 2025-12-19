@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/login_cubit.dart';
@@ -66,8 +67,8 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
 
               // Email field
               PremiumAuthTextField(
-                label: 'Email',
-                hintText: 'example@email.com',
+                label: context.l10n.email,
+                hintText: context.l10n.enterYourEmail,
                 controller: _emailController,
                 prefixIcon: Icons.email_outlined,
                 keyboardType: TextInputType.emailAddress,
@@ -75,11 +76,11 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                 isDark: true,
                 errorText:
                     !state.isEmailValid && _emailController.text.isNotEmpty
-                    ? 'Please enter a valid email'
+                    ? context.l10n.enterValidEmail
                     : null,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Email is required';
+                    return context.l10n.fieldRequired;
                   }
                   return null;
                 },
@@ -89,8 +90,8 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
 
               // Password field
               PremiumAuthTextField(
-                label: 'Password',
-                hintText: 'Enter your password',
+                label: context.l10n.password,
+                hintText: context.l10n.enterPassword,
                 controller: _passwordController,
                 isPassword: true,
                 obscureText: !state.isPasswordVisible,
@@ -102,7 +103,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                 isDark: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Password is required';
+                    return context.l10n.fieldRequired;
                   }
                   return null;
                 },
@@ -145,7 +146,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          'Remember me',
+                          context.l10n.rememberMe,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.white.withValues(alpha: 0.8),
@@ -158,9 +159,9 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                   // Forgot password
                   GestureDetector(
                     onTap: () => context.pushNamed('forgot-password'),
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(
+                    child: Text(
+                      context.l10n.forgotPassword,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: AppColors.accentCyan,
@@ -174,7 +175,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
 
               // Login button
               PremiumButton(
-                label: 'Sign In',
+                label: context.l10n.signIn,
                 onPressed: _onLogin,
                 icon: Icons.login,
                 fullWidth: true,
@@ -199,7 +200,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an account? ",
+                    '${context.l10n.dontHaveAccount} ',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white.withValues(alpha: 0.7),
@@ -207,9 +208,9 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                   ),
                   GestureDetector(
                     onTap: () => context.pushNamed('register'),
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(
+                    child: Text(
+                      context.l10n.signUp,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: AppColors.accentCyan,

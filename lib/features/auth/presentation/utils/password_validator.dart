@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
 
 /// Password validation utility.
@@ -10,28 +12,29 @@ class PasswordValidator {
   /// Validates a new password against all requirements.
   ///
   /// Returns null if valid, or an error message string if invalid.
-  static String? validateNewPassword(String? value) {
+  static String? validateNewPassword(String? value, {BuildContext? context}) {
+    final l10n = context?.l10n;
     if (value == null || value.isEmpty) {
-      return AuthConstants.newPasswordRequiredMsg;
+      return l10n?.fieldRequired ?? AuthConstants.newPasswordRequiredMsg;
     }
 
     if (value.length < AuthConstants.minPasswordLength) {
-      return AuthConstants.passwordTooShortMsg;
+      return l10n?.passwordTooShort ?? AuthConstants.passwordTooShortMsg;
     }
 
     if (AuthConstants.requireUppercase &&
         !RegExp(AuthConstants.uppercasePattern).hasMatch(value)) {
-      return AuthConstants.passwordUppercaseMsg;
+      return l10n?.passwordNeedUppercase ?? AuthConstants.passwordUppercaseMsg;
     }
 
     if (AuthConstants.requireLowercase &&
         !RegExp(AuthConstants.lowercasePattern).hasMatch(value)) {
-      return AuthConstants.passwordLowercaseMsg;
+      return l10n?.passwordNeedLowercase ?? AuthConstants.passwordLowercaseMsg;
     }
 
     if (AuthConstants.requireNumber &&
         !RegExp(AuthConstants.numberPattern).hasMatch(value)) {
-      return AuthConstants.passwordNumberMsg;
+      return l10n?.passwordNeedNumber ?? AuthConstants.passwordNumberMsg;
     }
 
     return null;

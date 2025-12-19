@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_strings.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_text_field.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_strings.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/login_cubit.dart';
 
@@ -57,20 +56,22 @@ class _LoginBodyState extends State<LoginBody> {
 
                 // Email
                 PremiumTextField(
-                  label: AuthStrings.emailLabel,
-                  hintText: 'example@email.com',
+                  label: context.l10n.email,
+                  hintText: context.l10n.enterYourEmail,
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   prefixIcon: Icons.email_outlined,
                   textInputAction: TextInputAction.next,
-                  errorText: !state.isEmailValid ? 'Invalid email' : null,
+                  errorText: !state.isEmailValid
+                      ? context.l10n.invalidEmail
+                      : null,
                 ),
                 const SizedBox(height: 20),
 
                 // Password
                 PremiumTextField(
-                  label: AuthStrings.passwordLabel,
-                  hintText: 'Enter your password',
+                  label: context.l10n.password,
+                  hintText: context.l10n.enterPassword,
                   controller: _passwordController,
                   isPassword: true,
                   obscureText: !state.isPasswordVisible,
@@ -96,9 +97,9 @@ class _LoginBodyState extends State<LoginBody> {
                           onChanged: (_) =>
                               context.read<LoginCubit>().toggleRememberMe(),
                         ),
-                        const Text(
-                          'Remember me',
-                          style: TextStyle(
+                        Text(
+                          context.l10n.rememberMe,
+                          style: const TextStyle(
                             fontSize: 14,
                             color: AppColors.textSecondary,
                           ),
@@ -109,9 +110,9 @@ class _LoginBodyState extends State<LoginBody> {
                       onPressed: () {
                         context.pushNamed('forgot-password');
                       },
-                      child: const Text(
-                        AuthStrings.forgotPassword,
-                        style: TextStyle(
+                      child: Text(
+                        context.l10n.forgotPassword,
+                        style: const TextStyle(
                           fontSize: 14,
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,
@@ -124,7 +125,7 @@ class _LoginBodyState extends State<LoginBody> {
 
                 // Login Button
                 PremiumButton(
-                  label: AuthStrings.loginButton,
+                  label: context.l10n.login,
                   onPressed: () => _onLoginPressed(context),
                   icon: Icons.login,
                 ),
@@ -132,20 +133,20 @@ class _LoginBodyState extends State<LoginBody> {
                 const SizedBox(height: 24),
 
                 // Divider
-                const Row(
+                Row(
                   children: [
-                    Expanded(child: Divider()),
+                    const Expanded(child: Divider()),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
-                        AuthStrings.or,
-                        style: TextStyle(
+                        context.l10n.or,
+                        style: const TextStyle(
                           color: AppColors.textSecondary,
                           fontSize: 14,
                         ),
                       ),
                     ),
-                    Expanded(child: Divider()),
+                    const Expanded(child: Divider()),
                   ],
                 ),
 
@@ -155,18 +156,18 @@ class _LoginBodyState extends State<LoginBody> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      AppStrings.dontHaveAccount,
-                      style: TextStyle(
+                    Text(
+                      context.l10n.dontHaveAccount,
+                      style: const TextStyle(
                         color: AppColors.textSecondary,
                         fontSize: 15,
                       ),
                     ),
                     TextButton(
                       onPressed: () => context.pushNamed('register'),
-                      child: const Text(
-                        AppStrings.signUp,
-                        style: TextStyle(
+                      child: Text(
+                        context.l10n.signUp,
+                        style: const TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -195,13 +196,13 @@ class _LoginBodyState extends State<LoginBody> {
         children: [
           _buildModeOption(
             context,
-            label: 'User',
+            label: context.l10n.user,
             isSelected: currentMode == 'user',
             onTap: () => context.read<LoginCubit>().changeLoginMode('user'),
           ),
           _buildModeOption(
             context,
-            label: 'Field Owner',
+            label: context.l10n.fieldOwner,
             isSelected: currentMode == 'admin',
             onTap: () => context.read<LoginCubit>().changeLoginMode('admin'),
           ),

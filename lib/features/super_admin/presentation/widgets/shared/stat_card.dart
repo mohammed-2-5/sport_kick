@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Mini statistics card for displaying metrics
 class StatCard extends StatelessWidget {
@@ -31,14 +32,16 @@ class StatCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 24,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
               color: color,
             ),
           ),
           const SizedBox(height: 4),
-          Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(color: Colors.grey[600]),
+          ),
         ],
       ),
     );

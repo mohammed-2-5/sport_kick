@@ -27,6 +27,8 @@ final class AdminDetailsLoaded extends AdminDetailsState {
   final bool isAssigningField;
   final bool showStatusDialog;
   final bool showAssignDialog;
+  final bool showResetPasswordDialog;
+  final bool isResettingPassword;
   final String? selectedFieldId;
 
   const AdminDetailsLoaded({
@@ -38,6 +40,8 @@ final class AdminDetailsLoaded extends AdminDetailsState {
     this.isAssigningField = false,
     this.showStatusDialog = false,
     this.showAssignDialog = false,
+    this.showResetPasswordDialog = false,
+    this.isResettingPassword = false,
     this.selectedFieldId,
   });
 
@@ -50,6 +54,8 @@ final class AdminDetailsLoaded extends AdminDetailsState {
     bool? isAssigningField,
     bool? showStatusDialog,
     bool? showAssignDialog,
+    bool? showResetPasswordDialog,
+    bool? isResettingPassword,
     String? selectedFieldId,
     bool clearSelectedField = false,
   }) {
@@ -62,6 +68,9 @@ final class AdminDetailsLoaded extends AdminDetailsState {
       isAssigningField: isAssigningField ?? this.isAssigningField,
       showStatusDialog: showStatusDialog ?? this.showStatusDialog,
       showAssignDialog: showAssignDialog ?? this.showAssignDialog,
+      showResetPasswordDialog:
+          showResetPasswordDialog ?? this.showResetPasswordDialog,
+      isResettingPassword: isResettingPassword ?? this.isResettingPassword,
       selectedFieldId: clearSelectedField
           ? null
           : (selectedFieldId ?? this.selectedFieldId),
@@ -78,6 +87,8 @@ final class AdminDetailsLoaded extends AdminDetailsState {
     isAssigningField,
     showStatusDialog,
     showAssignDialog,
+    showResetPasswordDialog,
+    isResettingPassword,
     selectedFieldId,
   ];
 }
@@ -108,6 +119,20 @@ final class AdminStatusToggled extends AdminDetailsState {
 
   @override
   List<Object?> get props => [admin, wasActivated];
+}
+
+/// Admin password reset successfully.
+final class AdminPasswordReset extends AdminDetailsState {
+  final UserEntity admin;
+  final String newPassword;
+
+  const AdminPasswordReset({required this.admin, required this.newPassword});
+
+  String get successMessage =>
+      'Password reset successfully!\n\nNew Password: $newPassword\n\nPlease save this password and share it securely with the admin.';
+
+  @override
+  List<Object?> get props => [admin, newPassword];
 }
 
 /// Error state.

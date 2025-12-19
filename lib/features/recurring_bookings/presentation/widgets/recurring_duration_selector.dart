@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Widget for selecting duration (1 or 2 hours) for recurring booking.
 class RecurringDurationSelector extends StatelessWidget {
@@ -19,18 +20,19 @@ class RecurringDurationSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Duration',
-          style: TextStyle(
-            fontSize: 16,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.navyDeep,
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
+        Text(
           'How long do you want to play each week?',
-          style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+          style: AppTextStyles.labelMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         const SizedBox(height: 16),
         Row(
@@ -112,8 +114,7 @@ class _DurationCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   '$hours Hour${hours > 1 ? 's' : ''}',
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isSelected
                         ? AppColors.accentCyan
@@ -134,8 +135,7 @@ class _DurationCard extends StatelessWidget {
               ),
               child: Text(
                 '${price.toStringAsFixed(0)} EGP',
-                style: TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: isSelected ? AppColors.accentCyan : AppColors.navyDeep,
                 ),
@@ -143,9 +143,11 @@ class _DurationCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             // Per week label
-            const Text(
+            Text(
               'per week',
-              style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+              style: AppTextStyles.labelSmall.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
             // Selection indicator
             if (isSelected) ...[

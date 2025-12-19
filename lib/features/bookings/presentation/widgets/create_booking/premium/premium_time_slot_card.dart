@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/next_day_badge.dart';
 
@@ -182,7 +184,12 @@ class _TimeDisplay extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          '${slot.startTime} - ${slot.endTime}',
+          LocaleFormatters.formatTimeRange(
+            context,
+            startTime: slot.startTime,
+            endTime: slot.endTime,
+            isEndNextDay: slot.isNextDay,
+          ),
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w700,
@@ -243,7 +250,12 @@ class _PriceBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        slot.formattedPrice,
+        LocaleFormatters.formatPrice(
+          context,
+          amount: slot.price,
+          currency: slot.currency,
+          decimalDigits: 0,
+        ),
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -263,14 +275,14 @@ class _BookedBadge extends StatelessWidget {
         color: AppColors.error.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.block, size: 12, color: AppColors.error),
-          SizedBox(width: 4),
+          const Icon(Icons.block, size: 12, color: AppColors.error),
+          const SizedBox(width: 4),
           Text(
-            'Booked',
-            style: TextStyle(
+            context.l10n.bookedLabel,
+            style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
               color: AppColors.error,
@@ -291,14 +303,18 @@ class _DurationUnavailableBadge extends StatelessWidget {
         color: AppColors.warning.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.timer_off_outlined, size: 12, color: AppColors.warning),
-          SizedBox(width: 4),
+          const Icon(
+            Icons.timer_off_outlined,
+            size: 12,
+            color: AppColors.warning,
+          ),
+          const SizedBox(width: 4),
           Text(
-            '2h N/A',
-            style: TextStyle(
+            context.l10n.durationUnavailable,
+            style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
               color: AppColors.warning,

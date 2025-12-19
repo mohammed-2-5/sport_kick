@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
@@ -27,7 +28,7 @@ class BookingTableView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, BookingTableState state) {
     if (state is BookingTableLoading) {
-      return _LoadingView(message: state.message ?? 'Loading...');
+      return _LoadingView(message: state.message ?? context.l10n.initializing);
     }
 
     if (state is BookingTableError) {
@@ -41,7 +42,7 @@ class BookingTableView extends StatelessWidget {
       return _buildLoadedContent(context, state);
     }
 
-    return const _LoadingView(message: 'Initializing...');
+    return _LoadingView(message: context.l10n.initializing);
   }
 
   Widget _buildLoadedContent(BuildContext context, BookingTableLoaded state) {
@@ -55,7 +56,7 @@ class BookingTableView extends StatelessWidget {
           // Premium Header
           SliverToBoxAdapter(
             child: PremiumCurvedHeader(
-              title: 'Booking Table',
+              title: context.l10n.bookingTableTitle,
               subtitle: state.selectedField.name,
               showBackButton: true,
               actions: [
@@ -171,9 +172,9 @@ class _MissingHoursCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Business hours missing',
-                  style: TextStyle(
+                Text(
+                  context.l10n.businessHoursMissingTitle,
+                  style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -181,7 +182,7 @@ class _MissingHoursCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Set hours for $fieldName to enable booking slots.',
+                  context.l10n.businessHoursMissingBody(fieldName),
                   style: const TextStyle(
                     fontSize: 13,
                     color: AppColors.textSecondary,
@@ -306,9 +307,9 @@ class _ErrorView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'Failed to load',
-              style: TextStyle(
+            Text(
+              context.l10n.failedToLoad,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
@@ -327,7 +328,7 @@ class _ErrorView extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Try Again'),
+              label: Text(context.l10n.tryAgain),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.navyDeep,
                 foregroundColor: Colors.white,

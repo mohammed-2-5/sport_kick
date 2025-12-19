@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_strings.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/forgot_password_cubit.dart';
@@ -29,9 +29,9 @@ class ForgotPasswordPage extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is AuthLoading) {
-              return const LoadingIndicator(
+              return LoadingIndicator(
                 variant: LoadingVariant.fullScreen,
-                message: 'Sending reset link...',
+                message: context.l10n.sendingResetLink,
               );
             }
             return const _ForgotPasswordContent();
@@ -56,15 +56,17 @@ class _ForgotPasswordContent extends StatelessWidget {
           );
         }
 
-        return const Column(
+        return Column(
           children: [
             PremiumCurvedHeader(
-              title: AuthStrings.forgotPasswordTitle,
-              subtitle: 'Recover your account',
+              title: context.l10n.resetPasswordTitle,
+              subtitle: context.l10n.recoverAccount,
               height: 160,
               showBackButton: true,
             ),
-            Expanded(child: SingleChildScrollView(child: ForgotPasswordBody())),
+            const Expanded(
+              child: SingleChildScrollView(child: ForgotPasswordBody()),
+            ),
           ],
         );
       },

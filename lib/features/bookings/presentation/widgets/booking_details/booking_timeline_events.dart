@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
-import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/utils/booking_status_utils.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_timeline_item.dart';
 
@@ -14,13 +14,14 @@ class BookingTimelineEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasConfirmed = booking.confirmedAt != null;
     final hasCanceled = booking.canceledAt != null;
+    final l10n = context.l10n;
 
     return Column(
       children: [
         // Created event
         BookingTimelineItem(
           icon: Icons.add_circle_outline,
-          title: 'Booking Created',
+          title: l10n.bookingCreated,
           time: BookingStatusUtils.formatDateTime(booking.createdAt),
           showConnector: hasConfirmed || hasCanceled,
         ),
@@ -29,7 +30,7 @@ class BookingTimelineEvents extends StatelessWidget {
         if (hasConfirmed)
           BookingTimelineItem(
             icon: Icons.check_circle_outline,
-            title: BookingConstants.confirmedLabel,
+            title: l10n.statusConfirmed,
             time: BookingStatusUtils.formatDateTime(booking.confirmedAt!),
             showConnector: hasCanceled,
           ),
@@ -38,7 +39,7 @@ class BookingTimelineEvents extends StatelessWidget {
         if (hasCanceled)
           BookingTimelineItem(
             icon: Icons.cancel_outlined,
-            title: BookingConstants.cancelledLabel,
+            title: l10n.statusCancelled,
             time: BookingStatusUtils.formatDateTime(booking.canceledAt!),
             isError: true,
             showConnector: false,

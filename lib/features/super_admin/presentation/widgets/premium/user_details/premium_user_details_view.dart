@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -243,7 +244,7 @@ class _ErrorState extends StatelessWidget {
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+                style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
               ),
               const SizedBox(height: 24),
               GestureDetector(
@@ -257,11 +258,9 @@ class _ErrorState extends StatelessWidget {
                     color: AppColors.premiumGold,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Retry',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                    style: AppTextStyles.labelLarge.copyWith(
                       color: Colors.white,
                     ),
                   ),

@@ -5,6 +5,8 @@ import 'package:spo_kick/features/fields/presentation/constants/search_constants
 import 'package:spo_kick/features/fields/presentation/widgets/search/amenities_filter.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/price_range_filter.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/sort_selector.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Search Filter Bottom Sheet
 ///
@@ -111,7 +113,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
         const Icon(Icons.filter_list, color: AppColors.primary),
         const SizedBox(width: 8),
         Text(
-          'Filters',
+          context.l10n.filtersTitle,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -124,7 +126,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                 _filters = _filters.clearAll();
               });
             },
-            child: const Text(SearchConstants.resetFilters),
+            child: Text(context.l10n.reset),
           ),
         IconButton(
           icon: const Icon(Icons.close),
@@ -155,7 +157,12 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  '${_filters.activeFilterCount} active',
+                  context.l10n.activeFiltersCount(
+                    LocaleFormatters.formatNumber(
+                      context,
+                      _filters.activeFilterCount,
+                    ),
+                  ),
                   style: const TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -180,9 +187,9 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: const Text(
-            SearchConstants.applyFilters,
-            style: TextStyle(fontWeight: FontWeight.bold),
+          child: Text(
+            context.l10n.applyFilters,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],

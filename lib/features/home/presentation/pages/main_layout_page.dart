@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
-import 'package:spo_kick/features/auth/presentation/pages/profile_page.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/pages/fields_list_page.dart';
 import 'package:spo_kick/features/home/presentation/pages/home_page.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_cubit.dart';
+import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:spo_kick/features/settings/presentation/pages/user_settings_page.dart';
 
 class MainLayoutPage extends StatefulWidget {
   const MainLayoutPage({super.key});
@@ -31,11 +33,20 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
         create: (_) => sl<FieldsCubit>()..loadAllFields(),
         child: const FieldsListPage(),
       ),
-      BlocProvider(
-        create: (_) => sl<BookingCubit>()..loadUserBookings(),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => sl<BookingCubit>()..loadUserBookings()),
+          BlocProvider(
+            create: (_) =>
+                sl<MyRecurringBookingsCubit>()..loadRecurringBookings(),
+          ),
+        ],
         child: const MyBookingsPage(),
       ),
-      const ProfilePage(),
+      BlocProvider(
+        create: (_) => sl<SettingsCubit>(),
+        child: const UserSettingsPage(),
+      ),
     ];
   }
 
@@ -71,7 +82,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
                 GButton(icon: Icons.home_rounded, text: 'Home'),
                 GButton(icon: Icons.search_rounded, text: 'Explore'),
                 GButton(icon: Icons.calendar_today_rounded, text: 'Bookings'),
-                GButton(icon: Icons.person_rounded, text: 'Profile'),
+                GButton(icon: Icons.settings_rounded, text: 'Settings'),
               ],
               selectedIndex: _selectedIndex,
               onTabChange: (index) {

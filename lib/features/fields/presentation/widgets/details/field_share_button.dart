@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart' as share_plus;
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
-import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Share button for field details.
 ///
@@ -15,29 +16,34 @@ class FieldShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.share),
-      onPressed: () => _shareField(),
-      tooltip: FieldConstants.shareLabel,
+      onPressed: () => _shareField(context),
+      tooltip: context.l10n.shareField,
     );
   }
 
-  Future<void> _shareField() async {
-    final text =
-        '''
-Check out ${field.name}!
-
-${field.description ?? 'A great sports field for booking'}
-
-📍 ${field.address}, ${field.city}
-💰 ${field.formattedPrice}
-⭐ ${field.hasReviews ? '${field.ratingDisplay} (${field.totalReviews} reviews)' : 'No reviews yet'}
-
-Book now on SpoKick!
-''';
+  Future<void> _shareField(BuildContext context) async {
+    final price = LocaleFormatters.formatPrice(
+      context,
+      amount: field.pricePerHour,
+      currency: field.currency,
+      decimalDigits: 0,
+    );
+    final rating = field.hasReviews
+        ? '${LocaleFormatters.formatNumber(context, field.averageRating ?? 0, decimalDigits: 1)} (${LocaleFormatters.formatNumber(context, field.totalReviews)})'
+        : context.l10n.noReviews;
+    final text = context.l10n.shareFieldMessage(
+      field.name,
+      field.description ?? '',
+      field.address,
+      field.city,
+      price,
+      rating,
+    );
 
     // ignore: deprecated_member_use
     await share_plus.Share.share(
       text,
-      subject: 'Check out ${field.name} on SpoKick',
+      subject: context.l10n.shareFieldSubject(field.name),
     );
   }
 }

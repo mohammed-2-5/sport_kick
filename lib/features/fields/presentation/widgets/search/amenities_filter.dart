@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/constants/search_constants.dart';
+import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Amenities Filter Widget
 ///
@@ -21,7 +23,7 @@ class AmenitiesFilter extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Amenities',
+          context.l10n.amenities,
           style: Theme.of(
             context,
           ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -32,8 +34,9 @@ class AmenitiesFilter extends StatelessWidget {
           runSpacing: SearchConstants.chipSpacing,
           children: SearchConstants.commonAmenities.map((amenity) {
             final isSelected = selectedAmenities.contains(amenity);
+            final label = FacilityLocalizer.localize(context, amenity);
             return FilterChip(
-              label: Text(amenity),
+              label: Text(label),
               selected: isSelected,
               onSelected: (selected) {
                 final updated = List<String>.from(selectedAmenities);

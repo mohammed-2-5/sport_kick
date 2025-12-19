@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium filter chips for owner fields.
 ///
@@ -38,20 +39,20 @@ class PremiumOwnerFieldsFilters extends StatelessWidget {
       child: Row(
         children: [
           _FilterChip(
-            label: 'All',
+            label: context.l10n.all,
             count: stats['total'] ?? 0,
             isSelected: selectedFilter == null,
             onTap: () => onFilterChanged(null),
           ),
           _FilterChip(
-            label: 'Active',
+            label: context.l10n.active,
             count: stats['active'] ?? 0,
             isSelected: selectedFilter == true,
             onTap: () => onFilterChanged(true),
             color: Colors.green,
           ),
           _FilterChip(
-            label: 'Inactive',
+            label: context.l10n.inactive,
             count: stats['inactive'] ?? 0,
             isSelected: selectedFilter == false,
             onTap: () => onFilterChanged(false),

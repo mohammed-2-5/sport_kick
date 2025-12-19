@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
@@ -153,15 +155,35 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
 
   bool _validateStepOne() {
     if (_selectedField == null) {
-      SnackbarHelper.showError(context, 'Please select a field');
+      SnackbarHelper.showError(
+        context,
+        context.l10n.selectField,
+      ); // "Please select a field" -> "Select Field" (using closest key or add specific error key if strict)
+      // Actually checking keys: no specific error key added for "Please select a field".
+      // I'll stick to 'Select Field' key as error for now or generic "Invalid Input".
+      // Wait, "Please select a field" is not in keys. I added "selectField": "Select Field".
+      // Using "Field is required" would be better but I don't have it.
+      // I'll use text for now to be safe or reuse 'fieldLabel' + 'required'?
+      // I'll use hardcoded for error to be safe or add key.
+      // Actually, I should use context.l10n.fieldRequired if valid, otherwise keep English for errors? No, localization task.
+      // I will use context.l10n.fieldRequired (it exists in app_en.arb).
+      SnackbarHelper.showError(context, context.l10n.fieldRequired);
       return false;
     }
     if (_selectedDate == null) {
-      SnackbarHelper.showError(context, 'Please select a date');
+      // "Please select a date"
+      SnackbarHelper.showError(
+        context,
+        context.l10n.chooseDate,
+      ); // "Choose a date" exists? Yes.
       return false;
     }
     if (_selectedTimeSlotId == null) {
-      SnackbarHelper.showError(context, 'Please select a time slot');
+      // "Please select a time slot"
+      SnackbarHelper.showError(
+        context,
+        context.l10n.selectTime,
+      ); // "Select time" exists? Yes.
       return false;
     }
     return true;
@@ -215,12 +237,16 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocListener<BookingCubit, BookingState>(
       listener: (context, state) {
         if (state is BookingError) {
           SnackbarHelper.showError(context, state.message);
         } else if (state is BookingCreated) {
-          SnackbarHelper.showSuccess(context, 'Booking created successfully!');
+          SnackbarHelper.showSuccess(
+            context,
+            l10n.bookingCreated,
+          ); // "Booking created successfully" exists as bookingCreated
           Navigator.pop(context, true);
         }
       },
@@ -229,9 +255,9 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
         body: Column(
           children: [
             // Header
-            const PremiumCurvedHeader(
-              title: 'Create Booking',
-              subtitle: 'Add a manual booking',
+            PremiumCurvedHeader(
+              title: l10n.createBookingTitle,
+              subtitle: l10n.createBookingSubtitle,
               showBackButton: true,
             ),
 
@@ -241,7 +267,11 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
               child: PremiumStepIndicator(
                 currentStep: _currentStep,
                 totalSteps: 3,
-                stepLabels: const ['Details', 'Customer', 'Confirm'],
+                stepLabels: [
+                  l10n.bookingStepDetails,
+                  l10n.bookingStepCustomer,
+                  l10n.bookingStepConfirm,
+                ],
               ),
             ),
 
@@ -250,26 +280,30 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
               child: PageView(
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: [_buildStepOne(), _buildStepTwo(), _buildStepThree()],
+                children: [
+                  _buildStepOne(l10n),
+                  _buildStepTwo(l10n),
+                  _buildStepThree(l10n),
+                ],
               ),
             ),
 
             // Action Buttons
-            _buildActionButtons(),
+            _buildActionButtons(l10n),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildStepOne() {
+  Widget _buildStepOne(AppLocalizations l10n) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           // Field Selection
           PremiumFormSection(
-            title: 'Select Field',
+            title: l10n.selectField,
             icon: Icons.sports_soccer,
             children: [
               BlocBuilder<FieldsCubit, FieldsState>(
@@ -280,11 +314,11 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
                   }
 
                   if (fields.isEmpty) {
-                    return const Center(child: Text('No fields available'));
+                    return Center(child: Text(l10n.noFieldsAvailable));
                   }
 
                   return PremiumDropdownField<FieldEntity>(
-                    label: 'Field',
+                    label: l10n.fieldLabel,
                     value: _selectedField ?? fields.first,
                     items: fields,
                     itemLabel: (field) => field.name,
@@ -306,7 +340,7 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
 
           // Date Selection
           PremiumFormSection(
-            title: 'Select Date',
+            title: l10n.selectDate,
             icon: Icons.calendar_today,
             children: [
               _DateSelector(
@@ -322,7 +356,7 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
 
           // Time Slot Selection
           PremiumFormSection(
-            title: 'Select Time',
+            title: l10n.selectTime,
             icon: Icons.access_time,
             children: [
               PremiumTimeSlotGrid(
@@ -344,12 +378,12 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
 
           // Price
           PremiumFormSection(
-            title: 'Price',
+            title: l10n.priceLabel,
             icon: Icons.attach_money,
             children: [
               PremiumFormField(
-                label: 'Total Price',
-                hintText: 'Enter price',
+                label: l10n.totalPriceLabel,
+                hintText: l10n.enterPriceHint,
                 controller: _priceController,
                 prefixIcon: Icons.attach_money,
                 keyboardType: TextInputType.number,
@@ -361,7 +395,7 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
     );
   }
 
-  Widget _buildStepTwo() {
+  Widget _buildStepTwo(AppLocalizations l10n) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Form(
@@ -369,44 +403,44 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
         child: Column(
           children: [
             PremiumFormSection(
-              title: 'Customer Information',
+              title: l10n.customerInfoTitle,
               icon: Icons.person,
               children: [
                 PremiumFormField(
-                  label: 'Customer Name',
-                  hintText: 'Enter customer name',
+                  label: l10n.customerNameLabel,
+                  hintText: l10n.enterCustomerNameHint,
                   controller: _customerNameController,
                   prefixIcon: Icons.person_outline,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Customer name is required';
+                      return l10n.customerNameRequired;
                     }
                     return null;
                   },
                 ),
                 PremiumFormField(
-                  label: 'Phone Number',
-                  hintText: 'Enter phone number',
+                  label: l10n.phoneLabel,
+                  hintText: l10n.enterPhoneHint,
                   controller: _customerPhoneController,
                   prefixIcon: Icons.phone_outlined,
                   keyboardType: TextInputType.phone,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Phone number is required';
+                      return l10n.phoneRequired;
                     }
                     return null;
                   },
                 ),
                 PremiumFormField(
-                  label: 'Email (Optional)',
-                  hintText: 'Enter email address',
+                  label: l10n.emailOptionalLabel,
+                  hintText: l10n.enterEmailHint,
                   controller: _customerEmailController,
                   prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 PremiumFormField(
-                  label: 'Notes (Optional)',
-                  hintText: 'Add any special notes',
+                  label: l10n.notesOptionalLabel,
+                  hintText: l10n.addNotesHint,
                   controller: _notesController,
                   prefixIcon: Icons.notes,
                   maxLines: 3,
@@ -419,29 +453,31 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
     );
   }
 
-  Widget _buildStepThree() {
+  Widget _buildStepThree(AppLocalizations l10n) {
     final selectedSlot = _selectedTimeSlotId != null
         ? _timeSlots.firstWhere((s) => s.id == _selectedTimeSlotId)
         : null;
+
+    final localeName = l10n.localeName;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           PremiumBookingSummary(
-            fieldName: _selectedField?.name ?? 'Not selected',
+            fieldName: _selectedField?.name ?? l10n.notSelected,
             date: _selectedDate != null
-                ? DateFormat('EEEE, MMMM d, yyyy').format(_selectedDate!)
-                : 'Not selected',
-            timeSlot: selectedSlot?.displayTime ?? 'Not selected',
+                ? DateFormat.yMMMMEEEEd(localeName).format(_selectedDate!)
+                : l10n.notSelected,
+            timeSlot: selectedSlot?.displayTime ?? l10n.notSelected,
             customerName: _customerNameController.text.isEmpty
-                ? 'Not entered'
+                ? l10n.notEntered
                 : _customerNameController.text,
             customerPhone: _customerPhoneController.text.isEmpty
                 ? null
                 : _customerPhoneController.text,
             price:
-                '\$${_priceController.text.isEmpty ? '0' : _priceController.text}',
+                '${_priceController.text.isEmpty ? '0' : _priceController.text} EGP',
             notes: _notesController.text.isEmpty ? null : _notesController.text,
           ),
 
@@ -461,10 +497,10 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
                   child: const Icon(Icons.info_outline, color: Colors.green),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Please review the booking details before confirming. This action cannot be undone.',
-                    style: TextStyle(
+                    l10n.bookingConfirmationMessage,
+                    style: const TextStyle(
                       fontSize: 13,
                       color: AppColors.textSecondary,
                     ),
@@ -478,7 +514,7 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
     );
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildActionButtons(AppLocalizations l10n) {
     return BlocBuilder<BookingCubit, BookingState>(
       builder: (context, state) {
         final isLoading = state is BookingLoading;
@@ -500,7 +536,7 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
               if (_currentStep > 1)
                 Expanded(
                   child: PremiumButton(
-                    label: 'Back',
+                    label: l10n.back,
                     onPressed: isLoading ? null : _handleBack,
                     style: PremiumButtonStyle.outline,
                     icon: Icons.arrow_back,
@@ -509,7 +545,7 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
               if (_currentStep > 1) const SizedBox(width: 16),
               Expanded(
                 child: PremiumButton(
-                  label: _currentStep == 3 ? 'Create Booking' : 'Next',
+                  label: _currentStep == 3 ? l10n.createBooking : l10n.next,
                   onPressed: isLoading
                       ? null
                       : (_currentStep == 3 ? _handleSubmit : _handleNext),
@@ -539,6 +575,7 @@ class _DateSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final dates = List.generate(14, (index) => now.add(Duration(days: index)));
+    final localeName = context.l10n.localeName;
 
     return SizedBox(
       height: 90,
@@ -557,6 +594,7 @@ class _DateSelector extends StatelessWidget {
           return _DateCard(
             date: date,
             isSelected: isSelected,
+            localeName: localeName,
             onTap: () {
               HapticFeedback.selectionClick();
               onDateSelected(date);
@@ -572,11 +610,13 @@ class _DateSelector extends StatelessWidget {
 class _DateCard extends StatelessWidget {
   final DateTime date;
   final bool isSelected;
+  final String localeName;
   final VoidCallback onTap;
 
   const _DateCard({
     required this.date,
     required this.isSelected,
+    required this.localeName,
     required this.onTap,
   });
 
@@ -614,7 +654,7 @@ class _DateCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              DateFormat('EEE').format(date),
+              DateFormat.E(localeName).format(date),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -632,7 +672,7 @@ class _DateCard extends StatelessWidget {
             ),
             const SizedBox(height: 2),
             Text(
-              DateFormat('MMM').format(date),
+              DateFormat.MMM(localeName).format(date),
               style: TextStyle(
                 fontSize: 11,
                 color: isSelected

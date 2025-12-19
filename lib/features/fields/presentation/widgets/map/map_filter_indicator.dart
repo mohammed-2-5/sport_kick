@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_state.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Indicator widget showing that map filters are active.
 class MapFilterIndicator extends StatelessWidget {
@@ -26,9 +27,9 @@ class MapFilterIndicator extends StatelessWidget {
             children: [
               const Icon(Icons.filter_alt, color: Colors.white, size: 16),
               const SizedBox(width: 4),
-              const Text(
-                'Filtered',
-                style: TextStyle(
+              Text(
+                context.l10n.filtered,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,

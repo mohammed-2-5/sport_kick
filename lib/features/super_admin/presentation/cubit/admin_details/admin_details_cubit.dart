@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -5,6 +6,7 @@ import 'package:spo_kick/features/fields/domain/usecases/get_all_fields_usecase.
 import 'package:spo_kick/features/super_admin/domain/usecases/activate_user_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/assign_field_to_admin_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/deactivate_user_usecase.dart';
+import 'package:spo_kick/features/super_admin/domain/usecases/reset_admin_password_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admin_details/admin_details_state.dart';
 
 /// Cubit for managing admin details screen state.
@@ -19,16 +21,19 @@ class AdminDetailsCubit extends Cubit<AdminDetailsState> {
   final AssignFieldToAdminUseCase _assignFieldToAdminUseCase;
   final ActivateUserUseCase _activateUserUseCase;
   final DeactivateUserUseCase _deactivateUserUseCase;
+  final ResetAdminPasswordUseCase _resetAdminPasswordUseCase;
 
   AdminDetailsCubit({
     required GetAllFieldsUseCase getAllFieldsUseCase,
     required AssignFieldToAdminUseCase assignFieldToAdminUseCase,
     required ActivateUserUseCase activateUserUseCase,
     required DeactivateUserUseCase deactivateUserUseCase,
+    required ResetAdminPasswordUseCase resetAdminPasswordUseCase,
   }) : _getAllFieldsUseCase = getAllFieldsUseCase,
        _assignFieldToAdminUseCase = assignFieldToAdminUseCase,
        _activateUserUseCase = activateUserUseCase,
        _deactivateUserUseCase = deactivateUserUseCase,
+       _resetAdminPasswordUseCase = resetAdminPasswordUseCase,
        super(const AdminDetailsLoading());
 
   /// Initialize with admin data and load fields.
@@ -208,6 +213,52 @@ class AdminDetailsCubit extends Cubit<AdminDetailsState> {
             wasActivated: !admin.isActive,
           ),
         );
+      },
+    );
+  }
+
+  /// Show reset password confirmation dialog.
+  void showResetPasswordDialog() {
+    final currentState = state;
+    if (currentState is AdminDetailsLoaded) {
+      emit(currentState.copyWith(showResetPasswordDialog: true));
+    }
+  }
+
+  /// Hide reset password confirmation dialog.
+  void hideResetPasswordDialog() {
+    final currentState = state;
+    if (currentState is AdminDetailsLoaded) {
+      emit(currentState.copyWith(showResetPasswordDialog: false));
+    }
+  }
+
+  /// Reset admin password.
+  Future<void> resetAdminPassword() async {
+    final currentState = state;
+    if (currentState is! AdminDetailsLoaded) return;
+
+    // Hide dialog and show loading
+    emit(
+      currentState.copyWith(
+        showResetPasswordDialog: false,
+        isResettingPassword: true,
+      ),
+    );
+
+    final admin = currentState.admin;
+    final result = await _resetAdminPasswordUseCase(adminId: admin.id);
+
+    result.fold(
+      (failure) {
+        debugPrint(
+          '❌ [AdminDetailsCubit] Password reset failed: ${failure.message}',
+        );
+        emit(AdminDetailsError(message: failure.message, admin: admin));
+      },
+      (newPassword) {
+        debugPrint('✅ [AdminDetailsCubit] Password reset successfully');
+        emit(AdminPasswordReset(admin: admin, newPassword: newPassword));
       },
     );
   }

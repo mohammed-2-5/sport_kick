@@ -12,6 +12,8 @@ import 'package:spo_kick/features/owner/presentation/widgets/premium/profile/pre
 import 'package:spo_kick/features/owner/presentation/widgets/premium/profile/premium_owner_profile_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/profile/premium_owner_profile_stats.dart';
 
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+
 /// Premium owner profile view.
 ///
 /// Features:
@@ -57,8 +59,8 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
       },
       builder: (context, authState) {
         if (authState is! Authenticated) {
-          return const Scaffold(
-            body: Center(child: Text('Please login to view your profile')),
+          return Scaffold(
+            body: Center(child: Text(context.l10n.loginToViewProfile)),
           );
         }
 
@@ -109,10 +111,10 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
                 PremiumOwnerProfileStats(revenue: state.revenue),
 
               if (state is OwnerProfileLoading)
-                const Padding(
-                  padding: EdgeInsets.all(20),
+                Padding(
+                  padding: const EdgeInsets.all(20),
                   child: LoadingIndicator.inline(
-                    message: 'Loading statistics...',
+                    message: context.l10n.loadingStatistics,
                   ),
                 ),
 
@@ -175,7 +177,7 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
           ElevatedButton.icon(
             onPressed: () => context.read<OwnerProfileCubit>().loadProfile(),
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.accentCyan,
               foregroundColor: Colors.white,
@@ -204,20 +206,20 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Logout',
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+        title: Text(
+          context.l10n.logoutTitle,
+          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
         ),
-        content: const Text(
-          'Are you sure you want to logout?',
-          style: TextStyle(fontSize: 15, color: AppColors.textSecondary),
+        content: Text(
+          context.l10n.logoutMessage,
+          style: const TextStyle(fontSize: 15, color: AppColors.textSecondary),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Cancel',
-              style: TextStyle(
+            child: Text(
+              context.l10n.cancel,
+              style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,
               ),
@@ -236,9 +238,9 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             ),
-            child: const Text(
-              'Logout',
-              style: TextStyle(fontWeight: FontWeight.w600),
+            child: Text(
+              context.l10n.logoutTitle,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
         ],

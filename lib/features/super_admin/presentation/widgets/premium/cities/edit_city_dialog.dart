@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 
 /// Dialog for editing an existing city.
@@ -126,19 +127,16 @@ class _EditCityDialogState extends State<EditCityDialog> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Edit City',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  style: AppTextStyles.titleLarge.copyWith(
                     color: AppColors.white,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'Editing: ${widget.city.name}',
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.labelMedium.copyWith(
                     color: AppColors.white.withValues(alpha: 0.9),
                   ),
                 ),
@@ -160,10 +158,9 @@ class _EditCityDialogState extends State<EditCityDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'City Name',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -233,10 +230,9 @@ class _EditCityDialogState extends State<EditCityDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Active Status',
-                        style: TextStyle(
-                          fontSize: 14,
+                        style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
                         ),
@@ -245,8 +241,7 @@ class _EditCityDialogState extends State<EditCityDialog> {
                         _isActive
                             ? 'City is visible to users'
                             : 'City is hidden from users',
-                        style: const TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),

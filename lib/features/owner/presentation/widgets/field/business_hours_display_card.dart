@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
@@ -91,21 +92,21 @@ class BusinessHoursDisplayCard extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         // Title
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Business Hours',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+                style: AppTextStyles.titleMedium.copyWith(
                   color: AppColors.textPrimary,
                 ),
               ),
               Text(
                 'Working schedule',
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -166,7 +167,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
           Expanded(
             child: Text(
               message,
-              style: const TextStyle(fontSize: 13, color: Colors.red),
+              style: AppTextStyles.labelMedium.copyWith(color: Colors.red),
             ),
           ),
         ],
@@ -220,8 +221,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
             child: Text(
               shortDay,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 11,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
               ),
@@ -232,8 +232,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
           Expanded(
             child: Text(
               dayName,
-              style: TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w500,
                 color: isOpen ? AppColors.textPrimary : AppColors.textSecondary,
               ),
@@ -251,8 +250,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   _formatTimeRange(hour.openingTime, hour.closingTime),
-                  style: const TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.labelMedium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.accentCyan,
                   ),
@@ -266,10 +264,9 @@ class BusinessHoursDisplayCard extends StatelessWidget {
                 color: AppColors.textSecondary.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: const Text(
+              child: Text(
                 'Closed',
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
                 ),

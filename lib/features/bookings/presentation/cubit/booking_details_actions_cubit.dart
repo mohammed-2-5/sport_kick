@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'booking_details_actions_state.dart';
@@ -24,8 +26,9 @@ class BookingDetailsActionsCubit extends Cubit<BookingDetailsActionsState> {
   }
 
   /// Initiates contact support action.
-  Future<void> contactSupport(String bookingId) async {
+  Future<void> contactSupport(BuildContext context, String bookingId) async {
     emit(const BookingDetailsActionsLoading());
+    final l10n = context.l10n;
 
     final emailUri = Uri(
       scheme: 'mailto',
@@ -39,13 +42,13 @@ class BookingDetailsActionsCubit extends Cubit<BookingDetailsActionsState> {
         emit(const BookingDetailsActionsInitial());
       } else {
         emit(
-          const BookingDetailsActionsError(
-            'Could not open email client. Please contact support@spokick.com',
+          BookingDetailsActionsError(
+            l10n.emailClientUnavailable('support@spokick.com'),
           ),
         );
       }
     } catch (e) {
-      emit(const BookingDetailsActionsError('Failed to open email client'));
+      emit(BookingDetailsActionsError(l10n.emailClientOpenFailed));
     }
   }
 

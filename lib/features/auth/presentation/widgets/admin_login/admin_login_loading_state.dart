@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Admin login loading state widget.
 ///
@@ -9,13 +9,13 @@ class AdminLoginLoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: AuthConstants.formFieldSpacing),
-          Text(AuthConstants.loadingLoginMsg),
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          Text(context.l10n.loggingIn),
         ],
       ),
     );

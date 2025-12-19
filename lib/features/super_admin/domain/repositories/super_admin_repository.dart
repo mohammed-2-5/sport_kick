@@ -189,6 +189,25 @@ abstract class SuperAdminRepository {
   /// - [Left(Failure)]: Error occurred
   Future<Either<Failure, void>> activateUser(String userId);
 
+  /// Reset an admin's password.
+  ///
+  /// Generates a new password for admins with @sportkick.com emails
+  /// who cannot receive password reset emails.
+  /// Sets password_changed = false to force password change on next login.
+  ///
+  /// Parameters:
+  /// - [adminId]: ID of the admin whose password to reset
+  ///
+  /// Returns:
+  /// - [Right(String)]: New password generated
+  /// - [Left(Failure)]: Error occurred
+  ///
+  /// Errors:
+  /// - [NotFoundFailure]: Admin not found
+  /// - [ValidationFailure]: Admin is not an admin role or has real email
+  /// - [ServerFailure]: Database/Edge Function error
+  Future<Either<Failure, String>> resetAdminPassword({required String adminId});
+
   /// Create a new field and assign it to an admin.
   ///
   /// Only super admin can create fields. This method:

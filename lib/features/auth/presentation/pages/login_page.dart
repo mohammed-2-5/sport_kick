@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
+import 'package:spo_kick/core/widgets/language_switcher_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/login_cubit.dart';
@@ -42,21 +44,24 @@ class LoginPage extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is AuthLoading) {
-                  return const LoadingIndicator(
+                  return LoadingIndicator(
                     variant: LoadingVariant.fullScreen,
-                    message: 'Logging in...',
+                    message: context.l10n.loggingInMessage,
                   );
                 }
 
-                return const Column(
+                return Column(
                   children: [
                     PremiumCurvedHeader(
-                      title: 'Welcome Back',
-                      subtitle: 'Sign in to continue',
+                      title: context.l10n.welcomeBackHeader,
+                      subtitle: context.l10n.signInSubtitle,
                       height: 180,
                       showBackButton: false,
+                      trailing: const LanguageSwitcherButton(dark: true),
                     ),
-                    Expanded(child: SingleChildScrollView(child: LoginBody())),
+                    const Expanded(
+                      child: SingleChildScrollView(child: LoginBody()),
+                    ),
                   ],
                 );
               },

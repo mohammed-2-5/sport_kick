@@ -80,59 +80,16 @@ class AnalyticsConstants {
   ];
 
   // ==================== CHART LABELS ====================
-
-  /// Revenue trends chart title
-  static const String revenueTrendsTitle = 'Revenue Trends';
-
-  /// Revenue by field chart title
-  static const String revenueByFieldTitle = 'Revenue by Field';
-
-  /// Booking status chart title
-  static const String bookingStatusTitle = 'Booking Status Breakdown';
-
-  /// Revenue trends subtitle
-  static const String revenueTrendsSubtitle = 'Track revenue over time';
-
-  /// Revenue by field subtitle
-  static const String revenueByFieldSubtitle = 'Top performing fields';
-
-  /// Booking status subtitle
-  static const String bookingStatusSubtitle =
-      'Distribution of booking statuses';
+  // NOTE: String labels moved to localization (app_en.arb / app_ar.arb)
+  // Use context.l10n.revenueTrendsTitle, context.l10n.revenueByFieldTitle, etc.
 
   // ==================== METRICS LABELS ====================
-
-  /// Total revenue label
-  static const String totalRevenueLabel = 'Total Revenue';
-
-  /// Monthly revenue label
-  static const String monthlyRevenueLabel = 'Monthly Revenue';
-
-  /// Average booking value label
-  static const String averageBookingLabel = 'Avg. Booking';
-
-  /// Total bookings label
-  static const String totalBookingsLabel = 'Total Bookings';
-
-  /// Pending bookings label
-  static const String pendingBookingsLabel = 'Pending';
-
-  /// Revenue growth label
-  static const String revenueGrowthLabel = 'Growth Rate';
+  // NOTE: Metric labels moved to localization (app_en.arb / app_ar.arb)
+  // Use context.l10n.totalRevenueLabel, context.l10n.monthlyRevenueLabel, etc.
 
   // ==================== DATE RANGE OPTION LABELS ====================
-
-  /// Last 7 days label
-  static const String last7DaysLabel = 'Last 7 Days';
-
-  /// Last 30 days label
-  static const String last30DaysLabel = 'Last 30 Days';
-
-  /// Last 90 days label
-  static const String last90DaysLabel = 'Last 90 Days';
-
-  /// Last year label
-  static const String lastYearLabel = 'Last Year';
+  // NOTE: Date range labels moved to localization (app_en.arb / app_ar.arb)
+  // Use context.l10n.last7Days, context.l10n.last30Days, etc.
 
   // ==================== UI SPACING ====================
 
@@ -170,15 +127,16 @@ class AnalyticsConstants {
 
   // ==================== EMPTY STATE ====================
 
-  /// Empty state message for no data
-  static const String noDataMessage = 'No data available for selected period';
-
   /// Empty state icon size
   static const double emptyStateIconSize = 64.0;
 
+  // NOTE: Empty state message moved to localization
+  // Use context.l10n.noDataAvailablePeriod
+
   // ==================== MONTH ABBREVIATIONS ====================
 
-  /// Month abbreviations for chart labels
+  /// Month abbreviations for chart labels (English)
+  /// For localized month names, use DateFormat from intl package
   static const List<String> monthAbbreviations = [
     '',
     'Jan',
@@ -197,19 +155,20 @@ class AnalyticsConstants {
 
   // ==================== HELPER METHODS ====================
 
-  /// Get date range label by days
-  static String getDateRangeLabel(int days) {
+  /// Get date range value by days
+  /// NOTE: For localized labels, use getDateRangeLabelLocalized with BuildContext
+  static int getDateRangeValue(int days) {
     switch (days) {
       case last7Days:
-        return last7DaysLabel;
+        return last7Days;
       case last30Days:
-        return last30DaysLabel;
+        return last30Days;
       case last90Days:
-        return last90DaysLabel;
+        return last90Days;
       case lastYear:
-        return lastYearLabel;
+        return lastYear;
       default:
-        return last30DaysLabel;
+        return last30Days;
     }
   }
 

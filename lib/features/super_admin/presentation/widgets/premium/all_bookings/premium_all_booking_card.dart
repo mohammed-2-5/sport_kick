@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 
 /// Premium booking card with status indicator.
@@ -187,9 +188,7 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
                             Expanded(
                               child: Text(
                                 widget.fieldName,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
+                                style: AppTextStyles.titleMedium.copyWith(
                                   color: AppColors.textPrimary,
                                 ),
                                 maxLines: 1,
@@ -282,8 +281,7 @@ class _StatusBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             status,
-            style: TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.badge.copyWith(
               fontWeight: FontWeight.w700,
               color: color,
             ),
@@ -315,8 +313,7 @@ class _InfoChip extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           text,
-          style: TextStyle(
-            fontSize: 12,
+          style: AppTextStyles.labelSmall.copyWith(
             fontWeight: FontWeight.w500,
             color: color.withValues(alpha: 0.9),
           ),
@@ -373,8 +370,7 @@ class _PriceBadge extends StatelessWidget {
       ),
       child: Text(
         price,
-        style: const TextStyle(
-          fontSize: 12,
+        style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w700,
           color: Colors.white,
         ),

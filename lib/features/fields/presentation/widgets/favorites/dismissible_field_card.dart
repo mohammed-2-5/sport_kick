@@ -6,6 +6,7 @@ import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dismissible field card for favorites list.
 ///
@@ -51,9 +52,9 @@ class DismissibleFieldCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 6),
-            const Text(
-              'REMOVE',
-              style: TextStyle(
+            Text(
+              context.l10n.removeFromFavorites.toUpperCase(),
+              style: const TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -68,20 +69,18 @@ class DismissibleFieldCard extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Remove from favorites?'),
-              content: Text(
-                'Are you sure you want to remove "${field.name}" from your favorites?',
-              ),
+              title: Text(context.l10n.removeFromFavoritesQuestion),
+              content: Text(context.l10n.removeFromFavoritesBody(field.name)),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.cancel),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text(
-                    'Remove',
-                    style: TextStyle(color: AppColors.error),
+                  child: Text(
+                    context.l10n.removeFromFavorites,
+                    style: const TextStyle(color: AppColors.error),
                   ),
                 ),
               ],

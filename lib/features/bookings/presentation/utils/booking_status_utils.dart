@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 
 /// Utility class for booking status-related UI helpers.
@@ -60,28 +62,26 @@ class BookingStatusUtils {
     }
   }
 
+  /// Returns localized status label.
+  static String getStatusLabel(BuildContext context, BookingStatus status) {
+    final l10n = context.l10n;
+    switch (status) {
+      case BookingStatus.pending:
+        return l10n.statusPending;
+      case BookingStatus.confirmed:
+        return l10n.statusConfirmed;
+      case BookingStatus.canceled:
+        return l10n.statusCancelled;
+      case BookingStatus.completed:
+        return l10n.statusCompleted;
+    }
+  }
+
   /// Formats a DateTime to a readable string.
   static String formatDateTime(DateTime dateTime) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    final month = months[dateTime.month - 1];
-    final day = dateTime.day;
-    final year = dateTime.year;
-    final hour = dateTime.hour.toString().padLeft(2, '0');
-    final minute = dateTime.minute.toString().padLeft(2, '0');
-
-    return '$month $day, $year at $hour:$minute';
+    final locale = Intl.getCurrentLocale();
+    final date = DateFormat.yMMMd(locale).format(dateTime);
+    final time = DateFormat.Hm(locale).format(dateTime);
+    return '$date $time';
   }
 }

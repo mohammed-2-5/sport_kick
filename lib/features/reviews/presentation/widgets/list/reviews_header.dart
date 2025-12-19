@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/rating/rating_stars.dart';
 
 class ReviewsHeader extends StatelessWidget {
@@ -27,7 +28,9 @@ class ReviewsHeader extends StatelessWidget {
         children: [
           Text(
             fieldName,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: AppTextStyles.appBarTitle.copyWith(
+              color: AppColors.textPrimary,
+            ),
           ),
           const SizedBox(height: 12),
           if (averageRating != null && totalReviews != null) ...[
@@ -37,22 +40,23 @@ class ReviewsHeader extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   averageRating!.toStringAsFixed(1),
-                  style: const TextStyle(
-                    fontSize: 24,
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   '($totalReviews ${totalReviews == 1 ? 'review' : 'reviews'})',
-                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: Colors.grey[600],
+                  ),
                 ),
               ],
             ),
           ] else ...[
             Text(
               'No ratings yet',
-              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
             ),
           ],
         ],

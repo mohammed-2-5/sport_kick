@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
 
@@ -19,9 +20,10 @@ class OwnerRevenueTrendsChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return _ChartCard(
-      title: AnalyticsConstants.revenueTrendsTitle,
-      subtitle: AnalyticsConstants.revenueTrendsSubtitle,
+      title: l10n.revenueTrendsTitle,
+      subtitle: l10n.revenueTrendsSubtitle,
       icon: Icons.trending_up,
       color: AnalyticsConstants.revenueChartColor,
       child: SizedBox(
@@ -31,20 +33,20 @@ class OwnerRevenueTrendsChart extends StatelessWidget {
             right: AnalyticsConstants.chartRightPadding,
             top: AnalyticsConstants.chartTopPadding,
           ),
-          child: _buildLineChart(),
+          child: _buildLineChart(context),
         ),
       ),
     );
   }
 
-  Widget _buildLineChart() {
+  Widget _buildLineChart(BuildContext context) {
     final spots = _generateSpots();
 
     if (spots.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
-          AnalyticsConstants.noDataMessage,
-          style: TextStyle(color: Colors.grey),
+          context.l10n.noDataAvailablePeriod,
+          style: const TextStyle(color: Colors.grey),
         ),
       );
     }

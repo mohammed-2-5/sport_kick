@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
 
 /// Forgot password loading state widget.
@@ -9,13 +10,13 @@ class ForgotPasswordLoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: AuthConstants.formFieldSpacing),
-          Text(AuthConstants.loadingResetPasswordMsg),
+          const CircularProgressIndicator(),
+          const SizedBox(height: AuthConstants.formFieldSpacing),
+          Text(context.l10n.sendingResetLink),
         ],
       ),
     );

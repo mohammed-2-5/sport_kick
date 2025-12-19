@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/auth/presentation/constants/auth_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class AdminEmailField extends StatelessWidget {
   final TextEditingController controller;
@@ -10,23 +10,24 @@ class AdminEmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        labelText: AuthConstants.emailLabel,
+        labelText: l10n.email,
         prefixIcon: const Icon(Icons.email_outlined),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
-          return AuthConstants.emailRequiredMsg;
+          return l10n.fieldRequired;
         }
-        final emailRegex = RegExp(AuthConstants.emailPattern);
+        final emailRegex = RegExp(
+          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+        );
         if (!emailRegex.hasMatch(value)) {
-          return AuthConstants.emailInvalidMsg;
+          return l10n.invalidEmail;
         }
         return null;
       },
@@ -48,11 +49,12 @@ class _AdminPasswordFieldState extends State<AdminPasswordField> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return TextFormField(
       controller: widget.controller,
       obscureText: _obscurePassword,
       decoration: InputDecoration(
-        labelText: AuthConstants.passwordLabel,
+        labelText: l10n.password,
         prefixIcon: const Icon(Icons.lock_outlined),
         suffixIcon: IconButton(
           icon: Icon(
@@ -66,13 +68,11 @@ class _AdminPasswordFieldState extends State<AdminPasswordField> {
             });
           },
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return AuthConstants.passwordRequiredMsg;
+          return l10n.fieldRequired;
         }
         return null;
       },
@@ -91,9 +91,9 @@ class AdminForgotPasswordLink extends StatelessWidget {
         onPressed: () {
           context.pushNamed('forgotPassword');
         },
-        child: const Text(
-          AuthConstants.forgotPasswordLabel,
-          style: TextStyle(color: AppColors.primary),
+        child: Text(
+          context.l10n.forgotPassword,
+          style: const TextStyle(color: AppColors.primary),
         ),
       ),
     );
@@ -107,20 +107,21 @@ class AdminLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return SizedBox(
-      height: AuthConstants.buttonHeight,
+      height: 50,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: const Text(
-          AuthConstants.loginButtonLabel,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        child: Text(
+          l10n.login,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -135,14 +136,14 @@ class AdminUserLoginLink extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Not an admin?'),
+        Text(context.l10n.notAnAdmin),
         TextButton(
           onPressed: () {
             context.goNamed('login');
           },
-          child: const Text(
-            'User Login',
-            style: TextStyle(
+          child: Text(
+            context.l10n.userLogin,
+            style: const TextStyle(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
             ),

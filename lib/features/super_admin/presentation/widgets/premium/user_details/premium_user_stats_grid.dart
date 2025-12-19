@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/user_details/user_details_state.dart';
 
@@ -123,9 +124,7 @@ class _SectionHeader extends StatelessWidget {
         const SizedBox(width: 12),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
+          style: AppTextStyles.titleMedium.copyWith(
             color: AppColors.textPrimary,
           ),
         ),
@@ -182,17 +181,12 @@ class _StatCard extends StatelessWidget {
             children: [
               Text(
                 item.value,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: item.color,
-                ),
+                style: AppTextStyles.titleLarge.copyWith(color: item.color),
               ),
               const SizedBox(height: 2),
               Text(
                 item.label,
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.textSecondary.withValues(alpha: 0.8),
                 ),
               ),
@@ -241,16 +235,14 @@ class _FavoriteFieldCard extends StatelessWidget {
               children: [
                 Text(
                   'Favorite Field',
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.7),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   fieldName,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
