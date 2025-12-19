@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 
+import '../../../../../../core/constants/app_text_styles.dart';
+
 /// Premium stats bar for cities overview.
 ///
 /// Features:
@@ -149,8 +151,7 @@ class _StatCard extends StatelessWidget {
           // Value
           Text(
             item.value,
-            style: TextStyle(
-              fontSize: 22,
+            style: AppTextStyles.headlineMedium.copyWith(
               fontWeight: FontWeight.w800,
               color: item.gradient[0],
             ),
@@ -159,8 +160,7 @@ class _StatCard extends StatelessWidget {
           // Label
           Text(
             item.label,
-            style: TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w500,
               color: AppColors.textSecondary.withValues(alpha: 0.8),
             ),

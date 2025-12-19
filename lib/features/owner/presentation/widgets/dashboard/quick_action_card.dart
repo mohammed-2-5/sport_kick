@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Colorful quick action button for owner dashboard
 class QuickActionCard extends StatelessWidget {
@@ -59,8 +60,7 @@ class QuickActionCard extends StatelessWidget {
                 // Title
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     height: 1.3,

@@ -6,7 +6,6 @@ import 'package:spo_kick/features/city/domain/usecases/get_cities_usecase.dart';
 import 'package:spo_kick/features/city/domain/usecases/get_city_by_id_usecase.dart';
 import 'package:spo_kick/features/city/domain/usecases/get_selected_city_usecase.dart';
 import 'package:spo_kick/features/city/domain/usecases/save_selected_city_usecase.dart';
-import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
 
 /// City Cubit
@@ -76,7 +75,7 @@ class CityCubit extends Cubit<CityState> {
   /// Confirm the current selection and persist it.
   Future<void> confirmSelection() async {
     if (_selectedCity == null) {
-      emit(const CityError(CityConstants.selectCityPrompt));
+      emit(const CityError(''));
       return;
     }
     await saveCity(_selectedCity!);
@@ -96,7 +95,7 @@ class CityCubit extends Cubit<CityState> {
       },
       (_) {
         debugPrint('[CityCubit] City saved: ${city.name}');
-        emit(CitySaved(city: city, message: CityConstants.citySelectedSuccess));
+        emit(CitySaved(city: city, message: null));
         // Immediately transition to CitySelected to maintain state
         emit(CitySelected(city));
       },

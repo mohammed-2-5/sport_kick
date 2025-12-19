@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_state.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/recurring_booking_card.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Content widget for my recurring bookings page.
 class MyRecurringBookingsContent extends StatelessWidget {
@@ -28,11 +30,11 @@ class MyRecurringBookingsContent extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           // Header with summary
-          SliverToBoxAdapter(child: _buildSummaryHeader()),
+          SliverToBoxAdapter(child: _buildSummaryHeader(context)),
 
           // Active subscriptions section
           if (state.hasActive) ...[
-            _buildSectionHeader('Active Subscriptions'),
+            _buildSectionHeader(context.l10n.activeSubscriptions),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final booking = state.activeBookings[index];
@@ -51,7 +53,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
 
           // Pending approvals section
           if (state.hasPending) ...[
-            _buildSectionHeader('Pending Approval'),
+            _buildSectionHeader(context.l10n.pendingApproval),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final booking = state.pendingBookings[index];
@@ -65,7 +67,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
 
           // History section (canceled/rejected)
           if (state.otherBookings.isNotEmpty) ...[
-            _buildSectionHeader('History'),
+            _buildSectionHeader(context.l10n.history),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final booking = state.otherBookings[index];
@@ -87,7 +89,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryHeader() {
+  Widget _buildSummaryHeader(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
@@ -129,9 +131,9 @@ class MyRecurringBookingsContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Weekly Reservations',
-                  style: TextStyle(
+                Text(
+                  context.l10n.weeklyReservations,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -139,7 +141,18 @@ class MyRecurringBookingsContent extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${state.activeBookings.length} active • ${state.pendingBookings.length} pending',
+                  context.l10n.recurringSummaryCounts(
+                    LocaleFormatters.formatNumber(
+                      context,
+                      state.activeBookings.length,
+                      decimalDigits: 0,
+                    ),
+                    LocaleFormatters.formatNumber(
+                      context,
+                      state.pendingBookings.length,
+                      decimalDigits: 0,
+                    ),
+                  ),
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 14,
@@ -203,42 +216,45 @@ class MyRecurringBookingsContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'No Subscriptions Yet',
-              style: TextStyle(
+            Text(
+              context.l10n.noSubscriptionsYet,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: AppColors.navyDeep,
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'Reserve your favorite weekly slot and never miss a game!',
+            Text(
+              context.l10n.noSubscriptionsSubtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textSecondary,
+              ),
             ),
             const SizedBox(height: 32),
-            _buildBenefitsList(),
+            _buildBenefitsList(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBenefitsList() {
+  Widget _buildBenefitsList(BuildContext context) {
     return Column(
       children: [
         _buildBenefitItem(
           icon: Icons.lock_clock_rounded,
-          text: 'Guaranteed weekly slot',
+          text: context.l10n.guaranteedWeeklySlot,
         ),
         _buildBenefitItem(
           icon: Icons.autorenew_rounded,
-          text: 'Auto-renews every week',
+          text: context.l10n.autoRenewsWeekly,
         ),
         _buildBenefitItem(
           icon: Icons.notifications_active_rounded,
-          text: 'Payment reminders',
+          text: context.l10n.paymentReminders,
         ),
       ],
     );

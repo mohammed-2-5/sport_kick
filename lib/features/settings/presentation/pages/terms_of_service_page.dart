@@ -1,175 +1,139 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/legal/legal_page_widgets.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Terms of Service Page
 ///
 /// Displays the complete terms and conditions for using Sport Kick.
-/// Covers user agreements, booking policies, and legal obligations.
 class TermsOfServicePage extends StatelessWidget {
   const TermsOfServicePage({super.key});
 
   static const String _contactEmail = 'mohammedyasser2023@gmail.com';
-  static const String _lastUpdated = 'December 1, 2025';
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
           PremiumCurvedHeader(
-            title: 'Terms of Service',
-            subtitle: 'Rules and guidelines',
+            title: context.l10n.termsTitle,
+            subtitle: context.l10n.termsSubtitle,
             showBackButton: true,
             height: 160,
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   LegalPageHeader(
                     icon: Icons.description,
-                    title: 'Terms of Service',
-                    description:
-                        'Please read these terms carefully before using Sport Kick. '
-                        'These terms govern your use of our platform and services.',
+                    title: context.l10n.termsTitle,
+                    description: context.l10n.termsDescription,
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   LegalSection(
-                    title: 'Acceptance of Terms',
+                    title: context.l10n.termsAcceptanceTitle,
                     points: [
-                      'By using Sport Kick, you agree to these Terms of Service',
-                      'If you do not agree, please do not use our services',
-                      'We reserve the right to modify these terms at any time',
-                      'Continued use after changes constitutes acceptance',
+                      context.l10n.termsAcceptanceAgree,
+                      context.l10n.termsAcceptanceDisagree,
+                      context.l10n.termsAcceptanceModify,
+                      context.l10n.termsAcceptanceContinuedUse,
                     ],
                   ),
                   LegalSection(
-                    title: 'User Accounts',
+                    title: context.l10n.termsAccountsTitle,
                     points: [
-                      'You must provide accurate and complete information when registering',
-                      'You are responsible for maintaining the security of your account',
-                      'You must be at least 13 years old to use our services',
-                      'One person or business per account',
-                      'You must not share your account credentials',
-                      'Notify us immediately of any unauthorized account access',
+                      context.l10n.termsAccountsAccurateInfo,
+                      context.l10n.termsAccountsSecurity,
+                      context.l10n.termsAccountsAge,
+                      context.l10n.termsAccountsSingle,
+                      context.l10n.termsAccountsNoShare,
+                      context.l10n.termsAccountsNotify,
                     ],
                   ),
                   LegalSection(
-                    title: 'Booking Policies',
+                    title: context.l10n.termsBookingTitle,
                     points: [
-                      'All bookings are subject to field availability',
-                      'Bookings may require owner approval before confirmation',
-                      'You must arrive on time for your booking',
-                      'Late arrivals may result in reduced playing time',
-                      'No-shows may result in account restrictions',
-                      'Prices are set by field owners and may vary',
+                      context.l10n.termsBookingAvailability,
+                      context.l10n.termsBookingApproval,
+                      context.l10n.termsBookingArrival,
+                      context.l10n.termsBookingLate,
+                      context.l10n.termsBookingNoShow,
+                      context.l10n.termsBookingPrices,
                     ],
                   ),
                   LegalSection(
-                    title: 'Cancellation and Refunds',
+                    title: context.l10n.termsCancellationTitle,
                     points: [
-                      'Users can cancel bookings according to the cancellation policy',
-                      'Cancellations made 24+ hours in advance may be eligible for full refund',
-                      'Cancellations made less than 24 hours may incur fees',
-                      'No-shows are not eligible for refunds',
-                      'Refunds are processed according to payment method (3-7 business days)',
-                      'Field owners reserve the right to cancel bookings due to maintenance or weather',
+                      context.l10n.termsCancellationPolicy,
+                      context.l10n.termsCancellationFullRefund,
+                      context.l10n.termsCancellationLateFees,
+                      context.l10n.termsCancellationNoShow,
+                      context.l10n.termsCancellationRefundTime,
+                      context.l10n.termsCancellationOwnerCancel,
                     ],
                   ),
                   LegalSection(
-                    title: 'Payments',
+                    title: context.l10n.termsConductTitle,
                     points: [
-                      'All payments are processed securely through our payment partners',
-                      'Prices are displayed in local currency (EGP)',
-                      'Payment is required to confirm booking (unless pay-at-venue is available)',
-                      'You authorize us to charge the payment method on file',
-                      'Disputed charges must be reported within 7 days',
-                      'We are not responsible for payment processing fees',
+                      context.l10n.termsConductRules,
+                      context.l10n.termsConductNoAbuse,
+                      context.l10n.termsConductDamage,
+                      context.l10n.termsConductProhibited,
                     ],
                   ),
                   LegalSection(
-                    title: 'User Conduct',
+                    title: context.l10n.termsLiabilityTitle,
                     points: [
-                      'You agree to use the app only for lawful purposes',
-                      'You must not abuse, harass, or harm other users or staff',
-                      'Respect field property and equipment',
-                      'Follow all field rules and safety guidelines',
-                      'Do not post false reviews or ratings',
-                      'Do not attempt to circumvent booking system',
+                      context.l10n.termsLiabilityPlatform,
+                      context.l10n.termsLiabilityCondition,
+                      context.l10n.termsLiabilityInjuries,
+                      context.l10n.termsLiabilityOwner,
                     ],
                   ),
                   LegalSection(
-                    title: 'Field Owner Responsibilities',
+                    title: context.l10n.termsPaymentsTitle,
                     points: [
-                      'Provide accurate field information and availability',
-                      'Maintain field in safe and playable condition',
-                      'Honor confirmed bookings unless emergency arises',
-                      'Process booking approvals/rejections promptly',
-                      'Provide refunds according to cancellation policy',
-                      'Respond to user inquiries in a timely manner',
+                      context.l10n.termsPaymentsProcessed,
+                      context.l10n.termsPaymentsFees,
+                      context.l10n.termsPaymentsDisplay,
+                      context.l10n.termsPaymentsRefunds,
+                      context.l10n.termsPaymentsCurrency,
                     ],
                   ),
                   LegalSection(
-                    title: 'Liability and Disclaimers',
+                    title: context.l10n.termsIPTitle,
                     points: [
-                      'Sport Kick is a platform connecting users and field owners',
-                      'We are not responsible for the condition or safety of fields',
-                      'Users assume all risks associated with playing sports',
-                      'We recommend users have appropriate health/accident insurance',
-                      'Field owners are independent contractors, not our employees',
-                      'We are not liable for injuries, accidents, or losses at fields',
-                      'Maximum liability is limited to the amount paid for the booking',
+                      context.l10n.termsIPProtected,
+                      context.l10n.termsIPBrand,
+                      context.l10n.termsIPUserContent,
                     ],
                   ),
                   LegalSection(
-                    title: 'Intellectual Property',
+                    title: context.l10n.termsTerminationTitle,
                     points: [
-                      'Sport Kick name, logo, and app design are our property',
-                      'You may not copy, modify, or distribute our content',
-                      'User-generated content (reviews, photos) may be used by us',
-                      'You retain ownership of content you upload',
-                      'You grant us license to use your content for promotional purposes',
+                      context.l10n.termsTerminationSuspend,
+                      context.l10n.termsTerminationDelete,
+                      context.l10n.termsTerminationDisputes,
                     ],
                   ),
                   LegalSection(
-                    title: 'Termination',
+                    title: context.l10n.termsLawTitle,
                     points: [
-                      'We reserve the right to suspend or terminate accounts',
-                      'Violations of these terms may result in immediate termination',
-                      'You can delete your account at any time',
-                      'Upon termination, you lose access to all bookings and data',
-                      'Outstanding payments remain due after termination',
+                      context.l10n.termsLawGoverning,
+                      context.l10n.termsLawDisputes,
                     ],
                   ),
-                  LegalSection(
-                    title: 'Dispute Resolution',
-                    points: [
-                      'Any disputes should first be reported to our support team',
-                      'We will attempt to resolve disputes amicably',
-                      'Unresolved disputes may be subject to arbitration',
-                      'Egyptian law governs these terms',
-                      'Jurisdiction is in Egyptian courts',
-                    ],
-                  ),
-                  LegalSection(
-                    title: 'Changes to Services',
-                    points: [
-                      'We may modify or discontinue features at any time',
-                      'We are not liable for any service modifications',
-                      'We will provide notice of significant changes when possible',
-                    ],
-                  ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   LegalContactSection(
                     email: _contactEmail,
-                    description:
-                        'If you have questions about these Terms of Service, please contact us:',
+                    title: context.l10n.supportContactTitle,
+                    description: context.l10n.supportContactDescription,
                   ),
-                  SizedBox(height: 32),
-                  LegalLastUpdated(date: _lastUpdated),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),

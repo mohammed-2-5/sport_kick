@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_state.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_pending_recurring_requests_usecase.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 import '../../../domain/usecases/get_owner_fields_usecase.dart';
 
@@ -135,53 +139,54 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
   }
 
   /// Get greeting based on time of day.
-  String getGreeting() {
+  String getGreeting([BuildContext? context]) {
     final hour = DateTime.now().hour;
-    if (hour < 12) {
-      return 'Good Morning';
-    } else if (hour < 17) {
-      return 'Good Afternoon';
-    } else {
-      return 'Good Evening';
-    }
+    final l10n = context?.l10n;
+
+    if (hour < 12) return l10n?.goodMorning ?? 'Good Morning';
+    if (hour < 17) return l10n?.goodAfternoon ?? 'Good Afternoon';
+    return l10n?.goodEvening ?? 'Good Evening';
   }
 
   /// Get formatted date.
-  String getFormattedDate() {
+  String getFormattedDate([BuildContext? context]) {
     final now = DateTime.now();
-    final months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    final days = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
-    ];
-    return '${days[now.weekday - 1]}, ${months[now.month - 1]} ${now.day}';
+    if (context != null) {
+      return LocaleFormatters.formatDate(context, now, pattern: 'EEEE, MMM d');
+    }
+    return DateFormat('EEEE, MMM d').format(now);
   }
 
   /// Format currency.
-  String formatCurrency(double amount) {
+  String formatCurrency(double amount, {BuildContext? context}) {
+    final currency = context?.l10n.currencyEgp ?? 'EGP';
     if (amount >= 1000000) {
-      return '${(amount / 1000000).toStringAsFixed(1)}M EGP';
+      final value = context != null
+          ? LocaleFormatters.formatNumber(
+              context,
+              amount / 1000000,
+              decimalDigits: 1,
+            )
+          : (amount / 1000000).toStringAsFixed(1);
+      return '${context?.l10n.millionsAbbreviation(value) ?? '${value}M'} $currency';
     } else if (amount >= 1000) {
-      return '${(amount / 1000).toStringAsFixed(1)}K EGP';
+      final value = context != null
+          ? LocaleFormatters.formatNumber(
+              context,
+              amount / 1000,
+              decimalDigits: 1,
+            )
+          : (amount / 1000).toStringAsFixed(1);
+      return '${context?.l10n.thousandsAbbreviation(value) ?? '${value}K'} $currency';
     }
-    return '${amount.toStringAsFixed(0)} EGP';
+    if (context != null) {
+      return LocaleFormatters.formatPrice(
+        context,
+        amount: amount,
+        currency: currency,
+        decimalDigits: 0,
+      );
+    }
+    return '$currency ${amount.toStringAsFixed(0)}';
   }
 }

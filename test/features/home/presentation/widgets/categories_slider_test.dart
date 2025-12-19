@@ -12,6 +12,7 @@ import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/home/presentation/widgets/hero/categories_slider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 class MockFieldsCubit extends MockCubit<FieldsState> implements FieldsCubit {}
 
@@ -91,6 +92,8 @@ void main() {
 
   Widget createWidgetUnderTest() {
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: InheritedGoRouter(
         goRouter: mockGoRouter,
         child: BlocProvider<FieldsCubit>.value(

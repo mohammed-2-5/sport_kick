@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium form text field.
 ///
@@ -47,8 +48,7 @@ class PremiumFormField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
@@ -65,8 +65,7 @@ class PremiumFormField extends StatelessWidget {
           inputFormatters: inputFormatters,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(
-              fontSize: 14,
+            hintStyle: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.5),
             ),
             prefixIcon: prefixIcon != null

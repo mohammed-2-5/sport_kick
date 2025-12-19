@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Widget for selecting a day of the week for recurring booking.
 class DaySelector extends StatelessWidget {
@@ -15,23 +17,22 @@ class DaySelector extends StatelessWidget {
     super.key,
   });
 
-  static const _days = [
-    (index: 0, short: 'Sat', full: 'Saturday'),
-    (index: 1, short: 'Sun', full: 'Sunday'),
-    (index: 2, short: 'Mon', full: 'Monday'),
-    (index: 3, short: 'Tue', full: 'Tuesday'),
-    (index: 4, short: 'Wed', full: 'Wednesday'),
-    (index: 5, short: 'Thu', full: 'Thursday'),
-    (index: 6, short: 'Fri', full: 'Friday'),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final days = List.generate(
+      7,
+      (index) => (
+        index: index,
+        short: LocaleFormatters.weekdayName(context, index, short: true),
+        full: LocaleFormatters.weekdayName(context, index),
+      ),
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Select Day',
+          context.l10n.selectDay,
           style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.navyDeep,
@@ -39,7 +40,7 @@ class DaySelector extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Choose the day you want to reserve every week',
+          context.l10n.selectDaySubtitle,
           style: AppTextStyles.labelMedium.copyWith(
             color: AppColors.textSecondary,
           ),
@@ -47,7 +48,7 @@ class DaySelector extends StatelessWidget {
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _days.map((day) {
+          children: days.map((day) {
             final isSelected = selectedDay == day.index;
             final isDisabled = disabledDays?.contains(day.index) ?? false;
 

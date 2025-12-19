@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Facilities selector for field form
 class FieldFacilitiesSelector extends StatelessWidget {
@@ -31,10 +32,9 @@ class FieldFacilitiesSelector extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Select Available Facilities',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
@@ -59,7 +59,7 @@ class FieldFacilitiesSelector extends StatelessWidget {
                 },
                 selectedColor: AppColors.primary.withValues(alpha: 0.2),
                 checkmarkColor: AppColors.primary,
-                labelStyle: TextStyle(
+                labelStyle: AppTextStyles.labelMedium.copyWith(
                   color: isSelected
                       ? AppColors.primary
                       : AppColors.textSecondary,

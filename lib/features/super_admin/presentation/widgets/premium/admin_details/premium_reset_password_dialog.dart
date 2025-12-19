@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 
 /// Premium reset password confirmation dialog.
@@ -113,10 +114,9 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                 const SizedBox(height: 20),
 
                 // Title
-                const Text(
+                Text(
                   'Reset Admin Password?',
-                  style: TextStyle(
-                    fontSize: 20,
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -149,8 +149,7 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                         child: Center(
                           child: Text(
                             widget.admin.initials,
-                            style: const TextStyle(
-                              fontSize: 14,
+                            style: AppTextStyles.titleSmall.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
@@ -164,8 +163,7 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                           children: [
                             Text(
                               widget.admin.displayName,
-                              style: const TextStyle(
-                                fontSize: 14,
+                              style: AppTextStyles.titleSmall.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textPrimary,
                               ),
@@ -173,8 +171,7 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                             ),
                             Text(
                               widget.admin.email,
-                              style: TextStyle(
-                                fontSize: 12,
+                              style: AppTextStyles.bodyMedium.copyWith(
                                 color: AppColors.textSecondary.withValues(
                                   alpha: 0.8,
                                 ),
@@ -194,8 +191,7 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                 Text(
                   'A new password will be generated for this admin. They will need to change it on their next login.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                     height: 1.4,
                   ),
@@ -219,11 +215,10 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: AppColors.border),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Cancel',
-                              style: TextStyle(
-                                fontSize: 15,
+                              style: AppTextStyles.labelLarge.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textSecondary,
                               ),
@@ -245,11 +240,10 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                             color: actionColor,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Reset Password',
-                              style: TextStyle(
-                                fontSize: 15,
+                              style: AppTextStyles.labelLarge.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/payment_method.dart';
 
 /// Widget for selecting payment method and entering payment phone.
@@ -128,8 +129,7 @@ class _MethodOption extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               method.displayName,
-              style: TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected ? Colors.white : Colors.grey[600],
               ),

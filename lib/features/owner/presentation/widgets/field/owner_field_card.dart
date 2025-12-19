@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_action_buttons.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_card_image.dart';
@@ -54,8 +55,7 @@ class OwnerFieldCard extends StatelessWidget {
                 // Name
                 Text(
                   field.name,
-                  style: const TextStyle(
-                    fontSize: 18,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -72,8 +72,7 @@ class OwnerFieldCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       field.city,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -86,8 +85,7 @@ class OwnerFieldCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       field.fieldSize,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -122,8 +120,7 @@ class OwnerFieldCard extends StatelessWidget {
                       ),
                       child: Text(
                         field.formattedPrice,
-                        style: const TextStyle(
-                          fontSize: 14,
+                        style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

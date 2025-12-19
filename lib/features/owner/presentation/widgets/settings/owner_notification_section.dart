@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/settings_section.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/switch_tile.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Notification settings section widget for owner settings page.
 class OwnerNotificationSection extends StatelessWidget {
@@ -25,14 +26,14 @@ class OwnerNotificationSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsSection(
-      title: 'Notifications',
+      title: context.l10n.notificationsSection,
       icon: Icons.notifications_outlined,
       children: [
         SwitchTile(
           icon: Icons.email_outlined,
           iconColor: AppColors.primary,
-          title: 'Email Notifications',
-          subtitle: 'Receive notifications via email',
+          title: context.l10n.emailNotifications,
+          subtitle: context.l10n.emailNotificationsDesc,
           value: emailNotifications,
           onChanged: onEmailChanged,
         ),
@@ -40,8 +41,8 @@ class OwnerNotificationSection extends StatelessWidget {
         SwitchTile(
           icon: Icons.notifications_active,
           iconColor: AppColors.secondary,
-          title: 'Push Notifications',
-          subtitle: 'Receive push notifications on your device',
+          title: context.l10n.pushNotifications,
+          subtitle: context.l10n.pushNotificationsDesc,
           value: pushNotifications,
           onChanged: onPushChanged,
         ),
@@ -49,8 +50,8 @@ class OwnerNotificationSection extends StatelessWidget {
         SwitchTile(
           icon: Icons.event_available,
           iconColor: AppColors.success,
-          title: 'Booking Alerts',
-          subtitle: 'Get notified about new bookings',
+          title: context.l10n.bookingAlerts,
+          subtitle: context.l10n.bookingAlertsDesc,
           value: bookingNotifications,
           onChanged: onBookingChanged,
         ),

@@ -5,6 +5,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
@@ -365,8 +366,7 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               hasFilters ? 'No users match your filters' : 'No users found',
-              style: const TextStyle(
-                fontSize: 16,
+              style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -376,8 +376,7 @@ class _EmptyState extends StatelessWidget {
               hasFilters
                   ? 'Try adjusting your search or filters'
                   : 'Users will appear here once they register',
-              style: TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.labelMedium.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
@@ -386,9 +385,11 @@ class _EmptyState extends StatelessWidget {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: onClearFilters,
-                child: const Text(
+                child: Text(
                   'Clear Filters',
-                  style: TextStyle(color: AppColors.premiumGold),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.premiumGold,
+                  ),
                 ),
               ),
             ],

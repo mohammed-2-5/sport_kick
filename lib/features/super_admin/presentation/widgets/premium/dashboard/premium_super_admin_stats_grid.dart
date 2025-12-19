@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium stats grid for super admin dashboard.
 ///
@@ -248,8 +249,7 @@ class _StatCardState extends State<_StatCard>
                     // Value
                     Text(
                       widget.stat.value,
-                      style: const TextStyle(
-                        fontSize: 26,
+                      style: AppTextStyles.headlineMedium.copyWith(
                         fontWeight: FontWeight.w800,
                         color: AppColors.textPrimary,
                       ),
@@ -262,8 +262,7 @@ class _StatCardState extends State<_StatCard>
                         Expanded(
                           child: Text(
                             widget.stat.label,
-                            style: TextStyle(
-                              fontSize: 13,
+                            style: AppTextStyles.bodySmall.copyWith(
                               fontWeight: FontWeight.w500,
                               color: AppColors.textSecondary.withValues(
                                 alpha: 0.8,
@@ -317,8 +316,7 @@ class _GrowthBadge extends StatelessWidget {
           const SizedBox(width: 2),
           Text(
             '${growth.abs().toStringAsFixed(1)}%',
-            style: TextStyle(
-              fontSize: 10,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: isPositive ? Colors.green : Colors.red,
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
 
@@ -40,8 +41,7 @@ class PeriodSelectorWidget extends StatelessWidget {
                 child: Text(
                   period,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isSelected ? Colors.white : AppColors.textSecondary,
                   ),

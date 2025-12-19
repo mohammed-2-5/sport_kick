@@ -38,7 +38,7 @@ class BusinessHoursDayCardContent extends StatelessWidget {
       children: [
         // Day name
         Text(
-          BusinessHoursFormatters.getDayName(dayOfWeek),
+          BusinessHoursFormatters.getDayName(context, dayOfWeek),
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: isOpen ? null : Colors.grey,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Hint banner for booking table.
 ///
@@ -39,19 +40,18 @@ class _EmptyStateHint extends StatelessWidget {
           color: AppColors.textSecondary.withValues(alpha: 0.3),
         ),
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.info_outline_rounded,
             size: 16,
             color: AppColors.textSecondary,
           ),
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
           Text(
             'No bookings for this field in this week',
-            style: TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
@@ -75,19 +75,18 @@ class _ScrollHint extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.goldAccent.withValues(alpha: 0.3)),
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.swipe_right_rounded,
             size: 16,
             color: AppColors.goldAccent,
           ),
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
           Text(
             'Scroll right to see all days (Sat-Fri)',
-            style: TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.goldAccent,
             ),

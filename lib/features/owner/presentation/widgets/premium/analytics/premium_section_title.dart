@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium Section Title widget.
 ///
@@ -16,8 +17,7 @@ class PremiumSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 18,
+      style: AppTextStyles.titleLarge.copyWith(
         fontWeight: FontWeight.w700,
         color: AppColors.textPrimary,
       ),

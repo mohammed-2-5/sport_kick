@@ -294,7 +294,7 @@ class _SearchBar extends StatelessWidget {
           ),
           child: TextField(
             onChanged: onChanged,
-            style: const TextStyle(color: Colors.white),
+            style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
             decoration: InputDecoration(
               hintText: 'Search by name, email, or phone...',
               hintStyle: AppTextStyles.bodyMedium.copyWith(

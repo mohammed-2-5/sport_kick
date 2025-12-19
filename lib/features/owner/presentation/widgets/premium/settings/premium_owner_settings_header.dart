@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium settings header with navy gradient and glassmorphism.
 class PremiumOwnerSettingsHeader extends StatelessWidget {
@@ -60,10 +61,9 @@ class PremiumOwnerSettingsHeader extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Title
-              const Text(
+              Text(
                 'Settings',
-                style: TextStyle(
-                  fontSize: 32,
+                style: AppTextStyles.displaySmall.copyWith(
                   fontWeight: FontWeight.w800,
                   color: Colors.white,
                   height: 1.2,
@@ -75,8 +75,7 @@ class PremiumOwnerSettingsHeader extends StatelessWidget {
               // Subtitle
               Text(
                 'Manage your preferences',
-                style: TextStyle(
-                  fontSize: 15,
+                style: AppTextStyles.bodyLarge.copyWith(
                   color: Colors.white.withValues(alpha: 0.8),
                 ),
               ),

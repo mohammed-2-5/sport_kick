@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'Submit'**
   String get submit;
 
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:
@@ -163,6 +169,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get close;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
 
   /// No description provided for @back.
   ///
@@ -545,7 +557,7 @@ abstract class AppLocalizations {
   /// No description provided for @enterFullName.
   ///
   /// In en, this message translates to:
-  /// **'Enter your full name'**
+  /// **'Enter full name'**
   String get enterFullName;
 
   /// No description provided for @enterPhoneNumber.
@@ -1413,6 +1425,18 @@ abstract class AppLocalizations {
   /// **'Business Hours'**
   String get businessHours;
 
+  /// No description provided for @open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get open;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
+
   /// No description provided for @notificationsSection.
   ///
   /// In en, this message translates to:
@@ -1484,6 +1508,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Automatically confirm new bookings'**
   String get autoApproveBookingsDesc;
+
+  /// No description provided for @autoApproveEnabledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-Approve Enabled'**
+  String get autoApproveEnabledTitle;
+
+  /// No description provided for @autoApproveEnabledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'All new booking requests will be automatically approved.'**
+  String get autoApproveEnabledMessage;
+
+  /// No description provided for @autoApproveDisabledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-Approve Disabled'**
+  String get autoApproveDisabledTitle;
+
+  /// No description provided for @autoApproveDisabledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You will need to manually approve each booking request.'**
+  String get autoApproveDisabledMessage;
 
   /// No description provided for @bookingRules.
   ///
@@ -1586,6 +1634,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to My Fields'**
   String get goToMyFields;
+
+  /// No description provided for @businessHoursLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading business hours...'**
+  String get businessHoursLoading;
+
+  /// No description provided for @businessHoursSetDefaultHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Default Hours'**
+  String get businessHoursSetDefaultHours;
+
+  /// No description provided for @businessHoursApplyToAllDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to All Days'**
+  String get businessHoursApplyToAllDays;
+
+  /// No description provided for @businessHoursApplyToAllDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This will set the same hours for all 7 days of the week.'**
+  String get businessHoursApplyToAllDescription;
+
+  /// No description provided for @businessHoursHelpText.
+  ///
+  /// In en, this message translates to:
+  /// **'Set when your field is available for bookings. You can set different hours for each day of the week.'**
+  String get businessHoursHelpText;
+
+  /// No description provided for @businessHoursHelpTimeSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Select opening and closing times in 15-minute intervals.'**
+  String get businessHoursHelpTimeSelection;
+
+  /// No description provided for @businessHoursOpeningTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Time'**
+  String get businessHoursOpeningTime;
+
+  /// No description provided for @businessHoursClosingTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Closing Time'**
+  String get businessHoursClosingTime;
+
+  /// No description provided for @businessHoursOpen24Hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Open 24 Hours'**
+  String get businessHoursOpen24Hours;
+
+  /// No description provided for @businessHoursClosedAllDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed All Day'**
+  String get businessHoursClosedAllDay;
+
+  /// No description provided for @businessHoursCurrentlyOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Currently Open'**
+  String get businessHoursCurrentlyOpen;
+
+  /// No description provided for @businessHoursCurrentlyClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Currently Closed'**
+  String get businessHoursCurrentlyClosed;
+
+  /// No description provided for @businessHoursAcceptingBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Your field is currently accepting bookings'**
+  String get businessHoursAcceptingBookings;
+
+  /// No description provided for @businessHoursClosedForBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Your field is currently closed for bookings'**
+  String get businessHoursClosedForBookings;
+
+  /// No description provided for @businessHoursUpdatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Business hours updated successfully'**
+  String get businessHoursUpdatedSuccess;
+
+  /// No description provided for @businessHoursDefaultHoursSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Default hours (24/7) set for all days'**
+  String get businessHoursDefaultHoursSet;
+
+  /// No description provided for @businessHoursInvalidTimeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening time must be before closing time'**
+  String get businessHoursInvalidTimeRange;
+
+  /// No description provided for @businessHoursNoHoursSet.
+  ///
+  /// In en, this message translates to:
+  /// **'No business hours set'**
+  String get businessHoursNoHoursSet;
+
+  /// No description provided for @businessHoursNoHoursSetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your field operating hours to allow users to make bookings.'**
+  String get businessHoursNoHoursSetDescription;
+
+  /// No description provided for @businessHoursTimeOutsideRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Time is outside business hours'**
+  String get businessHoursTimeOutsideRange;
 
   /// No description provided for @addFieldTitle.
   ///
@@ -1887,6 +2055,12 @@ abstract class AppLocalizations {
   /// **'Bookings'**
   String get bookings;
 
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get viewAll;
+
   /// No description provided for @myBookings.
   ///
   /// In en, this message translates to:
@@ -1920,8 +2094,26 @@ abstract class AppLocalizations {
   /// No description provided for @selectTime.
   ///
   /// In en, this message translates to:
-  /// **'Select time'**
+  /// **'Select Time'**
   String get selectTime;
+
+  /// No description provided for @dateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateLabel;
+
+  /// No description provided for @timeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get timeLabel;
+
+  /// No description provided for @hoursLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{countFormatted} {count, plural, one{hour} other{hours}}'**
+  String hoursLabel(num count, Object countFormatted);
 
   /// No description provided for @availableSlots.
   ///
@@ -1977,6 +2169,12 @@ abstract class AppLocalizations {
   /// **'Status'**
   String get bookingStatus;
 
+  /// No description provided for @bookingStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Status Breakdown'**
+  String get bookingStatusTitle;
+
   /// No description provided for @bookingTimeline.
   ///
   /// In en, this message translates to:
@@ -2013,6 +2211,24 @@ abstract class AppLocalizations {
   /// **'View'**
   String get view;
 
+  /// No description provided for @failedToLoadBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load bookings'**
+  String get failedToLoadBookings;
+
+  /// No description provided for @contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get contact;
+
+  /// No description provided for @noContactInfoAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No contact info available'**
+  String get noContactInfoAvailable;
+
   /// No description provided for @emailClientUnavailable.
   ///
   /// In en, this message translates to:
@@ -2030,6 +2246,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No bookings yet'**
   String get noBookingsYet;
+
+  /// No description provided for @bookingsWillAppearMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings will appear here once customers start booking your fields'**
+  String get bookingsWillAppearMessage;
 
   /// No description provided for @chooseAnotherDate.
   ///
@@ -3405,6 +3627,42 @@ abstract class AppLocalizations {
   /// **'No notifications'**
   String get noNotifications;
 
+  /// No description provided for @notificationsEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll see booking updates and alerts here'**
+  String get notificationsEmptySubtitle;
+
+  /// No description provided for @notificationJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get notificationJustNow;
+
+  /// No description provided for @notificationMinutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String notificationMinutesAgo(Object minutes);
+
+  /// No description provided for @notificationHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String notificationHoursAgo(Object hours);
+
+  /// No description provided for @notificationDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String notificationDaysAgo(Object days);
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all read'**
+  String get markAllRead;
+
   /// No description provided for @noFavorites.
   ///
   /// In en, this message translates to:
@@ -3620,6 +3878,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total Revenue'**
   String get totalRevenue;
+
+  /// No description provided for @vsLastMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'vs last month'**
+  String get vsLastMonth;
+
+  /// No description provided for @bookingsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{countFormatted} {count, plural, one{booking} other{bookings}}'**
+  String bookingsCount(num count, Object countFormatted);
 
   /// No description provided for @payment.
   ///
@@ -3903,6 +4173,12 @@ abstract class AppLocalizations {
   /// **'No fields available'**
   String get noFieldsAvailable;
 
+  /// No description provided for @noImagesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No images available'**
+  String get noImagesAvailable;
+
   /// No description provided for @addYourFirstField.
   ///
   /// In en, this message translates to:
@@ -4161,12 +4437,6 @@ abstract class AppLocalizations {
   /// **'Top performing fields'**
   String get revenueByFieldSubtitle;
 
-  /// No description provided for @bookingStatusTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Booking Status Breakdown'**
-  String get bookingStatusTitle;
-
   /// No description provided for @bookingStatusSubtitle.
   ///
   /// In en, this message translates to:
@@ -4338,7 +4608,7 @@ abstract class AppLocalizations {
   /// No description provided for @customerNameLabel.
   ///
   /// In en, this message translates to:
-  /// **'Customer Name'**
+  /// **'Customer Name *'**
   String get customerNameLabel;
 
   /// No description provided for @enterCustomerNameHint.
@@ -4350,7 +4620,7 @@ abstract class AppLocalizations {
   /// No description provided for @phoneLabel.
   ///
   /// In en, this message translates to:
-  /// **'Phone Number'**
+  /// **'Phone Number *'**
   String get phoneLabel;
 
   /// No description provided for @enterPhoneHint.
@@ -4430,6 +4700,2100 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to logout?'**
   String get logoutMessage;
+
+  /// No description provided for @pleaseLoginToManageBusinessHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Please log in to manage business hours'**
+  String get pleaseLoginToManageBusinessHours;
+
+  /// No description provided for @youHaveNoFields.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no fields'**
+  String get youHaveNoFields;
+
+  /// No description provided for @fieldInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Inactive'**
+  String get fieldInactive;
+
+  /// No description provided for @verify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verify;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @changePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Photo'**
+  String get changePhoto;
+
+  /// No description provided for @uploadPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Photo'**
+  String get uploadPhoto;
+
+  /// No description provided for @removePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Photo'**
+  String get removePhoto;
+
+  /// No description provided for @camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get camera;
+
+  /// No description provided for @gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get gallery;
+
+  /// No description provided for @createManualBookingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Manual Booking'**
+  String get createManualBookingTitle;
+
+  /// No description provided for @manualBookingCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual booking created successfully for {customerName}'**
+  String manualBookingCreatedSuccess(Object customerName);
+
+  /// No description provided for @manualBookingSelectField.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a field'**
+  String get manualBookingSelectField;
+
+  /// No description provided for @manualBookingSelectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a date'**
+  String get manualBookingSelectDate;
+
+  /// No description provided for @manualBookingSelectTimeSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a time slot'**
+  String get manualBookingSelectTimeSlot;
+
+  /// No description provided for @manualBookingEnterValidPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid price'**
+  String get manualBookingEnterValidPrice;
+
+  /// No description provided for @manualBookingEnterCustomerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter customer name'**
+  String get manualBookingEnterCustomerName;
+
+  /// No description provided for @manualBookingEnterCustomerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter customer phone'**
+  String get manualBookingEnterCustomerPhone;
+
+  /// No description provided for @bookingDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Details'**
+  String get bookingDetailsTitle;
+
+  /// No description provided for @bookingDetailsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select field, date, time, and price'**
+  String get bookingDetailsSubtitle;
+
+  /// No description provided for @chooseField.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a field'**
+  String get chooseField;
+
+  /// No description provided for @endTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'End time: {time} ({hours} {hours, plural, one{hour} other{hours}})'**
+  String endTimeLabel(num hours, Object time);
+
+  /// No description provided for @priceCalculation.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} EGP/hour × {hours} {hours, plural, one{hour} other{hours}}'**
+  String priceCalculation(num hours, Object price);
+
+  /// No description provided for @basicInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get basicInformation;
+
+  /// No description provided for @enterFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter field name'**
+  String get enterFieldName;
+
+  /// No description provided for @fieldNameExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Premium Soccer Field'**
+  String get fieldNameExample;
+
+  /// No description provided for @enterDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter description'**
+  String get enterDescription;
+
+  /// No description provided for @enterAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter address'**
+  String get enterAddress;
+
+  /// No description provided for @enterCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter city'**
+  String get enterCity;
+
+  /// No description provided for @citySelectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Your City'**
+  String get citySelectionTitle;
+
+  /// No description provided for @citySelectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your city to see available football fields'**
+  String get citySelectionSubtitle;
+
+  /// No description provided for @cityChangeCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Change City'**
+  String get cityChangeCity;
+
+  /// No description provided for @citySelectCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Select City'**
+  String get citySelectCity;
+
+  /// No description provided for @citySelectPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a city'**
+  String get citySelectPrompt;
+
+  /// No description provided for @cityNoCitiesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No cities available'**
+  String get cityNoCitiesAvailable;
+
+  /// No description provided for @cityErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load cities'**
+  String get cityErrorLoading;
+
+  /// No description provided for @cityLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading cities...'**
+  String get cityLoading;
+
+  /// No description provided for @citySavingSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving your selection...'**
+  String get citySavingSelection;
+
+  /// No description provided for @citySelectedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'City selected successfully'**
+  String get citySelectedSuccess;
+
+  /// No description provided for @cityContactSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Please contact support for assistance'**
+  String get cityContactSupport;
+
+  /// No description provided for @citySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search cities...'**
+  String get citySearchHint;
+
+  /// No description provided for @homeWelcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back!'**
+  String get homeWelcomeBack;
+
+  /// No description provided for @homeGoodMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning,'**
+  String get homeGoodMorning;
+
+  /// No description provided for @homeGoodAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Afternoon,'**
+  String get homeGoodAfternoon;
+
+  /// No description provided for @homeGoodEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Evening,'**
+  String get homeGoodEvening;
+
+  /// No description provided for @goodMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning'**
+  String get goodMorning;
+
+  /// No description provided for @goodAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Afternoon'**
+  String get goodAfternoon;
+
+  /// No description provided for @goodEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Evening'**
+  String get goodEvening;
+
+  /// No description provided for @homeGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get homeGuest;
+
+  /// No description provided for @homeProfileTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get homeProfileTooltip;
+
+  /// No description provided for @homeQuickActionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get homeQuickActionsTitle;
+
+  /// No description provided for @homeComingSoonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon'**
+  String get homeComingSoonTitle;
+
+  /// No description provided for @homeMyProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get homeMyProfileTitle;
+
+  /// No description provided for @homeMyProfileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View & edit'**
+  String get homeMyProfileSubtitle;
+
+  /// No description provided for @homeBrowseFieldsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Fields'**
+  String get homeBrowseFieldsTitle;
+
+  /// No description provided for @homeBrowseFieldsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find fields'**
+  String get homeBrowseFieldsSubtitle;
+
+  /// No description provided for @homeMyBookingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Bookings'**
+  String get homeMyBookingsTitle;
+
+  /// No description provided for @homeMyBookingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View & manage'**
+  String get homeMyBookingsSubtitle;
+
+  /// No description provided for @homeFavoritesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get homeFavoritesTitle;
+
+  /// No description provided for @homeFavoritesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get homeFavoritesSubtitle;
+
+  /// No description provided for @homeFavoritesComingSoonMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites feature coming soon!'**
+  String get homeFavoritesComingSoonMessage;
+
+  /// No description provided for @homeExploreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Fields'**
+  String get homeExploreTitle;
+
+  /// No description provided for @homeViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get homeViewAll;
+
+  /// No description provided for @homeNoFieldsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No fields available'**
+  String get homeNoFieldsAvailable;
+
+  /// No description provided for @homeNearbyFieldsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Fields'**
+  String get homeNearbyFieldsTitle;
+
+  /// No description provided for @homeViewMap.
+  ///
+  /// In en, this message translates to:
+  /// **'View Map'**
+  String get homeViewMap;
+
+  /// No description provided for @homeNoFieldsNearby.
+  ///
+  /// In en, this message translates to:
+  /// **'No fields nearby'**
+  String get homeNoFieldsNearby;
+
+  /// No description provided for @homeTapToViewOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to view on map'**
+  String get homeTapToViewOnMap;
+
+  /// No description provided for @homeShortcutBrowseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse\nFields'**
+  String get homeShortcutBrowseTitle;
+
+  /// No description provided for @homeShortcutBrowseSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find venues'**
+  String get homeShortcutBrowseSubtitle;
+
+  /// No description provided for @homeShortcutBookingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My\nBookings'**
+  String get homeShortcutBookingsTitle;
+
+  /// No description provided for @homeShortcutBookingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View history'**
+  String get homeShortcutBookingsSubtitle;
+
+  /// No description provided for @homeShortcutFavoritesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite\nFields'**
+  String get homeShortcutFavoritesTitle;
+
+  /// No description provided for @homeShortcutFavoritesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your picks'**
+  String get homeShortcutFavoritesSubtitle;
+
+  /// No description provided for @homeShortcutProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get homeShortcutProfileTitle;
+
+  /// No description provided for @homeShortcutProfileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get homeShortcutProfileSubtitle;
+
+  /// No description provided for @homeUpcomingMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Match'**
+  String get homeUpcomingMatch;
+
+  /// No description provided for @homeDirections.
+  ///
+  /// In en, this message translates to:
+  /// **'Directions'**
+  String get homeDirections;
+
+  /// No description provided for @homeInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite'**
+  String get homeInvite;
+
+  /// No description provided for @homeAddToCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Calendar'**
+  String get homeAddToCalendar;
+
+  /// No description provided for @homeNoUpcomingMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming matches'**
+  String get homeNoUpcomingMatches;
+
+  /// No description provided for @homeErrorLoadingBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading bookings'**
+  String get homeErrorLoadingBookings;
+
+  /// No description provided for @homeBookNextGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Book your next game now!'**
+  String get homeBookNextGame;
+
+  /// No description provided for @homeErrorOpenMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open maps'**
+  String get homeErrorOpenMaps;
+
+  /// No description provided for @homeErrorAddCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not add to calendar'**
+  String get homeErrorAddCalendar;
+
+  /// No description provided for @homeCalendarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Football at {fieldName}'**
+  String homeCalendarTitle(Object fieldName);
+
+  /// No description provided for @homeCalendarDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked via Sport Kick'**
+  String get homeCalendarDetails;
+
+  /// No description provided for @homeBookingShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Football at {fieldName}'**
+  String homeBookingShareTitle(Object fieldName);
+
+  /// No description provided for @homeBookingShareDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked via Sport Kick'**
+  String get homeBookingShareDescription;
+
+  /// No description provided for @homeNavHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homeNavHome;
+
+  /// No description provided for @homeNavExplore.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore'**
+  String get homeNavExplore;
+
+  /// No description provided for @homeNavBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get homeNavBookings;
+
+  /// No description provided for @homeNavSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get homeNavSettings;
+
+  /// No description provided for @sportFootball.
+  ///
+  /// In en, this message translates to:
+  /// **'Football'**
+  String get sportFootball;
+
+  /// No description provided for @sportTennis.
+  ///
+  /// In en, this message translates to:
+  /// **'Tennis'**
+  String get sportTennis;
+
+  /// No description provided for @sportBasketball.
+  ///
+  /// In en, this message translates to:
+  /// **'Basketball'**
+  String get sportBasketball;
+
+  /// No description provided for @sportPadel.
+  ///
+  /// In en, this message translates to:
+  /// **'Padel'**
+  String get sportPadel;
+
+  /// No description provided for @sportVolleyball.
+  ///
+  /// In en, this message translates to:
+  /// **'Volleyball'**
+  String get sportVolleyball;
+
+  /// No description provided for @homeFeaturePayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure online payments'**
+  String get homeFeaturePayments;
+
+  /// No description provided for @ownerWelcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back!'**
+  String get ownerWelcomeBack;
+
+  /// No description provided for @ownerManageFieldsTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your football fields'**
+  String get ownerManageFieldsTagline;
+
+  /// No description provided for @ownerNoFieldsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Fields Yet'**
+  String get ownerNoFieldsYet;
+
+  /// No description provided for @ownerStartByAddingField.
+  ///
+  /// In en, this message translates to:
+  /// **'Start by adding your first football field'**
+  String get ownerStartByAddingField;
+
+  /// No description provided for @ownerAddFirstField.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Your First Field'**
+  String get ownerAddFirstField;
+
+  /// No description provided for @ownerEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get ownerEditProfile;
+
+  /// No description provided for @ownerVerifyPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Payment'**
+  String get ownerVerifyPayment;
+
+  /// No description provided for @ownerVerifyPaymentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to verify this payment? This will confirm that the customer has paid for the booking.'**
+  String get ownerVerifyPaymentMessage;
+
+  /// No description provided for @ownerRejectPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Payment'**
+  String get ownerRejectPayment;
+
+  /// No description provided for @ownerRejectPaymentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please provide a reason for rejecting this payment. The customer will be notified.'**
+  String get ownerRejectPaymentMessage;
+
+  /// No description provided for @ownerRejectReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter rejection reason (min 10 characters)'**
+  String get ownerRejectReasonHint;
+
+  /// No description provided for @ownerRejectCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}/10 characters minimum'**
+  String ownerRejectCounter(Object count);
+
+  /// No description provided for @fieldOwnerRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Owner'**
+  String get fieldOwnerRole;
+
+  /// No description provided for @bookingShortId.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking #{id}'**
+  String bookingShortId(Object id);
+
+  /// No description provided for @paymentProofLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load image'**
+  String get paymentProofLoadFailed;
+
+  /// No description provided for @paymentProofTryLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Please try again later'**
+  String get paymentProofTryLater;
+
+  /// No description provided for @ownerApproveBookingConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to approve this booking?'**
+  String get ownerApproveBookingConfirm;
+
+  /// No description provided for @ownerRejectBookingConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reject this booking?'**
+  String get ownerRejectBookingConfirm;
+
+  /// No description provided for @rejectedByOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected by owner'**
+  String get rejectedByOwner;
+
+  /// No description provided for @workingSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Working schedule'**
+  String get workingSchedule;
+
+  /// No description provided for @closedSlotMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Field is closed at this time'**
+  String get closedSlotMessage;
+
+  /// No description provided for @pastSlotMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot create bookings for past dates'**
+  String get pastSlotMessage;
+
+  /// No description provided for @paymentRejectedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment rejected'**
+  String get paymentRejectedSuccess;
+
+  /// No description provided for @bookingRejectedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking rejected'**
+  String get bookingRejectedSuccess;
+
+  /// No description provided for @walkInCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-in Customer'**
+  String get walkInCustomer;
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nameLabel;
+
+  /// No description provided for @admin.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get admin;
+
+  /// No description provided for @paymentInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Information'**
+  String get paymentInformation;
+
+  /// No description provided for @paymentStatusPendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting Payment'**
+  String get paymentStatusPendingTitle;
+
+  /// No description provided for @paymentStatusPendingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer has not yet uploaded payment proof'**
+  String get paymentStatusPendingDesc;
+
+  /// No description provided for @paymentProofUploadedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Proof Uploaded'**
+  String get paymentProofUploadedTitle;
+
+  /// No description provided for @paymentProofUploadedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the payment proof and verify or reject'**
+  String get paymentProofUploadedDesc;
+
+  /// No description provided for @paymentVerifiedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Verified'**
+  String get paymentVerifiedTitle;
+
+  /// No description provided for @paymentVerifiedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment has been confirmed'**
+  String get paymentVerifiedDesc;
+
+  /// No description provided for @paymentRejectedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Rejected'**
+  String get paymentRejectedTitle;
+
+  /// No description provided for @paymentRejectedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment was rejected, awaiting new proof'**
+  String get paymentRejectedDesc;
+
+  /// No description provided for @rejectionReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejection Reason'**
+  String get rejectionReason;
+
+  /// No description provided for @copyValueMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied: {value}'**
+  String copyValueMessage(Object value);
+
+  /// No description provided for @enterPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter price'**
+  String get enterPrice;
+
+  /// No description provided for @updateField.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Field'**
+  String get updateField;
+
+  /// No description provided for @saveField.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Field'**
+  String get saveField;
+
+  /// No description provided for @setWorkingHoursDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Set working hours for each day of the week'**
+  String get setWorkingHoursDesc;
+
+  /// No description provided for @surfaceHybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid'**
+  String get surfaceHybrid;
+
+  /// No description provided for @fieldType.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Type'**
+  String get fieldType;
+
+  /// No description provided for @thousandsAbbreviation.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}K'**
+  String thousandsAbbreviation(Object value);
+
+  /// No description provided for @millionsAbbreviation.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}M'**
+  String millionsAbbreviation(Object value);
+
+  /// No description provided for @currencyEgp.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP'**
+  String get currencyEgp;
+
+  /// No description provided for @recentBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Bookings'**
+  String get recentBookings;
+
+  /// No description provided for @unknownCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Customer'**
+  String get unknownCustomer;
+
+  /// No description provided for @fieldVisibleToCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Field is visible to customers'**
+  String get fieldVisibleToCustomers;
+
+  /// No description provided for @fieldHiddenFromCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Field is hidden from customers'**
+  String get fieldHiddenFromCustomers;
+
+  /// No description provided for @enterCustomerDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter customer details for walk-in booking'**
+  String get enterCustomerDetails;
+
+  /// No description provided for @customerNameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 2 characters'**
+  String get customerNameTooShort;
+
+  /// No description provided for @phoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'01XXXXXXXXX'**
+  String get phoneHint;
+
+  /// No description provided for @invalidEgyPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Egyptian phone number'**
+  String get invalidEgyPhone;
+
+  /// No description provided for @emailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email (Optional)'**
+  String get emailLabel;
+
+  /// No description provided for @emailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'customer@example.com'**
+  String get emailHint;
+
+  /// No description provided for @notesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes (Optional)'**
+  String get notesLabel;
+
+  /// No description provided for @notesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Any special requests or notes...'**
+  String get notesHint;
+
+  /// No description provided for @selectDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Day'**
+  String get selectDay;
+
+  /// No description provided for @selectDaySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the day you want to reserve every week'**
+  String get selectDaySubtitle;
+
+  /// No description provided for @availableSlotsForDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Available time slots for {day}'**
+  String availableSlotsForDay(Object day);
+
+  /// No description provided for @selectDayFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a day first'**
+  String get selectDayFirst;
+
+  /// No description provided for @fieldClosedOnDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Field is closed on {day}'**
+  String fieldClosedOnDay(Object day);
+
+  /// No description provided for @selectDifferentDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a different day'**
+  String get selectDifferentDay;
+
+  /// No description provided for @noAvailableSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'No available slots'**
+  String get noAvailableSlots;
+
+  /// No description provided for @reservedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved by {name}'**
+  String reservedBy(Object name);
+
+  /// No description provided for @reservedByAnotherUser.
+  ///
+  /// In en, this message translates to:
+  /// **'another user'**
+  String get reservedByAnotherUser;
+
+  /// No description provided for @recurringDurationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get recurringDurationTitle;
+
+  /// No description provided for @recurringDurationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How long do you want to play each week?'**
+  String get recurringDurationSubtitle;
+
+  /// No description provided for @recurringHoursLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, one {{hoursFormatted} hour} two {{hoursFormatted} hours} few {{hoursFormatted} hours} many {{hoursFormatted} hours} other {{hoursFormatted} hours}}'**
+  String recurringHoursLabel(num hours, Object hoursFormatted);
+
+  /// No description provided for @recurringHoursShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{hoursFormatted}h'**
+  String recurringHoursShort(Object hoursFormatted);
+
+  /// No description provided for @perWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'per week'**
+  String get perWeek;
+
+  /// No description provided for @weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weekly;
+
+  /// No description provided for @weeklyReservationSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Weekly Reservation'**
+  String get weeklyReservationSummaryTitle;
+
+  /// No description provided for @dayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get dayLabel;
+
+  /// No description provided for @weeklyCostLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Cost'**
+  String get weeklyCostLabel;
+
+  /// No description provided for @weeklyPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Price'**
+  String get weeklyPriceLabel;
+
+  /// No description provided for @weeklyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weeklyLabel;
+
+  /// No description provided for @everyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Every'**
+  String get everyLabel;
+
+  /// No description provided for @reserveWeeklySlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve Weekly Slot'**
+  String get reserveWeeklySlot;
+
+  /// No description provided for @recurringRequestSubmittedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Submitted!'**
+  String get recurringRequestSubmittedTitle;
+
+  /// No description provided for @recurringRequestSubmittedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recurring booking request has been sent to the field owner. You\'ll be notified once it\'s approved.'**
+  String get recurringRequestSubmittedBody;
+
+  /// No description provided for @viewMySubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'View My Subscriptions'**
+  String get viewMySubscriptions;
+
+  /// No description provided for @submitRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Request'**
+  String get submitRequest;
+
+  /// No description provided for @submittingRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting Request...'**
+  String get submittingRequest;
+
+  /// No description provided for @submittingRequestDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait while we process your request'**
+  String get submittingRequestDescription;
+
+  /// No description provided for @everyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {day}'**
+  String everyDay(Object day);
+
+  /// No description provided for @completedSessionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Sessions'**
+  String get completedSessionsLabel;
+
+  /// No description provided for @nextBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Booking'**
+  String get nextBooking;
+
+  /// No description provided for @paidLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get paidLabel;
+
+  /// No description provided for @cancelingSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceling...'**
+  String get cancelingSubscription;
+
+  /// No description provided for @cancelSubscriptionQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel this recurring booking?'**
+  String get cancelSubscriptionQuestion;
+
+  /// No description provided for @pendingApprovalMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for owner approval. You\'ll be notified once approved.'**
+  String get pendingApprovalMessage;
+
+  /// No description provided for @requestRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Rejected'**
+  String get requestRejected;
+
+  /// No description provided for @activeSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Subscription'**
+  String get activeSubscription;
+
+  /// No description provided for @remainingBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} left'**
+  String remainingBookings(Object count);
+
+  /// No description provided for @unknownUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown User'**
+  String get unknownUser;
+
+  /// No description provided for @sinceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Since'**
+  String get sinceLabel;
+
+  /// No description provided for @weeklyLabelShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weeklyLabelShort;
+
+  /// No description provided for @generatingBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating...'**
+  String get generatingBooking;
+
+  /// No description provided for @completedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} completed'**
+  String completedCount(Object count);
+
+  /// No description provided for @mySubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'My Subscriptions'**
+  String get mySubscriptions;
+
+  /// No description provided for @newSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'New Subscription'**
+  String get newSubscription;
+
+  /// No description provided for @subscriptionCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription canceled successfully'**
+  String get subscriptionCanceled;
+
+  /// No description provided for @subscriptionCancelFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to cancel subscription'**
+  String get subscriptionCancelFailed;
+
+  /// No description provided for @activeSubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Subscriptions'**
+  String get activeSubscriptions;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @weeklyReservations.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Reservations'**
+  String get weeklyReservations;
+
+  /// No description provided for @recurringSummaryCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'{active} active • {pending} pending'**
+  String recurringSummaryCounts(Object active, Object pending);
+
+  /// No description provided for @noSubscriptionsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Subscriptions Yet'**
+  String get noSubscriptionsYet;
+
+  /// No description provided for @noSubscriptionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve your favorite weekly slot and never miss a game!'**
+  String get noSubscriptionsSubtitle;
+
+  /// No description provided for @guaranteedWeeklySlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Guaranteed weekly slot'**
+  String get guaranteedWeeklySlot;
+
+  /// No description provided for @autoRenewsWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-renews every week'**
+  String get autoRenewsWeekly;
+
+  /// No description provided for @paymentReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reminders'**
+  String get paymentReminders;
+
+  /// No description provided for @statusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get statusActive;
+
+  /// No description provided for @statusPendingApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Approval'**
+  String get statusPendingApproval;
+
+  /// No description provided for @statusCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get statusCanceled;
+
+  /// No description provided for @statusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get statusRejected;
+
+  /// No description provided for @newRecurringRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'New Recurring Request'**
+  String get newRecurringRequest;
+
+  /// No description provided for @processingRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing...'**
+  String get processingRequest;
+
+  /// No description provided for @pendingRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Requests'**
+  String get pendingRequests;
+
+  /// No description provided for @totalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get totalLabel;
+
+  /// No description provided for @completedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completedLabel;
+
+  /// No description provided for @upcomingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcomingLabel;
+
+  /// No description provided for @progressCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% completed'**
+  String progressCompleted(Object percent);
+
+  /// No description provided for @scheduleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get scheduleTitle;
+
+  /// No description provided for @recurringRequestsEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'When users request weekly recurring bookings, they\'ll appear here for your approval.'**
+  String get recurringRequestsEmptySubtitle;
+
+  /// No description provided for @keepSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Subscription'**
+  String get keepSubscription;
+
+  /// No description provided for @cancelSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Subscription'**
+  String get cancelSubscription;
+
+  /// No description provided for @recurringRequestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring Subscriptions'**
+  String get recurringRequestsTitle;
+
+  /// No description provided for @recurringRequestApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Request approved successfully'**
+  String get recurringRequestApproved;
+
+  /// No description provided for @recurringRequestApproveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to approve request'**
+  String get recurringRequestApproveFailed;
+
+  /// No description provided for @recurringRequestRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Request rejected'**
+  String get recurringRequestRejected;
+
+  /// No description provided for @recurringRequestRejectFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reject request'**
+  String get recurringRequestRejectFailed;
+
+  /// No description provided for @rejectRequestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Request'**
+  String get rejectRequestTitle;
+
+  /// No description provided for @rejectRequestPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Please provide a reason for rejecting this recurring booking request:'**
+  String get rejectRequestPrompt;
+
+  /// No description provided for @rejectRequestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Slot not available, time conflict...'**
+  String get rejectRequestHint;
+
+  /// No description provided for @loadingRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading requests...'**
+  String get loadingRequests;
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @privacyPolicySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How we protect your data'**
+  String get privacyPolicySubtitle;
+
+  /// No description provided for @privacyHeaderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Privacy Matters'**
+  String get privacyHeaderTitle;
+
+  /// No description provided for @privacyHeaderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport Kick is committed to protecting your privacy and personal information. This policy explains how we collect, use, and safeguard your data.'**
+  String get privacyHeaderDescription;
+
+  /// No description provided for @privacyInfoCollectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Information We Collect'**
+  String get privacyInfoCollectTitle;
+
+  /// No description provided for @privacyCollectAccountInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Account information (name, email, phone number)'**
+  String get privacyCollectAccountInfo;
+
+  /// No description provided for @privacyCollectProfileInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile information you provide'**
+  String get privacyCollectProfileInfo;
+
+  /// No description provided for @privacyCollectBookingHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking history and preferences'**
+  String get privacyCollectBookingHistory;
+
+  /// No description provided for @privacyCollectLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location data when using the app'**
+  String get privacyCollectLocation;
+
+  /// No description provided for @privacyCollectDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Device information and usage data'**
+  String get privacyCollectDevice;
+
+  /// No description provided for @privacyCollectPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment information (processed securely by our payment provider)'**
+  String get privacyCollectPayment;
+
+  /// No description provided for @privacyUseInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How We Use Your Information'**
+  String get privacyUseInfoTitle;
+
+  /// No description provided for @privacyUseProvideService.
+  ///
+  /// In en, this message translates to:
+  /// **'To provide and maintain our booking services'**
+  String get privacyUseProvideService;
+
+  /// No description provided for @privacyUseProcessPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'To process your bookings and payments'**
+  String get privacyUseProcessPayments;
+
+  /// No description provided for @privacyUseCommunicate.
+  ///
+  /// In en, this message translates to:
+  /// **'To communicate with you about bookings and updates'**
+  String get privacyUseCommunicate;
+
+  /// No description provided for @privacyUseImprove.
+  ///
+  /// In en, this message translates to:
+  /// **'To improve our services and user experience'**
+  String get privacyUseImprove;
+
+  /// No description provided for @privacyUseSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'To prevent fraud and ensure security'**
+  String get privacyUseSecurity;
+
+  /// No description provided for @privacyUseLegal.
+  ///
+  /// In en, this message translates to:
+  /// **'To comply with legal obligations'**
+  String get privacyUseLegal;
+
+  /// No description provided for @privacyStorageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Storage and Security'**
+  String get privacyStorageTitle;
+
+  /// No description provided for @privacyStorageSecure.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is stored securely using Supabase (PostgreSQL database)'**
+  String get privacyStorageSecure;
+
+  /// No description provided for @privacyStorageEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'We use industry-standard encryption for data transmission'**
+  String get privacyStorageEncryption;
+
+  /// No description provided for @privacyStoragePayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment information is handled by certified payment processors'**
+  String get privacyStoragePayment;
+
+  /// No description provided for @privacyStorageUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'We implement regular security updates and monitoring'**
+  String get privacyStorageUpdates;
+
+  /// No description provided for @privacyStorageAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Access to personal data is restricted to authorized personnel only'**
+  String get privacyStorageAccess;
+
+  /// No description provided for @privacySharingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Sharing'**
+  String get privacySharingTitle;
+
+  /// No description provided for @privacySharingNoSell.
+  ///
+  /// In en, this message translates to:
+  /// **'We do NOT sell your personal information to third parties'**
+  String get privacySharingNoSell;
+
+  /// No description provided for @privacySharingOwners.
+  ///
+  /// In en, this message translates to:
+  /// **'Field owners can see your booking details (name, phone) for confirmed bookings'**
+  String get privacySharingOwners;
+
+  /// No description provided for @privacySharingProviders.
+  ///
+  /// In en, this message translates to:
+  /// **'We may share data with service providers (payment processors, analytics)'**
+  String get privacySharingProviders;
+
+  /// No description provided for @privacySharingLegal.
+  ///
+  /// In en, this message translates to:
+  /// **'We will share data if required by law or to protect rights and safety'**
+  String get privacySharingLegal;
+
+  /// No description provided for @privacyRightsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Rights'**
+  String get privacyRightsTitle;
+
+  /// No description provided for @privacyRightsAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Access your personal data at any time through your profile'**
+  String get privacyRightsAccess;
+
+  /// No description provided for @privacyRightsUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Update or correct your information'**
+  String get privacyRightsUpdate;
+
+  /// No description provided for @privacyRightsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account and associated data'**
+  String get privacyRightsDelete;
+
+  /// No description provided for @privacyRightsOptOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Opt-out of marketing communications'**
+  String get privacyRightsOptOut;
+
+  /// No description provided for @privacyRightsExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export your booking history'**
+  String get privacyRightsExport;
+
+  /// No description provided for @privacyRightsWithdraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw consent for data processing (may limit service availability)'**
+  String get privacyRightsWithdraw;
+
+  /// No description provided for @privacyCookiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookies and Tracking'**
+  String get privacyCookiesTitle;
+
+  /// No description provided for @privacyCookiesUse.
+  ///
+  /// In en, this message translates to:
+  /// **'We use cookies and similar technologies to improve user experience'**
+  String get privacyCookiesUse;
+
+  /// No description provided for @privacyCookiesAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics cookies help us understand app usage'**
+  String get privacyCookiesAnalytics;
+
+  /// No description provided for @privacyCookiesDisable.
+  ///
+  /// In en, this message translates to:
+  /// **'You can disable cookies in your device settings'**
+  String get privacyCookiesDisable;
+
+  /// No description provided for @privacyCookiesImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Some features may not work without cookies'**
+  String get privacyCookiesImpact;
+
+  /// No description provided for @privacyChildrenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Children\'s Privacy'**
+  String get privacyChildrenTitle;
+
+  /// No description provided for @privacyChildrenNotFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Our service is not intended for children under 13'**
+  String get privacyChildrenNotFor;
+
+  /// No description provided for @privacyChildrenNoCollect.
+  ///
+  /// In en, this message translates to:
+  /// **'We do not knowingly collect data from children'**
+  String get privacyChildrenNoCollect;
+
+  /// No description provided for @privacyChildrenDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'If we learn we have collected child data, we will delete it'**
+  String get privacyChildrenDelete;
+
+  /// No description provided for @privacyChildrenParents.
+  ///
+  /// In en, this message translates to:
+  /// **'Parents can contact us to request data deletion'**
+  String get privacyChildrenParents;
+
+  /// No description provided for @privacyChangesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes to This Policy'**
+  String get privacyChangesTitle;
+
+  /// No description provided for @privacyChangesMayUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'We may update this privacy policy from time to time'**
+  String get privacyChangesMayUpdate;
+
+  /// No description provided for @privacyChangesNotify.
+  ///
+  /// In en, this message translates to:
+  /// **'We will notify you of significant changes via email or app notification'**
+  String get privacyChangesNotify;
+
+  /// No description provided for @privacyChangesAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Continued use of the app after changes constitutes acceptance'**
+  String get privacyChangesAccept;
+
+  /// No description provided for @privacyChangesLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}'**
+  String privacyChangesLastUpdated(Object date);
+
+  /// No description provided for @termsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsTitle;
+
+  /// No description provided for @termsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rules and guidelines'**
+  String get termsSubtitle;
+
+  /// No description provided for @termsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please read these terms carefully before using Sport Kick. These terms govern your use of our platform and services.'**
+  String get termsDescription;
+
+  /// No description provided for @termsAcceptanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptance of Terms'**
+  String get termsAcceptanceTitle;
+
+  /// No description provided for @termsAcceptanceAgree.
+  ///
+  /// In en, this message translates to:
+  /// **'By using Sport Kick, you agree to these Terms of Service'**
+  String get termsAcceptanceAgree;
+
+  /// No description provided for @termsAcceptanceDisagree.
+  ///
+  /// In en, this message translates to:
+  /// **'If you do not agree, please do not use our services'**
+  String get termsAcceptanceDisagree;
+
+  /// No description provided for @termsAcceptanceModify.
+  ///
+  /// In en, this message translates to:
+  /// **'We reserve the right to modify these terms at any time'**
+  String get termsAcceptanceModify;
+
+  /// No description provided for @termsAcceptanceContinuedUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Continued use after changes constitutes acceptance'**
+  String get termsAcceptanceContinuedUse;
+
+  /// No description provided for @termsAccountsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'User Accounts'**
+  String get termsAccountsTitle;
+
+  /// No description provided for @termsAccountsAccurateInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'You must provide accurate and complete information when registering'**
+  String get termsAccountsAccurateInfo;
+
+  /// No description provided for @termsAccountsSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'You are responsible for maintaining the security of your account'**
+  String get termsAccountsSecurity;
+
+  /// No description provided for @termsAccountsAge.
+  ///
+  /// In en, this message translates to:
+  /// **'You must be at least 13 years old to use our services'**
+  String get termsAccountsAge;
+
+  /// No description provided for @termsAccountsSingle.
+  ///
+  /// In en, this message translates to:
+  /// **'One person or business per account'**
+  String get termsAccountsSingle;
+
+  /// No description provided for @termsAccountsNoShare.
+  ///
+  /// In en, this message translates to:
+  /// **'You must not share your account credentials'**
+  String get termsAccountsNoShare;
+
+  /// No description provided for @termsAccountsNotify.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify us immediately of any unauthorized account access'**
+  String get termsAccountsNotify;
+
+  /// No description provided for @termsBookingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Policies'**
+  String get termsBookingTitle;
+
+  /// No description provided for @termsBookingAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'All bookings are subject to field availability'**
+  String get termsBookingAvailability;
+
+  /// No description provided for @termsBookingApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings may require owner approval before confirmation'**
+  String get termsBookingApproval;
+
+  /// No description provided for @termsBookingArrival.
+  ///
+  /// In en, this message translates to:
+  /// **'You must arrive on time for your booking'**
+  String get termsBookingArrival;
+
+  /// No description provided for @termsBookingLate.
+  ///
+  /// In en, this message translates to:
+  /// **'Late arrivals may result in reduced playing time'**
+  String get termsBookingLate;
+
+  /// No description provided for @termsBookingNoShow.
+  ///
+  /// In en, this message translates to:
+  /// **'No-shows may result in account restrictions'**
+  String get termsBookingNoShow;
+
+  /// No description provided for @termsBookingPrices.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices are set by field owners and may vary'**
+  String get termsBookingPrices;
+
+  /// No description provided for @termsCancellationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation and Refunds'**
+  String get termsCancellationTitle;
+
+  /// No description provided for @termsCancellationPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Users can cancel bookings according to the cancellation policy'**
+  String get termsCancellationPolicy;
+
+  /// No description provided for @termsCancellationFullRefund.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellations made 24+ hours in advance may be eligible for full refund'**
+  String get termsCancellationFullRefund;
+
+  /// No description provided for @termsCancellationLateFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellations made less than 24 hours may incur fees'**
+  String get termsCancellationLateFees;
+
+  /// No description provided for @termsCancellationNoShow.
+  ///
+  /// In en, this message translates to:
+  /// **'No-shows are not eligible for refunds'**
+  String get termsCancellationNoShow;
+
+  /// No description provided for @termsCancellationRefundTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds are processed according to payment method (3-7 business days)'**
+  String get termsCancellationRefundTime;
+
+  /// No description provided for @termsCancellationOwnerCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Field owners reserve the right to cancel bookings due to maintenance or weather'**
+  String get termsCancellationOwnerCancel;
+
+  /// No description provided for @termsConductTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'User Conduct'**
+  String get termsConductTitle;
+
+  /// No description provided for @termsConductRules.
+  ///
+  /// In en, this message translates to:
+  /// **'You must follow field rules and guidelines'**
+  String get termsConductRules;
+
+  /// No description provided for @termsConductNoAbuse.
+  ///
+  /// In en, this message translates to:
+  /// **'No harassment, discrimination, or abuse towards staff or players'**
+  String get termsConductNoAbuse;
+
+  /// No description provided for @termsConductDamage.
+  ///
+  /// In en, this message translates to:
+  /// **'You are responsible for any damage caused during your booking'**
+  String get termsConductDamage;
+
+  /// No description provided for @termsConductProhibited.
+  ///
+  /// In en, this message translates to:
+  /// **'Prohibited activities include fraudulent bookings or misuse of the platform'**
+  String get termsConductProhibited;
+
+  /// No description provided for @termsLiabilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Liability and Disclaimers'**
+  String get termsLiabilityTitle;
+
+  /// No description provided for @termsLiabilityPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport Kick is a platform that connects users with field owners'**
+  String get termsLiabilityPlatform;
+
+  /// No description provided for @termsLiabilityCondition.
+  ///
+  /// In en, this message translates to:
+  /// **'We are not responsible for the condition of fields or equipment'**
+  String get termsLiabilityCondition;
+
+  /// No description provided for @termsLiabilityInjuries.
+  ///
+  /// In en, this message translates to:
+  /// **'We are not liable for injuries, accidents, or losses during use of the services'**
+  String get termsLiabilityInjuries;
+
+  /// No description provided for @termsLiabilityOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Field owners are responsible for their facilities and adherence to safety standards'**
+  String get termsLiabilityOwner;
+
+  /// No description provided for @termsPaymentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment and Fees'**
+  String get termsPaymentsTitle;
+
+  /// No description provided for @termsPaymentsProcessed.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments are processed securely via our payment provider'**
+  String get termsPaymentsProcessed;
+
+  /// No description provided for @termsPaymentsFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Service fees may apply to bookings'**
+  String get termsPaymentsFees;
+
+  /// No description provided for @termsPaymentsDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices are displayed before checkout'**
+  String get termsPaymentsDisplay;
+
+  /// No description provided for @termsPaymentsRefunds.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds follow the cancellation policy'**
+  String get termsPaymentsRefunds;
+
+  /// No description provided for @termsPaymentsCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency and taxes are displayed during checkout'**
+  String get termsPaymentsCurrency;
+
+  /// No description provided for @termsIPTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Intellectual Property'**
+  String get termsIPTitle;
+
+  /// No description provided for @termsIPProtected.
+  ///
+  /// In en, this message translates to:
+  /// **'All content on Sport Kick is protected by copyright and trademarks'**
+  String get termsIPProtected;
+
+  /// No description provided for @termsIPBrand.
+  ///
+  /// In en, this message translates to:
+  /// **'You may not use our branding without permission'**
+  String get termsIPBrand;
+
+  /// No description provided for @termsIPUserContent.
+  ///
+  /// In en, this message translates to:
+  /// **'User-generated content remains your property, but you grant us a license to display it'**
+  String get termsIPUserContent;
+
+  /// No description provided for @termsTerminationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Termination'**
+  String get termsTerminationTitle;
+
+  /// No description provided for @termsTerminationSuspend.
+  ///
+  /// In en, this message translates to:
+  /// **'We may suspend or terminate accounts for violations of these terms'**
+  String get termsTerminationSuspend;
+
+  /// No description provided for @termsTerminationDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Users may delete their accounts at any time'**
+  String get termsTerminationDelete;
+
+  /// No description provided for @termsTerminationDisputes.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding payments or disputes may delay account deletion'**
+  String get termsTerminationDisputes;
+
+  /// No description provided for @termsLawTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Governing Law'**
+  String get termsLawTitle;
+
+  /// No description provided for @termsLawGoverning.
+  ///
+  /// In en, this message translates to:
+  /// **'These terms are governed by applicable local laws'**
+  String get termsLawGoverning;
+
+  /// No description provided for @termsLawDisputes.
+  ///
+  /// In en, this message translates to:
+  /// **'Any disputes will be resolved in the appropriate jurisdiction'**
+  String get termsLawDisputes;
+
+  /// No description provided for @supportContactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get supportContactTitle;
+
+  /// No description provided for @supportContactDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'If you have questions about our policies or need assistance, please contact us:'**
+  String get supportContactDescription;
 }
 
 class _AppLocalizationsDelegate

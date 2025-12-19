@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
@@ -95,8 +96,7 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                       children: [
                         Text(
                           field.name,
-                          style: const TextStyle(
-                            fontSize: 16,
+                          style: AppTextStyles.bodyLarge.copyWith(
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
@@ -113,8 +113,7 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 field.city,
-                                style: const TextStyle(
-                                  fontSize: 12,
+                                style: AppTextStyles.labelSmall.copyWith(
                                   color: Colors.white70,
                                 ),
                                 maxLines: 1,
@@ -227,8 +226,7 @@ class _StatusIndicator extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             isActive ? 'Active' : 'Inactive',
-            style: const TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),
@@ -269,8 +267,7 @@ class _StatChip extends StatelessWidget {
           Flexible(
             child: Text(
               label,
-              style: TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.bodySmall.copyWith(
                 fontWeight: FontWeight.w600,
                 color: color,
               ),
@@ -318,8 +315,7 @@ class _ActionButton extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: color,
                 ),

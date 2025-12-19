@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium dashboard header.
 ///
@@ -63,8 +64,7 @@ class PremiumDashboardHeader extends StatelessWidget {
         children: [
           Text(
             _greeting,
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: Colors.white.withValues(alpha: 0.8),
               letterSpacing: 0.5,
             ),
@@ -72,8 +72,7 @@ class PremiumDashboardHeader extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             ownerName,
-            style: const TextStyle(
-              fontSize: 28,
+            style: AppTextStyles.headlineMedium.copyWith(
               fontWeight: FontWeight.w800,
               color: Colors.white,
               letterSpacing: 0.5,
@@ -90,8 +89,7 @@ class PremiumDashboardHeader extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 _formattedDate,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: Colors.white.withValues(alpha: 0.7),
                 ),
               ),

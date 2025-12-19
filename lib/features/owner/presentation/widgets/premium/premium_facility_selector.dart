@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium facility selector (multi-select chips).
 ///
@@ -51,8 +52,7 @@ class PremiumFacilitySelector extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
@@ -169,8 +169,7 @@ class _FacilityChipState extends State<_FacilityChip>
               const SizedBox(width: 6),
               Text(
                 widget.label,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: widget.isSelected
                       ? Colors.white

@@ -2,15 +2,17 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 class UpcomingBookingsWidget extends StatelessWidget {
   const UpcomingBookingsWidget({super.key});
@@ -22,9 +24,9 @@ class UpcomingBookingsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Upcoming Match',
-            style: TextStyle(
+          Text(
+            context.l10n.homeUpcomingMatch,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.lightTextPrimary,
@@ -49,17 +51,17 @@ class UpcomingBookingsWidget extends StatelessWidget {
                       ..sort((a, b) => a.date.compareTo(b.date));
 
                 if (futureBookings.isEmpty) {
-                  return _buildEmptyState();
+                  return _buildEmptyState(context.l10n);
                 }
 
                 final nextBooking = futureBookings.first;
                 return _buildBookingCard(context, nextBooking);
               } else if (state is BookingsEmpty) {
-                return _buildEmptyState();
+                return _buildEmptyState(context.l10n);
               } else if (state is BookingError) {
-                return _buildErrorState(state.message);
+                return _buildErrorState(context, state.message);
               }
-              return _buildEmptyState(); // Default/Initial
+              return _buildEmptyState(context.l10n); // Default/Initial
             },
           ),
         ],
@@ -68,8 +70,16 @@ class UpcomingBookingsWidget extends StatelessWidget {
   }
 
   Widget _buildBookingCard(BuildContext context, BookingEntity booking) {
-    final dateStr = DateFormat('EEEE, MMM d').format(booking.date);
-    final timeStr = '${booking.startTime} - ${booking.endTime}';
+    final dateStr = LocaleFormatters.formatDate(
+      context,
+      booking.date,
+      pattern: 'EEEE, MMM d',
+    );
+    final timeStr = LocaleFormatters.formatTimeRange(
+      context,
+      startTime: booking.startTime,
+      endTime: booking.endTime,
+    );
 
     return GestureDetector(
       onTap: () => context.pushNamed(
@@ -114,7 +124,8 @@ class UpcomingBookingsWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        booking.fieldName ?? 'Football Field',
+                        booking.fieldName ??
+                            context.l10n.footballField, // fallback
                         style: const TextStyle(
                           color: AppColors.lightTextPrimary,
                           fontWeight: FontWeight.bold,
@@ -166,19 +177,19 @@ class UpcomingBookingsWidget extends StatelessWidget {
                 _buildAction(
                   context,
                   Icons.directions,
-                  'Directions',
+                  context.l10n.homeDirections,
                   () => _openDirections(context, booking),
                 ),
                 _buildAction(
                   context,
                   Icons.share,
-                  'Invite',
+                  context.l10n.homeInvite,
                   () => _shareBooking(context, booking),
                 ),
                 _buildAction(
                   context,
                   Icons.calendar_today,
-                  'Add to Calendar',
+                  context.l10n.homeAddToCalendar,
                   () => _addToCalendar(context, booking),
                 ),
               ],
@@ -191,7 +202,7 @@ class UpcomingBookingsWidget extends StatelessWidget {
 
   void _openDirections(BuildContext context, BookingEntity booking) async {
     // Try to open maps with the field location
-    final fieldName = booking.fieldName ?? 'Football Field';
+    final fieldName = booking.fieldName ?? context.l10n.footballField;
     final query = Uri.encodeComponent(fieldName);
     final mapsUrl = Uri.parse(
       'https://www.google.com/maps/search/?api=1&query=$query',
@@ -201,22 +212,25 @@ class UpcomingBookingsWidget extends StatelessWidget {
       await launchUrl(mapsUrl, mode: LaunchMode.externalApplication);
     } else {
       if (context.mounted) {
-        SnackbarHelper.showError(context, 'Could not open maps');
+        SnackbarHelper.showError(context, context.l10n.homeErrorOpenMaps);
       }
     }
   }
 
   void _shareBooking(BuildContext context, BookingEntity booking) {
-    final dateStr = DateFormat('EEEE, MMM d, yyyy').format(booking.date);
+    final dateStr = LocaleFormatters.formatDate(
+      context,
+      booking.date,
+      pattern: 'EEEE, MMM d, yyyy',
+    );
     final message =
         '''
-🏟️ Join me for football!
+${context.l10n.homeBookingShareTitle(booking.fieldName ?? context.l10n.footballField)}
 
-📍 ${booking.fieldName ?? 'Football Field'}
-📅 $dateStr
-⏰ ${booking.startTime} - ${booking.endTime}
+${context.l10n.bookingDate}: $dateStr
+${context.l10n.selectTime}: ${LocaleFormatters.formatTimeRange(context, startTime: booking.startTime, endTime: booking.endTime)}
 
-Book your spot on Sport Kick! 🎯
+${context.l10n.homeBookingShareDescription}
 ''';
     SharePlus.instance.share(ShareParams(text: message));
   }
@@ -256,11 +270,13 @@ Book your spot on Sport Kick! 🎯
             '${endDateTime.year}${endDateTime.month.toString().padLeft(2, '0')}${endDateTime.day.toString().padLeft(2, '0')}T${endDateTime.hour.toString().padLeft(2, '0')}${endDateTime.minute.toString().padLeft(2, '0')}00';
 
         final title = Uri.encodeComponent(
-          'Football at ${booking.fieldName ?? "Field"}',
+          context.l10n.homeCalendarTitle(
+            booking.fieldName ?? context.l10n.footballField,
+          ),
         );
-        final details = Uri.encodeComponent('Booked via Sport Kick');
+        final details = Uri.encodeComponent(context.l10n.homeCalendarDetails);
         final location = Uri.encodeComponent(
-          booking.fieldName ?? 'Football Field',
+          booking.fieldName ?? context.l10n.footballField,
         );
 
         final calendarUrl = Uri.parse(
@@ -275,9 +291,11 @@ Book your spot on Sport Kick! 🎯
 
       // Native calendar for mobile
       final event = Event(
-        title: 'Football at ${booking.fieldName ?? "Field"}',
-        description: 'Booked via Sport Kick',
-        location: booking.fieldName ?? 'Football Field',
+        title: context.l10n.homeCalendarTitle(
+          booking.fieldName ?? context.l10n.footballField,
+        ),
+        description: context.l10n.homeCalendarDetails,
+        location: booking.fieldName ?? context.l10n.footballField,
         startDate: startDateTime,
         endDate: endDateTime,
       );
@@ -285,12 +303,12 @@ Book your spot on Sport Kick! 🎯
       Add2Calendar.addEvent2Cal(event);
     } catch (e) {
       if (context.mounted) {
-        SnackbarHelper.showError(context, 'Could not add to calendar');
+        SnackbarHelper.showError(context, context.l10n.homeErrorAddCalendar);
       }
     }
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -307,18 +325,18 @@ Book your spot on Sport Kick! 🎯
               color: AppColors.lightTextSecondary.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'No upcoming matches',
-              style: TextStyle(
+            Text(
+              l10n.homeNoUpcomingMatches,
+              style: const TextStyle(
                 color: AppColors.lightTextPrimary,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Book your next game now!',
-              style: TextStyle(
+            Text(
+              l10n.homeBookNextGame,
+              style: const TextStyle(
                 color: AppColors.lightTextSecondary,
                 fontSize: 14,
               ),
@@ -342,7 +360,7 @@ Book your spot on Sport Kick! 🎯
     );
   }
 
-  Widget _buildErrorState(String message) {
+  Widget _buildErrorState(BuildContext context, String message) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -350,7 +368,7 @@ Book your spot on Sport Kick! 🎯
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
-        'Error loading bookings: $message',
+        '${context.l10n.homeErrorLoadingBookings}: $message',
         style: const TextStyle(color: AppColors.error),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/booking_table_helpers.dart';
 
@@ -30,10 +31,9 @@ class BookingTableHeaderRow extends StatelessWidget {
               right: BorderSide(color: AppColors.border.withValues(alpha: 0.3)),
             ),
           ),
-          child: const Text(
+          child: Text(
             'Time',
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
@@ -93,8 +93,7 @@ class _DayColumnHeader extends StatelessWidget {
         children: [
           Text(
             dayName,
-            style: TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodySmall.copyWith(
               fontWeight: FontWeight.w700,
               color: isToday ? AppColors.goldAccent : AppColors.textPrimary,
             ),
@@ -110,8 +109,7 @@ class _DayColumnHeader extends StatelessWidget {
                 : null,
             child: Text(
               '${date.day}',
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
                 color: isToday ? Colors.white : AppColors.textSecondary,
               ),

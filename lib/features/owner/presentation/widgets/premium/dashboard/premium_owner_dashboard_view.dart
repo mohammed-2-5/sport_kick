@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -15,6 +16,7 @@ import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/p
 import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/premium_owner_quick_actions.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/premium_owner_recent_bookings.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/premium_owner_stats_row.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium owner dashboard view.
 ///
@@ -124,9 +126,9 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                       ? notificationState.unreadCount
                       : 0;
                   return PremiumOwnerHeader(
-                    greeting: cubit.getGreeting(),
+                    greeting: cubit.getGreeting(context),
                     ownerName: state.ownerName,
-                    date: cubit.getFormattedDate(),
+                    date: cubit.getFormattedDate(context),
                     onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
                     onNotificationTap: () => context.pushNamed('notifications'),
                     notificationCount: unreadCount,
@@ -138,7 +140,10 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                 totalBookings: state.stats.totalBookings,
                 pendingBookings: state.stats.pendingBookings,
                 todayBookings: state.stats.todayBookings,
-                revenue: cubit.formatCurrency(state.stats.monthlyRevenue),
+                revenue: cubit.formatCurrency(
+                  state.stats.monthlyRevenue,
+                  context: context,
+                ),
                 onBookingsTap: () => context.pushNamed('ownerBookings'),
                 onRevenueTap: () => context.pushNamed('ownerAnalytics'),
               ),
@@ -207,12 +212,12 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
+        title: Text(context.l10n.logoutTitle),
+        content: Text(context.l10n.logoutMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -220,7 +225,10 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
               context.read<AuthCubit>().logout();
               context.goNamed('login');
             },
-            child: const Text('Logout', style: TextStyle(color: Colors.red)),
+            child: Text(
+              context.l10n.logoutTitle,
+              style: AppTextStyles.bodyMedium.copyWith(color: Colors.red),
+            ),
           ),
         ],
       ),

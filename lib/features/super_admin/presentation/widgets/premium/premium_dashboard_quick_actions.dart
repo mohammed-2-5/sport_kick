@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium dashboard quick action card.
 ///
@@ -111,8 +112,7 @@ class _PremiumDashboardQuickActionState
               // Label
               Text(
                 widget.label,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.premiumTextPrimary,
                 ),
@@ -122,8 +122,7 @@ class _PremiumDashboardQuickActionState
                 const SizedBox(height: 4),
                 Text(
                   widget.subtitle!,
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.premiumTextSecondary.withValues(
                       alpha: 0.7,
                     ),
@@ -164,8 +163,7 @@ class PremiumQuickActionsSection extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 18,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.premiumTextPrimary,
           ),
@@ -261,8 +259,7 @@ class PremiumDashboardStatCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         trend!,
-                        style: TextStyle(
-                          fontSize: 11,
+                        style: AppTextStyles.labelSmall.copyWith(
                           fontWeight: FontWeight.w600,
                           color: isTrendPositive == true
                               ? Colors.green
@@ -278,8 +275,7 @@ class PremiumDashboardStatCard extends StatelessWidget {
           // Value
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 24,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.w800,
               color: AppColors.premiumTextPrimary,
             ),
@@ -288,8 +284,7 @@ class PremiumDashboardStatCard extends StatelessWidget {
           // Label
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.premiumTextSecondary.withValues(alpha: 0.7),
             ),
           ),

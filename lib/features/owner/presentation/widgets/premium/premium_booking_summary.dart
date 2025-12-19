@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium booking summary card for manual booking.
@@ -61,10 +62,9 @@ class PremiumBookingSummary extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'Booking Summary',
-                style: TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -109,10 +109,9 @@ class PremiumBookingSummary extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Total Price',
-                style: TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -123,8 +122,7 @@ class PremiumBookingSummary extends StatelessWidget {
                 ).createShader(bounds),
                 child: Text(
                   price,
-                  style: const TextStyle(
-                    fontSize: 24,
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
                   ),
@@ -171,16 +169,14 @@ class _SummaryRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.textSecondary.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 value,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),

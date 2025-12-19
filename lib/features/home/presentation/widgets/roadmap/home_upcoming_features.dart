@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/home/presentation/constants/home_constants.dart';
 
 /// Upcoming features section widget for the home page.
@@ -27,9 +28,9 @@ class HomeUpcomingFeatures extends StatelessWidget {
         children: [
           _buildHeader(context),
           const SizedBox(height: HomeConstants.upcomingFeaturesTitleSpacing),
-          const _FeatureItem(
+          _FeatureItem(
             icon: Icons.payment,
-            text: HomeConstants.featurePayments,
+            text: context.l10n.homeFeaturePayments,
           ),
         ],
       ),
@@ -42,7 +43,7 @@ class HomeUpcomingFeatures extends StatelessWidget {
         const Icon(Icons.info_outline, color: AppColors.info),
         const SizedBox(width: HomeConstants.upcomingFeaturesIconSpacing),
         Text(
-          HomeConstants.comingSoonTitle,
+          context.l10n.homeComingSoonTitle,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.info,

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium edit profile bottom sheet.
 ///
@@ -90,22 +92,20 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
                   child: const Icon(Icons.edit, color: Colors.white),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Edit Profile',
-                        style: TextStyle(
-                          fontSize: 18,
+                        context.l10n.editProfile,
+                        style: AppTextStyles.titleLarge.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
                       ),
                       Text(
-                        'Update your information',
-                        style: TextStyle(
-                          fontSize: 13,
+                        context.l10n.updateYourInformation,
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -129,19 +129,19 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
                 child: Column(
                   children: [
                     _buildTextField(
-                      label: 'Full Name',
+                      label: context.l10n.fullName,
                       controller: _nameController,
                       icon: Icons.person_outline,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Name is required';
+                          return context.l10n.nameRequired;
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: 16),
                     _buildTextField(
-                      label: 'Phone Number',
+                      label: context.l10n.phone,
                       controller: _phoneController,
                       icon: Icons.phone_outlined,
                       keyboardType: TextInputType.phone,
@@ -155,7 +155,7 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: PremiumButton(
-              label: 'Save Changes',
+              label: context.l10n.saveChanges,
               onPressed: _handleSave,
               icon: Icons.check,
               fullWidth: true,
@@ -178,8 +178,7 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),

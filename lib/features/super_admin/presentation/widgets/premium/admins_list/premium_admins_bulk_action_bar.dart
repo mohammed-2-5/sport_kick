@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium bulk action bar for admins list.
 ///
@@ -82,16 +83,14 @@ class PremiumAdminsBulkActionBar extends StatelessWidget {
                     children: [
                       Text(
                         '$selectedCount selected',
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
                       ),
                       Text(
                         'of $totalCount admins',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: Colors.white.withValues(alpha: 0.8),
                         ),
                       ),
@@ -171,8 +170,7 @@ class _ActionButton extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               label,
-              style: const TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
@@ -223,8 +221,7 @@ class _BulkActionButton extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               label,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.labelLarge.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.premiumGold,
               ),

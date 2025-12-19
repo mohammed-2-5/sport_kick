@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Statistics section for field detail page.
 ///
@@ -22,14 +23,14 @@ class FieldDetailStats extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Statistics', style: AppTextStyles.titleMedium),
+          Text(context.l10n.statistics, style: AppTextStyles.titleMedium),
           const SizedBox(height: 16),
           Row(
             children: [
               Expanded(
                 child: _StatCard(
                   icon: Icons.event_available,
-                  label: 'Bookings',
+                  label: context.l10n.bookings,
                   value: field.totalBookings.toString(),
                   color: AppColors.primary,
                 ),
@@ -38,7 +39,7 @@ class FieldDetailStats extends StatelessWidget {
               Expanded(
                 child: _StatCard(
                   icon: Icons.star,
-                  label: 'Rating',
+                  label: context.l10n.rating,
                   value: field.ratingDisplay,
                   color: AppColors.warning,
                 ),
@@ -48,8 +49,8 @@ class FieldDetailStats extends StatelessWidget {
           const SizedBox(height: 12),
           _StatCard(
             icon: field.isActive ? Icons.check_circle : Icons.cancel,
-            label: 'Status',
-            value: field.isActive ? 'Active' : 'Inactive',
+            label: context.l10n.bookingStatus,
+            value: field.isActive ? context.l10n.active : context.l10n.inactive,
             color: field.isActive ? AppColors.success : AppColors.error,
           ),
           const SizedBox(height: 24),

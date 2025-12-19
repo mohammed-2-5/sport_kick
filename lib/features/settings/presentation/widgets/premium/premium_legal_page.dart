@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 
 /// Premium legal page template.
@@ -105,8 +106,7 @@ class _LegalInfoHeader extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 18,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w800,
                     color: AppColors.textPrimary,
                   ),
@@ -117,8 +117,7 @@ class _LegalInfoHeader extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             description,
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textPrimary,
               height: 1.5,
             ),
@@ -144,8 +143,7 @@ class _LegalInfoHeader extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   'Effective: $effectiveDate',
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -178,8 +176,7 @@ class PremiumLegalSection extends StatelessWidget {
         const SizedBox(height: 24),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 17,
+          style: AppTextStyles.titleSmall.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
@@ -209,8 +206,7 @@ class PremiumLegalSection extends StatelessWidget {
                 Expanded(
                   child: Text(
                     point,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.textPrimary,
                       height: 1.6,
                     ),
@@ -248,10 +244,9 @@ class PremiumLegalContact extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Contact Us',
-            style: TextStyle(
-              fontSize: 17,
+            style: AppTextStyles.titleSmall.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
             ),
@@ -289,7 +284,9 @@ class _ContactRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textPrimary,
+            ),
           ),
         ),
       ],

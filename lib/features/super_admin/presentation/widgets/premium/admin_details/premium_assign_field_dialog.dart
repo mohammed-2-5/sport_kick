@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// Premium assign field dialog.
@@ -130,22 +131,20 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                         ),
                       ),
                       const SizedBox(width: 14),
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Assign Field',
-                              style: TextStyle(
-                                fontSize: 18,
+                              style: AppTextStyles.titleMedium.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.textPrimary,
                               ),
                             ),
                             Text(
                               'Select a field to assign',
-                              style: TextStyle(
-                                fontSize: 13,
+                              style: AppTextStyles.bodyMedium.copyWith(
                                 color: AppColors.textSecondary,
                               ),
                             ),
@@ -226,11 +225,10 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(color: AppColors.border),
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 'Cancel',
-                                style: TextStyle(
-                                  fontSize: 15,
+                                style: AppTextStyles.labelLarge.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textSecondary,
                                 ),
@@ -267,8 +265,7 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                             child: Center(
                               child: Text(
                                 'Assign',
-                                style: TextStyle(
-                                  fontSize: 15,
+                                style: AppTextStyles.labelLarge.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: widget.selectedFieldId != null
                                       ? Colors.white
@@ -355,16 +352,14 @@ class _FieldItem extends StatelessWidget {
                 children: [
                   Text(
                     field.name,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyles.titleSmall.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
                   ),
                   Text(
                     field.city,
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.textSecondary.withValues(alpha: 0.8),
                     ),
                   ),
@@ -374,8 +369,7 @@ class _FieldItem extends StatelessWidget {
             // Price
             Text(
               field.formattedPrice,
-              style: TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: isSelected
                     ? AppColors.premiumGold
@@ -408,8 +402,7 @@ class _EmptyState extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             'No available fields',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),
           ),

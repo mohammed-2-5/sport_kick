@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 
 class CitySelectionContinueButton extends StatelessWidget {
@@ -30,7 +31,7 @@ class CitySelectionContinueButton extends StatelessWidget {
           width: double.infinity,
           child: FilledButton(
             onPressed: isEnabled ? onContinue : null,
-            child: const Text(CityConstants.continueButtonText),
+            child: Text(context.l10n.continueLabel),
           ),
         ),
       ),

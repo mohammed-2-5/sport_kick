@@ -36,10 +36,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get submit => 'Submit';
 
   @override
+  String get apply => 'Apply';
+
+  @override
   String get retry => 'Retry';
 
   @override
   String get close => 'Close';
+
+  @override
+  String get refresh => 'Refresh';
 
   @override
   String get back => 'Back';
@@ -231,7 +237,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterPassword => 'Enter your password';
 
   @override
-  String get enterFullName => 'Enter your full name';
+  String get enterFullName => 'Enter full name';
 
   @override
   String get enterPhoneNumber => 'Enter your phone number';
@@ -735,6 +741,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessHours => 'Business Hours';
 
   @override
+  String get open => 'Open';
+
+  @override
+  String get closed => 'Closed';
+
+  @override
   String get notificationsSection => 'Notifications';
 
   @override
@@ -770,6 +782,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get autoApproveBookingsDesc => 'Automatically confirm new bookings';
+
+  @override
+  String get autoApproveEnabledTitle => 'Auto-Approve Enabled';
+
+  @override
+  String get autoApproveEnabledMessage =>
+      'All new booking requests will be automatically approved.';
+
+  @override
+  String get autoApproveDisabledTitle => 'Auto-Approve Disabled';
+
+  @override
+  String get autoApproveDisabledMessage =>
+      'You will need to manually approve each booking request.';
 
   @override
   String get bookingRules => 'Booking Rules';
@@ -822,6 +848,75 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goToMyFields => 'Go to My Fields';
+
+  @override
+  String get businessHoursLoading => 'Loading business hours...';
+
+  @override
+  String get businessHoursSetDefaultHours => 'Set Default Hours';
+
+  @override
+  String get businessHoursApplyToAllDays => 'Apply to All Days';
+
+  @override
+  String get businessHoursApplyToAllDescription =>
+      'This will set the same hours for all 7 days of the week.';
+
+  @override
+  String get businessHoursHelpText =>
+      'Set when your field is available for bookings. You can set different hours for each day of the week.';
+
+  @override
+  String get businessHoursHelpTimeSelection =>
+      'Select opening and closing times in 15-minute intervals.';
+
+  @override
+  String get businessHoursOpeningTime => 'Opening Time';
+
+  @override
+  String get businessHoursClosingTime => 'Closing Time';
+
+  @override
+  String get businessHoursOpen24Hours => 'Open 24 Hours';
+
+  @override
+  String get businessHoursClosedAllDay => 'Closed All Day';
+
+  @override
+  String get businessHoursCurrentlyOpen => 'Currently Open';
+
+  @override
+  String get businessHoursCurrentlyClosed => 'Currently Closed';
+
+  @override
+  String get businessHoursAcceptingBookings =>
+      'Your field is currently accepting bookings';
+
+  @override
+  String get businessHoursClosedForBookings =>
+      'Your field is currently closed for bookings';
+
+  @override
+  String get businessHoursUpdatedSuccess =>
+      'Business hours updated successfully';
+
+  @override
+  String get businessHoursDefaultHoursSet =>
+      'Default hours (24/7) set for all days';
+
+  @override
+  String get businessHoursInvalidTimeRange =>
+      'Opening time must be before closing time';
+
+  @override
+  String get businessHoursNoHoursSet => 'No business hours set';
+
+  @override
+  String get businessHoursNoHoursSetDescription =>
+      'Set your field operating hours to allow users to make bookings.';
+
+  @override
+  String get businessHoursTimeOutsideRange => 'Time is outside business hours';
 
   @override
   String get addFieldTitle => 'Add Field';
@@ -989,6 +1084,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookings => 'Bookings';
 
   @override
+  String get viewAll => 'View All';
+
+  @override
   String get myBookings => 'My Bookings';
 
   @override
@@ -1004,7 +1102,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectDate => 'Select Date';
 
   @override
-  String get selectTime => 'Select time';
+  String get selectTime => 'Select Time';
+
+  @override
+  String get dateLabel => 'Date';
+
+  @override
+  String get timeLabel => 'Time';
+
+  @override
+  String hoursLabel(num count, Object countFormatted) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'hours',
+      one: 'hour',
+    );
+    return '$countFormatted $_temp0';
+  }
 
   @override
   String get availableSlots => 'Available Time Slots';
@@ -1034,6 +1149,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingStatus => 'Status';
 
   @override
+  String get bookingStatusTitle => 'Booking Status Breakdown';
+
+  @override
   String get bookingTimeline => 'Booking Timeline';
 
   @override
@@ -1052,6 +1170,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get view => 'View';
 
   @override
+  String get failedToLoadBookings => 'Failed to load bookings';
+
+  @override
+  String get contact => 'Contact';
+
+  @override
+  String get noContactInfoAvailable => 'No contact info available';
+
+  @override
   String emailClientUnavailable(Object email) {
     return 'Could not open email client. Please contact $email';
   }
@@ -1061,6 +1188,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noBookingsYet => 'No bookings yet';
+
+  @override
+  String get bookingsWillAppearMessage =>
+      'Bookings will appear here once customers start booking your fields';
 
   @override
   String get chooseAnotherDate => 'Choose Another Date';
@@ -1804,6 +1935,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noNotifications => 'No notifications';
 
   @override
+  String get notificationsEmptySubtitle =>
+      'You\'ll see booking updates and alerts here';
+
+  @override
+  String get notificationJustNow => 'Just now';
+
+  @override
+  String notificationMinutesAgo(Object minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String notificationHoursAgo(Object hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String notificationDaysAgo(Object days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get markAllRead => 'Mark all read';
+
+  @override
   String get noFavorites => 'No favorites yet';
 
   @override
@@ -1910,6 +2066,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get totalRevenue => 'Total Revenue';
+
+  @override
+  String get vsLastMonth => 'vs last month';
+
+  @override
+  String bookingsCount(num count, Object countFormatted) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'bookings',
+      one: 'booking',
+    );
+    return '$countFormatted $_temp0';
+  }
 
   @override
   String get payment => 'Payment';
@@ -2053,6 +2223,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noFieldsAvailable => 'No fields available';
 
   @override
+  String get noImagesAvailable => 'No images available';
+
+  @override
   String get addYourFirstField => 'Add Your First Field';
 
   @override
@@ -2185,9 +2358,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get revenueByFieldSubtitle => 'Top performing fields';
 
   @override
-  String get bookingStatusTitle => 'Booking Status Breakdown';
-
-  @override
   String get bookingStatusSubtitle => 'Distribution of booking statuses';
 
   @override
@@ -2272,13 +2442,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customerInfoTitle => 'Customer Information';
 
   @override
-  String get customerNameLabel => 'Customer Name';
+  String get customerNameLabel => 'Customer Name *';
 
   @override
   String get enterCustomerNameHint => 'Enter customer name';
 
   @override
-  String get phoneLabel => 'Phone Number';
+  String get phoneLabel => 'Phone Number *';
 
   @override
   String get enterPhoneHint => 'Enter phone number';
@@ -2319,4 +2489,1200 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutMessage => 'Are you sure you want to logout?';
+
+  @override
+  String get pleaseLoginToManageBusinessHours =>
+      'Please log in to manage business hours';
+
+  @override
+  String get youHaveNoFields => 'You have no fields';
+
+  @override
+  String get fieldInactive => 'Field Inactive';
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get changePhoto => 'Change Photo';
+
+  @override
+  String get uploadPhoto => 'Upload Photo';
+
+  @override
+  String get removePhoto => 'Remove Photo';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get createManualBookingTitle => 'Create Manual Booking';
+
+  @override
+  String manualBookingCreatedSuccess(Object customerName) {
+    return 'Manual booking created successfully for $customerName';
+  }
+
+  @override
+  String get manualBookingSelectField => 'Please select a field';
+
+  @override
+  String get manualBookingSelectDate => 'Please select a date';
+
+  @override
+  String get manualBookingSelectTimeSlot => 'Please select a time slot';
+
+  @override
+  String get manualBookingEnterValidPrice => 'Please enter a valid price';
+
+  @override
+  String get manualBookingEnterCustomerName => 'Please enter customer name';
+
+  @override
+  String get manualBookingEnterCustomerPhone => 'Please enter customer phone';
+
+  @override
+  String get bookingDetailsTitle => 'Booking Details';
+
+  @override
+  String get bookingDetailsSubtitle => 'Select field, date, time, and price';
+
+  @override
+  String get chooseField => 'Choose a field';
+
+  @override
+  String endTimeLabel(num hours, Object time) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'hours',
+      one: 'hour',
+    );
+    return 'End time: $time ($hours $_temp0)';
+  }
+
+  @override
+  String priceCalculation(num hours, Object price) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'hours',
+      one: 'hour',
+    );
+    return '$price EGP/hour × $hours $_temp0';
+  }
+
+  @override
+  String get basicInformation => 'Basic Information';
+
+  @override
+  String get enterFieldName => 'Enter field name';
+
+  @override
+  String get fieldNameExample => 'e.g., Premium Soccer Field';
+
+  @override
+  String get enterDescription => 'Enter description';
+
+  @override
+  String get enterAddress => 'Enter address';
+
+  @override
+  String get enterCity => 'Enter city';
+
+  @override
+  String get citySelectionTitle => 'Select Your City';
+
+  @override
+  String get citySelectionSubtitle =>
+      'Choose your city to see available football fields';
+
+  @override
+  String get cityChangeCity => 'Change City';
+
+  @override
+  String get citySelectCity => 'Select City';
+
+  @override
+  String get citySelectPrompt => 'Please select a city';
+
+  @override
+  String get cityNoCitiesAvailable => 'No cities available';
+
+  @override
+  String get cityErrorLoading => 'Failed to load cities';
+
+  @override
+  String get cityLoading => 'Loading cities...';
+
+  @override
+  String get citySavingSelection => 'Saving your selection...';
+
+  @override
+  String get citySelectedSuccess => 'City selected successfully';
+
+  @override
+  String get cityContactSupport => 'Please contact support for assistance';
+
+  @override
+  String get citySearchHint => 'Search cities...';
+
+  @override
+  String get homeWelcomeBack => 'Welcome back!';
+
+  @override
+  String get homeGoodMorning => 'Good Morning,';
+
+  @override
+  String get homeGoodAfternoon => 'Good Afternoon,';
+
+  @override
+  String get homeGoodEvening => 'Good Evening,';
+
+  @override
+  String get goodMorning => 'Good Morning';
+
+  @override
+  String get goodAfternoon => 'Good Afternoon';
+
+  @override
+  String get goodEvening => 'Good Evening';
+
+  @override
+  String get homeGuest => 'Guest';
+
+  @override
+  String get homeProfileTooltip => 'Profile';
+
+  @override
+  String get homeQuickActionsTitle => 'Quick Actions';
+
+  @override
+  String get homeComingSoonTitle => 'Coming Soon';
+
+  @override
+  String get homeMyProfileTitle => 'My Profile';
+
+  @override
+  String get homeMyProfileSubtitle => 'View & edit';
+
+  @override
+  String get homeBrowseFieldsTitle => 'Browse Fields';
+
+  @override
+  String get homeBrowseFieldsSubtitle => 'Find fields';
+
+  @override
+  String get homeMyBookingsTitle => 'My Bookings';
+
+  @override
+  String get homeMyBookingsSubtitle => 'View & manage';
+
+  @override
+  String get homeFavoritesTitle => 'Favorites';
+
+  @override
+  String get homeFavoritesSubtitle => 'Coming soon';
+
+  @override
+  String get homeFavoritesComingSoonMessage => 'Favorites feature coming soon!';
+
+  @override
+  String get homeExploreTitle => 'Explore Fields';
+
+  @override
+  String get homeViewAll => 'View All';
+
+  @override
+  String get homeNoFieldsAvailable => 'No fields available';
+
+  @override
+  String get homeNearbyFieldsTitle => 'Nearby Fields';
+
+  @override
+  String get homeViewMap => 'View Map';
+
+  @override
+  String get homeNoFieldsNearby => 'No fields nearby';
+
+  @override
+  String get homeTapToViewOnMap => 'Tap to view on map';
+
+  @override
+  String get homeShortcutBrowseTitle => 'Browse\nFields';
+
+  @override
+  String get homeShortcutBrowseSubtitle => 'Find venues';
+
+  @override
+  String get homeShortcutBookingsTitle => 'My\nBookings';
+
+  @override
+  String get homeShortcutBookingsSubtitle => 'View history';
+
+  @override
+  String get homeShortcutFavoritesTitle => 'Favorite\nFields';
+
+  @override
+  String get homeShortcutFavoritesSubtitle => 'Your picks';
+
+  @override
+  String get homeShortcutProfileTitle => 'Profile';
+
+  @override
+  String get homeShortcutProfileSubtitle => 'Settings';
+
+  @override
+  String get homeUpcomingMatch => 'Upcoming Match';
+
+  @override
+  String get homeDirections => 'Directions';
+
+  @override
+  String get homeInvite => 'Invite';
+
+  @override
+  String get homeAddToCalendar => 'Add to Calendar';
+
+  @override
+  String get homeNoUpcomingMatches => 'No upcoming matches';
+
+  @override
+  String get homeErrorLoadingBookings => 'Error loading bookings';
+
+  @override
+  String get homeBookNextGame => 'Book your next game now!';
+
+  @override
+  String get homeErrorOpenMaps => 'Could not open maps';
+
+  @override
+  String get homeErrorAddCalendar => 'Could not add to calendar';
+
+  @override
+  String homeCalendarTitle(Object fieldName) {
+    return 'Football at $fieldName';
+  }
+
+  @override
+  String get homeCalendarDetails => 'Booked via Sport Kick';
+
+  @override
+  String homeBookingShareTitle(Object fieldName) {
+    return 'Football at $fieldName';
+  }
+
+  @override
+  String get homeBookingShareDescription => 'Booked via Sport Kick';
+
+  @override
+  String get homeNavHome => 'Home';
+
+  @override
+  String get homeNavExplore => 'Explore';
+
+  @override
+  String get homeNavBookings => 'Bookings';
+
+  @override
+  String get homeNavSettings => 'Settings';
+
+  @override
+  String get sportFootball => 'Football';
+
+  @override
+  String get sportTennis => 'Tennis';
+
+  @override
+  String get sportBasketball => 'Basketball';
+
+  @override
+  String get sportPadel => 'Padel';
+
+  @override
+  String get sportVolleyball => 'Volleyball';
+
+  @override
+  String get homeFeaturePayments => 'Secure online payments';
+
+  @override
+  String get ownerWelcomeBack => 'Welcome Back!';
+
+  @override
+  String get ownerManageFieldsTagline => 'Manage your football fields';
+
+  @override
+  String get ownerNoFieldsYet => 'No Fields Yet';
+
+  @override
+  String get ownerStartByAddingField =>
+      'Start by adding your first football field';
+
+  @override
+  String get ownerAddFirstField => 'Add Your First Field';
+
+  @override
+  String get ownerEditProfile => 'Edit Profile';
+
+  @override
+  String get ownerVerifyPayment => 'Verify Payment';
+
+  @override
+  String get ownerVerifyPaymentMessage =>
+      'Are you sure you want to verify this payment? This will confirm that the customer has paid for the booking.';
+
+  @override
+  String get ownerRejectPayment => 'Reject Payment';
+
+  @override
+  String get ownerRejectPaymentMessage =>
+      'Please provide a reason for rejecting this payment. The customer will be notified.';
+
+  @override
+  String get ownerRejectReasonHint =>
+      'Enter rejection reason (min 10 characters)';
+
+  @override
+  String ownerRejectCounter(Object count) {
+    return '$count/10 characters minimum';
+  }
+
+  @override
+  String get fieldOwnerRole => 'Field Owner';
+
+  @override
+  String bookingShortId(Object id) {
+    return 'Booking #$id';
+  }
+
+  @override
+  String get paymentProofLoadFailed => 'Failed to load image';
+
+  @override
+  String get paymentProofTryLater => 'Please try again later';
+
+  @override
+  String get ownerApproveBookingConfirm =>
+      'Are you sure you want to approve this booking?';
+
+  @override
+  String get ownerRejectBookingConfirm =>
+      'Are you sure you want to reject this booking?';
+
+  @override
+  String get rejectedByOwner => 'Rejected by owner';
+
+  @override
+  String get workingSchedule => 'Working schedule';
+
+  @override
+  String get closedSlotMessage => 'Field is closed at this time';
+
+  @override
+  String get pastSlotMessage => 'Cannot create bookings for past dates';
+
+  @override
+  String get paymentRejectedSuccess => 'Payment rejected';
+
+  @override
+  String get bookingRejectedSuccess => 'Booking rejected';
+
+  @override
+  String get walkInCustomer => 'Walk-in Customer';
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get admin => 'Admin';
+
+  @override
+  String get paymentInformation => 'Payment Information';
+
+  @override
+  String get paymentStatusPendingTitle => 'Awaiting Payment';
+
+  @override
+  String get paymentStatusPendingDesc =>
+      'Customer has not yet uploaded payment proof';
+
+  @override
+  String get paymentProofUploadedTitle => 'Payment Proof Uploaded';
+
+  @override
+  String get paymentProofUploadedDesc =>
+      'Review the payment proof and verify or reject';
+
+  @override
+  String get paymentVerifiedTitle => 'Payment Verified';
+
+  @override
+  String get paymentVerifiedDesc => 'Payment has been confirmed';
+
+  @override
+  String get paymentRejectedTitle => 'Payment Rejected';
+
+  @override
+  String get paymentRejectedDesc => 'Payment was rejected, awaiting new proof';
+
+  @override
+  String get rejectionReason => 'Rejection Reason';
+
+  @override
+  String copyValueMessage(Object value) {
+    return 'Copied: $value';
+  }
+
+  @override
+  String get enterPrice => 'Enter price';
+
+  @override
+  String get updateField => 'Update Field';
+
+  @override
+  String get saveField => 'Save Field';
+
+  @override
+  String get setWorkingHoursDesc =>
+      'Set working hours for each day of the week';
+
+  @override
+  String get surfaceHybrid => 'Hybrid';
+
+  @override
+  String get fieldType => 'Field Type';
+
+  @override
+  String thousandsAbbreviation(Object value) {
+    return '${value}K';
+  }
+
+  @override
+  String millionsAbbreviation(Object value) {
+    return '${value}M';
+  }
+
+  @override
+  String get currencyEgp => 'EGP';
+
+  @override
+  String get recentBookings => 'Recent Bookings';
+
+  @override
+  String get unknownCustomer => 'Unknown Customer';
+
+  @override
+  String get fieldVisibleToCustomers => 'Field is visible to customers';
+
+  @override
+  String get fieldHiddenFromCustomers => 'Field is hidden from customers';
+
+  @override
+  String get enterCustomerDetails =>
+      'Enter customer details for walk-in booking';
+
+  @override
+  String get customerNameTooShort => 'Name must be at least 2 characters';
+
+  @override
+  String get phoneHint => '01XXXXXXXXX';
+
+  @override
+  String get invalidEgyPhone => 'Invalid Egyptian phone number';
+
+  @override
+  String get emailLabel => 'Email (Optional)';
+
+  @override
+  String get emailHint => 'customer@example.com';
+
+  @override
+  String get notesLabel => 'Notes (Optional)';
+
+  @override
+  String get notesHint => 'Any special requests or notes...';
+
+  @override
+  String get selectDay => 'Select Day';
+
+  @override
+  String get selectDaySubtitle =>
+      'Choose the day you want to reserve every week';
+
+  @override
+  String availableSlotsForDay(Object day) {
+    return 'Available time slots for $day';
+  }
+
+  @override
+  String get selectDayFirst => 'Select a day first';
+
+  @override
+  String fieldClosedOnDay(Object day) {
+    return 'Field is closed on $day';
+  }
+
+  @override
+  String get selectDifferentDay => 'Please select a different day';
+
+  @override
+  String get noAvailableSlots => 'No available slots';
+
+  @override
+  String reservedBy(Object name) {
+    return 'Reserved by $name';
+  }
+
+  @override
+  String get reservedByAnotherUser => 'another user';
+
+  @override
+  String get recurringDurationTitle => 'Duration';
+
+  @override
+  String get recurringDurationSubtitle =>
+      'How long do you want to play each week?';
+
+  @override
+  String recurringHoursLabel(num hours, Object hoursFormatted) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hoursFormatted hours',
+      many: '$hoursFormatted hours',
+      few: '$hoursFormatted hours',
+      two: '$hoursFormatted hours',
+      one: '$hoursFormatted hour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recurringHoursShort(Object hoursFormatted) {
+    return '${hoursFormatted}h';
+  }
+
+  @override
+  String get perWeek => 'per week';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get weeklyReservationSummaryTitle => 'Your Weekly Reservation';
+
+  @override
+  String get dayLabel => 'Day';
+
+  @override
+  String get weeklyCostLabel => 'Weekly Cost';
+
+  @override
+  String get weeklyPriceLabel => 'Weekly Price';
+
+  @override
+  String get weeklyLabel => 'Weekly';
+
+  @override
+  String get everyLabel => 'Every';
+
+  @override
+  String get reserveWeeklySlot => 'Reserve Weekly Slot';
+
+  @override
+  String get recurringRequestSubmittedTitle => 'Request Submitted!';
+
+  @override
+  String get recurringRequestSubmittedBody =>
+      'Your recurring booking request has been sent to the field owner. You\'ll be notified once it\'s approved.';
+
+  @override
+  String get viewMySubscriptions => 'View My Subscriptions';
+
+  @override
+  String get submitRequest => 'Submit Request';
+
+  @override
+  String get submittingRequest => 'Submitting Request...';
+
+  @override
+  String get submittingRequestDescription =>
+      'Please wait while we process your request';
+
+  @override
+  String everyDay(Object day) {
+    return 'Every $day';
+  }
+
+  @override
+  String get completedSessionsLabel => 'Completed Sessions';
+
+  @override
+  String get nextBooking => 'Next Booking';
+
+  @override
+  String get paidLabel => 'Paid';
+
+  @override
+  String get cancelingSubscription => 'Canceling...';
+
+  @override
+  String get cancelSubscriptionQuestion =>
+      'Are you sure you want to cancel this recurring booking?';
+
+  @override
+  String get pendingApprovalMessage =>
+      'Waiting for owner approval. You\'ll be notified once approved.';
+
+  @override
+  String get requestRejected => 'Request Rejected';
+
+  @override
+  String get activeSubscription => 'Active Subscription';
+
+  @override
+  String remainingBookings(Object count) {
+    return '$count left';
+  }
+
+  @override
+  String get unknownUser => 'Unknown User';
+
+  @override
+  String get sinceLabel => 'Since';
+
+  @override
+  String get weeklyLabelShort => 'Weekly';
+
+  @override
+  String get generatingBooking => 'Generating...';
+
+  @override
+  String completedCount(Object count) {
+    return '$count completed';
+  }
+
+  @override
+  String get mySubscriptions => 'My Subscriptions';
+
+  @override
+  String get newSubscription => 'New Subscription';
+
+  @override
+  String get subscriptionCanceled => 'Subscription canceled successfully';
+
+  @override
+  String get subscriptionCancelFailed => 'Failed to cancel subscription';
+
+  @override
+  String get activeSubscriptions => 'Active Subscriptions';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get weeklyReservations => 'Weekly Reservations';
+
+  @override
+  String recurringSummaryCounts(Object active, Object pending) {
+    return '$active active • $pending pending';
+  }
+
+  @override
+  String get noSubscriptionsYet => 'No Subscriptions Yet';
+
+  @override
+  String get noSubscriptionsSubtitle =>
+      'Reserve your favorite weekly slot and never miss a game!';
+
+  @override
+  String get guaranteedWeeklySlot => 'Guaranteed weekly slot';
+
+  @override
+  String get autoRenewsWeekly => 'Auto-renews every week';
+
+  @override
+  String get paymentReminders => 'Payment reminders';
+
+  @override
+  String get statusActive => 'Active';
+
+  @override
+  String get statusPendingApproval => 'Pending Approval';
+
+  @override
+  String get statusCanceled => 'Canceled';
+
+  @override
+  String get statusRejected => 'Rejected';
+
+  @override
+  String get newRecurringRequest => 'New Recurring Request';
+
+  @override
+  String get processingRequest => 'Processing...';
+
+  @override
+  String get pendingRequests => 'Pending Requests';
+
+  @override
+  String get totalLabel => 'Total';
+
+  @override
+  String get completedLabel => 'Completed';
+
+  @override
+  String get upcomingLabel => 'Upcoming';
+
+  @override
+  String progressCompleted(Object percent) {
+    return '$percent% completed';
+  }
+
+  @override
+  String get scheduleTitle => 'Schedule';
+
+  @override
+  String get recurringRequestsEmptySubtitle =>
+      'When users request weekly recurring bookings, they\'ll appear here for your approval.';
+
+  @override
+  String get keepSubscription => 'Keep Subscription';
+
+  @override
+  String get cancelSubscription => 'Cancel Subscription';
+
+  @override
+  String get recurringRequestsTitle => 'Recurring Subscriptions';
+
+  @override
+  String get recurringRequestApproved => 'Request approved successfully';
+
+  @override
+  String get recurringRequestApproveFailed => 'Failed to approve request';
+
+  @override
+  String get recurringRequestRejected => 'Request rejected';
+
+  @override
+  String get recurringRequestRejectFailed => 'Failed to reject request';
+
+  @override
+  String get rejectRequestTitle => 'Reject Request';
+
+  @override
+  String get rejectRequestPrompt =>
+      'Please provide a reason for rejecting this recurring booking request:';
+
+  @override
+  String get rejectRequestHint => 'e.g., Slot not available, time conflict...';
+
+  @override
+  String get loadingRequests => 'Loading requests...';
+
+  @override
+  String get privacyPolicyTitle => 'Privacy Policy';
+
+  @override
+  String get privacyPolicySubtitle => 'How we protect your data';
+
+  @override
+  String get privacyHeaderTitle => 'Your Privacy Matters';
+
+  @override
+  String get privacyHeaderDescription =>
+      'Sport Kick is committed to protecting your privacy and personal information. This policy explains how we collect, use, and safeguard your data.';
+
+  @override
+  String get privacyInfoCollectTitle => 'Information We Collect';
+
+  @override
+  String get privacyCollectAccountInfo =>
+      'Account information (name, email, phone number)';
+
+  @override
+  String get privacyCollectProfileInfo => 'Profile information you provide';
+
+  @override
+  String get privacyCollectBookingHistory => 'Booking history and preferences';
+
+  @override
+  String get privacyCollectLocation => 'Location data when using the app';
+
+  @override
+  String get privacyCollectDevice => 'Device information and usage data';
+
+  @override
+  String get privacyCollectPayment =>
+      'Payment information (processed securely by our payment provider)';
+
+  @override
+  String get privacyUseInfoTitle => 'How We Use Your Information';
+
+  @override
+  String get privacyUseProvideService =>
+      'To provide and maintain our booking services';
+
+  @override
+  String get privacyUseProcessPayments =>
+      'To process your bookings and payments';
+
+  @override
+  String get privacyUseCommunicate =>
+      'To communicate with you about bookings and updates';
+
+  @override
+  String get privacyUseImprove => 'To improve our services and user experience';
+
+  @override
+  String get privacyUseSecurity => 'To prevent fraud and ensure security';
+
+  @override
+  String get privacyUseLegal => 'To comply with legal obligations';
+
+  @override
+  String get privacyStorageTitle => 'Data Storage and Security';
+
+  @override
+  String get privacyStorageSecure =>
+      'Your data is stored securely using Supabase (PostgreSQL database)';
+
+  @override
+  String get privacyStorageEncryption =>
+      'We use industry-standard encryption for data transmission';
+
+  @override
+  String get privacyStoragePayment =>
+      'Payment information is handled by certified payment processors';
+
+  @override
+  String get privacyStorageUpdates =>
+      'We implement regular security updates and monitoring';
+
+  @override
+  String get privacyStorageAccess =>
+      'Access to personal data is restricted to authorized personnel only';
+
+  @override
+  String get privacySharingTitle => 'Data Sharing';
+
+  @override
+  String get privacySharingNoSell =>
+      'We do NOT sell your personal information to third parties';
+
+  @override
+  String get privacySharingOwners =>
+      'Field owners can see your booking details (name, phone) for confirmed bookings';
+
+  @override
+  String get privacySharingProviders =>
+      'We may share data with service providers (payment processors, analytics)';
+
+  @override
+  String get privacySharingLegal =>
+      'We will share data if required by law or to protect rights and safety';
+
+  @override
+  String get privacyRightsTitle => 'Your Rights';
+
+  @override
+  String get privacyRightsAccess =>
+      'Access your personal data at any time through your profile';
+
+  @override
+  String get privacyRightsUpdate => 'Update or correct your information';
+
+  @override
+  String get privacyRightsDelete => 'Delete your account and associated data';
+
+  @override
+  String get privacyRightsOptOut => 'Opt-out of marketing communications';
+
+  @override
+  String get privacyRightsExport => 'Export your booking history';
+
+  @override
+  String get privacyRightsWithdraw =>
+      'Withdraw consent for data processing (may limit service availability)';
+
+  @override
+  String get privacyCookiesTitle => 'Cookies and Tracking';
+
+  @override
+  String get privacyCookiesUse =>
+      'We use cookies and similar technologies to improve user experience';
+
+  @override
+  String get privacyCookiesAnalytics =>
+      'Analytics cookies help us understand app usage';
+
+  @override
+  String get privacyCookiesDisable =>
+      'You can disable cookies in your device settings';
+
+  @override
+  String get privacyCookiesImpact =>
+      'Some features may not work without cookies';
+
+  @override
+  String get privacyChildrenTitle => 'Children\'s Privacy';
+
+  @override
+  String get privacyChildrenNotFor =>
+      'Our service is not intended for children under 13';
+
+  @override
+  String get privacyChildrenNoCollect =>
+      'We do not knowingly collect data from children';
+
+  @override
+  String get privacyChildrenDelete =>
+      'If we learn we have collected child data, we will delete it';
+
+  @override
+  String get privacyChildrenParents =>
+      'Parents can contact us to request data deletion';
+
+  @override
+  String get privacyChangesTitle => 'Changes to This Policy';
+
+  @override
+  String get privacyChangesMayUpdate =>
+      'We may update this privacy policy from time to time';
+
+  @override
+  String get privacyChangesNotify =>
+      'We will notify you of significant changes via email or app notification';
+
+  @override
+  String get privacyChangesAccept =>
+      'Continued use of the app after changes constitutes acceptance';
+
+  @override
+  String privacyChangesLastUpdated(Object date) {
+    return 'Last updated: $date';
+  }
+
+  @override
+  String get termsTitle => 'Terms of Service';
+
+  @override
+  String get termsSubtitle => 'Rules and guidelines';
+
+  @override
+  String get termsDescription =>
+      'Please read these terms carefully before using Sport Kick. These terms govern your use of our platform and services.';
+
+  @override
+  String get termsAcceptanceTitle => 'Acceptance of Terms';
+
+  @override
+  String get termsAcceptanceAgree =>
+      'By using Sport Kick, you agree to these Terms of Service';
+
+  @override
+  String get termsAcceptanceDisagree =>
+      'If you do not agree, please do not use our services';
+
+  @override
+  String get termsAcceptanceModify =>
+      'We reserve the right to modify these terms at any time';
+
+  @override
+  String get termsAcceptanceContinuedUse =>
+      'Continued use after changes constitutes acceptance';
+
+  @override
+  String get termsAccountsTitle => 'User Accounts';
+
+  @override
+  String get termsAccountsAccurateInfo =>
+      'You must provide accurate and complete information when registering';
+
+  @override
+  String get termsAccountsSecurity =>
+      'You are responsible for maintaining the security of your account';
+
+  @override
+  String get termsAccountsAge =>
+      'You must be at least 13 years old to use our services';
+
+  @override
+  String get termsAccountsSingle => 'One person or business per account';
+
+  @override
+  String get termsAccountsNoShare =>
+      'You must not share your account credentials';
+
+  @override
+  String get termsAccountsNotify =>
+      'Notify us immediately of any unauthorized account access';
+
+  @override
+  String get termsBookingTitle => 'Booking Policies';
+
+  @override
+  String get termsBookingAvailability =>
+      'All bookings are subject to field availability';
+
+  @override
+  String get termsBookingApproval =>
+      'Bookings may require owner approval before confirmation';
+
+  @override
+  String get termsBookingArrival => 'You must arrive on time for your booking';
+
+  @override
+  String get termsBookingLate =>
+      'Late arrivals may result in reduced playing time';
+
+  @override
+  String get termsBookingNoShow =>
+      'No-shows may result in account restrictions';
+
+  @override
+  String get termsBookingPrices =>
+      'Prices are set by field owners and may vary';
+
+  @override
+  String get termsCancellationTitle => 'Cancellation and Refunds';
+
+  @override
+  String get termsCancellationPolicy =>
+      'Users can cancel bookings according to the cancellation policy';
+
+  @override
+  String get termsCancellationFullRefund =>
+      'Cancellations made 24+ hours in advance may be eligible for full refund';
+
+  @override
+  String get termsCancellationLateFees =>
+      'Cancellations made less than 24 hours may incur fees';
+
+  @override
+  String get termsCancellationNoShow => 'No-shows are not eligible for refunds';
+
+  @override
+  String get termsCancellationRefundTime =>
+      'Refunds are processed according to payment method (3-7 business days)';
+
+  @override
+  String get termsCancellationOwnerCancel =>
+      'Field owners reserve the right to cancel bookings due to maintenance or weather';
+
+  @override
+  String get termsConductTitle => 'User Conduct';
+
+  @override
+  String get termsConductRules => 'You must follow field rules and guidelines';
+
+  @override
+  String get termsConductNoAbuse =>
+      'No harassment, discrimination, or abuse towards staff or players';
+
+  @override
+  String get termsConductDamage =>
+      'You are responsible for any damage caused during your booking';
+
+  @override
+  String get termsConductProhibited =>
+      'Prohibited activities include fraudulent bookings or misuse of the platform';
+
+  @override
+  String get termsLiabilityTitle => 'Liability and Disclaimers';
+
+  @override
+  String get termsLiabilityPlatform =>
+      'Sport Kick is a platform that connects users with field owners';
+
+  @override
+  String get termsLiabilityCondition =>
+      'We are not responsible for the condition of fields or equipment';
+
+  @override
+  String get termsLiabilityInjuries =>
+      'We are not liable for injuries, accidents, or losses during use of the services';
+
+  @override
+  String get termsLiabilityOwner =>
+      'Field owners are responsible for their facilities and adherence to safety standards';
+
+  @override
+  String get termsPaymentsTitle => 'Payment and Fees';
+
+  @override
+  String get termsPaymentsProcessed =>
+      'Payments are processed securely via our payment provider';
+
+  @override
+  String get termsPaymentsFees => 'Service fees may apply to bookings';
+
+  @override
+  String get termsPaymentsDisplay => 'Prices are displayed before checkout';
+
+  @override
+  String get termsPaymentsRefunds => 'Refunds follow the cancellation policy';
+
+  @override
+  String get termsPaymentsCurrency =>
+      'Currency and taxes are displayed during checkout';
+
+  @override
+  String get termsIPTitle => 'Intellectual Property';
+
+  @override
+  String get termsIPProtected =>
+      'All content on Sport Kick is protected by copyright and trademarks';
+
+  @override
+  String get termsIPBrand => 'You may not use our branding without permission';
+
+  @override
+  String get termsIPUserContent =>
+      'User-generated content remains your property, but you grant us a license to display it';
+
+  @override
+  String get termsTerminationTitle => 'Termination';
+
+  @override
+  String get termsTerminationSuspend =>
+      'We may suspend or terminate accounts for violations of these terms';
+
+  @override
+  String get termsTerminationDelete =>
+      'Users may delete their accounts at any time';
+
+  @override
+  String get termsTerminationDisputes =>
+      'Outstanding payments or disputes may delay account deletion';
+
+  @override
+  String get termsLawTitle => 'Governing Law';
+
+  @override
+  String get termsLawGoverning =>
+      'These terms are governed by applicable local laws';
+
+  @override
+  String get termsLawDisputes =>
+      'Any disputes will be resolved in the appropriate jurisdiction';
+
+  @override
+  String get supportContactTitle => 'Contact Us';
+
+  @override
+  String get supportContactDescription =>
+      'If you have questions about our policies or need assistance, please contact us:';
 }

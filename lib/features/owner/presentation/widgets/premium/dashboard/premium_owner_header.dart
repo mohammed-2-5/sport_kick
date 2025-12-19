@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium owner dashboard header with gradient background.
 ///
@@ -64,8 +65,7 @@ class PremiumOwnerHeader extends StatelessWidget {
           // Greeting
           Text(
             greeting,
-            style: TextStyle(
-              fontSize: 15,
+            style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w500,
               color: Colors.white.withValues(alpha: 0.7),
             ),
@@ -75,8 +75,7 @@ class PremiumOwnerHeader extends StatelessWidget {
           // Owner name
           Text(
             ownerName,
-            style: const TextStyle(
-              fontSize: 28,
+            style: AppTextStyles.headlineMedium.copyWith(
               fontWeight: FontWeight.w700,
               color: Colors.white,
             ),
@@ -94,8 +93,7 @@ class PremiumOwnerHeader extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 date,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: Colors.white.withValues(alpha: 0.6),
                 ),
               ),
@@ -249,8 +247,7 @@ class _NotificationButtonState extends State<_NotificationButton>
                   ),
                   child: Text(
                     widget.count > 9 ? '9+' : widget.count.toString(),
-                    style: const TextStyle(
-                      fontSize: 10,
+                    style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),

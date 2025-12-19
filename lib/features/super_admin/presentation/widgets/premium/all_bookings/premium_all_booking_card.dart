@@ -333,9 +333,9 @@ class _ManualBadge extends StatelessWidget {
         color: AppColors.goldAccent.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: const Text(
+      child: Text(
         'Manual',
-        style: TextStyle(
+        style: AppTextStyles.badge.copyWith(
           fontSize: 10,
           fontWeight: FontWeight.w600,
           color: AppColors.goldAccent,

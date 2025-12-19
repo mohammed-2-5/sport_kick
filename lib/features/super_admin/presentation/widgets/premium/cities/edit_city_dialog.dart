@@ -274,7 +274,9 @@ class _EditCityDialogState extends State<EditCityDialog> {
                 Expanded(
                   child: Text(
                     'This city has ${widget.city.fieldsCount} field${widget.city.fieldsCount != 1 ? 's' : ''} registered.',
-                    style: const TextStyle(fontSize: 12, color: AppColors.info),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.info,
+                    ),
                   ),
                 ),
               ],
@@ -302,9 +304,9 @@ class _EditCityDialogState extends State<EditCityDialog> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Cancel',
-                style: TextStyle(
+                style: AppTextStyles.labelMedium.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -333,9 +335,11 @@ class _EditCityDialogState extends State<EditCityDialog> {
                         color: AppColors.white,
                       ),
                     )
-                  : const Text(
+                  : Text(
                       'Save Changes',
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                      style: AppTextStyles.labelLarge.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
             ),
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
@@ -7,6 +9,7 @@ import 'package:spo_kick/features/owner/presentation/widgets/booking/booking_act
 import 'package:spo_kick/features/owner/presentation/widgets/booking/booking_card_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/booking_info_chip.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/payment_status_badge.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Card displaying booking details for field owners.
 ///
@@ -123,19 +126,17 @@ class _CustomerInfoRow extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Customer',
-                style: TextStyle(
-                  fontSize: 12,
+              Text(
+                context.l10n.customerName,
+                style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
-                booking.userName ?? 'Unknown',
-                style: const TextStyle(
-                  fontSize: 15,
+                booking.userName ?? context.l10n.unknownCustomer,
+                style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -159,7 +160,7 @@ class _DateTimeRow extends StatelessWidget {
         Expanded(
           child: BookingInfoChip(
             icon: Icons.calendar_today_rounded,
-            label: 'Date',
+            label: context.l10n.dateLabel,
             value: booking.formattedDate,
             color: const Color(0xFF42A5F5),
           ),
@@ -168,7 +169,7 @@ class _DateTimeRow extends StatelessWidget {
         Expanded(
           child: BookingInfoChip(
             icon: Icons.access_time_rounded,
-            label: 'Time',
+            label: context.l10n.timeLabel,
             value: booking.formattedTimeSlot,
             color: const Color(0xFF66BB6A),
           ),
@@ -190,8 +191,15 @@ class _DurationPriceRow extends StatelessWidget {
         Expanded(
           child: BookingInfoChip(
             icon: Icons.timer_rounded,
-            label: 'Duration',
-            value: '${booking.durationInHours}h',
+            label: context.l10n.durationLabel,
+            value: context.l10n.hoursLabel(
+              booking.durationInHours,
+              LocaleFormatters.formatNumber(
+                context,
+                booking.durationInHours,
+                decimalDigits: 0,
+              ),
+            ),
             color: const Color(0xFFAB47BC),
           ),
         ),
@@ -199,8 +207,13 @@ class _DurationPriceRow extends StatelessWidget {
         Expanded(
           child: BookingInfoChip(
             icon: Icons.attach_money_rounded,
-            label: 'Price',
-            value: '${booking.totalPrice.toStringAsFixed(0)} EGP',
+            label: context.l10n.price,
+            value: LocaleFormatters.formatPrice(
+              context,
+              amount: booking.totalPrice,
+              currency: context.l10n.currencyEgp,
+              decimalDigits: 0,
+            ),
             color: const Color(0xFFFFA726),
           ),
         ),
@@ -231,10 +244,9 @@ class _PaymentStatusRow extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        const Text(
-          'Payment:',
-          style: TextStyle(
-            fontSize: 14,
+        Text(
+          '${context.l10n.payment}:',
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),
@@ -258,7 +270,7 @@ class _ViewPaymentProofButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onPressed,
         icon: const Icon(Icons.receipt_long_outlined, size: 18),
-        label: const Text('View Payment Proof'),
+        label: Text(context.l10n.viewPaymentProof),
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.info,
           side: BorderSide(color: AppColors.info.withValues(alpha: 0.5)),
@@ -286,7 +298,7 @@ class _PaymentVerificationButtons extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: onReject,
             icon: const Icon(Icons.close_rounded, size: 18),
-            label: const Text('Reject'),
+            label: Text(context.l10n.reject),
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.error,
               side: BorderSide(color: AppColors.error.withValues(alpha: 0.5)),
@@ -302,7 +314,7 @@ class _PaymentVerificationButtons extends StatelessWidget {
           child: ElevatedButton.icon(
             onPressed: onVerify,
             icon: const Icon(Icons.check_rounded, size: 18),
-            label: const Text('Verify'),
+            label: Text(context.l10n.verify),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.success,
               foregroundColor: Colors.white,

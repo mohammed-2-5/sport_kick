@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
@@ -54,7 +55,7 @@ class RevenueTrendsChart extends StatelessWidget {
                     getTitlesWidget: (value, meta) {
                       return Text(
                         '${value.toInt()} EGP',
-                        style: const TextStyle(fontSize: 10),
+                        style: AppTextStyles.labelSmall.copyWith(fontSize: 10),
                       );
                     },
                   ),
@@ -84,7 +85,7 @@ class RevenueTrendsChart extends StatelessWidget {
                       ];
                       return Text(
                         months[month],
-                        style: const TextStyle(fontSize: 10),
+                        style: AppTextStyles.labelSmall.copyWith(fontSize: 10),
                       );
                     },
                   ),

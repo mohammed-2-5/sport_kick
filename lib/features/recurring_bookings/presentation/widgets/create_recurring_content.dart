@@ -6,6 +6,8 @@ import 'package:spo_kick/features/recurring_bookings/presentation/cubit/create_r
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/day_selector.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/recurring_duration_selector.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/recurring_time_slot_grid.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Content widget for create recurring booking page.
 class CreateRecurringContent extends StatelessWidget {
@@ -33,7 +35,7 @@ class CreateRecurringContent extends StatelessWidget {
         context,
         editing,
       ),
-      CreateRecurringSubmitting() => _buildSubmittingContent(),
+      CreateRecurringSubmitting() => _buildSubmittingContent(context),
       CreateRecurringSuccess() => const SizedBox.shrink(), // Handled by dialog
       CreateRecurringError() => const SizedBox.shrink(), // Handled by snackbar
     };
@@ -52,7 +54,7 @@ class CreateRecurringContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Field info card
-                _buildFieldCard(editingState),
+                _buildFieldCard(context, editingState),
                 const SizedBox(height: 24),
 
                 // Duration selector
@@ -117,7 +119,7 @@ class CreateRecurringContent extends StatelessWidget {
                 // Summary card
                 if (editingState.isValid) ...[
                   const SizedBox(height: 24),
-                  _buildSummaryCard(editingState),
+                  _buildSummaryCard(context, editingState),
                 ],
 
                 const SizedBox(height: 100),
@@ -127,12 +129,15 @@ class CreateRecurringContent extends StatelessWidget {
         ),
 
         // Bottom submit button
-        _buildBottomButton(editingState),
+        _buildBottomButton(context, editingState),
       ],
     );
   }
 
-  Widget _buildFieldCard(CreateRecurringEditing editingState) {
+  Widget _buildFieldCard(
+    BuildContext context,
+    CreateRecurringEditing editingState,
+  ) {
     final field = editingState.field;
 
     return Container(
@@ -201,7 +206,7 @@ class CreateRecurringContent extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      '${field.pricePerHour.toStringAsFixed(0)} EGP/hour',
+                      '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: 'EGP', decimalDigits: 0)} / ${context.l10n.perHour}',
                       style: const TextStyle(
                         fontSize: 13,
                         color: AppColors.textSecondary,
@@ -219,18 +224,18 @@ class CreateRecurringContent extends StatelessWidget {
               color: AppColors.accentCyan.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
+                const Icon(
                   Icons.event_repeat_rounded,
                   size: 14,
                   color: AppColors.accentCyan,
                 ),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text(
-                  'Weekly',
-                  style: TextStyle(
+                  context.l10n.weekly,
+                  style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
                     color: AppColors.accentCyan,
@@ -244,7 +249,10 @@ class CreateRecurringContent extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryCard(CreateRecurringEditing editingState) {
+  Widget _buildSummaryCard(
+    BuildContext context,
+    CreateRecurringEditing editingState,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -261,9 +269,9 @@ class CreateRecurringContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Your Weekly Reservation',
-            style: TextStyle(
+          Text(
+            context.l10n.weeklyReservationSummaryTitle,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -275,16 +283,22 @@ class CreateRecurringContent extends StatelessWidget {
               Expanded(
                 child: _buildSummaryItem(
                   icon: Icons.calendar_today_rounded,
-                  label: 'Day',
-                  value: editingState.selectedDayName,
+                  label: context.l10n.dayLabel,
+                  value: _localizedDayName(
+                    editingState.selectedDayOfWeek,
+                    context,
+                  ),
                 ),
               ),
               Expanded(
                 child: _buildSummaryItem(
                   icon: Icons.access_time_rounded,
-                  label: 'Time',
-                  value:
-                      '${editingState.selectedTime} - ${editingState.endTime}',
+                  label: context.l10n.timeLabel,
+                  value: LocaleFormatters.formatTimeRange(
+                    context,
+                    startTime: editingState.selectedTime ?? '',
+                    endTime: editingState.endTime ?? '',
+                  ),
                 ),
               ),
             ],
@@ -295,16 +309,26 @@ class CreateRecurringContent extends StatelessWidget {
               Expanded(
                 child: _buildSummaryItem(
                   icon: Icons.timer_outlined,
-                  label: 'Duration',
-                  value: '${editingState.durationHours} hour(s)',
+                  label: context.l10n.durationLabel,
+                  value: context.l10n.recurringHoursLabel(
+                    editingState.durationHours,
+                    LocaleFormatters.formatNumber(
+                      context,
+                      editingState.durationHours,
+                    ),
+                  ),
                 ),
               ),
               Expanded(
                 child: _buildSummaryItem(
                   icon: Icons.payments_outlined,
-                  label: 'Weekly Cost',
-                  value:
-                      '${editingState.pricePerBooking.toStringAsFixed(0)} EGP',
+                  label: context.l10n.weeklyCostLabel,
+                  value: LocaleFormatters.formatPrice(
+                    context,
+                    amount: editingState.pricePerBooking,
+                    currency: 'EGP',
+                    decimalDigits: 0,
+                  ),
                 ),
               ),
             ],
@@ -355,7 +379,10 @@ class CreateRecurringContent extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomButton(CreateRecurringEditing editingState) {
+  Widget _buildBottomButton(
+    BuildContext context,
+    CreateRecurringEditing editingState,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -386,9 +413,9 @@ class CreateRecurringContent extends StatelessWidget {
               ),
               elevation: 0,
             ),
-            child: const Text(
-              'Submit Request',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            child: Text(
+              context.l10n.submitRequest,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -396,7 +423,7 @@ class CreateRecurringContent extends StatelessWidget {
     );
   }
 
-  Widget _buildSubmittingContent() {
+  Widget _buildSubmittingContent(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -416,21 +443,29 @@ class CreateRecurringContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Submitting Request...',
-            style: TextStyle(
+          Text(
+            context.l10n.submittingRequest,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.navyDeep,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Please wait while we process your request',
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          Text(
+            context.l10n.submittingRequestDescription,
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColors.textSecondary,
+            ),
           ),
         ],
       ),
     );
+  }
+
+  String _localizedDayName(int? dayOfWeek, BuildContext context) {
+    if (dayOfWeek == null) return '';
+    return LocaleFormatters.weekdayName(context, dayOfWeek);
   }
 }

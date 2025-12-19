@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium tab bar for owner bookings filtering.
 ///
@@ -125,8 +126,7 @@ class _TabItem extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                   color: isSelected ? Colors.white : AppColors.textSecondary,
                 ),
@@ -148,8 +148,7 @@ class _TabItem extends StatelessWidget {
                   ),
                   child: Text(
                     count.toString(),
-                    style: TextStyle(
-                      fontSize: 11,
+                    style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w700,
                       color: isSelected
                           ? Colors.white

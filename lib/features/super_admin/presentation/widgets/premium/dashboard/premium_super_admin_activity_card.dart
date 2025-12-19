@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium activity summary card for super admin dashboard.
 ///
@@ -72,8 +73,7 @@ class _SectionHeader extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 18,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
@@ -245,8 +245,7 @@ class _ActivityItemState extends State<_ActivityItem>
                   // Value
                   Text(
                     widget.value,
-                    style: TextStyle(
-                      fontSize: 18,
+                    style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w700,
                       color: widget.color,
                     ),
@@ -257,8 +256,7 @@ class _ActivityItemState extends State<_ActivityItem>
                   Text(
                     widget.label,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 10,
+                    style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w500,
                       color: AppColors.textSecondary.withValues(alpha: 0.7),
                     ),

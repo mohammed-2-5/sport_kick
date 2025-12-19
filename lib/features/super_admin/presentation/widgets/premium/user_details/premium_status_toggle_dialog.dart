@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 
 /// Premium status toggle confirmation dialog.
@@ -116,7 +117,7 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                 // Title
                 Text(
                   isActivating ? 'Activate User?' : 'Deactivate User?',
-                  style: const TextStyle(
+                  style: AppTextStyles.titleLarge.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -150,8 +151,7 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                         child: Center(
                           child: Text(
                             widget.user.initials,
-                            style: const TextStyle(
-                              fontSize: 14,
+                            style: AppTextStyles.labelLarge.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
@@ -164,16 +164,14 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                         children: [
                           Text(
                             widget.user.displayName,
-                            style: const TextStyle(
-                              fontSize: 14,
+                            style: AppTextStyles.labelLarge.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.textPrimary,
                             ),
                           ),
                           Text(
                             widget.user.email,
-                            style: TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondary.withValues(
                                 alpha: 0.8,
                               ),
@@ -193,8 +191,7 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                       ? 'This user will be able to login and make bookings again.'
                       : 'This user will no longer be able to login or make new bookings.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                     height: 1.4,
                   ),
@@ -218,10 +215,10 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: AppColors.border),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Cancel',
-                              style: TextStyle(
+                              style: AppTextStyles.titleMedium.copyWith(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textSecondary,
@@ -247,7 +244,7 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                           child: Center(
                             child: Text(
                               isActivating ? 'Activate' : 'Deactivate',
-                              style: const TextStyle(
+                              style: AppTextStyles.titleMedium.copyWith(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
 import 'package:spo_kick/features/city/presentation/widgets/city_selector_list.dart';
@@ -31,14 +31,17 @@ class _CitySelectorDialogState extends State<CitySelectorDialog> {
     }
 
     return AlertDialog(
-      title: const Text(CityConstants.changeCityText),
+      title: Text(context.l10n.cityChangeCity),
       content: SizedBox(
         width: double.maxFinite,
         child: BlocConsumer<CityCubit, CityState>(
           listener: (context, state) {
             if (state is CitySaved) {
               Navigator.pop(context);
-              CitySelectionFeedback.showSuccess(context, state.message);
+              CitySelectionFeedback.showSuccess(
+                context,
+                state.message ?? context.l10n.citySelectedSuccess,
+              );
             }
             if (state is CityError) {
               CitySelectionFeedback.showError(context, state.message);
@@ -91,7 +94,7 @@ class _CitySelectorDialogState extends State<CitySelectorDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         BlocBuilder<CityCubit, CityState>(
           builder: (context, state) {
@@ -101,7 +104,7 @@ class _CitySelectorDialogState extends State<CitySelectorDialog> {
               onPressed: selectedCityId != null
                   ? () => cubit.confirmSelection()
                   : null,
-              child: const Text('Confirm'),
+              child: Text(context.l10n.confirm),
             );
           },
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Header for the booking card displaying status and field name.
 class BookingCardHeader extends StatelessWidget {
@@ -35,9 +37,8 @@ class BookingCardHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  booking.status.displayName.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 14,
+                  _statusLabel(context, booking.status).toUpperCase(),
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
                     letterSpacing: 0.8,
@@ -45,9 +46,8 @@ class BookingCardHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  booking.fieldName ?? 'Unknown Field',
-                  style: TextStyle(
-                    fontSize: 13,
+                  booking.fieldName ?? context.l10n.unknownField,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: Colors.white.withValues(alpha: 0.9),
                     fontWeight: FontWeight.w600,
                   ),
@@ -62,9 +62,10 @@ class BookingCardHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              '#${booking.id.substring(0, 6).toUpperCase()}',
-              style: TextStyle(
-                fontSize: 11,
+              context.l10n.bookingShortId(
+                booking.id.substring(0, 6).toUpperCase(),
+              ),
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w700,
                 color: booking.status.color,
                 letterSpacing: 0.5,
@@ -74,5 +75,18 @@ class BookingCardHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _statusLabel(BuildContext context, BookingStatus status) {
+    switch (status) {
+      case BookingStatus.pending:
+        return context.l10n.statusPending;
+      case BookingStatus.confirmed:
+        return context.l10n.statusConfirmed;
+      case BookingStatus.canceled:
+        return context.l10n.statusCancelled;
+      case BookingStatus.completed:
+        return context.l10n.statusCompleted;
+    }
   }
 }

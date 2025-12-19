@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
@@ -43,7 +44,7 @@ class OwnerBookingStatusChart extends StatelessWidget {
       return Center(
         child: Text(
           context.l10n.noDataAvailablePeriod,
-          style: const TextStyle(color: Colors.grey),
+          style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
         ),
       );
     }
@@ -124,7 +125,7 @@ class OwnerBookingStatusChart extends StatelessWidget {
       color: color,
       title: title,
       radius: radius,
-      titleStyle: const TextStyle(
+      titleStyle: AppTextStyles.labelSmall.copyWith(
         fontSize: fontSize,
         fontWeight: FontWeight.bold,
         color: Colors.white,
@@ -192,14 +193,14 @@ class _LegendItem extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(
+            style: AppTextStyles.bodySmall.copyWith(
               fontSize: AnalyticsConstants.chartAxisFontSize,
             ),
           ),
         ),
         Text(
           value,
-          style: const TextStyle(
+          style: AppTextStyles.bodyMedium.copyWith(
             fontSize: AnalyticsConstants.chartAxisFontSize,
             fontWeight: FontWeight.bold,
           ),
@@ -252,14 +253,14 @@ class _ChartCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontSize: AnalyticsConstants.chartTitleFontSize,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         subtitle,
-                        style: TextStyle(
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontSize: AnalyticsConstants.chartAxisFontSize,
                           color: Colors.grey[600],
                         ),

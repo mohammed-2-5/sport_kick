@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/l10n/app_localizations.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
@@ -500,8 +501,7 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
                 Expanded(
                   child: Text(
                     l10n.bookingConfirmationMessage,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -655,8 +655,7 @@ class _DateCard extends StatelessWidget {
           children: [
             Text(
               DateFormat.E(localeName).format(date),
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w500,
                 color: isSelected ? Colors.white : AppColors.textSecondary,
               ),
@@ -664,8 +663,7 @@ class _DateCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               date.day.toString(),
-              style: TextStyle(
-                fontSize: 22,
+              style: AppTextStyles.headlineSmall.copyWith(
                 fontWeight: FontWeight.w700,
                 color: isSelected ? Colors.white : AppColors.textPrimary,
               ),
@@ -673,8 +671,7 @@ class _DateCard extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               DateFormat.MMM(localeName).format(date),
-              style: TextStyle(
-                fontSize: 11,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: isSelected
                     ? Colors.white.withValues(alpha: 0.9)
                     : AppColors.textSecondary,

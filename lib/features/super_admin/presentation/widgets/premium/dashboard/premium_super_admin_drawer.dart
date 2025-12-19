@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium super admin navigation drawer with gold accent.
 ///
@@ -132,8 +133,7 @@ class PremiumSuperAdminDrawer extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text(
               'Sport Kick Admin v1.0.0',
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.5),
               ),
             ),
@@ -196,8 +196,7 @@ class _DrawerHeader extends StatelessWidget {
                   child: Center(
                     child: Text(
                       name.isNotEmpty ? name[0].toUpperCase() : 'A',
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.goldAccent,
                       ),
@@ -241,8 +240,7 @@ class _DrawerHeader extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 17,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -252,8 +250,7 @@ class _DrawerHeader extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   email,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: Colors.white.withValues(alpha: 0.7),
                   ),
                   maxLines: 1,
@@ -277,19 +274,18 @@ class _DrawerHeader extends StatelessWidget {
                       color: AppColors.goldAccent.withValues(alpha: 0.5),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.verified_rounded,
                         size: 10,
                         color: AppColors.goldAccent,
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         'SUPER ADMIN',
-                        style: TextStyle(
-                          fontSize: 9,
+                        style: AppTextStyles.labelSmall.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.goldAccent,
                           letterSpacing: 0.5,
@@ -321,8 +317,7 @@ class _SectionDivider extends StatelessWidget {
         children: [
           Text(
             title.toUpperCase(),
-            style: TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textSecondary.withValues(alpha: 0.5),
               letterSpacing: 1,
@@ -452,8 +447,7 @@ class _DrawerItemState extends State<_DrawerItem>
               Expanded(
                 child: Text(
                   widget.label,
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: widget.isSelected
                         ? FontWeight.w600
                         : FontWeight.w500,
@@ -536,17 +530,16 @@ class _LogoutButtonState extends State<_LogoutButton>
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.logout_rounded, color: Colors.red, size: 20),
-              SizedBox(width: 8),
+              const Icon(Icons.logout_rounded, color: Colors.red, size: 20),
+              const SizedBox(width: 8),
               Text(
                 'Logout',
-                style: TextStyle(
-                  fontSize: 15,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Colors.red,
+                  color: AppColors.error,
                 ),
               ),
             ],

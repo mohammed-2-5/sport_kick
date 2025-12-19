@@ -5,6 +5,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -408,8 +409,7 @@ class _EmptyState extends StatelessWidget {
               hasFilters
                   ? 'Try adjusting your search or filters'
                   : 'Create your first admin to get started',
-              style: TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.labelMedium.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
@@ -418,9 +418,11 @@ class _EmptyState extends StatelessWidget {
             if (hasFilters)
               TextButton(
                 onPressed: onClearFilters,
-                child: const Text(
+                child: Text(
                   'Clear Filters',
-                  style: TextStyle(color: AppColors.premiumGold),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.premiumGold,
+                  ),
                 ),
               )
             else

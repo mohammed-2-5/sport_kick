@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 
 /// Status indicator widget showing if field is currently open or closed.
 ///
@@ -36,8 +36,8 @@ class BusinessHoursStatusIndicator extends StatelessWidget {
                 children: [
                   Text(
                     isOpen
-                        ? BusinessHoursStrings.currentlyOpen
-                        : BusinessHoursStrings.currentlyClosed,
+                        ? context.l10n.businessHoursCurrentlyOpen
+                        : context.l10n.businessHoursCurrentlyClosed,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -47,8 +47,8 @@ class BusinessHoursStatusIndicator extends StatelessWidget {
                   const SizedBox(height: BusinessHoursConstants.tinySpacing),
                   Text(
                     isOpen
-                        ? BusinessHoursStrings.fieldAcceptingBookings
-                        : BusinessHoursStrings.fieldClosedForBookings,
+                        ? context.l10n.businessHoursAcceptingBookings
+                        : context.l10n.businessHoursClosedForBookings,
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],

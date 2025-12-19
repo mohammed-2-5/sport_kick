@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/repositories/recurring_booking_repository.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Grid widget for selecting time slots for recurring booking.
 class RecurringTimeSlotGrid extends StatelessWidget {
@@ -25,34 +28,35 @@ class RecurringTimeSlotGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (selectedDayOfWeek == null) {
-      return _buildSelectDayPrompt();
+      return _buildSelectDayPrompt(context);
     }
 
     final dayBusinessHours = _getBusinessHoursForDay();
     if (dayBusinessHours == null || !dayBusinessHours.isOpen) {
-      return _buildClosedMessage();
+      return _buildClosedMessage(context);
     }
 
     final slots = _generateTimeSlots(dayBusinessHours);
     if (slots.isEmpty) {
-      return _buildNoSlotsMessage();
+      return _buildNoSlotsMessage(context);
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Select Time',
-          style: TextStyle(
-            fontSize: 16,
+        Text(
+          context.l10n.selectTime,
+          style: AppTextStyles.titleSmall.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.navyDeep,
           ),
         ),
         const SizedBox(height: 8),
         Text(
-          'Available time slots for ${_getDayName()}',
-          style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+          context.l10n.availableSlotsForDay(_getDayName(context)),
+          style: AppTextStyles.bodySmall.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         const SizedBox(height: 16),
         GridView.builder(
@@ -80,7 +84,7 @@ class RecurringTimeSlotGrid extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectDayPrompt() {
+  Widget _buildSelectDayPrompt(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -96,16 +100,18 @@ class RecurringTimeSlotGrid extends StatelessWidget {
             color: AppColors.navyDeep.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Select a day first',
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          Text(
+            context.l10n.selectDayFirst,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildClosedMessage() {
+  Widget _buildClosedMessage(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -118,24 +124,25 @@ class RecurringTimeSlotGrid extends StatelessWidget {
           const Icon(Icons.block_rounded, size: 48, color: AppColors.error),
           const SizedBox(height: 12),
           Text(
-            'Field is closed on ${_getDayName()}',
-            style: const TextStyle(
-              fontSize: 14,
+            context.l10n.fieldClosedOnDay(_getDayName(context)),
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.error,
               fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
-            'Please select a different day',
-            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          Text(
+            context.l10n.selectDifferentDay,
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildNoSlotsMessage() {
+  Widget _buildNoSlotsMessage(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -143,14 +150,17 @@ class RecurringTimeSlotGrid extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.goldAccent.withValues(alpha: 0.2)),
       ),
-      child: const Column(
+      child: Column(
         children: [
-          Icon(Icons.event_busy_rounded, size: 48, color: AppColors.goldAccent),
-          SizedBox(height: 12),
+          const Icon(
+            Icons.event_busy_rounded,
+            size: 48,
+            color: AppColors.goldAccent,
+          ),
+          const SizedBox(height: 12),
           Text(
-            'No available slots',
-            style: TextStyle(
-              fontSize: 14,
+            context.l10n.noAvailableSlots,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.goldAccent,
               fontWeight: FontWeight.w500,
             ),
@@ -160,17 +170,9 @@ class RecurringTimeSlotGrid extends StatelessWidget {
     );
   }
 
-  String _getDayName() {
-    const days = [
-      'Saturday',
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-    ];
-    return selectedDayOfWeek != null ? days[selectedDayOfWeek!] : '';
+  String _getDayName(BuildContext context) {
+    if (selectedDayOfWeek == null) return '';
+    return LocaleFormatters.weekdayName(context, selectedDayOfWeek!);
   }
 
   BusinessHoursEntity? _getBusinessHoursForDay() {
@@ -265,8 +267,15 @@ class _TimeSlotChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final displayTime = LocaleFormatters.formatTime(context, time);
+    final reservedTooltip = isReserved
+        ? context.l10n.reservedBy(
+            reservedBy ?? context.l10n.reservedByAnotherUser,
+          )
+        : '';
+
     return Tooltip(
-      message: isReserved ? 'Reserved by ${reservedBy ?? 'another user'}' : '',
+      message: reservedTooltip,
       child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(
@@ -289,9 +298,8 @@ class _TimeSlotChip extends StatelessWidget {
             children: [
               Center(
                 child: Text(
-                  time,
-                  style: TextStyle(
-                    fontSize: 13,
+                  displayTime,
+                  style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: _textColor,
                   ),

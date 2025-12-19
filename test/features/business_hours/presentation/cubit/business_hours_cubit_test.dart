@@ -210,7 +210,7 @@ void main() {
         const BusinessHoursValidating(),
         isA<BusinessHoursValidated>()
             .having((s) => s.isValid, 'isValid', false)
-            .having((s) => s.message, 'message', isNotNull),
+            .having((s) => s.message, 'message', isNull),
       ],
     );
   });

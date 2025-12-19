@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -23,11 +24,10 @@ class UserBookingHistorySection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Booking History',
-            style: TextStyle(
-              fontSize: AdminUIConstants.fontSizeLarge,
-              fontWeight: AdminUIConstants.fontWeightBold,
+            style: AppTextStyles.headlineSmall.copyWith(
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: AdminUIConstants.spacingMedium),

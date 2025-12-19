@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/manual_booking_form_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/manual_booking_validator.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Cubit for managing manual booking form wizard state.
 ///
@@ -67,11 +68,12 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
   }
 
   /// Navigate to next step with validation.
-  void nextStep() {
+  void nextStep(AppLocalizations l10n) {
     final currentStep = _data.currentStep;
 
     if (currentStep == 0) {
       final error = ManualBookingValidator.validateStepOne(
+        l10n: l10n,
         field: _data.selectedField,
         date: _data.selectedDate,
         startTime: _data.selectedStartTime,
@@ -87,6 +89,7 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
       _goToStep(1);
     } else if (currentStep == 1) {
       final error = ManualBookingValidator.validateStepTwo(
+        l10n: l10n,
         customerName: _data.customerName,
         customerPhone: _data.customerPhone,
       );

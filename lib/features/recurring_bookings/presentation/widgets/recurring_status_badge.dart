@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/entities/recurring_booking_entity.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Badge widget for displaying recurring booking status.
 class RecurringStatusBadge extends StatelessWidget {
@@ -31,7 +32,7 @@ class RecurringStatusBadge extends StatelessWidget {
           Icon(_icon, size: isCompact ? 12 : 14, color: _iconColor),
           SizedBox(width: isCompact ? 4 : 6),
           Text(
-            status.displayName,
+            _label(context),
             style: TextStyle(
               fontSize: isCompact ? 10 : 12,
               fontWeight: FontWeight.w600,
@@ -94,6 +95,19 @@ class RecurringStatusBadge extends StatelessWidget {
         return Icons.cancel_outlined;
       case RecurringBookingStatus.rejected:
         return Icons.block_rounded;
+    }
+  }
+
+  String _label(BuildContext context) {
+    switch (status) {
+      case RecurringBookingStatus.active:
+        return context.l10n.statusActive;
+      case RecurringBookingStatus.pendingApproval:
+        return context.l10n.statusPendingApproval;
+      case RecurringBookingStatus.canceled:
+        return context.l10n.statusCanceled;
+      case RecurringBookingStatus.rejected:
+        return context.l10n.statusRejected;
     }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for verifying or rejecting payment proofs.
 ///
@@ -11,7 +13,7 @@ class PaymentVerificationDialog {
   static Future<bool?> showVerifyDialog(BuildContext context) {
     return showDialog<bool>(
       context: context,
-      builder: (context) => _VerifyConfirmationDialog(),
+      builder: (context) => const _VerifyConfirmationDialog(),
     );
   }
 
@@ -19,12 +21,14 @@ class PaymentVerificationDialog {
   static Future<String?> showRejectDialog(BuildContext context) {
     return showDialog<String>(
       context: context,
-      builder: (context) => _RejectReasonDialog(),
+      builder: (context) => const _RejectReasonDialog(),
     );
   }
 }
 
 class _VerifyConfirmationDialog extends StatelessWidget {
+  const _VerifyConfirmationDialog();
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -44,17 +48,17 @@ class _VerifyConfirmationDialog extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          const Text(
-            'Verify Payment',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+          Text(
+            context.l10n.ownerVerifyPayment,
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),
-      content: const Text(
-        'Are you sure you want to verify this payment? '
-        'This will confirm that the customer has paid for the booking.',
-        style: TextStyle(
-          fontSize: 14,
+      content: Text(
+        context.l10n.ownerVerifyPaymentMessage,
+        style: AppTextStyles.bodyMedium.copyWith(
           color: AppColors.textSecondary,
           height: 1.5,
         ),
@@ -62,9 +66,11 @@ class _VerifyConfirmationDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: AppColors.textSecondary),
+          child: Text(
+            context.l10n.cancel,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ),
         ElevatedButton(
@@ -76,7 +82,7 @@ class _VerifyConfirmationDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: const Text('Verify Payment'),
+          child: Text(context.l10n.ownerVerifyPayment),
         ),
       ],
     );
@@ -84,6 +90,8 @@ class _VerifyConfirmationDialog extends StatelessWidget {
 }
 
 class _RejectReasonDialog extends StatefulWidget {
+  const _RejectReasonDialog();
+
   @override
   State<_RejectReasonDialog> createState() => _RejectReasonDialogState();
 }
@@ -129,9 +137,11 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
             ),
           ),
           const SizedBox(width: 12),
-          const Text(
-            'Reject Payment',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+          Text(
+            context.l10n.ownerRejectPayment,
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),
@@ -139,11 +149,9 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Please provide a reason for rejecting this payment. '
-            'The customer will be notified.',
-            style: TextStyle(
-              fontSize: 14,
+          Text(
+            context.l10n.ownerRejectPaymentMessage,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
               height: 1.5,
             ),
@@ -153,10 +161,9 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
             controller: _reasonController,
             maxLines: 3,
             decoration: InputDecoration(
-              hintText: 'Enter rejection reason (min 10 characters)',
-              hintStyle: const TextStyle(
+              hintText: context.l10n.ownerRejectReasonHint,
+              hintStyle: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
-                fontSize: 14,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -171,9 +178,10 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
           ),
           const SizedBox(height: 8),
           Text(
-            '${_reasonController.text.trim().length}/10 characters minimum',
-            style: TextStyle(
-              fontSize: 12,
+            context.l10n.ownerRejectCounter(
+              _reasonController.text.trim().length,
+            ),
+            style: AppTextStyles.labelSmall.copyWith(
               color: _isValid ? AppColors.success : AppColors.textSecondary,
             ),
           ),
@@ -182,9 +190,11 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: AppColors.textSecondary),
+          child: Text(
+            context.l10n.cancel,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ),
         ElevatedButton(
@@ -199,7 +209,7 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: const Text('Reject Payment'),
+          child: Text(context.l10n.ownerRejectPayment),
         ),
       ],
     );

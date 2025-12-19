@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class QuickBookingShortcuts extends StatelessWidget {
   const QuickBookingShortcuts({super.key});
@@ -15,8 +16,8 @@ class QuickBookingShortcuts extends StatelessWidget {
         children: [
           _buildShortcutCard(
             context,
-            title: 'Browse\nFields',
-            subtitle: 'Find venues',
+            title: context.l10n.homeShortcutBrowseTitle,
+            subtitle: context.l10n.homeShortcutBrowseSubtitle,
             icon: Icons.explore_rounded,
             gradient: const LinearGradient(
               colors: [Color(0xFF00D9FF), Color(0xFF0099CC)],
@@ -28,8 +29,8 @@ class QuickBookingShortcuts extends StatelessWidget {
           const SizedBox(width: 14),
           _buildShortcutCard(
             context,
-            title: 'My\nBookings',
-            subtitle: 'View history',
+            title: context.l10n.homeShortcutBookingsTitle,
+            subtitle: context.l10n.homeShortcutBookingsSubtitle,
             icon: Icons.calendar_today_rounded,
             gradient: const LinearGradient(
               colors: [Color(0xFF7B61FF), Color(0xFF5B41DF)],
@@ -41,8 +42,8 @@ class QuickBookingShortcuts extends StatelessWidget {
           const SizedBox(width: 14),
           _buildShortcutCard(
             context,
-            title: 'Favorite\nFields',
-            subtitle: 'Your picks',
+            title: context.l10n.homeShortcutFavoritesTitle,
+            subtitle: context.l10n.homeShortcutFavoritesSubtitle,
             icon: Icons.favorite_rounded,
             gradient: const LinearGradient(
               colors: [Color(0xFFFF4B4B), Color(0xFFCC3333)],
@@ -52,8 +53,8 @@ class QuickBookingShortcuts extends StatelessWidget {
           const SizedBox(width: 14),
           _buildShortcutCard(
             context,
-            title: 'Profile',
-            subtitle: 'Settings',
+            title: context.l10n.homeShortcutProfileTitle,
+            subtitle: context.l10n.homeShortcutProfileSubtitle,
             icon: Icons.person_rounded,
             gradient: const LinearGradient(
               colors: [AppColors.primary, AppColors.primaryDark],

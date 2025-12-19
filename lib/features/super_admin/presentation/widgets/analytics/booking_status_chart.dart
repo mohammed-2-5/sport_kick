@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
@@ -49,8 +50,7 @@ class BookingStatusChart extends StatelessWidget {
                             '${((pending / total) * 100).toStringAsFixed(0)}%',
                         color: Colors.orange,
                         radius: 100,
-                        titleStyle: const TextStyle(
-                          fontSize: 14,
+                        titleStyle: AppTextStyles.labelLarge.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -62,8 +62,7 @@ class BookingStatusChart extends StatelessWidget {
                             '${((confirmed / total) * 100).toStringAsFixed(0)}%',
                         color: Colors.green,
                         radius: 100,
-                        titleStyle: const TextStyle(
-                          fontSize: 14,
+                        titleStyle: AppTextStyles.labelLarge.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -75,8 +74,7 @@ class BookingStatusChart extends StatelessWidget {
                             '${((canceled / total) * 100).toStringAsFixed(0)}%',
                         color: Colors.red,
                         radius: 100,
-                        titleStyle: const TextStyle(
-                          fontSize: 14,
+                        titleStyle: AppTextStyles.labelLarge.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -88,8 +86,7 @@ class BookingStatusChart extends StatelessWidget {
                             '${((completed / total) * 100).toStringAsFixed(0)}%',
                         color: Colors.purple,
                         radius: 100,
-                        titleStyle: const TextStyle(
-                          fontSize: 14,
+                        titleStyle: AppTextStyles.labelLarge.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

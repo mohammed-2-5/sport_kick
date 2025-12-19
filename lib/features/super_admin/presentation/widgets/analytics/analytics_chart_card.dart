@@ -45,8 +45,7 @@ class AnalyticsChartCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -101,8 +100,7 @@ class ChartLegendItem extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),

@@ -22,16 +22,4 @@ class CityConstants {
 
   // Animation
   static const int animationDurationMs = 200;
-
-  // Text
-  static const String citySelectionTitle = 'Select Your City';
-  static const String citySelectionSubtitle =
-      'Choose your city to see available football fields';
-  static const String continueButtonText = 'Continue';
-  static const String changeCityText = 'Change City';
-  static const String noCitiesAvailable = 'No cities available';
-  static const String loadingCities = 'Loading cities...';
-  static const String errorLoadingCities = 'Failed to load cities';
-  static const String selectCityPrompt = 'Please select a city';
-  static const String citySelectedSuccess = 'City selected successfully';
 }

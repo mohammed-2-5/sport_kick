@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/notifications/domain/entities/notification_entity.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// A tile widget displaying a single notification.
 ///
@@ -155,7 +155,7 @@ class _TimeStamp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      _formatTime(createdAt),
+      _formatTime(context, createdAt),
       style: TextStyle(
         fontSize: 12,
         color: AppColors.textSecondary.withValues(alpha: 0.6),
@@ -163,20 +163,39 @@ class _TimeStamp extends StatelessWidget {
     );
   }
 
-  String _formatTime(DateTime dateTime) {
+  String _formatTime(BuildContext context, DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);
 
     if (difference.inMinutes < 1) {
-      return 'Just now';
+      return context.l10n.notificationJustNow;
     } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m ago';
+      final minutes = LocaleFormatters.formatNumber(
+        context,
+        difference.inMinutes,
+        decimalDigits: 0,
+      );
+      return context.l10n.notificationMinutesAgo(minutes);
     } else if (difference.inHours < 24) {
-      return '${difference.inHours}h ago';
+      final hours = LocaleFormatters.formatNumber(
+        context,
+        difference.inHours,
+        decimalDigits: 0,
+      );
+      return context.l10n.notificationHoursAgo(hours);
     } else if (difference.inDays < 7) {
-      return '${difference.inDays}d ago';
+      final days = LocaleFormatters.formatNumber(
+        context,
+        difference.inDays,
+        decimalDigits: 0,
+      );
+      return context.l10n.notificationDaysAgo(days);
     } else {
-      return DateFormat('MMM d, yyyy').format(dateTime);
+      return LocaleFormatters.formatDate(
+        context,
+        dateTime,
+        pattern: 'MMM d, yyyy',
+      );
     }
   }
 }

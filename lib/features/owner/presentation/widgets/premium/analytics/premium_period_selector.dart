@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium Period Selector widget.
 ///
@@ -62,8 +63,7 @@ class PremiumPeriodSelector extends StatelessWidget {
               child: Center(
                 child: Text(
                   period,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: isSelected ? Colors.white : AppColors.textSecondary,
                   ),

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Action buttons for pending bookings (Approve/Reject).
 class BookingActionButtons extends StatelessWidget {
@@ -18,7 +20,7 @@ class BookingActionButtons extends StatelessWidget {
         Expanded(
           child: _buildActionButton(
             context,
-            'Reject',
+            context.l10n.reject,
             Icons.close_rounded,
             AppGradients.error,
             () => _handleReject(context),
@@ -28,7 +30,7 @@ class BookingActionButtons extends StatelessWidget {
         Expanded(
           child: _buildActionButton(
             context,
-            'Approve',
+            context.l10n.approve,
             Icons.check_rounded,
             AppGradients.success,
             () => _handleApprove(context),
@@ -71,9 +73,8 @@ class BookingActionButtons extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: AppTextStyles.bodyLarge.copyWith(
                     color: Colors.white,
-                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 0.5,
                   ),
@@ -90,19 +91,19 @@ class BookingActionButtons extends StatelessWidget {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Approve Booking'),
-        content: const Text('Are you sure you want to approve this booking?'),
+        title: Text(context.l10n.approveBooking),
+        content: Text(context.l10n.ownerApproveBookingConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(dialogContext);
               context.read<OwnerCubit>().approveBooking(booking.id);
             },
-            child: const Text('Approve'),
+            child: Text(context.l10n.approve),
           ),
         ],
       ),
@@ -113,24 +114,24 @@ class BookingActionButtons extends StatelessWidget {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Reject Booking'),
-        content: const Text('Are you sure you want to reject this booking?'),
+        title: Text(context.l10n.rejectBooking),
+        content: Text(context.l10n.ownerRejectBookingConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(dialogContext);
               context.read<OwnerCubit>().rejectBooking(
                 booking.id,
-                'Rejected by owner',
+                context.l10n.rejectedByOwner,
               );
             },
-            child: const Text(
-              'Reject',
-              style: TextStyle(color: AppColors.error),
+            child: Text(
+              context.l10n.reject,
+              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
             ),
           ),
         ],

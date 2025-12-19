@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
@@ -8,6 +9,7 @@ import 'package:spo_kick/features/owner/presentation/widgets/field_form/field_fo
 import 'package:spo_kick/features/owner/presentation/widgets/field_form/field_form_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field_form/field_form_section_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field_form/field_form_text_field.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 class AddEditFieldForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -64,20 +66,20 @@ class AddEditFieldForm extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Basic Information Section
-          const FieldFormSectionHeader(
-            title: 'Basic Information',
+          FieldFormSectionHeader(
+            title: context.l10n.basicInformation,
             icon: Icons.info_outline,
           ),
           const SizedBox(height: 16),
 
           FieldFormTextField(
             controller: nameController,
-            label: 'Field Name',
-            hint: 'e.g., Premium Soccer Field',
+            label: context.l10n.enterFieldName,
+            hint: context.l10n.fieldNameExample,
             icon: Icons.sports_soccer_rounded,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter field name';
+                return context.l10n.enterFieldName;
               }
               return null;
             },
@@ -87,13 +89,13 @@ class AddEditFieldForm extends StatelessWidget {
 
           FieldFormTextField(
             controller: descriptionController,
-            label: 'Description',
-            hint: 'Describe your field...',
+            label: context.l10n.description,
+            hint: context.l10n.enterDescription,
             icon: Icons.description_outlined,
             maxLines: 3,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter description';
+                return context.l10n.enterDescription;
               }
               return null;
             },
@@ -102,20 +104,20 @@ class AddEditFieldForm extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Location Section
-          const FieldFormSectionHeader(
-            title: 'Location',
+          FieldFormSectionHeader(
+            title: context.l10n.location,
             icon: Icons.location_on_outlined,
           ),
           const SizedBox(height: 16),
 
           FieldFormTextField(
             controller: addressController,
-            label: 'Address',
-            hint: 'Street address',
+            label: context.l10n.location, // Address uses location/address key
+            hint: context.l10n.enterAddress,
             icon: Icons.home_outlined,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter address';
+                return context.l10n.enterAddress;
               }
               return null;
             },
@@ -125,12 +127,12 @@ class AddEditFieldForm extends StatelessWidget {
 
           FieldFormTextField(
             controller: cityController,
-            label: 'City',
-            hint: 'e.g., Los Angeles',
+            label: context.l10n.city,
+            hint: context.l10n.enterCity,
             icon: Icons.location_city_rounded,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter city';
+                return context.l10n.enterCity;
               }
               return null;
             },
@@ -139,14 +141,14 @@ class AddEditFieldForm extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Field Details Section
-          const FieldFormSectionHeader(
-            title: 'Field Details',
+          FieldFormSectionHeader(
+            title: context.l10n.fieldDetails,
             icon: Icons.settings_outlined,
           ),
           const SizedBox(height: 16),
 
           FieldFormDropdown(
-            label: 'Field Size',
+            label: context.l10n.fieldSize,
             value: selectedSize,
             items: OwnerConstants.fieldSizes,
             icon: Icons.straighten_rounded,
@@ -156,9 +158,10 @@ class AddEditFieldForm extends StatelessWidget {
           const SizedBox(height: 16),
 
           FieldFormDropdown(
-            label: 'Surface Type',
+            label: context.l10n.surfaceType,
             value: selectedSurface,
             items: OwnerConstants.surfaceTypes,
+            itemLabelBuilder: (item) => _getLocalizedSurface(context, item),
             icon: Icons.grass_rounded,
             onChanged: onSurfaceChanged,
           ),
@@ -166,9 +169,10 @@ class AddEditFieldForm extends StatelessWidget {
           const SizedBox(height: 16),
 
           FieldFormDropdown(
-            label: 'Field Type',
+            label: context.l10n.fieldType,
             value: selectedType,
             items: OwnerConstants.fieldTypes,
+            itemLabelBuilder: (item) => _getLocalizedFieldType(context, item),
             icon: Icons.wb_sunny_outlined,
             onChanged: onTypeChanged,
           ),
@@ -176,24 +180,24 @@ class AddEditFieldForm extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Pricing Section
-          const FieldFormSectionHeader(
-            title: 'Pricing',
+          FieldFormSectionHeader(
+            title: context.l10n.price,
             icon: Icons.attach_money_rounded,
           ),
           const SizedBox(height: 16),
 
           FieldFormTextField(
             controller: priceController,
-            label: 'Price per Hour',
-            hint: 'e.g., 50',
+            label: context.l10n.pricePerHour,
+            hint: context.l10n.enterPrice,
             icon: Icons.payments_outlined,
             keyboardType: TextInputType.number,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter price';
+                return context.l10n.enterPrice;
               }
               if (double.tryParse(value) == null) {
-                return 'Please enter a valid number';
+                return context.l10n.enterValidNumber;
               }
               return null;
             },
@@ -202,8 +206,8 @@ class AddEditFieldForm extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Facilities Section
-          const FieldFormSectionHeader(
-            title: 'Facilities',
+          FieldFormSectionHeader(
+            title: context.l10n.facilities,
             icon: Icons.widgets_outlined,
           ),
           const SizedBox(height: 16),
@@ -217,8 +221,8 @@ class AddEditFieldForm extends StatelessWidget {
 
           // Business Hours Section
           if (onManageBusinessHours != null) ...[
-            const FieldFormSectionHeader(
-              title: 'Business Hours',
+            FieldFormSectionHeader(
+              title: context.l10n.businessHours,
               icon: Icons.schedule_rounded,
             ),
             const SizedBox(height: 16),
@@ -246,23 +250,21 @@ class AddEditFieldForm extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Manage Business Hours',
-                            style: TextStyle(
-                              fontSize: 16,
+                            context.l10n.manageBusinessHours,
+                            style: AppTextStyles.bodyLarge.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.textPrimary,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
-                            'Set working hours for each day of the week',
-                            style: TextStyle(
-                              fontSize: 13,
+                            context.l10n.setWorkingHoursDesc,
+                            style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
                           ),
@@ -284,7 +286,7 @@ class AddEditFieldForm extends StatelessWidget {
 
           // Save Button
           CustomButton(
-            text: 'Update Field',
+            text: context.l10n.updateField,
             onPressed: onSave,
             variant: ButtonVariant.primary,
             icon: Icons.check_rounded,
@@ -294,5 +296,18 @@ class AddEditFieldForm extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _getLocalizedSurface(BuildContext context, String surface) {
+    if (surface == 'Natural Grass') return context.l10n.surfaceGrass;
+    if (surface == 'Artificial Turf') return context.l10n.surfaceTurf;
+    if (surface == 'Hybrid') return context.l10n.surfaceHybrid;
+    return surface;
+  }
+
+  String _getLocalizedFieldType(BuildContext context, String type) {
+    if (type == 'Outdoor') return context.l10n.outdoor;
+    if (type == 'Indoor') return context.l10n.indoor;
+    return type;
   }
 }

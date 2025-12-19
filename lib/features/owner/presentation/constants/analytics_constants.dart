@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:intl/intl.dart';
 
 /// Analytics constants for Owner Revenue Analytics
 ///
@@ -133,26 +134,6 @@ class AnalyticsConstants {
   // NOTE: Empty state message moved to localization
   // Use context.l10n.noDataAvailablePeriod
 
-  // ==================== MONTH ABBREVIATIONS ====================
-
-  /// Month abbreviations for chart labels (English)
-  /// For localized month names, use DateFormat from intl package
-  static const List<String> monthAbbreviations = [
-    '',
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-
   // ==================== HELPER METHODS ====================
 
   /// Get date range value by days
@@ -180,5 +161,11 @@ class AnalyticsConstants {
   /// Get status pie color by index
   static Color getStatusPieColor(int index) {
     return statusPieColors[index % statusPieColors.length];
+  }
+
+  /// Localized month abbreviation using current locale.
+  static String monthLabel(BuildContext context, int month) {
+    final locale = Localizations.localeOf(context).toString();
+    return DateFormat.MMM(locale).format(DateTime(2000, month));
   }
 }

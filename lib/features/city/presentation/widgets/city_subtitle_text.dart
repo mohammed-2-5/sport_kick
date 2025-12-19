@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 
 class CitySubtitleText extends StatelessWidget {
@@ -9,7 +10,7 @@ class CitySubtitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subtitle = _subtitleText();
+    final subtitle = _subtitleText(context);
     if (subtitle == null) return const SizedBox.shrink();
 
     return Text(
@@ -20,13 +21,13 @@ class CitySubtitleText extends StatelessWidget {
     );
   }
 
-  String? _subtitleText() {
+  String? _subtitleText(BuildContext context) {
     final parts = <String>[];
     if (city.arabicName != null) {
       parts.add(city.arabicName!);
     }
     if (city.fieldsCount != null && city.fieldsCount! > 0) {
-      parts.add('${city.fieldsCount} fields');
+      parts.add(context.l10n.fieldsCount(city.fieldsCount!));
     }
     if (parts.isEmpty) return null;
     return parts.join(' • ');

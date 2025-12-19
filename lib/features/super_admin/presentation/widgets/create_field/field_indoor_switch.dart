@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Indoor/Outdoor field toggle switch.
 ///
@@ -35,10 +36,12 @@ class FieldIndoorSwitch extends StatelessWidget {
         children: [
           const Icon(Icons.roofing_rounded, color: AppColors.primary),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Text(
               'Indoor Field',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: AppTextStyles.labelLarge.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           Switch(

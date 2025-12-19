@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -104,20 +105,19 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
                   )
                 else
                   // Show loading indicator for initial state
-                  const SliverFillRemaining(
+                  SliverFillRemaining(
                     child: Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          CircularProgressIndicator(
+                          const CircularProgressIndicator(
                             color: AppColors.goldAccent,
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Text(
                             'Loading analytics...',
-                            style: TextStyle(
+                            style: AppTextStyles.bodyMedium.copyWith(
                               color: AppColors.textSecondary,
-                              fontSize: 14,
                             ),
                           ),
                         ],

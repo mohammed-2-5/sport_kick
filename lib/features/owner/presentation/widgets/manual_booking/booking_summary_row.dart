@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/constants/owner_ui_constants.dart';
 
 /// Helper widget to display a row in the booking summary card.
@@ -21,16 +22,12 @@ class BookingSummaryRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: OwnerUIConstants.fontSizeMedium,
-            ),
+            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
           ),
           Text(
             value,
-            style: const TextStyle(
+            style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w600,
-              fontSize: OwnerUIConstants.fontSizeMedium,
             ),
           ),
         ],

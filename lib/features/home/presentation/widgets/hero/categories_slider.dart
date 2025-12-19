@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 
@@ -28,7 +29,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
             CarouselSlider.builder(
               itemCount: hasRealData
                   ? state.categories.length
-                  : _getMockCategories().length,
+                  : _getMockCategories(context).length,
               options: CarouselOptions(
                 height: 200,
                 viewportFraction: 0.7,
@@ -55,7 +56,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
                     category.id,
                   );
                 } else {
-                  final category = _getMockCategories()[index];
+                  final category = _getMockCategories(context)[index];
                   return _buildCategoryCard(
                     context,
                     category['name'] as String,
@@ -71,7 +72,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
               children: List.generate(
                 hasRealData
                     ? state.categories.length
-                    : _getMockCategories().length,
+                    : _getMockCategories(context).length,
                 (index) => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   width: _currentIndex == index ? 24 : 8,
@@ -175,30 +176,31 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
     );
   }
 
-  List<Map<String, dynamic>> _getMockCategories() {
+  List<Map<String, dynamic>> _getMockCategories(BuildContext context) {
+    final l10n = context.l10n;
     return [
       {
-        'name': 'Football',
+        'name': l10n.sportFootball,
         'image':
             'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
       },
       {
-        'name': 'Tennis',
+        'name': l10n.sportTennis,
         'image':
             'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80',
       },
       {
-        'name': 'Basketball',
+        'name': l10n.sportBasketball,
         'image':
             'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80',
       },
       {
-        'name': 'Padel',
+        'name': l10n.sportPadel,
         'image':
             'https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=800&q=80',
       },
       {
-        'name': 'Volleyball',
+        'name': l10n.sportVolleyball,
         'image':
             'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=800&q=80',
       },

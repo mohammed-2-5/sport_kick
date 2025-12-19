@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -303,7 +304,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
             },
             child: Text(
               context.l10n.logoutTitle,
-              style: const TextStyle(color: Colors.red),
+              style: AppTextStyles.bodyMedium.copyWith(color: Colors.red),
             ),
           ),
         ],
@@ -360,16 +361,14 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                       children: [
                         Text(
                           context.l10n.businessHoursSheetTitle,
-                          style: const TextStyle(
-                            fontSize: 18,
+                          style: AppTextStyles.titleLarge.copyWith(
                             fontWeight: FontWeight.w700,
                             color: AppColors.textPrimary,
                           ),
                         ),
                         Text(
                           context.l10n.businessHoursSheetSubtitle,
-                          style: const TextStyle(
-                            fontSize: 13,
+                          style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.textSecondary,
                           ),
                         ),
@@ -407,8 +406,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                     const SizedBox(height: 24),
                     Text(
                       context.l10n.businessHoursPerField,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: AppTextStyles.titleLarge.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
@@ -417,8 +415,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                     Text(
                       context.l10n.businessHoursPerFieldDesc,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary.withValues(alpha: 0.8),
                         height: 1.5,
                       ),

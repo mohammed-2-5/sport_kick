@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Stat chip widget for displaying field statistics
 class FieldStatChip extends StatelessWidget {
@@ -29,8 +30,7 @@ class FieldStatChip extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             text,
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               color: color,
               fontWeight: FontWeight.w600,
             ),

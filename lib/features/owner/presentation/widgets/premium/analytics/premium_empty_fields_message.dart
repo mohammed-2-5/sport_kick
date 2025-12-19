@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium Empty Fields Message widget.
 ///
@@ -17,18 +18,20 @@ class PremiumEmptyFieldsMessage extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
       ),
-      child: const Center(
+      child: Center(
         child: Column(
           children: [
-            Icon(
+            const Icon(
               Icons.sports_soccer_rounded,
               size: 40,
               color: AppColors.textSecondary,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
               'No field data available',
-              style: TextStyle(color: AppColors.textSecondary),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
           ],
         ),

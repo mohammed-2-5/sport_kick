@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Form widget for editing field details.
 ///
@@ -41,18 +43,18 @@ class EditFieldForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle('Basic Information'),
+        _buildSectionTitle(context.l10n.basicInformation),
         const SizedBox(height: 12),
         TextFormField(
           controller: nameController,
-          decoration: const InputDecoration(
-            labelText: 'Field Name',
-            hintText: 'Enter field name',
-            prefixIcon: Icon(Icons.sports_soccer),
+          decoration: InputDecoration(
+            labelText: context.l10n.enterFieldName,
+            hintText: context.l10n.enterFieldName,
+            prefixIcon: const Icon(Icons.sports_soccer),
           ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
-              return 'Please enter field name';
+              return context.l10n.enterFieldName;
             }
             return null;
           },
@@ -60,59 +62,59 @@ class EditFieldForm extends StatelessWidget {
         const SizedBox(height: 16),
         TextFormField(
           controller: descriptionController,
-          decoration: const InputDecoration(
-            labelText: 'Description (optional)',
-            hintText: 'Enter field description',
-            prefixIcon: Icon(Icons.description),
+          decoration: InputDecoration(
+            labelText: context.l10n.description,
+            hintText: context.l10n.enterDescription,
+            prefixIcon: const Icon(Icons.description),
           ),
           maxLines: 3,
         ),
         const SizedBox(height: 16),
         TextFormField(
           controller: addressController,
-          decoration: const InputDecoration(
-            labelText: 'Address',
-            hintText: 'Enter field address',
-            prefixIcon: Icon(Icons.location_on),
+          decoration: InputDecoration(
+            labelText: context.l10n.location,
+            hintText: context.l10n.enterAddress,
+            prefixIcon: const Icon(Icons.location_on),
           ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
-              return 'Please enter address';
+              return context.l10n.enterAddress;
             }
             return null;
           },
         ),
         const SizedBox(height: 24),
-        _buildSectionTitle('Pricing'),
+        _buildSectionTitle(context.l10n.price),
         const SizedBox(height: 12),
         TextFormField(
           controller: priceController,
-          decoration: const InputDecoration(
-            labelText: 'Price per Hour (EGP)',
-            hintText: 'Enter price',
-            prefixIcon: Icon(Icons.attach_money),
+          decoration: InputDecoration(
+            labelText: context.l10n.pricePerHour,
+            hintText: context.l10n.enterPrice,
+            prefixIcon: const Icon(Icons.attach_money),
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter price';
+              return context.l10n.enterPrice;
             }
             final price = double.tryParse(value);
             if (price == null || price <= 0) {
-              return 'Please enter a valid price';
+              return context.l10n.enterValidNumber;
             }
             return null;
           },
         ),
         const SizedBox(height: 24),
-        _buildSectionTitle('Field Specifications'),
+        _buildSectionTitle(context.l10n.fieldDetails),
         const SizedBox(height: 12),
         DropdownButtonFormField<String>(
           initialValue: selectedSize,
-          decoration: const InputDecoration(
-            labelText: 'Field Size',
-            prefixIcon: Icon(Icons.people_outline),
+          decoration: InputDecoration(
+            labelText: context.l10n.fieldSize,
+            prefixIcon: const Icon(Icons.people_outline),
           ),
           items: OwnerConstants.fieldSizes.map((size) {
             return DropdownMenuItem(value: size, child: Text(size));
@@ -126,12 +128,15 @@ class EditFieldForm extends StatelessWidget {
         const SizedBox(height: 16),
         DropdownButtonFormField<String>(
           initialValue: selectedSurface,
-          decoration: const InputDecoration(
-            labelText: 'Surface Type',
-            prefixIcon: Icon(Icons.grass),
+          decoration: InputDecoration(
+            labelText: context.l10n.surfaceType,
+            prefixIcon: const Icon(Icons.grass),
           ),
           items: OwnerConstants.surfaceTypes.map((surface) {
-            return DropdownMenuItem(value: surface, child: Text(surface));
+            return DropdownMenuItem(
+              value: surface,
+              child: Text(_facilityLabel(context, surface)),
+            );
           }).toList(),
           onChanged: (value) {
             if (value != null) {
@@ -140,7 +145,7 @@ class EditFieldForm extends StatelessWidget {
           },
         ),
         const SizedBox(height: 24),
-        _buildSectionTitle('Facilities'),
+        _buildSectionTitle(context.l10n.facilities),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,
@@ -148,7 +153,7 @@ class EditFieldForm extends StatelessWidget {
           children: OwnerConstants.facilities.map((facility) {
             final isSelected = selectedFacilities.contains(facility);
             return FilterChip(
-              label: Text(facility),
+              label: Text(_facilityLabel(context, facility)),
               selected: isSelected,
               onSelected: (_) => onFacilityToggled(facility),
               selectedColor: AppColors.primary.withValues(alpha: 0.2),
@@ -157,14 +162,14 @@ class EditFieldForm extends StatelessWidget {
           }).toList(),
         ),
         const SizedBox(height: 24),
-        _buildSectionTitle('Status'),
+        _buildSectionTitle(context.l10n.bookingStatus),
         const SizedBox(height: 12),
         SwitchListTile(
-          title: const Text('Field Active'),
+          title: Text(context.l10n.fieldActive),
           subtitle: Text(
             isActive
-                ? 'Field is visible to customers'
-                : 'Field is hidden from customers',
+                ? context.l10n.fieldVisibleToCustomers
+                : context.l10n.fieldHiddenFromCustomers,
           ),
           value: isActive,
           onChanged: onActiveChanged,
@@ -177,11 +182,35 @@ class EditFieldForm extends StatelessWidget {
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 16,
+      style: AppTextStyles.bodyLarge.copyWith(
         fontWeight: FontWeight.bold,
         color: AppColors.textPrimary,
       ),
     );
+  }
+
+  String _facilityLabel(BuildContext context, String facility) {
+    switch (facility) {
+      case 'Parking':
+        return context.l10n.parking;
+      case 'Changing Room':
+        return context.l10n.changingRooms;
+      case 'Shower':
+        return context.l10n.showers;
+      case 'Cafeteria':
+        return context.l10n.cafeteria;
+      case 'WiFi':
+        return context.l10n.wifi;
+      case 'Lighting':
+        return context.l10n.lighting;
+      case 'Natural Grass':
+        return context.l10n.surfaceGrass;
+      case 'Artificial Turf':
+        return context.l10n.surfaceTurf;
+      case 'Hybrid':
+        return context.l10n.surfaceHybrid;
+      default:
+        return facility;
+    }
   }
 }

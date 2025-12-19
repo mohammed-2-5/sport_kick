@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 
 /// Logout button widget for owner settings page.
@@ -40,7 +41,7 @@ class OwnerLogoutButton extends StatelessWidget {
         ),
         content: Text(
           context.l10n.logoutMessage,
-          style: const TextStyle(fontSize: 15),
+          style: AppTextStyles.bodyLarge,
         ),
         actions: [
           TextButton(

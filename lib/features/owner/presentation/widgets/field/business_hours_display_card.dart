@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
@@ -7,6 +8,7 @@ import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
 import 'package:spo_kick/features/business_hours/presentation/cubit/business_hours_cubit.dart';
 import 'package:spo_kick/features/business_hours/presentation/cubit/business_hours_state.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium business hours display card for field details.
 ///
@@ -21,18 +23,6 @@ class BusinessHoursDisplayCard extends StatelessWidget {
     required this.fieldId,
     this.onManage,
   });
-
-  /// Day names for display (Saturday first).
-  static const _dayNames = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-  static const _fullDayNames = [
-    'Saturday',
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +41,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
                   children: [
                     _buildHeader(context),
                     const SizedBox(height: 16),
-                    _buildContent(state),
+                    _buildContent(context, state),
                   ],
                 ),
               ),
@@ -97,13 +87,13 @@ class BusinessHoursDisplayCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Business Hours',
+                context.l10n.businessHours,
                 style: AppTextStyles.titleMedium.copyWith(
                   color: AppColors.textPrimary,
                 ),
               ),
               Text(
-                'Working schedule',
+                context.l10n.workingSchedule,
                 style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.textSecondary,
                 ),
@@ -116,12 +106,11 @@ class BusinessHoursDisplayCard extends StatelessWidget {
           TextButton.icon(
             onPressed: onManage,
             icon: const Icon(Icons.edit_rounded, size: 16),
-            label: const Text('Manage'),
+            label: Text(context.l10n.manage),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.accentCyan,
-              textStyle: const TextStyle(
+              textStyle: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
-                fontSize: 13,
               ),
             ),
           ),
@@ -129,7 +118,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(BusinessHoursState state) {
+  Widget _buildContent(BuildContext context, BusinessHoursState state) {
     if (state is BusinessHoursLoading) {
       return const Center(
         child: Padding(
@@ -147,7 +136,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
     }
 
     if (state is BusinessHoursLoaded) {
-      return _buildHoursGrid(state.businessHours);
+      return _buildHoursGrid(context, state.businessHours);
     }
 
     return const SizedBox.shrink();
@@ -175,24 +164,23 @@ class BusinessHoursDisplayCard extends StatelessWidget {
     );
   }
 
-  Widget _buildHoursGrid(List<BusinessHoursEntity> hours) {
+  Widget _buildHoursGrid(
+    BuildContext context,
+    List<BusinessHoursEntity> hours,
+  ) {
     // Sort hours by day of week (0=Saturday to 6=Friday)
     final sortedHours = List<BusinessHoursEntity>.from(hours)
       ..sort((a, b) => a.dayOfWeek.compareTo(b.dayOfWeek));
 
     return Column(
-      children: sortedHours.map((hour) => _buildDayRow(hour)).toList(),
+      children: sortedHours.map((hour) => _buildDayRow(context, hour)).toList(),
     );
   }
 
-  Widget _buildDayRow(BusinessHoursEntity hour) {
+  Widget _buildDayRow(BuildContext context, BusinessHoursEntity hour) {
     final isOpen = hour.isOpen;
-    final dayName = hour.dayOfWeek < _fullDayNames.length
-        ? _fullDayNames[hour.dayOfWeek]
-        : 'Day ${hour.dayOfWeek}';
-    final shortDay = hour.dayOfWeek < _dayNames.length
-        ? _dayNames[hour.dayOfWeek]
-        : 'D${hour.dayOfWeek}';
+    final dayName = _fullDayName(hour.dayOfWeek);
+    final shortDay = _shortDayName(hour.dayOfWeek);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
@@ -265,7 +253,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
-                'Closed',
+                context.l10n.closed,
                 style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -279,7 +267,7 @@ class BusinessHoursDisplayCard extends StatelessWidget {
 
   /// Format time range string.
   String _formatTimeRange(String? openTime, String? closeTime) {
-    if (openTime == null || closeTime == null) return 'N/A';
+    if (openTime == null || closeTime == null) return '—';
 
     final formattedOpen = _formatTime(openTime);
     final formattedClose = _formatTime(closeTime);
@@ -292,5 +280,15 @@ class BusinessHoursDisplayCard extends StatelessWidget {
       return time.substring(0, 5);
     }
     return time;
+  }
+
+  String _shortDayName(int dayIndex) {
+    final baseDate = DateTime(2024, 1, 6 + dayIndex); // Jan 6, 2024 is Saturday
+    return DateFormat.E().format(baseDate);
+  }
+
+  String _fullDayName(int dayIndex) {
+    final baseDate = DateTime(2024, 1, 6 + dayIndex);
+    return DateFormat.EEEE().format(baseDate);
   }
 }

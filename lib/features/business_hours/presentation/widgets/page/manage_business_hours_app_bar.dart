@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// App bar for the Manage Business Hours page.
 ///
@@ -25,7 +25,7 @@ class ManageBusinessHoursAppBar extends StatelessWidget
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(BusinessHoursStrings.pageTitle),
+          Text(context.l10n.businessHours),
           if (fieldName != null)
             Text(
               fieldName!,
@@ -40,7 +40,7 @@ class ManageBusinessHoursAppBar extends StatelessWidget
         IconButton(
           icon: const Icon(Icons.refresh),
           onPressed: onRefresh,
-          tooltip: BusinessHoursStrings.refreshTooltip,
+          tooltip: context.l10n.refresh,
         ),
       ],
     );

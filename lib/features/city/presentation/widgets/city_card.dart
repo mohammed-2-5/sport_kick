@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 
@@ -77,7 +78,7 @@ class CityCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    '${city.fieldsCount} fields',
+                    context.l10n.fieldsCount(city.fieldsCount!),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: isSelected
                           ? AppColors.primary

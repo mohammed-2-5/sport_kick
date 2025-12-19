@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
 
 /// Filter chips for login activity status.
@@ -117,7 +118,7 @@ class _FilterChip extends StatelessWidget {
           children: [
             Text(
               label,
-              style: TextStyle(
+              style: AppTextStyles.labelMedium.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
                 color: isSelected ? Colors.white : AppColors.textSecondary,
@@ -134,8 +135,7 @@ class _FilterChip extends StatelessWidget {
               ),
               child: Text(
                 count.toString(),
-                style: TextStyle(
-                  fontSize: 11,
+                style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.w700,
                   color: isSelected ? Colors.white : chipColor,
                 ),

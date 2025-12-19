@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:intl/intl.dart';
 
 /// State for the booking table screen.
 sealed class BookingTableState extends Equatable {
@@ -60,27 +61,14 @@ class BookingTableLoaded extends BookingTableState {
 
   /// Get formatted week range string.
   String get weekRangeString {
-    final months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    final startMonth = months[weekStartDate.month - 1];
-    final endMonth = months[weekEndDate.month - 1];
+    final locale = Intl.getCurrentLocale();
+    final startPattern = weekStartDate.year == weekEndDate.year
+        ? 'MMM d'
+        : 'MMM d, y';
+    final startLabel = DateFormat(startPattern, locale).format(weekStartDate);
+    final endLabel = DateFormat('MMM d, y', locale).format(weekEndDate);
 
-    if (startMonth == endMonth) {
-      return '$startMonth ${weekStartDate.day} - ${weekEndDate.day}, ${weekStartDate.year}';
-    }
-    return '$startMonth ${weekStartDate.day} - $endMonth ${weekEndDate.day}, ${weekStartDate.year}';
+    return '$startLabel - $endLabel';
   }
 
   /// Check if current week contains today.

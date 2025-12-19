@@ -20,8 +20,7 @@ class UserListEmptyState extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             hasFilters ? 'No Results Found' : 'No Users Yet',
-            style: TextStyle(
-              fontSize: 20,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.grey[700],
             ),

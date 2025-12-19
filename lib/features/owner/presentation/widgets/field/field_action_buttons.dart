@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Action buttons for field card (Edit/Delete).
 class FieldActionButtons extends StatelessWidget {
@@ -81,9 +82,8 @@ class _ActionButton extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: Colors.white,
-                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

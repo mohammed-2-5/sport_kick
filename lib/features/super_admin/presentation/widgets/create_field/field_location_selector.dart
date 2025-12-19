@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/models/location_data.dart';
 import 'package:spo_kick/core/widgets/map/map_location_picker.dart';
 
@@ -88,8 +89,7 @@ class FieldLocationSelector extends StatelessWidget {
                 Expanded(
                   child: Text(
                     'GPS: ${selectedLocation!.coordinatesString}',
-                    style: const TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.lightTextSecondary,
                     ),
                   ),

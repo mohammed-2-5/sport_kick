@@ -109,8 +109,7 @@ class BookingStatsCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 24,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -118,8 +117,7 @@ class BookingStatsCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             title,
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               color: Colors.white.withValues(alpha: 0.9),
               fontWeight: FontWeight.w600,
             ),

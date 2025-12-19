@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 
@@ -113,7 +114,7 @@ class BookingCell extends StatelessWidget {
           // Customer name
           Text(
             displayName,
-            style: TextStyle(
+            style: AppTextStyles.labelSmall.copyWith(
               fontSize: 10,
               fontWeight: FontWeight.w600,
               color: _getStatusColor(),
@@ -132,7 +133,7 @@ class BookingCell extends StatelessWidget {
               const SizedBox(width: 2),
               Text(
                 _getStatusLabel(),
-                style: TextStyle(
+                style: AppTextStyles.labelSmall.copyWith(
                   fontSize: 8,
                   fontWeight: FontWeight.w500,
                   color: _getStatusColor().withValues(alpha: 0.8),
@@ -150,9 +151,9 @@ class BookingCell extends StatelessWidget {
                   color: AppColors.navyDeep.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: const Text(
+                child: Text(
                   'Manual',
-                  style: TextStyle(
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontSize: 7,
                     fontWeight: FontWeight.w500,
                     color: AppColors.navyDeep,

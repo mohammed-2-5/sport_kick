@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Widget for selecting duration (1 or 2 hours) for recurring booking.
 class RecurringDurationSelector extends StatelessWidget {
@@ -21,7 +23,7 @@ class RecurringDurationSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Duration',
+          context.l10n.recurringDurationTitle,
           style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.navyDeep,
@@ -29,7 +31,7 @@ class RecurringDurationSelector extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'How long do you want to play each week?',
+          context.l10n.recurringDurationSubtitle,
           style: AppTextStyles.labelMedium.copyWith(
             color: AppColors.textSecondary,
           ),
@@ -113,7 +115,10 @@ class _DurationCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '$hours Hour${hours > 1 ? 's' : ''}',
+                  context.l10n.recurringHoursLabel(
+                    hours,
+                    LocaleFormatters.formatNumber(context, hours),
+                  ),
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isSelected
@@ -134,7 +139,12 @@ class _DurationCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                '${price.toStringAsFixed(0)} EGP',
+                LocaleFormatters.formatPrice(
+                  context,
+                  amount: price,
+                  currency: 'EGP',
+                  decimalDigits: 0,
+                ),
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: isSelected ? AppColors.accentCyan : AppColors.navyDeep,
@@ -144,7 +154,7 @@ class _DurationCard extends StatelessWidget {
             const SizedBox(height: 8),
             // Per week label
             Text(
-              'per week',
+              context.l10n.perWeek,
               style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textSecondary,
               ),

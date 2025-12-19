@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 
 class CitySelectionEmptyView extends StatelessWidget {
@@ -20,13 +21,13 @@ class CitySelectionEmptyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              CityConstants.noCitiesAvailable,
+              context.l10n.cityNoCitiesAvailable,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Please contact support for assistance',
-              style: TextStyle(color: AppColors.textSecondary),
+            Text(
+              context.l10n.cityContactSupport,
+              style: const TextStyle(color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_cubit.dart';
@@ -174,8 +175,7 @@ class _MissingHoursCard extends StatelessWidget {
               children: [
                 Text(
                   context.l10n.businessHoursMissingTitle,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -183,8 +183,7 @@ class _MissingHoursCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   context.l10n.businessHoursMissingBody(fieldName),
-                  style: const TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -193,9 +192,9 @@ class _MissingHoursCard extends StatelessWidget {
           ),
           TextButton(
             onPressed: onSetup,
-            child: const Text(
+            child: Text(
               'Set up',
-              style: TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.goldAccent,
               ),
@@ -266,8 +265,7 @@ class _LoadingView extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             message,
-            style: const TextStyle(
-              fontSize: 15,
+            style: AppTextStyles.bodyLarge.copyWith(
               color: AppColors.textSecondary,
               fontWeight: FontWeight.w500,
             ),
@@ -309,8 +307,7 @@ class _ErrorView extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               context.l10n.failedToLoad,
-              style: const TextStyle(
-                fontSize: 18,
+              style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
               ),
@@ -318,8 +315,7 @@ class _ErrorView extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               message,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,

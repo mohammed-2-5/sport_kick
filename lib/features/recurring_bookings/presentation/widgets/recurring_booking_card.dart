@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/entities/recurring_booking_entity.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/recurring_status_badge.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Card widget for displaying a recurring booking subscription.
 class RecurringBookingCard extends StatelessWidget {
@@ -40,20 +41,21 @@ class RecurringBookingCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
-            _buildContent(),
-            if (booking.isActive) _buildNextBookingSection(),
-            if (booking.isActive && onCancel != null) _buildCancelButton(),
-            if (booking.isPending) _buildPendingMessage(),
+            _buildHeader(context),
+            _buildContent(context),
+            if (booking.isActive) _buildNextBookingSection(context),
+            if (booking.isActive && onCancel != null)
+              _buildCancelButton(context),
+            if (booking.isPending) _buildPendingMessage(context),
             if (booking.status == RecurringBookingStatus.rejected)
-              _buildRejectionMessage(),
+              _buildRejectionMessage(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -117,7 +119,7 @@ class RecurringBookingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -127,13 +129,23 @@ class RecurringBookingCard extends StatelessWidget {
             children: [
               _buildInfoChip(
                 icon: Icons.calendar_today_rounded,
-                label: 'Every ${booking.dayName}',
+                label: context.l10n.everyDay(
+                  LocaleFormatters.weekdayName(
+                    context,
+                    booking.dayOfWeek,
+                    short: true,
+                  ),
+                ),
                 color: AppColors.accentCyan,
               ),
               const SizedBox(width: 12),
               _buildInfoChip(
                 icon: Icons.access_time_rounded,
-                label: booking.timeRange,
+                label: LocaleFormatters.formatTimeRange(
+                  context,
+                  startTime: booking.startTime,
+                  endTime: booking.endTime,
+                ),
                 color: AppColors.navyDeep,
               ),
             ],
@@ -144,20 +156,27 @@ class RecurringBookingCard extends StatelessWidget {
             children: [
               _buildInfoChip(
                 icon: Icons.timer_outlined,
-                label: '${booking.durationHours}h',
+                label: context.l10n.recurringHoursShort(
+                  LocaleFormatters.formatNumber(
+                    context,
+                    booking.durationHours,
+                    decimalDigits: 0,
+                  ),
+                ),
                 color: Colors.orange,
               ),
               const SizedBox(width: 12),
               _buildInfoChip(
                 icon: Icons.payments_outlined,
-                label: '${booking.pricePerBooking.toStringAsFixed(0)} EGP/week',
+                label:
+                    '${LocaleFormatters.formatPrice(context, amount: booking.pricePerBooking, currency: 'EGP', decimalDigits: 0)} / ${context.l10n.perWeek}',
                 color: const Color(0xFF10B981),
               ),
             ],
           ),
           if (booking.isActive && booking.totalBookingsCount > 0) ...[
             const SizedBox(height: 16),
-            _buildProgressBar(),
+            _buildProgressBar(context),
           ],
         ],
       ),
@@ -192,7 +211,7 @@ class RecurringBookingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressBar() {
+  Widget _buildProgressBar(BuildContext context) {
     final progress = booking.totalBookingsCount > 0
         ? booking.completedBookingsCount / booking.totalBookingsCount
         : 0.0;
@@ -203,9 +222,12 @@ class RecurringBookingCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Completed Sessions', style: AppTextStyles.caption),
             Text(
-              '${booking.completedBookingsCount} / ${booking.totalBookingsCount}',
+              context.l10n.completedSessionsLabel,
+              style: AppTextStyles.caption,
+            ),
+            Text(
+              '${LocaleFormatters.formatNumber(context, booking.completedBookingsCount, decimalDigits: 0)} / ${LocaleFormatters.formatNumber(context, booking.totalBookingsCount, decimalDigits: 0)}',
               style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.navyDeep,
@@ -227,10 +249,9 @@ class RecurringBookingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildNextBookingSection() {
+  Widget _buildNextBookingSection(BuildContext context) {
     if (booking.nextBookingDate == null) return const SizedBox.shrink();
 
-    final dateFormat = DateFormat('EEE, MMM d');
     final isPaid = booking.nextBookingPaid ?? false;
 
     return Container(
@@ -260,13 +281,17 @@ class RecurringBookingCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Next Booking',
+                  context.l10n.nextBooking,
                   style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
                 Text(
-                  dateFormat.format(booking.nextBookingDate!),
+                  LocaleFormatters.formatDate(
+                    context,
+                    booking.nextBookingDate!,
+                    pattern: 'EEE, MMM d',
+                  ),
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.navyDeep,
@@ -282,7 +307,7 @@ class RecurringBookingCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              isPaid ? 'Paid' : 'Pay Now',
+              isPaid ? context.l10n.paidLabel : context.l10n.payNow,
               style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -294,7 +319,7 @@ class RecurringBookingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildCancelButton() {
+  Widget _buildCancelButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: SizedBox(
@@ -316,13 +341,17 @@ class RecurringBookingCard extends StatelessWidget {
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
               : const Icon(Icons.cancel_outlined, size: 18),
-          label: Text(isProcessing ? 'Canceling...' : 'Cancel Subscription'),
+          label: Text(
+            isProcessing
+                ? context.l10n.cancelingSubscription
+                : context.l10n.cancelSubscription,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildPendingMessage() {
+  Widget _buildPendingMessage(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(12),
@@ -341,7 +370,7 @@ class RecurringBookingCard extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              'Waiting for owner approval. You\'ll be notified once approved.',
+              context.l10n.pendingApprovalMessage,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.goldAccent.withValues(alpha: 0.9),
               ),
@@ -352,7 +381,7 @@ class RecurringBookingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRejectionMessage() {
+  Widget _buildRejectionMessage(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(12),
@@ -369,7 +398,7 @@ class RecurringBookingCard extends StatelessWidget {
               const Icon(Icons.block_rounded, color: AppColors.error, size: 20),
               const SizedBox(width: 10),
               Text(
-                'Request Rejected',
+                context.l10n.requestRejected,
                 style: AppTextStyles.labelMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppColors.error,

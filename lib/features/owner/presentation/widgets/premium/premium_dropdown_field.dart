@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium dropdown field.
 ///
@@ -33,8 +34,7 @@ class PremiumDropdownField<T> extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
@@ -53,8 +53,7 @@ class PremiumDropdownField<T> extends StatelessWidget {
                 value: item,
                 child: Text(
                   itemLabel(item),
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textPrimary,
                   ),
                 ),

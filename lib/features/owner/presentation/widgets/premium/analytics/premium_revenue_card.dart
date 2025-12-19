@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium Revenue Card with gradient design.
 ///
@@ -85,19 +86,17 @@ class PremiumRevenueCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Total Revenue',
-              style: TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textOnNavySecondary,
-                fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Text(
               periodLabel,
-              style: const TextStyle(
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textOnNavySecondary,
-                fontSize: 12,
               ),
             ),
           ],
@@ -114,9 +113,8 @@ class PremiumRevenueCard extends StatelessWidget {
       builder: (context, value, child) {
         return Text(
           '${value.toStringAsFixed(0)} $currency',
-          style: const TextStyle(
+          style: AppTextStyles.displaySmall.copyWith(
             color: Colors.white,
-            fontSize: 36,
             fontWeight: FontWeight.w800,
             letterSpacing: -1,
           ),
@@ -149,20 +147,18 @@ class PremiumRevenueCard extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             '${isPositive ? '+' : ''}${growthPercentage.toStringAsFixed(1)}%',
-            style: TextStyle(
+            style: AppTextStyles.bodyMedium.copyWith(
               color: isPositive
                   ? const Color(0xFF10B981)
                   : const Color(0xFFEF4444),
-              fontSize: 14,
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(width: 6),
           Text(
             'vs last period',
-            style: TextStyle(
+            style: AppTextStyles.labelSmall.copyWith(
               color: AppColors.textOnNavySecondary.withValues(alpha: 0.8),
-              fontSize: 12,
             ),
           ),
         ],

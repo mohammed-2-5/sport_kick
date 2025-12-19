@@ -11,6 +11,7 @@ import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_reserve
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/create_recurring_cubit.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/create_recurring_state.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/create_recurring_content.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Page for creating a new recurring booking request.
 class CreateRecurringPage extends StatefulWidget {
@@ -65,9 +66,9 @@ class _CreateRecurringPageState extends State<CreateRecurringPage> {
             color: AppColors.navyDeep,
             onPressed: () => context.pop(),
           ),
-          title: const Text(
-            'Reserve Weekly Slot',
-            style: TextStyle(
+          title: Text(
+            context.l10n.reserveWeeklySlot,
+            style: const TextStyle(
               color: AppColors.navyDeep,
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -142,20 +143,22 @@ class _CreateRecurringPageState extends State<CreateRecurringPage> {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'Request Submitted!',
-              style: TextStyle(
+            Text(
+              context.l10n.recurringRequestSubmittedTitle,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: AppColors.navyDeep,
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'Your recurring booking request has been sent to the field owner. '
-              'You\'ll be notified once it\'s approved.',
+            Text(
+              context.l10n.recurringRequestSubmittedBody,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textSecondary,
+              ),
             ),
             const SizedBox(height: 24),
             SizedBox(
@@ -173,9 +176,9 @@ class _CreateRecurringPageState extends State<CreateRecurringPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'View My Subscriptions',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                child: Text(
+                  context.l10n.viewMySubscriptions,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ),

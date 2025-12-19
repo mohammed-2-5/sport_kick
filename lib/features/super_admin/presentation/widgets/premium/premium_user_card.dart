@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium user card for super admin user management.
@@ -119,8 +120,7 @@ class PremiumUserCard extends StatelessWidget {
                     child: Center(
                       child: Text(
                         _initials,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
@@ -152,8 +152,7 @@ class PremiumUserCard extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: const TextStyle(
-                        fontSize: 15,
+                      style: AppTextStyles.bodyLarge.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
@@ -163,8 +162,7 @@ class PremiumUserCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       email,
-                      style: TextStyle(
-                        fontSize: 13,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.textSecondary.withValues(alpha: 0.8),
                       ),
                       maxLines: 1,
@@ -248,8 +246,7 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         isActive ? 'Active' : 'Inactive',
-        style: TextStyle(
-          fontSize: 11,
+        style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w600,
           color: isActive ? Colors.green : Colors.grey,
         ),
@@ -280,8 +277,7 @@ class _StatChip extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.8),
             ),
           ),
@@ -327,8 +323,7 @@ class _ActionButton extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
                 color: color,
               ),

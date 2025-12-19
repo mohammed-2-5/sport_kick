@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
 
 /// Badge displaying payment status with appropriate color and icon.
@@ -34,7 +35,7 @@ class PaymentStatusBadge extends StatelessWidget {
           SizedBox(width: isCompact ? 4 : 6),
           Text(
             status.displayName,
-            style: TextStyle(
+            style: AppTextStyles.labelSmall.copyWith(
               fontSize: isCompact ? 10 : 12,
               fontWeight: FontWeight.w600,
               color: _textColor,

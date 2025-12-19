@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Error state view for notifications.
 ///
@@ -45,7 +46,7 @@ class NotificationErrorView extends StatelessWidget {
                 backgroundColor: AppColors.accentCyan,
                 foregroundColor: Colors.black,
               ),
-              child: const Text('Retry'),
+              child: Text(context.l10n.retry),
             ),
           ],
         ),

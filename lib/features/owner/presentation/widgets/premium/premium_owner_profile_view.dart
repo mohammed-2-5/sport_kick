@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -166,8 +167,7 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
           const SizedBox(height: 16),
           Text(
             state.message,
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -208,18 +208,22 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           context.l10n.logoutTitle,
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
         content: Text(
           context.l10n.logoutMessage,
-          style: const TextStyle(fontSize: 15, color: AppColors.textSecondary),
+          style: AppTextStyles.bodyLarge.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
               context.l10n.cancel,
-              style: const TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,
               ),
@@ -240,7 +244,9 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
             ),
             child: Text(
               context.l10n.logoutTitle,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],

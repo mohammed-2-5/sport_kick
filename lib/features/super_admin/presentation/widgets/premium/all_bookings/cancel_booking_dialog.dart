@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 
 /// Dialog for cancelling a booking with reason.
@@ -112,22 +113,24 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
             ),
           ),
           const SizedBox(width: 16),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Cancel Booking',
-                  style: TextStyle(
+                  style: AppTextStyles.titleLarge.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: AppColors.white,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   'This action cannot be undone',
-                  style: TextStyle(fontSize: 13, color: AppColors.textOnNavy),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.textOnNavy,
+                  ),
                 ),
               ],
             ),
@@ -164,16 +167,14 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                     children: [
                       Text(
                         widget.booking.fieldName ?? 'Unknown Field',
-                        style: const TextStyle(
-                          fontSize: 14,
+                        style: AppTextStyles.titleSmall.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
                         ),
                       ),
                       Text(
                         '${widget.booking.formattedDate} • ${widget.booking.formattedTimeSlot}',
-                        style: const TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -185,10 +186,9 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
           ),
           const SizedBox(height: 20),
 
-          const Text(
+          Text(
             'Cancellation Reason *',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -252,9 +252,9 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Keep Booking',
-                style: TextStyle(
+                style: AppTextStyles.button.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -283,9 +283,11 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                         color: AppColors.white,
                       ),
                     )
-                  : const Text(
+                  : Text(
                       'Cancel Booking',
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                      style: AppTextStyles.button.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
             ),
           ),

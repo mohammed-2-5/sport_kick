@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/field_status_badge.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/metric_chip.dart';
@@ -68,8 +69,7 @@ class FieldCard extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 field.name,
-                                style: const TextStyle(
-                                  fontSize: 18,
+                                style: AppTextStyles.titleMedium.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                                 maxLines: 2,
@@ -92,9 +92,8 @@ class FieldCard extends StatelessWidget {
                             const SizedBox(width: 4),
                             Text(
                               field.city,
-                              style: TextStyle(
+                              style: AppTextStyles.bodyMedium.copyWith(
                                 color: Colors.grey[600],
-                                fontSize: 14,
                               ),
                             ),
                           ],
@@ -102,9 +101,8 @@ class FieldCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           field.formattedPrice,
-                          style: TextStyle(
+                          style: AppTextStyles.titleSmall.copyWith(
                             color: Theme.of(context).colorScheme.primary,
-                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -148,7 +146,9 @@ class FieldCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       'Owner ID: ${field.ownerId!.substring(0, 8)}...',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: Colors.grey[600],
+                      ),
                     ),
                   ],
                 ),

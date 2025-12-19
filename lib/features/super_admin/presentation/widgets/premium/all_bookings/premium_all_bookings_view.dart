@@ -326,7 +326,10 @@ class _PremiumTabBar extends StatelessWidget {
         indicatorSize: TabBarIndicatorSize.tab,
         labelColor: Colors.white,
         unselectedLabelColor: AppColors.textSecondary,
-        labelStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+        labelStyle: AppTextStyles.labelMedium.copyWith(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+        ),
         dividerColor: Colors.transparent,
         padding: const EdgeInsets.all(4),
         tabs: tabs.map((tab) => Tab(text: tab.label)).toList(),
@@ -413,7 +416,7 @@ class _SearchBar extends StatelessWidget {
         onChanged: onChanged,
         decoration: InputDecoration(
           hintText: 'Search by user or field...',
-          hintStyle: TextStyle(
+          hintStyle: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondary.withValues(alpha: 0.6),
           ),
           prefixIcon: Icon(

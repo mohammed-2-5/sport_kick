@@ -265,7 +265,7 @@ void main() {
     });
 
     test('formatCurrency formats small amounts correctly', () {
-      expect(cubit.formatCurrency(500), '500 EGP');
+      expect(cubit.formatCurrency(500), 'EGP 500');
     });
   });
 

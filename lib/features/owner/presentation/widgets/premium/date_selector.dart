@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Date selector widget for booking forms.
 ///
@@ -96,9 +98,8 @@ class DateCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              DateFormat('EEE').format(date),
-              style: TextStyle(
-                fontSize: 12,
+              DateFormat.E(context.l10n.localeName).format(date),
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w500,
                 color: isSelected ? Colors.white : AppColors.textSecondary,
               ),
@@ -106,17 +107,15 @@ class DateCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               date.day.toString(),
-              style: TextStyle(
-                fontSize: 22,
+              style: AppTextStyles.headlineSmall.copyWith(
                 fontWeight: FontWeight.w700,
                 color: isSelected ? Colors.white : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 2),
             Text(
-              DateFormat('MMM').format(date),
-              style: TextStyle(
-                fontSize: 11,
+              DateFormat.MMM(context.l10n.localeName).format(date),
+              style: AppTextStyles.labelSmall.copyWith(
                 color: isSelected
                     ? Colors.white.withValues(alpha: 0.9)
                     : AppColors.textSecondary,

@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
 
@@ -46,7 +48,7 @@ class OwnerRevenueTrendsChart extends StatelessWidget {
       return Center(
         child: Text(
           context.l10n.noDataAvailablePeriod,
-          style: const TextStyle(color: Colors.grey),
+          style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
         ),
       );
     }
@@ -61,8 +63,13 @@ class OwnerRevenueTrendsChart extends StatelessWidget {
               reservedSize: AnalyticsConstants.leftAxisReservedSize,
               getTitlesWidget: (value, meta) {
                 return Text(
-                  '${value.toInt()} EGP',
-                  style: const TextStyle(
+                  LocaleFormatters.formatPrice(
+                    context,
+                    amount: value,
+                    currency: context.l10n.currencyEgp,
+                    decimalDigits: 0,
+                  ),
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontSize: AnalyticsConstants.chartAxisFontSize,
                   ),
                 );
@@ -73,7 +80,7 @@ class OwnerRevenueTrendsChart extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: (value, meta) {
-                return _buildMonthLabel(value.toInt());
+                return _buildMonthLabel(context, value.toInt());
               },
             ),
           ),
@@ -119,15 +126,17 @@ class OwnerRevenueTrendsChart extends StatelessWidget {
     return spots;
   }
 
-  Widget _buildMonthLabel(int index) {
+  Widget _buildMonthLabel(BuildContext context, int index) {
     final now = DateTime.now();
     final monthIndex =
         now.month - (AnalyticsConstants.monthsToShow - 1) + index;
     final month = monthIndex <= 0 ? monthIndex + 12 : monthIndex;
 
     return Text(
-      AnalyticsConstants.monthAbbreviations[month],
-      style: const TextStyle(fontSize: AnalyticsConstants.chartAxisFontSize),
+      AnalyticsConstants.monthLabel(context, month),
+      style: AppTextStyles.labelSmall.copyWith(
+        fontSize: AnalyticsConstants.chartAxisFontSize,
+      ),
     );
   }
 }
@@ -175,14 +184,14 @@ class _ChartCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontSize: AnalyticsConstants.chartTitleFontSize,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         subtitle,
-                        style: TextStyle(
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontSize: AnalyticsConstants.chartAxisFontSize,
                           color: Colors.grey[600],
                         ),

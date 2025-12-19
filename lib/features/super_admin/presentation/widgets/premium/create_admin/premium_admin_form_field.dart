@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium form field for admin creation form.
 ///
@@ -44,8 +45,7 @@ class PremiumAdminFormField extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.labelLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -54,8 +54,7 @@ class PremiumAdminFormField extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 '*',
-                style: TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: Colors.red.shade400,
                 ),
@@ -72,10 +71,13 @@ class PremiumAdminFormField extends StatelessWidget {
             HapticFeedback.selectionClick();
             onChanged(value);
           },
-          style: const TextStyle(fontSize: 15, color: AppColors.textPrimary),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontSize: 15,
+            color: AppColors.textPrimary,
+          ),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(
+            hintStyle: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.6),
             ),
             prefixIcon: Icon(
@@ -125,7 +127,9 @@ class PremiumAdminFormField extends StatelessWidget {
               Expanded(
                 child: Text(
                   errorText!,
-                  style: TextStyle(fontSize: 12, color: Colors.red.shade400),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: Colors.red.shade400,
+                  ),
                 ),
               ),
             ],

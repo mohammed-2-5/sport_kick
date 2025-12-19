@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 import 'package:spo_kick/features/city/presentation/widgets/city_card.dart';
 
@@ -23,7 +24,7 @@ class CitySelectionGrid extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            CityConstants.citySelectionSubtitle,
+            context.l10n.citySelectionSubtitle,
             style: Theme.of(
               context,
             ).textTheme.bodyLarge?.copyWith(color: Colors.black54),

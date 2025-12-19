@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/presentation/constants/analytics_constants.dart';
 
+import '../../../../../core/constants/app_text_styles.dart';
+
 /// Owner Revenue by Field Chart
 ///
 /// Bar chart showing revenue breakdown by field
@@ -38,7 +40,7 @@ class OwnerRevenueByFieldChart extends StatelessWidget {
       return Center(
         child: Text(
           context.l10n.noDataAvailablePeriod,
-          style: const TextStyle(color: Colors.grey),
+          style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
         ),
       );
     }
@@ -86,7 +88,7 @@ class OwnerRevenueByFieldChart extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${value.toInt()}',
-                  style: const TextStyle(
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontSize: AnalyticsConstants.chartAxisFontSize,
                   ),
                 );
@@ -138,7 +140,7 @@ class OwnerRevenueByFieldChart extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8),
       child: Text(
         'F${index + 1}',
-        style: const TextStyle(
+        style: AppTextStyles.labelSmall.copyWith(
           fontSize: AnalyticsConstants.chartAxisFontSize,
           fontWeight: FontWeight.bold,
         ),
@@ -196,14 +198,14 @@ class _ChartCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontSize: AnalyticsConstants.chartTitleFontSize,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         subtitle,
-                        style: TextStyle(
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontSize: AnalyticsConstants.chartAxisFontSize,
                           color: Colors.grey[600],
                         ),

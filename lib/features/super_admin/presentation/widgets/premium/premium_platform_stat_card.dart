@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium platform statistics card for super admin dashboard.
 ///
@@ -130,8 +131,7 @@ class _PremiumPlatformStatCardState extends State<PremiumPlatformStatCard>
                           const SizedBox(width: 4),
                           Text(
                             widget.trend!,
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               fontWeight: FontWeight.w600,
                               color: Colors.white,
                             ),
@@ -145,8 +145,7 @@ class _PremiumPlatformStatCardState extends State<PremiumPlatformStatCard>
               // Value
               Text(
                 widget.value,
-                style: const TextStyle(
-                  fontSize: 28,
+                style: AppTextStyles.headlineMedium.copyWith(
                   fontWeight: FontWeight.w800,
                   color: Colors.white,
                 ),
@@ -155,8 +154,7 @@ class _PremiumPlatformStatCardState extends State<PremiumPlatformStatCard>
               // Label
               Text(
                 widget.label,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.labelMedium.copyWith(
                   fontWeight: FontWeight.w500,
                   color: Colors.white.withValues(alpha: 0.9),
                 ),

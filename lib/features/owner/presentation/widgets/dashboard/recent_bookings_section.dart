@@ -4,6 +4,8 @@ import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
+import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Recent bookings section for Owner Dashboard
 ///
@@ -29,17 +31,17 @@ class RecentBookingsSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Recent Bookings',
+              context.l10n.recentBookings,
               style: AppTextStyles.appBarTitle.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            TextButton(onPressed: onViewAll, child: const Text('View All')),
+            TextButton(onPressed: onViewAll, child: Text(context.l10n.viewAll)),
           ],
         ),
         const SizedBox(height: 16),
         if (recentBookings.isEmpty)
-          _buildEmptyState()
+          _buildEmptyState(context)
         else
           ListView.builder(
             shrinkWrap: true,
@@ -53,7 +55,7 @@ class RecentBookingsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
@@ -70,14 +72,14 @@ class RecentBookingsSection extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No bookings yet',
+            context.l10n.noBookingsYet,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Bookings will appear here once customers start booking your fields',
+            context.l10n.bookingsWillAppearMessage,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
@@ -131,17 +133,15 @@ class _BookingItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  booking.fieldName ?? 'Unknown Field',
-                  style: const TextStyle(
-                    fontSize: 16,
+                  booking.fieldName ?? context.l10n.unknownField,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   booking.formattedDate,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -151,13 +151,12 @@ class _BookingItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              gradient: _getStatusGradient(booking.status.toString()),
+              gradient: _getStatusGradient(booking.status),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              booking.status.toString().split('.').last.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 11,
+              _statusLabel(context, booking.status),
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
                 letterSpacing: 0.5,
@@ -169,17 +168,28 @@ class _BookingItem extends StatelessWidget {
     );
   }
 
-  LinearGradient _getStatusGradient(String status) {
-    if (status.contains('confirmed')) {
-      return AppGradients.success;
-    } else if (status.contains('pending')) {
-      return AppGradients.warning;
-    } else if (status.contains('canceled')) {
-      return AppGradients.error;
-    } else {
-      return const LinearGradient(
-        colors: [Color(0xFF9E9E9E), Color(0xFFBDBDBD)],
-      );
+  LinearGradient _getStatusGradient(BookingStatus status) {
+    switch (status) {
+      case BookingStatus.confirmed:
+      case BookingStatus.completed:
+        return AppGradients.success;
+      case BookingStatus.pending:
+        return AppGradients.warning;
+      case BookingStatus.canceled:
+        return AppGradients.error;
+    }
+  }
+
+  String _statusLabel(BuildContext context, BookingStatus status) {
+    switch (status) {
+      case BookingStatus.pending:
+        return context.l10n.statusPending;
+      case BookingStatus.confirmed:
+        return context.l10n.statusConfirmed;
+      case BookingStatus.completed:
+        return context.l10n.statusCompleted;
+      case BookingStatus.canceled:
+        return context.l10n.statusCancelled;
     }
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -9,6 +10,7 @@ import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/owner/presentation/constants/owner_ui_constants.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/duration_selector.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Step 1 of manual booking flow: Booking Details
 ///
@@ -68,7 +70,7 @@ class BookingStepOneWidget extends StatelessWidget {
                     context.read<FieldsCubit>().loadAllFields();
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: Text(context.l10n.retry),
                 ),
               ],
             ),
@@ -84,14 +86,14 @@ class BookingStepOneWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Booking Details',
+                  context.l10n.bookingDetailsTitle,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: OwnerUIConstants.spacingSmall),
                 Text(
-                  'Select field, date, time, and price',
+                  context.l10n.bookingDetailsSubtitle,
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
@@ -100,7 +102,7 @@ class BookingStepOneWidget extends StatelessWidget {
 
                 // Field selection
                 Text(
-                  'Select Field',
+                  context.l10n.selectField,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -113,13 +115,13 @@ class BookingStepOneWidget extends StatelessWidget {
                   ),
                   child: DropdownButtonFormField<FieldEntity>(
                     initialValue: selectedField,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 12,
                       ),
-                      hintText: 'Choose a field',
+                      hintText: context.l10n.chooseField,
                     ),
                     items: fields.map((field) {
                       return DropdownMenuItem(
@@ -135,7 +137,7 @@ class BookingStepOneWidget extends StatelessWidget {
 
                 // Date selection
                 Text(
-                  'Select Date',
+                  context.l10n.selectDate,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -165,12 +167,13 @@ class BookingStepOneWidget extends StatelessWidget {
                         const SizedBox(width: 12),
                         Text(
                           selectedDate == null
-                              ? 'Choose a date'
-                              : DateFormat(
-                                  'EEEE, MMM d, y',
-                                ).format(selectedDate!),
-                          style: TextStyle(
-                            fontSize: 16,
+                              ? context.l10n.chooseDate
+                              : LocaleFormatters.formatDate(
+                                  context,
+                                  selectedDate!,
+                                  pattern: 'EEEE, MMM d, y',
+                                ),
+                          style: AppTextStyles.bodyLarge.copyWith(
                             color: selectedDate == null
                                 ? Colors.grey[600]
                                 : Colors.black,
@@ -185,7 +188,7 @@ class BookingStepOneWidget extends StatelessWidget {
 
                 // Duration selection
                 Text(
-                  'Booking Duration',
+                  context.l10n.bookingDuration,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -200,7 +203,7 @@ class BookingStepOneWidget extends StatelessWidget {
 
                 // Time slot selection
                 Text(
-                  'Start Time',
+                  context.l10n.selectTime,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -208,7 +211,7 @@ class BookingStepOneWidget extends StatelessWidget {
                 const SizedBox(height: 12),
                 _buildTimeDropdown(
                   context,
-                  'Select start time',
+                  context.l10n.selectTime,
                   selectedStartTime,
                   onStartTimeChanged,
                 ),
@@ -234,9 +237,14 @@ class BookingStepOneWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'End time: $selectedEndTime ($durationHours hour${durationHours > 1 ? 's' : ''})',
-                          style: const TextStyle(
-                            fontSize: 14,
+                          context.l10n.endTimeLabel(
+                            durationHours,
+                            LocaleFormatters.formatTime(
+                              context,
+                              selectedEndTime!,
+                            ),
+                          ),
+                          style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.w500,
                             color: AppColors.navyDeep,
                           ),
@@ -250,7 +258,7 @@ class BookingStepOneWidget extends StatelessWidget {
 
                 // Calculated price display
                 Text(
-                  'Total Price',
+                  context.l10n.totalPrice,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -278,19 +286,29 @@ class BookingStepOneWidget extends StatelessWidget {
                         children: [
                           Text(
                             totalPrice != null
-                                ? '${totalPrice!.toStringAsFixed(0)} EGP'
-                                : 'Select field to see price',
-                            style: const TextStyle(
-                              fontSize: 20,
+                                ? LocaleFormatters.formatPrice(
+                                    context,
+                                    amount: totalPrice!,
+                                    currency: context.l10n.currencyEgp,
+                                    decimalDigits: 0,
+                                  )
+                                : context.l10n.selectFieldToSeePrice,
+                            style: AppTextStyles.titleMedium.copyWith(
                               fontWeight: FontWeight.w700,
                               color: AppColors.navyDeep,
                             ),
                           ),
                           if (selectedField != null && totalPrice != null)
                             Text(
-                              '${selectedField!.pricePerHour.toStringAsFixed(0)} EGP/hour × $durationHours hour${durationHours > 1 ? 's' : ''}',
-                              style: TextStyle(
-                                fontSize: 12,
+                              context.l10n.priceCalculation(
+                                durationHours,
+                                LocaleFormatters.formatNumber(
+                                  context,
+                                  selectedField!.pricePerHour,
+                                  decimalDigits: 0,
+                                ),
+                              ),
+                              style: AppTextStyles.labelSmall.copyWith(
                                 color: Colors.grey[600],
                               ),
                             ),
@@ -306,7 +324,7 @@ class BookingStepOneWidget extends StatelessWidget {
           );
         }
 
-        return const Center(child: Text('No fields available'));
+        return Center(child: Text(context.l10n.noFieldsAvailable));
       },
     );
   }
@@ -355,7 +373,7 @@ class BookingStepOneWidget extends StatelessWidget {
                 value: time,
                 child: Row(
                   children: [
-                    Text(time),
+                    Text(LocaleFormatters.formatTime(context, time)),
                     if (bookingState is TimeSlotsLoaded)
                       const SizedBox(width: 8),
                     if (bookingState is TimeSlotsLoaded)
@@ -371,8 +389,10 @@ class BookingStepOneWidget extends StatelessWidget {
             onChanged: timeSlots.isEmpty ? null : onChanged,
             hint: Text(
               bookingState is BookingLoading
-                  ? 'Loading slots...'
-                  : (timeSlots.isEmpty ? 'No slots available' : 'Select time'),
+                  ? context.l10n.loading
+                  : (timeSlots.isEmpty
+                        ? context.l10n.noSlotsAvailable
+                        : context.l10n.selectTime),
             ),
           ),
         );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/premium_admin_card.dart';
 
@@ -245,8 +246,7 @@ class _EmptyState extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             message,
-            style: const TextStyle(
-              fontSize: 18,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -254,8 +254,7 @@ class _EmptyState extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'Try adjusting your search or filters',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),
           ),

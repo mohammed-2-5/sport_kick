@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_state.dart';
@@ -131,8 +132,7 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
           const SizedBox(height: 16),
           Text(
             context.l10n.failedToLoadFields,
-            style: const TextStyle(
-              fontSize: 18,
+            style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -191,8 +191,7 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
             const SizedBox(width: 10),
             Text(
               context.l10n.addField,
-              style: const TextStyle(
-                fontSize: 16,
+              style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
               ),
@@ -229,18 +228,22 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           context.l10n.deleteFieldTitle,
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
         content: Text(
           context.l10n.deleteFieldMessage(fieldName),
-          style: const TextStyle(fontSize: 15, color: AppColors.textSecondary),
+          style: AppTextStyles.bodyLarge.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: Text(
               context.l10n.cancel,
-              style: const TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,
               ),
@@ -258,7 +261,9 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
             ),
             child: Text(
               context.l10n.delete,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],

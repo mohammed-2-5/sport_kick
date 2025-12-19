@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium chart card container.
@@ -40,8 +41,7 @@ class PremiumChartCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
-                        fontSize: 17,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
@@ -50,8 +50,7 @@ class PremiumChartCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         subtitle!,
-                        style: TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textSecondary.withValues(alpha: 0.7),
                         ),
                       ),
@@ -101,14 +100,15 @@ class ChartLegendItem extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(fontSize: 13, color: AppColors.textPrimary),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textPrimary,
+            ),
           ),
         ),
         if (value != null)
           Text(
             value!,
-            style: const TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodySmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),

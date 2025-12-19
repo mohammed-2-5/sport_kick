@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
 
@@ -48,22 +49,20 @@ class PremiumOwnerProfileStats extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Total Revenue',
-                        style: TextStyle(
-                          fontSize: 14,
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       Text(
                         'This Month',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -79,15 +78,18 @@ class PremiumOwnerProfileStats extends StatelessWidget {
                     color: Colors.green.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.trending_up, size: 14, color: Colors.green),
-                      SizedBox(width: 4),
+                      const Icon(
+                        Icons.trending_up,
+                        size: 14,
+                        color: Colors.green,
+                      ),
+                      const SizedBox(width: 4),
                       Text(
                         '+12%',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.labelSmall.copyWith(
                           fontWeight: FontWeight.w600,
                           color: Colors.green,
                         ),
@@ -107,8 +109,7 @@ class PremiumOwnerProfileStats extends StatelessWidget {
               ).createShader(bounds),
               child: Text(
                 '\$${revenue?.totalRevenue.toStringAsFixed(0) ?? '0'}',
-                style: const TextStyle(
-                  fontSize: 36,
+                style: AppTextStyles.displaySmall.copyWith(
                   fontWeight: FontWeight.w800,
                   color: Colors.white,
                 ),

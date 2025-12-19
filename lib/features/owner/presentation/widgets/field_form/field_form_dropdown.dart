@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class FieldFormDropdown extends StatelessWidget {
   final String label;
@@ -8,6 +9,7 @@ class FieldFormDropdown extends StatelessWidget {
   final List<String> items;
   final IconData icon;
   final void Function(String?) onChanged;
+  final String Function(String)? itemLabelBuilder;
 
   const FieldFormDropdown({
     required this.label,
@@ -15,6 +17,7 @@ class FieldFormDropdown extends StatelessWidget {
     required this.items,
     required this.icon,
     required this.onChanged,
+    this.itemLabelBuilder,
     super.key,
   });
 
@@ -37,7 +40,7 @@ class FieldFormDropdown extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             label,
-            style: const TextStyle(
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
               fontWeight: FontWeight.w600,
             ),
@@ -46,7 +49,12 @@ class FieldFormDropdown extends StatelessWidget {
           DropdownButton<String>(
             value: value,
             items: items
-                .map((item) => DropdownMenuItem(value: item, child: Text(item)))
+                .map(
+                  (item) => DropdownMenuItem(
+                    value: item,
+                    child: Text(itemLabelBuilder?.call(item) ?? item),
+                  ),
+                )
                 .toList(),
             onChanged: onChanged,
             underline: const SizedBox.shrink(),

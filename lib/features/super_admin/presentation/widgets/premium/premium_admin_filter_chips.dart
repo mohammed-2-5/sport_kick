@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium filter chips for admin lists.
 ///
@@ -142,8 +143,7 @@ class _FilterChipState extends State<_FilterChip>
             children: [
               Text(
                 widget.label,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.labelMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: widget.isSelected
                       ? Colors.white
@@ -161,8 +161,7 @@ class _FilterChipState extends State<_FilterChip>
                 ),
                 child: Text(
                   '${widget.count}',
-                  style: TextStyle(
-                    fontSize: 11,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w700,
                     color: widget.isSelected
                         ? Colors.white

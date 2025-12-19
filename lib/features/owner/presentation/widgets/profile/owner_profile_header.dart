@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Header section for owner profile page.
 ///
@@ -83,19 +85,18 @@ class OwnerProfileHeader extends StatelessWidget {
               ),
             ],
           ),
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              const Icon(
                 Icons.business_center_rounded,
                 size: 16,
                 color: Colors.white,
               ),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Text(
-                'FIELD OWNER',
-                style: TextStyle(
-                  fontSize: 13,
+                context.l10n.fieldOwnerRole.toUpperCase(),
+                style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   letterSpacing: 0.8,
@@ -122,8 +123,7 @@ class OwnerProfileHeader extends StatelessWidget {
       child: Center(
         child: Text(
           user.initials,
-          style: const TextStyle(
-            fontSize: 40,
+          style: AppTextStyles.displaySmall.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.warning,
           ),

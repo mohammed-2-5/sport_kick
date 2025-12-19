@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Header card for the create field form
 class FieldFormHeader extends StatelessWidget {
@@ -16,26 +17,27 @@ class FieldFormHeader extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: AppShadows.medium,
       ),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(Icons.add_business_rounded, size: 32, color: Colors.white),
-          SizedBox(width: 16),
+          const Icon(Icons.add_business_rounded, size: 32, color: Colors.white),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Create New Field',
-                  style: TextStyle(
-                    fontSize: 18,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   'Fill in details and assign to admin',
-                  style: TextStyle(fontSize: 14, color: Colors.white70),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: Colors.white70,
+                  ),
                 ),
               ],
             ),

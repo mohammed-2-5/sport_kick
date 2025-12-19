@@ -5,7 +5,6 @@ import 'package:spo_kick/features/business_hours/domain/usecases/initialize_defa
 import 'package:spo_kick/features/business_hours/domain/usecases/is_field_currently_open_usecase.dart';
 import 'package:spo_kick/features/business_hours/domain/usecases/update_business_hours_usecase.dart';
 import 'package:spo_kick/features/business_hours/domain/usecases/validate_booking_time_usecase.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 import 'package:spo_kick/features/business_hours/presentation/cubit/business_hours_state.dart';
 
 /// Cubit for managing business hours state and operations.
@@ -131,7 +130,7 @@ class BusinessHoursCubit extends Cubit<BusinessHoursState> {
         emit(
           BusinessHoursUpdated(
             businessHours: currentBusinessHours,
-            message: BusinessHoursStrings.hoursUpdatedSuccess,
+            message: null,
           ),
         );
 
@@ -192,12 +191,7 @@ class BusinessHoursCubit extends Cubit<BusinessHoursState> {
     }
 
     // All updates successful - reload full business hours
-    emit(
-      const BusinessHoursUpdated(
-        businessHours: [],
-        message: BusinessHoursStrings.hoursUpdatedSuccess,
-      ),
-    );
+    emit(const BusinessHoursUpdated(businessHours: [], message: null));
 
     Future.delayed(const Duration(milliseconds: 300), () {
       getFieldBusinessHours(fieldId: fieldId);
@@ -250,12 +244,7 @@ class BusinessHoursCubit extends Cubit<BusinessHoursState> {
         emit(BusinessHoursValidated(isValid: false, message: failure.message));
       },
       (isValid) {
-        emit(
-          BusinessHoursValidated(
-            isValid: isValid,
-            message: isValid ? null : 'Time is outside business hours',
-          ),
-        );
+        emit(BusinessHoursValidated(isValid: isValid, message: null));
       },
     );
   }

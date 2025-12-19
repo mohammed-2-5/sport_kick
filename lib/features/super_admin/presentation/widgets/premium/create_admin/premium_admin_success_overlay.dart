@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
 
@@ -122,9 +123,9 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
 
                 const SizedBox(height: 24),
 
-                const Text(
+                Text(
                   'Admin Created Successfully!',
-                  style: TextStyle(
+                  style: AppTextStyles.titleLarge.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -136,8 +137,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
 
                 Text(
                   'Share these credentials securely',
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
                 ),
@@ -198,7 +198,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                       Expanded(
                         child: Text(
                           'Admin must change password on first login',
-                          style: TextStyle(
+                          style: AppTextStyles.bodyMedium.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                             color: Colors.orange.shade700,
@@ -260,16 +260,14 @@ class _CredentialRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 isPassword ? value : value,
-                style: TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                   fontFamily: isPassword ? 'monospace' : null,

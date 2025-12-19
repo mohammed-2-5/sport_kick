@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium logout confirmation dialog.
 ///
@@ -102,9 +103,9 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                 const SizedBox(height: 20),
 
                 // Title
-                const Text(
+                Text(
                   'Logout?',
-                  style: TextStyle(
+                  style: AppTextStyles.titleLarge.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -117,8 +118,7 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                 Text(
                   'Are you sure you want to logout?\nYou will need to login again to access the admin panel.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                     height: 1.4,
                   ),
@@ -142,10 +142,10 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: AppColors.border),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Cancel',
-                              style: TextStyle(
+                              style: AppTextStyles.titleMedium.copyWith(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textSecondary,
@@ -168,10 +168,10 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Logout',
-                              style: TextStyle(
+                              style: AppTextStyles.titleMedium.copyWith(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/settings_section.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/settings_tile.dart';
 import 'package:spo_kick/features/settings/presentation/constants/settings_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// About section widget for owner settings page.
 class OwnerAboutSection extends StatelessWidget {
@@ -14,7 +16,7 @@ class OwnerAboutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsSection(
-      title: 'About',
+      title: context.l10n.about,
       icon: Icons.info_outline,
       children: [
         SettingsTile(
@@ -22,7 +24,7 @@ class OwnerAboutSection extends StatelessWidget {
             Icons.privacy_tip_outlined,
             color: AppColors.info,
           ),
-          title: 'Privacy Policy',
+          title: context.l10n.privacyPolicy,
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
             context.pushNamed('privacyPolicy');
@@ -34,7 +36,7 @@ class OwnerAboutSection extends StatelessWidget {
             Icons.description_outlined,
             color: AppColors.info,
           ),
-          title: 'Terms of Service',
+          title: context.l10n.termsOfService,
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
             context.pushNamed('termsOfService');
@@ -43,7 +45,7 @@ class OwnerAboutSection extends StatelessWidget {
         const SizedBox(height: 8),
         SettingsTile(
           leading: const Icon(Icons.help_outline, color: AppColors.warning),
-          title: 'Help & Support',
+          title: context.l10n.helpSupport,
           trailing: const Icon(Icons.email),
           onTap: () => _launchUrl(
             context,
@@ -51,12 +53,14 @@ class OwnerAboutSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        const SettingsTile(
-          leading: Icon(Icons.info, color: AppColors.mediumGrey),
-          title: 'Version',
+        SettingsTile(
+          leading: const Icon(Icons.info, color: AppColors.mediumGrey),
+          title: context.l10n.version,
           trailing: Text(
             '1.0.0',
-            style: TextStyle(color: AppColors.textSecondary),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ),
       ],
@@ -70,11 +74,14 @@ class OwnerAboutSection extends StatelessWidget {
         await launchUrl(url, mode: LaunchMode.externalApplication);
       } else {
         if (!context.mounted) return;
-        SnackbarHelper.showError(context, 'Could not open the link');
+        SnackbarHelper.showError(context, context.l10n.couldNotOpenLink);
       }
     } catch (e) {
       if (!context.mounted) return;
-      SnackbarHelper.showError(context, 'Error opening link: $e');
+      SnackbarHelper.showError(
+        context,
+        context.l10n.errorOpeningLink(e.toString()),
+      );
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 
 /// Statistics card widget for user details page
@@ -33,9 +34,8 @@ class UserStatsCard extends StatelessWidget {
           const SizedBox(height: AdminUIConstants.spacingSmall),
           Text(
             value,
-            style: TextStyle(
-              fontSize: AdminUIConstants.statCardValueSize,
-              fontWeight: AdminUIConstants.fontWeightBold,
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
               color: color,
             ),
             textAlign: TextAlign.center,
@@ -45,10 +45,7 @@ class UserStatsCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: AdminUIConstants.statCardLabelSize,
-              color: Colors.grey[600],
-            ),
+            style: AppTextStyles.bodySmall.copyWith(color: Colors.grey[600]),
             textAlign: TextAlign.center,
           ),
         ],

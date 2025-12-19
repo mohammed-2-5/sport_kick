@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Card displaying total revenue overview.
 class RevenueOverviewCard extends StatelessWidget {
@@ -59,10 +62,9 @@ class RevenueOverviewCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Text(
-                    'Total Revenue',
-                    style: TextStyle(
-                      fontSize: 16,
+                  Text(
+                    context.l10n.totalRevenue,
+                    style: AppTextStyles.bodyLarge.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -71,9 +73,13 @@ class RevenueOverviewCard extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                '\$${totalRevenue.toStringAsFixed(2)}',
-                style: const TextStyle(
-                  fontSize: 36,
+                LocaleFormatters.formatPrice(
+                  context,
+                  amount: totalRevenue,
+                  currency: context.l10n.currencyEgp,
+                  decimalDigits: 2,
+                ),
+                style: AppTextStyles.displaySmall.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -90,19 +96,18 @@ class RevenueOverviewCard extends StatelessWidget {
                       color: AppColors.success.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.trending_up_rounded,
                           size: 14,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         Text(
-                          '+12.5%',
-                          style: TextStyle(
-                            fontSize: 12,
+                          '+${LocaleFormatters.formatNumber(context, 12.5, decimalDigits: 1)}%',
+                          style: AppTextStyles.labelSmall.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -112,9 +117,8 @@ class RevenueOverviewCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'vs last month',
-                    style: TextStyle(
-                      fontSize: 13,
+                    context.l10n.vsLastMonth,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: Colors.white.withValues(alpha: 0.9),
                     ),
                   ),

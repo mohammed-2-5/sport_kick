@@ -200,14 +200,20 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                   color: AppColors.infoLight,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Icon(Icons.info_outline, color: AppColors.info, size: 16),
-                    SizedBox(width: 8),
+                    const Icon(
+                      Icons.info_outline,
+                      color: AppColors.info,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         'Permanent delete is disabled for cities with fields.',
-                        style: TextStyle(fontSize: 12, color: AppColors.info),
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.info,
+                        ),
                       ),
                     ),
                   ],
@@ -311,9 +317,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Cancel',
-                style: TextStyle(
+                style: AppTextStyles.labelMedium.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -340,7 +346,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
               ),
               child: Text(
                 _hardDelete ? 'Delete Forever' : 'Deactivate',
-                style: const TextStyle(fontWeight: FontWeight.w600),
+                style: AppTextStyles.labelLarge.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

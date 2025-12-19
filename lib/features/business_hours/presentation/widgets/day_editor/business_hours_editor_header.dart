@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 import 'package:spo_kick/features/business_hours/presentation/utils/business_hours_formatters.dart';
 
 /// Header widget for business hours day editor.
@@ -38,7 +38,7 @@ class BusinessHoursEditorHeader extends StatelessWidget {
         if (showDayName) ...[
           Expanded(
             child: Text(
-              BusinessHoursFormatters.getDayName(dayOfWeek),
+              BusinessHoursFormatters.getDayName(context, dayOfWeek),
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -49,7 +49,7 @@ class BusinessHoursEditorHeader extends StatelessWidget {
 
         // Open/Closed label
         Text(
-          isOpen ? BusinessHoursStrings.isOpen : BusinessHoursStrings.closed,
+          isOpen ? context.l10n.open : context.l10n.closed,
           style: theme.textTheme.bodyLarge?.copyWith(
             color: isOpen ? AppColors.success : Colors.grey,
             fontWeight: FontWeight.w600,

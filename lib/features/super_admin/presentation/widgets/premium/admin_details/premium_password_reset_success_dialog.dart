@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 
@@ -120,10 +121,9 @@ class _PremiumPasswordResetSuccessDialogState
 
                 const SizedBox(height: 24),
 
-                const Text(
+                Text(
                   'Password Reset Successfully!',
-                  style: TextStyle(
-                    fontSize: 20,
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -134,8 +134,7 @@ class _PremiumPasswordResetSuccessDialogState
 
                 Text(
                   'Share this password securely with ${widget.admin.displayName}',
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
                   textAlign: TextAlign.center,
@@ -168,8 +167,7 @@ class _PremiumPasswordResetSuccessDialogState
                         child: Center(
                           child: Text(
                             widget.admin.initials,
-                            style: const TextStyle(
-                              fontSize: 14,
+                            style: AppTextStyles.titleSmall.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
@@ -183,8 +181,7 @@ class _PremiumPasswordResetSuccessDialogState
                           children: [
                             Text(
                               widget.admin.displayName,
-                              style: const TextStyle(
-                                fontSize: 14,
+                              style: AppTextStyles.titleSmall.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textPrimary,
                               ),
@@ -192,8 +189,7 @@ class _PremiumPasswordResetSuccessDialogState
                             ),
                             Text(
                               widget.admin.email,
-                              style: TextStyle(
-                                fontSize: 12,
+                              style: AppTextStyles.bodyMedium.copyWith(
                                 color: AppColors.textSecondary.withValues(
                                   alpha: 0.8,
                                 ),
@@ -249,8 +245,7 @@ class _PremiumPasswordResetSuccessDialogState
                       Expanded(
                         child: Text(
                           'Admin must change password on next login',
-                          style: TextStyle(
-                            fontSize: 13,
+                          style: AppTextStyles.labelMedium.copyWith(
                             fontWeight: FontWeight.w500,
                             color: Colors.orange.shade700,
                           ),
@@ -309,16 +304,14 @@ class _CredentialRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.textSecondary.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 value,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                   fontFamily: 'monospace',

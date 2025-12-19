@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Data model for booking stat card.
 class BookingStatData {
@@ -75,8 +76,7 @@ class PremiumBookingStatCard extends StatelessWidget {
       builder: (context, value, child) {
         return Text(
           value.toString(),
-          style: TextStyle(
-            fontSize: 24,
+          style: AppTextStyles.headlineSmall.copyWith(
             fontWeight: FontWeight.w800,
             color: stat.gradient[0],
           ),
@@ -88,8 +88,7 @@ class PremiumBookingStatCard extends StatelessWidget {
   Widget _buildLabel() {
     return Text(
       stat.label,
-      style: const TextStyle(
-        fontSize: 12,
+      style: AppTextStyles.labelSmall.copyWith(
         fontWeight: FontWeight.w500,
         color: AppColors.textSecondary,
       ),

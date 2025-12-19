@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/booking_table_helpers.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Handler for booking table cell tap interactions.
 ///
@@ -85,8 +86,8 @@ class BookingTableCellHandler {
   /// Show snackbar for closed time slot.
   static void _showClosedMessage(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Field is closed at this time'),
+      SnackBar(
+        content: Text(context.l10n.closedSlotMessage),
         backgroundColor: AppColors.error,
         behavior: SnackBarBehavior.floating,
       ),
@@ -97,7 +98,7 @@ class BookingTableCellHandler {
   static void _showPastSlotMessage(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('Cannot create bookings for past dates'),
+        content: Text(context.l10n.pastSlotMessage),
         backgroundColor: AppColors.textSecondary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

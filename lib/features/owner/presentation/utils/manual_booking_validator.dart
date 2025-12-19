@@ -1,7 +1,9 @@
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 class ManualBookingValidator {
   static String? validateStepOne({
+    required AppLocalizations l10n,
     required FieldEntity? field,
     required DateTime? date,
     required String? startTime,
@@ -9,29 +11,30 @@ class ManualBookingValidator {
     required double? price,
   }) {
     if (field == null) {
-      return 'Please select a field';
+      return l10n.manualBookingSelectField;
     }
     if (date == null) {
-      return 'Please select a date';
+      return l10n.manualBookingSelectDate;
     }
     if (startTime == null || endTime == null) {
-      return 'Please select a time slot';
+      return l10n.manualBookingSelectTimeSlot;
     }
     if (price == null || price <= 0) {
-      return 'Please enter a valid price';
+      return l10n.manualBookingEnterValidPrice;
     }
     return null;
   }
 
   static String? validateStepTwo({
+    required AppLocalizations l10n,
     required String? customerName,
     required String? customerPhone,
   }) {
     if (customerName == null || customerName.isEmpty) {
-      return 'Please enter customer name';
+      return l10n.manualBookingEnterCustomerName;
     }
     if (customerPhone == null || customerPhone.isEmpty) {
-      return 'Please enter customer phone';
+      return l10n.manualBookingEnterCustomerPhone;
     }
     return null;
   }

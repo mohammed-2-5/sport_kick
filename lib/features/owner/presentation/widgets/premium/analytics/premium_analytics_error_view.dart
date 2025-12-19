@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium Analytics Error View widget.
 ///
@@ -35,14 +37,16 @@ class PremiumAnalyticsErrorView extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               message,
-              style: const TextStyle(color: AppColors.textSecondary),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Try Again'),
+              label: Text(context.l10n.retry),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.navyDeep,
                 foregroundColor: Colors.white,

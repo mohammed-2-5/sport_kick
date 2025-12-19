@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -107,7 +108,7 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
                   child: Text(
                     context.l10n.createFieldRestrictedMessage,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 16),
+                    style: AppTextStyles.bodyLarge,
                   ),
                 ),
               ),

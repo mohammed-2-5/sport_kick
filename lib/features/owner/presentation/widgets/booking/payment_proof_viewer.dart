@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Full-screen viewer for payment proof images.
 ///
@@ -94,19 +96,17 @@ class _Header extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Payment Proof',
-                      style: TextStyle(
-                        fontSize: 18,
+                    Text(
+                      context.l10n.paymentProof,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
                     ),
                     if (bookingId != null)
                       Text(
-                        'Booking #${bookingId!.substring(0, 8)}',
-                        style: const TextStyle(
-                          fontSize: 12,
+                        context.l10n.bookingShortId(bookingId!.substring(0, 8)),
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -172,18 +172,19 @@ class _ErrorPlaceholder extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Failed to load image',
-            style: TextStyle(
-              fontSize: 16,
+          Text(
+            context.l10n.paymentProofLoadFailed,
+            style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Please try again later',
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          Text(
+            context.l10n.paymentProofTryLater,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ],
       ),

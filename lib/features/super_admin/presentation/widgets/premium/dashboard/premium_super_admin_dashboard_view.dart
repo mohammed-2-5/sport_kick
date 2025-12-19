@@ -249,7 +249,10 @@ class _PremiumSuperAdminDashboardViewState
               context.read<AuthCubit>().logout();
               context.goNamed('login');
             },
-            child: const Text('Logout', style: TextStyle(color: Colors.red)),
+            child: Text(
+              'Logout',
+              style: AppTextStyles.labelMedium.copyWith(color: AppColors.error),
+            ),
           ),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/home/presentation/widgets/hero/categories_slider.dart';
 import 'package:spo_kick/features/home/presentation/widgets/hero/city_dropdown_widget.dart';
@@ -16,8 +17,8 @@ class HeroSearchSection extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         final user = (state is Authenticated) ? state.user : null;
-        final userName = user?.fullName ?? 'Guest';
-        final userInitials = user?.initials ?? 'G';
+        final userName = user?.fullName ?? context.l10n.homeGuest;
+        final userInitials = user?.initials ?? context.l10n.homeGuest[0];
 
         return Stack(
           clipBehavior: Clip.none,
@@ -49,7 +50,7 @@ class HeroSearchSection extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _getTimeBasedGreeting(),
+                              _getTimeBasedGreeting(context),
                               style: const TextStyle(
                                 color: AppColors.textOnNavySecondary,
                                 fontSize: 14,
@@ -113,10 +114,10 @@ class HeroSearchSection extends StatelessWidget {
     );
   }
 
-  String _getTimeBasedGreeting() {
+  String _getTimeBasedGreeting(BuildContext context) {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning,';
-    if (hour < 17) return 'Good Afternoon,';
-    return 'Good Evening,';
+    if (hour < 12) return context.l10n.homeGoodMorning;
+    if (hour < 17) return context.l10n.homeGoodAfternoon;
+    return context.l10n.homeGoodEvening;
   }
 }

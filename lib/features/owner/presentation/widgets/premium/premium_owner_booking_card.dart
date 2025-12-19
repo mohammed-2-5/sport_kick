@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/payment_status_badge.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium owner booking card with payment status.
 ///
@@ -89,18 +92,16 @@ class _CardHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                booking.fieldName ?? 'Unknown Field',
-                style: const TextStyle(
-                  fontSize: 16,
+                booking.fieldName ?? context.l10n.unknownField,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                booking.userName ?? 'Unknown User',
-                style: TextStyle(
-                  fontSize: 13,
+                booking.userName ?? context.l10n.unknownCustomer,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary.withValues(alpha: 0.8),
                 ),
               ),
@@ -128,10 +129,7 @@ class _DateTimeRow extends StatelessWidget {
           color: AppColors.textSecondary.withValues(alpha: 0.7),
         ),
         const SizedBox(width: 8),
-        Text(
-          booking.formattedDate,
-          style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
-        ),
+        Text(booking.formattedDate, style: AppTextStyles.bodyMedium),
         const SizedBox(width: 16),
         Icon(
           Icons.access_time,
@@ -140,8 +138,13 @@ class _DateTimeRow extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Text(
-          '${booking.startTime} - ${booking.endTime}',
-          style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+          LocaleFormatters.formatTimeRange(
+            context,
+            startTime: booking.startTime,
+            endTime: booking.endTime,
+            baseDate: booking.date,
+          ),
+          style: AppTextStyles.bodyMedium,
         ),
       ],
     );
@@ -163,17 +166,23 @@ class _PaymentRow extends StatelessWidget {
           color: AppColors.textSecondary.withValues(alpha: 0.7),
         ),
         const SizedBox(width: 8),
-        const Text(
-          'Payment:',
-          style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+        Text(
+          '${context.l10n.payment}:',
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         const SizedBox(width: 8),
         PaymentStatusBadge(status: booking.paymentStatus, isCompact: true),
         const Spacer(),
         Text(
-          '${booking.totalPrice.toStringAsFixed(0)} EGP',
-          style: const TextStyle(
-            fontSize: 14,
+          LocaleFormatters.formatPrice(
+            context,
+            amount: booking.totalPrice,
+            currency: context.l10n.currencyEgp,
+            decimalDigits: 0,
+          ),
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.success,
           ),
@@ -195,7 +204,7 @@ class _ViewProofButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onPressed,
         icon: const Icon(Icons.receipt_long_outlined, size: 16),
-        label: const Text('View Proof'),
+        label: Text(context.l10n.viewPaymentProof),
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.info,
           side: BorderSide(color: AppColors.info.withValues(alpha: 0.5)),
@@ -223,7 +232,7 @@ class _PaymentActions extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: onReject,
             icon: const Icon(Icons.close_rounded, size: 16),
-            label: const Text('Reject'),
+            label: Text(context.l10n.reject),
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.error,
               side: BorderSide(color: AppColors.error.withValues(alpha: 0.5)),
@@ -239,7 +248,7 @@ class _PaymentActions extends StatelessWidget {
           child: ElevatedButton.icon(
             onPressed: onVerify,
             icon: const Icon(Icons.check_rounded, size: 16),
-            label: const Text('Verify'),
+            label: Text(context.l10n.verify),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.success,
               foregroundColor: Colors.white,
@@ -268,7 +277,7 @@ class _BookingActions extends StatelessWidget {
         if (onReject != null)
           Expanded(
             child: _ActionButton(
-              label: 'Reject',
+              label: context.l10n.reject,
               icon: Icons.close,
               color: Colors.red,
               onTap: onReject!,
@@ -278,7 +287,7 @@ class _BookingActions extends StatelessWidget {
         if (onApprove != null)
           Expanded(
             child: _ActionButton(
-              label: 'Approve',
+              label: context.l10n.approve,
               icon: Icons.check,
               color: Colors.green,
               onTap: onApprove!,
@@ -307,11 +316,6 @@ class _StatusBadge extends StatelessWidget {
     }
   }
 
-  String get _displayStatus {
-    final statusStr = status.toString().split('.').last;
-    return statusStr[0].toUpperCase() + statusStr.substring(1);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -328,14 +332,26 @@ class _StatusBadge extends StatelessWidget {
         ],
       ),
       child: Text(
-        _displayStatus,
-        style: const TextStyle(
-          fontSize: 12,
+        _statusLabel(context),
+        style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w700,
           color: Colors.white,
         ),
       ),
     );
+  }
+
+  String _statusLabel(BuildContext context) {
+    switch (status) {
+      case BookingStatus.pending:
+        return context.l10n.statusPending;
+      case BookingStatus.confirmed:
+        return context.l10n.statusConfirmed;
+      case BookingStatus.canceled:
+        return context.l10n.statusCancelled;
+      case BookingStatus.completed:
+        return context.l10n.statusCompleted;
+    }
   }
 }
 
@@ -370,8 +386,7 @@ class _ActionButton extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: color,
               ),

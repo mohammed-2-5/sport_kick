@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -56,8 +57,7 @@ class PremiumOwnerFieldsHeader extends StatelessWidget {
                   children: [
                     Text(
                       context.l10n.manageFields,
-                      style: const TextStyle(
-                        fontSize: 24,
+                      style: AppTextStyles.headlineSmall.copyWith(
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
@@ -65,8 +65,7 @@ class PremiumOwnerFieldsHeader extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       context.l10n.manageFieldsSubtitle,
-                      style: const TextStyle(
-                        fontSize: 13,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: Colors.white70,
                       ),
                     ),
@@ -221,12 +220,11 @@ class _SearchBar extends StatelessWidget {
           ),
           child: TextField(
             onChanged: onChanged,
-            style: const TextStyle(color: Colors.white),
+            style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(
+              hintStyle: AppTextStyles.bodyMedium.copyWith(
                 color: Colors.white.withValues(alpha: 0.5),
-                fontSize: 14,
               ),
               prefixIcon: Icon(
                 Icons.search,
@@ -282,8 +280,7 @@ class _StatChip extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
@@ -297,8 +294,7 @@ class _StatChip extends StatelessWidget {
                 ),
                 child: Text(
                   count.toString(),
-                  style: const TextStyle(
-                    fontSize: 11,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),

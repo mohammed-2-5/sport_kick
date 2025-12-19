@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Welcome header widget for Owner Dashboard
 ///
@@ -42,10 +44,9 @@ class WelcomeHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Welcome Back!',
-                  style: TextStyle(
-                    fontSize: 14,
+                Text(
+                  context.l10n.ownerWelcomeBack,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
@@ -53,9 +54,8 @@ class WelcomeHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Manage your football fields',
-                  style: TextStyle(
-                    fontSize: 18,
+                  context.l10n.ownerManageFieldsTagline,
+                  style: AppTextStyles.titleMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.95),
                     fontWeight: FontWeight.bold,
                   ),

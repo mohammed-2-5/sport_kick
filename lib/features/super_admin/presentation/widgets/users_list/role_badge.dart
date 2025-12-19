@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Role badge widget used in admin/user cards.
 class RoleBadge extends StatelessWidget {
@@ -26,8 +27,7 @@ class RoleBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             isSuperAdmin ? 'Super Admin' : 'Field Owner',
-            style: TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: color,
             ),

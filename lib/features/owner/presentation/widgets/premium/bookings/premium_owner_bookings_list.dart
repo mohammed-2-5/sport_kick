@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/premium_owner_booking_card.dart';
 
@@ -194,8 +195,7 @@ class _EmptyState extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             message,
-            style: const TextStyle(
-              fontSize: 18,
+            style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -203,8 +203,7 @@ class _EmptyState extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'Try adjusting your filters or search',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),
           ),

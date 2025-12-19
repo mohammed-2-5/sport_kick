@@ -9,6 +9,7 @@ import 'package:spo_kick/features/notifications/presentation/cubit/notification_
 import 'package:spo_kick/features/notifications/presentation/widgets/notification_empty_view.dart';
 import 'package:spo_kick/features/notifications/presentation/widgets/notification_error_view.dart';
 import 'package:spo_kick/features/notifications/presentation/widgets/notification_item.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Page displaying the list of notifications.
 ///
@@ -51,9 +52,9 @@ class _NotificationListPageState extends State<NotificationListPage> {
       appBar: AppBar(
         backgroundColor: AppColors.premiumBackground,
         elevation: 0,
-        title: const Text(
-          'Notifications',
-          style: TextStyle(
+        title: Text(
+          context.l10n.notifications,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w700,
@@ -70,9 +71,12 @@ class _NotificationListPageState extends State<NotificationListPage> {
                 return TextButton(
                   onPressed: () =>
                       context.read<NotificationCubit>().markAllAsRead(),
-                  child: const Text(
-                    'Mark all read',
-                    style: TextStyle(color: AppColors.accentCyan, fontSize: 14),
+                  child: Text(
+                    context.l10n.markAllRead,
+                    style: const TextStyle(
+                      color: AppColors.accentCyan,
+                      fontSize: 14,
+                    ),
                   ),
                 );
               }

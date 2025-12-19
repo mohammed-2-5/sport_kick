@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 class FieldFacilitiesSelector extends StatelessWidget {
   final List<String> selectedFacilities;
@@ -45,9 +47,8 @@ class FieldFacilitiesSelector extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  facility,
-                  style: TextStyle(
-                    fontSize: 14,
+                  _getFacilityLabel(context, facility),
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: isSelected ? Colors.white : AppColors.textPrimary,
                   ),
@@ -66,6 +67,25 @@ class FieldFacilitiesSelector extends StatelessWidget {
         );
       }).toList(),
     );
+  }
+
+  String _getFacilityLabel(BuildContext context, String facility) {
+    switch (facility) {
+      case 'Parking':
+        return context.l10n.parking;
+      case 'Changing Room':
+        return context.l10n.changingRooms;
+      case 'Shower':
+        return context.l10n.showers;
+      case 'Cafeteria':
+        return context.l10n.cafeteria;
+      case 'WiFi':
+        return context.l10n.wifi;
+      case 'Lighting':
+        return context.l10n.lighting;
+      default:
+        return facility;
+    }
   }
 
   IconData _getFacilityIcon(String facility) {

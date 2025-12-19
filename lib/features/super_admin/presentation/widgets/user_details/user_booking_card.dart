@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
@@ -54,9 +55,8 @@ class UserBookingCard extends StatelessWidget {
                   children: [
                     Text(
                       booking.fieldName ?? 'Unknown Field',
-                      style: const TextStyle(
-                        fontSize: AdminUIConstants.fontSizeLarge,
-                        fontWeight: AdminUIConstants.fontWeightBold,
+                      style: AppTextStyles.bodyLarge.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -72,8 +72,7 @@ class UserBookingCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           DateFormat('MMM d, y').format(booking.date),
-                          style: TextStyle(
-                            fontSize: 13,
+                          style: AppTextStyles.bodySmall.copyWith(
                             color: Colors.grey[600],
                           ),
                         ),
@@ -86,8 +85,7 @@ class UserBookingCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           booking.formattedTimeSlot,
-                          style: TextStyle(
-                            fontSize: 13,
+                          style: AppTextStyles.bodySmall.copyWith(
                             color: Colors.grey[600],
                           ),
                         ),
@@ -116,9 +114,8 @@ class UserBookingCard extends StatelessWidget {
                     ),
                     child: Text(
                       booking.status.displayName,
-                      style: TextStyle(
-                        fontSize: AdminUIConstants.badgeFontSize,
-                        fontWeight: AdminUIConstants.fontWeightBold,
+                      style: AppTextStyles.labelSmall.copyWith(
+                        fontWeight: FontWeight.bold,
                         color: _getStatusColor(booking.status),
                       ),
                     ),
@@ -126,9 +123,8 @@ class UserBookingCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     booking.formattedPrice,
-                    style: const TextStyle(
-                      fontSize: AdminUIConstants.fontSizeMedium,
-                      fontWeight: AdminUIConstants.fontWeightBold,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeight.bold,
                       color: AppColors.success,
                     ),
                   ),

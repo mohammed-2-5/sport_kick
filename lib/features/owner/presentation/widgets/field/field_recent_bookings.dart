@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Recent bookings section for field detail page.
 ///
@@ -31,9 +34,11 @@ class FieldRecentBookings extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Recent Bookings',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              context.l10n.recentBookings,
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 16),
             Container(
@@ -42,20 +47,19 @@ class FieldRecentBookings extends StatelessWidget {
                 color: AppColors.surfaceVariant,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Center(
+              child: Center(
                 child: Column(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.event_busy,
                       size: 48,
                       color: AppColors.textSecondary,
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
-                      'No bookings yet',
-                      style: TextStyle(
+                      context.l10n.noBookingsYet,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
-                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -75,14 +79,15 @@ class FieldRecentBookings extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Recent Bookings',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                context.l10n.recentBookings,
+                style: AppTextStyles.titleMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
                 '${fieldBookings.length} of ${bookings.length}',
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
@@ -129,9 +134,8 @@ class _BookingItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                booking.userName ?? 'Unknown Customer',
-                style: const TextStyle(
-                  fontSize: 14,
+                booking.userName ?? context.l10n.unknownCustomer,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -148,9 +152,8 @@ class _BookingItem extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                DateFormat('MMM dd, yyyy').format(booking.date),
-                style: const TextStyle(
-                  fontSize: 12,
+                DateFormat.yMMMd(context.l10n.localeName).format(booking.date),
+                style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
@@ -163,8 +166,7 @@ class _BookingItem extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 '${booking.startTime} - ${booking.endTime}',
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
@@ -172,9 +174,12 @@ class _BookingItem extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            '${booking.totalPrice.toStringAsFixed(0)} EGP',
-            style: const TextStyle(
-              fontSize: 14,
+            LocaleFormatters.formatPrice(
+              context,
+              amount: booking.totalPrice,
+              currency: context.l10n.currencyEgp,
+            ),
+            style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
             ),
@@ -232,8 +237,7 @@ class _StatusBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             statusText,
-            style: TextStyle(
-              fontSize: 10,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.bold,
               color: color,
             ),

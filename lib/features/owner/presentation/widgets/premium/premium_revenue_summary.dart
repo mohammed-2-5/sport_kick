@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium revenue summary card.
@@ -35,10 +36,9 @@ class PremiumRevenueSummary extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Total Revenue',
-                style: TextStyle(
-                  fontSize: 15,
+                style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
                 ),
@@ -57,8 +57,7 @@ class PremiumRevenueSummary extends StatelessWidget {
                 ),
                 child: Text(
                   period,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.accentCyan,
                   ),
@@ -73,8 +72,7 @@ class PremiumRevenueSummary extends StatelessWidget {
             children: [
               Text(
                 totalRevenue,
-                style: const TextStyle(
-                  fontSize: 36,
+                style: AppTextStyles.displaySmall.copyWith(
                   fontWeight: FontWeight.w800,
                   color: AppColors.textPrimary,
                   letterSpacing: 0.5,
@@ -109,8 +107,7 @@ class PremiumRevenueSummary extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         trend!,
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.labelSmall.copyWith(
                           fontWeight: FontWeight.w600,
                           color: (isTrendPositive ?? true)
                               ? Colors.green
@@ -145,16 +142,14 @@ class PremiumRevenueSummary extends StatelessWidget {
                     Expanded(
                       child: Text(
                         item.label,
-                        style: const TextStyle(
-                          fontSize: 14,
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textPrimary,
                         ),
                       ),
                     ),
                     Text(
                       item.value,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/entities/recurring_booking_entity.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Card widget for displaying a pending recurring booking request (owner view).
 class RecurringRequestCard extends StatelessWidget {
@@ -36,16 +37,16 @@ class RecurringRequestCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(),
-          _buildUserInfo(),
-          _buildScheduleInfo(),
-          _buildActionButtons(),
+          _buildHeader(context),
+          _buildUserInfo(context),
+          _buildScheduleInfo(context),
+          _buildActionButtons(context),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -82,9 +83,9 @@ class RecurringRequestCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'New Recurring Request',
-                  style: TextStyle(
+                Text(
+                  context.l10n.newRecurringRequest,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -108,7 +109,7 @@ class RecurringRequestCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              _getTimeAgo(),
+              _getTimeAgo(context),
               style: const TextStyle(
                 fontSize: 11,
                 color: Colors.white,
@@ -121,7 +122,7 @@ class RecurringRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildUserInfo() {
+  Widget _buildUserInfo(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -154,7 +155,7 @@ class RecurringRequestCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  request.userName ?? 'Unknown User',
+                  request.userName ?? context.l10n.unknownUser,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -187,7 +188,7 @@ class RecurringRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildScheduleInfo() {
+  Widget _buildScheduleInfo(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
@@ -203,16 +204,23 @@ class RecurringRequestCard extends StatelessWidget {
               Expanded(
                 child: _buildScheduleItem(
                   icon: Icons.calendar_today_rounded,
-                  label: 'Every',
-                  value: request.dayName,
+                  label: context.l10n.everyLabel,
+                  value: LocaleFormatters.weekdayName(
+                    context,
+                    request.dayOfWeek,
+                  ),
                 ),
               ),
               Container(width: 1, height: 40, color: AppColors.border),
               Expanded(
                 child: _buildScheduleItem(
                   icon: Icons.access_time_rounded,
-                  label: 'Time',
-                  value: request.timeRange,
+                  label: context.l10n.timeLabel,
+                  value: LocaleFormatters.formatTimeRange(
+                    context,
+                    startTime: request.startTime,
+                    endTime: request.endTime,
+                  ),
                 ),
               ),
             ],
@@ -225,16 +233,28 @@ class RecurringRequestCard extends StatelessWidget {
               Expanded(
                 child: _buildScheduleItem(
                   icon: Icons.timer_outlined,
-                  label: 'Duration',
-                  value: '${request.durationHours} hour(s)',
+                  label: context.l10n.durationLabel,
+                  value: context.l10n.recurringHoursLabel(
+                    request.durationHours,
+                    LocaleFormatters.formatNumber(
+                      context,
+                      request.durationHours,
+                      decimalDigits: 0,
+                    ),
+                  ),
                 ),
               ),
               Container(width: 1, height: 40, color: AppColors.border),
               Expanded(
                 child: _buildScheduleItem(
                   icon: Icons.payments_outlined,
-                  label: 'Weekly',
-                  value: '${request.pricePerBooking.toStringAsFixed(0)} EGP',
+                  label: context.l10n.weeklyLabel,
+                  value: LocaleFormatters.formatPrice(
+                    context,
+                    amount: request.pricePerBooking,
+                    currency: 'EGP',
+                    decimalDigits: 0,
+                  ),
                   valueColor: const Color(0xFF10B981),
                 ),
               ),
@@ -272,7 +292,7 @@ class RecurringRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildActionButtons(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -290,7 +310,7 @@ class RecurringRequestCard extends StatelessWidget {
                 ),
               ),
               icon: const Icon(Icons.close_rounded, size: 18),
-              label: const Text('Reject'),
+              label: Text(context.l10n.reject),
             ),
           ),
           const SizedBox(width: 12),
@@ -318,7 +338,11 @@ class RecurringRequestCard extends StatelessWidget {
                       ),
                     )
                   : const Icon(Icons.check_rounded, size: 18),
-              label: Text(isProcessing ? 'Processing...' : 'Approve'),
+              label: Text(
+                isProcessing
+                    ? context.l10n.processingRequest
+                    : context.l10n.approve,
+              ),
             ),
           ),
         ],
@@ -326,15 +350,40 @@ class RecurringRequestCard extends StatelessWidget {
     );
   }
 
-  String _getTimeAgo() {
+  String _getTimeAgo(BuildContext context) {
     final now = DateTime.now();
     final diff = now.difference(request.createdAt);
 
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) return context.l10n.notificationJustNow;
+    if (diff.inMinutes < 60) {
+      final minutes = LocaleFormatters.formatNumber(
+        context,
+        diff.inMinutes,
+        decimalDigits: 0,
+      );
+      return context.l10n.notificationMinutesAgo(minutes);
+    }
+    if (diff.inHours < 24) {
+      final hours = LocaleFormatters.formatNumber(
+        context,
+        diff.inHours,
+        decimalDigits: 0,
+      );
+      return context.l10n.notificationHoursAgo(hours);
+    }
+    if (diff.inDays < 7) {
+      final days = LocaleFormatters.formatNumber(
+        context,
+        diff.inDays,
+        decimalDigits: 0,
+      );
+      return context.l10n.notificationDaysAgo(days);
+    }
 
-    return DateFormat('MMM d').format(request.createdAt);
+    return LocaleFormatters.formatDate(
+      context,
+      request.createdAt,
+      pattern: 'MMM d',
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 
 /// Dialog for creating or editing a sport category.
@@ -90,8 +91,7 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
           children: [
             Text(
               isEditing ? 'Edit Category' : 'Create Category',
-              style: const TextStyle(
-                fontSize: 22,
+              style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
               ),
@@ -112,10 +112,9 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
             const SizedBox(height: 16),
 
             // Icon selector
-            const Text(
+            Text(
               'Icon',
-              style: TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
               ),

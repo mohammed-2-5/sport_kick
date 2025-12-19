@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium owner settings section.
@@ -43,8 +44,7 @@ class PremiumOwnerSettingsSection extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -112,8 +112,7 @@ class OwnerSettingsToggle extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: enabled
                         ? AppColors.textPrimary
@@ -124,8 +123,7 @@ class OwnerSettingsToggle extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     description!,
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.textSecondary.withValues(alpha: 0.7),
                     ),
                   ),
@@ -213,8 +211,7 @@ class _OwnerSettingsTileState extends State<OwnerSettingsTile>
               Expanded(
                 child: Text(
                   widget.label,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -224,8 +221,7 @@ class _OwnerSettingsTileState extends State<OwnerSettingsTile>
                 const SizedBox(width: 8),
                 Text(
                   widget.value!,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.7),
                   ),
                 ),

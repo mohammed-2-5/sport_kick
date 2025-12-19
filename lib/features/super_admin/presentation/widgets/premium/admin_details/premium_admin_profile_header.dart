@@ -103,19 +103,18 @@ class PremiumAdminProfileHeader extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.navyDeep, width: 2),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.admin_panel_settings,
                             size: 12,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
                             'Admin',
-                            style: TextStyle(
-                              fontSize: 10,
+                            style: AppTextStyles.badge.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
@@ -9,7 +10,8 @@ import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/payment_proof_viewer.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/payment_verification_dialog.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/owner_booking_detail_sections.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/detail/booking_detail_widgets.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// View for owner booking detail page.
 ///
@@ -27,8 +29,8 @@ class OwnerBookingDetailView extends StatelessWidget {
       backgroundColor: AppColors.backgroundLight,
       body: Column(
         children: [
-          const PremiumCurvedHeader(
-            title: 'Booking Details',
+          PremiumCurvedHeader(
+            title: context.l10n.bookingDetails,
             showBackButton: true,
             height: 140,
           ),
@@ -89,7 +91,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         HapticFeedback.mediumImpact();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Payment verified successfully'),
+            content: Text(context.l10n.paymentVerifiedSuccess),
             backgroundColor: AppColors.success,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
@@ -113,7 +115,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         HapticFeedback.mediumImpact();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Payment rejected'),
+            content: Text(context.l10n.paymentRejectedSuccess),
             backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
@@ -130,8 +132,8 @@ class OwnerBookingDetailView extends StatelessWidget {
     final confirmed = await _showConfirmDialog(
       context,
       title: 'Approve Booking',
-      message: 'Are you sure you want to approve this booking?',
-      confirmText: 'Approve',
+      message: context.l10n.ownerApproveBookingConfirm,
+      confirmText: context.l10n.approve,
       confirmColor: AppColors.success,
     );
     if (confirmed && context.mounted) {
@@ -140,7 +142,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         HapticFeedback.mediumImpact();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Booking approved successfully'),
+            content: Text(context.l10n.bookingApprovedSuccess),
             backgroundColor: AppColors.success,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
@@ -157,8 +159,8 @@ class OwnerBookingDetailView extends StatelessWidget {
     final confirmed = await _showConfirmDialog(
       context,
       title: 'Reject Booking',
-      message: 'Are you sure you want to reject this booking?',
-      confirmText: 'Reject',
+      message: context.l10n.ownerRejectBookingConfirm,
+      confirmText: context.l10n.reject,
       confirmColor: AppColors.error,
     );
     if (confirmed && context.mounted) {
@@ -167,7 +169,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         HapticFeedback.mediumImpact();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Booking rejected'),
+            content: Text(context.l10n.bookingRejectedSuccess),
             backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
@@ -193,18 +195,22 @@ class OwnerBookingDetailView extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
         content: Text(
           message,
-          style: const TextStyle(fontSize: 15, color: AppColors.textSecondary),
+          style: AppTextStyles.bodyLarge.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text(
-              'Cancel',
-              style: TextStyle(
+            child: Text(
+              context.l10n.cancel,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,
               ),
@@ -222,7 +228,9 @@ class OwnerBookingDetailView extends StatelessWidget {
             ),
             child: Text(
               confirmText,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -273,7 +281,7 @@ class _BottomActions extends StatelessWidget {
               child: OutlinedButton.icon(
                 onPressed: onReject,
                 icon: const Icon(Icons.close_rounded, size: 18),
-                label: const Text('Reject'),
+                label: Text(context.l10n.reject),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.error,
                   side: const BorderSide(color: AppColors.error),
@@ -289,7 +297,7 @@ class _BottomActions extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: onApprove,
                 icon: const Icon(Icons.check_rounded, size: 18),
-                label: const Text('Approve'),
+                label: Text(context.l10n.approve),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.success,
                   foregroundColor: Colors.white,

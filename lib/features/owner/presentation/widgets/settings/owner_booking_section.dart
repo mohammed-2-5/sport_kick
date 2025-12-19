@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -10,6 +11,7 @@ import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/settings_section.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/settings_tile.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/switch_tile.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Booking preferences section widget for owner settings page.
 class OwnerBookingSection extends StatelessWidget {
@@ -25,14 +27,14 @@ class OwnerBookingSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsSection(
-      title: 'Booking Preferences',
+      title: context.l10n.bookingPreferencesSection,
       icon: Icons.settings_outlined,
       children: [
         SwitchTile(
           icon: Icons.check_circle_outline,
           iconColor: AppColors.success,
-          title: 'Auto-Approve Bookings',
-          subtitle: 'Automatically approve all booking requests',
+          title: context.l10n.autoApproveBookings,
+          subtitle: context.l10n.autoApproveBookingsDesc,
           value: autoApproveBookings,
           onChanged: (value) {
             onAutoApproveChanged(value);
@@ -42,8 +44,8 @@ class OwnerBookingSection extends StatelessWidget {
         const SizedBox(height: 8),
         SettingsTile(
           leading: const Icon(Icons.schedule, color: AppColors.info),
-          title: 'Business Hours',
-          subtitle: 'Set your operating hours',
+          title: context.l10n.businessHours,
+          subtitle: context.l10n.setWorkingHoursDesc,
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _showBusinessHoursDialog(context),
         ),
@@ -55,16 +57,20 @@ class OwnerBookingSection extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(enabled ? 'Auto-Approve Enabled' : 'Auto-Approve Disabled'),
+        title: Text(
+          enabled
+              ? context.l10n.autoApproveEnabledTitle
+              : context.l10n.autoApproveDisabledTitle,
+        ),
         content: Text(
           enabled
-              ? 'All new booking requests will be automatically approved.'
-              : 'You will need to manually approve each booking request.',
+              ? context.l10n.autoApproveEnabledMessage
+              : context.l10n.autoApproveDisabledMessage,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: Text(context.l10n.ok),
           ),
         ],
       ),
@@ -76,8 +82,8 @@ class OwnerBookingSection extends StatelessWidget {
     final authState = context.read<AuthCubit>().state;
     if (authState is! Authenticated) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please log in to manage business hours'),
+        SnackBar(
+          content: Text(context.l10n.pleaseLoginToManageBusinessHours),
           backgroundColor: AppColors.error,
         ),
       );
@@ -114,7 +120,7 @@ class _FieldSelectionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Select Field'),
+      title: Text(context.l10n.selectField),
       content: BlocBuilder<OwnerCubit, OwnerState>(
         builder: (context, state) {
           if (state is OwnerLoading) {
@@ -130,7 +136,9 @@ class _FieldSelectionDialog extends StatelessWidget {
               child: Center(
                 child: Text(
                   state.message,
-                  style: const TextStyle(color: AppColors.error),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.error,
+                  ),
                 ),
               ),
             );
@@ -138,11 +146,9 @@ class _FieldSelectionDialog extends StatelessWidget {
 
           if (state is OwnerFieldsLoaded) {
             if (state.fields.isEmpty) {
-              return const SizedBox(
+              return SizedBox(
                 height: 100,
-                child: Center(
-                  child: Text('You have no fields. Add a field first.'),
-                ),
+                child: Center(child: Text(context.l10n.youHaveNoFields)),
               );
             }
 
@@ -168,16 +174,16 @@ class _FieldSelectionDialog extends StatelessWidget {
             );
           }
 
-          return const SizedBox(
+          return SizedBox(
             height: 100,
-            child: Center(child: Text('Loading fields...')),
+            child: Center(child: Text(context.l10n.loadingFields)),
           );
         },
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
       ],
     );

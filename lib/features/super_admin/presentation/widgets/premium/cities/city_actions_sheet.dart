@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 
 /// Bottom sheet with action buttons for city management.
@@ -112,8 +113,7 @@ class CityActionsSheet extends StatelessWidget {
                     Expanded(
                       child: Text(
                         city.name,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: AppColors.darkGrey,
                         ),
@@ -134,8 +134,7 @@ class CityActionsSheet extends StatelessWidget {
                       ),
                       child: Text(
                         city.isActive ? 'Active' : 'Inactive',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: city.isActive
                               ? AppColors.success
                               : AppColors.error,
@@ -148,8 +147,7 @@ class CityActionsSheet extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   '${city.fieldsCount} field${city.fieldsCount != 1 ? 's' : ''}',
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.mediumGrey,
                   ),
                 ),
@@ -234,8 +232,7 @@ class CityActionsSheet extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.titleSmall.copyWith(
                         fontWeight: FontWeight.w600,
                         color: color,
                       ),
@@ -243,8 +240,7 @@ class CityActionsSheet extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.mediumGrey,
                       ),
                     ),

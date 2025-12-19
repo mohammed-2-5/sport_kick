@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium quick actions for super admin dashboard.
 ///
@@ -149,8 +150,7 @@ class _SectionHeader extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 18,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
@@ -256,8 +256,7 @@ class _QuickActionCardState extends State<_QuickActionCard>
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 11,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
                 height: 1.2,

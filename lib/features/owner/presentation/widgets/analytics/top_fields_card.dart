@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Card displaying top 3 performing fields based on booking count.
 class TopFieldsCard extends StatelessWidget {
@@ -43,15 +46,18 @@ class TopFieldsCard extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Top Performing Fields',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Text(
+                    context.l10n.topPerformingFields,
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   ...topFields.asMap().entries.map((entry) {
                     final index = entry.key;
                     final fieldEntry = entry.value;
                     return _buildTopFieldItem(
+                      context,
                       index + 1,
                       fieldEntry.key.name,
                       fieldEntry.value,
@@ -68,7 +74,12 @@ class TopFieldsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTopFieldItem(int rank, String name, int bookings) {
+  Widget _buildTopFieldItem(
+    BuildContext context,
+    int rank,
+    String name,
+    int bookings,
+  ) {
     final gradients = [
       const LinearGradient(
         colors: [Color(0xFFFFD700), Color(0xFFFFE44D)],
@@ -118,9 +129,8 @@ class TopFieldsCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                '#$rank',
-                style: const TextStyle(
-                  fontSize: 18,
+                '#${LocaleFormatters.formatNumber(context, rank)}',
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -134,16 +144,21 @@ class TopFieldsCard extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '$bookings bookings',
-                  style: const TextStyle(
-                    fontSize: 13,
+                  context.l10n.bookingsCount(
+                    bookings,
+                    LocaleFormatters.formatNumber(
+                      context,
+                      bookings,
+                      decimalDigits: 0,
+                    ),
+                  ),
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),

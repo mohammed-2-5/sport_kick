@@ -4,8 +4,6 @@ import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
-import 'package:spo_kick/core/localization/l10n_extensions.dart';
-import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Premium field information card.
 ///

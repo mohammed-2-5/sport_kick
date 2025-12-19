@@ -274,9 +274,9 @@ class _PremiumSuperAdminUsersListViewState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text(
+            child: Text(
               'Cancel',
-              style: TextStyle(
+              style: AppTextStyles.labelLarge.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,
               ),
@@ -294,7 +294,9 @@ class _PremiumSuperAdminUsersListViewState
             ),
             child: Text(
               confirmText,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: AppTextStyles.labelLarge.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],

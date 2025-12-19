@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Data model for performance metric.
 class MetricData {
@@ -100,8 +101,7 @@ class PremiumMetricCard extends StatelessWidget {
   Widget _buildValue() {
     return Text(
       metric.displayValue,
-      style: TextStyle(
-        fontSize: 16,
+      style: AppTextStyles.titleMedium.copyWith(
         fontWeight: FontWeight.w700,
         color: metric.color,
       ),
@@ -111,7 +111,7 @@ class PremiumMetricCard extends StatelessWidget {
   Widget _buildLabel() {
     return Text(
       metric.label,
-      style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+      style: AppTextStyles.labelSmall.copyWith(color: AppColors.textSecondary),
     );
   }
 }

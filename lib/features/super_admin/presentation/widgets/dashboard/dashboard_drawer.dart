@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 
@@ -17,23 +18,28 @@ class DashboardDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Icon(Icons.admin_panel_settings, size: 48, color: Colors.white),
-                SizedBox(height: 12),
+                const Icon(
+                  Icons.admin_panel_settings,
+                  size: 48,
+                  color: Colors.white,
+                ),
+                const SizedBox(height: 12),
                 Text(
                   'Super Admin',
-                  style: TextStyle(
+                  style: AppTextStyles.headlineSmall.copyWith(
                     color: Colors.white,
-                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   'Sport Kick Platform',
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: Colors.white70,
+                  ),
                 ),
               ],
             ),
@@ -90,7 +96,10 @@ class DashboardDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
-            title: const Text('Logout', style: TextStyle(color: Colors.red)),
+            title: Text(
+              'Logout',
+              style: AppTextStyles.bodyMedium.copyWith(color: Colors.red),
+            ),
             onTap: () {
               Navigator.pop(context);
               _showLogoutConfirmation(context);

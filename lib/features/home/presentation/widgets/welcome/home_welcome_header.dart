@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/home/presentation/constants/home_constants.dart';
 import 'package:spo_kick/features/home/presentation/widgets/welcome/role_badge.dart';
 
@@ -57,7 +58,7 @@ class HomeWelcomeHeader extends StatelessWidget {
         const SizedBox(width: HomeConstants.welcomeIconSpacing),
         Expanded(
           child: Text(
-            HomeConstants.welcomeMessage,
+            context.l10n.homeWelcomeBack,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -70,7 +71,7 @@ class HomeWelcomeHeader extends StatelessWidget {
 
   Widget _buildUserName(BuildContext context) {
     return Text(
-      user?.displayName ?? HomeConstants.guestUserFallback,
+      user?.displayName ?? context.l10n.homeGuest,
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
         color: Colors.white,
         fontWeight: FontWeight.w600,

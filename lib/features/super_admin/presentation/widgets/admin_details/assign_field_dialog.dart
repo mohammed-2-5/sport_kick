@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 
@@ -32,10 +33,7 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
           children: [
             Text(
               'Assigning to: ${widget.admin.fullName ?? widget.admin.email}',
-              style: TextStyle(
-                fontSize: AdminUIConstants.fontSizeMedium,
-                color: Colors.grey[600],
-              ),
+              style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
             ),
             const SizedBox(height: AdminUIConstants.spacingMedium),
             BlocBuilder<FieldsCubit, FieldsState>(
@@ -104,25 +102,27 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
           color: Colors.blue.withValues(alpha: AdminUIConstants.opacityMedium),
         ),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.blue),
-              SizedBox(width: AdminUIConstants.listItemSpacing),
+              const Icon(Icons.check_circle, color: Colors.blue),
+              const SizedBox(width: AdminUIConstants.listItemSpacing),
               Expanded(
                 child: Text(
                   'All Available Fields Assigned',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: AppTextStyles.titleSmall.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: AdminUIConstants.spacingSmall),
-          Text(
+          const SizedBox(height: AdminUIConstants.spacingSmall),
+          const Text(
             'This admin already has all available fields assigned.',
-            style: TextStyle(fontSize: AdminUIConstants.fontSizeSmall),
+            style: AppTextStyles.bodySmall,
           ),
         ],
       ),

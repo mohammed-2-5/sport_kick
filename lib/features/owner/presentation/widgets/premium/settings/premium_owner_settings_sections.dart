@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+
+import '../../../../../../core/widgets/premium/premium_card.dart';
 
 /// Premium settings sections.
 ///
@@ -162,17 +164,16 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
             HapticFeedback.mediumImpact();
             onLogout();
           },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.logout, color: Colors.red),
-                SizedBox(width: 12),
+                const Icon(Icons.logout, color: Colors.red),
+                const SizedBox(width: 12),
                 Text(
                   'Logout',
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: Colors.red,
                   ),
@@ -221,8 +222,7 @@ class _SettingsSection extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -266,8 +266,7 @@ class _SettingsTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 15,
+                    style: AppTextStyles.bodyLarge.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -275,8 +274,7 @@ class _SettingsTile extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     subtitle,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -321,8 +319,7 @@ class _SwitchTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -330,8 +327,7 @@ class _SwitchTile extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: const TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -373,8 +369,7 @@ class _InfoTile extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(
-                fontSize: 15,
+              style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -382,8 +377,7 @@ class _InfoTile extends StatelessWidget {
           ),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
             ),
           ),

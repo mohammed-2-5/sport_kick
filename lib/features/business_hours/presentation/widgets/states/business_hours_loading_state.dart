@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 
 /// Loading state widget for business hours feature.
 ///
@@ -11,13 +11,13 @@ class BusinessHoursLoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: BusinessHoursConstants.itemSpacing),
-          Text(BusinessHoursStrings.loadingMessage),
+          const CircularProgressIndicator(),
+          const SizedBox(height: BusinessHoursConstants.itemSpacing),
+          Text(context.l10n.businessHoursLoading),
         ],
       ),
     );

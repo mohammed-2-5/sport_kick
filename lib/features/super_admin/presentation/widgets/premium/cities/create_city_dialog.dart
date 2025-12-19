@@ -264,9 +264,9 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Cancel',
-                style: TextStyle(
+                style: AppTextStyles.labelLarge.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -295,9 +295,11 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                         color: AppColors.white,
                       ),
                     )
-                  : const Text(
+                  : Text(
                       'Create City',
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                      style: AppTextStyles.labelLarge.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
             ),
           ),

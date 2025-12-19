@@ -452,9 +452,12 @@ class _ContentSection extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const Text(
+                Text(
                   '/hour',
-                  style: TextStyle(fontSize: 10, color: Colors.white70),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    fontSize: 10,
+                    color: Colors.white70,
+                  ),
                 ),
               ],
             ),

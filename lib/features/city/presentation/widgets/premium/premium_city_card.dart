@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 
 /// Premium city selection card.
@@ -142,7 +143,7 @@ class _PremiumCityCardState extends State<PremiumCityCard>
                     if (widget.city.fieldsCount != null) ...[
                       const SizedBox(height: 6),
                       Text(
-                        '${widget.city.fieldsCount} fields',
+                        context.l10n.fieldsCount(widget.city.fieldsCount!),
                         style: TextStyle(
                           fontSize: 12,
                           color: AppColors.textSecondary.withValues(alpha: 0.7),

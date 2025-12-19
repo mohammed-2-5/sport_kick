@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Help card widget providing information about business hours feature.
 ///
@@ -14,16 +14,16 @@ class BusinessHoursHelpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.primary.withValues(alpha: 0.05),
-      child: const Padding(
-        padding: EdgeInsets.all(BusinessHoursConstants.cardPadding),
+      child: Padding(
+        padding: const EdgeInsets.all(BusinessHoursConstants.cardPadding),
         child: Row(
           children: [
-            Icon(Icons.info_outline, color: AppColors.primary),
-            SizedBox(width: BusinessHoursConstants.itemSpacing),
+            const Icon(Icons.info_outline, color: AppColors.primary),
+            const SizedBox(width: BusinessHoursConstants.itemSpacing),
             Expanded(
               child: Text(
-                BusinessHoursStrings.helpText,
-                style: TextStyle(fontSize: 14),
+                context.l10n.businessHoursHelpText,
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           ],

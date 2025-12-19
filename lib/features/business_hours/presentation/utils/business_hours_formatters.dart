@@ -1,5 +1,7 @@
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 
 /// Utility class for formatting business hours data.
 ///
@@ -8,51 +10,71 @@ import 'package:spo_kick/features/business_hours/presentation/constants/business
 class BusinessHoursFormatters {
   BusinessHoursFormatters._();
 
-  /// Formats a time string (HH:MM:SS) to display format (HH:MM AM/PM)
-  static String formatTime(String time) {
-    final parts = time.split(':');
-    if (parts.length < 2) return time;
+  static final _baseSunday = DateTime(2023, 1, 1);
 
-    int hour = int.tryParse(parts[0]) ?? 0;
-    final minute = parts[1];
-
-    final period = hour >= 12 ? 'PM' : 'AM';
-    if (hour > 12) {
-      hour -= 12;
-    } else if (hour == 0) {
-      hour = 12;
+  static String _normalizeTime(String? time, String fallback) {
+    final value = time ?? fallback;
+    final parts = value.split(':');
+    if (parts.length < 2) {
+      return fallback.substring(0, 5);
     }
 
-    return '$hour:$minute $period';
+    final hourPart = parts[0].padLeft(2, '0');
+    final minutePart = parts[1].padLeft(2, '0');
+    return '$hourPart:$minutePart';
   }
 
-  /// Formats a time range for display
-  static String formatTimeRange(String? openingTime, String? closingTime) {
-    final opening = formatTime(
-      openingTime ?? BusinessHoursConstants.defaultOpeningTime,
+  /// Formats a time string (HH:MM[:SS]) using the current locale.
+  static String formatTime(BuildContext context, {String? time}) {
+    final cleaned = _normalizeTime(
+      time,
+      BusinessHoursConstants.defaultOpeningTime,
     );
-    final closing = formatTime(
-      closingTime ?? BusinessHoursConstants.defaultClosingTime,
+    return LocaleFormatters.formatTime(context, cleaned);
+  }
+
+  /// Formats a time range for display with locale-aware digits/periods.
+  static String formatTimeRange(
+    BuildContext context, {
+    String? openingTime,
+    String? closingTime,
+    bool isEndNextDay = false,
+  }) {
+    final opening = _normalizeTime(
+      openingTime,
+      BusinessHoursConstants.defaultOpeningTime,
+    );
+    final closing = _normalizeTime(
+      closingTime,
+      BusinessHoursConstants.defaultClosingTime,
     );
 
-    return '$opening${BusinessHoursStrings.timeSeparator}$closing';
+    return LocaleFormatters.formatTimeRange(
+      context,
+      startTime: opening,
+      endTime: closing,
+      isEndNextDay: isEndNextDay,
+    );
   }
 
   /// Gets the full day name for a day of week (0-6)
-  static String getDayName(int dayOfWeek) {
-    if (dayOfWeek < 0 || dayOfWeek >= BusinessHoursStrings.dayNames.length) {
+  static String getDayName(BuildContext context, int dayOfWeek) {
+    if (dayOfWeek < 0 || dayOfWeek >= BusinessHoursConstants.daysInWeek) {
       return '';
     }
-    return BusinessHoursStrings.dayNames[dayOfWeek];
+    final locale = Localizations.localeOf(context).toString();
+    final date = _baseSunday.add(Duration(days: dayOfWeek));
+    return DateFormat.EEEE(locale).format(date);
   }
 
   /// Gets the short day name for a day of week (0-6)
-  static String getDayNameShort(int dayOfWeek) {
-    if (dayOfWeek < 0 ||
-        dayOfWeek >= BusinessHoursStrings.dayNamesShort.length) {
+  static String getDayNameShort(BuildContext context, int dayOfWeek) {
+    if (dayOfWeek < 0 || dayOfWeek >= BusinessHoursConstants.daysInWeek) {
       return '';
     }
-    return BusinessHoursStrings.dayNamesShort[dayOfWeek];
+    final locale = Localizations.localeOf(context).toString();
+    final date = _baseSunday.add(Duration(days: dayOfWeek));
+    return DateFormat.E(locale).format(date);
   }
 
   /// Checks if the hours represent 24/7 operation

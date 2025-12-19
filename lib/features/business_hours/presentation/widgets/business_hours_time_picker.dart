@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 
 /// Time picker widget for selecting business hours.
 ///
@@ -82,7 +83,7 @@ class BusinessHoursTimePicker extends StatelessWidget {
                   ),
                   const SizedBox(width: BusinessHoursConstants.itemSpacing),
                   Text(
-                    _formatTimeDisplay(selectedTime),
+                    _formatTimeDisplay(context, selectedTime),
                     style: theme.textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: enabled ? null : Colors.grey,
@@ -109,12 +110,6 @@ class BusinessHoursTimePicker extends StatelessWidget {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: currentTime,
-      builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
-          child: child!,
-        );
-      },
     );
 
     if (!context.mounted) return;
@@ -154,21 +149,9 @@ class BusinessHoursTimePicker extends StatelessWidget {
     return '$hour:$minute:00';
   }
 
-  /// Formats time string for display (HH:MM AM/PM)
-  String _formatTimeDisplay(String time) {
-    final timeOfDay = _parseTime(time);
-
-    int hour = timeOfDay.hour;
-    final minute = timeOfDay.minute.toString().padLeft(2, '0');
-
-    final period = hour >= 12 ? 'PM' : 'AM';
-    if (hour > 12) {
-      hour -= 12;
-    } else if (hour == 0) {
-      hour = 12;
-    }
-
-    return '$hour:$minute $period';
+  /// Formats time string for display using the current locale.
+  String _formatTimeDisplay(BuildContext context, String time) {
+    return LocaleFormatters.formatTime(context, time);
   }
 
   /// Checks if time1 is before time2
@@ -181,8 +164,8 @@ class BusinessHoursTimePicker extends StatelessWidget {
   /// Shows error message for invalid time selection
   void _showTimeError(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(BusinessHoursStrings.invalidTimeRange),
+      SnackBar(
+        content: Text(context.l10n.businessHoursInvalidTimeRange),
         backgroundColor: AppColors.error,
         behavior: SnackBarBehavior.floating,
       ),

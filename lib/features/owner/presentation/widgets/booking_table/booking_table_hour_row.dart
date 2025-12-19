@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/booking_table_helpers.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_cell.dart';
@@ -39,8 +40,7 @@ class BookingTableHourRow extends StatelessWidget {
           ),
           child: Text(
             hour,
-            style: const TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),

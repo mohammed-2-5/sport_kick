@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 
 /// Bottom sheet with action buttons for booking management.
@@ -107,7 +108,7 @@ class BookingActionsSheet extends StatelessWidget {
                     Expanded(
                       child: Text(
                         booking.fieldName ?? 'Unknown Field',
-                        style: const TextStyle(
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: AppColors.darkGrey,
@@ -129,7 +130,7 @@ class BookingActionsSheet extends StatelessWidget {
                       ),
                       child: Text(
                         booking.status.displayName,
-                        style: TextStyle(
+                        style: AppTextStyles.labelSmall.copyWith(
                           fontSize: 12,
                           color: _getStatusColor(booking.status),
                           fontWeight: FontWeight.w600,
@@ -141,15 +142,13 @@ class BookingActionsSheet extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   '${booking.userName ?? 'Unknown'} • ${booking.formattedDate}',
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.mediumGrey,
                   ),
                 ),
                 Text(
                   '${booking.formattedTimeSlot} • ${booking.formattedPrice}',
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -228,8 +227,7 @@ class BookingActionsSheet extends StatelessWidget {
                       booking.status == BookingStatus.completed
                           ? 'This booking has been completed'
                           : 'This booking has been cancelled',
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -278,8 +276,7 @@ class BookingActionsSheet extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w600,
                         color: color,
                       ),
@@ -287,8 +284,7 @@ class BookingActionsSheet extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.mediumGrey,
                       ),
                     ),

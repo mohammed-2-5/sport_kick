@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium revenue card for super admin dashboard.
 ///
@@ -127,8 +128,7 @@ class _PremiumSuperAdminRevenueCardState
                           children: [
                             Text(
                               'Platform Revenue',
-                              style: TextStyle(
-                                fontSize: 14,
+                              style: AppTextStyles.titleSmall.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white.withValues(alpha: 0.9),
                               ),
@@ -136,8 +136,7 @@ class _PremiumSuperAdminRevenueCardState
                             const SizedBox(height: 2),
                             Text(
                               'Total earnings from all fields',
-                              style: TextStyle(
-                                fontSize: 11,
+                              style: AppTextStyles.labelSmall.copyWith(
                                 color: Colors.white.withValues(alpha: 0.5),
                               ),
                             ),
@@ -153,8 +152,7 @@ class _PremiumSuperAdminRevenueCardState
                 // Total revenue
                 Text(
                   widget.totalRevenue,
-                  style: const TextStyle(
-                    fontSize: 36,
+                  style: AppTextStyles.displaySmall.copyWith(
                     fontWeight: FontWeight.w800,
                     color: AppColors.goldAccent,
                     letterSpacing: -0.5,
@@ -229,16 +227,14 @@ class _RevenueBreakdownItem extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(
-                    fontSize: 11,
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: Colors.white.withValues(alpha: 0.5),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   value,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -288,8 +284,7 @@ class _GrowthBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             '${isPositive ? '+' : ''}${growth.toStringAsFixed(1)}%',
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: isPositive ? Colors.green : Colors.red,
             ),

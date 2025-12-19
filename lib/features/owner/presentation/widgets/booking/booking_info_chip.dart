@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// A chip displaying booking information (Date, Time, Duration, Price).
 class BookingInfoChip extends StatelessWidget {
@@ -35,7 +36,7 @@ class BookingInfoChip extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontSize: 10,
                     color: color,
                     fontWeight: FontWeight.w600,
@@ -44,8 +45,7 @@ class BookingInfoChip extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   value,
-                  style: const TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                   maxLines: 1,

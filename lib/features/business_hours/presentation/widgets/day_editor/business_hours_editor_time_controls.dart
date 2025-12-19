@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 import 'package:spo_kick/features/business_hours/presentation/widgets/business_hours_time_picker.dart';
 import 'package:spo_kick/features/business_hours/presentation/widgets/day_editor/business_hours_editor_help_text.dart';
 
@@ -40,7 +40,7 @@ class BusinessHoursEditorTimeControls extends StatelessWidget {
       children: [
         // Opening time picker
         BusinessHoursTimePicker(
-          label: BusinessHoursStrings.openingTime,
+          label: context.l10n.businessHoursOpeningTime,
           selectedTime: openingTime,
           onTimeChanged: onOpeningTimeChanged,
           isOpeningTime: true,
@@ -51,7 +51,7 @@ class BusinessHoursEditorTimeControls extends StatelessWidget {
 
         // Closing time picker
         BusinessHoursTimePicker(
-          label: BusinessHoursStrings.closingTime,
+          label: context.l10n.businessHoursClosingTime,
           selectedTime: closingTime,
           onTimeChanged: onClosingTimeChanged,
           isOpeningTime: false,

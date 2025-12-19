@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
-import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/presentation/widgets/city_list_item.dart';
 
 class CitySelectorList extends StatelessWidget {
@@ -18,10 +18,10 @@ class CitySelectorList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (cities.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(24.0),
-          child: Text(CityConstants.noCitiesAvailable),
+          padding: const EdgeInsets.all(24.0),
+          child: Text(context.l10n.cityNoCitiesAvailable),
         ),
       );
     }

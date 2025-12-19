@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium quick actions grid for owner dashboard.
@@ -152,8 +153,7 @@ class _SectionHeader extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 18,
+          style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
@@ -223,8 +223,7 @@ class _QuickActionCard extends StatelessWidget {
               // Label
               Text(
                 action.label,
-                style: const TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),
@@ -251,9 +250,8 @@ class _QuickActionCard extends StatelessWidget {
                 ),
                 child: Text(
                   action.badgeCount > 99 ? '99+' : action.badgeCount.toString(),
-                  style: const TextStyle(
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: Colors.white,
-                    fontSize: 10,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

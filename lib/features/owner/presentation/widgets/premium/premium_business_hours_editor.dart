@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium business hours editor.
 ///
@@ -82,10 +83,9 @@ class PremiumBusinessHoursEditor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Business Hours',
-          style: TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
@@ -169,8 +169,7 @@ class _DayScheduleCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   schedule.day,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -219,15 +218,18 @@ class _DayScheduleCard extends StatelessWidget {
                     style: BorderStyle.solid,
                   ),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.add, size: 16, color: AppColors.accentCyan),
-                    SizedBox(width: 6),
+                    const Icon(
+                      Icons.add,
+                      size: 16,
+                      color: AppColors.accentCyan,
+                    ),
+                    const SizedBox(width: 6),
                     Text(
                       'Add Time Slot',
-                      style: TextStyle(
-                        fontSize: 13,
+                      style: AppTextStyles.bodySmall.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.accentCyan,
                       ),
@@ -240,8 +242,7 @@ class _DayScheduleCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               'Closed',
-              style: TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.6),
               ),
             ),
@@ -314,8 +315,7 @@ class _TimeSlotRow extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     slot.start,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -355,8 +355,7 @@ class _TimeSlotRow extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     slot.end,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),

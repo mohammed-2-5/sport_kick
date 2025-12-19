@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// Image header for the field card.
@@ -59,15 +60,18 @@ class FieldCardImage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: AppShadows.small,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.verified_rounded, size: 14, color: Colors.white),
-                    SizedBox(width: 4),
+                    const Icon(
+                      Icons.verified_rounded,
+                      size: 14,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 4),
                     Text(
                       'VERIFIED',
-                      style: TextStyle(
-                        fontSize: 10,
+                      style: AppTextStyles.labelSmall.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         letterSpacing: 0.5,
@@ -92,15 +96,21 @@ class FieldCardImage extends StatelessWidget {
           topRight: Radius.circular(18),
         ),
       ),
-      child: const Center(
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.sports_soccer, size: 48, color: AppColors.textSecondary),
-            SizedBox(height: 8),
+            const Icon(
+              Icons.sports_soccer,
+              size: 48,
+              color: AppColors.textSecondary,
+            ),
+            const SizedBox(height: 8),
             Text(
               'No Image',
-              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
           ],
         ),

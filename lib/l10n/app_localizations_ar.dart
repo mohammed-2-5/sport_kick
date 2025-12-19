@@ -36,10 +36,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get submit => 'إرسال';
 
   @override
+  String get apply => 'تطبيق';
+
+  @override
   String get retry => 'إعادة المحاولة';
 
   @override
   String get close => 'إغلاق';
+
+  @override
+  String get refresh => 'تحديث';
 
   @override
   String get back => 'رجوع';
@@ -231,7 +237,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterPassword => 'أدخل كلمة المرور';
 
   @override
-  String get enterFullName => 'أدخل اسمك الكامل';
+  String get enterFullName => 'أدخل الاسم بالكامل';
 
   @override
   String get enterPhoneNumber => 'أدخل رقم هاتفك';
@@ -344,7 +350,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get phoneMustStartWith01 => 'يجب أن يبدأ رقم الهاتف بـ ٠١';
 
   @override
-  String get enterValidNumber => 'يرجى إدخال رقم صالح';
+  String get enterValidNumber => 'يرجى إدخال رقم صحيح';
 
   @override
   String numberAtLeast(Object min) {
@@ -735,6 +741,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get businessHours => 'ساعات العمل';
 
   @override
+  String get open => 'مفتوح';
+
+  @override
+  String get closed => 'مغلق';
+
+  @override
   String get notificationsSection => 'الإشعارات';
 
   @override
@@ -769,6 +781,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get autoApproveBookingsDesc => 'تأكيد الحجوزات الجديدة تلقائياً';
+
+  @override
+  String get autoApproveEnabledTitle => 'تم تشغيل الموافقة التلقائية';
+
+  @override
+  String get autoApproveEnabledMessage =>
+      'سيتم قبول جميع طلبات الحجز الجديدة تلقائياً.';
+
+  @override
+  String get autoApproveDisabledTitle => 'تم إيقاف الموافقة التلقائية';
+
+  @override
+  String get autoApproveDisabledMessage =>
+      'ستحتاج إلى الموافقة على كل طلب حجز يدوياً.';
 
   @override
   String get bookingRules => 'قواعد الحجز';
@@ -821,6 +847,72 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get goToMyFields => 'الذهاب إلى ملاعبي';
+
+  @override
+  String get businessHoursLoading => 'جاري تحميل ساعات العمل...';
+
+  @override
+  String get businessHoursSetDefaultHours => 'تعيين مواعيد افتراضية';
+
+  @override
+  String get businessHoursApplyToAllDays => 'تطبيق على كل الأيام';
+
+  @override
+  String get businessHoursApplyToAllDescription =>
+      'سيتم تعيين نفس المواعيد لجميع الأيام السبعة.';
+
+  @override
+  String get businessHoursHelpText =>
+      'حدد مواعيد إتاحة الملعب للحجوزات. يمكنك تحديد مواعيد مختلفة لكل يوم في الأسبوع.';
+
+  @override
+  String get businessHoursHelpTimeSelection =>
+      'اختر مواعيد الفتح والإغلاق بفواصل 15 دقيقة.';
+
+  @override
+  String get businessHoursOpeningTime => 'وقت الفتح';
+
+  @override
+  String get businessHoursClosingTime => 'وقت الإغلاق';
+
+  @override
+  String get businessHoursOpen24Hours => 'مفتوح 24 ساعة';
+
+  @override
+  String get businessHoursClosedAllDay => 'مغلق طوال اليوم';
+
+  @override
+  String get businessHoursCurrentlyOpen => 'مفتوح الآن';
+
+  @override
+  String get businessHoursCurrentlyClosed => 'مغلق الآن';
+
+  @override
+  String get businessHoursAcceptingBookings => 'الملعب يستقبل الحجوزات حالياً';
+
+  @override
+  String get businessHoursClosedForBookings => 'الملعب مغلق للحجوزات حالياً';
+
+  @override
+  String get businessHoursUpdatedSuccess => 'تم تحديث مواعيد العمل بنجاح';
+
+  @override
+  String get businessHoursDefaultHoursSet =>
+      'تم تعيين المواعيد الافتراضية (24/7) لكل الأيام';
+
+  @override
+  String get businessHoursInvalidTimeRange =>
+      'يجب أن يكون وقت الفتح قبل وقت الإغلاق';
+
+  @override
+  String get businessHoursNoHoursSet => 'لم يتم تعيين مواعيد عمل';
+
+  @override
+  String get businessHoursNoHoursSetDescription =>
+      'قم بتعيين مواعيد تشغيل ملعبك للسماح للمستخدمين بالحجز.';
+
+  @override
+  String get businessHoursTimeOutsideRange => 'الوقت خارج مواعيد العمل';
 
   @override
   String get addFieldTitle => 'إضافة ملعب';
@@ -988,6 +1080,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookings => 'الحجوزات';
 
   @override
+  String get viewAll => 'عرض الكل';
+
+  @override
   String get myBookings => 'حجوزاتي';
 
   @override
@@ -1004,6 +1099,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get selectTime => 'اختر الوقت';
+
+  @override
+  String get dateLabel => 'التاريخ';
+
+  @override
+  String get timeLabel => 'الوقت';
+
+  @override
+  String hoursLabel(num count, Object countFormatted) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'ساعة',
+      few: 'ساعات',
+      two: 'ساعتين',
+      one: 'ساعة',
+    );
+    return '$countFormatted $_temp0';
+  }
 
   @override
   String get availableSlots => 'الأوقات المتاحة';
@@ -1033,6 +1147,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingStatus => 'الحالة';
 
   @override
+  String get bookingStatusTitle => 'تفصيل حالة الحجز';
+
+  @override
   String get bookingTimeline => 'الجدول الزمني للحجز';
 
   @override
@@ -1051,6 +1168,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get view => 'عرض';
 
   @override
+  String get failedToLoadBookings => 'فشل تحميل الحجوزات';
+
+  @override
+  String get contact => 'التواصل';
+
+  @override
+  String get noContactInfoAvailable => 'لا توجد معلومات تواصل متاحة';
+
+  @override
   String emailClientUnavailable(Object email) {
     return 'تعذر فتح تطبيق البريد. يرجى التواصل عبر $email';
   }
@@ -1059,7 +1185,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get emailClientOpenFailed => 'فشل فتح تطبيق البريد';
 
   @override
-  String get noBookingsYet => 'لا توجد حجوزات بعد';
+  String get noBookingsYet => 'لا توجد حجوزات حتى الآن';
+
+  @override
+  String get bookingsWillAppearMessage =>
+      'ستظهر الحجوزات هنا عند بدء العملاء بحجز ملاعبك';
 
   @override
   String get chooseAnotherDate => 'اختر تاريخاً آخر';
@@ -1795,6 +1925,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noNotifications => 'لا توجد إشعارات';
 
   @override
+  String get notificationsEmptySubtitle => 'ستظهر تحديثات الحجز والتنبيهات هنا';
+
+  @override
+  String get notificationJustNow => 'الآن';
+
+  @override
+  String notificationMinutesAgo(Object minutes) {
+    return 'منذ $minutes دقيقة';
+  }
+
+  @override
+  String notificationHoursAgo(Object hours) {
+    return 'منذ $hours ساعة';
+  }
+
+  @override
+  String notificationDaysAgo(Object days) {
+    return 'منذ $days يوم';
+  }
+
+  @override
+  String get markAllRead => 'تحديد الكل كمقروء';
+
+  @override
   String get noFavorites => 'لا توجد عناصر مفضلة بعد';
 
   @override
@@ -1901,6 +2055,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get totalRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get vsLastMonth => 'مقارنة بالشهر الماضي';
+
+  @override
+  String bookingsCount(num count, Object countFormatted) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'حجز',
+      many: 'حجز',
+      few: 'حجوزات',
+      two: 'حجزان',
+      one: 'حجز',
+      zero: 'حجوزات',
+    );
+    return '$countFormatted $_temp0';
+  }
 
   @override
   String get payment => 'الدفع';
@@ -2044,6 +2216,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noFieldsAvailable => 'لا توجد ملاعب متاحة';
 
   @override
+  String get noImagesAvailable => 'لا توجد صور';
+
+  @override
   String get addYourFirstField => 'أضف ملعبك الأول';
 
   @override
@@ -2103,7 +2278,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingSummary => 'ملخص الحجز';
 
   @override
-  String get customerInformation => 'معلومات العميل';
+  String get customerInformation => 'بيانات العميل';
 
   @override
   String get customerName => 'العميل';
@@ -2118,7 +2293,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterEmailAddress => 'أدخل عنوان البريد الإلكتروني';
 
   @override
-  String get invalidEmailFormat => 'تنسيق البريد الإلكتروني غير صحيح';
+  String get invalidEmailFormat => 'تنسيق البريد الإلكتروني غير صالح';
 
   @override
   String get phoneNumberRequired => 'رقم الهاتف مطلوب';
@@ -2151,7 +2326,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get viewPaymentProof => 'عرض إثبات الدفع';
 
   @override
-  String get paymentVerifiedSuccess => 'تم التحقق من الدفع بنجاح';
+  String get paymentVerifiedSuccess => 'تم توثيق الدفع بنجاح';
 
   @override
   String get paymentRejectedMessage => 'تم رفض الدفع';
@@ -2173,9 +2348,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get revenueByFieldSubtitle => 'أفضل الملاعب أداءً';
-
-  @override
-  String get bookingStatusTitle => 'تفصيل حالة الحجز';
 
   @override
   String get bookingStatusSubtitle => 'توزيع حالات الحجز';
@@ -2262,13 +2434,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get customerInfoTitle => 'معلومات العميل';
 
   @override
-  String get customerNameLabel => 'اسم العميل';
+  String get customerNameLabel => 'اسم العميل *';
 
   @override
   String get enterCustomerNameHint => 'أدخل اسم العميل';
 
   @override
-  String get phoneLabel => 'رقم الهاتف';
+  String get phoneLabel => 'رقم الهاتف *';
 
   @override
   String get enterPhoneHint => 'أدخل رقم الهاتف';
@@ -2310,4 +2482,1176 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logoutMessage => 'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get pleaseLoginToManageBusinessHours =>
+      'يرجى تسجيل الدخول لإدارة ساعات العمل';
+
+  @override
+  String get youHaveNoFields => 'ليس لديك أي ملاعب';
+
+  @override
+  String get fieldInactive => 'الملعب غير نشط';
+
+  @override
+  String get verify => 'تحقق';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get saveChanges => 'حفظ التغييرات';
+
+  @override
+  String get changePhoto => 'تغيير الصورة';
+
+  @override
+  String get uploadPhoto => 'رفع صورة';
+
+  @override
+  String get removePhoto => 'إزالة الصورة';
+
+  @override
+  String get camera => 'كاميرا';
+
+  @override
+  String get gallery => 'معرض الصور';
+
+  @override
+  String get createManualBookingTitle => 'إنشاء حجز يدوي';
+
+  @override
+  String manualBookingCreatedSuccess(Object customerName) {
+    return 'تم إنشاء الحجز اليدوي بنجاح للعميل $customerName';
+  }
+
+  @override
+  String get manualBookingSelectField => 'يرجى اختيار ملعب';
+
+  @override
+  String get manualBookingSelectDate => 'يرجى اختيار تاريخ';
+
+  @override
+  String get manualBookingSelectTimeSlot => 'يرجى اختيار وقت';
+
+  @override
+  String get manualBookingEnterValidPrice => 'يرجى إدخال سعر صحيح';
+
+  @override
+  String get manualBookingEnterCustomerName => 'يرجى إدخال اسم العميل';
+
+  @override
+  String get manualBookingEnterCustomerPhone => 'يرجى إدخال رقم هاتف العميل';
+
+  @override
+  String get bookingDetailsTitle => 'تفاصيل الحجز';
+
+  @override
+  String get bookingDetailsSubtitle => 'حدد الملعب والتاريخ والوقت والسعر';
+
+  @override
+  String get chooseField => 'اختر ملعباً';
+
+  @override
+  String endTimeLabel(num hours, Object time) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'ساعة',
+      few: 'ساعات',
+      two: 'ساعتين',
+      one: 'ساعة',
+    );
+    return 'وقت الانتهاء: $time ($hours $_temp0)';
+  }
+
+  @override
+  String priceCalculation(num hours, Object price) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'ساعة',
+      few: 'ساعات',
+      two: 'ساعتين',
+      one: 'ساعة',
+    );
+    return '$price ج.م/ساعة × $hours $_temp0';
+  }
+
+  @override
+  String get basicInformation => 'معلومات أساسية';
+
+  @override
+  String get enterFieldName => 'أدخل اسم الملعب';
+
+  @override
+  String get fieldNameExample => 'مثال: ملعب كرة قدم مميز';
+
+  @override
+  String get enterDescription => 'أدخل الوصف';
+
+  @override
+  String get enterAddress => 'أدخل العنوان';
+
+  @override
+  String get enterCity => 'أدخل المدينة';
+
+  @override
+  String get citySelectionTitle => 'اختر مدينتك';
+
+  @override
+  String get citySelectionSubtitle => 'اختر مدينتك لرؤية الملاعب المتاحة';
+
+  @override
+  String get cityChangeCity => 'تغيير المدينة';
+
+  @override
+  String get citySelectCity => 'اختر المدينة';
+
+  @override
+  String get citySelectPrompt => 'يرجى اختيار مدينة';
+
+  @override
+  String get cityNoCitiesAvailable => 'لا توجد مدن متاحة';
+
+  @override
+  String get cityErrorLoading => 'فشل تحميل المدن';
+
+  @override
+  String get cityLoading => 'جاري تحميل المدن...';
+
+  @override
+  String get citySavingSelection => 'جاري حفظ اختيارك...';
+
+  @override
+  String get citySelectedSuccess => 'تم اختيار المدينة بنجاح';
+
+  @override
+  String get cityContactSupport => 'يرجى التواصل مع الدعم للمساعدة';
+
+  @override
+  String get citySearchHint => 'ابحث عن المدن...';
+
+  @override
+  String get homeWelcomeBack => 'مرحباً بعودتك!';
+
+  @override
+  String get homeGoodMorning => 'صباح الخير،';
+
+  @override
+  String get homeGoodAfternoon => 'مساء الخير،';
+
+  @override
+  String get homeGoodEvening => 'مساء الخير،';
+
+  @override
+  String get goodMorning => 'صباح الخير';
+
+  @override
+  String get goodAfternoon => 'مساء الخير';
+
+  @override
+  String get goodEvening => 'مساء الخير';
+
+  @override
+  String get homeGuest => 'زائر';
+
+  @override
+  String get homeProfileTooltip => 'الملف الشخصي';
+
+  @override
+  String get homeQuickActionsTitle => 'إجراءات سريعة';
+
+  @override
+  String get homeComingSoonTitle => 'قريباً';
+
+  @override
+  String get homeMyProfileTitle => 'ملفي الشخصي';
+
+  @override
+  String get homeMyProfileSubtitle => 'عرض وتعديل';
+
+  @override
+  String get homeBrowseFieldsTitle => 'تصفح الملاعب';
+
+  @override
+  String get homeBrowseFieldsSubtitle => 'ابحث عن الملاعب';
+
+  @override
+  String get homeMyBookingsTitle => 'حجوزاتي';
+
+  @override
+  String get homeMyBookingsSubtitle => 'عرض وإدارة';
+
+  @override
+  String get homeFavoritesTitle => 'المفضلة';
+
+  @override
+  String get homeFavoritesSubtitle => 'قريباً';
+
+  @override
+  String get homeFavoritesComingSoonMessage => 'ميزة المفضلة قريباً!';
+
+  @override
+  String get homeExploreTitle => 'استكشف الملاعب';
+
+  @override
+  String get homeViewAll => 'عرض الكل';
+
+  @override
+  String get homeNoFieldsAvailable => 'لا توجد ملاعب متاحة';
+
+  @override
+  String get homeNearbyFieldsTitle => 'الملاعب القريبة';
+
+  @override
+  String get homeViewMap => 'عرض الخريطة';
+
+  @override
+  String get homeNoFieldsNearby => 'لا توجد ملاعب قريبة';
+
+  @override
+  String get homeTapToViewOnMap => 'اضغط لعرضها على الخريطة';
+
+  @override
+  String get homeShortcutBrowseTitle => 'تصفح\\nالملاعب';
+
+  @override
+  String get homeShortcutBrowseSubtitle => 'ابحث عن الملاعب';
+
+  @override
+  String get homeShortcutBookingsTitle => 'حجوزاتي';
+
+  @override
+  String get homeShortcutBookingsSubtitle => 'عرض السجل';
+
+  @override
+  String get homeShortcutFavoritesTitle => 'الملاعب المفضلة';
+
+  @override
+  String get homeShortcutFavoritesSubtitle => 'اختياراتك';
+
+  @override
+  String get homeShortcutProfileTitle => 'الملف الشخصي';
+
+  @override
+  String get homeShortcutProfileSubtitle => 'الإعدادات';
+
+  @override
+  String get homeUpcomingMatch => 'المباراة القادمة';
+
+  @override
+  String get homeDirections => 'الاتجاهات';
+
+  @override
+  String get homeInvite => 'دعوة';
+
+  @override
+  String get homeAddToCalendar => 'أضف إلى التقويم';
+
+  @override
+  String get homeNoUpcomingMatches => 'لا توجد مباريات قادمة';
+
+  @override
+  String get homeErrorLoadingBookings => 'خطأ في تحميل الحجوزات';
+
+  @override
+  String get homeBookNextGame => 'احجز مباراتك القادمة الآن!';
+
+  @override
+  String get homeErrorOpenMaps => 'تعذر فتح الخرائط';
+
+  @override
+  String get homeErrorAddCalendar => 'تعذر الإضافة إلى التقويم';
+
+  @override
+  String homeCalendarTitle(Object fieldName) {
+    return 'كرة قدم في $fieldName';
+  }
+
+  @override
+  String get homeCalendarDetails => 'تم الحجز عبر سبورت كيك';
+
+  @override
+  String homeBookingShareTitle(Object fieldName) {
+    return 'كرة قدم في $fieldName';
+  }
+
+  @override
+  String get homeBookingShareDescription => 'تم الحجز عبر سبورت كيك';
+
+  @override
+  String get homeNavHome => 'الرئيسية';
+
+  @override
+  String get homeNavExplore => 'استكشاف';
+
+  @override
+  String get homeNavBookings => 'الحجوزات';
+
+  @override
+  String get homeNavSettings => 'الإعدادات';
+
+  @override
+  String get sportFootball => 'كرة القدم';
+
+  @override
+  String get sportTennis => 'التنس';
+
+  @override
+  String get sportBasketball => 'كرة السلة';
+
+  @override
+  String get sportPadel => 'البادل';
+
+  @override
+  String get sportVolleyball => 'الكرة الطائرة';
+
+  @override
+  String get homeFeaturePayments => 'مدفوعات إلكترونية آمنة';
+
+  @override
+  String get ownerWelcomeBack => 'مرحباً بعودتك!';
+
+  @override
+  String get ownerManageFieldsTagline => 'إدارة ملاعب كرة القدم الخاصة بك';
+
+  @override
+  String get ownerNoFieldsYet => 'لا توجد ملاعب بعد';
+
+  @override
+  String get ownerStartByAddingField => 'ابدأ بإضافة ملعبك الأول';
+
+  @override
+  String get ownerAddFirstField => 'أضف ملعبك الأول';
+
+  @override
+  String get ownerEditProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get ownerVerifyPayment => 'تأكيد الدفع';
+
+  @override
+  String get ownerVerifyPaymentMessage =>
+      'هل أنت متأكد أنك تريد تأكيد هذا الدفع؟ سيؤكد ذلك أن العميل قد دفع مقابل الحجز.';
+
+  @override
+  String get ownerRejectPayment => 'رفض الدفع';
+
+  @override
+  String get ownerRejectPaymentMessage =>
+      'يرجى تقديم سبب لرفض هذا الدفع. سيتم إشعار العميل.';
+
+  @override
+  String get ownerRejectReasonHint => 'أدخل سبب الرفض (10 أحرف على الأقل)';
+
+  @override
+  String ownerRejectCounter(Object count) {
+    return '$count/10 أحرف كحد أدنى';
+  }
+
+  @override
+  String get fieldOwnerRole => 'مالك الملعب';
+
+  @override
+  String bookingShortId(Object id) {
+    return 'الحجز رقم $id';
+  }
+
+  @override
+  String get paymentProofLoadFailed => 'فشل تحميل الصورة';
+
+  @override
+  String get paymentProofTryLater => 'يرجى المحاولة لاحقاً';
+
+  @override
+  String get ownerApproveBookingConfirm =>
+      'هل أنت متأكد أنك تريد الموافقة على هذا الحجز؟';
+
+  @override
+  String get ownerRejectBookingConfirm =>
+      'هل أنت متأكد أنك تريد رفض هذا الحجز؟';
+
+  @override
+  String get rejectedByOwner => 'مرفوض من المالك';
+
+  @override
+  String get workingSchedule => 'جدول العمل';
+
+  @override
+  String get closedSlotMessage => 'الملعب مغلق في هذا الوقت';
+
+  @override
+  String get pastSlotMessage => 'لا يمكن إنشاء حجوزات في أوقات سابقة';
+
+  @override
+  String get paymentRejectedSuccess => 'تم رفض الدفع';
+
+  @override
+  String get bookingRejectedSuccess => 'تم رفض الحجز';
+
+  @override
+  String get walkInCustomer => 'عميل حضوري';
+
+  @override
+  String get nameLabel => 'الاسم';
+
+  @override
+  String get admin => 'المسؤول';
+
+  @override
+  String get paymentInformation => 'معلومات الدفع';
+
+  @override
+  String get paymentStatusPendingTitle => 'في انتظار الدفع';
+
+  @override
+  String get paymentStatusPendingDesc => 'لم يقم العميل برفع إثبات الدفع بعد';
+
+  @override
+  String get paymentProofUploadedTitle => 'تم رفع إثبات الدفع';
+
+  @override
+  String get paymentProofUploadedDesc =>
+      'راجع إثبات الدفع ثم قم بالموافقة أو الرفض';
+
+  @override
+  String get paymentVerifiedTitle => 'تم توثيق الدفع';
+
+  @override
+  String get paymentVerifiedDesc => 'تم تأكيد الدفع';
+
+  @override
+  String get paymentRejectedTitle => 'تم رفض الدفع';
+
+  @override
+  String get paymentRejectedDesc => 'تم رفض الدفع، بانتظار إثبات جديد';
+
+  @override
+  String get rejectionReason => 'سبب الرفض';
+
+  @override
+  String copyValueMessage(Object value) {
+    return 'تم النسخ: $value';
+  }
+
+  @override
+  String get enterPrice => 'أدخل السعر';
+
+  @override
+  String get updateField => 'تحديث الملعب';
+
+  @override
+  String get saveField => 'حفظ الملعب';
+
+  @override
+  String get setWorkingHoursDesc => 'حدد ساعات العمل لكل يوم من أيام الأسبوع';
+
+  @override
+  String get surfaceHybrid => 'هجين';
+
+  @override
+  String get fieldType => 'نوع الملعب';
+
+  @override
+  String thousandsAbbreviation(Object value) {
+    return '$value ألف';
+  }
+
+  @override
+  String millionsAbbreviation(Object value) {
+    return '$value مليون';
+  }
+
+  @override
+  String get currencyEgp => 'ج.م';
+
+  @override
+  String get recentBookings => 'الحجوزات الأخيرة';
+
+  @override
+  String get unknownCustomer => 'عميل غير معروف';
+
+  @override
+  String get fieldVisibleToCustomers => 'الملعب ظاهر للعملاء';
+
+  @override
+  String get fieldHiddenFromCustomers => 'الملعب مخفي عن العملاء';
+
+  @override
+  String get enterCustomerDetails => 'أدخل بيانات العميل للحجز المباشر';
+
+  @override
+  String get customerNameTooShort => 'يجب أن يكون الاسم حرفين على الأقل';
+
+  @override
+  String get phoneHint => '01XXXXXXXXX';
+
+  @override
+  String get invalidEgyPhone => 'رقم هاتف مصري غير صالح';
+
+  @override
+  String get emailLabel => 'البريد الإلكتروني (اختياري)';
+
+  @override
+  String get emailHint => 'customer@example.com';
+
+  @override
+  String get notesLabel => 'ملاحظات (اختياري)';
+
+  @override
+  String get notesHint => 'أي طلبات خاصة أو ملاحظات...';
+
+  @override
+  String get selectDay => 'اختر اليوم';
+
+  @override
+  String get selectDaySubtitle => 'اختر اليوم الذي تريد حجزه أسبوعياً';
+
+  @override
+  String availableSlotsForDay(Object day) {
+    return 'الأوقات المتاحة ليوم $day';
+  }
+
+  @override
+  String get selectDayFirst => 'اختر يومًا أولاً';
+
+  @override
+  String fieldClosedOnDay(Object day) {
+    return 'الملعب مغلق يوم $day';
+  }
+
+  @override
+  String get selectDifferentDay => 'الرجاء اختيار يوم آخر';
+
+  @override
+  String get noAvailableSlots => 'لا توجد أوقات متاحة';
+
+  @override
+  String reservedBy(Object name) {
+    return 'محجوز بواسطة $name';
+  }
+
+  @override
+  String get reservedByAnotherUser => 'مستخدم آخر';
+
+  @override
+  String get recurringDurationTitle => 'المدة';
+
+  @override
+  String get recurringDurationSubtitle => 'كم مدة اللعب كل أسبوع؟';
+
+  @override
+  String recurringHoursLabel(num hours, Object hoursFormatted) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hoursFormatted ساعة',
+      many: '$hoursFormatted ساعة',
+      few: '$hoursFormatted ساعات',
+      two: '$hoursFormatted ساعتان',
+      one: '$hoursFormatted ساعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recurringHoursShort(Object hoursFormatted) {
+    return '$hoursFormatted س';
+  }
+
+  @override
+  String get perWeek => 'في الأسبوع';
+
+  @override
+  String get weekly => 'أسبوعي';
+
+  @override
+  String get weeklyReservationSummaryTitle => 'حجزك الأسبوعي';
+
+  @override
+  String get dayLabel => 'اليوم';
+
+  @override
+  String get weeklyCostLabel => 'التكلفة الأسبوعية';
+
+  @override
+  String get weeklyPriceLabel => 'السعر الأسبوعي';
+
+  @override
+  String get weeklyLabel => 'أسبوعي';
+
+  @override
+  String get everyLabel => 'كل';
+
+  @override
+  String get reserveWeeklySlot => 'احجز موعدًا أسبوعيًا';
+
+  @override
+  String get recurringRequestSubmittedTitle => 'تم إرسال الطلب!';
+
+  @override
+  String get recurringRequestSubmittedBody =>
+      'تم إرسال طلب الحجز الأسبوعي إلى صاحب الملعب. سنخبرك عند الموافقة.';
+
+  @override
+  String get viewMySubscriptions => 'عرض اشتراكاتي';
+
+  @override
+  String get submitRequest => 'إرسال الطلب';
+
+  @override
+  String get submittingRequest => 'جارٍ إرسال الطلب...';
+
+  @override
+  String get submittingRequestDescription => 'يرجى الانتظار أثناء معالجة الطلب';
+
+  @override
+  String everyDay(Object day) {
+    return 'كل $day';
+  }
+
+  @override
+  String get completedSessionsLabel => 'الحصص المكتملة';
+
+  @override
+  String get nextBooking => 'الحجز القادم';
+
+  @override
+  String get paidLabel => 'مدفوع';
+
+  @override
+  String get cancelingSubscription => 'جارٍ الإلغاء...';
+
+  @override
+  String get cancelSubscriptionQuestion =>
+      'هل أنت متأكد من إلغاء هذا الحجز المتكرر؟';
+
+  @override
+  String get pendingApprovalMessage =>
+      'بانتظار موافقة مالك الملعب. سنخبرك عند الموافقة.';
+
+  @override
+  String get requestRejected => 'تم رفض الطلب';
+
+  @override
+  String get activeSubscription => 'اشتراك نشط';
+
+  @override
+  String remainingBookings(Object count) {
+    return '$count متبقية';
+  }
+
+  @override
+  String get unknownUser => 'مستخدم غير معروف';
+
+  @override
+  String get sinceLabel => 'منذ';
+
+  @override
+  String get weeklyLabelShort => 'أسبوعي';
+
+  @override
+  String get generatingBooking => 'جارٍ الإنشاء...';
+
+  @override
+  String completedCount(Object count) {
+    return '$count مكتملة';
+  }
+
+  @override
+  String get mySubscriptions => 'اشتراكاتي';
+
+  @override
+  String get newSubscription => 'اشتراك جديد';
+
+  @override
+  String get subscriptionCanceled => 'تم إلغاء الاشتراك بنجاح';
+
+  @override
+  String get subscriptionCancelFailed => 'فشل إلغاء الاشتراك';
+
+  @override
+  String get activeSubscriptions => 'الاشتراكات النشطة';
+
+  @override
+  String get pending => 'قيد الانتظار';
+
+  @override
+  String get history => 'السجل';
+
+  @override
+  String get weeklyReservations => 'الحجوزات الأسبوعية';
+
+  @override
+  String recurringSummaryCounts(Object active, Object pending) {
+    return '$active نشطة • $pending قيد الانتظار';
+  }
+
+  @override
+  String get noSubscriptionsYet => 'لا توجد اشتراكات بعد';
+
+  @override
+  String get noSubscriptionsSubtitle =>
+      'احجز موعدك الأسبوعي المفضل ولا تفوت أي مباراة!';
+
+  @override
+  String get guaranteedWeeklySlot => 'موعد أسبوعي مضمون';
+
+  @override
+  String get autoRenewsWeekly => 'يتجدد تلقائياً كل أسبوع';
+
+  @override
+  String get paymentReminders => 'تذكيرات الدفع';
+
+  @override
+  String get statusActive => 'نشط';
+
+  @override
+  String get statusPendingApproval => 'قيد الموافقة';
+
+  @override
+  String get statusCanceled => 'ملغى';
+
+  @override
+  String get statusRejected => 'مرفوض';
+
+  @override
+  String get newRecurringRequest => 'طلب متكرر جديد';
+
+  @override
+  String get processingRequest => 'جارٍ المعالجة...';
+
+  @override
+  String get pendingRequests => 'طلبات قيد الانتظار';
+
+  @override
+  String get totalLabel => 'الإجمالي';
+
+  @override
+  String get completedLabel => 'مكتمل';
+
+  @override
+  String get upcomingLabel => 'قادمة';
+
+  @override
+  String progressCompleted(Object percent) {
+    return '$percent% مكتملة';
+  }
+
+  @override
+  String get scheduleTitle => 'الجدول';
+
+  @override
+  String get recurringRequestsEmptySubtitle =>
+      'عندما يرسل المستخدمون طلبات حجز أسبوعية ستظهر هنا للموافقة.';
+
+  @override
+  String get keepSubscription => 'الاحتفاظ بالاشتراك';
+
+  @override
+  String get cancelSubscription => 'إلغاء الاشتراك';
+
+  @override
+  String get recurringRequestsTitle => 'الاشتراكات المتكررة';
+
+  @override
+  String get recurringRequestApproved => 'تمت الموافقة على الطلب بنجاح';
+
+  @override
+  String get recurringRequestApproveFailed => 'فشل في الموافقة على الطلب';
+
+  @override
+  String get recurringRequestRejected => 'تم رفض الطلب';
+
+  @override
+  String get recurringRequestRejectFailed => 'فشل رفض الطلب';
+
+  @override
+  String get rejectRequestTitle => 'رفض الطلب';
+
+  @override
+  String get rejectRequestPrompt => 'يرجى توضيح سبب رفض طلب الحجز المتكرر:';
+
+  @override
+  String get rejectRequestHint => 'مثال: الموعد غير متاح أو يوجد تعارض...';
+
+  @override
+  String get loadingRequests => 'جارٍ تحميل الطلبات...';
+
+  @override
+  String get privacyPolicyTitle => 'سياسة الخصوصية';
+
+  @override
+  String get privacyPolicySubtitle => 'كيف نحمي بياناتك';
+
+  @override
+  String get privacyHeaderTitle => 'خصوصيتك مهمة';
+
+  @override
+  String get privacyHeaderDescription =>
+      'ملتزمون بحماية خصوصيتك ومعلوماتك الشخصية. توضح هذه السياسة كيفية جمع بياناتك واستخدامها وحمايتها.';
+
+  @override
+  String get privacyInfoCollectTitle => 'المعلومات التي نجمعها';
+
+  @override
+  String get privacyCollectAccountInfo =>
+      'بيانات الحساب (الاسم، البريد الإلكتروني، رقم الهاتف)';
+
+  @override
+  String get privacyCollectProfileInfo => 'معلومات الملف الشخصي التي تقدمها';
+
+  @override
+  String get privacyCollectBookingHistory => 'سجل الحجوزات والتفضيلات';
+
+  @override
+  String get privacyCollectLocation => 'بيانات الموقع عند استخدام التطبيق';
+
+  @override
+  String get privacyCollectDevice => 'بيانات الجهاز واستخدام التطبيق';
+
+  @override
+  String get privacyCollectPayment =>
+      'بيانات الدفع (يتم معالجتها بشكل آمن عبر مزود الدفع)';
+
+  @override
+  String get privacyUseInfoTitle => 'كيف نستخدم معلوماتك';
+
+  @override
+  String get privacyUseProvideService => 'لتقديم خدمات الحجز والحفاظ عليها';
+
+  @override
+  String get privacyUseProcessPayments => 'لمعالجة الحجوزات والمدفوعات';
+
+  @override
+  String get privacyUseCommunicate => 'للتواصل معك حول الحجوزات والتحديثات';
+
+  @override
+  String get privacyUseImprove => 'لتحسين خدماتنا وتجربة المستخدم';
+
+  @override
+  String get privacyUseSecurity => 'لمنع الاحتيال وضمان الأمان';
+
+  @override
+  String get privacyUseLegal => 'للإيفاء بالالتزامات القانونية';
+
+  @override
+  String get privacyStorageTitle => 'تخزين البيانات وأمنها';
+
+  @override
+  String get privacyStorageSecure =>
+      'يتم تخزين بياناتك بأمان باستخدام Supabase (قاعدة بيانات PostgreSQL)';
+
+  @override
+  String get privacyStorageEncryption =>
+      'نستخدم تشفيراً بمعايير صناعية لنقل البيانات';
+
+  @override
+  String get privacyStoragePayment =>
+      'بيانات الدفع تتم معالجتها بواسطة مزودي دفع معتمدين';
+
+  @override
+  String get privacyStorageUpdates => 'نطبق تحديثات أمان منتظمة ومراقبة مستمرة';
+
+  @override
+  String get privacyStorageAccess =>
+      'يقتصر الوصول للبيانات الشخصية على الموظفين المخولين فقط';
+
+  @override
+  String get privacySharingTitle => 'مشاركة البيانات';
+
+  @override
+  String get privacySharingNoSell => 'لا نبيع معلوماتك الشخصية لأي طرف ثالث';
+
+  @override
+  String get privacySharingOwners =>
+      'يستطيع أصحاب الملاعب رؤية تفاصيل حجزك (الاسم، الهاتف) للحجوزات المؤكدة';
+
+  @override
+  String get privacySharingProviders =>
+      'قد نشارك البيانات مع مزودي خدمات (الدفع، التحليلات)';
+
+  @override
+  String get privacySharingLegal =>
+      'سنشارك البيانات إذا تطلب القانون ذلك أو لحماية الحقوق والسلامة';
+
+  @override
+  String get privacyRightsTitle => 'حقوقك';
+
+  @override
+  String get privacyRightsAccess =>
+      'الوصول إلى بياناتك الشخصية في أي وقت عبر ملفك الشخصي';
+
+  @override
+  String get privacyRightsUpdate => 'تحديث أو تصحيح معلوماتك';
+
+  @override
+  String get privacyRightsDelete => 'حذف حسابك وبياناتك المرتبطة';
+
+  @override
+  String get privacyRightsOptOut => 'إلغاء الاشتراك من رسائل التسويق';
+
+  @override
+  String get privacyRightsExport => 'تصدير سجل حجوزاتك';
+
+  @override
+  String get privacyRightsWithdraw =>
+      'سحب الموافقة على معالجة البيانات (قد يحد من توفر الخدمة)';
+
+  @override
+  String get privacyCookiesTitle => 'ملفات تعريف الارتباط والتتبع';
+
+  @override
+  String get privacyCookiesUse =>
+      'نستخدم ملفات تعريف الارتباط وتقنيات مشابهة لتحسين تجربة المستخدم';
+
+  @override
+  String get privacyCookiesAnalytics =>
+      'ملفات تعريف الارتباط التحليلية تساعدنا على فهم استخدام التطبيق';
+
+  @override
+  String get privacyCookiesDisable =>
+      'يمكنك تعطيل ملفات تعريف الارتباط من إعدادات جهازك';
+
+  @override
+  String get privacyCookiesImpact =>
+      'قد لا تعمل بعض الميزات بدون ملفات تعريف الارتباط';
+
+  @override
+  String get privacyChildrenTitle => 'خصوصية الأطفال';
+
+  @override
+  String get privacyChildrenNotFor => 'خدمتنا غير موجهة للأطفال دون 13 عاماً';
+
+  @override
+  String get privacyChildrenNoCollect => 'لا نجمع بيانات من الأطفال عن علم';
+
+  @override
+  String get privacyChildrenDelete =>
+      'إذا علمنا أننا جمعنا بيانات أطفال فسنحذفها';
+
+  @override
+  String get privacyChildrenParents =>
+      'يمكن للوالدين التواصل معنا لطلب حذف البيانات';
+
+  @override
+  String get privacyChangesTitle => 'التغييرات على هذه السياسة';
+
+  @override
+  String get privacyChangesMayUpdate =>
+      'قد نقوم بتحديث سياسة الخصوصية من وقت لآخر';
+
+  @override
+  String get privacyChangesNotify =>
+      'سنخطر بالتغييرات المهمة عبر البريد الإلكتروني أو إشعار داخل التطبيق';
+
+  @override
+  String get privacyChangesAccept =>
+      'الاستمرار في استخدام التطبيق بعد التغييرات يعني قبولها';
+
+  @override
+  String privacyChangesLastUpdated(Object date) {
+    return 'آخر تحديث: $date';
+  }
+
+  @override
+  String get termsTitle => 'شروط الخدمة';
+
+  @override
+  String get termsSubtitle => 'القواعد والإرشادات';
+
+  @override
+  String get termsDescription =>
+      'يرجى قراءة هذه الشروط بعناية قبل استخدام التطبيق. تحكم هذه الشروط استخدامك لمنصتنا وخدماتنا.';
+
+  @override
+  String get termsAcceptanceTitle => 'قبول الشروط';
+
+  @override
+  String get termsAcceptanceAgree =>
+      'باستخدامك للتطبيق فإنك توافق على شروط الخدمة';
+
+  @override
+  String get termsAcceptanceDisagree =>
+      'إذا لم توافق، يرجى عدم استخدام خدماتنا';
+
+  @override
+  String get termsAcceptanceModify => 'نحتفظ بالحق في تعديل الشروط في أي وقت';
+
+  @override
+  String get termsAcceptanceContinuedUse =>
+      'الاستمرار في الاستخدام بعد التعديل يعني القبول';
+
+  @override
+  String get termsAccountsTitle => 'حسابات المستخدمين';
+
+  @override
+  String get termsAccountsAccurateInfo =>
+      'يجب تقديم معلومات دقيقة وكاملة عند التسجيل';
+
+  @override
+  String get termsAccountsSecurity => 'أنت مسؤول عن الحفاظ على أمان حسابك';
+
+  @override
+  String get termsAccountsAge =>
+      'يجب ألا يقل عمرك عن 13 عاماً لاستخدام خدماتنا';
+
+  @override
+  String get termsAccountsSingle => 'حساب واحد للشخص أو الشركة';
+
+  @override
+  String get termsAccountsNoShare => 'لا يجوز مشاركة بيانات الدخول';
+
+  @override
+  String get termsAccountsNotify => 'أبلغنا فوراً بأي دخول غير مصرح به';
+
+  @override
+  String get termsBookingTitle => 'سياسات الحجز';
+
+  @override
+  String get termsBookingAvailability => 'جميع الحجوزات خاضعة لتوفر الملعب';
+
+  @override
+  String get termsBookingApproval =>
+      'قد تتطلب الحجوزات موافقة المالك قبل التأكيد';
+
+  @override
+  String get termsBookingArrival => 'يجب الحضور في الوقت المحدد للحجز';
+
+  @override
+  String get termsBookingLate => 'قد يؤدي التأخر إلى تقليل وقت اللعب';
+
+  @override
+  String get termsBookingNoShow => 'عدم الحضور قد يؤدي إلى قيود على الحساب';
+
+  @override
+  String get termsBookingPrices => 'يحدد أصحاب الملاعب الأسعار وقد تختلف';
+
+  @override
+  String get termsCancellationTitle => 'الإلغاء والاسترداد';
+
+  @override
+  String get termsCancellationPolicy =>
+      'يمكن للمستخدمين إلغاء الحجوزات وفق سياسة الإلغاء';
+
+  @override
+  String get termsCancellationFullRefund =>
+      'الإلغاء قبل 24 ساعة أو أكثر قد يتيح استرداد كامل';
+
+  @override
+  String get termsCancellationLateFees =>
+      'الإلغاء خلال أقل من 24 ساعة قد يفرض رسوماً';
+
+  @override
+  String get termsCancellationNoShow => 'عدم الحضور لا يتيح استرداداً';
+
+  @override
+  String get termsCancellationRefundTime =>
+      'يتم معالجة المبالغ المستردة وفق طريقة الدفع (3-7 أيام عمل)';
+
+  @override
+  String get termsCancellationOwnerCancel =>
+      'يحتفظ المالك بالحق في إلغاء الحجز للصيانة أو الطقس';
+
+  @override
+  String get termsConductTitle => 'سلوك المستخدم';
+
+  @override
+  String get termsConductRules => 'يجب اتباع قواعد وإرشادات الملعب';
+
+  @override
+  String get termsConductNoAbuse =>
+      'يمنع التحرش أو التمييز أو الإساءة للطاقم أو اللاعبين';
+
+  @override
+  String get termsConductDamage => 'أنت مسؤول عن أي ضرر يحدث خلال الحجز';
+
+  @override
+  String get termsConductProhibited =>
+      'الأنشطة المحظورة تشمل الحجوزات الاحتيالية أو إساءة استخدام المنصة';
+
+  @override
+  String get termsLiabilityTitle => 'المسؤولية وإخلاء المسؤولية';
+
+  @override
+  String get termsLiabilityPlatform =>
+      'التطبيق منصة تربط المستخدمين بأصحاب الملاعب';
+
+  @override
+  String get termsLiabilityCondition =>
+      'لسنا مسؤولين عن حالة الملاعب أو المعدات';
+
+  @override
+  String get termsLiabilityInjuries =>
+      'لسنا مسؤولين عن الإصابات أو الحوادث أو الخسائر أثناء الاستخدام';
+
+  @override
+  String get termsLiabilityOwner =>
+      'أصحاب الملاعب مسؤولون عن مرافقهم والالتزام بمعايير السلامة';
+
+  @override
+  String get termsPaymentsTitle => 'المدفوعات والرسوم';
+
+  @override
+  String get termsPaymentsProcessed =>
+      'تتم معالجة المدفوعات بأمان عبر مزود الدفع';
+
+  @override
+  String get termsPaymentsFees => 'قد تنطبق رسوم خدمة على الحجوزات';
+
+  @override
+  String get termsPaymentsDisplay => 'يتم عرض الأسعار قبل الدفع';
+
+  @override
+  String get termsPaymentsRefunds => 'الاستردادات وفق سياسة الإلغاء';
+
+  @override
+  String get termsPaymentsCurrency => 'يتم عرض العملة والضرائب أثناء الدفع';
+
+  @override
+  String get termsIPTitle => 'الملكية الفكرية';
+
+  @override
+  String get termsIPProtected =>
+      'جميع المحتويات محمية بحقوق النشر والعلامات التجارية';
+
+  @override
+  String get termsIPBrand => 'لا يجوز استخدام علامتنا التجارية دون إذن';
+
+  @override
+  String get termsIPUserContent =>
+      'المحتوى الذي ينشئه المستخدم يظل ملكك لكنك تمنحنا ترخيصاً لعرضه';
+
+  @override
+  String get termsTerminationTitle => 'إنهاء الخدمة';
+
+  @override
+  String get termsTerminationSuspend =>
+      'قد نقوم بتعليق أو إنهاء الحساب لمخالفة الشروط';
+
+  @override
+  String get termsTerminationDelete => 'يمكن للمستخدم حذف حسابه في أي وقت';
+
+  @override
+  String get termsTerminationDisputes =>
+      'المدفوعات أو النزاعات المعلقة قد تؤخر حذف الحساب';
+
+  @override
+  String get termsLawTitle => 'القانون الحاكم';
+
+  @override
+  String get termsLawGoverning =>
+      'تخضع هذه الشروط للقوانين المحلية المعمول بها';
+
+  @override
+  String get termsLawDisputes =>
+      'يتم حل أي نزاعات في الولاية القضائية المناسبة';
+
+  @override
+  String get supportContactTitle => 'تواصل معنا';
+
+  @override
+  String get supportContactDescription =>
+      'إذا كانت لديك أسئلة حول سياساتنا أو تحتاج إلى مساعدة، يرجى التواصل معنا:';
 }

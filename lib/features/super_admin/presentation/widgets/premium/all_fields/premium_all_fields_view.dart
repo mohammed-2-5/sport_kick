@@ -243,7 +243,7 @@ class _SearchBar extends StatelessWidget {
         onChanged: onChanged,
         decoration: InputDecoration(
           hintText: 'Search fields...',
-          hintStyle: TextStyle(
+          hintStyle: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondary.withValues(alpha: 0.6),
           ),
           prefixIcon: Icon(

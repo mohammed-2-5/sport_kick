@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Header section for field detail page showing image gallery and basic info.
 class FieldDetailHeader extends StatefulWidget {
@@ -96,20 +97,19 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
                               ),
                             ],
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.verified_rounded,
                                 size: 16,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 4),
+                              const SizedBox(width: 4),
                               Text(
-                                'Verified',
-                                style: TextStyle(
+                                context.l10n.verified,
+                                style: AppTextStyles.labelSmall.copyWith(
                                   color: Colors.white,
-                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -166,7 +166,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
                     const SizedBox(width: 8),
                     _buildInfoChip(
                       Icons.grass,
-                      widget.field.surfaceType!,
+                      _getSurfaceLabel(context, widget.field.surfaceType!),
                       AppColors.success,
                     ),
                   ],
@@ -175,7 +175,10 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
               if (widget.field.description != null &&
                   widget.field.description!.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                const Text('Description', style: AppTextStyles.titleMedium),
+                Text(
+                  context.l10n.description,
+                  style: AppTextStyles.titleMedium,
+                ),
                 const SizedBox(height: 8),
                 Text(
                   widget.field.description!,
@@ -187,7 +190,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
               ],
               if (widget.field.hasFacilities) ...[
                 const SizedBox(height: 16),
-                const Text('Facilities', style: AppTextStyles.titleMedium),
+                Text(context.l10n.facilities, style: AppTextStyles.titleMedium),
                 const SizedBox(height: 8),
                 Wrap(
                   spacing: 8,
@@ -196,8 +199,8 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
                       .map(
                         (facility) => Chip(
                           label: Text(
-                            facility,
-                            style: const TextStyle(fontSize: 12),
+                            _getFacilityLabel(context, facility),
+                            style: AppTextStyles.labelSmall,
                           ),
                           backgroundColor: AppColors.primary.withValues(
                             alpha: 0.1,
@@ -228,7 +231,7 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
             ),
             const SizedBox(height: 8),
             Text(
-              'No Images',
+              context.l10n.noImagesAvailable,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
@@ -262,5 +265,37 @@ class _FieldDetailHeaderState extends State<FieldDetailHeader> {
         ],
       ),
     );
+  }
+
+  String _getSurfaceLabel(BuildContext context, String surface) {
+    switch (surface) {
+      case 'Natural Grass':
+        return context.l10n.surfaceGrass;
+      case 'Artificial Turf':
+        return context.l10n.surfaceTurf;
+      case 'Hybrid':
+        return context.l10n.surfaceHybrid;
+      default:
+        return surface;
+    }
+  }
+
+  String _getFacilityLabel(BuildContext context, String facility) {
+    switch (facility) {
+      case 'Parking':
+        return context.l10n.parking;
+      case 'Changing Room':
+        return context.l10n.changingRooms;
+      case 'Shower':
+        return context.l10n.showers;
+      case 'Cafeteria':
+        return context.l10n.cafeteria;
+      case 'WiFi':
+        return context.l10n.wifi;
+      case 'Lighting':
+        return context.l10n.lighting;
+      default:
+        return facility;
+    }
   }
 }

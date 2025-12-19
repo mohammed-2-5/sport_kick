@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 import 'package:spo_kick/features/business_hours/presentation/models/business_hours_update.dart';
 import 'package:spo_kick/features/business_hours/presentation/utils/business_hours_validators.dart';
 import 'package:spo_kick/features/business_hours/presentation/widgets/day_editor/business_hours_editor_header.dart';
@@ -113,8 +113,10 @@ class _BusinessHoursDayEditorState extends State<BusinessHoursDayEditor> {
                   )) {
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(BusinessHoursStrings.invalidTimeRange),
+                        SnackBar(
+                          content: Text(
+                            context.l10n.businessHoursInvalidTimeRange,
+                          ),
                           backgroundColor: AppColors.error,
                           behavior: SnackBarBehavior.floating,
                         ),
@@ -138,8 +140,10 @@ class _BusinessHoursDayEditorState extends State<BusinessHoursDayEditor> {
                   )) {
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(BusinessHoursStrings.invalidTimeRange),
+                        SnackBar(
+                          content: Text(
+                            context.l10n.businessHoursInvalidTimeRange,
+                          ),
                           backgroundColor: AppColors.error,
                           behavior: SnackBarBehavior.floating,
                         ),

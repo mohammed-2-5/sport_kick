@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Help text widget for business hours editor.
 ///
@@ -18,7 +18,7 @@ class BusinessHoursEditorHelpText extends StatelessWidget {
         const SizedBox(width: BusinessHoursConstants.tinySpacing),
         Expanded(
           child: Text(
-            BusinessHoursStrings.helpTimeSelection,
+            context.l10n.businessHoursHelpTimeSelection,
             style: theme.textTheme.bodySmall?.copyWith(
               color: Colors.grey[600],
               fontStyle: FontStyle.italic,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium time slot grid selector.
 ///
@@ -159,8 +160,7 @@ class _TimeSlotChipState extends State<_TimeSlotChip>
           child: Center(
             child: Text(
               widget.slot.displayTime,
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
                 color: widget.isSelected
                     ? Colors.white

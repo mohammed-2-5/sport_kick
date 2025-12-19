@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Empty state widget displayed when owner has no fields.
 class OwnerFieldsEmptyState extends StatelessWidget {
@@ -31,10 +32,13 @@ class OwnerFieldsEmptyState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            const Text('No Fields Yet', style: AppTextStyles.headlineSmall),
+            Text(
+              context.l10n.ownerNoFieldsYet,
+              style: AppTextStyles.headlineSmall,
+            ),
             const SizedBox(height: 12),
             Text(
-              'Start by adding your first football field',
+              context.l10n.ownerStartByAddingField,
               textAlign: TextAlign.center,
               style: AppTextStyles.labelLarge.copyWith(
                 color: AppColors.textSecondary,
@@ -59,15 +63,18 @@ class OwnerFieldsEmptyState extends StatelessWidget {
                       horizontal: 32,
                       vertical: 16,
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.add_rounded, color: Colors.white, size: 24),
-                        SizedBox(width: 12),
+                        const Icon(
+                          Icons.add_rounded,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        const SizedBox(width: 12),
                         Text(
-                          'Add Your First Field',
-                          style: TextStyle(
-                            fontSize: 16,
+                          context.l10n.ownerAddFirstField,
+                          style: AppTextStyles.labelLarge.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             letterSpacing: 0.5,

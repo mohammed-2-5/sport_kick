@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 class NearbyFieldsPreview extends StatelessWidget {
   const NearbyFieldsPreview({super.key});
@@ -19,7 +21,7 @@ class NearbyFieldsPreview extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Nearby Fields',
+                context.l10n.homeNearbyFieldsTitle,
                 style: AppTextStyles.titleMedium.copyWith(
                   color: AppColors.lightTextPrimary,
                 ),
@@ -33,9 +35,9 @@ class NearbyFieldsPreview extends StatelessWidget {
                   size: 18,
                   color: AppColors.lightAccent,
                 ),
-                label: const Text(
-                  'View Map',
-                  style: TextStyle(
+                label: Text(
+                  context.l10n.homeViewMap,
+                  style: const TextStyle(
                     color: AppColors.lightAccent,
                     fontWeight: FontWeight.w600,
                   ),
@@ -124,7 +126,7 @@ class NearbyFieldsPreview extends StatelessWidget {
                     builder: (context, state) {
                       if (state is FieldsLoaded) {
                         if (state.fields.isEmpty) {
-                          return _buildEmptyState();
+                          return _buildEmptyState(context.l10n);
                         }
                         final fields = state.fields.take(3).toList();
                         return Stack(
@@ -162,7 +164,7 @@ class NearbyFieldsPreview extends StatelessWidget {
                           ],
                         );
                       } else if (state is FieldsEmpty || state is FieldsError) {
-                        return _buildEmptyState();
+                        return _buildEmptyState(context.l10n);
                       }
 
                       // Loading state
@@ -182,7 +184,7 @@ class NearbyFieldsPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppLocalizations l10n) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -194,7 +196,7 @@ class NearbyFieldsPreview extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No fields nearby',
+            l10n.homeNoFieldsNearby,
             style: AppTextStyles.bodyLarge.copyWith(
               color: AppColors.lightTextPrimary,
               fontWeight: FontWeight.w600,
@@ -232,11 +234,11 @@ class NearbyFieldsPreview extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '$count fields nearby',
+                  context.l10n.fieldsCount(count),
                   style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
                 ),
                 Text(
-                  'Tap to view on map',
+                  context.l10n.homeTapToViewOnMap,
                   style: AppTextStyles.labelSmall.copyWith(
                     color: Colors.white70,
                   ),

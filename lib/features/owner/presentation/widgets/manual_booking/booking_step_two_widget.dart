@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/constants/owner_ui_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/booking_summary_row.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Step 2 of manual booking flow: Customer Information
 ///
@@ -51,14 +53,14 @@ class BookingStepTwoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Customer Information',
+              context.l10n.customerInfoTitle,
               style: Theme.of(
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: OwnerUIConstants.spacingSmall),
             Text(
-              'Enter customer details for walk-in booking',
+              context.l10n.enterCustomerDetails,
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
@@ -83,32 +85,34 @@ class BookingStepTwoWidget extends StatelessWidget {
                       Icon(Icons.info_outline, color: Colors.blue[700]),
                       const SizedBox(width: OwnerUIConstants.spacingSmall),
                       Text(
-                        'Booking Summary',
-                        style: TextStyle(
+                        context.l10n.bookingSummary,
+                        style: AppTextStyles.bodyLarge.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.blue[900],
-                          fontSize: OwnerUIConstants.fontSizeLarge,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: OwnerUIConstants.spacingMedium),
                   BookingSummaryRow(
-                    label: 'Field',
+                    label: context.l10n.fieldLabel,
                     value: selectedField?.name ?? '-',
                   ),
                   BookingSummaryRow(
-                    label: 'Date',
+                    label: context.l10n.bookingDate,
                     value: selectedDate == null
                         ? '-'
-                        : DateFormat('MMM d, y').format(selectedDate!),
+                        : DateFormat(
+                            'MMM d, y',
+                            context.l10n.localeName,
+                          ).format(selectedDate!),
                   ),
                   BookingSummaryRow(
-                    label: 'Time',
+                    label: context.l10n.timeSlot,
                     value: '$selectedStartTime - $selectedEndTime',
                   ),
                   BookingSummaryRow(
-                    label: 'Price',
+                    label: context.l10n.priceLabel,
                     value: 'EGP ${totalPrice?.toStringAsFixed(0) ?? '-'}',
                   ),
                 ],
@@ -121,8 +125,8 @@ class BookingStepTwoWidget extends StatelessWidget {
             TextFormField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: 'Customer Name *',
-                hintText: 'Enter full name',
+                labelText: context.l10n.customerNameLabel,
+                hintText: context.l10n.enterFullName,
                 prefixIcon: const Icon(Icons.person),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
@@ -132,10 +136,10 @@ class BookingStepTwoWidget extends StatelessWidget {
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Customer name is required';
+                  return context.l10n.customerNameRequired;
                 }
                 if (value.trim().length < 2) {
-                  return 'Name must be at least 2 characters';
+                  return context.l10n.customerNameTooShort;
                 }
                 return null;
               },
@@ -147,8 +151,8 @@ class BookingStepTwoWidget extends StatelessWidget {
             TextFormField(
               controller: phoneController,
               decoration: InputDecoration(
-                labelText: 'Phone Number *',
-                hintText: '01XXXXXXXXX',
+                labelText: context.l10n.phoneLabel,
+                hintText: context.l10n.phoneHint,
                 prefixIcon: const Icon(Icons.phone),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
@@ -159,12 +163,12 @@ class BookingStepTwoWidget extends StatelessWidget {
               keyboardType: TextInputType.phone,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Phone number is required';
+                  return context.l10n.phoneRequired;
                 }
                 final phoneRegex = RegExp(r'^01[0-2,5]\d{8}$');
                 final cleanPhone = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
                 if (!phoneRegex.hasMatch(cleanPhone)) {
-                  return 'Invalid Egyptian phone number';
+                  return context.l10n.invalidEgyPhone;
                 }
                 return null;
               },
@@ -176,8 +180,8 @@ class BookingStepTwoWidget extends StatelessWidget {
             TextFormField(
               controller: emailController,
               decoration: InputDecoration(
-                labelText: 'Email (Optional)',
-                hintText: 'customer@example.com',
+                labelText: context.l10n.emailLabel,
+                hintText: context.l10n.emailHint,
                 prefixIcon: const Icon(Icons.email),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
@@ -192,7 +196,7 @@ class BookingStepTwoWidget extends StatelessWidget {
                     r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                   );
                   if (!emailRegex.hasMatch(value.trim())) {
-                    return 'Invalid email format';
+                    return context.l10n.invalidEmailFormat;
                   }
                 }
                 return null;
@@ -205,8 +209,8 @@ class BookingStepTwoWidget extends StatelessWidget {
             TextFormField(
               controller: notesController,
               decoration: InputDecoration(
-                labelText: 'Notes (Optional)',
-                hintText: 'Any special requests or notes...',
+                labelText: context.l10n.notesLabel,
+                hintText: context.l10n.notesHint,
                 prefixIcon: const Icon(Icons.notes),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 
 /// Empty state widget for business hours feature.
 ///
@@ -25,21 +25,21 @@ class BusinessHoursEmptyState extends StatelessWidget {
           children: [
             Icon(Icons.schedule, size: 64, color: Colors.grey[400]),
             const SizedBox(height: BusinessHoursConstants.itemSpacing),
-            const Text(
-              BusinessHoursStrings.noHoursSet,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              context.l10n.businessHoursNoHoursSet,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: BusinessHoursConstants.smallSpacing),
-            const Text(
-              BusinessHoursStrings.noHoursSetDescription,
+            Text(
+              context.l10n.businessHoursNoHoursSetDescription,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: BusinessHoursConstants.sectionSpacing),
             FilledButton.icon(
               onPressed: onInitializeDefaultHours,
               icon: const Icon(Icons.add),
-              label: const Text(BusinessHoursStrings.setDefaultHours),
+              label: Text(context.l10n.businessHoursSetDefaultHours),
             ),
           ],
         ),

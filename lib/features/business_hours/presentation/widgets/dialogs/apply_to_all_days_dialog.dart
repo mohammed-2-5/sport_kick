@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for confirming "Apply to All Days" action.
 ///
@@ -18,16 +18,16 @@ class ApplyToAllDaysDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(BusinessHoursStrings.applyToAllDays),
-      content: const Text(BusinessHoursStrings.helpApplyToAll),
+      title: Text(context.l10n.businessHoursApplyToAllDays),
+      content: Text(context.l10n.businessHoursApplyToAllDescription),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text(BusinessHoursStrings.cancel),
+          child: Text(context.l10n.cancel),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text(BusinessHoursStrings.apply),
+          child: Text(context.l10n.apply),
         ),
       ],
     );

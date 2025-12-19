@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Colorful stat card widget for displaying key metrics
 class StatCard extends StatelessWidget {
@@ -53,8 +54,7 @@ class StatCard extends StatelessWidget {
           // Title
           Text(
             title,
-            style: TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodySmall.copyWith(
               color: Colors.white.withValues(alpha: 0.9),
               fontWeight: FontWeight.w600,
               letterSpacing: 0.3,
@@ -66,8 +66,7 @@ class StatCard extends StatelessWidget {
           // Value
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 28,
+            style: AppTextStyles.headlineMedium.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,

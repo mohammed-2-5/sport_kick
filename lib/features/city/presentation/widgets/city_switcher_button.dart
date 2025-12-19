@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
@@ -23,7 +24,7 @@ class CitySwitcherButton extends StatelessWidget {
           onPressed: () => CitySelectorLauncher.show(context),
           icon: const Icon(Icons.location_on, color: Colors.white, size: 20),
           label: Text(
-            city?.name ?? 'Select City',
+            city?.name ?? context.l10n.citySelectCity,
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,

@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/onboarding/presentation/widgets/premium/premium_onboarding_page.dart';
 import 'package:spo_kick/features/onboarding/presentation/widgets/premium/premium_page_indicator.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium onboarding view with enhanced UI.
 ///
@@ -88,9 +89,9 @@ class _PremiumOnboardingViewState extends State<PremiumOnboardingView> {
                           color: Colors.white.withValues(alpha: 0.2),
                         ),
                       ),
-                      child: const Text(
-                        'Skip',
-                        style: TextStyle(
+                      child: Text(
+                        context.l10n.skip,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
@@ -127,8 +128,8 @@ class _PremiumOnboardingViewState extends State<PremiumOnboardingView> {
                 padding: const EdgeInsets.fromLTRB(32, 0, 32, 40),
                 child: PremiumButton(
                   label: _currentPage == widget.pages.length - 1
-                      ? 'Get Started'
-                      : 'Next',
+                      ? context.l10n.getStarted
+                      : context.l10n.next,
                   onPressed: _onNextPressed,
                   icon: _currentPage == widget.pages.length - 1
                       ? Icons.arrow_forward

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium settings toggle switch.
 ///
@@ -55,7 +56,7 @@ class PremiumSettingsToggle extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(
+                    style: AppTextStyles.titleMedium.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
@@ -65,8 +66,7 @@ class PremiumSettingsToggle extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       description!,
-                      style: TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.textSecondary.withValues(alpha: 0.8),
                       ),
                     ),

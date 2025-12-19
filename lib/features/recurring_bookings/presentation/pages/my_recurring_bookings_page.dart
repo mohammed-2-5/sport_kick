@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_cubit.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_state.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/my_recurring_bookings_content.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Page for displaying user's recurring booking subscriptions.
 class MyRecurringBookingsPage extends StatefulWidget {
@@ -40,9 +41,9 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
             }
           },
         ),
-        title: const Text(
-          'My Subscriptions',
-          style: TextStyle(
+        title: Text(
+          context.l10n.mySubscriptions,
+          style: const TextStyle(
             color: AppColors.navyDeep,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -52,7 +53,7 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
           IconButton(
             icon: const Icon(Icons.add_circle_outline_rounded),
             color: AppColors.accentCyan,
-            tooltip: 'New Subscription',
+            tooltip: context.l10n.newSubscription,
             onPressed: () => _navigateToFieldSelection(),
           ),
         ],
@@ -100,8 +101,8 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
           SnackBar(
             content: Text(
               success
-                  ? 'Subscription canceled successfully'
-                  : 'Failed to cancel subscription',
+                  ? context.l10n.subscriptionCanceled
+                  : context.l10n.subscriptionCancelFailed,
             ),
             backgroundColor: success
                 ? const Color(0xFF10B981)
@@ -123,23 +124,26 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.cancel_outlined, color: AppColors.error, size: 24),
-                SizedBox(width: 12),
-                Text('Cancel Subscription?'),
+                const Icon(
+                  Icons.cancel_outlined,
+                  color: AppColors.error,
+                  size: 24,
+                ),
+                const SizedBox(width: 12),
+                Text(context.l10n.cancelSubscriptionTitle),
               ],
             ),
-            content: const Column(
+            content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Are you sure you want to cancel this recurring booking?'),
-                SizedBox(height: 12),
+                Text(context.l10n.cancelSubscriptionQuestion),
+                const SizedBox(height: 12),
                 Text(
-                  'Note: Bookings within the next 7 days will still be honored. '
-                  'Only future bookings will be canceled.',
-                  style: TextStyle(
+                  context.l10n.cancelSubscriptionBody,
+                  style: const TextStyle(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                   ),
@@ -149,7 +153,7 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: const Text('Keep Subscription'),
+                child: Text(context.l10n.keepSubscription),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.pop(context, true),
@@ -160,7 +164,7 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text('Cancel'),
+                child: Text(context.l10n.cancel),
               ),
             ],
           ),
@@ -178,15 +182,15 @@ class _LoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(color: AppColors.accentCyan),
-          SizedBox(height: 16),
+          const CircularProgressIndicator(color: AppColors.accentCyan),
+          const SizedBox(height: 16),
           Text(
-            'Loading subscriptions...',
-            style: TextStyle(color: AppColors.textSecondary),
+            context.l10n.loadingSubscriptions,
+            style: const TextStyle(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -234,7 +238,7 @@ class _ErrorView extends StatelessWidget {
                 ),
               ),
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Retry'),
+              label: Text(context.l10n.retry),
             ),
           ],
         ),

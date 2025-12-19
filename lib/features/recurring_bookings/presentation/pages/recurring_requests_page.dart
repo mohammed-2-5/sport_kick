@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/recurring_requests_cubit.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/recurring_requests_state.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/recurring_requests_content.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Page for managing recurring booking requests (owner view).
 class RecurringRequestsPage extends StatefulWidget {
@@ -33,9 +34,9 @@ class _RecurringRequestsPageState extends State<RecurringRequestsPage> {
           color: AppColors.navyDeep,
           onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Recurring Subscriptions',
-          style: TextStyle(
+        title: Text(
+          context.l10n.recurringRequestsTitle,
+          style: const TextStyle(
             color: AppColors.navyDeep,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -84,8 +85,8 @@ class _RecurringRequestsPageState extends State<RecurringRequestsPage> {
         SnackBar(
           content: Text(
             success
-                ? 'Request approved! 4 weekly bookings have been created.'
-                : 'Failed to approve request',
+                ? context.l10n.recurringRequestApproved
+                : context.l10n.recurringRequestApproveFailed,
           ),
           backgroundColor: success ? const Color(0xFF10B981) : AppColors.error,
           behavior: SnackBarBehavior.floating,
@@ -109,7 +110,9 @@ class _RecurringRequestsPageState extends State<RecurringRequestsPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              success ? 'Request rejected' : 'Failed to reject request',
+              success
+                  ? context.l10n.recurringRequestRejected
+                  : context.l10n.recurringRequestRejectFailed,
             ),
             backgroundColor: success
                 ? AppColors.textSecondary
@@ -131,26 +134,24 @@ class _RecurringRequestsPageState extends State<RecurringRequestsPage> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.block_rounded, color: AppColors.error, size: 24),
-            SizedBox(width: 12),
-            Text('Reject Request'),
+            const Icon(Icons.block_rounded, color: AppColors.error, size: 24),
+            const SizedBox(width: 12),
+            Text(context.l10n.rejectRequestTitle),
           ],
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Please provide a reason for rejecting this recurring booking request:',
-            ),
+            Text(context.l10n.rejectRequestPrompt),
             const SizedBox(height: 16),
             TextField(
               controller: controller,
               maxLines: 3,
               decoration: InputDecoration(
-                hintText: 'e.g., Slot not available, time conflict...',
+                hintText: context.l10n.rejectRequestHint,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -165,7 +166,7 @@ class _RecurringRequestsPageState extends State<RecurringRequestsPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -180,7 +181,7 @@ class _RecurringRequestsPageState extends State<RecurringRequestsPage> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text('Reject'),
+            child: Text(context.l10n.reject),
           ),
         ],
       ),
@@ -197,15 +198,15 @@ class _LoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(color: AppColors.accentCyan),
-          SizedBox(height: 16),
+          const CircularProgressIndicator(color: AppColors.accentCyan),
+          const SizedBox(height: 16),
           Text(
-            'Loading requests...',
-            style: TextStyle(color: AppColors.textSecondary),
+            context.l10n.loadingRequests,
+            style: const TextStyle(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -253,7 +254,7 @@ class _ErrorView extends StatelessWidget {
                 ),
               ),
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Retry'),
+              label: Text(context.l10n.retry),
             ),
           ],
         ),

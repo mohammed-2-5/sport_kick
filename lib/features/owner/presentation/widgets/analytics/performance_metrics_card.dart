@@ -78,8 +78,7 @@ class PerformanceMetricsCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
@@ -87,8 +86,7 @@ class PerformanceMetricsCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   value,
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -112,8 +110,7 @@ class PerformanceMetricsCard extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   change,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.success,
                   ),

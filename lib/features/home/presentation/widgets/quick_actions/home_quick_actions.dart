@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/home/presentation/constants/home_constants.dart';
 
 /// Quick actions section widget for the home page.
@@ -23,7 +24,7 @@ class HomeQuickActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          HomeConstants.quickActionsTitle,
+          context.l10n.homeQuickActionsTitle,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -72,29 +73,29 @@ class HomeQuickActions extends StatelessWidget {
     return [
       _QuickActionData(
         icon: Icons.person_outline,
-        title: HomeConstants.myProfileTitle,
-        subtitle: HomeConstants.myProfileSubtitle,
+        title: context.l10n.homeMyProfileTitle,
+        subtitle: context.l10n.homeMyProfileSubtitle,
         gradient: AppGradients.primary,
         onTap: () => context.pushNamed('profile'),
       ),
       _QuickActionData(
         icon: Icons.sports_soccer,
-        title: HomeConstants.browseFieldsTitle,
-        subtitle: HomeConstants.browseFieldsSubtitle,
+        title: context.l10n.homeBrowseFieldsTitle,
+        subtitle: context.l10n.homeBrowseFieldsSubtitle,
         gradient: AppGradients.info,
         onTap: () => context.pushNamed('fieldsList'),
       ),
       _QuickActionData(
         icon: Icons.calendar_today_outlined,
-        title: HomeConstants.myBookingsTitle,
-        subtitle: HomeConstants.myBookingsSubtitle,
+        title: context.l10n.homeMyBookingsTitle,
+        subtitle: context.l10n.homeMyBookingsSubtitle,
         gradient: AppGradients.success,
         onTap: () => context.pushNamed('myBookings'),
       ),
       _QuickActionData(
         icon: Icons.star_outline,
-        title: HomeConstants.favoritesTitle,
-        subtitle: HomeConstants.favoritesSubtitle,
+        title: context.l10n.homeFavoritesTitle,
+        subtitle: context.l10n.homeFavoritesSubtitle,
         gradient: AppGradients.warning,
         onTap: () => context.pushNamed('favorites'),
       ),

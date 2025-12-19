@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium step indicator for multi-step forms.
 ///
@@ -45,8 +46,7 @@ class PremiumStepIndicator extends StatelessWidget {
                     // Label
                     Text(
                       stepLabels[index],
-                      style: TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.labelSmall.copyWith(
                         fontWeight: isActive
                             ? FontWeight.w600
                             : FontWeight.w500,
@@ -119,8 +119,7 @@ class _StepCircle extends StatelessWidget {
             ? const Icon(Icons.check, size: 20, color: Colors.white)
             : Text(
                 '$stepNumber',
-                style: TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: isActive || isCompleted
                       ? Colors.white

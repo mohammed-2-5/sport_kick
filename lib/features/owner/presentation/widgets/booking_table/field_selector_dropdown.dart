@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// Dropdown selector for switching between owner's fields.
@@ -74,8 +75,7 @@ class FieldSelectorDropdown extends StatelessWidget {
                       children: [
                         Text(
                           field.name,
-                          style: const TextStyle(
-                            fontSize: 14,
+                          style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.w600,
                             color: AppColors.textPrimary,
                           ),
@@ -84,8 +84,7 @@ class FieldSelectorDropdown extends StatelessWidget {
                         if (field.city.isNotEmpty)
                           Text(
                             field.city,
-                            style: TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: AppColors.textSecondary.withValues(
                                 alpha: 0.7,
                               ),

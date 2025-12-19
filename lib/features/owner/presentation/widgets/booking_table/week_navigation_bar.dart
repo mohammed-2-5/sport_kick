@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Week navigation bar with previous/next buttons and today shortcut.
 class WeekNavigationBar extends StatelessWidget {
@@ -44,8 +45,7 @@ class WeekNavigationBar extends StatelessWidget {
               children: [
                 Text(
                   weekRangeString,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -65,10 +65,9 @@ class WeekNavigationBar extends StatelessWidget {
                           color: AppColors.goldAccent.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Go to Today',
-                          style: TextStyle(
-                            fontSize: 12,
+                          style: AppTextStyles.labelSmall.copyWith(
                             fontWeight: FontWeight.w600,
                             color: AppColors.goldAccent,
                           ),

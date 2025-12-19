@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Empty state view for notifications.
 ///
@@ -22,7 +23,7 @@ class NotificationEmptyView extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No notifications yet',
+            context.l10n.noNotifications,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -31,7 +32,7 @@ class NotificationEmptyView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'You\'ll see booking updates and alerts here',
+            context.l10n.notificationsEmptySubtitle,
             style: TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary.withValues(alpha: 0.5),

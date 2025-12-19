@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium KPI (Key Performance Indicator) card.
 ///
@@ -63,8 +64,7 @@ class PremiumKPICard extends StatelessWidget {
           // Label
           Text(
             label,
-            style: TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodySmall.copyWith(
               color: Colors.white.withValues(alpha: 0.9),
               fontWeight: FontWeight.w600,
               letterSpacing: 0.3,
@@ -78,8 +78,7 @@ class PremiumKPICard extends StatelessWidget {
               Flexible(
                 child: Text(
                   value,
-                  style: const TextStyle(
-                    fontSize: 32,
+                  style: AppTextStyles.displaySmall.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0.5,
@@ -130,8 +129,7 @@ class _TrendIndicator extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             trend,
-            style: const TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),

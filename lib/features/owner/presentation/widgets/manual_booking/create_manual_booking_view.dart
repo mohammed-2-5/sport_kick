@@ -8,6 +8,7 @@ import 'package:spo_kick/features/owner/presentation/cubit/manual_booking_form_s
 import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/booking_step_one_widget.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/booking_step_two_widget.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/step_indicator_widget.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Create Manual Booking View - 2-step flow form for creating manual bookings.
 ///
@@ -79,7 +80,7 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
           ManualBookingFormCubit()..initializeWithData(widget.initialData),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Create Manual Booking'),
+          title: Text(context.l10n.createManualBookingTitle),
           elevation: 0,
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Colors.white,
@@ -106,7 +107,9 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
                 } else if (state is BookingCreated) {
                   SnackbarHelper.showSuccess(
                     context,
-                    'Manual booking created successfully for ${_customerNameController.text}',
+                    context.l10n.manualBookingCreatedSuccess(
+                      _customerNameController.text,
+                    ),
                   );
                   Navigator.pop(context, true);
                 }
@@ -239,7 +242,7 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
               child: OutlinedButton.icon(
                 onPressed: isLoading ? null : formCubit.previousStep,
                 icon: const Icon(Icons.arrow_back),
-                label: const Text('Back'),
+                label: Text(context.l10n.back),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -251,10 +254,14 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
               onPressed: isLoading
                   ? null
                   : (currentStep == 0
-                        ? formCubit.nextStep
+                        ? () => formCubit.nextStep(context.l10n)
                         : formCubit.prepareSubmission),
               icon: Icon(currentStep == 0 ? Icons.arrow_forward : Icons.check),
-              label: Text(currentStep == 0 ? 'Next' : 'Create Booking'),
+              label: Text(
+                currentStep == 0
+                    ? context.l10n.next
+                    : context.l10n.createBooking,
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,

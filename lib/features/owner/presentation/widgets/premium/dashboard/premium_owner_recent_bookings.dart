@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
@@ -93,10 +94,9 @@ class _SectionHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        const Text(
+        Text(
           'Recent Bookings',
-          style: TextStyle(
-            fontSize: 18,
+          style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
@@ -119,18 +119,17 @@ class _ViewAllButton extends StatelessWidget {
         HapticFeedback.lightImpact();
         onTap();
       },
-      child: const Row(
+      child: Row(
         children: [
           Text(
             'View All',
-            style: TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodySmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.accentCyan,
             ),
           ),
-          SizedBox(width: 4),
-          Icon(
+          const SizedBox(width: 4),
+          const Icon(
             Icons.arrow_forward_rounded,
             size: 16,
             color: AppColors.accentCyan,
@@ -230,8 +229,7 @@ class _BookingCardState extends State<_BookingCard>
                         Expanded(
                           child: Text(
                             widget.booking.userName ?? 'Customer',
-                            style: const TextStyle(
-                              fontSize: 14,
+                            style: AppTextStyles.bodyMedium.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.textPrimary,
                             ),
@@ -257,8 +255,7 @@ class _BookingCardState extends State<_BookingCard>
                         Expanded(
                           child: Text(
                             widget.booking.fieldName ?? 'Field',
-                            style: TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: AppColors.textSecondary.withValues(
                                 alpha: 0.8,
                               ),
@@ -276,8 +273,7 @@ class _BookingCardState extends State<_BookingCard>
                         const SizedBox(width: 4),
                         Text(
                           '${widget.booking.startTime} - ${widget.booking.endTime}',
-                          style: TextStyle(
-                            fontSize: 12,
+                          style: AppTextStyles.labelSmall.copyWith(
                             color: AppColors.textSecondary.withValues(
                               alpha: 0.8,
                             ),
@@ -313,8 +309,7 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         status,
-        style: TextStyle(
-          fontSize: 10,
+        style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w600,
           color: color,
         ),
@@ -347,10 +342,9 @@ class _EmptyState extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const Text(
+          Text(
             'No Recent Bookings',
-            style: TextStyle(
-              fontSize: 15,
+            style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -358,8 +352,7 @@ class _EmptyState extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             'Your recent bookings will appear here',
-            style: TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),
           ),

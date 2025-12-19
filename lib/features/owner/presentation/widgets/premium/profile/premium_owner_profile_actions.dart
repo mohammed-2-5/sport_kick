@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium profile action buttons.
 ///
@@ -29,7 +30,7 @@ class PremiumOwnerProfileActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PremiumButton(
-          label: 'Edit Profile',
+          label: context.l10n.editProfile,
           onPressed: () {
             HapticFeedback.lightImpact();
             onEditProfile();
@@ -40,7 +41,7 @@ class PremiumOwnerProfileActions extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         PremiumButton(
-          label: 'Change Password',
+          label: context.l10n.changePassword,
           onPressed: () {
             HapticFeedback.lightImpact();
             onChangePassword();
@@ -51,7 +52,7 @@ class PremiumOwnerProfileActions extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         PremiumButton(
-          label: 'Settings',
+          label: context.l10n.settings,
           onPressed: () {
             HapticFeedback.lightImpact();
             onSettings();
@@ -62,7 +63,7 @@ class PremiumOwnerProfileActions extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         PremiumButton(
-          label: 'Logout',
+          label: context.l10n.logout,
           onPressed: () {
             HapticFeedback.mediumImpact();
             onLogout();

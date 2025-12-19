@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium owner profile card.
@@ -104,8 +105,7 @@ class PremiumOwnerProfileCard extends StatelessWidget {
           // Name
           Text(
             name,
-            style: const TextStyle(
-              fontSize: 20,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
             ),
@@ -125,8 +125,7 @@ class PremiumOwnerProfileCard extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   email!,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
                 ),
@@ -146,8 +145,7 @@ class PremiumOwnerProfileCard extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   phone!,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
                 ),
@@ -211,8 +209,7 @@ class _InitialsAvatar extends StatelessWidget {
       child: Center(
         child: Text(
           _initials,
-          style: const TextStyle(
-            fontSize: 32,
+          style: AppTextStyles.displaySmall.copyWith(
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
@@ -242,8 +239,7 @@ class _StatItem extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 22,
+          style: AppTextStyles.headlineSmall.copyWith(
             fontWeight: FontWeight.w800,
             color: AppColors.textPrimary,
           ),
@@ -251,8 +247,7 @@ class _StatItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(
-            fontSize: 12,
+          style: AppTextStyles.labelSmall.copyWith(
             color: AppColors.textSecondary.withValues(alpha: 0.7),
           ),
         ),

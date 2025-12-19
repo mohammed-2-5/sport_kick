@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/cubit/business_hours_cubit.dart';
 import 'package:spo_kick/features/business_hours/presentation/cubit/business_hours_state.dart';
 import 'package:spo_kick/features/business_hours/presentation/widgets/dialogs/apply_to_all_days_dialog.dart';
@@ -59,10 +59,14 @@ class _ManageBusinessHoursPageState extends State<ManageBusinessHoursPage> {
       ),
       body: BlocConsumer<BusinessHoursCubit, BusinessHoursState>(
         listener: (context, state) {
+          final l10n = context.l10n;
+
           if (state is BusinessHoursUpdated) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.message),
+                content: Text(
+                  state.message ?? l10n.businessHoursUpdatedSuccess,
+                ),
                 backgroundColor: AppColors.success,
                 behavior: SnackBarBehavior.floating,
               ),
@@ -77,7 +81,7 @@ class _ManageBusinessHoursPageState extends State<ManageBusinessHoursPage> {
                 backgroundColor: AppColors.error,
                 behavior: SnackBarBehavior.floating,
                 action: SnackBarAction(
-                  label: 'Retry',
+                  label: l10n.retry,
                   textColor: Colors.white,
                   onPressed: () =>
                       context.read<BusinessHoursCubit>().getFieldBusinessHours(
@@ -91,8 +95,8 @@ class _ManageBusinessHoursPageState extends State<ManageBusinessHoursPage> {
 
           if (state is BusinessHoursInitialized) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(BusinessHoursStrings.defaultHoursSet),
+              SnackBar(
+                content: Text(l10n.businessHoursDefaultHoursSet),
                 backgroundColor: AppColors.success,
                 behavior: SnackBarBehavior.floating,
               ),

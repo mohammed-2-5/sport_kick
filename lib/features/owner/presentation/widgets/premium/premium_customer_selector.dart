@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium customer selector with search.
 ///
@@ -70,9 +71,8 @@ class _PremiumCustomerSelectorState extends State<PremiumCustomerSelector> {
             controller: _searchController,
             decoration: InputDecoration(
               hintText: 'Search customers...',
-              hintStyle: TextStyle(
+              hintStyle: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.6),
-                fontSize: 14,
               ),
               prefixIcon: const Icon(
                 Icons.search,
@@ -158,18 +158,17 @@ class _CreateNewButton extends StatelessWidget {
             width: 1,
           ),
         ),
-        child: const Row(
+        child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.add_circle_outline,
               color: AppColors.accentCyan,
               size: 20,
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Text(
               'Create New Customer',
-              style: TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.accentCyan,
               ),
@@ -233,8 +232,7 @@ class _CustomerCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   customer.initials,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -249,8 +247,7 @@ class _CustomerCard extends StatelessWidget {
                 children: [
                   Text(
                     customer.name,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -259,8 +256,7 @@ class _CustomerCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       customer.phone!,
-                      style: TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.labelSmall.copyWith(
                         color: AppColors.textSecondary.withValues(alpha: 0.8),
                       ),
                     ),

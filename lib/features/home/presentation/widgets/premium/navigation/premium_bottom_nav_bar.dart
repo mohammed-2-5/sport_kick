@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/home/presentation/widgets/premium/navigation/premium_nav_item.dart';
 
 /// Premium glassmorphism bottom navigation bar.
@@ -63,28 +64,28 @@ class PremiumBottomNavBar extends StatelessWidget {
                 PremiumNavItem(
                   icon: Icons.home_outlined,
                   activeIcon: Icons.home_rounded,
-                  label: 'Home',
+                  label: context.l10n.homeNavHome,
                   isSelected: currentIndex == 0,
                   onTap: () => onTap(0),
                 ),
                 PremiumNavItem(
                   icon: Icons.explore_outlined,
                   activeIcon: Icons.explore_rounded,
-                  label: 'Explore',
+                  label: context.l10n.homeNavExplore,
                   isSelected: currentIndex == 1,
                   onTap: () => onTap(1),
                 ),
                 PremiumNavItem(
                   icon: Icons.calendar_today_outlined,
                   activeIcon: Icons.calendar_today_rounded,
-                  label: 'Bookings',
+                  label: context.l10n.homeNavBookings,
                   isSelected: currentIndex == 2,
                   onTap: () => onTap(2),
                 ),
                 PremiumNavItem(
                   icon: Icons.settings_outlined,
                   activeIcon: Icons.settings_rounded,
-                  label: 'Settings',
+                  label: context.l10n.homeNavSettings,
                   isSelected: currentIndex == 3,
                   onTap: () => onTap(3),
                 ),

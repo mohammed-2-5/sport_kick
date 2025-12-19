@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
 
@@ -67,7 +68,7 @@ class CityPerformanceChart extends StatelessWidget {
                     getTitlesWidget: (value, meta) {
                       return Text(
                         value.toInt().toString(),
-                        style: const TextStyle(fontSize: 10),
+                        style: AppTextStyles.labelSmall.copyWith(fontSize: 10),
                       );
                     },
                   ),
@@ -82,7 +83,7 @@ class CityPerformanceChart extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 8),
                         child: Text(
                           name.length > 8 ? '${name.substring(0, 8)}...' : name,
-                          style: const TextStyle(fontSize: 9),
+                          style: AppTextStyles.labelSmall.copyWith(fontSize: 9),
                         ),
                       );
                     },

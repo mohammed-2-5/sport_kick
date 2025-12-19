@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -28,14 +29,18 @@ class OwnerBookingsListWidget extends StatelessWidget {
                 color: AppColors.textSecondary.withValues(alpha: 0.5),
               ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'No bookings found',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: AppTextStyles.titleMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 12),
-              const Text(
+              Text(
                 'Bookings will appear here',
-                style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),

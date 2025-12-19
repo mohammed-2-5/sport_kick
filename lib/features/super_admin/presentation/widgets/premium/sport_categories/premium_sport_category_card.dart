@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 
 /// Premium card for displaying a sport category.
@@ -69,8 +70,7 @@ class PremiumSportCategoryCard extends StatelessWidget {
                     children: [
                       Text(
                         category.name,
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
@@ -79,8 +79,7 @@ class PremiumSportCategoryCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           category.description!,
-                          style: const TextStyle(
-                            fontSize: 13,
+                          style: AppTextStyles.bodyMedium.copyWith(
                             color: AppColors.textSecondary,
                           ),
                           maxLines: 2,

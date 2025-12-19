@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.dart';
@@ -28,7 +29,7 @@ class CreateReviewBody extends StatelessWidget {
               // Rating section
               const Text(
                 'How would you rate this field?',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                style: AppTextStyles.titleMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
@@ -43,7 +44,7 @@ class CreateReviewBody extends StatelessWidget {
               // Comment section
               const Text(
                 'Share your experience (optional)',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: AppTextStyles.labelLarge,
               ),
               const SizedBox(height: 8),
               TextFormField(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/legal/legal_page_widgets.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Privacy Policy Page
 ///
@@ -18,9 +19,9 @@ class PrivacyPolicyPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const PremiumCurvedHeader(
-            title: 'Privacy Policy',
-            subtitle: 'How we protect your data',
+          PremiumCurvedHeader(
+            title: context.l10n.privacyPolicyTitle,
+            subtitle: context.l10n.privacyPolicySubtitle,
             showBackButton: true,
             height: 160,
           ),
@@ -32,91 +33,90 @@ class PrivacyPolicyPage extends StatelessWidget {
                 children: [
                   _buildPrivacyHeader(context),
                   const SizedBox(height: 24),
-                  const _PrivacySection(
-                    title: 'Information We Collect',
+                  _PrivacySection(
+                    title: context.l10n.privacyInfoCollectTitle,
                     points: [
-                      'Account information (name, email, phone number)',
-                      'Profile information you provide',
-                      'Booking history and preferences',
-                      'Location data when using the app',
-                      'Device information and usage data',
-                      'Payment information (processed securely by our payment provider)',
+                      context.l10n.privacyCollectAccountInfo,
+                      context.l10n.privacyCollectProfileInfo,
+                      context.l10n.privacyCollectBookingHistory,
+                      context.l10n.privacyCollectLocation,
+                      context.l10n.privacyCollectDevice,
+                      context.l10n.privacyCollectPayment,
                     ],
                   ),
-                  const _PrivacySection(
-                    title: 'How We Use Your Information',
+                  _PrivacySection(
+                    title: context.l10n.privacyUseInfoTitle,
                     points: [
-                      'To provide and maintain our booking services',
-                      'To process your bookings and payments',
-                      'To communicate with you about bookings and updates',
-                      'To improve our services and user experience',
-                      'To prevent fraud and ensure security',
-                      'To comply with legal obligations',
+                      context.l10n.privacyUseProvideService,
+                      context.l10n.privacyUseProcessPayments,
+                      context.l10n.privacyUseCommunicate,
+                      context.l10n.privacyUseImprove,
+                      context.l10n.privacyUseSecurity,
+                      context.l10n.privacyUseLegal,
                     ],
                   ),
-                  const _PrivacySection(
-                    title: 'Data Storage and Security',
+                  _PrivacySection(
+                    title: context.l10n.privacyStorageTitle,
                     points: [
-                      'Your data is stored securely using Supabase (PostgreSQL database)',
-                      'We use industry-standard encryption for data transmission',
-                      'Payment information is handled by certified payment processors',
-                      'We implement regular security updates and monitoring',
-                      'Access to personal data is restricted to authorized personnel only',
+                      context.l10n.privacyStorageSecure,
+                      context.l10n.privacyStorageEncryption,
+                      context.l10n.privacyStoragePayment,
+                      context.l10n.privacyStorageUpdates,
+                      context.l10n.privacyStorageAccess,
                     ],
                   ),
-                  const _PrivacySection(
-                    title: 'Data Sharing',
+                  _PrivacySection(
+                    title: context.l10n.privacySharingTitle,
                     points: [
-                      'We do NOT sell your personal information to third parties',
-                      'Field owners can see your booking details (name, phone) for confirmed bookings',
-                      'We may share data with service providers (payment processors, analytics)',
-                      'We will share data if required by law or to protect rights and safety',
+                      context.l10n.privacySharingNoSell,
+                      context.l10n.privacySharingOwners,
+                      context.l10n.privacySharingProviders,
+                      context.l10n.privacySharingLegal,
                     ],
                   ),
-                  const _PrivacySection(
-                    title: 'Your Rights',
+                  _PrivacySection(
+                    title: context.l10n.privacyRightsTitle,
                     points: [
-                      'Access your personal data at any time through your profile',
-                      'Update or correct your information',
-                      'Delete your account and associated data',
-                      'Opt-out of marketing communications',
-                      'Export your booking history',
-                      'Withdraw consent for data processing (may limit service availability)',
+                      context.l10n.privacyRightsAccess,
+                      context.l10n.privacyRightsUpdate,
+                      context.l10n.privacyRightsDelete,
+                      context.l10n.privacyRightsOptOut,
+                      context.l10n.privacyRightsExport,
+                      context.l10n.privacyRightsWithdraw,
                     ],
                   ),
-                  const _PrivacySection(
-                    title: 'Cookies and Tracking',
+                  _PrivacySection(
+                    title: context.l10n.privacyCookiesTitle,
                     points: [
-                      'We use cookies and similar technologies to improve user experience',
-                      'Analytics cookies help us understand app usage',
-                      'You can disable cookies in your device settings',
-                      'Some features may not work without cookies',
+                      context.l10n.privacyCookiesUse,
+                      context.l10n.privacyCookiesAnalytics,
+                      context.l10n.privacyCookiesDisable,
+                      context.l10n.privacyCookiesImpact,
                     ],
                   ),
-                  const _PrivacySection(
-                    title: "Children's Privacy",
+                  _PrivacySection(
+                    title: context.l10n.privacyChildrenTitle,
                     points: [
-                      'Our service is not intended for children under 13',
-                      'We do not knowingly collect data from children',
-                      'If we learn we have collected child data, we will delete it',
-                      'Parents can contact us to request data deletion',
+                      context.l10n.privacyChildrenNotFor,
+                      context.l10n.privacyChildrenNoCollect,
+                      context.l10n.privacyChildrenDelete,
+                      context.l10n.privacyChildrenParents,
                     ],
                   ),
-                  const _PrivacySection(
-                    title: 'Changes to This Policy',
+                  _PrivacySection(
+                    title: context.l10n.privacyChangesTitle,
                     points: [
-                      'We may update this privacy policy from time to time',
-                      'We will notify you of significant changes via email or app notification',
-                      'Continued use of the app after changes constitutes acceptance',
-                      'Last updated: $_effectiveDate',
+                      context.l10n.privacyChangesMayUpdate,
+                      context.l10n.privacyChangesNotify,
+                      context.l10n.privacyChangesAccept,
+                      context.l10n.privacyChangesLastUpdated(_effectiveDate),
                     ],
                   ),
                   const SizedBox(height: 32),
-                  const LegalContactSection(
+                  LegalContactSection(
                     email: _contactEmail,
-                    title: 'Contact Us',
-                    description:
-                        'If you have questions about this Privacy Policy or how we handle your data, please contact us:',
+                    title: context.l10n.supportContactTitle,
+                    description: context.l10n.supportContactDescription,
                   ),
                   const SizedBox(height: 32),
                 ],
@@ -144,7 +144,7 @@ class PrivacyPolicyPage extends StatelessWidget {
               const Icon(Icons.privacy_tip, color: AppColors.primary, size: 32),
               const SizedBox(width: 12),
               Text(
-                'Your Privacy Matters',
+                context.l10n.privacyHeaderTitle,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary,
@@ -154,8 +154,7 @@ class PrivacyPolicyPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Sport Kick is committed to protecting your privacy and personal information. '
-            'This policy explains how we collect, use, and safeguard your data.',
+            context.l10n.privacyHeaderDescription,
             style: Theme.of(
               context,
             ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),

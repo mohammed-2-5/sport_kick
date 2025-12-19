@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
@@ -78,9 +79,9 @@ class _BookingListHeader extends StatelessWidget {
           child: const Icon(Icons.history, size: 18, color: Colors.white),
         ),
         const SizedBox(width: 12),
-        const Text(
+        Text(
           'Booking History',
-          style: TextStyle(
+          style: AppTextStyles.titleMedium.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
@@ -130,7 +131,7 @@ class _BookingCard extends StatelessWidget {
                 children: [
                   Text(
                     DateFormat('dd').format(booking.date),
-                    style: TextStyle(
+                    style: AppTextStyles.titleLarge.copyWith(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: _statusColor,
@@ -138,8 +139,7 @@ class _BookingCard extends StatelessWidget {
                   ),
                   Text(
                     DateFormat('MMM').format(booking.date),
-                    style: TextStyle(
-                      fontSize: 11,
+                    style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w600,
                       color: _statusColor.withValues(alpha: 0.8),
                     ),
@@ -155,7 +155,7 @@ class _BookingCard extends StatelessWidget {
                 children: [
                   Text(
                     booking.fieldName ?? 'Unknown Field',
-                    style: const TextStyle(
+                    style: AppTextStyles.titleMedium.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
@@ -174,7 +174,7 @@ class _BookingCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '${booking.startTime} - ${booking.endTime}',
-                        style: TextStyle(
+                        style: AppTextStyles.bodyMedium.copyWith(
                           fontSize: 13,
                           color: AppColors.textSecondary.withValues(alpha: 0.8),
                         ),
@@ -199,8 +199,7 @@ class _BookingCard extends StatelessWidget {
                   ),
                   child: Text(
                     booking.status.displayName,
-                    style: TextStyle(
-                      fontSize: 11,
+                    style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w600,
                       color: _statusColor,
                     ),
@@ -209,8 +208,7 @@ class _BookingCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   'EGP ${booking.totalPrice.toStringAsFixed(0)}',
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.priceSmall.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -248,10 +246,9 @@ class _EmptyBookingsState extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'No Bookings Yet',
-            style: TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -259,7 +256,7 @@ class _EmptyBookingsState extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             'This user hasn\'t made any bookings',
-            style: TextStyle(
+            style: AppTextStyles.bodyMedium.copyWith(
               fontSize: 13,
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),
@@ -293,9 +290,8 @@ class _ViewAllButton extends StatelessWidget {
         child: Center(
           child: Text(
             'View All $totalCount Bookings',
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.labelLarge.copyWith(
+              fontWeight: FontWeight.w600, // already 500
               color: AppColors.accentCyan,
             ),
           ),

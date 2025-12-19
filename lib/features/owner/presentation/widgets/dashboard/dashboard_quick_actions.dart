@@ -65,8 +65,7 @@ class DashboardQuickActions extends StatelessWidget {
                   children: [
                     Text(
                       context.l10n.createManualBooking,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),

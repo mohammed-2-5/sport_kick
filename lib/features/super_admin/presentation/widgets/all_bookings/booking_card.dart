@@ -40,16 +40,14 @@ class BookingCard extends StatelessWidget {
                       children: [
                         Text(
                           'Booking #${booking.id.substring(0, 8)}',
-                          style: const TextStyle(
-                            fontSize: 12,
+                          style: AppTextStyles.bodySmall.copyWith(
                             color: Colors.grey,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           booking.fieldName ?? 'Unknown Field',
-                          style: const TextStyle(
-                            fontSize: 18,
+                          style: AppTextStyles.titleMedium.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                           maxLines: 1,
@@ -130,10 +128,9 @@ class BookingCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           booking.formattedPrice,
-                          style: const TextStyle(
+                          style: AppTextStyles.labelLarge.copyWith(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
-                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -142,7 +139,9 @@ class BookingCard extends StatelessWidget {
                   // Duration
                   Text(
                     '${booking.durationInHours}h',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: Colors.grey[600],
+                    ),
                   ),
                 ],
               ),
@@ -164,8 +163,7 @@ class BookingCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           booking.notes!,
-                          style: TextStyle(
-                            fontSize: 12,
+                          style: AppTextStyles.bodySmall.copyWith(
                             color: Colors.grey[700],
                           ),
                           maxLines: 2,

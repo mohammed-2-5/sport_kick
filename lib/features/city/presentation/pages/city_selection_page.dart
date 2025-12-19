@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
-import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
 import 'package:spo_kick/features/city/presentation/widgets/city_selection_continue_button.dart';
@@ -24,7 +24,7 @@ class CitySelectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(CityConstants.citySelectionTitle),
+        title: Text(context.l10n.citySelectionTitle),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
@@ -34,7 +34,9 @@ class CitySelectionPage extends StatelessWidget {
           if (state is CitySaved) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.message),
+                content: Text(
+                  state.message ?? context.l10n.citySelectedSuccess,
+                ),
                 backgroundColor: AppColors.success,
               ),
             );
@@ -43,7 +45,11 @@ class CitySelectionPage extends StatelessWidget {
           if (state is CityError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.message),
+                content: Text(
+                  state.message.isNotEmpty
+                      ? state.message
+                      : context.l10n.somethingWentWrong,
+                ),
                 backgroundColor: AppColors.error,
               ),
             );

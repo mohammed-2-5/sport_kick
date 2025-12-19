@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -191,18 +192,16 @@ class _EnforceToggle extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Enforce Operating Hours',
-                  style: TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
                 ),
                 Text(
                   'Apply to all field bookings',
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
                 ),
@@ -231,8 +230,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 16,
+      style: AppTextStyles.titleMedium.copyWith(
         fontWeight: FontWeight.w700,
         color: AppColors.textPrimary,
       ),
@@ -246,10 +244,10 @@ class _SavingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
+        const SizedBox(
           width: 16,
           height: 16,
           child: CircularProgressIndicator(
@@ -257,10 +255,12 @@ class _SavingIndicator extends StatelessWidget {
             color: AppColors.premiumGold,
           ),
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Text(
           'Saving...',
-          style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
       ],
     );
@@ -287,8 +287,7 @@ class _ErrorState extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),

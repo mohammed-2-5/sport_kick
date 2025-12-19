@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admin_details/admin_details_state.dart';
 
@@ -111,7 +112,7 @@ class _SectionHeader extends StatelessWidget {
         const SizedBox(width: 12),
         Text(
           title,
-          style: const TextStyle(
+          style: AppTextStyles.titleMedium.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
@@ -165,8 +166,7 @@ class _StatCard extends StatelessWidget {
             children: [
               Text(
                 item.value,
-                style: TextStyle(
-                  fontSize: 20,
+                style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.w700,
                   color: item.color,
                 ),
@@ -174,8 +174,7 @@ class _StatCard extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 item.label,
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelMedium.copyWith(
                   color: AppColors.textSecondary.withValues(alpha: 0.8),
                 ),
               ),
@@ -224,8 +223,7 @@ class _RatingCard extends StatelessWidget {
               children: [
                 Text(
                   'Average Rating',
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.7),
                   ),
                 ),
@@ -234,8 +232,7 @@ class _RatingCard extends StatelessWidget {
                   children: [
                     Text(
                       rating.toStringAsFixed(1),
-                      style: const TextStyle(
-                        fontSize: 24,
+                      style: AppTextStyles.headlineMedium.copyWith(
                         fontWeight: FontWeight.w700,
                         color: Colors.orange,
                       ),

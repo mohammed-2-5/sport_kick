@@ -60,9 +60,9 @@ class CitySaving extends CityState {
 /// City Saved Successfully
 class CitySaved extends CityState {
   final CityEntity city;
-  final String message;
+  final String? message;
 
-  const CitySaved({required this.city, required this.message});
+  const CitySaved({required this.city, this.message});
 
   @override
   List<Object?> get props => [city, message];

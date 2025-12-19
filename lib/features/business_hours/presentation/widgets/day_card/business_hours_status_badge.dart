@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 
 /// Status badge widget showing open/closed status.
 ///
@@ -34,7 +34,7 @@ class BusinessHoursStatusBadge extends StatelessWidget {
           ),
           const SizedBox(width: BusinessHoursConstants.tinySpacing),
           Text(
-            isOpen ? BusinessHoursStrings.isOpen : BusinessHoursStrings.closed,
+            isOpen ? context.l10n.open : context.l10n.closed,
             style: theme.textTheme.bodySmall?.copyWith(
               color: isOpen ? AppColors.success : Colors.grey,
               fontWeight: FontWeight.w600,

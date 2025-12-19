@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Statistics section for owner profile page.
 ///
@@ -18,9 +21,11 @@ class OwnerProfileStats extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Your Statistics',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            context.l10n.statistics,
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 16),
           Row(
@@ -28,7 +33,7 @@ class OwnerProfileStats extends StatelessWidget {
               Expanded(
                 child: _StatCard(
                   icon: Icons.sports_soccer,
-                  label: 'Fields',
+                  label: context.l10n.fields,
                   value: fieldsCount.toString(),
                   color: AppColors.primary,
                 ),
@@ -37,7 +42,7 @@ class OwnerProfileStats extends StatelessWidget {
               Expanded(
                 child: _StatCard(
                   icon: Icons.event,
-                  label: 'Bookings',
+                  label: context.l10n.bookings,
                   value: revenue?.totalBookings.toString() ?? '0',
                   color: AppColors.info,
                 ),
@@ -50,10 +55,19 @@ class OwnerProfileStats extends StatelessWidget {
               Expanded(
                 child: _StatCard(
                   icon: Icons.attach_money,
-                  label: 'Total Revenue',
+                  label: context.l10n.totalRevenue,
                   value: revenue != null
-                      ? '${revenue!.totalRevenue.toStringAsFixed(0)} EGP'
-                      : '0 EGP',
+                      ? LocaleFormatters.formatPrice(
+                          context,
+                          amount: revenue!.totalRevenue,
+                          currency: context.l10n.currencyEgp,
+                        )
+                      : LocaleFormatters.formatPrice(
+                          context,
+                          amount: 0,
+                          currency: context.l10n.currencyEgp,
+                          decimalDigits: 0,
+                        ),
                   color: AppColors.success,
                 ),
               ),
@@ -61,10 +75,19 @@ class OwnerProfileStats extends StatelessWidget {
               Expanded(
                 child: _StatCard(
                   icon: Icons.trending_up,
-                  label: 'This Month',
+                  label: context.l10n.thisMonth,
                   value: revenue != null
-                      ? '${revenue!.monthlyRevenue.toStringAsFixed(0)} EGP'
-                      : '0 EGP',
+                      ? LocaleFormatters.formatPrice(
+                          context,
+                          amount: revenue!.monthlyRevenue,
+                          currency: context.l10n.currencyEgp,
+                        )
+                      : LocaleFormatters.formatPrice(
+                          context,
+                          amount: 0,
+                          currency: context.l10n.currencyEgp,
+                          decimalDigits: 0,
+                        ),
                   color: AppColors.warning,
                 ),
               ),
@@ -131,8 +154,7 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 18,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: color,
             ),

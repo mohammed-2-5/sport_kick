@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium owner stats row with gradient cards.
 ///
@@ -36,31 +39,31 @@ class PremiumOwnerStatsRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
           _StatCard(
-            label: 'Total Bookings',
-            value: totalBookings.toString(),
+            label: context.l10n.totalBookings,
+            value: LocaleFormatters.formatNumber(context, totalBookings),
             icon: Icons.calendar_month_rounded,
             gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
             onTap: onBookingsTap,
           ),
           const SizedBox(width: 12),
           _StatCard(
-            label: 'Pending',
-            value: pendingBookings.toString(),
+            label: context.l10n.pendingBookingsLabel,
+            value: LocaleFormatters.formatNumber(context, pendingBookings),
             icon: Icons.pending_actions_rounded,
             gradient: const [Color(0xFFF59E0B), Color(0xFFEF4444)],
             onTap: onBookingsTap,
           ),
           const SizedBox(width: 12),
           _StatCard(
-            label: 'Today',
-            value: todayBookings.toString(),
+            label: context.l10n.today,
+            value: LocaleFormatters.formatNumber(context, todayBookings),
             icon: Icons.today_rounded,
             gradient: const [AppColors.accentCyan, AppColors.accentCyanDark],
             onTap: onBookingsTap,
           ),
           const SizedBox(width: 12),
           _StatCard(
-            label: 'Revenue',
+            label: context.l10n.revenue,
             value: revenue,
             icon: Icons.account_balance_wallet_rounded,
             gradient: const [Color(0xFF10B981), Color(0xFF059669)],
@@ -167,8 +170,7 @@ class _StatCardState extends State<_StatCard>
               const Spacer(),
               Text(
                 widget.value,
-                style: const TextStyle(
-                  fontSize: 20,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
@@ -176,8 +178,7 @@ class _StatCardState extends State<_StatCard>
               const SizedBox(height: 2),
               Text(
                 widget.label,
-                style: TextStyle(
-                  fontSize: 11,
+                style: AppTextStyles.labelSmall.copyWith(
                   color: Colors.white.withValues(alpha: 0.8),
                 ),
               ),

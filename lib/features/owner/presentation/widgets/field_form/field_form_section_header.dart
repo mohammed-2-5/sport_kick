@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class FieldFormSectionHeader extends StatelessWidget {
   final String title;
@@ -26,7 +27,9 @@ class FieldFormSectionHeader extends StatelessWidget {
         const SizedBox(width: 12),
         Text(
           title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );

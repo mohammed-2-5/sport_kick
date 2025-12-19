@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
@@ -50,11 +51,10 @@ class PremiumAdminFieldsList extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Assigned Fields',
-                  style: TextStyle(
-                    fontSize: 18,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -126,15 +126,14 @@ class _AddFieldButton extends StatelessWidget {
             ),
           ],
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.add, size: 16, color: Colors.white),
-            SizedBox(width: 6),
+            const Icon(Icons.add, size: 16, color: Colors.white),
+            const SizedBox(width: 6),
             Text(
               'Assign Field',
-              style: TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
@@ -194,8 +193,7 @@ class _FieldCard extends StatelessWidget {
                 children: [
                   Text(
                     field.name,
-                    style: const TextStyle(
-                      fontSize: 15,
+                    style: AppTextStyles.titleSmall.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -214,8 +212,7 @@ class _FieldCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           field.city,
-                          style: TextStyle(
-                            fontSize: 13,
+                          style: AppTextStyles.bodyMedium.copyWith(
                             color: AppColors.textSecondary.withValues(
                               alpha: 0.8,
                             ),
@@ -242,8 +239,7 @@ class _FieldCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         field.averageRating!.toStringAsFixed(1),
-                        style: const TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: Colors.orange,
                         ),
@@ -276,7 +272,7 @@ class _FieldStatusBadge extends StatelessWidget {
       ),
       child: Text(
         isActive ? 'Active' : 'Inactive',
-        style: TextStyle(
+        style: AppTextStyles.badge.copyWith(
           fontSize: 11,
           fontWeight: FontWeight.w600,
           color: isActive ? Colors.green : Colors.grey,
@@ -310,10 +306,9 @@ class _EmptyFieldsState extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'No Fields Assigned',
-            style: TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -321,8 +316,7 @@ class _EmptyFieldsState extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             'Assign fields to this admin to get started',
-            style: TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,

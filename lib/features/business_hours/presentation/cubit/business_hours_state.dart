@@ -64,12 +64,9 @@ class BusinessHoursUpdated extends BusinessHoursState {
   final List<BusinessHoursEntity> businessHours;
 
   /// Success message to display
-  final String message;
+  final String? message;
 
-  const BusinessHoursUpdated({
-    required this.businessHours,
-    required this.message,
-  });
+  const BusinessHoursUpdated({required this.businessHours, this.message});
 
   @override
   List<Object?> get props => [businessHours, message];

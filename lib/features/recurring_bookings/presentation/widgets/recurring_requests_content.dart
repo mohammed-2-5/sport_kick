@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/recurring_requests_state.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/recurring_request_card.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/active_subscription_card.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Content widget for recurring requests page (owner view).
 class RecurringRequestsContent extends StatelessWidget {
@@ -24,7 +26,7 @@ class RecurringRequestsContent extends StatelessWidget {
     final isEmpty = !state.hasPendingRequests && !state.hasActiveSubscriptions;
 
     if (isEmpty) {
-      return _buildEmptyState();
+      return _buildEmptyState(context);
     }
 
     return RefreshIndicator(
@@ -33,13 +35,17 @@ class RecurringRequestsContent extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           // Stats header
-          SliverToBoxAdapter(child: _buildStatsHeader()),
+          SliverToBoxAdapter(child: _buildStatsHeader(context)),
 
           // Pending requests section
           if (state.hasPendingRequests) ...[
             _buildSectionHeader(
-              'Pending Requests',
-              badge: state.pendingCount.toString(),
+              context.l10n.pendingRequests,
+              badge: LocaleFormatters.formatNumber(
+                context,
+                state.pendingCount,
+                decimalDigits: 0,
+              ),
               badgeColor: AppColors.goldAccent,
             ),
             SliverList(
@@ -61,8 +67,12 @@ class RecurringRequestsContent extends StatelessWidget {
           // Active subscriptions section
           if (state.hasActiveSubscriptions) ...[
             _buildSectionHeader(
-              'Active Subscriptions',
-              badge: state.activeCount.toString(),
+              context.l10n.activeSubscriptions,
+              badge: LocaleFormatters.formatNumber(
+                context,
+                state.activeCount,
+                decimalDigits: 0,
+              ),
               badgeColor: const Color(0xFF10B981),
             ),
             SliverList(
@@ -83,7 +93,7 @@ class RecurringRequestsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatsHeader() {
+  Widget _buildStatsHeader(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
@@ -110,8 +120,12 @@ class RecurringRequestsContent extends StatelessWidget {
           Expanded(
             child: _buildStatItem(
               icon: Icons.hourglass_empty_rounded,
-              value: state.pendingCount.toString(),
-              label: 'Pending',
+              value: LocaleFormatters.formatNumber(
+                context,
+                state.pendingCount,
+                decimalDigits: 0,
+              ),
+              label: context.l10n.pending,
               color: AppColors.goldAccent,
             ),
           ),
@@ -123,8 +137,12 @@ class RecurringRequestsContent extends StatelessWidget {
           Expanded(
             child: _buildStatItem(
               icon: Icons.autorenew_rounded,
-              value: state.activeCount.toString(),
-              label: 'Active',
+              value: LocaleFormatters.formatNumber(
+                context,
+                state.activeCount,
+                decimalDigits: 0,
+              ),
+              label: context.l10n.statusActive,
               color: const Color(0xFF10B981),
             ),
           ),
@@ -223,7 +241,7 @@ class RecurringRequestsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -244,19 +262,22 @@ class RecurringRequestsContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'No Recurring Subscriptions',
-              style: TextStyle(
+            Text(
+              context.l10n.noRecurringSubscriptions,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: AppColors.navyDeep,
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'When users request weekly recurring bookings, they\'ll appear here for your approval.',
+            Text(
+              context.l10n.recurringRequestsEmptySubtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textSecondary,
+              ),
             ),
           ],
         ),

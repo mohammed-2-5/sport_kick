@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/empty_states.dart';
@@ -96,18 +97,18 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Select Your City',
-                  style: TextStyle(
+                Text(
+                  context.l10n.citySelectionTitle,
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Choose a city to find nearby fields',
-                  style: TextStyle(fontSize: 14, color: Colors.white70),
+                Text(
+                  context.l10n.citySelectionSubtitle,
+                  style: const TextStyle(fontSize: 14, color: Colors.white70),
                 ),
                 const SizedBox(height: 20),
                 // Search field
@@ -118,11 +119,11 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
                   ),
                   child: TextField(
                     controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search cities...',
-                      prefixIcon: Icon(Icons.search),
+                    decoration: InputDecoration(
+                      hintText: context.l10n.citySearchHint,
+                      prefixIcon: const Icon(Icons.search),
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 14,
                       ),
@@ -146,7 +147,7 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: PremiumButton(
-                  label: 'Continue',
+                  label: context.l10n.continueLabel,
                   onPressed: widget.selectedCityId != null
                       ? widget.onContinue
                       : null,
@@ -160,7 +161,7 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
 
   Widget _buildContent() {
     if (widget.isLoading) {
-      return const LoadingIndicator.inline(message: 'Loading cities...');
+      return LoadingIndicator.inline(message: context.l10n.cityLoading);
     }
 
     if (widget.errorMessage != null && widget.cities.isEmpty) {

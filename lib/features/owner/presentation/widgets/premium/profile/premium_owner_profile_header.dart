@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Premium profile header with navy gradient and glassmorphism.
 ///
@@ -80,10 +82,9 @@ class PremiumOwnerProfileHeader extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Text(
-                    'My Profile',
-                    style: TextStyle(
-                      fontSize: 20,
+                  Text(
+                    context.l10n.myProfile,
+                    style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
@@ -169,8 +170,7 @@ class PremiumOwnerProfileHeader extends StatelessWidget {
                 // Name
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 22,
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -181,8 +181,7 @@ class PremiumOwnerProfileHeader extends StatelessWidget {
                 // Email
                 Text(
                   email,
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.8),
                   ),
                 ),
@@ -195,13 +194,13 @@ class PremiumOwnerProfileHeader extends StatelessWidget {
                   children: [
                     _StatChip(
                       icon: Icons.sports_soccer,
-                      label: 'Fields',
+                      label: context.l10n.fields,
                       value: fieldsCount.toString(),
                     ),
                     const SizedBox(width: 12),
                     _StatChip(
                       icon: Icons.calendar_today,
-                      label: 'Bookings',
+                      label: context.l10n.bookings,
                       value: bookingsCount.toString(),
                     ),
                   ],
@@ -260,16 +259,14 @@ class _StatChip extends StatelessWidget {
                 children: [
                   Text(
                     value,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: AppTextStyles.bodyLarge.copyWith(
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
                   ),
                   Text(
                     label,
-                    style: TextStyle(
-                      fontSize: 11,
+                    style: AppTextStyles.labelSmall.copyWith(
                       color: Colors.white.withValues(alpha: 0.8),
                     ),
                   ),

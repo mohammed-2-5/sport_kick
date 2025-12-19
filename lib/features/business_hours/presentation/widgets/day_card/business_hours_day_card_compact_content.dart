@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
-import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_strings.dart';
 import 'package:spo_kick/features/business_hours/presentation/utils/business_hours_formatters.dart';
 
 /// Compact content layout for business hours day card.
@@ -41,7 +41,7 @@ class BusinessHoursDayCardCompactContent extends StatelessWidget {
         SizedBox(
           width: 40,
           child: Text(
-            BusinessHoursFormatters.getDayNameShort(dayOfWeek),
+            BusinessHoursFormatters.getDayNameShort(context, dayOfWeek),
             style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: isOpen ? null : Colors.grey,
@@ -56,13 +56,14 @@ class BusinessHoursDayCardCompactContent extends StatelessWidget {
           child: isOpen
               ? Text(
                   BusinessHoursFormatters.formatTimeRange(
-                    openingTime,
-                    closingTime,
+                    context,
+                    openingTime: openingTime,
+                    closingTime: closingTime,
                   ),
                   style: theme.textTheme.bodySmall,
                 )
               : Text(
-                  BusinessHoursStrings.closed,
+                  context.l10n.closed,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: Colors.grey,
                     fontStyle: FontStyle.italic,

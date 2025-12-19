@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium info card explaining the admin creation process.
@@ -43,22 +44,22 @@ class PremiumAdminFormInfoCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Create Admin Account',
-                      style: TextStyle(
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Text(
                       'Field owner management',
-                      style: TextStyle(
+                      style: AppTextStyles.bodyMedium.copyWith(
                         fontSize: 13,
                         color: AppColors.textSecondary,
                       ),
@@ -107,8 +108,7 @@ class PremiumAdminFormInfoCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         'Admin must change password on first login',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.w500,
                           color: AppColors.premiumGold.withValues(alpha: 0.9),
                         ),
@@ -149,7 +149,7 @@ class _InfoStepItem extends StatelessWidget {
           child: Center(
             child: Text(
               number,
-              style: const TextStyle(
+              style: AppTextStyles.labelSmall.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
@@ -163,8 +163,7 @@ class _InfoStepItem extends StatelessWidget {
             padding: const EdgeInsets.only(top: 2),
             child: Text(
               text,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textPrimary,
                 height: 1.4,
               ),

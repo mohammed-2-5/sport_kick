@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
@@ -78,11 +79,23 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
               duration: const Duration(milliseconds: 400),
               tabBackgroundColor: AppColors.primary.withValues(alpha: 0.1),
               color: AppColors.textSecondary,
-              tabs: const [
-                GButton(icon: Icons.home_rounded, text: 'Home'),
-                GButton(icon: Icons.search_rounded, text: 'Explore'),
-                GButton(icon: Icons.calendar_today_rounded, text: 'Bookings'),
-                GButton(icon: Icons.settings_rounded, text: 'Settings'),
+              tabs: [
+                GButton(
+                  icon: Icons.home_rounded,
+                  text: context.l10n.homeNavHome,
+                ),
+                GButton(
+                  icon: Icons.search_rounded,
+                  text: context.l10n.homeNavExplore,
+                ),
+                GButton(
+                  icon: Icons.calendar_today_rounded,
+                  text: context.l10n.homeNavBookings,
+                ),
+                GButton(
+                  icon: Icons.settings_rounded,
+                  text: context.l10n.homeNavSettings,
+                ),
               ],
               selectedIndex: _selectedIndex,
               onTabChange: (index) {

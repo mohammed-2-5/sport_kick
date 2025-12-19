@@ -42,6 +42,19 @@ class LocaleFormatters {
     return '${formatter.format(start)} - ${formatter.format(end)}';
   }
 
+  /// Formats a single time string (HH:mm or HH:mm:ss) using the current locale.
+  static String formatTime(BuildContext context, String time) {
+    final locale = Localizations.localeOf(context).toString();
+    final parts = time.split(':');
+    if (parts.length < 2) return time;
+
+    final base = DateTime.now();
+    final hour = int.tryParse(parts[0]) ?? 0;
+    final minute = int.tryParse(parts[1]) ?? 0;
+    final date = DateTime(base.year, base.month, base.day, hour, minute);
+    return DateFormat.jm(locale).format(date);
+  }
+
   /// Formats a plain number with locale digits.
   static String formatNumber(
     BuildContext context,
@@ -66,5 +79,18 @@ class LocaleFormatters {
   }) {
     final number = formatNumber(context, amount, decimalDigits: decimalDigits);
     return '$number $currency';
+  }
+
+  /// Returns localized weekday name for an index where 0 = Saturday.
+  static String weekdayName(
+    BuildContext context,
+    int dayOfWeek, {
+    bool short = false,
+  }) {
+    final locale = Localizations.localeOf(context).toString();
+    // January 7, 2023 is a Saturday. Add the index to get the target weekday.
+    final date = DateTime.utc(2023, 1, 7 + dayOfWeek);
+    final formatter = DateFormat(short ? 'EEE' : 'EEEE', locale);
+    return formatter.format(date);
   }
 }

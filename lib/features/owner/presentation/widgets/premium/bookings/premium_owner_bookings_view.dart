@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_state.dart';
@@ -10,6 +11,8 @@ import 'package:spo_kick/features/owner/presentation/widgets/booking/payment_ver
 import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/premium_owner_bookings_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/premium_owner_bookings_tabs.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/premium_owner_bookings_list.dart';
+
+import '../../../../../../core/localization/l10n_extensions.dart';
 
 /// Premium view for owner bookings management.
 ///
@@ -205,7 +208,7 @@ class _BookingsContent extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Payment verified successfully'),
+            content: Text(context.l10n.paymentVerifiedSuccess),
             backgroundColor: AppColors.success,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
@@ -227,7 +230,7 @@ class _BookingsContent extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Payment rejected'),
+            content: Text(context.l10n.paymentRejectedSuccess),
             backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
@@ -252,18 +255,22 @@ class _BookingsContent extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
         content: Text(
           message,
-          style: const TextStyle(fontSize: 15, color: AppColors.textSecondary),
+          style: AppTextStyles.bodyLarge.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text(
+            child: Text(
               'Cancel',
-              style: TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,
               ),
@@ -281,7 +288,9 @@ class _BookingsContent extends StatelessWidget {
             ),
             child: Text(
               confirmText,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -304,10 +313,9 @@ class _ErrorState extends StatelessWidget {
         children: [
           const Icon(Icons.error_outline, size: 64, color: Colors.red),
           const SizedBox(height: 16),
-          const Text(
-            'Failed to load bookings',
-            style: TextStyle(
-              fontSize: 18,
+          Text(
+            context.l10n.failedToLoadBookings,
+            style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -316,7 +324,7 @@ class _ErrorState extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.accentCyan,
               foregroundColor: Colors.white,

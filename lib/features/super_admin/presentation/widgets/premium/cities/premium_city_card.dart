@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium city card with glassmorphism design.
 ///
@@ -141,8 +142,7 @@ class _PremiumCityCardState extends State<PremiumCityCard>
                             children: [
                               Text(
                                 widget.name,
-                                style: const TextStyle(
-                                  fontSize: 16,
+                                style: AppTextStyles.titleSmall.copyWith(
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.textPrimary,
                                 ),
@@ -240,8 +240,7 @@ class _FieldsBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             '$count field${count != 1 ? 's' : ''}',
-            style: TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.accentCyan.withValues(alpha: 0.9),
             ),
@@ -286,8 +285,7 @@ class _StatusBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 11,
+            style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: color,
             ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 
@@ -18,9 +20,9 @@ class ExploreSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Explore Fields',
-                style: TextStyle(
+              Text(
+                context.l10n.homeExploreTitle,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: AppColors.lightTextPrimary,
@@ -28,9 +30,9 @@ class ExploreSection extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () => context.pushNamed('fieldsList'),
-                child: const Text(
-                  'View All',
-                  style: TextStyle(
+                child: Text(
+                  context.l10n.homeViewAll,
+                  style: const TextStyle(
                     color: AppColors.lightAccent,
                     fontWeight: FontWeight.w600,
                   ),
@@ -55,7 +57,7 @@ class ExploreSection extends StatelessWidget {
               final fields = state.fields.take(5).toList();
 
               if (fields.isEmpty) {
-                return _buildEmptyState();
+                return _buildEmptyState(context);
               }
 
               return SizedBox(
@@ -73,7 +75,7 @@ class ExploreSection extends StatelessWidget {
                 ),
               );
             } else if (state is FieldsEmpty) {
-              return _buildEmptyState();
+              return _buildEmptyState(context);
             }
             return const SizedBox.shrink();
           },
@@ -88,7 +90,6 @@ class ExploreSection extends StatelessWidget {
   }) {
     final imageUrl = field.images.isNotEmpty ? field.images.first : null;
     final rating = field.averageRating ?? 0.0;
-    final price = field.pricePerHour.toStringAsFixed(0);
 
     return GestureDetector(
       onTap: () {
@@ -235,7 +236,7 @@ class ExploreSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '$price ${field.currency} / hour',
+                    '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)} / ${context.l10n.perHour}',
                     style: const TextStyle(
                       color: AppColors.lightAccent,
                       fontWeight: FontWeight.w600,
@@ -251,7 +252,7 @@ class ExploreSection extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     return Container(
       height: 240,
       margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -270,9 +271,9 @@ class ExploreSection extends StatelessWidget {
               color: AppColors.lightTextSecondary.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'No fields available',
-              style: TextStyle(
+            Text(
+              context.l10n.homeNoFieldsAvailable,
+              style: const TextStyle(
                 color: AppColors.lightTextPrimary,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,

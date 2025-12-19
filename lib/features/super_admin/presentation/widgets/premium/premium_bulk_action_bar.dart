@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium bulk action bar for list selections.
 ///
@@ -84,8 +85,7 @@ class PremiumBulkActionBar extends StatelessWidget {
                         const SizedBox(width: 10),
                         Text(
                           '$selectedCount selected',
-                          style: const TextStyle(
-                            fontSize: 14,
+                          style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),

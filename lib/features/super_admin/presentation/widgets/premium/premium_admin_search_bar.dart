@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium search bar for super admin.
 ///
@@ -79,14 +80,12 @@ class _PremiumAdminSearchBarState extends State<PremiumAdminSearchBar> {
               controller: _controller,
               focusNode: _focusNode,
               onChanged: widget.onChanged,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
               decoration: InputDecoration(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(
-                  fontSize: 14,
+                hintStyle: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.textSecondary.withValues(alpha: 0.6),
                 ),
                 prefixIcon: Icon(
