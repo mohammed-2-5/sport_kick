@@ -7,6 +7,7 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/auth/presentation/pages/profile_page.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 class MockAuthCubit extends MockCubit<AuthState> implements AuthCubit {}
 
@@ -29,6 +30,8 @@ void main() {
 
   Widget createWidgetUnderTest() {
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: BlocProvider<AuthCubit>.value(
         value: mockAuthCubit,
         child: const ProfilePage(),
@@ -50,7 +53,7 @@ void main() {
     await tester.pumpWidget(createWidgetUnderTest());
 
     expect(find.text('Test User'), findsOneWidget);
-    expect(find.text('USER'), findsOneWidget); // Role
+    expect(find.text('User'), findsOneWidget); // Role
     expect(find.text('test@example.com'), findsOneWidget);
     expect(find.text('123456789'), findsOneWidget);
 

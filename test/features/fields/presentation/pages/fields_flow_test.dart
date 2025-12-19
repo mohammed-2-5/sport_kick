@@ -12,6 +12,7 @@ import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.d
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/fields_list_view.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/field_filters_dialog.dart';
 
 // Mocks
@@ -101,7 +102,11 @@ void main() {
         BlocProvider<FieldsCubit>.value(value: mockFieldsCubit),
         BlocProvider<CityCubit>.value(value: mockCityCubit),
       ],
-      child: const MaterialApp(home: FieldsListView()),
+      child: const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: FieldsListView(),
+      ),
     );
   }
 

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Premium field information card.
 ///
@@ -93,7 +97,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '(${field.totalReviews})',
+                        '(${LocaleFormatters.formatNumber(context, field.totalReviews)})',
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.white.withValues(alpha: 0.9),
@@ -130,7 +134,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        '${field.totalBookings} bookings',
+                        '${LocaleFormatters.formatNumber(context, field.totalBookings)} ${context.l10n.bookings}',
                         style: const TextStyle(
                           fontSize: 13,
                           color: AppColors.accentCyan,
@@ -177,7 +181,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            'Price per hour',
+                            context.l10n.ratePerHour,
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.white.withValues(alpha: 0.9),
@@ -188,7 +192,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        field.formattedPrice,
+                        '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w900,
@@ -218,17 +222,17 @@ class PremiumFieldInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.people_outline_rounded,
                             color: AppColors.accentCyan,
                             size: 18,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
-                            'Capacity',
-                            style: TextStyle(
+                            context.l10n.fieldSize,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.accentCyan,
                               fontWeight: FontWeight.w600,

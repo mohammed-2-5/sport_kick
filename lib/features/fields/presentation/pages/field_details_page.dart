@@ -9,6 +9,7 @@ import 'package:spo_kick/features/fields/presentation/cubit/field_details_scroll
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/premium_field_details_view.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Field details page - shows complete information about a field.
 ///
@@ -47,7 +48,7 @@ class FieldDetailsPage extends StatelessWidget {
 
   Widget _buildPageContent(BuildContext context, FieldsState state) {
     if (state is FieldsLoading) {
-      return const LoadingIndicator.inline(message: 'Loading field details...');
+      return LoadingIndicator.inline(message: context.l10n.loading);
     }
 
     if (state is FieldsError) {
@@ -65,7 +66,7 @@ class FieldDetailsPage extends StatelessWidget {
     }
 
     return EmptyStates.error(
-      message: 'Field not found',
+      message: context.l10n.fieldNotFound,
       onRetry: () => context.read<FieldsCubit>().loadFieldDetails(fieldId),
     );
   }

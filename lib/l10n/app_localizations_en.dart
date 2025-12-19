@@ -562,6 +562,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exploreFields => 'Explore Fields';
 
   @override
+  String get favoritesEmptySubtitle =>
+      'Tap the heart icon on any field to add it to your favorites';
+
+  @override
+  String get favoritesEmpty => 'No favorite fields yet';
+
+  @override
+  String get beFirstReview => 'Be the first to review this field';
+
+  @override
+  String get notAvailable => 'Not Available';
+
+  @override
+  String get available => 'Available';
+
+  @override
+  String get price => 'Price';
+
+  @override
+  String get reviewsTitleFull => 'Reviews & Ratings';
+
+  @override
   String favoritesSavedCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

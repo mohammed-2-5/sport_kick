@@ -134,7 +134,7 @@ class FieldInfoSection extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        '${field.totalBookings} bookings',
+                        '${LocaleFormatters.formatNumber(context, field.totalBookings)} ${context.l10n.bookings}',
                         style: const TextStyle(
                           fontSize: 13,
                           color: AppColors.info,
@@ -254,12 +254,17 @@ class FieldInfoSection extends StatelessWidget {
           Row(
             children: [
               if (field.surfaceType != null) ...[
-                _buildInfoChip(Icons.grass, field.surfaceType!),
+                _buildInfoChip(
+                  Icons.grass,
+                  _localizedSurface(context, field.surfaceType!),
+                  rawValue: field.surfaceType!,
+                ),
                 const SizedBox(width: FieldConstants.chipSpacing),
               ],
               _buildInfoChip(
                 field.isIndoor ? Icons.home : Icons.wb_sunny,
                 field.isIndoor ? context.l10n.indoor : context.l10n.outdoor,
+                rawValue: field.isIndoor ? 'indoor' : 'outdoor',
               ),
             ],
           ),
@@ -268,25 +273,25 @@ class FieldInfoSection extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoChip(IconData icon, String label) {
+  Widget _buildInfoChip(IconData icon, String label, {String? rawValue}) {
     // Determine gradient based on label type
+    final compare = (rawValue ?? label).toLowerCase();
     LinearGradient chipGradient;
-    if (label.toLowerCase().contains('grass') ||
-        label.toLowerCase().contains('natural')) {
+    if (compare.contains('grass') || compare.contains('natural')) {
       chipGradient = const LinearGradient(
         colors: [
           FieldConstants.grassGradientStart,
           FieldConstants.grassGradientEnd,
         ],
       );
-    } else if (label == 'Indoor') {
+    } else if (compare.contains('indoor')) {
       chipGradient = const LinearGradient(
         colors: [
           FieldConstants.indoorGradientStart,
           FieldConstants.indoorGradientEnd,
         ],
       );
-    } else if (label == 'Outdoor') {
+    } else if (compare.contains('outdoor')) {
       chipGradient = const LinearGradient(
         colors: [
           FieldConstants.outdoorGradientStart,
@@ -331,5 +336,16 @@ class FieldInfoSection extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _localizedSurface(BuildContext context, String surface) {
+    final lower = surface.toLowerCase();
+    if (lower.contains('natural') || lower.contains('grass')) {
+      return context.l10n.surfaceGrass;
+    }
+    if (lower.contains('turf') || lower.contains('artificial')) {
+      return context.l10n.surfaceTurf;
+    }
+    return surface;
   }
 }

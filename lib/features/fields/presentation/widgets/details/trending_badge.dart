@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Trending badge widget for popular fields.
 class TrendingBadge extends StatelessWidget {
@@ -25,18 +26,18 @@ class TrendingBadge extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.local_fire_department_rounded,
             size: 18,
             color: Colors.white,
           ),
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
           Text(
-            'TRENDING',
-            style: TextStyle(
+            context.l10n.trending,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.bold,

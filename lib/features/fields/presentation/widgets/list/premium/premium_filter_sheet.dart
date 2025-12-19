@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 
 /// Premium filter bottom sheet with glassmorphism.
 ///
@@ -89,9 +92,9 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Filters',
-                  style: TextStyle(
+                Text(
+                  context.l10n.filtersTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                     color: AppColors.textPrimary,
@@ -108,9 +111,9 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                       _currentSort = 'recommended';
                     });
                   },
-                  child: const Text(
-                    'Reset',
-                    style: TextStyle(
+                  child: Text(
+                    context.l10n.reset,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       color: AppColors.accentCyan,
@@ -129,13 +132,13 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Price Range
-                  const _SectionTitle(title: 'Price Range'),
+                  _SectionTitle(title: context.l10n.priceRange),
                   const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${_currentPriceRange.start.round()} EGP',
+                        '${LocaleFormatters.formatNumber(context, _currentPriceRange.start)} ${context.l10n.perHour}',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -143,7 +146,7 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                         ),
                       ),
                       Text(
-                        '${_currentPriceRange.end.round()} EGP',
+                        '${LocaleFormatters.formatNumber(context, _currentPriceRange.end)} ${context.l10n.perHour}',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -168,32 +171,32 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                   const SizedBox(height: 24),
 
                   // Sort By
-                  const _SectionTitle(title: 'Sort By'),
+                  _SectionTitle(title: context.l10n.sortBy),
                   const SizedBox(height: 12),
                   Wrap(
                     spacing: 10,
                     runSpacing: 10,
                     children: [
                       _SortChip(
-                        label: 'Recommended',
+                        label: context.l10n.sortRelevance,
                         value: 'recommended',
                         currentSort: _currentSort,
                         onTap: (value) => setState(() => _currentSort = value),
                       ),
                       _SortChip(
-                        label: 'Price: Low to High',
+                        label: context.l10n.sortPriceLowToHigh,
                         value: 'price_asc',
                         currentSort: _currentSort,
                         onTap: (value) => setState(() => _currentSort = value),
                       ),
                       _SortChip(
-                        label: 'Price: High to Low',
+                        label: context.l10n.sortPriceHighToLow,
                         value: 'price_desc',
                         currentSort: _currentSort,
                         onTap: (value) => setState(() => _currentSort = value),
                       ),
                       _SortChip(
-                        label: 'Rating',
+                        label: context.l10n.sortRating,
                         value: 'rating',
                         currentSort: _currentSort,
                         onTap: (value) => setState(() => _currentSort = value),
@@ -204,7 +207,7 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                   const SizedBox(height: 24),
 
                   // Amenities
-                  const _SectionTitle(title: 'Amenities'),
+                  _SectionTitle(title: context.l10n.amenities),
                   const SizedBox(height: 12),
                   Wrap(
                     spacing: 10,
@@ -212,7 +215,7 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                     children: widget.availableAmenities
                         .map(
                           (amenity) => _AmenityChip(
-                            label: amenity,
+                            label: FacilityLocalizer.localize(context, amenity),
                             isSelected: _currentAmenities.contains(amenity),
                             onTap: () {
                               setState(() {
@@ -249,7 +252,7 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
             ),
             child: SafeArea(
               child: PremiumButton(
-                label: 'Apply Filters',
+                label: context.l10n.applyFilters,
                 onPressed: () {
                   widget.onPriceRangeChanged(_currentPriceRange);
                   widget.onAmenitiesChanged(_currentAmenities);

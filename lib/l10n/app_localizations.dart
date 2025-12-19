@@ -1124,6 +1124,48 @@ abstract class AppLocalizations {
   /// **'Explore Fields'**
   String get exploreFields;
 
+  /// No description provided for @favoritesEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the heart icon on any field to add it to your favorites'**
+  String get favoritesEmptySubtitle;
+
+  /// No description provided for @favoritesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorite fields yet'**
+  String get favoritesEmpty;
+
+  /// No description provided for @beFirstReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to review this field'**
+  String get beFirstReview;
+
+  /// No description provided for @notAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Available'**
+  String get notAvailable;
+
+  /// No description provided for @available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get available;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @reviewsTitleFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews & Ratings'**
+  String get reviewsTitleFull;
+
   /// No description provided for @favoritesSavedCount.
   ///
   /// In en, this message translates to:

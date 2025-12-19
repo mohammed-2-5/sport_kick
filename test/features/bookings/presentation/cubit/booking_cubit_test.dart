@@ -128,9 +128,7 @@ void main() {
             cubit.loadAvailableTimeSlots(fieldId: tFieldId, date: tDate),
         expect: () => [
           const BookingLoading(message: 'Loading available time slots...'),
-          const BookingsEmpty(
-            message: 'No time slots available for this date.',
-          ),
+          const BookingsEmpty(),
         ],
       );
     });

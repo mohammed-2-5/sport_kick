@@ -1,59 +1,627 @@
-00:00 +0: loading C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/widgets/categories_slider_test.dart
-test/features/home/presentation/widgets/categories_slider_test.dart:62:16: Error: Type 'StreamSubscription' not found.
-    implements StreamSubscription<List<int>> {}
-               ^^^^^^^^^^^^^^^^^^
-test/features/home/presentation/widgets/categories_slider_test.dart:56:14: Error: A value of type '_TestStreamSubscription' can't be returned from a function with return type 'StreamSubscription<List<int>>'.
- - '_TestStreamSubscription' is from 'test/features/home/presentation/widgets/categories_slider_test.dart'.
- - 'StreamSubscription' is from 'dart:async'.
- - 'List' is from 'dart:core'.
-      return _TestStreamSubscription();
-             ^
-test/features/home/presentation/widgets/categories_slider_test.dart:97:38: Error: Required named parameter 'fields' must be provided.
-      ).thenReturn(const FieldsLoaded(categories: []));
-                                     ^
-lib/features/fields/presentation/cubit/fields_state.dart:68:9: Context: Found this candidate, but the arguments don't match.
-  const FieldsLoaded({
-        ^^^^^^^^^^^^
-test/features/home/presentation/widgets/categories_slider_test.dart:125:30: Error: Required named parameter 'fields' must be provided.
-    ).thenReturn(FieldsLoaded(categories: categories));
-                             ^
-lib/features/fields/presentation/cubit/fields_state.dart:68:9: Context: Found this candidate, but the arguments don't match.
-  const FieldsLoaded({
-        ^^^^^^^^^^^^
-test/features/home/presentation/widgets/categories_slider_test.dart:148:30: Error: Required named parameter 'fields' must be provided.
-    ).thenReturn(FieldsLoaded(categories: categories));
-                             ^
-lib/features/fields/presentation/cubit/fields_state.dart:68:9: Context: Found this candidate, but the arguments don't match.
-  const FieldsLoaded({
-        ^^^^^^^^^^^^
-00:00 +0 -1: loading C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/widgets/categories_slider_test.dart [E]
-  Failed to load "C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/widgets/categories_slider_test.dart":
-  Compilation failed for testPath=C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/widgets/categories_slider_test.dart: test/features/home/presentation/widgets/categories_slider_test.dart:62:16: Error: Type 'StreamSubscription' not found.
-      implements StreamSubscription<List<int>> {}
-                 ^^^^^^^^^^^^^^^^^^
-  test/features/home/presentation/widgets/categories_slider_test.dart:56:14: Error: A value of type '_TestStreamSubscription' can't be returned from a function with return type 'StreamSubscription<List<int>>'.
-   - '_TestStreamSubscription' is from 'test/features/home/presentation/widgets/categories_slider_test.dart'.
-   - 'StreamSubscription' is from 'dart:async'.
-   - 'List' is from 'dart:core'.
-        return _TestStreamSubscription();
-               ^
-  test/features/home/presentation/widgets/categories_slider_test.dart:97:38: Error: Required named parameter 'fields' must be provided.
-        ).thenReturn(const FieldsLoaded(categories: []));
-                                       ^
-  lib/features/fields/presentation/cubit/fields_state.dart:68:9: Context: Found this candidate, but the arguments don't match.
-    const FieldsLoaded({
-          ^^^^^^^^^^^^
-  test/features/home/presentation/widgets/categories_slider_test.dart:125:30: Error: Required named parameter 'fields' must be provided.
-      ).thenReturn(FieldsLoaded(categories: categories));
-                               ^
-  lib/features/fields/presentation/cubit/fields_state.dart:68:9: Context: Found this candidate, but the arguments don't match.
-    const FieldsLoaded({
-          ^^^^^^^^^^^^
-  test/features/home/presentation/widgets/categories_slider_test.dart:148:30: Error: Required named parameter 'fields' must be provided.
-      ).thenReturn(FieldsLoaded(categories: categories));
-                               ^
-  lib/features/fields/presentation/cubit/fields_state.dart:68:9: Context: Found this candidate, but the arguments don't match.
-    const FieldsLoaded({
-          ^^^^^^^^^^^^
-  .
-00:00 +0 -1: Some tests failed.
+00:00 +0: loading C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart
+00:00 +0: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - addToHistory - should add query to history
+00:00 +1: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - addToHistory - should add query at the beginning
+00:00 +2: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - addToHistory - should move existing query to top
+00:00 +3: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - addToHistory - should not add empty query
+00:00 +4: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - addToHistory - should limit history to 10 items
+00:00 +5: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - getHistory - should return empty list initially
+00:00 +6: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - getHistory - should return all history items
+00:00 +7: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - removeFromHistory - should remove specific query
+00:00 +8: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - removeFromHistory - should not fail when removing non-existent query
+00:00 +9: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - clearHistory - should clear all history
+00:00 +10: C:/Users/moham/StudioProjects/spo_kick/test/core/utils/search_history_integration_test.dart: SearchHistoryService Integration - Data Persistence - history should persist across service instances
+00:00 +11: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/data/models/user_model_test.dart: should be a subclass of UserEntity
+00:00 +12: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/data/models/user_model_test.dart: fromJson should return a valid model when the JSON is valid
+00:00 +13: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/data/models/user_model_test.dart: fromJson should default passwordChanged to false if missing
+00:00 +14: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/data/models/user_model_test.dart: toJson should return a JSON map containing the proper data
+00:00 +15: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: (setUpAll)
+00:00 +15: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: AuthCubit initial state is AuthInitial
+00:00 +16: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: AuthCubit currentUser returns null when not authenticated
+00:00 +17: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: AuthCubit isAuthenticated returns false when not authenticated
+00:00 +18: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: AuthCubit isLoading returns false initially
+00:00 +19: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: checkAuthStatus emits [AuthLoading, Authenticated] when user exists
+[NotificationService] No FCM token to save (not supported or no token)
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[AuthCubit] Notifications setup for user: test@example.com
+00:00 +20: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: checkAuthStatus emits [AuthLoading, Unauthenticated] when no user
+00:00 +21: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: checkAuthStatus emits [AuthLoading, Unauthenticated] on failure
+00:00 +22: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: login emits [AuthLoading, Authenticated] on successful login
+Γ£à Login Success: test@example.com
+[NotificationService] No FCM token to save (not supported or no token)
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[AuthCubit] Notifications setup for user: test@example.com
+00:00 +23: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: login emits [AuthLoading, AuthError] on invalid credentials
+Γ¥î Login Error: Invalid credentials
+00:00 +24: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: login emits [AuthLoading, AuthError] on network error
+Γ¥î Login Error: Network error
+00:00 +25: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: login authenticates admin user successfully
+Γ£à Login Success: admin@example.com
+[NotificationService] No FCM token to save (not supported or no token)
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[AuthCubit] Notifications setup for user: admin@example.com
+00:00 +26: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: register emits [AuthLoading, Authenticated] on successful registration
+Γ£à Registration Success: test@example.com
+[NotificationService] No FCM token to save (not supported or no token)
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[AuthCubit] Notifications setup for user: test@example.com
+00:00 +27: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: register emits [AuthLoading, AuthError] when email already exists
+Γ¥î Registration Error: Email already in use
+00:00 +28: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: register emits [AuthLoading, AuthError] on weak password
+Γ¥î Registration Error: Password too weak
+00:00 +29: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: logout emits [AuthLoading, Unauthenticated] on successful logout
+00:00 +30: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: logout emits [AuthLoading, AuthError] on logout failure
+00:00 +31: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: resetPassword emits [AuthLoading, PasswordResetEmailSent] on success
+00:01 +32: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: resetPassword emits [AuthLoading, AuthError] when email not found
+00:01 +33: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: updateProfile emits [AuthLoading, ProfileUpdated, Authenticated] on success
+Γ£à Profile Update Success: Updated Name
+00:01 +34: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: updateProfile emits error and restores auth status on failure
+Γ¥î Profile Update Error: Update failed
+[NotificationService] No FCM token to save (not supported or no token)
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[AuthCubit] Notifications setup for user: test@example.com
+00:01 +35: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: changePassword emits PasswordChanged on success
+Γ£à Password Change Success
+[NotificationService] No FCM token to save (not supported or no token)
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[AuthCubit] Notifications setup for user: test@example.com
+00:01 +36: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: changePassword emits AuthError on wrong current password
+Γ¥î Password Change Error: Wrong password
+[NotificationService] No FCM token to save (not supported or no token)
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[AuthCubit] Notifications setup for user: test@example.com
+00:01 +37: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: clearError emits Unauthenticated when in error state
+00:01 +38: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: clearError does nothing when not in error state
+00:01 +39: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: getters after authentication currentUser returns user when authenticated
+Γ£à Login Success: test@example.com
+[NotificationService] No FCM token to save (not supported or no token)
+[NotificationService] Skipping subscribe - not supported
+[NotificationService] Skipping subscribe - not supported
+[AuthCubit] Notifications setup for user: test@example.com
+00:01 +40: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/auth_cubit_test.dart: (tearDownAll)
+00:01 +40: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/forgot_password_cubit_test.dart: ForgotPasswordCubit initial state is correct
+00:01 +41: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/forgot_password_cubit_test.dart: ForgotPasswordCubit updateEmail emits new email
+00:01 +42: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/forgot_password_cubit_test.dart: ForgotPasswordCubit markEmailSent emits isEmailSent: true
+00:01 +43: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/forgot_password_cubit_test.dart: ForgotPasswordCubit resetState emits initial state
+00:01 +44: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/login_cubit_test.dart: LoginCubit initial state is correct
+00:01 +45: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/login_cubit_test.dart: LoginCubit emits [isPasswordVisible: true] when togglePasswordVisibility is called
+00:01 +46: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/login_cubit_test.dart: LoginCubit emits [loginMode: admin] when changeLoginMode is called
+00:01 +47: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/login_cubit_test.dart: LoginCubit emits updated validity when valid
+00:01 +48: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/login_cubit_test.dart: LoginCubit toggles rememberMe
+00:02 +49: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/register_cubit_test.dart: RegisterCubit initial state is correct
+00:02 +50: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/register_cubit_test.dart: RegisterCubit toggles password visibility
+00:02 +51: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/cubit/register_cubit_test.dart: RegisterCubit toggles confirm password visibility
+00:03 +52: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +53: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +54: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +55: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +56: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +57: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +58: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +59: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +60: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +61: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +62: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +63: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +64: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +65: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show login message when unauthenticated
+00:04 +66: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +67: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +68: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +69: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +70: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +71: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +72: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +72: C:/Users/moham/StudioProjects/spo_kick/test/features/bookings/presentation/cubit/booking_cubit_test.dart: BookingCubit - updateBookingStatus - should emit [Loading, Loaded] (reload) when successful
+≡ƒöä [BookingCubit] Updating booking booking-1 to Confirmed
+Γ£à [BookingCubit] Booking updated successfully
+≡ƒöä [BookingCubit] Loading owner bookings...
+Γ£à [BookingCubit] Loaded 1 owner bookings
+00:05 +73: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +74: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+00:05 +75: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated
+ΓòÉΓòÉΓòí EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK Γò₧ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "USER": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart:56:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart line 56
+The test description was:
+  should show user details when authenticated
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+00:05 +75 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/bookings/presentation/cubit/booking_flow_cubit_test.dart: initializeFlow handles error when loading time slots fails
+00:05 +75 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show user details when authenticated [E]
+  Test failed. See exception logs above.
+  The test description was: should show user details when authenticated
+  
+00:05 +76 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +77 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +78 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +79 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +80 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +81 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +82 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +83 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +84 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +85 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +86 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +87 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +88 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +89 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +90 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +91 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +92 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/auth/presentation/pages/profile_page_test.dart: should show Edit Profile and Logout buttons
+00:06 +93 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/bookings/presentation/cubit/booking_flow_cubit_test.dart: BookingFlowActive computed properties canProceed is true on selectDate step
+00:06 +94 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/bookings/presentation/cubit/booking_flow_cubit_test.dart: BookingFlowActive computed properties canProceed is false on selectTime step without slot
+00:06 +95 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/bookings/presentation/cubit/booking_flow_cubit_test.dart: BookingFlowActive computed properties progress calculates correctly for each step
+00:06 +96 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: (setUpAll)
+00:06 +96 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: BusinessHoursCubit initial state is BusinessHoursInitial
+00:06 +97 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: BusinessHoursCubit currentFieldId is null initially
+00:06 +98 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: BusinessHoursCubit hasUnsavedChanges is false initially
+00:06 +99 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: getFieldBusinessHours emits [Loading, Loaded] when successful
+00:06 +100 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: getFieldBusinessHours emits [Loading, Error] on failure
+00:06 +101 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: getFieldBusinessHours checks current status when requested
+00:06 +102 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: validateBookingTime emits [Validating, Validated(true)] when valid
+00:06 +103 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: validateBookingTime emits [Validating, Validated(false)] when invalid
+00:06 +104 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: initializeDefaultBusinessHours emits [Initializing, Loading, Loaded] on success
+00:06 +105 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: initializeDefaultBusinessHours emits [Initializing, Error] on failure
+00:06 +106 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: reset resets to initial state
+00:06 +107 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: checkCurrentStatus updates loaded state with open status
+00:06 +108 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: checkCurrentStatus does nothing when not in loaded state
+00:06 +109 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: BusinessHoursEntity has correct day name getter
+00:06 +110 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/business_hours/presentation/cubit/business_hours_cubit_test.dart: (tearDownAll)
+00:07 +110 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: CityCubit initial state is CityInitial
+00:07 +111 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: CityCubit cachedCities is initially empty
+00:07 +112 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: CityCubit selectedCity is initially null
+00:07 +113 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: loadCities emits [CitiesLoading, CitiesLoaded] when getCities succeeds
+00:07 +114 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: loadCities emits [CitiesLoading, CitiesLoaded] with selected city from cache
+00:07 +115 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: loadCities emits [CitiesLoading, CityError] when getCities fails
+[CityCubit] Failed to load cities: Connection error
+00:07 +116 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: selectCity emits [CitySelected] when selectCity is called
+00:07 +117 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: saveCity emits [CitySaving, CitySaved, CitySelected] when saveCity succeeds
+[CityCubit] City saved: Cairo
+00:07 +118 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: saveCity emits [CitySaving, CityError] when saveCity fails
+[CityCubit] Failed to save city: Failed to save
+00:07 +119 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: loadSelectedCity emits [CitiesLoading, CitySelected] when saved city exists
+[CITY CUBIT] Loading selected city ID from cache...
+[CITY CUBIT] Found city ID: city-1. Fetching details...
+[CITY CUBIT] Successfully loaded city: Cairo
+00:07 +120 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: loadSelectedCity loads all cities when no saved city exists
+[CITY CUBIT] Loading selected city ID from cache...
+[CITY CUBIT] No city ID found in cache
+00:07 +121 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: clearCity clears city and loads all cities when clearCity succeeds
+[CityCubit] City selection cleared
+00:07 +122 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: clearCity emits CityError when clearCity fails
+[CityCubit] Failed to clear city: Clear failed
+00:07 +123 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: confirmSelection emits CityError when no city is selected
+00:07 +124 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: confirmSelection saves city when a city is selected
+[CityCubit] City saved: Cairo
+00:07 +125 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: helper methods selectedIdFromState returns correct id for CitySelected
+00:07 +126 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: helper methods resolveCityFromState returns city for CitySelected
+00:07 +127 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/city/presentation/cubit/city_cubit_test.dart: helper methods resolveCityFromState returns city for CitySaved
+00:08 +128 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - addToFavorites - should successfully add a field to favorites
+00:08 +129 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - addToFavorites - should not duplicate if field already exists
+00:08 +130 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - addToFavorites - should add multiple different fields
+00:08 +131 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - removeFromFavorites - should successfully remove a field from favorites
+00:08 +132 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - removeFromFavorites - should not fail when removing non-existent field
+00:08 +133 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - isFavorite - should return true for favorited field
+00:08 +134 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - isFavorite - should return false for non-favorited field
+00:08 +135 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - getFavoriteFieldIds - should return empty list initially
+00:08 +136 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - getFavoriteFieldIds - should return all favorited field IDs
+00:08 +137 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - clearAllFavorites - should remove all favorites
+00:08 +138 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/data/repositories/favorites_repository_integration_test.dart: FavoritesRepository Integration - Data Persistence - favorites should persist across repository instances
+00:08 +139 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - isEmpty should return true when favoriteFieldIds is empty
+00:08 +140 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - isEmpty should return false when favoriteFieldIds is not empty
+00:08 +141 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - count should return correct number of favorites
+00:08 +142 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - isFavorite should return true for favorited field
+00:08 +143 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - isFavorite should return false for non-favorited field
+00:08 +144 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - filterFavorites - should filter list to only include favorites
+00:08 +145 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - filterFavorites - should return empty list when no favorites match
+00:08 +146 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - filterFavorites - should return empty list when favorites is empty
+00:08 +147 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesListLoaded - filterFavorites - should work with different getter functions
+00:08 +148 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoriteToggled - props should include fieldId and isFavorite
+00:08 +149 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/favorites/presentation/cubit/favorites_state_test.dart: FavoritesState - FavoritesError - props should include message
+00:09 +150 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getAllFields - should return list of fields when remote data source is successful
+00:09 +151 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getAllFields - should return ServerFailure when remote data source throws ServerException
+00:09 +152 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getFieldById - should return field when remote data source is successful
+00:09 +153 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getFieldById - should return NotFoundFailure when remote data source throws NotFoundException
+00:09 +154 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - searchFields - should return list of fields when remote data source is successful
+00:09 +155 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getFieldsByCategory - should return list of fields when remote data source is successful
+00:09 +156 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getFieldsByCity - should return list of fields when remote data source is successful
+00:09 +157 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getFeaturedFields - should return list of fields when remote data source is successful
+00:09 +158 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getPopularFields - should return list of fields when remote data source is successful
+00:09 +159 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - getSportCategories - should return list of categories when remote data source is successful
+00:09 +160 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/data/repositories/field_repository_impl_test.dart: FieldRepositoryImpl - filterFields - should return list of fields when remote data source is successful
+00:09 +161 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/fields_cubit_test.dart: FieldsCubit - initial state should be FieldsInitial
+00:09 +162 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/fields_cubit_test.dart: FieldsCubit - loadAllFields - should emit [Loading, Loaded] when successful
+00:09 +163 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/fields_cubit_test.dart: FieldsCubit - searchFields - should emit [Loaded] with searchQuery when already loaded
+00:09 +164 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/fields_cubit_test.dart: FieldsCubit - filterByCategory - should emit [Loaded] with updated filterOptions
+00:10 +165 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/search_cubit_test.dart: SearchCubit - initial state should be SearchInitial
+00:10 +166 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/search_cubit_test.dart: SearchCubit - loadHistory - should emit SearchHistoryLoaded with history from service
+00:10 +167 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/search_cubit_test.dart: SearchCubit - search - should not search when query is empty
+00:11 +168 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:11 +169 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:11 +170 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:11 +171 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:11 +172 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:11 +173 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:11 +174 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:11 +175 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:12 +176 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Search "Alpha" updates list
+00:12 +177 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/search_cubit_test.dart: SearchCubit - close - should cancel debounce timer on close
+00:12 +178 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Filter Dialog updates options
+00:13 +179 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Filter Dialog updates options
+00:13 +180 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Filter Dialog updates options
+00:13 +181 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/pages/fields_flow_test.dart: Fields Flow Reality Test Filter Dialog updates options
+00:13 +182 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/widgets/categories_slider_test.dart: CategoriesSlider displays mock categories when state has no data
+00:14 +183 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/widgets/categories_slider_test.dart: CategoriesSlider displays real categories when state has data
+00:14 +184 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/widgets/categories_slider_test.dart: Tapping a category navigates to fieldsList with categoryId
+00:14 +185 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/widgets/categories_slider_test.dart: (tearDownAll)
+00:14 +185 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl getOwnerFields should return List<FieldEntity> when remote call is successful
+≡ƒôª [OwnerRepository] Getting fields for owner: owner-123
+00:14 +186 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl getOwnerFields should return ServerFailure when remote call throws ServerException
+≡ƒôª [OwnerRepository] Getting fields for owner: owner-123
+Γ¥î [OwnerRepository] Server error: Server error
+00:14 +187 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl updateField should return FieldEntity when update is successful
+≡ƒôª [OwnerRepository] Updating field: field-123
+00:14 +188 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl updateField should return ServerFailure when update throws ServerException
+≡ƒôª [OwnerRepository] Updating field: field-123
+Γ¥î [OwnerRepository] Server error: Update failed
+00:14 +189 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl getOwnerBookings should return List<BookingEntity> when remote call is successful
+≡ƒôª [OwnerRepository] Getting bookings for owner: owner-123
+00:14 +190 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl getOwnerBookings should return filtered bookings when status is provided
+≡ƒôª [OwnerRepository] Getting bookings for owner: owner-123
+00:14 +191 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl getOwnerBookings should return ServerFailure when remote call throws ServerException
+≡ƒôª [OwnerRepository] Getting bookings for owner: owner-123
+Γ¥î [OwnerRepository] Server error: Failed to get bookings
+00:14 +192 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl approveBooking should return Right(null) when approval is successful
+≡ƒôª [OwnerRepository] Approving booking: booking-123
+00:14 +193 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl approveBooking should return ServerFailure when approval throws ServerException
+≡ƒôª [OwnerRepository] Approving booking: booking-123
+Γ¥î [OwnerRepository] Server error: Approval failed
+00:14 +194 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl rejectBooking should return Right(null) when rejection is successful
+≡ƒôª [OwnerRepository] Rejecting booking: booking-123
+00:14 +195 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl rejectBooking should return ServerFailure when rejection throws ServerException
+≡ƒôª [OwnerRepository] Rejecting booking: booking-123
+Γ¥î [OwnerRepository] Server error: Rejection failed
+00:14 +196 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl getOwnerRevenue should return OwnerRevenueEntity when remote call is successful
+≡ƒôª [OwnerRepository] Getting revenue for owner: owner-123
+00:14 +197 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl getOwnerRevenue should return ServerFailure when remote call throws ServerException
+≡ƒôª [OwnerRepository] Getting revenue for owner: owner-123
+Γ¥î [OwnerRepository] Server error: Failed to get revenue
+00:14 +198 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl updateOwnerProfile should return Right(null) when profile update is successful
+≡ƒôª [OwnerRepository] Updating profile for owner: owner-123
+00:14 +199 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/data/repositories/owner_repository_impl_test.dart: OwnerRepositoryImpl updateOwnerProfile should return ServerFailure when update throws ServerException
+≡ƒôª [OwnerRepository] Updating profile for owner: owner-123
+Γ¥î [OwnerRepository] Server error: Update failed
+00:15 +200 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: (setUpAll)
+00:15 +200 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: OwnerBookingsCubit initial state is OwnerBookingsLoading
+00:15 +201 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: OwnerBookingsCubit getStats returns zeros when not loaded
+00:15 +202 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: loadBookings emits [Loading, Loaded] when bookings load successfully
+00:15 +203 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: loadBookings emits [Loading, Error] when user not found
+00:15 +204 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: loadBookings emits [Loading, Error] when bookings load fails
+00:15 +205 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: changeTab tab 0 shows all bookings (no filter)
+00:15 +206 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: changeTab tab 1 filters by pending
+00:15 +207 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: changeTab tab 2 filters by confirmed
+00:15 +208 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: search updates search query
+00:15 +209 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: search clearSearch clears query
+00:15 +210 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: approveBooking emits error on failure
+00:15 +211 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: rejectBooking emits error on failure
+00:15 +212 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: OwnerBookingsLoaded filteredBookings returns all when no filter
+00:15 +213 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: OwnerBookingsLoaded filteredBookings filters by status
+00:15 +214 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: OwnerBookingsLoaded filteredBookings filters by search query
+00:15 +215 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: OwnerBookingsLoaded getCountByStatus returns correct count
+00:15 +216 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: getStats returns correct stats when loaded
+00:15 +217 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit_test.dart: (tearDownAll)
+00:16 +217 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - initial state should be OwnerInitial
+00:16 +218 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - loadOwnerFields - should emit [Loading, FieldsLoaded] when successful
+≡ƒöä [OwnerCubit] Loading fields for owner: owner-1
+Γ£à [OwnerCubit] Loaded 1 fields
+00:16 +219 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - loadOwnerFields - should emit [Loading, Error] when failure occurs
+≡ƒöä [OwnerCubit] Loading fields for owner: owner-1
+Γ¥î [OwnerCubit] Error loading fields: Server error
+00:16 +220 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - updateField - should emit [Loading, ActionSuccess] when successful
+≡ƒöä [OwnerCubit] Updating field: field-1
+Γ£à [OwnerCubit] Field updated successfully
+00:16 +221 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - updateField - should emit Error when validation fails
+≡ƒöä [OwnerCubit] Updating field: field-1
+Γ¥î [OwnerCubit] Error updating field: Invalid price
+00:16 +222 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - deleteField - should emit [Loading, ActionSuccess] when successful
+≡ƒöä [OwnerCubit] Deleting field: field-1
+Γ£à [OwnerCubit] Field deleted successfully
+00:16 +223 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - deleteField - should emit [Loading, Error] when failure occurs
+≡ƒöä [OwnerCubit] Deleting field: field-1
+Γ¥î [OwnerCubit] Error deleting field: Delete failed
+00:16 +224 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - loadOwnerBookings - should emit [Loading, BookingsLoaded] when successful
+≡ƒöä [OwnerCubit] Loading bookings for owner: owner-1
+Γ£à [OwnerCubit] Loaded 1 bookings
+00:16 +225 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - loadOwnerBookings - should pass status filter when provided
+≡ƒöä [OwnerCubit] Loading bookings for owner: owner-1
+Γ£à [OwnerCubit] Loaded 1 bookings
+00:16 +226 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - approveBooking - should emit [Loading, ActionSuccess] when successful
+≡ƒöä [OwnerCubit] Approving booking: booking-1
+Γ£à [OwnerCubit] Booking approved successfully
+00:16 +227 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - rejectBooking - should emit [Loading, ActionSuccess] when successful
+≡ƒöä [OwnerCubit] Rejecting booking: booking-1
+Γ£à [OwnerCubit] Booking rejected successfully
+00:16 +228 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - loadOwnerRevenue - should emit [Loading, RevenueLoaded] when successful
+≡ƒöä [OwnerCubit] Loading revenue for owner: owner-1
+Γ£à [OwnerCubit] Revenue loaded successfully
+00:16 +229 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - updateProfile - should emit [Loading, ActionSuccess] when successful
+≡ƒöä [OwnerCubit] Updating profile for owner: owner-1
+Γ£à [OwnerCubit] Profile updated successfully
+00:16 +230 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_cubit_test.dart: OwnerCubit - reset - should emit OwnerInitial
+≡ƒöä [OwnerCubit] Resetting state
+00:17 +231 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: OwnerDashboardCubit initial state is OwnerDashboardLoading
+00:17 +232 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: loadDashboard emits [Loading, Loaded] when all data loads successfully
+00:17 +233 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: loadDashboard emits [Loading, Error] when user not found
+00:17 +234 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: loadDashboard emits [Loading, Error] when fields load fails
+00:17 +235 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: changeNavIndex updates nav index when in loaded state
+00:17 +236 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: changeNavIndex does nothing when not in loaded state
+00:17 +237 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: drawer operations toggleDrawer opens drawer when closed
+00:17 +238 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: drawer operations openDrawer sets drawer open
+00:17 +239 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: drawer operations closeDrawer sets drawer closed
+00:17 +240 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: helper methods getGreeting returns appropriate greeting
+00:17 +241 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: helper methods getFormattedDate returns formatted string
+00:17 +242 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: helper methods formatCurrency formats millions correctly
+00:17 +243 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: helper methods formatCurrency formats thousands correctly
+00:17 +244 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: helper methods formatCurrency formats small amounts correctly
+00:17 +245 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: OwnerDashboardStats fromData calculates stats correctly
+00:17 +246 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit_test.dart: OwnerDashboardStats fromData handles empty data
+00:18 +247 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: (setUpAll)
+00:18 +247 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: ReviewsCubit initial state is ReviewsInitial
+00:18 +248 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: loadFieldReviews emits [Loading, Loaded] when successful
+00:18 +249 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: loadFieldReviews emits [Loading, Error] on failure
+00:18 +250 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: createReview emits [Creating, Created] when successful
+00:18 +251 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: createReview emits [Creating, Error] when fails
+00:18 +252 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: updateReview emits [Updating, Updated] when successful
+00:18 +253 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: updateReview emits [Updating, Error] when fails
+00:18 +254 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: deleteReview emits [Deleting, Deleted] when successful
+00:18 +255 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: deleteReview emits [Deleting, Error] when fails
+00:18 +256 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: checkReviewEligibility emits [Checking, Checked(true)] when eligible
+00:18 +257 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: checkReviewEligibility emits [Checking, Checked(false)] when not eligible
+00:18 +258 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: reset resets to initial state
+00:18 +259 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/reviews_cubit_test.dart: (tearDownAll)
+00:18 +259 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - initial state should be ReviewFormInitial
+00:18 +260 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - should initialize with existing values when editing
+00:18 +261 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - updateRating - should update rating and emit valid state
+00:18 +262 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - updateRating - should emit initial state when rating is 0
+00:18 +263 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - updateComment - should update comment
+00:18 +264 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - submit - should emit error when rating is 0
+00:18 +265 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - submit - should emit error when no userId for new review
+00:18 +266 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - submit - should call createReview for new review
+00:18 +267 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/reviews/presentation/cubit/review_form_cubit_test.dart: ReviewFormCubit - submit - should call updateReview when editing
+00:19 +268 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/settings/presentation/cubit/settings_cubit_test.dart: initial state should be SettingsInitial
+00:19 +269 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/settings/presentation/cubit/settings_cubit_test.dart: loadPreferences emits [SettingsLoading, SettingsLoaded] when successful
+00:19 +270 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/settings/presentation/cubit/settings_cubit_test.dart: loadPreferences emits [SettingsLoading, SettingsError] when failed
+00:19 +271 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/settings/presentation/cubit/settings_cubit_test.dart: updatePreference emits [SettingsUpdating, SettingsUpdated] when successful
+00:19 +272 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: initial state is SplashInitial
+00:19 +273 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +273 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getPlatformStatistics should return PlatformStatisticsEntity when remote call is successful
+≡ƒôè [SuperAdminRepository] Getting platform statistics...
+00:20 +274 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +274 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getPlatformStatistics should return ServerFailure when remote call throws ServerException
+≡ƒôè [SuperAdminRepository] Getting platform statistics...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +275 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +275 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getPlatformStatistics should return AuthenticationFailure when remote call throws AuthenticationException
+≡ƒôè [SuperAdminRepository] Getting platform statistics...
+Γ¥î [SuperAdminRepository] AuthException: Auth error
+00:20 +276 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +276 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl createAdminAccount should return AdminInvitationEntity when remote call is successful
+≡ƒöÉ [SuperAdminRepository] Creating admin account...
+00:20 +277 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +277 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl createAdminAccount should return ConflictFailure when remote call throws ConflictException
+≡ƒöÉ [SuperAdminRepository] Creating admin account...
+Γ¥î [SuperAdminRepository] ConflictException: Email exists
+00:20 +278 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +278 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl createAdminAccount should return ValidationFailure when remote call throws ValidationException
+≡ƒöÉ [SuperAdminRepository] Creating admin account...
+Γ¥î [SuperAdminRepository] ValidationException: Invalid email
+00:20 +279 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +279 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getAllAdmins should return list of UserEntity when remote call is successful
+≡ƒæÑ [SuperAdminRepository] Getting all admins...
+00:20 +280 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +280 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getAllAdmins should return ServerFailure when remote call throws ServerException
+≡ƒæÑ [SuperAdminRepository] Getting all admins...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +281 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +281 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getAllUsers should return list of UserEntity when remote call is successful
+≡ƒæÑ [SuperAdminRepository] Getting all users...
+00:20 +282 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +282 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getAllUsers should return ServerFailure when remote call throws ServerException
+≡ƒæÑ [SuperAdminRepository] Getting all users...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +283 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +283 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl assignFieldToAdmin should return void (Right(null)) when remote call is successful
+≡ƒöù [SuperAdminRepository] Assigning field to admin...
+00:20 +284 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +284 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl assignFieldToAdmin should return NotFoundFailure when remote call throws NotFoundException
+≡ƒöù [SuperAdminRepository] Assigning field to admin...
+Γ¥î [SuperAdminRepository] NotFoundException: Admin or field not found
+00:20 +285 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +285 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl assignFieldToAdmin should return ServerFailure when remote call throws ServerException
+≡ƒöù [SuperAdminRepository] Assigning field to admin...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +286 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +286 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getAllCities should return list of CityEntity when remote call is successful
+≡ƒÅÖ∩╕Å [SuperAdminRepository] Getting all cities...
+00:20 +287 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +287 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getAllCities should return ServerFailure when remote call throws ServerException
+≡ƒÅÖ∩╕Å [SuperAdminRepository] Getting all cities...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +288 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +288 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getActiveCities should return list of CityEntity when remote call is successful
+≡ƒÅÖ∩╕Å [SuperAdminRepository] Getting active cities...
+00:20 +289 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +289 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl getActiveCities should return ServerFailure when remote call throws ServerException
+≡ƒÅÖ∩╕Å [SuperAdminRepository] Getting active cities...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +290 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +290 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl deactivateUser should return void when remote call is successful
+≡ƒÜ½ [SuperAdminRepository] Deactivating user...
+00:20 +291 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +291 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl deactivateUser should return ServerFailure when remote call throws ServerException
+≡ƒÜ½ [SuperAdminRepository] Deactivating user...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +292 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +292 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl activateUser should return void when remote call is successful
+Γ£à [SuperAdminRepository] Activating user...
+00:20 +293 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +293 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl activateUser should return ServerFailure when remote call throws ServerException
+Γ£à [SuperAdminRepository] Activating user...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +294 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +294 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl createField should return FieldEntity when remote call is successful
+ΓÜ╜ [SuperAdminRepository] Creating field...
+00:20 +295 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +295 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl createField should return NotFoundFailure when remote call throws NotFoundException
+ΓÜ╜ [SuperAdminRepository] Creating field...
+Γ¥î [SuperAdminRepository] NotFoundException: City not found
+00:20 +296 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +296 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl createField should return ConflictFailure when remote call throws ConflictException
+ΓÜ╜ [SuperAdminRepository] Creating field...
+Γ¥î [SuperAdminRepository] ConflictException: Field exists
+00:20 +297 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +297 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/data/repositories/super_admin_repository_impl_test.dart: SuperAdminRepositoryImpl createField should return ServerFailure when remote call throws ServerException
+ΓÜ╜ [SuperAdminRepository] Creating field...
+Γ¥î [SuperAdminRepository] ServerException: Server error
+00:20 +298 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +299 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +300 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +301 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +302 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +303 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +304 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +305 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +306 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:20 +307 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +308 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +309 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +310 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +311 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +312 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +313 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +314 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +315 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +316 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:21 +317 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +318 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +319 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +320 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +321 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +322 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +323 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +324 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +325 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +326 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +327 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +328 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:22 +329 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +330 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +331 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +332 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +333 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +334 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +335 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +336 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +337 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +338 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +338 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - loadPlatformStatistics - should emit [Loading, PlatformStatisticsLoaded] when successful
+≡ƒöä [SuperAdminCubit] Loading platform statistics...
+Γ£à [SuperAdminCubit] Platform statistics loaded
+   Users: 150
+   Admins: 10
+   Fields: 45
+   Bookings: 500
+00:23 +339 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +339 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - loadPlatformStatistics - should emit [Loading, Error] when use case fails
+≡ƒöä [SuperAdminCubit] Loading platform statistics...
+Γ¥î [SuperAdminCubit] Error loading statistics: Server error
+00:23 +340 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +340 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - createAdmin - should emit [Loading, AdminAccountCreated] when successful
+≡ƒöä [SuperAdminCubit] Creating admin account...
+   Email: newadmin@test.com
+   Name: New Admin
+Γ£à [SuperAdminCubit] Admin created successfully!
+   Admin ID: admin-1
+   Email: admin@test.com
+   Password: Admin2024@Test
+00:23 +341 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +341 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - loadAdmins - should emit [Loading, AdminsListLoaded] when successful
+≡ƒöä [SuperAdminCubit] Loading admins list...
+Γ£à [SuperAdminCubit] Loaded 2 admins
+00:23 +342 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +342 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - loadUsers - should emit [Loading, UsersListLoaded] when successful
+≡ƒöä [SuperAdminCubit] Loading users list...
+Γ£à [SuperAdminCubit] Loaded 2 users
+00:23 +343 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +343 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - assignField - should emit [Loading, FieldAssigned] when successful
+≡ƒöä [SuperAdminCubit] Assigning field to admin...
+   Admin ID: admin-1
+   Field ID: field-1
+Γ£à [SuperAdminCubit] Field assigned successfully
+00:23 +344 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +344 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - loadCities - should emit [Loading, CitiesLoaded] when successful
+≡ƒöä [SuperAdminCubit] Loading cities...
+Γ£à [SuperAdminCubit] Loaded 2 cities
+00:23 +345 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +345 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - deactivateUser - should emit [Loading, UserDeactivated, Loading, UsersListLoaded]
+≡ƒöä [SuperAdminCubit] Deactivating user: user-1
+Γ£à [SuperAdminCubit] User deactivated successfully
+≡ƒöä [SuperAdminCubit] Loading users list...
+Γ£à [SuperAdminCubit] Loaded 2 users
+00:23 +346 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +346 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - activateUser - should emit [Loading, UserActivated, Loading, UsersListLoaded]
+≡ƒöä [SuperAdminCubit] Activating user: user-2
+Γ£à [SuperAdminCubit] User activated successfully
+≡ƒöä [SuperAdminCubit] Loading users list...
+Γ£à [SuperAdminCubit] Loaded 2 users
+00:23 +347 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +347 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - bulkActivateUsers - should emit BulkActionCompleted when all succeed
+≡ƒöä [SuperAdminCubit] Bulk activating 3 users
+Γ£à [SuperAdminCubit] Bulk activation complete: 3 succeeded, 0 failed
+≡ƒöä [SuperAdminCubit] Loading users list...
+Γ£à [SuperAdminCubit] Loaded 2 users
+00:23 +348 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +348 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - exportUsersToCSV - should call CSV export service with users
+≡ƒöä [SuperAdminCubit] Exporting 2 users to CSV
+Γ£à [SuperAdminCubit] Users exported successfully
+00:23 +349 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:23 +349 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/cubit/super_admin_cubit_test.dart: SuperAdminCubit - reset - should emit SuperAdminInitial
+≡ƒöä [SuperAdminCubit] Resetting state
+00:23 +350 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToOnboarding] when onboarding is NOT completed
+00:24 +351 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/pages/admins_list_page_test.dart: AdminsListPage shows loading placeholder when state is SuperAdminAdminsListLoading
+00:25 +352 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/super_admin/presentation/pages/super_admin_dashboard_page_test.dart: SuperAdminDashboardPage shows loading indicator when state is SuperAdminDashboardLoading
+00:25 +353 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:25 +354 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:25 +355 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:25 +356 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:25 +357 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:25 +358 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:25 +359 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:25 +360 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:25 +361 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToLogin] when onboarding completed but no user logged in
+00:29 +362 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToCitySelection] when logged in user has no city selected
+00:35 +363 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToHome] when logged in user has city selected
+00:40 +364 -1: C:/Users/moham/StudioProjects/spo_kick/test/features/splash/presentation/cubit/splash_cubit_test.dart: emits [SplashLoading, SplashNavigateToHome] when logged in as admin (skips city check)
+00:45 +365 -1: Some tests failed.

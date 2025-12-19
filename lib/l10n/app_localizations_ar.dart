@@ -562,6 +562,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get exploreFields => 'استكشاف الملاعب';
 
   @override
+  String get favoritesEmptySubtitle =>
+      'اضغط على أيقونة القلب في أي ملعب لإضافته إلى المفضلة';
+
+  @override
+  String get favoritesEmpty => 'لا توجد ملاعب مفضلة بعد';
+
+  @override
+  String get beFirstReview => 'كن أول من يقيّم هذا الملعب';
+
+  @override
+  String get notAvailable => 'غير متاح';
+
+  @override
+  String get available => 'متاح';
+
+  @override
+  String get price => 'السعر';
+
+  @override
+  String get reviewsTitleFull => 'المراجعات والتقييمات';
+
+  @override
   String favoritesSavedCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

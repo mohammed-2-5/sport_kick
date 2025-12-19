@@ -11,6 +11,7 @@ import 'package:spo_kick/features/favorites/presentation/cubit/favorites_state.d
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/premium/premium_field_list_item.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium favorites page with enhanced UI.
 ///
@@ -36,17 +37,17 @@ class PremiumFavoritesPage extends StatelessWidget {
         backgroundColor: AppColors.lightBackground,
         body: Column(
           children: [
-            const PremiumCurvedHeader(
-              title: 'My Favorites',
-              subtitle: 'Your saved fields',
+            PremiumCurvedHeader(
+              title: context.l10n.myFavorites,
+              subtitle: context.l10n.favoritesSubtitle,
               showBackButton: true,
             ),
             Expanded(
               child: BlocBuilder<FavoritesCubit, FavoritesState>(
                 builder: (context, favoritesState) {
                   if (favoritesState is FavoritesLoading) {
-                    return const LoadingIndicator.inline(
-                      message: 'Loading favorites...',
+                    return LoadingIndicator.inline(
+                      message: context.l10n.loading,
                     );
                   }
 

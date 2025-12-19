@@ -53,7 +53,7 @@ class DismissibleFieldCard extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              context.l10n.removeFromFavorites.toUpperCase(),
+              context.l10n.removeFromFavorites,
               style: const TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
