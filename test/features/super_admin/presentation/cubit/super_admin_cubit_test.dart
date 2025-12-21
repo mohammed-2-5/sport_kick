@@ -397,7 +397,7 @@ void main() {
         },
         act: (cubit) => cubit.bulkActivateUsers(tUserIds),
         expect: () => [
-          const SuperAdminLoading(message: 'Activating users...'),
+          const SuperAdminLoading(message: 'Activating user...'),
           const BulkActionCompleted('Successfully activated 3 users'),
           const SuperAdminLoading(message: 'Loading users...'),
           UsersListLoaded(tUsers),

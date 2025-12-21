@@ -716,6 +716,26 @@ class AppTextStyles {
 
   // ==================== BOLD VARIANTS ====================
 
+  /// Headline Large (Bold)
+  static const TextStyle headlineLargeBold = TextStyle(
+    fontFamily: headingFontFamily,
+    fontSize: 32,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    height: 1.25,
+    color: AppColors.textPrimary,
+  );
+
+  /// Headline Medium (Bold)
+  static const TextStyle headlineMediumBold = TextStyle(
+    fontFamily: headingFontFamily,
+    fontSize: 28,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    height: 1.29,
+    color: AppColors.textPrimary,
+  );
+
   /// Headline Small (Bold)
   static const TextStyle headlineSmallBold = TextStyle(
     fontFamily: headingFontFamily,
