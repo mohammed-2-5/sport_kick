@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_text_field.dart';
@@ -99,8 +100,7 @@ class _LoginBodyState extends State<LoginBody> {
                         ),
                         Text(
                           context.l10n.rememberMe,
-                          style: const TextStyle(
-                            fontSize: 14,
+                          style: AppTextStyles.bodyMedium.copyWith(
                             color: AppColors.textSecondary,
                           ),
                         ),
@@ -112,10 +112,8 @@ class _LoginBodyState extends State<LoginBody> {
                       },
                       child: Text(
                         context.l10n.forgotPassword,
-                        style: const TextStyle(
-                          fontSize: 14,
+                        style: AppTextStyles.labelMediumBold.copyWith(
                           color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -140,9 +138,8 @@ class _LoginBodyState extends State<LoginBody> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         context.l10n.or,
-                        style: const TextStyle(
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textSecondary,
-                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -158,19 +155,16 @@ class _LoginBodyState extends State<LoginBody> {
                   children: [
                     Text(
                       context.l10n.dontHaveAccount,
-                      style: const TextStyle(
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
-                        fontSize: 15,
                       ),
                     ),
                     TextButton(
                       onPressed: () => context.pushNamed('register'),
                       child: Text(
                         context.l10n.signUp,
-                        style: const TextStyle(
+                        style: AppTextStyles.bodyMediumBold.copyWith(
                           color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -243,11 +237,11 @@ class _LoginBodyState extends State<LoginBody> {
           child: Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: isSelected ? Colors.white : AppColors.textSecondary,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              fontSize: 14,
-            ),
+            style: isSelected
+                ? AppTextStyles.labelMediumBold.copyWith(color: Colors.white)
+                : AppTextStyles.labelMedium.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
           ),
         ),
       ),

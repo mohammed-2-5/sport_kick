@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
@@ -42,14 +43,7 @@ class ProfileBody extends StatelessWidget {
   Widget _buildUserInfo(BuildContext context) {
     return Column(
       children: [
-        Text(
-          user.displayName,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
-        ),
+        Text(user.displayName, style: AppTextStyles.headlineMediumBold),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -61,9 +55,7 @@ class ProfileBody extends StatelessWidget {
             builder: (context) {
               return Text(
                 _roleLabel(context),
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+                style: AppTextStyles.labelSmallBold.copyWith(
                   color: AppColors.primary,
                   letterSpacing: 1.0,
                 ),

@@ -9,6 +9,8 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/admins_list/sup
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/premium_admin_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admins_list/premium_super_admin_admins_list_view.dart';
 
+import '../../../../helpers/test_helpers.dart';
+
 class MockSuperAdminAdminsListCubit extends MockCubit<SuperAdminAdminsListState>
     implements SuperAdminAdminsListCubit {}
 
@@ -64,7 +66,7 @@ void main() {
         setCubitState(const SuperAdminAdminsListLoading());
 
         // Act
-        await tester.pumpWidget(MaterialApp(home: buildTestWidget()));
+        await pumpApp(tester, buildTestWidget());
         await tester.pump(); // settle initial frame
 
         // Assert
@@ -82,7 +84,7 @@ void main() {
       setCubitState(const SuperAdminAdminsListError(errorMessage));
 
       // Act
-      await tester.pumpWidget(MaterialApp(home: buildTestWidget()));
+      await pumpApp(tester, buildTestWidget());
       await tester.pump();
 
       // Assert
@@ -97,7 +99,7 @@ void main() {
         setCubitState(SuperAdminAdminsListLoaded(allAdmins: [tAdmin]));
 
         // Act
-        await tester.pumpWidget(MaterialApp(home: buildTestWidget()));
+        await pumpApp(tester, buildTestWidget());
         await tester.pump();
 
         // Assert
@@ -112,10 +114,10 @@ void main() {
       setCubitState(const SuperAdminAdminsListLoaded(allAdmins: []));
 
       // Act
-      await tester.pumpWidget(MaterialApp(home: buildTestWidget()));
+      await pumpApp(tester, buildTestWidget());
 
       // Assert
-      expect(find.text('No admins yet'), findsOneWidget);
+      expect(find.text('No Admins Yet'), findsOneWidget);
       expect(find.byIcon(Icons.admin_panel_settings_outlined), findsOneWidget);
     });
   });

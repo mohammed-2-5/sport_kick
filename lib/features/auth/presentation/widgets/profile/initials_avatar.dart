@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class InitialsAvatar extends StatelessWidget {
   final String initials;
@@ -17,9 +18,8 @@ class InitialsAvatar extends StatelessWidget {
       child: Center(
         child: Text(
           initials,
-          style: TextStyle(
+          style: AppTextStyles.headlineLargeBold.copyWith(
             fontSize: fontSize,
-            fontWeight: FontWeight.bold,
             color: AppColors.primary,
           ),
         ),

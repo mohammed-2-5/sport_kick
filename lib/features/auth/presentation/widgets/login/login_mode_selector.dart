@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class LoginModeSelector extends StatelessWidget {
@@ -95,14 +96,13 @@ class LoginModeButton extends StatelessWidget {
               color: isSelected ? Colors.white : AppColors.textSecondary,
             ),
             const SizedBox(width: 6),
-            Flexible(
               child: Text(
                 label,
-                style: TextStyle(
-                  color: isSelected ? Colors.white : AppColors.textSecondary,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                  fontSize: 13,
-                ),
+                style: isSelected
+                    ? AppTextStyles.labelSmallBold.copyWith(color: Colors.white)
+                    : AppTextStyles.labelSmall.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
