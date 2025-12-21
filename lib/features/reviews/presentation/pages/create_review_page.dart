@@ -10,6 +10,7 @@ import 'package:spo_kick/features/reviews/presentation/cubit/review_form_cubit.d
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/create/create_review_body.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Page for creating or editing a review.
 ///
@@ -56,7 +57,9 @@ class CreateReviewPage extends StatelessWidget {
           body: Column(
             children: [
               PremiumCurvedHeader(
-                title: _isEditing ? 'Edit Review' : 'Write a Review',
+                title: _isEditing
+                    ? context.l10n.editReview
+                    : context.l10n.writeAReview,
                 subtitle: fieldName,
                 showBackButton: true,
                 height: 180,

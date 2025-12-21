@@ -79,8 +79,7 @@ class FieldReviewsSection extends StatelessWidget {
                           field.averageRating ?? 0,
                           decimalDigits: 1,
                         ),
-                        style: const TextStyle(
-                          fontSize: 36,
+                        style: AppTextStyles.displaySmall.copyWith(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primary,
                         ),
@@ -103,8 +102,7 @@ class FieldReviewsSection extends StatelessWidget {
                                   field.totalReviews,
                                 ),
                               ),
-                          style: const TextStyle(
-                            fontSize: 16,
+                          style: AppTextStyles.titleMedium.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -128,7 +126,9 @@ class FieldReviewsSection extends StatelessWidget {
                   Expanded(
                     child: Text(
                       context.l10n.noReviews,
-                      style: const TextStyle(color: Colors.grey),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ],
@@ -206,7 +206,9 @@ class FieldReviewsSection extends StatelessWidget {
                           Expanded(
                             child: Text(
                               context.l10n.failedToLoadReviews,
-                              style: const TextStyle(color: AppColors.error),
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                color: AppColors.error,
+                              ),
                             ),
                           ),
                         ],
@@ -218,10 +220,9 @@ class FieldReviewsSection extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Recent Reviews',
-                          style: TextStyle(
-                            fontSize: 16,
+                        Text(
+                          context.l10n.recentReviews,
+                          style: AppTextStyles.titleMedium.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),

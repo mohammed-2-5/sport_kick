@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_price_row.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_total_row.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium card displaying price breakdown.
 ///
@@ -45,8 +47,7 @@ class BookingPriceCard extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 context.l10n.priceBreakdown,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -56,7 +57,8 @@ class BookingPriceCard extends StatelessWidget {
           const SizedBox(height: BookingConstants.standardPadding),
           BookingPriceRow(
             label: context.l10n.durationHours(booking.durationInHours),
-            value: '${hourlyRate.toStringAsFixed(0)} ${booking.currency}/hr',
+            value:
+                '${LocaleFormatters.formatPrice(context, amount: hourlyRate, currency: booking.currency, decimalDigits: 0)}/${context.l10n.perHour}',
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 12),

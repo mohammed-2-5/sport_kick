@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium bulk action bar for admins list.
 ///
@@ -82,14 +83,14 @@ class PremiumAdminsBulkActionBar extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '$selectedCount selected',
+                        context.l10n.selectedCount(selectedCount),
                         style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
                       ),
                       Text(
-                        'of $totalCount admins',
+                        context.l10n.ofTotalAdmins(totalCount),
                         style: AppTextStyles.bodySmall.copyWith(
                           color: Colors.white.withValues(alpha: 0.8),
                         ),
@@ -101,7 +102,9 @@ class PremiumAdminsBulkActionBar extends StatelessWidget {
                   icon: selectedCount == totalCount
                       ? Icons.deselect
                       : Icons.select_all,
-                  label: selectedCount == totalCount ? 'Deselect' : 'All',
+                  label: selectedCount == totalCount
+                      ? context.l10n.deselect
+                      : context.l10n.all,
                   onTap: selectedCount == totalCount
                       ? onDeselectAll
                       : onSelectAll,
@@ -117,7 +120,7 @@ class PremiumAdminsBulkActionBar extends StatelessWidget {
                 Expanded(
                   child: _BulkActionButton(
                     icon: Icons.check_circle_outline,
-                    label: 'Activate',
+                    label: context.l10n.activate,
                     onTap: onActivate,
                   ),
                 ),
@@ -125,7 +128,7 @@ class PremiumAdminsBulkActionBar extends StatelessWidget {
                 Expanded(
                   child: _BulkActionButton(
                     icon: Icons.block,
-                    label: 'Deactivate',
+                    label: context.l10n.deactivate,
                     onTap: onDeactivate,
                   ),
                 ),

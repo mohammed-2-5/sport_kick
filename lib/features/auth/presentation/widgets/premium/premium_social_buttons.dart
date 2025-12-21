@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium social login buttons.
 ///
@@ -39,8 +40,7 @@ class PremiumSocialButtons extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 context.l10n.orContinueWith,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: Colors.white.withValues(alpha: 0.6),
                 ),
               ),
@@ -163,8 +163,7 @@ class _SocialButtonState extends State<_SocialButton>
               const SizedBox(width: 10),
               Text(
                 widget.label,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),
@@ -276,14 +275,14 @@ class PremiumSocialButtonsVertical extends StatelessWidget {
       children: [
         _FullWidthSocialButton(
           icon: _GoogleIcon(),
-          label: 'Continue with Google',
+          label: context.l10n.continueWithGoogle,
           onPressed: onGooglePressed,
           isLoading: isLoading,
         ),
         const SizedBox(height: 12),
         _FullWidthSocialButton(
           icon: const Icon(Icons.facebook, color: Color(0xFF1877F2), size: 24),
-          label: 'Continue with Facebook',
+          label: context.l10n.continueWithFacebook,
           onPressed: onFacebookPressed,
           isLoading: isLoading,
         ),
@@ -291,7 +290,7 @@ class PremiumSocialButtonsVertical extends StatelessWidget {
           const SizedBox(height: 12),
           _FullWidthSocialButton(
             icon: const Icon(Icons.apple, color: Colors.black, size: 24),
-            label: 'Continue with Apple',
+            label: context.l10n.continueWithApple,
             onPressed: onApplePressed,
             isLoading: isLoading,
             backgroundColor: Colors.black,
@@ -384,8 +383,7 @@ class _FullWidthSocialButtonState extends State<_FullWidthSocialButton>
               const SizedBox(width: 12),
               Text(
                 widget.label,
-                style: TextStyle(
-                  fontSize: 15,
+                style: AppTextStyles.labelMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: widget.textColor,
                 ),

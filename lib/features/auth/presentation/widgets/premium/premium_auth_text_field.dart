@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/premium/password_strength_indicator.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium auth text field with glass styling.
 ///
@@ -104,8 +105,7 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
         // Label
         Text(
           widget.label,
-          style: TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.labelMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: widget.isDark
                 ? Colors.white.withValues(alpha: 0.9)
@@ -155,8 +155,7 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
                     textInputAction: widget.textInputAction,
                     enabled: widget.enabled,
                     validator: widget.validator,
-                    style: TextStyle(
-                      fontSize: 15,
+                    style: AppTextStyles.bodyLarge.copyWith(
                       color: widget.isDark
                           ? Colors.white
                           : AppColors.textPrimary,
@@ -169,7 +168,7 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
                     },
                     decoration: InputDecoration(
                       hintText: widget.hintText,
-                      hintStyle: TextStyle(
+                      hintStyle: AppTextStyles.bodyMedium.copyWith(
                         color: widget.isDark
                             ? Colors.white.withValues(alpha: 0.4)
                             : AppColors.textSecondary.withValues(alpha: 0.6),
@@ -235,7 +234,7 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
               Expanded(
                 child: Text(
                   widget.errorText!,
-                  style: const TextStyle(fontSize: 12, color: Colors.red),
+                  style: AppTextStyles.bodySmall.copyWith(color: Colors.red),
                 ),
               ),
             ],

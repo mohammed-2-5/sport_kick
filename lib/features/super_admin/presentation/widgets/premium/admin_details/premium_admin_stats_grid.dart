@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admin_details/admin_details_state.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium admin statistics grid.
 ///
@@ -21,25 +22,25 @@ class PremiumAdminStatsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final statItems = [
       _StatItem(
-        label: 'Total Fields',
+        label: context.l10n.totalFields,
         value: stats.totalFields.toString(),
         icon: Icons.sports_soccer,
         color: AppColors.premiumGold,
       ),
       _StatItem(
-        label: 'Active Fields',
+        label: context.l10n.activeFields,
         value: stats.activeFields.toString(),
         icon: Icons.check_circle,
         color: Colors.green,
       ),
       _StatItem(
-        label: 'Total Bookings',
+        label: context.l10n.totalBookings,
         value: stats.totalBookings.toString(),
         icon: Icons.calendar_month,
         color: AppColors.accentCyan,
       ),
       _StatItem(
-        label: 'Member Days',
+        label: context.l10n.memberDays,
         value: stats.memberDays.toString(),
         icon: Icons.timer,
         color: Colors.purple,
@@ -51,7 +52,7 @@ class PremiumAdminStatsGrid extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionHeader(title: 'Performance', icon: Icons.insights),
+          _SectionHeader(title: context.l10n.performance, icon: Icons.insights),
           const SizedBox(height: 12),
           AnimationLimiter(
             child: GridView.builder(
@@ -222,7 +223,7 @@ class _RatingCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Average Rating',
+                  context.l10n.averageRating,
                   style: AppTextStyles.labelMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.7),
                   ),

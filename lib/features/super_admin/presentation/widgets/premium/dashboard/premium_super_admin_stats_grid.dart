@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium stats grid for super admin dashboard.
 ///
@@ -41,7 +42,7 @@ class PremiumSuperAdminStatsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final stats = [
       _StatItem(
-        label: 'Total Users',
+        label: context.l10n.totalUsers,
         value: _formatNumber(totalUsers),
         icon: Icons.people_rounded,
         gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
@@ -49,21 +50,21 @@ class PremiumSuperAdminStatsGrid extends StatelessWidget {
         onTap: onUsersTap,
       ),
       _StatItem(
-        label: 'Field Owners',
+        label: context.l10n.fieldOwners2,
         value: _formatNumber(totalAdmins),
         icon: Icons.admin_panel_settings_rounded,
         gradient: const [AppColors.goldAccent, Color(0xFFD4A574)],
         onTap: onAdminsTap,
       ),
       _StatItem(
-        label: 'Total Fields',
+        label: context.l10n.totalFields,
         value: _formatNumber(totalFields),
         icon: Icons.sports_soccer_rounded,
         gradient: const [Color(0xFF10B981), Color(0xFF059669)],
         onTap: onFieldsTap,
       ),
       _StatItem(
-        label: 'Total Bookings',
+        label: context.l10n.totalBookings,
         value: _formatNumber(totalBookings),
         icon: Icons.calendar_month_rounded,
         gradient: const [Color(0xFF3B82F6), Color(0xFF1D4ED8)],
@@ -249,10 +250,7 @@ class _StatCardState extends State<_StatCard>
                     // Value
                     Text(
                       widget.stat.value,
-                      style: AppTextStyles.headlineMedium.copyWith(
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: AppTextStyles.bold(AppTextStyles.headlineMedium),
                     ),
                     const SizedBox(height: 4),
 
@@ -262,12 +260,7 @@ class _StatCardState extends State<_StatCard>
                         Expanded(
                           child: Text(
                             widget.stat.label,
-                            style: AppTextStyles.bodySmall.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textSecondary.withValues(
-                                alpha: 0.8,
-                              ),
-                            ),
+                            style: AppTextStyles.bodySmallSecondary,
                           ),
                         ),
                         if (widget.stat.growth != null)
@@ -316,9 +309,9 @@ class _GrowthBadge extends StatelessWidget {
           const SizedBox(width: 2),
           Text(
             '${growth.abs().toStringAsFixed(1)}%',
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: isPositive ? Colors.green : Colors.red,
+            style: AppTextStyles.withColor(
+              AppTextStyles.labelSmallBold,
+              isPositive ? Colors.green : Colors.red,
             ),
           ),
         ],

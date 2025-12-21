@@ -18,6 +18,8 @@ import 'package:spo_kick/features/fields/presentation/widgets/details/premium/pr
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/premium_reviews_preview.dart';
 
 import '../../../../../../core/widgets/premium/glass_variants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium field details view with all enhanced components.
 ///
@@ -141,7 +143,7 @@ class _PremiumFieldDetailsViewState extends State<PremiumFieldDetailsView> {
                     ),
 
                     // Bottom spacing for floating button
-                    const SizedBox(height: 120),
+                    const SizedBox(height: 180),
                   ],
                 ),
               ),
@@ -247,10 +249,21 @@ class _PremiumFieldDetailsViewState extends State<PremiumFieldDetailsView> {
   }
 
   void _shareField() {
+    final price =
+        '${widget.field.pricePerHour.toStringAsFixed(0)} ${widget.field.currency}';
+    final rating = widget.field.hasReviews
+        ? '${widget.field.averageRating?.toStringAsFixed(1)} (${widget.field.totalReviews})'
+        : context.l10n.noReviews;
     SharePlus.instance.share(
       ShareParams(
-        text:
-            'Check out ${widget.field.name} on SpoKick!\n${widget.field.address}',
+        text: context.l10n.shareFieldMessage(
+          widget.field.name,
+          widget.field.description ?? '',
+          widget.field.address,
+          widget.field.city,
+          price,
+          rating,
+        ),
       ),
     );
   }
@@ -314,22 +327,20 @@ class _BookNowFloatingButton extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Reserve Weekly Slot',
-                            style: TextStyle(
-                              fontSize: 14,
+                            context.l10n.reserveWeeklySlot,
+                            style: AppTextStyles.labelLarge.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.navyDeep,
                             ),
                           ),
                           Text(
-                            'Auto-book same time every week',
-                            style: TextStyle(
-                              fontSize: 11,
+                            context.l10n.autoBookSameTimeEveryWeek,
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
                           ),
@@ -347,7 +358,7 @@ class _BookNowFloatingButton extends StatelessWidget {
             ),
             // Main book now button
             GlassFloatingButton(
-              label: 'Book Now',
+              label: context.l10n.bookNow,
               icon: Icons.calendar_today,
               onPressed: () {
                 context.pushNamed('createBooking', extra: field);

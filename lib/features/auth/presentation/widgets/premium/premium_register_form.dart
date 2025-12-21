@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/register_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/premium/password_strength_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/premium/premium_auth_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/premium/premium_social_buttons.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium register form with glassmorphism styling.
 ///
@@ -48,8 +50,8 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
   void _onRegister() {
     if (!_acceptedTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please accept the Terms & Conditions'),
+        SnackBar(
+          content: Text(context.l10n.pleaseAcceptTheTermsAndConditions),
           backgroundColor: Colors.red,
         ),
       );
@@ -77,18 +79,18 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
             children: [
               // Full Name
               PremiumAuthTextField(
-                label: 'Full Name',
-                hintText: 'Enter your full name',
+                label: context.l10n.fullName,
+                hintText: context.l10n.enterYourFullName,
                 controller: _nameController,
                 prefixIcon: Icons.person_outline,
                 textInputAction: TextInputAction.next,
                 isDark: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Name is required';
+                    return context.l10n.nameIsRequired;
                   }
                   if (value.length < 2) {
-                    return 'Name is too short';
+                    return context.l10n.nameIsTooShort;
                   }
                   return null;
                 },
@@ -98,8 +100,8 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
 
               // Email
               PremiumAuthTextField(
-                label: 'Email',
-                hintText: 'example@email.com',
+                label: context.l10n.email,
+                hintText: context.l10n.exampleEmailCom,
                 controller: _emailController,
                 prefixIcon: Icons.email_outlined,
                 keyboardType: TextInputType.emailAddress,
@@ -107,12 +109,12 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
                 isDark: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Email is required';
+                    return context.l10n.emailIsRequired;
                   }
                   if (!RegExp(
                     r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                   ).hasMatch(value)) {
-                    return 'Please enter a valid email';
+                    return context.l10n.pleaseEnterAValidEmail;
                   }
                   return null;
                 },
@@ -122,8 +124,8 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
 
               // Phone
               PremiumAuthTextField(
-                label: 'Phone Number',
-                hintText: '01XXXXXXXXX',
+                label: context.l10n.phone,
+                hintText: context.l10n.phoneHint,
                 controller: _phoneController,
                 prefixIcon: Icons.phone_outlined,
                 keyboardType: TextInputType.phone,
@@ -131,10 +133,10 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
                 isDark: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Phone number is required';
+                    return context.l10n.phoneNumberIsRequired;
                   }
                   if (value.length < 10) {
-                    return 'Please enter a valid phone number';
+                    return context.l10n.pleaseEnterAValidPhoneNumber;
                   }
                   return null;
                 },
@@ -144,8 +146,8 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
 
               // Password
               PremiumAuthTextField(
-                label: 'Password',
-                hintText: 'Create a strong password',
+                label: context.l10n.password,
+                hintText: context.l10n.createAStrongPassword,
                 controller: _passwordController,
                 isPassword: true,
                 obscureText: !state.isPasswordVisible,
@@ -162,10 +164,10 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Password is required';
+                    return context.l10n.passwordIsRequired;
                   }
                   if (value.length < 8) {
-                    return 'Password must be at least 8 characters';
+                    return context.l10n.passwordMustBeAtLeast8Characters;
                   }
                   return null;
                 },
@@ -184,8 +186,8 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
 
               // Confirm Password
               PremiumAuthTextField(
-                label: 'Confirm Password',
-                hintText: 'Re-enter your password',
+                label: context.l10n.confirmPassword,
+                hintText: context.l10n.reenterPassword,
                 controller: _confirmPasswordController,
                 isPassword: true,
                 obscureText: !state.isConfirmPasswordVisible,
@@ -199,10 +201,10 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
                 isDark: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please confirm your password';
+                    return context.l10n.pleaseConfirmYourPassword;
                   }
                   if (value != _passwordController.text) {
-                    return 'Passwords do not match';
+                    return context.l10n.passwordsDoNotMatch;
                   }
                   return null;
                 },
@@ -249,23 +251,22 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
                     Expanded(
                       child: Text.rich(
                         TextSpan(
-                          text: 'I agree to the ',
-                          style: TextStyle(
-                            fontSize: 13,
+                          text: context.l10n.iAgreeToThe,
+                          style: AppTextStyles.bodySmall.copyWith(
                             color: Colors.white.withValues(alpha: 0.7),
                           ),
-                          children: const [
+                          children: [
                             TextSpan(
-                              text: 'Terms of Service',
-                              style: TextStyle(
+                              text: context.l10n.termsOfService,
+                              style: AppTextStyles.labelSmall.copyWith(
                                 color: AppColors.accentCyan,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            TextSpan(text: ' and '),
+                            TextSpan(text: context.l10n.and),
                             TextSpan(
-                              text: 'Privacy Policy',
-                              style: TextStyle(
+                              text: context.l10n.privacyPolicy,
+                              style: AppTextStyles.labelSmall.copyWith(
                                 color: AppColors.accentCyan,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -282,7 +283,7 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
 
               // Register button
               PremiumButton(
-                label: 'Create Account',
+                label: context.l10n.createAccount,
                 onPressed: _onRegister,
                 icon: Icons.person_add_outlined,
                 fullWidth: true,
@@ -307,18 +308,16 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Already have an account? ',
-                    style: TextStyle(
-                      fontSize: 14,
+                    context.l10n.alreadyHaveAnAccount,
+                    style: AppTextStyles.bodyMedium.copyWith(
                       color: Colors.white.withValues(alpha: 0.7),
                     ),
                   ),
                   GestureDetector(
                     onTap: () => context.pop(),
-                    child: const Text(
-                      'Sign In',
-                      style: TextStyle(
-                        fontSize: 14,
+                    child: Text(
+                      context.l10n.signIn,
+                      style: AppTextStyles.labelLarge.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.accentCyan,
                       ),

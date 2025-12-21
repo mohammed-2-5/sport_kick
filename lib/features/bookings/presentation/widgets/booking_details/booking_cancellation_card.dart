@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Card displaying the cancellation reason for a canceled booking.
 ///
@@ -47,8 +48,7 @@ class BookingCancellationCard extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 context.l10n.cancellationReason,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.error,
                 ),
@@ -58,8 +58,7 @@ class BookingCancellationCard extends StatelessWidget {
           const SizedBox(height: BookingConstants.itemSpacing),
           Text(
             reason,
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.error.withValues(alpha: 0.8),
               height: 1.5,
             ),

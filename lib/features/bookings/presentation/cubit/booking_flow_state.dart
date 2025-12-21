@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
+import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Enum representing the current step in the booking flow.
 enum BookingFlowStep { selectDate, selectTime, confirm, success }
@@ -20,16 +21,16 @@ extension BookingFlowStepX on BookingFlowStep {
     }
   }
 
-  String get title {
+  String title(AppLocalizations l10n) {
     switch (this) {
       case BookingFlowStep.selectDate:
-        return 'Select Date';
+        return l10n.selectDate;
       case BookingFlowStep.selectTime:
-        return 'Choose Time';
+        return l10n.chooseTime;
       case BookingFlowStep.confirm:
-        return 'Confirm';
+        return l10n.confirm;
       case BookingFlowStep.success:
-        return 'Booked!';
+        return l10n.success;
     }
   }
 

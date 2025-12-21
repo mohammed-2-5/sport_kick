@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/constants/search_constants.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Amenities Filter Widget
 ///
@@ -49,7 +50,7 @@ class AmenitiesFilter extends StatelessWidget {
               },
               selectedColor: AppColors.primary.withValues(alpha: 0.2),
               checkmarkColor: AppColors.primary,
-              labelStyle: TextStyle(
+              labelStyle: AppTextStyles.bodyMedium.copyWith(
                 color: isSelected ? AppColors.primary : AppColors.textPrimary,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),

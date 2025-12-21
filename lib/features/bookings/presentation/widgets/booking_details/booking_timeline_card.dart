@@ -5,6 +5,7 @@ import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_timeline_events.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium card displaying the booking timeline.
 ///
@@ -40,8 +41,7 @@ class BookingTimelineCard extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 context.l10n.bookingTimeline,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),

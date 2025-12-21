@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class UserListStats extends StatelessWidget {
   final int filteredCount;
@@ -26,27 +27,26 @@ class UserListStats extends StatelessWidget {
           Icon(Icons.people, size: 20, color: Colors.grey[600]),
           const SizedBox(width: 8),
           Text(
-            'Showing $filteredCount of $totalCount users',
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
-            ),
+            context.l10n.showingUsersCount(filteredCount, totalCount),
+            style: AppTextStyles.bodyMediumSecondary,
           ),
           const Spacer(),
           if (isSelectionMode)
             Text(
-              '$selectedCount selected',
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
+              context.l10n.selectedCount(selectedCount),
+              style: AppTextStyles.bold(
+                AppTextStyles.withColor(
+                  AppTextStyles.bodyMedium,
+                  Theme.of(context).colorScheme.primary,
+                ),
               ),
             )
           else
             Text(
-              '$activeCount active',
-              style: AppTextStyles.labelSmall.copyWith(
-                color: Colors.green[700],
-                fontWeight: FontWeight.w500,
+              context.l10n.activeCount(activeCount),
+              style: AppTextStyles.withColor(
+                AppTextStyles.labelSmallBold,
+                Colors.green[700]!,
               ),
             ),
         ],

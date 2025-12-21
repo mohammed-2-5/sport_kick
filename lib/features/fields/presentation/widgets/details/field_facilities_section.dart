@@ -4,6 +4,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Facilities section widget for field details.
 ///
@@ -26,7 +27,9 @@ class FieldFacilitiesSection extends StatelessWidget {
         children: [
           Text(
             context.l10n.facilities,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: FieldConstants.itemSpacing),
           Wrap(
@@ -57,8 +60,7 @@ class FieldFacilitiesSection extends StatelessWidget {
                         const SizedBox(width: FieldConstants.chipSpacing),
                         Text(
                           FacilityLocalizer.localize(context, facility),
-                          style: const TextStyle(
-                            fontSize: 14,
+                          style: AppTextStyles.labelLarge.copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w500,
                           ),

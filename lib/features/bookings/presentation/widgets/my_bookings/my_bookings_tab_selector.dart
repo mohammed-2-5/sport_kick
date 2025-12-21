@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class MyBookingsTabSelector extends StatelessWidget {
   final TabController tabController;
@@ -34,9 +35,8 @@ class MyBookingsTabSelector extends StatelessWidget {
           ),
           indicatorSize: TabBarIndicatorSize.tab,
           dividerColor: Colors.transparent,
-          labelStyle: const TextStyle(
+          labelStyle: AppTextStyles.labelLarge.copyWith(
             fontWeight: FontWeight.bold,
-            fontSize: 14,
           ),
           padding: const EdgeInsets.all(6),
           tabs: [

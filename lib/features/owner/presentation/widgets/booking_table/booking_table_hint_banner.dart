@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Hint banner for booking table.
 ///
@@ -50,7 +51,7 @@ class _EmptyStateHint extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            'No bookings for this field in this week',
+            context.l10n.noBookingsForThisFieldIn,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
@@ -85,7 +86,7 @@ class _ScrollHint extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            'Scroll right to see all days (Sat-Fri)',
+            context.l10n.scrollRightToSeeAllDays,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.goldAccent,

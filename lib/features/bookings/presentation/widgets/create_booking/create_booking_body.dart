@@ -4,6 +4,7 @@ import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/create_booking_content.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Body content for create booking view.
 ///
@@ -24,9 +25,14 @@ class CreateBookingBody extends StatelessWidget {
           state: state,
           selectedDate: cubit.selectedDate,
           selectedTimeSlot: cubit.selectedTimeSlot,
-          onDateSelected: cubit.changeSelectedDate,
+          onDateSelected: (date) => cubit.changeSelectedDate(
+            date,
+            loadingMessage: context.l10n.loadingAvailableTimeSlots,
+          ),
           onTimeSlotSelected: cubit.selectTimeSlot,
-          onConfirm: cubit.createBookingFromSelection,
+          onConfirm: () => cubit.createBookingFromSelection(
+            loadingMessage: context.l10n.creatingBooking2,
+          ),
         );
       },
     );

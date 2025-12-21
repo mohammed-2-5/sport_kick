@@ -41,8 +41,7 @@ class BookingListItemPaymentStatus extends StatelessWidget {
               children: [
                 Text(
                   context.l10n.paymentStatusLabel,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w500,
                     color: AppColors.textSecondary,
                   ),
@@ -50,8 +49,7 @@ class BookingListItemPaymentStatus extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   _statusLabel(context),
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: _getTextColor(),
                   ),

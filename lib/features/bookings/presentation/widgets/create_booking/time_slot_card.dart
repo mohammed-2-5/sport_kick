@@ -3,6 +3,8 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Individual time slot card widget.
 class TimeSlotCard extends StatelessWidget {
@@ -59,8 +61,7 @@ class TimeSlotCard extends StatelessWidget {
                         endTime: slot.endTime,
                         isEndNextDay: slot.isNextDay,
                       ),
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w600,
                         color: isAvailable
                             ? AppColors.textPrimary
@@ -70,8 +71,7 @@ class TimeSlotCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       periodLabel ?? slot.period,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -88,18 +88,18 @@ class TimeSlotCard extends StatelessWidget {
                     color: AppColors.error.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.block,
                         size: BookingConstants.statusIconSize,
                         color: AppColors.error,
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
-                        'Booked',
-                        style: TextStyle(
+                        context.l10n.bookedLabel,
+                        style: AppTextStyles.labelSmall.copyWith(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: AppColors.error,
@@ -111,8 +111,7 @@ class TimeSlotCard extends StatelessWidget {
               else
                 Text(
                   slot.formattedPrice,
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: isSelected
                         ? AppColors.primary

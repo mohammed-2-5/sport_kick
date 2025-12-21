@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/custom_button.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Error display widget with retry functionality.
 ///
@@ -11,7 +12,7 @@ import 'package:spo_kick/core/widgets/custom_button.dart';
 /// Usage:
 /// ```dart
 /// AppErrorWidget(
-///   message: 'Failed to load fields',
+///   message: context.l10n.failedToLoadFields,
 ///   onRetry: () => _loadFields(),
 /// )
 /// ```
@@ -133,7 +134,7 @@ class AppErrorWidget extends StatelessWidget {
             if (showRetryButton && onRetry != null) ...[
               const SizedBox(height: 32),
               CustomButton(
-                text: 'Try Again',
+                text: context.l10n.tryAgain,
                 onPressed: onRetry,
                 variant: ButtonVariant.outline,
                 icon: Icons.refresh,

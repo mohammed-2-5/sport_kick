@@ -3,11 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/reports/reports_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/reports/reports_state.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Super Admin Reports Page - Premium Design
 ///
@@ -72,10 +75,10 @@ class _SuperAdminReportsView extends StatelessWidget {
             },
             child: CustomScrollView(
               slivers: [
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: PremiumCurvedHeader(
-                    title: 'Reports',
-                    subtitle: 'Platform analytics & exports',
+                    title: context.l10n.reports,
+                    subtitle: context.l10n.platformAnalyticsAndExports,
                     showBackButton: true,
                   ),
                 ),
@@ -98,9 +101,10 @@ class _SuperAdminReportsView extends StatelessWidget {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'Exporting ${state.exportType}...',
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
+                            context.l10n.exportingReport(state.exportType),
+                            style: AppTextStyles.withColor(
+                              AppTextStyles.bodyMedium,
+                              AppColors.textSecondary,
                             ),
                           ),
                         ],
@@ -113,53 +117,68 @@ class _SuperAdminReportsView extends StatelessWidget {
                     sliver: SliverList(
                       delegate: SliverChildListDelegate([
                         if (state is ReportsDataLoaded) ...[
-                          _buildStatsOverview(state),
+                          _buildStatsOverview(context, state),
                           const SizedBox(height: 24),
                         ],
                         _buildReportCard(
                           context,
-                          title: 'User Activity Report',
-                          description: 'User registrations and engagement',
+                          title: context.l10n.userActivityReport,
+                          description:
+                              context.l10n.userRegistrationsAndEngagement,
                           icon: Icons.people_rounded,
                           color: const Color(0xFF6366F1),
                           count: state is ReportsDataLoaded
-                              ? '${state.users.length} users'
+                              ? context.l10n.usersCount(state.users.length)
                               : null,
                           onTap: () => context.pushNamed('superAdminUsers'),
                         ),
                         const SizedBox(height: 12),
                         _buildReportCard(
                           context,
-                          title: 'Revenue Report',
-                          description: 'Platform-wide revenue and transactions',
+                          title: context.l10n.revenueReport,
+                          description:
+                              context.l10n.platformWideRevenueAndTransactions,
                           icon: Icons.account_balance_wallet_rounded,
                           color: const Color(0xFF10B981),
                           count: state is ReportsDataLoaded
-                              ? 'EGP ${state.statistics?.totalRevenue.toStringAsFixed(0) ?? '0'}'
+                              ? LocaleFormatters.formatPrice(
+                                  context,
+                                  amount: state.statistics?.totalRevenue ?? 0,
+                                  currency: context.l10n.currencyEgp,
+                                  decimalDigits: 0,
+                                )
                               : null,
                           onTap: () => context.pushNamed('superAdminAnalytics'),
                         ),
                         const SizedBox(height: 12),
                         _buildReportCard(
                           context,
-                          title: 'Booking Analytics',
-                          description: 'Booking trends and field utilization',
+                          title: context.l10n.bookingAnalytics,
+                          description:
+                              context.l10n.bookingTrendsAndFieldUtilization,
                           icon: Icons.calendar_month_rounded,
                           color: const Color(0xFFF59E0B),
                           count: state is ReportsDataLoaded
-                              ? '${state.bookings.length} bookings'
+                              ? context.l10n.bookingsCount(
+                                  state.bookings.length,
+                                  LocaleFormatters.formatNumber(
+                                    context,
+                                    state.bookings.length,
+                                  ),
+                                )
                               : null,
                           onTap: () => context.pushNamed('superAdminBookings'),
                         ),
                         const SizedBox(height: 12),
                         _buildReportCard(
                           context,
-                          title: 'Field Performance',
-                          description: 'Field ratings and review analysis',
+                          title: context.l10n.fieldPerformance,
+                          description:
+                              context.l10n.fieldRatingsAndReviewAnalysis,
                           icon: Icons.sports_soccer_rounded,
                           color: const Color(0xFF8B5CF6),
                           count: state is ReportsDataLoaded
-                              ? '${state.fields.length} fields'
+                              ? context.l10n.fieldsCount(state.fields.length)
                               : null,
                           onTap: () => context.pushNamed('superAdminFields'),
                         ),
@@ -177,7 +196,7 @@ class _SuperAdminReportsView extends StatelessWidget {
     );
   }
 
-  Widget _buildStatsOverview(ReportsDataLoaded state) {
+  Widget _buildStatsOverview(BuildContext context, ReportsDataLoaded state) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -194,38 +213,34 @@ class _SuperAdminReportsView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Quick Overview',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
-            ),
+          Text(
+            context.l10n.quickOverview,
+            style: AppTextStyles.bold(AppTextStyles.titleMedium),
           ),
           const SizedBox(height: 16),
           Row(
             children: [
               _buildStatItem(
-                'Users',
-                '${state.users.length}',
+                context.l10n.users,
+                LocaleFormatters.formatNumber(context, state.users.length),
                 Icons.person_rounded,
                 const Color(0xFF6366F1),
               ),
               _buildStatItem(
-                'Admins',
-                '${state.admins.length}',
+                context.l10n.admins,
+                LocaleFormatters.formatNumber(context, state.admins.length),
                 Icons.admin_panel_settings_rounded,
                 const Color(0xFF10B981),
               ),
               _buildStatItem(
-                'Bookings',
-                '${state.bookings.length}',
+                context.l10n.bookings,
+                LocaleFormatters.formatNumber(context, state.bookings.length),
                 Icons.calendar_month_rounded,
                 const Color(0xFFF59E0B),
               ),
               _buildStatItem(
-                'Fields',
-                '${state.fields.length}',
+                context.l10n.fields,
+                LocaleFormatters.formatNumber(context, state.fields.length),
                 Icons.sports_soccer_rounded,
                 const Color(0xFF8B5CF6),
               ),
@@ -254,21 +269,8 @@ class _SuperAdminReportsView extends StatelessWidget {
             child: Icon(icon, color: color, size: 20),
           ),
           const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 11,
-              color: AppColors.textSecondary,
-            ),
-          ),
+          Text(value, style: AppTextStyles.bold(AppTextStyles.titleMedium)),
+          Text(label, style: AppTextStyles.labelSmall),
         ],
       ),
     );
@@ -318,20 +320,10 @@ class _SuperAdminReportsView extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
+                    style: AppTextStyles.bold(AppTextStyles.titleMedium),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    description,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
+                  Text(description, style: AppTextStyles.bodySmall),
                 ],
               ),
             ),
@@ -347,10 +339,8 @@ class _SuperAdminReportsView extends StatelessWidget {
                 ),
                 child: Text(
                   count,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: color,
+                  style: AppTextStyles.bold(
+                    AppTextStyles.withColor(AppTextStyles.labelMedium, color),
                   ),
                 ),
               ),
@@ -379,26 +369,22 @@ class _SuperAdminReportsView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.download_rounded, color: AppColors.goldAccent),
-              SizedBox(width: 12),
+              const Icon(Icons.download_rounded, color: AppColors.goldAccent),
+              const SizedBox(width: 12),
               Text(
-                'Export Data',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
+                context.l10n.exportData,
+                style: AppTextStyles.bold(AppTextStyles.headlineSmallWhite),
               ),
             ],
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Generate and download detailed reports in CSV or PDF format.',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.textOnNavySecondary,
+          Text(
+            context.l10n.generateAndDownloadDetailedReportsIn,
+            style: AppTextStyles.withColor(
+              AppTextStyles.bodyMedium,
+              AppColors.textOnNavySecondary,
             ),
           ),
           const SizedBox(height: 16),
@@ -406,7 +392,7 @@ class _SuperAdminReportsView extends StatelessWidget {
             children: [
               Expanded(
                 child: PremiumButton(
-                  label: 'CSV',
+                  label: context.l10n.csv,
                   onPressed: () {
                     HapticFeedback.mediumImpact();
                     cubit.exportAllDataToCSV();
@@ -419,7 +405,7 @@ class _SuperAdminReportsView extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: PremiumButton(
-                  label: 'PDF',
+                  label: context.l10n.pdf,
                   onPressed: () {
                     HapticFeedback.mediumImpact();
                     cubit.exportStatisticsToPDF();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
@@ -25,10 +26,8 @@ class UserBookingHistorySection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Booking History',
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            context.l10n.bookingHistory,
+            style: AppTextStyles.headlineSmallBold,
           ),
           const SizedBox(height: AdminUIConstants.spacingMedium),
           BlocBuilder<SuperAdminCubit, SuperAdminState>(
@@ -44,7 +43,7 @@ class UserBookingHistorySection extends StatelessWidget {
                 );
               }
 
-              return const Center(child: Text('Loading bookings...'));
+              return Center(child: Text(context.l10n.loadingBookings));
             },
           ),
         ],

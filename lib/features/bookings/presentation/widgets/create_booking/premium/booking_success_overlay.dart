@@ -6,6 +6,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Animated success overlay displayed after booking confirmation.
 ///
@@ -218,8 +219,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                               children: [
                                 Text(
                                   context.l10n.bookingConfirmedTitle,
-                                  style: const TextStyle(
-                                    fontSize: 28,
+                                  style: AppTextStyles.headlineMedium.copyWith(
                                     fontWeight: FontWeight.w800,
                                     color: AppColors.textPrimary,
                                   ),
@@ -228,8 +228,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                 Text(
                                   context.l10n.bookingConfirmedDescription,
                                   textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 15,
+                                  style: AppTextStyles.bodyMedium.copyWith(
                                     color: AppColors.textSecondary,
                                     height: 1.5,
                                   ),
@@ -257,23 +256,24 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                           const SizedBox(width: 8),
                                           Text(
                                             context.l10n.bookingId,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: AppTextStyles.labelMedium
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      AppColors.textSecondary,
+                                                ),
                                           ),
                                         ],
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
                                         '#${widget.booking.id.substring(0, 8).toUpperCase()}',
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w800,
-                                          color: AppColors.textPrimary,
-                                          letterSpacing: 1,
-                                        ),
+                                        style: AppTextStyles.titleLarge
+                                            .copyWith(
+                                              fontWeight: FontWeight.w800,
+                                              color: AppColors.textPrimary,
+                                              letterSpacing: 1,
+                                            ),
                                       ),
                                     ],
                                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -71,8 +72,8 @@ class _OwnerEditFieldPageState extends State<OwnerEditFieldPage> {
       body: Column(
         children: [
           PremiumCurvedHeader(
-            title: 'Edit Field',
-            subtitle: 'Update ${widget.field.name}',
+            title: context.l10n.editFieldTitle,
+            subtitle: context.l10n.updateFieldSubtitle(widget.field.name),
             showBackButton: true,
             height: 160,
           ),
@@ -133,7 +134,7 @@ class _OwnerEditFieldPageState extends State<OwnerEditFieldPage> {
                           ),
                           const SizedBox(height: 32),
                           PremiumButton(
-                            label: 'Save Changes',
+                            label: context.l10n.saveChanges,
                             onPressed: isLoading ? null : _handleSubmit,
                             loading: isLoading,
                             icon: Icons.save,
@@ -141,7 +142,7 @@ class _OwnerEditFieldPageState extends State<OwnerEditFieldPage> {
                           ),
                           const SizedBox(height: 16),
                           PremiumButton(
-                            label: 'Cancel',
+                            label: context.l10n.cancel,
                             onPressed: () => Navigator.pop(context),
                             style: PremiumButtonStyle.outline,
                             fullWidth: true,

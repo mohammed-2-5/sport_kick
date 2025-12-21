@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium activity summary card for super admin dashboard.
 ///
@@ -33,7 +34,7 @@ class PremiumSuperAdminActivityCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionHeader(title: "Today's Activity"),
+          _SectionHeader(title: context.l10n.todaySActivity),
           const SizedBox(height: 14),
           _ActivityGrid(
             todayBookings: todayBookings,
@@ -71,13 +72,7 @@ class _SectionHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        Text(
-          title,
-          style: AppTextStyles.titleMedium.copyWith(
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-          ),
-        ),
+        Text(title, style: AppTextStyles.titleMediumBold),
       ],
     );
   }
@@ -105,7 +100,7 @@ class _ActivityGrid extends StatelessWidget {
       children: [
         Expanded(
           child: _ActivityItem(
-            label: 'Today Bookings',
+            label: context.l10n.todayBookings2,
             value: todayBookings.toString(),
             icon: Icons.event_available_rounded,
             color: const Color(0xFF3B82F6),
@@ -115,7 +110,7 @@ class _ActivityGrid extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: _ActivityItem(
-            label: 'Pending',
+            label: context.l10n.pending,
             value: pendingBookings.toString(),
             icon: Icons.pending_actions_rounded,
             color: Colors.orange,
@@ -126,7 +121,7 @@ class _ActivityGrid extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: _ActivityItem(
-            label: 'New Fields',
+            label: context.l10n.newFields,
             value: pendingFields.toString(),
             icon: Icons.add_business_rounded,
             color: const Color(0xFF10B981),
@@ -137,7 +132,7 @@ class _ActivityGrid extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: _ActivityItem(
-            label: 'Active Now',
+            label: context.l10n.activeNow,
             value: activeUsers.toString(),
             icon: Icons.person_rounded,
             color: const Color(0xFF8B5CF6),
@@ -245,9 +240,9 @@ class _ActivityItemState extends State<_ActivityItem>
                   // Value
                   Text(
                     widget.value,
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: widget.color,
+                    style: AppTextStyles.withColor(
+                      AppTextStyles.titleMediumBold,
+                      widget.color,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -256,10 +251,7 @@ class _ActivityItemState extends State<_ActivityItem>
                   Text(
                     widget.label,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textSecondary.withValues(alpha: 0.7),
-                    ),
+                    style: AppTextStyles.bodySmallSecondary,
                   ),
                 ],
               ),

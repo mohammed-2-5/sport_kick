@@ -6,6 +6,7 @@ import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card.
 import 'package:spo_kick/features/fields/presentation/widgets/search/search_empty_results.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Search results list widget.
 /// Displays search results with count header and field cards.
@@ -38,8 +39,7 @@ class SearchResultsList extends StatelessWidget {
                   results.length.toString(),
                   LocaleFormatters.formatNumber(context, results.length),
                 ),
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),

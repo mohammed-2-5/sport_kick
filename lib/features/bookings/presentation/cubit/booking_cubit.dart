@@ -54,31 +54,47 @@ class BookingCubit extends Cubit<BookingState> {
   ///
   /// Stores the field, sets the initial date, and triggers the initial
   /// time-slot load. Keeps UI free of orchestration logic.
-  Future<void> startBookingFlow(String fieldId, {DateTime? initialDate}) async {
+  Future<void> startBookingFlow(
+    String fieldId, {
+    DateTime? initialDate,
+    required String loadingMessage,
+  }) async {
     _selectedDate = initialDate ?? DateTime.now();
     _currentFieldId = fieldId;
-    await loadAvailableTimeSlots(fieldId: fieldId, date: _selectedDate);
+    await loadAvailableTimeSlots(
+      fieldId: fieldId,
+      date: _selectedDate,
+      loadingMessage: loadingMessage,
+    );
   }
 
   /// Change selected date and reload slots for the current field.
-  Future<void> changeSelectedDate(DateTime date) async {
+  Future<void> changeSelectedDate(
+    DateTime date, {
+    required String loadingMessage,
+  }) async {
     _selectedDate = date;
     if (_currentFieldId == null) {
       emit(const BookingError(BookingConstants.selectDateFirstMessage));
       return;
     }
-    await loadAvailableTimeSlots(fieldId: _currentFieldId!, date: date);
+    await loadAvailableTimeSlots(
+      fieldId: _currentFieldId!,
+      date: date,
+      loadingMessage: loadingMessage,
+    );
   }
 
   /// Load available time slots for a field on a specific date.
   Future<void> loadAvailableTimeSlots({
     required String fieldId,
     required DateTime date,
+    required String loadingMessage,
   }) async {
     _selectedDate = date;
     _currentFieldId = fieldId;
     _selectedTimeSlot = null;
-    emit(const BookingLoading(message: 'Loading available time slots...'));
+    emit(BookingLoading(message: loadingMessage));
 
     final result = await getAvailableTimeSlotsUseCase(
       fieldId: fieldId,
@@ -123,7 +139,10 @@ class BookingCubit extends Cubit<BookingState> {
   }
 
   /// Create a booking using current selection.
-  Future<void> createBookingFromSelection() async {
+  /// Create a booking using current selection.
+  Future<void> createBookingFromSelection({
+    required String loadingMessage,
+  }) async {
     if (_currentFieldId == null || _selectedTimeSlot == null) {
       emit(const BookingError(BookingConstants.selectTimeSlotFirstMessage));
       return;
@@ -136,6 +155,7 @@ class BookingCubit extends Cubit<BookingState> {
       endTime: _selectedTimeSlot!.endTime,
       totalPrice: _selectedTimeSlot!.price,
       notes: null,
+      loadingMessage: loadingMessage,
     );
   }
 
@@ -147,8 +167,9 @@ class BookingCubit extends Cubit<BookingState> {
     required String endTime,
     required double totalPrice,
     String? notes,
+    required String loadingMessage,
   }) async {
-    emit(const BookingLoading(message: 'Creating booking...'));
+    emit(BookingLoading(message: loadingMessage));
 
     final result = await createBookingUseCase(
       fieldId: fieldId,
@@ -179,12 +200,13 @@ class BookingCubit extends Cubit<BookingState> {
     required String customerPhone,
     String? customerEmail,
     String? notes,
+    required String loadingMessage,
   }) async {
     debugPrint('🔄 [BookingCubit] Creating manual booking...');
     debugPrint('   Customer: $customerName ($customerPhone)');
     debugPrint('   Field: $fieldId, Date: $date, Time: $startTime-$endTime');
 
-    emit(const BookingLoading(message: 'Creating manual booking...'));
+    emit(BookingLoading(message: loadingMessage));
 
     final result = await createManualBookingUseCase(
       fieldId: fieldId,
@@ -211,8 +233,8 @@ class BookingCubit extends Cubit<BookingState> {
   }
 
   /// Load all bookings for the current user.
-  Future<void> loadUserBookings() async {
-    emit(const BookingLoading(message: 'Loading your bookings...'));
+  Future<void> loadUserBookings({required String loadingMessage}) async {
+    emit(BookingLoading(message: loadingMessage));
 
     final result = await getUserBookingsUseCase();
 
@@ -232,8 +254,11 @@ class BookingCubit extends Cubit<BookingState> {
   }
 
   /// Load a single booking by ID.
-  Future<void> loadBookingById(String bookingId) async {
-    emit(const BookingLoading(message: 'Loading booking details...'));
+  Future<void> loadBookingById(
+    String bookingId, {
+    required String loadingMessage,
+  }) async {
+    emit(BookingLoading(message: loadingMessage));
 
     final result = await getBookingByIdUseCase(bookingId);
 
@@ -247,8 +272,9 @@ class BookingCubit extends Cubit<BookingState> {
   Future<void> cancelBooking({
     required String bookingId,
     required String reason,
+    required String loadingMessage,
   }) async {
-    emit(const BookingLoading(message: 'Canceling booking...'));
+    emit(BookingLoading(message: loadingMessage));
 
     final result = await cancelBookingUseCase(
       bookingId: bookingId,
@@ -268,15 +294,16 @@ class BookingCubit extends Cubit<BookingState> {
 
   /// Refresh bookings after a successful operation.
   Future<void> refreshBookings() async {
-    await loadUserBookings();
+    // We use a safe default here as this is often an internal refresh
+    await loadUserBookings(loadingMessage: 'Loading your bookings...');
   }
 
   /// Load all bookings for the field owner.
   ///
   /// Fetches bookings for all fields owned by the current user.
-  Future<void> loadOwnerBookings() async {
+  Future<void> loadOwnerBookings({required String loadingMessage}) async {
     debugPrint('🔄 [BookingCubit] Loading owner bookings...');
-    emit(const BookingLoading(message: 'Loading bookings...'));
+    emit(BookingLoading(message: loadingMessage));
 
     final result = await getOwnerBookingsUseCase();
 
@@ -301,12 +328,13 @@ class BookingCubit extends Cubit<BookingState> {
   /// Updates the booking status in the backend and reloads the owner's bookings.
   Future<void> updateBookingStatus(
     String bookingId,
-    BookingStatus newStatus,
-  ) async {
+    BookingStatus newStatus, {
+    required String loadingMessage,
+  }) async {
     debugPrint(
       '🔄 [BookingCubit] Updating booking $bookingId to ${newStatus.displayName}',
     );
-    emit(const BookingLoading(message: 'Updating booking...'));
+    emit(BookingLoading(message: loadingMessage));
 
     final result = await updateBookingStatusUseCase(
       bookingId: bookingId,
@@ -321,7 +349,7 @@ class BookingCubit extends Cubit<BookingState> {
       (updatedBooking) async {
         debugPrint('✅ [BookingCubit] Booking updated successfully');
         // Reload all bookings to reflect the change
-        await loadOwnerBookings();
+        await loadOwnerBookings(loadingMessage: 'Loading bookings...');
       },
     );
   }

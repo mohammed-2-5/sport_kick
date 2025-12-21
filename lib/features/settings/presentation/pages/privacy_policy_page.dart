@@ -161,7 +161,7 @@ class PrivacyPolicyPage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Effective Date: $_effectiveDate',
+            context.l10n.effectiveDateLabel(_effectiveDate),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: AppColors.textSecondary,
               fontStyle: FontStyle.italic,

@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/field_badges.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium hero image with parallax scroll effect.
 ///
@@ -179,15 +181,14 @@ class _PremiumFieldHeroState extends State<PremiumFieldHero> {
                   color: Colors.black.withValues(alpha: 0.6),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.zoom_in, size: 16, color: Colors.white),
-                    SizedBox(width: 4),
+                    const Icon(Icons.zoom_in, size: 16, color: Colors.white),
+                    const SizedBox(width: 4),
                     Text(
-                      'Tap to view',
-                      style: TextStyle(
-                        fontSize: 12,
+                      context.l10n.tapToView,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),

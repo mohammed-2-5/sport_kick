@@ -11,6 +11,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fi
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_list_loading_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/field_filter_sheet.dart';
 import 'package:spo_kick/features/super_admin/utils/field_filter_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// All Fields View - displays and manages the fields list with filtering.
 class AllFieldsView extends StatefulWidget {
@@ -125,7 +126,7 @@ class _AllFieldsViewState extends State<AllFieldsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Fields'),
+        title: Text(context.l10n.allFields),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
@@ -140,7 +141,7 @@ class _AllFieldsViewState extends State<AllFieldsView> {
                   ),
                   onPressed: () =>
                       _showFilterSheet(state.fields.cast<FieldEntity>()),
-                  tooltip: 'Filter',
+                  tooltip: context.l10n.filterFields,
                 );
               }
               return const SizedBox.shrink();
@@ -149,7 +150,7 @@ class _AllFieldsViewState extends State<AllFieldsView> {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => context.read<SuperAdminCubit>().loadAllFields(),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.refresh,
           ),
         ],
       ),

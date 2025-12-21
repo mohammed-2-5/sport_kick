@@ -15,6 +15,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/citie
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/premium_cities_stats_bar.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/premium_city_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/premium_city_filter_chips.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium cities management view.
 ///
@@ -124,7 +125,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
                   onPressed: _showCreateCityDialog,
                   backgroundColor: AppColors.navyDeep,
                   icon: const Icon(Icons.add_location_alt_rounded),
-                  label: const Text('Add City'),
+                  label: Text(context.l10n.addCity),
                 )
               : null,
         );
@@ -148,7 +149,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
       return _buildLoadedContent(context, state.cities);
     }
 
-    return const _LoadingView(message: 'Loading cities...');
+    return _LoadingView(message: context.l10n.cityLoading);
   }
 
   Widget _buildLoadedContent(BuildContext context, List<CityEntity> cities) {
@@ -171,8 +172,8 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
           // Premium Header
           SliverToBoxAdapter(
             child: PremiumCurvedHeader(
-              title: 'Cities',
-              subtitle: 'Manage platform locations',
+              title: context.l10n.cities,
+              subtitle: context.l10n.managePlatformLocations,
               showBackButton: true,
               actions: [
                 _RefreshButton(
@@ -338,7 +339,7 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Oops! Something went wrong',
+              context.l10n.oopsSomethingWentWrong,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
@@ -355,7 +356,7 @@ class _ErrorView extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Try Again'),
+              label: Text(context.l10n.tryAgain),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.navyDeep,
                 foregroundColor: Colors.white,
@@ -402,14 +403,14 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'No cities found',
+              context.l10n.noCitiesFound,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'Try adjusting your filters\nor add a new city',
+              context.l10n.tryAdjustingYourFiltersNorAdd,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),

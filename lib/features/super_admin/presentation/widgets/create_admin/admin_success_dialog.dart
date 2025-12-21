@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_admin/credential_field.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class AdminSuccessDialog extends StatelessWidget {
   final AdminInvitationEntity invitation;
@@ -32,7 +33,7 @@ class AdminSuccessDialog extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          const Text('Admin Created!'),
+          Text(context.l10n.adminCreated),
         ],
       ),
       content: SingleChildScrollView(
@@ -40,33 +41,33 @@ class AdminSuccessDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Admin account has been created successfully. Please save these credentials:',
+            Text(
+              context.l10n.adminAccountHasBeenCreatedSuccessfully,
               style: AppTextStyles.bodyMedium,
             ),
             const SizedBox(height: 20),
             CredentialField(
-              label: 'Email',
+              label: context.l10n.email,
               value: invitation.email,
               icon: Icons.email,
             ),
             const SizedBox(height: 12),
             CredentialField(
-              label: 'Password',
+              label: context.l10n.password,
               value: invitation.defaultPassword,
               icon: Icons.lock,
               isPassword: true,
             ),
             const SizedBox(height: 12),
             CredentialField(
-              label: 'Full Name',
+              label: context.l10n.fullName,
               value: invitation.fullName,
               icon: Icons.person,
             ),
             if (invitation.phone != null) ...[
               const SizedBox(height: 12),
               CredentialField(
-                label: 'Phone',
+                label: context.l10n.phone2,
                 value: invitation.phone!,
                 icon: Icons.phone,
               ),
@@ -79,14 +80,20 @@ class AdminSuccessDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(Icons.warning_amber, color: Colors.orange, size: 20),
-                  SizedBox(width: 8),
+                  const Icon(
+                    Icons.warning_amber,
+                    color: Colors.orange,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Admin must change password on first login',
-                      style: TextStyle(fontSize: 12, color: Colors.orange),
+                      context.l10n.adminMustChangePasswordOnFirst,
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: Colors.orange,
+                      ),
                     ),
                   ),
                 ],
@@ -100,22 +107,32 @@ class AdminSuccessDialog extends StatelessWidget {
           onPressed: () {
             Clipboard.setData(
               ClipboardData(
-                text:
-                    'Email: ${invitation.email}\n'
-                    'Password: ${invitation.defaultPassword}\n'
-                    'Name: ${invitation.fullName}',
+                text: [
+                  context.l10n.labelWithValue(
+                    context.l10n.email,
+                    invitation.email,
+                  ),
+                  context.l10n.labelWithValue(
+                    context.l10n.password,
+                    invitation.defaultPassword,
+                  ),
+                  context.l10n.labelWithValue(
+                    context.l10n.fullName,
+                    invitation.fullName,
+                  ),
+                ].join('\n'),
               ),
             );
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Credentials copied to clipboard'),
+              SnackBar(
+                content: Text(context.l10n.credentialsCopiedToClipboard),
                 backgroundColor: Colors.green,
               ),
             );
           },
-          child: const Text('Copy All'),
+          child: Text(context.l10n.copyAll),
         ),
-        ElevatedButton(onPressed: onDone, child: const Text('Done')),
+        ElevatedButton(onPressed: onDone, child: Text(context.l10n.done)),
       ],
     );
   }

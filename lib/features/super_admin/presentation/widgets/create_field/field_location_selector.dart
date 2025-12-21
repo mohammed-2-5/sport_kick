@@ -4,6 +4,8 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/models/location_data.dart';
 import 'package:spo_kick/core/widgets/map/map_location_picker.dart';
 
+import '../../../../../core/localization/l10n_extensions.dart';
+
 /// Location selector with address field and map picker button.
 ///
 /// Allows users to:
@@ -32,8 +34,8 @@ class FieldLocationSelector extends StatelessWidget {
         TextFormField(
           controller: addressController,
           decoration: InputDecoration(
-            labelText: 'Address',
-            hintText: 'Street address or select on map',
+            labelText: context.l10n.searchTipAddressTitle,
+            hintText: context.l10n.streetAddressOrSelectOnMap,
             prefixIcon: const Icon(Icons.location_on_outlined),
             suffixIcon: IconButton(
               icon: Container(
@@ -49,7 +51,7 @@ class FieldLocationSelector extends StatelessWidget {
                 ),
               ),
               onPressed: () => _openMapPicker(context),
-              tooltip: 'Select on map',
+              tooltip: context.l10n.selectOnMap,
             ),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             enabledBorder: OutlineInputBorder(
@@ -88,7 +90,9 @@ class FieldLocationSelector extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'GPS: ${selectedLocation!.coordinatesString}',
+                    context.l10n.gpsCoordinates(
+                      selectedLocation!.coordinatesString,
+                    ),
                     style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.lightTextSecondary,
                     ),
@@ -114,7 +118,7 @@ class FieldLocationSelector extends StatelessWidget {
     final result = await MapLocationPicker.show(
       context,
       initialLocation: selectedLocation,
-      title: 'Select Field Location',
+      title: context.l10n.selectFieldLocation,
     );
 
     if (result != null) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Interactive rating selector widget.
 ///
@@ -10,7 +11,7 @@ import 'package:flutter/material.dart';
 /// RatingSelector(
 ///   initialRating: 0,
 ///   onRatingChanged: (rating) => print('Selected: $rating'),
-///   label: 'Your Rating *',
+///   label: context.l10n.yourRating,
 /// )
 /// ```
 class RatingSelector extends StatefulWidget {
@@ -100,7 +101,7 @@ class _RatingSelectorState extends State<RatingSelector> {
           const SizedBox(height: 8),
           Center(
             child: Text(
-              _getRatingLabel(_currentRating),
+              _getRatingLabel(context, _currentRating),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.grey[600],
                 fontWeight: FontWeight.w500,
@@ -112,18 +113,18 @@ class _RatingSelectorState extends State<RatingSelector> {
     );
   }
 
-  String _getRatingLabel(int rating) {
+  String _getRatingLabel(BuildContext context, int rating) {
     switch (rating) {
       case 1:
-        return 'Poor';
+        return context.l10n.ratingPoor;
       case 2:
-        return 'Fair';
+        return context.l10n.ratingFair;
       case 3:
-        return 'Good';
+        return context.l10n.ratingGood;
       case 4:
-        return 'Very Good';
+        return context.l10n.ratingVeryGood;
       case 5:
-        return 'Excellent';
+        return context.l10n.ratingExcellent;
       default:
         return '';
     }

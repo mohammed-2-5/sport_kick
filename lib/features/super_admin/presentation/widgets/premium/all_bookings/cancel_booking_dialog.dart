@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for cancelling a booking with reason.
 ///
@@ -118,7 +119,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Cancel Booking',
+                  context.l10n.cancelBooking,
                   style: AppTextStyles.titleLarge.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -127,7 +128,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'This action cannot be undone',
+                  context.l10n.thisActionCannotBeUndone,
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textOnNavy,
                   ),
@@ -166,7 +167,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.booking.fieldName ?? 'Unknown Field',
+                        widget.booking.fieldName ?? context.l10n.unknownField,
                         style: AppTextStyles.titleSmall.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
@@ -187,7 +188,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
           const SizedBox(height: 20),
 
           Text(
-            'Cancellation Reason *',
+            context.l10n.cancellationReason,
             style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -198,7 +199,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
             controller: _reasonController,
             maxLines: 3,
             decoration: InputDecoration(
-              hintText: 'Enter reason for cancellation...',
+              hintText: context.l10n.enterReasonForCancellation,
               filled: true,
               fillColor: AppColors.backgroundLight,
               border: OutlineInputBorder(
@@ -222,10 +223,10 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Please enter a cancellation reason';
+                return context.l10n.pleaseEnterACancellationReason;
               }
               if (value.trim().length < 5) {
-                return 'Reason must be at least 5 characters';
+                return context.l10n.reasonMustBeAtLeast5Characters;
               }
               return null;
             },
@@ -253,7 +254,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                 ),
               ),
               child: Text(
-                'Keep Booking',
+                context.l10n.keepBooking,
                 style: AppTextStyles.button.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
@@ -284,7 +285,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                       ),
                     )
                   : Text(
-                      'Cancel Booking',
+                      context.l10n.cancelBooking,
                       style: AppTextStyles.button.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

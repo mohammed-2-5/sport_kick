@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/l10n/app_localizations.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Password strength indicator with animated bars.
 ///
@@ -57,8 +58,7 @@ class PasswordStrengthIndicator extends StatelessWidget {
           children: [
             Text(
               l10n.passwordStrength,
-              style: const TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
@@ -67,8 +67,7 @@ class PasswordStrengthIndicator extends StatelessWidget {
               child: Text(
                 strengthInfo.label,
                 key: ValueKey(strengthInfo.label),
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: strengthInfo.color,
                 ),
@@ -194,8 +193,7 @@ class _RequirementItem extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: isMet ? Colors.green : AppColors.textSecondary,
                 fontWeight: isMet ? FontWeight.w500 : FontWeight.normal,
               ),

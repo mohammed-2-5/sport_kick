@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/localization/l10n_extensions.dart';
+
 class AdminListSearchBar extends StatelessWidget {
   final TextEditingController controller;
   final String searchQuery;
@@ -22,7 +24,7 @@ class AdminListSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          hintText: 'Search admins by name, email, or phone...',
+          hintText: context.l10n.searchAdminsByNameEmailOrPhone,
           prefixIcon: const Icon(Icons.search),
           suffixIcon: searchQuery.isNotEmpty
               ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)

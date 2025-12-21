@@ -11,6 +11,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/das
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/dashboard_quick_actions_section.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/dashboard_revenue_row.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/revenue_chart.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Super Admin Dashboard View - Main content widget
 ///
@@ -107,7 +108,7 @@ class _DashboardContent extends StatelessWidget {
 
             // Revenue Trends Chart
             Text(
-              'Revenue Trends',
+              context.l10n.revenueTrendsTitle,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.premiumTextPrimary,

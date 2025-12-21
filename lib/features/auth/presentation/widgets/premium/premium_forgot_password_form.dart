@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/premium/premium_auth_text_field.dart';
 
@@ -66,8 +67,7 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
                 Expanded(
                   child: Text(
                     context.l10n.resetPasswordSubtitle,
-                    style: TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: Colors.white.withValues(alpha: 0.8),
                       height: 1.4,
                     ),
@@ -128,8 +128,7 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
                   const SizedBox(width: 8),
                   Text(
                     context.l10n.backToLogin,
-                    style: TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyles.bodyMedium.copyWith(
                       color: Colors.white.withValues(alpha: 0.7),
                     ),
                   ),
@@ -234,8 +233,7 @@ class _PremiumForgotPasswordSuccessState
               opacity: _opacityAnimation,
               child: Text(
                 context.l10n.resetEmailSentTitle,
-                style: const TextStyle(
-                  fontSize: 24,
+                style: AppTextStyles.headlineMedium.copyWith(
                   fontWeight: FontWeight.w800,
                   color: Colors.white,
                 ),
@@ -249,8 +247,7 @@ class _PremiumForgotPasswordSuccessState
               opacity: _opacityAnimation,
               child: Text(
                 context.l10n.resetEmailSentMessage,
-                style: TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodyMedium.copyWith(
                   color: Colors.white.withValues(alpha: 0.7),
                 ),
                 textAlign: TextAlign.center,
@@ -273,8 +270,7 @@ class _PremiumForgotPasswordSuccessState
                 ),
                 child: Text(
                   widget.email,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.accentCyan,
                   ),
@@ -289,8 +285,7 @@ class _PremiumForgotPasswordSuccessState
               opacity: _opacityAnimation,
               child: Text(
                 context.l10n.resetLinkExpires,
-                style: TextStyle(
-                  fontSize: 13,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: Colors.white.withValues(alpha: 0.6),
                   height: 1.5,
                 ),
@@ -320,8 +315,7 @@ class _PremiumForgotPasswordSuccessState
               opacity: _opacityAnimation,
               child: Text(
                 context.l10n.checkSpamFolder,
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: Colors.white.withValues(alpha: 0.5),
                 ),
               ),

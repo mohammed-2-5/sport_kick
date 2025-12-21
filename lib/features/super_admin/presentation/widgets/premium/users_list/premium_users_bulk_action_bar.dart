@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium bulk action bar for users list.
 ///
@@ -82,17 +83,12 @@ class PremiumUsersBulkActionBar extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '$selectedCount selected',
-                        style: AppTextStyles.titleMedium.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
+                        context.l10n.selectedCount(selectedCount),
+                        style: AppTextStyles.titleMediumWhite,
                       ),
                       Text(
-                        'of $totalCount users',
-                        style: AppTextStyles.labelSmall.copyWith(
-                          color: Colors.white.withValues(alpha: 0.8),
-                        ),
+                        context.l10n.ofTotalUsers(totalCount),
+                        style: AppTextStyles.labelSmallWhite,
                       ),
                     ],
                   ),
@@ -101,7 +97,9 @@ class PremiumUsersBulkActionBar extends StatelessWidget {
                   icon: selectedCount == totalCount
                       ? Icons.deselect
                       : Icons.select_all,
-                  label: selectedCount == totalCount ? 'Deselect' : 'All',
+                  label: selectedCount == totalCount
+                      ? context.l10n.deselect
+                      : context.l10n.all,
                   onTap: selectedCount == totalCount
                       ? onDeselectAll
                       : onSelectAll,
@@ -117,7 +115,7 @@ class PremiumUsersBulkActionBar extends StatelessWidget {
                 Expanded(
                   child: _BulkActionButton(
                     icon: Icons.check_circle_outline,
-                    label: 'Activate',
+                    label: context.l10n.activate,
                     onTap: onActivate,
                   ),
                 ),
@@ -125,7 +123,7 @@ class PremiumUsersBulkActionBar extends StatelessWidget {
                 Expanded(
                   child: _BulkActionButton(
                     icon: Icons.block,
-                    label: 'Deactivate',
+                    label: context.l10n.deactivate,
                     onTap: onDeactivate,
                   ),
                 ),
@@ -170,9 +168,9 @@ class _ActionButton extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               label,
-              style: AppTextStyles.labelLarge.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
+              style: AppTextStyles.withColor(
+                AppTextStyles.bold(AppTextStyles.labelLarge),
+                Colors.white,
               ),
             ),
           ],
@@ -221,9 +219,9 @@ class _BulkActionButton extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               label,
-              style: AppTextStyles.bodyMedium.copyWith(
-                fontWeight: FontWeight.w700,
-                color: AppColors.premiumGold,
+              style: AppTextStyles.withColor(
+                AppTextStyles.bold(AppTextStyles.bodyMedium),
+                AppColors.premiumGold,
               ),
             ),
           ],

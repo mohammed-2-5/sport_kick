@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 
@@ -161,11 +162,12 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
                 right: 20,
                 child: Text(
                   name,
-                  style: const TextStyle(
+                  style: AppTextStyles.headlineSmall.copyWith(
                     color: Colors.white,
-                    fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    shadows: [Shadow(color: Colors.black54, blurRadius: 8)],
+                    shadows: [
+                      const Shadow(color: Colors.black54, blurRadius: 8),
+                    ],
                   ),
                 ),
               ),

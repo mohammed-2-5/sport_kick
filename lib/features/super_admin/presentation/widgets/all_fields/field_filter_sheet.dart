@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/widgets/advanced_filter_bottom_sheet.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Field filter bottom sheet widget
 ///
@@ -50,12 +52,12 @@ class FieldFilterSheet extends StatelessWidget {
       filterGroups: [
         // City Filter
         FilterGroup(
-          title: 'City',
+          title: context.l10n.city,
           widget: DropdownFilterWidget(
             value: cityFilter,
-            hint: 'All Cities',
+            hint: context.l10n.allCities,
             options: [
-              FilterOption(value: 'all', label: 'All Cities'),
+              FilterOption(value: 'all', label: context.l10n.allCities),
               ...availableCities.map(
                 (city) => FilterOption(value: city, label: city),
               ),
@@ -65,12 +67,12 @@ class FieldFilterSheet extends StatelessWidget {
         ),
         // Sport Category Filter
         FilterGroup(
-          title: 'Sport Category',
+          title: context.l10n.sportCategory,
           widget: DropdownFilterWidget(
             value: sportFilter,
-            hint: 'All Sports',
+            hint: context.l10n.allSports,
             options: [
-              FilterOption(value: 'all', label: 'All Sports'),
+              FilterOption(value: 'all', label: context.l10n.allSports),
               ...availableSports.map(
                 (sport) => FilterOption(value: sport, label: sport),
               ),
@@ -80,21 +82,27 @@ class FieldFilterSheet extends StatelessWidget {
         ),
         // Status Filter
         FilterGroup(
-          title: 'Status',
+          title: context.l10n.bookingStatus,
           widget: DropdownFilterWidget(
             value: statusFilter,
-            hint: 'All Statuses',
+            hint: context.l10n.allStatuses,
             options: [
-              FilterOption(value: 'all', label: 'All'),
-              FilterOption(value: 'active', label: 'Active'),
-              FilterOption(value: 'inactive', label: 'Inactive'),
+              FilterOption(value: context.l10n.all2, label: context.l10n.all),
+              FilterOption(
+                value: context.l10n.active2,
+                label: context.l10n.active,
+              ),
+              FilterOption(
+                value: context.l10n.inactive2,
+                label: context.l10n.inactive,
+              ),
             ],
             onChanged: onStatusChanged,
           ),
         ),
         // Price Range Filter
         FilterGroup(
-          title: 'Price Range',
+          title: context.l10n.priceRange,
           widget: _PriceRangeWidget(
             minPrice: minPrice ?? priceMin,
             maxPrice: maxPrice ?? priceMax,
@@ -148,11 +156,11 @@ class _PriceRangeWidgetState extends State<_PriceRangeWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${_currentRange.start.toStringAsFixed(0)} EGP/hr',
+              '${LocaleFormatters.formatNumber(context, _currentRange.start, decimalDigits: 0)} ${context.l10n.currencyEgp}/${context.l10n.perHour}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              '${_currentRange.end.toStringAsFixed(0)} EGP/hr',
+              '${LocaleFormatters.formatNumber(context, _currentRange.end, decimalDigits: 0)} ${context.l10n.currencyEgp}/${context.l10n.perHour}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -163,8 +171,18 @@ class _PriceRangeWidgetState extends State<_PriceRangeWidget> {
           max: widget.rangeMax,
           divisions: ((widget.rangeMax - widget.rangeMin) / 10).round(),
           labels: RangeLabels(
-            '${_currentRange.start.toStringAsFixed(0)} EGP',
-            '${_currentRange.end.toStringAsFixed(0)} EGP',
+            LocaleFormatters.formatPrice(
+              context,
+              amount: _currentRange.start,
+              currency: context.l10n.currencyEgp,
+              decimalDigits: 0,
+            ),
+            LocaleFormatters.formatPrice(
+              context,
+              amount: _currentRange.end,
+              currency: context.l10n.currencyEgp,
+              decimalDigits: 0,
+            ),
           ),
           onChanged: (values) {
             setState(() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Action buttons for user/admin cards.
 class UserCardActions extends StatelessWidget {
@@ -15,7 +16,7 @@ class UserCardActions extends StatelessWidget {
           child: TextButton.icon(
             onPressed: onViewDetails,
             icon: const Icon(Icons.visibility_outlined, size: 18),
-            label: const Text('View Details'),
+            label: Text(context.l10n.viewDetails),
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 8),
             ),
@@ -26,7 +27,7 @@ class UserCardActions extends StatelessWidget {
           child: TextButton.icon(
             onPressed: onViewBookings,
             icon: const Icon(Icons.event_note, size: 18),
-            label: const Text('Bookings'),
+            label: Text(context.l10n.bookings),
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 8),
             ),

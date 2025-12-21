@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/statistics_card.dart';
 
 /// Main statistics grid for dashboard.
@@ -20,31 +21,33 @@ class DashboardMainStatsGrid extends StatelessWidget {
       childAspectRatio: 1.1,
       children: [
         StatisticsCard(
-          title: 'Total Users',
+          title: context.l10n.totalUsers,
           value: statistics.totalUsers.toString(),
-          subtitle: '+${statistics.newUsersThisMonth} this month',
+          subtitle: context.l10n.newUsersThisMonth(
+            statistics.newUsersThisMonth,
+          ),
           icon: Icons.people,
           color: Colors.blue,
           trend: statistics.userGrowthRate,
         ),
         StatisticsCard(
-          title: 'Total Admins',
+          title: context.l10n.totalAdmins,
           value: statistics.totalAdmins.toString(),
-          subtitle: 'Field owners',
+          subtitle: context.l10n.fieldOwners,
           icon: Icons.admin_panel_settings,
           color: Colors.purple,
         ),
         StatisticsCard(
-          title: 'Active Fields',
+          title: context.l10n.activeFields,
           value: statistics.activeFields.toString(),
-          subtitle: '${statistics.inactiveFields} inactive',
+          subtitle: context.l10n.inactiveCount(statistics.inactiveFields),
           icon: Icons.sports_soccer,
           color: Colors.green,
         ),
         StatisticsCard(
-          title: 'Total Bookings',
+          title: context.l10n.totalBookings,
           value: statistics.totalBookings.toString(),
-          subtitle: '${statistics.pendingBookings} pending',
+          subtitle: context.l10n.pendingCount(statistics.pendingBookings),
           icon: Icons.event,
           color: Colors.orange,
         ),

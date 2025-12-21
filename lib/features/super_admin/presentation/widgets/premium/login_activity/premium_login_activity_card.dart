@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart' hide DeviceType;
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium card for displaying login activity.
 ///
@@ -55,7 +57,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 _buildDetails(context),
                 const SizedBox(height: 12),
-                _buildFooter(),
+                _buildFooter(context),
               ],
             ),
           ),
@@ -111,7 +113,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
           if (activity.ipAddress != null)
             _DetailRow(
               icon: Icons.language_rounded,
-              label: 'IP Address',
+              label: context.l10n.ipAddress,
               value: activity.ipAddress!,
               onCopy: () => _copyToClipboard(context, activity.ipAddress!),
             ),
@@ -119,7 +121,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
             const SizedBox(height: 8),
             _DetailRow(
               icon: Icons.location_on_rounded,
-              label: 'Location',
+              label: context.l10n.location,
               value: activity.location!,
             ),
           ],
@@ -127,7 +129,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
             const SizedBox(height: 8),
             _DetailRow(
               icon: Icons.person_rounded,
-              label: 'Role',
+              label: context.l10n.role,
               value: _formatRole(userRole!),
             ),
           ],
@@ -136,7 +138,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter() {
+  Widget _buildFooter(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -149,10 +151,8 @@ class PremiumLoginActivityCard extends StatelessWidget {
             ),
             const SizedBox(width: 4),
             Text(
-              _formatTimestamp(activity.timestamp),
-              style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.textSecondary.withValues(alpha: 0.7),
-              ),
+              _formatTimestamp(context, activity.timestamp),
+              style: AppTextStyles.bodySmallSecondary,
             ),
           ],
         ),
@@ -164,7 +164,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(6),
             ),
             child: Text(
-              'Current Session',
+              context.l10n.currentSession,
               style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.accentCyan,
@@ -175,16 +175,16 @@ class PremiumLoginActivityCard extends StatelessWidget {
     );
   }
 
-  String _formatTimestamp(DateTime timestamp) {
+  String _formatTimestamp(BuildContext context, DateTime timestamp) {
     final now = DateTime.now();
     final diff = now.difference(timestamp);
 
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inHours < 1) return '${diff.inMinutes}m ago';
-    if (diff.inDays < 1) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) return context.l10n.justNow;
+    if (diff.inHours < 1) return context.l10n.minutesAgo(diff.inMinutes);
+    if (diff.inDays < 1) return context.l10n.hoursAgo(diff.inHours);
+    if (diff.inDays < 7) return context.l10n.daysAgo(diff.inDays);
 
-    return '${timestamp.day}/${timestamp.month}/${timestamp.year}';
+    return LocaleFormatters.formatDate(context, timestamp);
   }
 
   String _formatRole(String role) {
@@ -198,8 +198,8 @@ class PremiumLoginActivityCard extends StatelessWidget {
   void _copyToClipboard(BuildContext context, String text) {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Copied to clipboard'),
+      SnackBar(
+        content: Text(context.l10n.copiedToClipboard),
         duration: Duration(seconds: 2),
       ),
     );
@@ -323,10 +323,8 @@ class _DetailRow extends StatelessWidget {
         Icon(icon, size: 16, color: AppColors.textSecondary),
         const SizedBox(width: 8),
         Text(
-          '$label: ',
-          style: AppTextStyles.labelMedium.copyWith(
-            color: AppColors.textSecondary,
-          ),
+          context.l10n.label(label),
+          style: AppTextStyles.labelMediumSecondary,
         ),
         Expanded(
           child: Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
 import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
 
@@ -14,7 +15,7 @@ class ThemeSelectorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Choose Theme'),
+      title: Text(context.l10n.chooseTheme),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

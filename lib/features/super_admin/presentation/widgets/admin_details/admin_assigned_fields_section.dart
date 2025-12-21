@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -8,6 +9,7 @@ import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/admin_details/admin_empty_fields_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/admin_details/admin_field_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Displays the assigned fields section for an admin.
 class AdminAssignedFieldsSection extends StatelessWidget {
@@ -30,17 +32,14 @@ class AdminAssignedFieldsSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Assigned Fields',
-                style: TextStyle(
-                  fontSize: AdminUIConstants.fontSizeXLarge,
-                  fontWeight: AdminUIConstants.fontWeightBold,
-                ),
+              Text(
+                context.l10n.assignedFields,
+                style: AppTextStyles.bold(AppTextStyles.titleLarge),
               ),
               TextButton.icon(
                 onPressed: onAssignField,
                 icon: const Icon(Icons.add, size: 18),
-                label: const Text('Assign'),
+                label: Text(context.l10n.assign),
               ),
             ],
           ),

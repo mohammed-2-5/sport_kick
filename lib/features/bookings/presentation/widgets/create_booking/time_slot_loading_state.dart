@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/shimmer_loading.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Loading state for time slot selector.
 class TimeSlotLoadingState extends StatelessWidget {
@@ -15,8 +16,7 @@ class TimeSlotLoadingState extends StatelessWidget {
       children: [
         Text(
           context.l10n.availableTimeSlots,
-          style: const TextStyle(
-            fontSize: 18,
+          style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium quick actions for super admin dashboard.
 ///
@@ -38,49 +39,49 @@ class PremiumSuperAdminQuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final actions = [
       _QuickAction(
-        label: 'Manage Users',
+        label: context.l10n.manageUsers,
         icon: Icons.people_rounded,
         gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
         onTap: onManageUsers,
       ),
       _QuickAction(
-        label: 'Field Owners',
+        label: context.l10n.fieldOwners2,
         icon: Icons.admin_panel_settings_rounded,
         gradient: const [AppColors.goldAccent, Color(0xFFD4A574)],
         onTap: onManageAdmins,
       ),
       _QuickAction(
-        label: 'All Fields',
+        label: context.l10n.allFields,
         icon: Icons.sports_soccer_rounded,
         gradient: const [Color(0xFF10B981), Color(0xFF059669)],
         onTap: onManageFields,
       ),
       _QuickAction(
-        label: 'All Bookings',
+        label: context.l10n.allBookings,
         icon: Icons.calendar_month_rounded,
         gradient: const [Color(0xFF3B82F6), Color(0xFF1D4ED8)],
         onTap: onManageBookings,
       ),
       _QuickAction(
-        label: 'Cities',
+        label: context.l10n.cities,
         icon: Icons.location_city_rounded,
         gradient: const [Color(0xFFF59E0B), Color(0xFFEF4444)],
         onTap: onManageCities,
       ),
       _QuickAction(
-        label: 'Analytics',
+        label: context.l10n.analytics,
         icon: Icons.analytics_rounded,
         gradient: const [Color(0xFFEC4899), Color(0xFFBE185D)],
         onTap: onViewAnalytics,
       ),
       _QuickAction(
-        label: 'Reports',
+        label: context.l10n.reports,
         icon: Icons.assessment_rounded,
         gradient: const [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
         onTap: onViewReports,
       ),
       _QuickAction(
-        label: 'Settings',
+        label: context.l10n.settings,
         icon: Icons.settings_rounded,
         gradient: const [Color(0xFF64748B), Color(0xFF475569)],
         onTap: onSettings,
@@ -92,7 +93,7 @@ class PremiumSuperAdminQuickActions extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionHeader(title: 'Quick Actions'),
+          _SectionHeader(title: context.l10n.quickActions),
           const SizedBox(height: 14),
           AnimationLimiter(
             child: GridView.builder(
@@ -148,13 +149,7 @@ class _SectionHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        Text(
-          title,
-          style: AppTextStyles.titleMedium.copyWith(
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-          ),
-        ),
+        Text(title, style: AppTextStyles.titleMediumBold),
       ],
     );
   }
@@ -256,11 +251,7 @@ class _QuickActionCardState extends State<_QuickActionCard>
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.labelSmall.copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-                height: 1.2,
-              ),
+              style: AppTextStyles.labelSmallBold,
             ),
           ],
         ),

@@ -3,6 +3,7 @@ import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/comparison/comparison_empty_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/comparison/field_comparison_table.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Field comparison page - compare multiple fields side-by-side.
 ///
@@ -18,9 +19,8 @@ class FieldComparisonPage extends StatelessWidget {
       body: Column(
         children: [
           PremiumCurvedHeader(
-            title: 'Compare Fields',
-            subtitle:
-                '${fields.length} ${fields.length == 1 ? 'field' : 'fields'} selected',
+            title: context.l10n.compareFields,
+            subtitle: context.l10n.fieldsSelectedCount(fields.length),
             showBackButton: true,
             height: 160,
           ),

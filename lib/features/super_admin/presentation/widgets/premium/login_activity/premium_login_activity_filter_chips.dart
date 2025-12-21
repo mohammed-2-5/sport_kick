@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Filter chips for login activity status.
 ///
@@ -36,16 +37,16 @@ class PremiumLoginActivityFilterChips extends StatelessWidget {
       child: Row(
         children: [
           _FilterChip(
-            label: 'All',
+            label: context.l10n.all,
             count: allCount,
-            isSelected: selectedFilter == 'all',
+            isSelected: selectedFilter == context.l10n.all2,
             onTap: () => onFilterChanged('all'),
           ),
           const SizedBox(width: 10),
           _FilterChip(
             label: LoginStatus.success.displayName,
             count: successCount,
-            isSelected: selectedFilter == 'success',
+            isSelected: selectedFilter == context.l10n.successStatus,
             color: const Color(0xFF10B981),
             onTap: () => onFilterChanged('success'),
           ),
@@ -53,7 +54,7 @@ class PremiumLoginActivityFilterChips extends StatelessWidget {
           _FilterChip(
             label: LoginStatus.failed.displayName,
             count: failedCount,
-            isSelected: selectedFilter == 'failed',
+            isSelected: selectedFilter == context.l10n.failed,
             color: const Color(0xFFEF4444),
             onTap: () => onFilterChanged('failed'),
           ),
@@ -61,7 +62,7 @@ class PremiumLoginActivityFilterChips extends StatelessWidget {
           _FilterChip(
             label: LoginStatus.blocked.displayName,
             count: blockedCount,
-            isSelected: selectedFilter == 'blocked',
+            isSelected: selectedFilter == context.l10n.blocked,
             color: const Color(0xFFF59E0B),
             onTap: () => onFilterChanged('blocked'),
           ),

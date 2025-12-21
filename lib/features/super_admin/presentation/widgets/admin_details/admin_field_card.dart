@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Field card widget for admin details page
 class AdminFieldCard extends StatelessWidget {
@@ -56,10 +59,7 @@ class AdminFieldCard extends StatelessWidget {
                   children: [
                     Text(
                       field.name,
-                      style: const TextStyle(
-                        fontSize: AdminUIConstants.fontSizeLarge,
-                        fontWeight: AdminUIConstants.fontWeightBold,
-                      ),
+                      style: AppTextStyles.bold(AppTextStyles.titleMedium),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -72,13 +72,7 @@ class AdminFieldCard extends StatelessWidget {
                           color: Colors.grey[600],
                         ),
                         const SizedBox(width: 4),
-                        Text(
-                          field.city,
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey[600],
-                          ),
-                        ),
+                        Text(field.city, style: AppTextStyles.bodySmall),
                         const SizedBox(width: AdminUIConstants.listItemSpacing),
                         Icon(
                           Icons.event,
@@ -87,11 +81,14 @@ class AdminFieldCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          '${field.totalBookings} bookings',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey[600],
+                          context.l10n.bookingsCount(
+                            field.totalBookings,
+                            LocaleFormatters.formatNumber(
+                              context,
+                              field.totalBookings,
+                            ),
                           ),
+                          style: AppTextStyles.bodySmall,
                         ),
                       ],
                     ),
@@ -118,12 +115,10 @@ class AdminFieldCard extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  field.isActive ? 'Active' : 'Inactive',
-                  style: TextStyle(
-                    fontSize: AdminUIConstants.badgeFontSize,
-                    fontWeight: AdminUIConstants.fontWeightBold,
-                    color: field.isActive ? Colors.green : Colors.orange,
-                  ),
+                  field.isActive ? context.l10n.active : context.l10n.inactive,
+                  style: field.isActive
+                      ? AppTextStyles.statusBadgeActive
+                      : AppTextStyles.statusBadgeInactive,
                 ),
               ),
             ],

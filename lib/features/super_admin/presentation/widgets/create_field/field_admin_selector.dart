@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 
 /// Dropdown to select an admin for the field
@@ -31,28 +32,28 @@ class FieldAdminSelector extends StatelessWidget {
         boxShadow: AppShadows.small,
       ),
       child: isLoading
-          ? const Padding(
-              padding: EdgeInsets.all(16),
+          ? Padding(
+              padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   ),
-                  SizedBox(width: 12),
-                  Text('Loading admins...'),
+                  const SizedBox(width: 12),
+                  Text(context.l10n.loadingAdmins),
                 ],
               ),
             )
           : DropdownButtonFormField<UserEntity>(
               key: ValueKey(selectedAdmin),
               initialValue: selectedAdmin,
-              decoration: const InputDecoration(
-                labelText: 'Select Admin',
-                prefixIcon: Icon(Icons.person_outline),
+              decoration: InputDecoration(
+                labelText: context.l10n.selectAdmin,
+                prefixIcon: const Icon(Icons.person_outline),
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
+                contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 16,
                 ),
@@ -64,7 +65,8 @@ class FieldAdminSelector extends StatelessWidget {
                 );
               }).toList(),
               onChanged: onChanged,
-              validator: (v) => v == null ? 'Please select an admin' : null,
+              validator: (v) =>
+                  v == null ? context.l10n.pleaseSelectAnAdmin : null,
             ),
     );
   }

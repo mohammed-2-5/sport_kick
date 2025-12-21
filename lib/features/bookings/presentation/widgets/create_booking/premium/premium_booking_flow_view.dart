@@ -6,6 +6,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/error_handler.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/booking_step_indicator.dart';
@@ -16,6 +17,7 @@ import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/p
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_slot_grid.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/l10n/app_localizations.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium booking flow view with wizard-style navigation.
 ///
@@ -179,8 +181,7 @@ class PremiumBookingFlowView extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               context.l10n.creatingBooking,
-              style: const TextStyle(
-                fontSize: 18,
+              style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -188,8 +189,7 @@ class PremiumBookingFlowView extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               context.l10n.pleaseWaitMoment,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
@@ -280,15 +280,20 @@ class _BottomActionBar extends StatelessWidget {
                   children: [
                     Text(
                       l10n.totalWithHours(state.selectedDuration),
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.labelSmall.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
                     Text(
-                      '${state.totalPrice.toStringAsFixed(0)} EGP',
-                      style: const TextStyle(
-                        fontSize: 22,
+                      LocaleFormatters.formatPrice(
+                        context,
+                        amount: state.totalPrice,
+                        currency:
+                            state.selectedTimeSlot?.currency ??
+                            context.l10n.currencyEgp,
+                        decimalDigits: 0,
+                      ),
+                      style: AppTextStyles.headlineSmall.copyWith(
                         fontWeight: FontWeight.w800,
                         color: AppColors.textPrimary,
                       ),

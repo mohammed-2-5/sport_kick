@@ -1,6 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Glassmorphism floating header that appears on scroll.
 ///
@@ -73,8 +76,7 @@ class PremiumFieldFloatingHeader extends StatelessWidget {
                     children: [
                       Text(
                         fieldName,
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
@@ -91,9 +93,8 @@ class PremiumFieldFloatingHeader extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '$rating ($reviewCount reviews)',
-                            style: const TextStyle(
-                              fontSize: 12,
+                            '${LocaleFormatters.formatNumber(context, rating, decimalDigits: 1)} (${context.l10n.reviewsSummary(reviewCount)})',
+                            style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondary,
                               fontWeight: FontWeight.w500,
                             ),

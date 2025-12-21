@@ -70,6 +70,7 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
       notes: _notesController.text.trim().isEmpty
           ? null
           : _notesController.text.trim(),
+      loadingMessage: context.l10n.creatingManualBooking,
     );
   }
 
@@ -183,6 +184,7 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
           bookingCubit.loadAvailableTimeSlots(
             fieldId: field.id,
             date: data.selectedDate!,
+            loadingMessage: context.l10n.loadingAvailableTimeSlots,
           );
         }
       },
@@ -192,6 +194,7 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
           bookingCubit.loadAvailableTimeSlots(
             fieldId: data.selectedField!.id,
             date: date,
+            loadingMessage: context.l10n.loadingAvailableTimeSlots,
           );
         }
       },

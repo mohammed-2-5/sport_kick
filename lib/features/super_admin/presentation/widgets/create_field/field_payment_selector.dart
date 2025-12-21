@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/payment_method.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Widget for selecting payment method and entering payment phone.
 ///
@@ -60,9 +61,9 @@ class FieldPaymentSelector extends StatelessWidget {
           keyboardType: TextInputType.phone,
           decoration: InputDecoration(
             labelText: 'Payment Phone Number',
-            hintText: '01XXXXXXXXX',
+            hintText: context.l10n.phoneHint,
             prefixIcon: Icon(
-              paymentMethod == 'vodafone_cash'
+              paymentMethod == context.l10n.vodafoneCash
                   ? Icons.phone_android_rounded
                   : Icons.account_balance_rounded,
               color: AppColors.accentCyan,
@@ -76,9 +77,9 @@ class FieldPaymentSelector extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: AppColors.accentCyan),
             ),
-            helperText: paymentMethod == 'vodafone_cash'
-                ? 'Vodafone Cash number for receiving payments'
-                : 'InstaPay number for receiving transfers',
+            helperText: paymentMethod == context.l10n.vodafoneCash
+                ? context.l10n.vodafoneCashNumberForReceivingPayments
+                : context.l10n.instapayNumberForReceivingTransfers,
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {

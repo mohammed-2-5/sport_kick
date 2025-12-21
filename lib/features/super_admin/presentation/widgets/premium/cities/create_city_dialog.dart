@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for creating a new city.
 ///
@@ -111,14 +112,14 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Add New City',
+                  context.l10n.addNewCity,
                   style: AppTextStyles.titleLarge.copyWith(
                     color: AppColors.white,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Create a new city for the platform',
+                  context.l10n.createANewCityForThe,
                   style: AppTextStyles.labelMedium.copyWith(
                     color: AppColors.textOnNavy,
                   ),
@@ -142,7 +143,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'City Name',
+            context.l10n.cityName,
             style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -153,7 +154,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
             controller: _nameController,
             textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
-              hintText: 'Enter city name',
+              hintText: context.l10n.enterCityName,
               prefixIcon: const Icon(
                 Icons.location_city,
                 color: AppColors.mediumGrey,
@@ -184,10 +185,10 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Please enter a city name';
+                return context.l10n.pleaseEnterACityName;
               }
               if (value.trim().length < 2) {
-                return 'City name must be at least 2 characters';
+                return context.l10n.cityNameMustBeAtLeast2Characters;
               }
               return null;
             },
@@ -214,7 +215,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Active Status',
+                        context.l10n.activeStatus,
                         style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
@@ -222,7 +223,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                       ),
                       Text(
                         _isActive
-                            ? 'City will be visible to users'
+                            ? context.l10n.cityWillBeVisibleToUsers
                             : 'City will be hidden from users',
                         style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
@@ -265,7 +266,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                 ),
               ),
               child: Text(
-                'Cancel',
+                context.l10n.cancel,
                 style: AppTextStyles.labelLarge.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
@@ -296,7 +297,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                       ),
                     )
                   : Text(
-                      'Create City',
+                      context.l10n.createCity,
                       style: AppTextStyles.labelLarge.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

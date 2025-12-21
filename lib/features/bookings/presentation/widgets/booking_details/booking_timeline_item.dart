@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// A single timeline item for booking history.
 ///
@@ -71,8 +72,7 @@ class BookingTimelineItem extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyles.labelLarge.copyWith(
                       fontWeight: FontWeight.w600,
                       color: color,
                     ),
@@ -80,8 +80,7 @@ class BookingTimelineItem extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     time,
-                    style: const TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),

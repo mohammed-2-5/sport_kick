@@ -6,6 +6,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium recent bookings section for owner dashboard.
 ///
@@ -95,7 +96,7 @@ class _SectionHeader extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Text(
-          'Recent Bookings',
+          context.l10n.recentBookings,
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
@@ -122,7 +123,7 @@ class _ViewAllButton extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            'View All',
+            context.l10n.viewAll,
             style: AppTextStyles.bodySmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.accentCyan,
@@ -228,7 +229,8 @@ class _BookingCardState extends State<_BookingCard>
                       children: [
                         Expanded(
                           child: Text(
-                            widget.booking.userName ?? 'Customer',
+                            widget.booking.userName ??
+                                context.l10n.customerName,
                             style: AppTextStyles.bodyMedium.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.textPrimary,
@@ -254,7 +256,7 @@ class _BookingCardState extends State<_BookingCard>
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            widget.booking.fieldName ?? 'Field',
+                            widget.booking.fieldName ?? context.l10n.field,
                             style: AppTextStyles.labelSmall.copyWith(
                               color: AppColors.textSecondary.withValues(
                                 alpha: 0.8,
@@ -343,7 +345,7 @@ class _EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'No Recent Bookings',
+            context.l10n.noRecentBookings,
             style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -351,7 +353,7 @@ class _EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Your recent bookings will appear here',
+            context.l10n.yourRecentBookingsWillAppearHere,
             style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),

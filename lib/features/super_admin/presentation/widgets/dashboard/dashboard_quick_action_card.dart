@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Quick action card widget for dashboard.
 class DashboardQuickActionCard extends StatelessWidget {
@@ -53,18 +54,16 @@ class DashboardQuickActionCard extends StatelessWidget {
             const Spacer(),
             Text(
               title,
-              style: const TextStyle(
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.premiumTextPrimary,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
               ),
             ),
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: const TextStyle(
+              style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.premiumTextSecondary,
-                fontSize: 12,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

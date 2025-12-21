@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for editing an existing city.
 ///
@@ -128,14 +129,14 @@ class _EditCityDialogState extends State<EditCityDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Edit City',
+                  context.l10n.editCity,
                   style: AppTextStyles.titleLarge.copyWith(
                     color: AppColors.white,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Editing: ${widget.city.name}',
+                  context.l10n.editingCity(widget.city.name),
                   style: AppTextStyles.labelMedium.copyWith(
                     color: AppColors.white.withValues(alpha: 0.9),
                   ),
@@ -159,7 +160,7 @@ class _EditCityDialogState extends State<EditCityDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'City Name',
+            context.l10n.cityName,
             style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -170,7 +171,7 @@ class _EditCityDialogState extends State<EditCityDialog> {
             controller: _nameController,
             textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
-              hintText: 'Enter city name',
+              hintText: context.l10n.enterCityName,
               prefixIcon: const Icon(
                 Icons.location_city,
                 color: AppColors.mediumGrey,
@@ -201,10 +202,10 @@ class _EditCityDialogState extends State<EditCityDialog> {
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Please enter a city name';
+                return context.l10n.pleaseEnterACityName;
               }
               if (value.trim().length < 2) {
-                return 'City name must be at least 2 characters';
+                return context.l10n.cityNameMustBeAtLeast2Characters;
               }
               return null;
             },
@@ -231,7 +232,7 @@ class _EditCityDialogState extends State<EditCityDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Active Status',
+                        context.l10n.activeStatus,
                         style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
@@ -239,8 +240,8 @@ class _EditCityDialogState extends State<EditCityDialog> {
                       ),
                       Text(
                         _isActive
-                            ? 'City is visible to users'
-                            : 'City is hidden from users',
+                            ? context.l10n.cityIsVisibleToUsers
+                            : context.l10n.cityIsHiddenFromUsers,
                         style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -273,7 +274,9 @@ class _EditCityDialogState extends State<EditCityDialog> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'This city has ${widget.city.fieldsCount} field${widget.city.fieldsCount != 1 ? 's' : ''} registered.',
+                    context.l10n.cityFieldsRegisteredCount(
+                      widget.city.fieldsCount,
+                    ),
                     style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.info,
                     ),
@@ -305,7 +308,7 @@ class _EditCityDialogState extends State<EditCityDialog> {
                 ),
               ),
               child: Text(
-                'Cancel',
+                context.l10n.cancel,
                 style: AppTextStyles.labelMedium.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
@@ -336,7 +339,7 @@ class _EditCityDialogState extends State<EditCityDialog> {
                       ),
                     )
                   : Text(
-                      'Save Changes',
+                      context.l10n.saveChanges,
                       style: AppTextStyles.labelLarge.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

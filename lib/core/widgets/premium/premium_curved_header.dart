@@ -15,8 +15,8 @@ import 'package:spo_kick/features/home/presentation/widgets/hero/curved_header_c
 /// Usage:
 /// ```dart
 /// PremiumCurvedHeader(
-///   title: 'My Bookings',
-///   subtitle: 'View and manage your bookings',
+///   title: context.l10n.myBookings,
+///   subtitle: context.l10n.viewAndManageYourBookings,
 ///   showBackButton: true,
 /// )
 /// ```

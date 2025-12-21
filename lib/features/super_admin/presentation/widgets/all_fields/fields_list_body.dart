@@ -9,6 +9,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fi
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/fields_statistics_section.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dialogs/delete_options_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/fields/field_actions_sheet.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Main body widget for fields list.
 class FieldsListBody extends StatelessWidget {
@@ -83,14 +84,14 @@ class FieldsListBody extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      '${filteredFields.length} field${filteredFields.length != 1 ? 's' : ''} found',
+                      context.l10n.fieldsFoundCount(filteredFields.length),
                       style: Theme.of(
                         context,
                       ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
                     ),
                   ),
                   Text(
-                    'Long press for actions',
+                    context.l10n.longPressForActions,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.grey[400],
                       fontStyle: FontStyle.italic,

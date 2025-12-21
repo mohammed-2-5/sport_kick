@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/settings/settings_section.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/settings/settings_tile.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Account section widget for super admin settings page.
 /// Displays user profile information with edit options.
@@ -25,15 +27,12 @@ class SuperAdminAccountSection extends StatelessWidget {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   child: Text(
                     user.initials,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppTextStyles.titleMediumWhite,
                   ),
                 ),
                 title: Text(
                   user.fullName ?? user.email,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: AppTextStyles.bold(AppTextStyles.bodyLarge),
                 ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,12 +48,11 @@ class SuperAdminAccountSection extends StatelessWidget {
                         color: Colors.deepPurple.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: const Text(
-                        'Super Admin',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.deepPurple,
+                      child: Text(
+                        context.l10n.roleSuperAdmin,
+                        style: AppTextStyles.withColor(
+                          AppTextStyles.labelSmallBold,
+                          Colors.deepPurple,
                         ),
                       ),
                     ),
@@ -68,9 +66,9 @@ class SuperAdminAccountSection extends StatelessWidget {
               const Divider(height: 1),
               SettingsTile(
                 icon: Icons.phone,
-                title: 'Phone',
-                subtitle: user.phone ?? 'Not set',
-                onTap: () => context.pushNamed('editProfile'),
+                title: context.l10n.phone2,
+                subtitle: user.phone ?? context.l10n.notSet,
+                onTap: () => context.pushNamed("editProfile"),
               ),
             ],
           );

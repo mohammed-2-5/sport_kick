@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class UserListSearchBar extends StatelessWidget {
   final TextEditingController controller;
@@ -22,7 +23,7 @@ class UserListSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          hintText: 'Search users by name, email, or phone...',
+          hintText: context.l10n.searchUsersByNameEmailOrPhone,
           prefixIcon: const Icon(Icons.search),
           suffixIcon: searchQuery.isNotEmpty
               ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Action buttons for user details page
 class UserActionButtons extends StatelessWidget {
@@ -24,7 +25,9 @@ class UserActionButtons extends StatelessWidget {
           onPressed: onToggleStatus,
           icon: Icon(user.isActive ? Icons.block : Icons.check_circle),
           label: Text(
-            user.isActive ? 'Deactivate Account' : 'Activate Account',
+            user.isActive
+                ? context.l10n.deactivateAccount
+                : context.l10n.activateAccount,
           ),
           style: ElevatedButton.styleFrom(
             backgroundColor: user.isActive

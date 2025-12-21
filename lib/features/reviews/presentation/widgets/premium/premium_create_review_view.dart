@@ -6,6 +6,8 @@ import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.d
 import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_review_form.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/premium/review_success_overlay.dart';
 
+import '../../../../../core/localization/l10n_extensions.dart';
+
 /// Premium create review view with enhanced UI.
 ///
 /// Features:
@@ -60,7 +62,9 @@ class _PremiumCreateReviewViewState extends State<PremiumCreateReviewView> {
       },
       builder: (context, state) {
         if (state is ReviewFormSubmitting) {
-          return const LoadingIndicator.inline(message: 'Submitting review...');
+          return LoadingIndicator.inline(
+            message: context.l10n.submittingReview,
+          );
         }
 
         if (_showSuccess) {
@@ -93,7 +97,10 @@ class _PremiumCreateReviewViewState extends State<PremiumCreateReviewView> {
               context.read<ReviewFormCubit>().updateComment(
                 _commentController.text,
               );
-              context.read<ReviewFormCubit>().submit();
+              context.read<ReviewFormCubit>().submit(
+                errorRating: context.l10n.selectRating,
+                errorLogin: context.l10n.youMustBeLoggedInToReview,
+              );
             },
           ),
         );

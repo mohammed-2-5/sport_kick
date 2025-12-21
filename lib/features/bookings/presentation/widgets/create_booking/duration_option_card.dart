@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/l10n/app_localizations.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Individual duration option card with premium styling.
 ///
@@ -183,8 +184,7 @@ class _DurationOptionCardState extends State<DurationOptionCard>
               const SizedBox(width: 6),
               Text(
                 l10n.durationHours(widget.duration),
-                style: TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: textColor,
                 ),
@@ -194,8 +194,7 @@ class _DurationOptionCardState extends State<DurationOptionCard>
           const SizedBox(height: 6),
           Text(
             _formattedPrice,
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: priceColor,
             ),
@@ -204,7 +203,10 @@ class _DurationOptionCardState extends State<DurationOptionCard>
             const SizedBox(height: 4),
             Text(
               widget.unavailableMessage!,
-              style: const TextStyle(fontSize: 10, color: AppColors.error),
+              style: AppTextStyles.labelSmall.copyWith(
+                fontSize: 10,
+                color: AppColors.error,
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -233,7 +235,7 @@ class _DurationOptionCardState extends State<DurationOptionCard>
         ),
         child: Text(
           widget.badgeText!,
-          style: TextStyle(
+          style: AppTextStyles.labelSmall.copyWith(
             fontSize: 9,
             fontWeight: FontWeight.w600,
             color: textColor,

@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 
 import '../../../../../../core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium stats bar for cities overview.
 ///
@@ -36,25 +37,25 @@ class PremiumCitiesStatsBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final stats = [
       _StatItem(
-        label: 'Total Cities',
+        label: context.l10n.totalCities,
         value: totalCities.toString(),
         icon: Icons.location_city_rounded,
         gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
       ),
       _StatItem(
-        label: 'Active',
+        label: context.l10n.active,
         value: activeCities.toString(),
         icon: Icons.check_circle_rounded,
         gradient: const [Color(0xFF10B981), Color(0xFF059669)],
       ),
       _StatItem(
-        label: 'Inactive',
+        label: context.l10n.inactive,
         value: inactiveCities.toString(),
         icon: Icons.pause_circle_rounded,
         gradient: const [Color(0xFFEF4444), Color(0xFFDC2626)],
       ),
       _StatItem(
-        label: 'Total Fields',
+        label: context.l10n.totalFields,
         value: totalFields.toString(),
         icon: Icons.sports_soccer_rounded,
         gradient: const [AppColors.accentCyan, Color(0xFF0891B2)],

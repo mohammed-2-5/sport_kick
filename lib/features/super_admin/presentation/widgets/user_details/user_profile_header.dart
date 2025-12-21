@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/features/super_admin/utils/user_card_utils.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Profile header widget for user details page
 class UserProfileHeader extends StatelessWidget {
@@ -32,9 +33,11 @@ class UserProfileHeader extends StatelessWidget {
             backgroundColor: Colors.white,
             child: Text(
               getInitials(user.fullName),
-              style: AppTextStyles.headlineSmall.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
+              style: AppTextStyles.bold(
+                AppTextStyles.withColor(
+                  AppTextStyles.headlineSmall,
+                  Colors.blue,
+                ),
               ),
             ),
           ),
@@ -43,10 +46,7 @@ class UserProfileHeader extends StatelessWidget {
           // Name
           Text(
             user.fullName ?? user.email,
-            style: AppTextStyles.headlineLarge.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+            style: AppTextStyles.bold(AppTextStyles.headlineLargeWhite),
             textAlign: TextAlign.center,
           ),
 
@@ -73,11 +73,8 @@ class UserProfileHeader extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'Customer',
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
+                  context.l10n.customerName,
+                  style: AppTextStyles.bodyMediumWhite,
                 ),
               ],
             ),
@@ -122,10 +119,14 @@ class UserProfileHeader extends StatelessWidget {
                 ),
                 const SizedBox(width: AdminUIConstants.spacingSmall),
                 Text(
-                  user.isActive ? 'Active Account' : 'Inactive Account',
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: user.isActive ? AppColors.success : AppColors.error,
+                  user.isActive
+                      ? context.l10n.activeAccount
+                      : context.l10n.inactiveAccount,
+                  style: AppTextStyles.bold(
+                    AppTextStyles.withColor(
+                      AppTextStyles.bodyMedium,
+                      user.isActive ? AppColors.success : AppColors.error,
+                    ),
                   ),
                 ),
               ],
@@ -136,10 +137,10 @@ class UserProfileHeader extends StatelessWidget {
 
           // Member Since
           Text(
-            'Member since ${DateFormat('MMM d, y').format(user.createdAt)}',
-            style: AppTextStyles.bodySmall.copyWith(
-              color: Colors.white.withValues(alpha: 0.9),
+            context.l10n.memberSinceDate(
+              DateFormat('MMM d, y').format(user.createdAt),
             ),
+            style: AppTextStyles.bodySmallWhite,
           ),
         ],
       ),
@@ -155,9 +156,7 @@ class UserProfileHeader extends StatelessWidget {
         Flexible(
           child: Text(
             text,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: color.withValues(alpha: 0.95),
-            ),
+            style: AppTextStyles.bodyMediumWhite,
             overflow: TextOverflow.ellipsis,
           ),
         ),

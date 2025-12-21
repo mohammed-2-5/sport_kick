@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium status toggle confirmation dialog.
 ///
@@ -116,12 +117,10 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
 
                 // Title
                 Text(
-                  isActivating ? 'Activate User?' : 'Deactivate User?',
-                  style: AppTextStyles.titleLarge.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                  ),
+                  isActivating
+                      ? context.l10n.activateUser
+                      : context.l10n.deactivateUser,
+                  style: AppTextStyles.titleLargeBold,
                 ),
 
                 const SizedBox(height: 12),
@@ -151,9 +150,9 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                         child: Center(
                           child: Text(
                             widget.user.initials,
-                            style: AppTextStyles.labelLarge.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
+                            style: AppTextStyles.withColor(
+                              AppTextStyles.bold(AppTextStyles.labelLarge),
+                              Colors.white,
                             ),
                           ),
                         ),
@@ -164,18 +163,11 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                         children: [
                           Text(
                             widget.user.displayName,
-                            style: AppTextStyles.labelLarge.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textPrimary,
-                            ),
+                            style: AppTextStyles.bold(AppTextStyles.labelLarge),
                           ),
                           Text(
                             widget.user.email,
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.textSecondary.withValues(
-                                alpha: 0.8,
-                              ),
-                            ),
+                            style: AppTextStyles.bodySmallSecondary,
                           ),
                         ],
                       ),
@@ -188,13 +180,10 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                 // Warning message
                 Text(
                   isActivating
-                      ? 'This user will be able to login and make bookings again.'
+                      ? context.l10n.thisUserWillBeAbleTo
                       : 'This user will no longer be able to login or make new bookings.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.8),
-                    height: 1.4,
-                  ),
+                  style: AppTextStyles.bodyMediumSecondary,
                 ),
 
                 const SizedBox(height: 24),
@@ -217,11 +206,10 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                           ),
                           child: Center(
                             child: Text(
-                              'Cancel',
-                              style: AppTextStyles.titleMedium.copyWith(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textSecondary,
+                              context.l10n.cancel,
+                              style: AppTextStyles.withColor(
+                                AppTextStyles.bold(AppTextStyles.titleMedium),
+                                AppColors.textSecondary,
                               ),
                             ),
                           ),
@@ -243,12 +231,10 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                           ),
                           child: Center(
                             child: Text(
-                              isActivating ? 'Activate' : 'Deactivate',
-                              style: AppTextStyles.titleMedium.copyWith(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
+                              isActivating
+                                  ? context.l10n.activate
+                                  : context.l10n.deactivate,
+                              style: AppTextStyles.titleMediumWhite,
                             ),
                           ),
                         ),

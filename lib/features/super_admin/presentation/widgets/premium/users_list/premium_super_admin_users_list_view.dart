@@ -8,6 +8,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/premium_users_list_filters.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/premium_users_list_content.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/premium_users_bulk_action_bar.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium view for super admin users list management.
 ///
@@ -177,7 +178,7 @@ class _PremiumSuperAdminUsersListViewState
           const Icon(Icons.error_outline, size: 64, color: Colors.red),
           const SizedBox(height: 16),
           Text(
-            'Failed to load users',
+            context.l10n.failedToLoadUsers,
             style: AppTextStyles.titleMedium.copyWith(
               color: AppColors.textPrimary,
             ),
@@ -186,7 +187,7 @@ class _PremiumSuperAdminUsersListViewState
           ElevatedButton.icon(
             onPressed: () => cubit.loadUsers(),
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.premiumGold,
               foregroundColor: Colors.white,
@@ -203,16 +204,14 @@ class _PremiumSuperAdminUsersListViewState
 
   String _getEmptyMessage(SuperAdminUsersListLoaded state) {
     if (state.searchQuery.isNotEmpty) {
-      return 'No users match your search';
+      return context.l10n.noUsersMatchYourFilters;
     }
 
     if (state.statusFilter != null) {
-      return state.statusFilter == 'Active'
-          ? 'No active users'
-          : 'No inactive users';
+      return context.l10n.noUsersMatchYourFilters;
     }
 
-    return 'No users yet';
+    return context.l10n.noUsersYet;
   }
 
   Future<void> _handleBulkActivate(
@@ -222,10 +221,11 @@ class _PremiumSuperAdminUsersListViewState
   ) async {
     final confirmed = await _showConfirmDialog(
       context,
-      title: 'Activate Users',
-      message:
-          'Are you sure you want to activate ${state.selectedIds.length} user${state.selectedIds.length > 1 ? 's' : ''}?',
-      confirmText: 'Activate',
+      title: context.l10n.activateUsers,
+      message: context.l10n.areYouSureYouWantToActivateCountUsers(
+        state.selectedIds.length,
+      ),
+      confirmText: context.l10n.activate,
       confirmColor: Colors.green,
     );
 
@@ -241,10 +241,11 @@ class _PremiumSuperAdminUsersListViewState
   ) async {
     final confirmed = await _showConfirmDialog(
       context,
-      title: 'Deactivate Users',
-      message:
-          'Are you sure you want to deactivate ${state.selectedIds.length} user${state.selectedIds.length > 1 ? 's' : ''}?',
-      confirmText: 'Deactivate',
+      title: context.l10n.deactivateUsers,
+      message: context.l10n.areYouSureYouWantToDeactivateCountUsers(
+        state.selectedIds.length,
+      ),
+      confirmText: context.l10n.deactivate,
       confirmColor: Colors.red,
     );
 
@@ -275,7 +276,7 @@ class _PremiumSuperAdminUsersListViewState
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: Text(
-              'Cancel',
+              context.l10n.cancel,
               style: AppTextStyles.labelLarge.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,

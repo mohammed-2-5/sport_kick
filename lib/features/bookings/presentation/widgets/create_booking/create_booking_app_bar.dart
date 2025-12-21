@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class CreateBookingAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -17,7 +18,7 @@ class CreateBookingAppBar extends StatelessWidget
       ),
       title: Text(
         context.l10n.bookFieldTitle,
-        style: const TextStyle(
+        style: AppTextStyles.titleLarge.copyWith(
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),

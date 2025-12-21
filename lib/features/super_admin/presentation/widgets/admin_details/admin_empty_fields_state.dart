@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Empty state widget for when no fields are assigned
 class AdminEmptyFieldsState extends StatelessWidget {
@@ -24,27 +26,24 @@ class AdminEmptyFieldsState extends StatelessWidget {
             color: Colors.grey[400],
           ),
           const SizedBox(height: AdminUIConstants.listItemSpacing),
-          const Text(
-            'No Fields Assigned',
-            style: TextStyle(
-              fontSize: AdminUIConstants.fontSizeLarge,
-              fontWeight: AdminUIConstants.fontWeightBold,
-            ),
+          Text(
+            context.l10n.noFieldsAssigned,
+            style: AppTextStyles.bold(AppTextStyles.titleMedium),
           ),
           const SizedBox(height: AdminUIConstants.spacingSmall),
           Text(
-            'This admin doesn\'t have any fields assigned yet',
+            context.l10n.thisAdminDoesntHaveAnyFieldsAssignedYet,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: AdminUIConstants.fontSizeMedium,
-              color: Colors.grey[600],
+            style: AppTextStyles.withColor(
+              AppTextStyles.bodyMedium,
+              Colors.grey[600]!,
             ),
           ),
           const SizedBox(height: AdminUIConstants.spacingMedium),
           ElevatedButton.icon(
             onPressed: onAssignField,
             icon: const Icon(Icons.add),
-            label: const Text('Assign First Field'),
+            label: Text(context.l10n.assignFirstField),
           ),
         ],
       ),

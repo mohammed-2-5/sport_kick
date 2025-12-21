@@ -5,6 +5,7 @@ import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/rating/star_rating_input.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Body content for create review page.
 ///
@@ -27,8 +28,8 @@ class CreateReviewBody extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Rating section
-              const Text(
-                'How would you rate this field?',
+              Text(
+                context.l10n.howWouldYouRateThisField,
                 style: AppTextStyles.titleMedium,
                 textAlign: TextAlign.center,
               ),
@@ -42,8 +43,8 @@ class CreateReviewBody extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Comment section
-              const Text(
-                'Share your experience (optional)',
+              Text(
+                context.l10n.shareYourExperienceOptional,
                 style: AppTextStyles.labelLarge,
               ),
               const SizedBox(height: 8),
@@ -53,7 +54,7 @@ class CreateReviewBody extends StatelessWidget {
                 maxLines: 5,
                 enabled: !isSubmitting,
                 decoration: InputDecoration(
-                  hintText: 'Tell others about your experience...',
+                  hintText: context.l10n.tellOthersAboutYourExperience,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -64,8 +65,15 @@ class CreateReviewBody extends StatelessWidget {
 
               // Submit button
               PremiumButton(
-                label: cubit.isEditing ? 'Update Review' : 'Submit Review',
-                onPressed: isSubmitting ? null : () => cubit.submit(),
+                label: cubit.isEditing
+                    ? context.l10n.updateReview
+                    : context.l10n.submitReview,
+                onPressed: isSubmitting
+                    ? null
+                    : () => cubit.submit(
+                        errorRating: context.l10n.selectRating,
+                        errorLogin: context.l10n.youMustBeLoggedInToReview,
+                      ),
                 loading: isSubmitting,
               ),
             ],

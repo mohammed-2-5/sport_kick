@@ -131,9 +131,9 @@ class _PremiumPlatformStatCardState extends State<PremiumPlatformStatCard>
                           const SizedBox(width: 4),
                           Text(
                             widget.trend!,
-                            style: AppTextStyles.labelSmall.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                            style: AppTextStyles.withColor(
+                              AppTextStyles.labelSmallBold,
+                              Colors.white,
                             ),
                           ),
                         ],
@@ -145,20 +145,11 @@ class _PremiumPlatformStatCardState extends State<PremiumPlatformStatCard>
               // Value
               Text(
                 widget.value,
-                style: AppTextStyles.headlineMedium.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white,
-                ),
+                style: AppTextStyles.bold(AppTextStyles.headlineMediumWhite),
               ),
               const SizedBox(height: 4),
               // Label
-              Text(
-                widget.label,
-                style: AppTextStyles.labelMedium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white.withValues(alpha: 0.9),
-                ),
-              ),
+              Text(widget.label, style: AppTextStyles.labelMediumWhite),
             ],
           ),
         ),

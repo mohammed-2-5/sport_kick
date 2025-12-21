@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium rating filter chips for reviews.
 ///
@@ -38,7 +39,7 @@ class PremiumRatingFilterChips extends StatelessWidget {
                 horizontalOffset: 50.0,
                 child: FadeInAnimation(
                   child: _FilterChip(
-                    label: 'All',
+                    label: context.l10n.all,
                     count:
                         ratingCounts?.values.fold<int>(0, (a, b) => a + b) ?? 0,
                     isSelected: selectedRating == null,

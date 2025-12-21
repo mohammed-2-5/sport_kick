@@ -37,7 +37,7 @@ class NearbyFieldsPreview extends StatelessWidget {
                 ),
                 label: Text(
                   context.l10n.homeViewMap,
-                  style: const TextStyle(
+                  style: AppTextStyles.labelMedium.copyWith(
                     color: AppColors.lightAccent,
                     fontWeight: FontWeight.w600,
                   ),

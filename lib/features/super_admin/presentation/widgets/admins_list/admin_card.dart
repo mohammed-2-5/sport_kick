@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/role_badge.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_info_row.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_status_badge.dart';
 import 'package:spo_kick/features/super_admin/utils/user_card_utils.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Admin card widget displaying field owner information.
 class AdminCard extends StatelessWidget {
@@ -44,13 +46,15 @@ class AdminCard extends StatelessWidget {
               const SizedBox(height: 8),
               UserInfoRow(
                 icon: Icons.calendar_today_outlined,
-                text: 'Joined ${formatRelativeDate(admin.createdAt)}',
+                text: context.l10n.joinedDate(
+                  formatRelativeDate(admin.createdAt),
+                ),
                 iconColor: Colors.grey,
               ),
               const SizedBox(height: 12),
               const Divider(height: 1),
               const SizedBox(height: 8),
-              _buildActions(),
+              _buildActions(context),
             ],
           ),
         ),
@@ -68,7 +72,7 @@ class AdminCard extends StatelessWidget {
           ).colorScheme.primary.withValues(alpha: 0.1),
           child: Text(
             getInitials(admin.fullName),
-            style: TextStyle(
+            style: AppTextStyles.titleMedium.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.primary,
@@ -82,8 +86,7 @@ class AdminCard extends StatelessWidget {
             children: [
               Text(
                 admin.fullName ?? admin.email,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
@@ -100,14 +103,14 @@ class AdminCard extends StatelessWidget {
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: TextButton.icon(
             onPressed: onTap,
             icon: const Icon(Icons.visibility_outlined, size: 18),
-            label: const Text('View Details'),
+            label: Text(context.l10n.viewDetails),
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 8),
             ),
@@ -118,7 +121,7 @@ class AdminCard extends StatelessWidget {
           child: TextButton.icon(
             onPressed: onTap,
             icon: const Icon(Icons.add_business, size: 18),
-            label: const Text('Assign Field'),
+            label: Text(context.l10n.assignField),
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 8),
             ),

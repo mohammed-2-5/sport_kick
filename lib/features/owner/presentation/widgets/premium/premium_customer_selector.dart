@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium customer selector with search.
 ///
@@ -70,7 +71,7 @@ class _PremiumCustomerSelectorState extends State<PremiumCustomerSelector> {
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
-              hintText: 'Search customers...',
+              hintText: context.l10n.searchCustomers,
               hintStyle: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.6),
               ),
@@ -167,7 +168,7 @@ class _CreateNewButton extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              'Create New Customer',
+              context.l10n.createNewCustomer,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.accentCyan,

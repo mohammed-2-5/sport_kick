@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/shared/stat_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Bookings statistics section widget
 ///
@@ -44,7 +46,7 @@ class BookingsStatisticsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Bookings Overview',
+            context.l10n.bookingsOverview,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -54,7 +56,7 @@ class BookingsStatisticsSection extends StatelessWidget {
             children: [
               Expanded(
                 child: StatCard(
-                  label: 'Total',
+                  label: context.l10n.total,
                   value: totalBookings.toString(),
                   icon: Icons.event,
                   color: Colors.blue,
@@ -63,7 +65,7 @@ class BookingsStatisticsSection extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: StatCard(
-                  label: 'Pending',
+                  label: context.l10n.pending,
                   value: pendingCount.toString(),
                   icon: Icons.schedule,
                   color: Colors.orange,
@@ -76,7 +78,7 @@ class BookingsStatisticsSection extends StatelessWidget {
             children: [
               Expanded(
                 child: StatCard(
-                  label: 'Confirmed',
+                  label: context.l10n.statusConfirmed,
                   value: confirmedCount.toString(),
                   icon: Icons.check_circle,
                   color: Colors.green,
@@ -85,7 +87,7 @@ class BookingsStatisticsSection extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: StatCard(
-                  label: 'Completed',
+                  label: context.l10n.statusCompleted,
                   value: completedCount.toString(),
                   icon: Icons.done_all,
                   color: Colors.purple,
@@ -98,7 +100,7 @@ class BookingsStatisticsSection extends StatelessWidget {
             children: [
               Expanded(
                 child: StatCard(
-                  label: 'Canceled',
+                  label: context.l10n.statusCanceled,
                   value: canceledCount.toString(),
                   icon: Icons.cancel,
                   color: Colors.red,
@@ -107,8 +109,13 @@ class BookingsStatisticsSection extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: StatCard(
-                  label: 'Revenue',
-                  value: '${totalRevenue.toStringAsFixed(0)} EGP',
+                  label: context.l10n.revenue,
+                  value: LocaleFormatters.formatPrice(
+                    context,
+                    amount: totalRevenue,
+                    currency: context.l10n.currencyEgp,
+                    decimalDigits: 0,
+                  ),
                   icon: Icons.attach_money,
                   color: Colors.teal,
                 ),

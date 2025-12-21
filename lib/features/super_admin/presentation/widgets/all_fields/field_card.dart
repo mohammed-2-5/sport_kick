@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/field_status_badge.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_fields/metric_chip.dart';
@@ -117,7 +118,10 @@ class FieldCard extends StatelessWidget {
                 children: [
                   MetricChip(
                     icon: Icons.event,
-                    label: '${field.totalBookings} bookings',
+                    label: context.l10n.bookingsCount(
+                      field.totalBookings,
+                      field.totalBookings,
+                    ),
                     color: Colors.blue,
                   ),
                   const SizedBox(width: 8),
@@ -129,9 +133,9 @@ class FieldCard extends StatelessWidget {
                     ),
                   const SizedBox(width: 8),
                   if (field.isVerified)
-                    const MetricChip(
+                    MetricChip(
                       icon: Icons.verified,
-                      label: 'Verified',
+                      label: context.l10n.verified,
                       color: Colors.green,
                     ),
                 ],
@@ -145,7 +149,7 @@ class FieldCard extends StatelessWidget {
                     const Icon(Icons.person, size: 16, color: Colors.grey),
                     const SizedBox(width: 4),
                     Text(
-                      'Owner ID: ${field.ownerId!.substring(0, 8)}...',
+                      context.l10n.ownerIdShort(field.ownerId!.substring(0, 8)),
                       style: AppTextStyles.bodySmall.copyWith(
                         color: Colors.grey[600],
                       ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog utility for user status toggle confirmation.
 /// Shows appropriate message based on current user status.
@@ -14,16 +15,18 @@ void showUserStatusToggleDialog({
   showDialog(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: Text(user.isActive ? 'Deactivate User?' : 'Activate User?'),
+      title: Text(
+        user.isActive ? context.l10n.deactivateUser : context.l10n.activateUser,
+      ),
       content: Text(
         user.isActive
-            ? 'This will prevent the user from logging in and making new bookings.'
+            ? context.l10n.thisWillPreventTheUserFrom
             : 'This will restore the user\'s access to the platform.',
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(dialogContext),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -50,7 +53,9 @@ void showUserStatusToggleDialog({
               SnackbarHelper.showSuccess(context, message);
             }
           },
-          child: Text(user.isActive ? 'Deactivate' : 'Activate'),
+          child: Text(
+            user.isActive ? context.l10n.deactivate : context.l10n.activate,
+          ),
         ),
       ],
     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium legal page template.
 ///
@@ -142,7 +143,7 @@ class _LegalInfoHeader extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'Effective: $effectiveDate',
+                  context.l10n.effectiveLabel(effectiveDate),
                   style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
@@ -245,7 +246,7 @@ class PremiumLegalContact extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Contact Us',
+            context.l10n.contactUs,
             style: AppTextStyles.titleSmall.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,

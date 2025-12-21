@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/widgets/advanced_filter_bottom_sheet.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// User filter bottom sheet widget
 class UserFilterSheet extends StatelessWidget {
@@ -25,20 +26,26 @@ class UserFilterSheet extends StatelessWidget {
     return AdvancedFilterBottomSheet(
       filterGroups: [
         FilterGroup(
-          title: 'Account Status',
+          title: context.l10n.accountStatus,
           widget: DropdownFilterWidget(
             value: statusFilter,
             hint: 'All Statuses',
             options: [
-              FilterOption(value: 'all', label: 'All'),
-              FilterOption(value: 'active', label: 'Active'),
-              FilterOption(value: 'inactive', label: 'Inactive'),
+              FilterOption(value: context.l10n.all2, label: context.l10n.all),
+              FilterOption(
+                value: context.l10n.active2,
+                label: context.l10n.active,
+              ),
+              FilterOption(
+                value: context.l10n.inactive2,
+                label: context.l10n.inactive,
+              ),
             ],
             onChanged: onStatusChanged,
           ),
         ),
         FilterGroup(
-          title: 'Join Date',
+          title: context.l10n.joinDate,
           widget: DateRangeFilterWidget(
             dateRange: dateRange,
             onChanged: onDateRangeChanged,

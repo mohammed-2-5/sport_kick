@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium owner navigation drawer.
 ///
@@ -46,31 +47,31 @@ class PremiumOwnerDrawer extends StatelessWidget {
               children: [
                 _DrawerItem(
                   icon: Icons.dashboard_rounded,
-                  label: 'Dashboard',
+                  label: context.l10n.dashboard,
                   isSelected: selectedIndex == 0,
                   onTap: () => onItemTap(0),
                 ),
                 _DrawerItem(
                   icon: Icons.calendar_month_rounded,
-                  label: 'Bookings',
+                  label: context.l10n.bookings,
                   isSelected: selectedIndex == 1,
                   onTap: () => onItemTap(1),
                 ),
                 _DrawerItem(
                   icon: Icons.sports_soccer_rounded,
-                  label: 'My Fields',
+                  label: context.l10n.myFields,
                   isSelected: selectedIndex == 2,
                   onTap: () => onItemTap(2),
                 ),
                 _DrawerItem(
                   icon: Icons.analytics_rounded,
-                  label: 'Analytics',
+                  label: context.l10n.analytics,
                   isSelected: selectedIndex == 3,
                   onTap: () => onItemTap(3),
                 ),
                 _DrawerItem(
                   icon: Icons.event_repeat_rounded,
-                  label: 'Subscriptions',
+                  label: context.l10n.subscriptions,
                   isSelected: selectedIndex == 4,
                   onTap: () => onItemTap(4),
                   badgeCount: pendingRecurringCount,
@@ -78,13 +79,13 @@ class PremiumOwnerDrawer extends StatelessWidget {
                 const Divider(height: 32),
                 _DrawerItem(
                   icon: Icons.person_rounded,
-                  label: 'Profile',
+                  label: context.l10n.profile,
                   isSelected: selectedIndex == 5,
                   onTap: () => onItemTap(5),
                 ),
                 _DrawerItem(
                   icon: Icons.settings_rounded,
-                  label: 'Settings',
+                  label: context.l10n.settings,
                   isSelected: selectedIndex == 6,
                   onTap: () => onItemTap(6),
                 ),
@@ -99,7 +100,7 @@ class PremiumOwnerDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
-              'Sport Kick v1.0.0',
+              context.l10n.sportKickV100,
               style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.5),
               ),
@@ -162,7 +163,7 @@ class _DrawerHeader extends StatelessWidget {
                   : null,
               child: avatarUrl == null
                   ? Text(
-                      name.isNotEmpty ? name[0].toUpperCase() : 'O',
+                      name.isNotEmpty ? name[0].toUpperCase() : context.l10n.o,
                       style: AppTextStyles.headlineSmall.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.accentCyan,
@@ -207,7 +208,7 @@ class _DrawerHeader extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
-                    'Field Owner',
+                    context.l10n.fieldOwner,
                     style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.accentCyan,
@@ -429,7 +430,7 @@ class _LogoutButtonState extends State<_LogoutButton>
               const Icon(Icons.logout_rounded, color: Colors.red, size: 20),
               const SizedBox(width: 8),
               Text(
-                'Logout',
+                context.l10n.logout,
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: Colors.red,

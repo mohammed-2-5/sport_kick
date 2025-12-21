@@ -90,7 +90,7 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(
             context.l10n.keepBooking,
-            style: const TextStyle(
+            style: AppTextStyles.labelLarge.copyWith(
               color: AppColors.textSecondary,
               fontWeight: FontWeight.w600,
             ),
@@ -114,6 +114,7 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
       reason: _reasonController.text.isEmpty
           ? context.l10n.canceledByUser
           : _reasonController.text,
+      loadingMessage: context.l10n.cancelingBooking,
     );
   }
 }

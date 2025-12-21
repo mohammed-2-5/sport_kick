@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
 
@@ -30,8 +31,8 @@ class CityPerformanceChart extends StatelessWidget {
     if (top5.isEmpty) return const SizedBox.shrink();
 
     return AnalyticsChartCard(
-      title: 'Top Fields by Bookings',
-      subtitle: 'Most booked fields',
+      title: context.l10n.topFieldsByBookings,
+      subtitle: context.l10n.mostBookedFields,
       icon: Icons.location_city,
       color: Colors.teal,
       child: SizedBox(
@@ -77,7 +78,9 @@ class CityPerformanceChart extends StatelessWidget {
                   sideTitles: SideTitles(
                     showTitles: true,
                     getTitlesWidget: (value, meta) {
-                      if (value.toInt() >= top5.length) return const Text('');
+                      if (value.toInt() >= top5.length) {
+                        return const SizedBox.shrink();
+                      }
                       final name = top5[value.toInt()].key;
                       return Padding(
                         padding: const EdgeInsets.only(top: 8),

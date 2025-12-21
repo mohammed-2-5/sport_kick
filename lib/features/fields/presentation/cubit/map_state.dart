@@ -136,11 +136,21 @@ class MapFilters extends Equatable {
     }
 
     if (surfaceType != null) {
-      filtered = filtered
-          .where(
-            (f) => f.surfaceType?.toLowerCase() == surfaceType!.toLowerCase(),
-          )
-          .toList();
+      // Handle "Indoor" as a special case - it's a boolean field, not a surface type
+      if (surfaceType!.toLowerCase() == 'indoor') {
+        filtered = filtered.where((f) => f.isIndoor).toList();
+      } else {
+        // For other surface types, use flexible matching
+        // (e.g., "Grass" should match "Natural Grass", "Turf" matches "Artificial Turf")
+        final surfaceLower = surfaceType!.toLowerCase();
+        filtered = filtered
+            .where(
+              (f) =>
+                  f.surfaceType != null &&
+                  f.surfaceType!.toLowerCase().contains(surfaceLower),
+            )
+            .toList();
+      }
     }
 
     return filtered;

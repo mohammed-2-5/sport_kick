@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium user profile header.
 ///
@@ -75,9 +76,7 @@ class PremiumUserProfileHeader extends StatelessWidget {
                       ? Center(
                           child: Text(
                             user.initials,
-                            style: AppTextStyles.headlineMedium.copyWith(
-                              color: Colors.white,
-                            ),
+                            style: AppTextStyles.headlineMediumWhite,
                           ),
                         )
                       : null,
@@ -89,21 +88,14 @@ class PremiumUserProfileHeader extends StatelessWidget {
               // Name
               Text(
                 user.displayName,
-                style: AppTextStyles.headlineSmall.copyWith(
-                  color: Colors.white,
-                ),
+                style: AppTextStyles.headlineSmallWhite,
                 textAlign: TextAlign.center,
               ),
 
               const SizedBox(height: 4),
 
               // Email
-              Text(
-                user.email,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: Colors.white.withValues(alpha: 0.7),
-                ),
-              ),
+              Text(user.email, style: AppTextStyles.bodyMediumWhite),
 
               const SizedBox(height: 16),
 
@@ -131,10 +123,8 @@ class PremiumUserProfileHeader extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        'Joined $memberSince',
-                        style: AppTextStyles.labelMedium.copyWith(
-                          color: Colors.white.withValues(alpha: 0.7),
-                        ),
+                        context.l10n.joinedDate(memberSince),
+                        style: AppTextStyles.labelMediumWhite,
                       ),
                     ],
                   ),
@@ -178,10 +168,10 @@ class _StatusBadge extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            isActive ? 'Active' : 'Inactive',
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: isActive ? Colors.green.shade300 : Colors.grey.shade300,
+            isActive ? context.l10n.active : context.l10n.inactive,
+            style: AppTextStyles.withColor(
+              AppTextStyles.labelSmallBold,
+              isActive ? Colors.green.shade300 : Colors.grey.shade300,
             ),
           ),
         ],

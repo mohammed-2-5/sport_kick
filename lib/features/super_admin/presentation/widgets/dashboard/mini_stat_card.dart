@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class MiniStatCard extends StatelessWidget {
   final String label;
@@ -27,8 +28,7 @@ class MiniStatCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: TextStyle(
-              fontSize: 24,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
               color: color,
             ),
@@ -36,8 +36,7 @@ class MiniStatCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelMedium.copyWith(
               color: AppColors.premiumTextSecondary,
             ),
           ),

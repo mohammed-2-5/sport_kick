@@ -43,20 +43,14 @@ class PremiumAdminFormField extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              label,
-              style: AppTextStyles.labelLarge.copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
+            Text(label, style: AppTextStyles.bold(AppTextStyles.labelLarge)),
             if (isRequired) ...[
               const SizedBox(width: 4),
               Text(
                 '*',
-                style: AppTextStyles.labelLarge.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.red.shade400,
+                style: AppTextStyles.withColor(
+                  AppTextStyles.bold(AppTextStyles.labelLarge),
+                  Colors.red.shade400,
                 ),
               ),
             ],
@@ -71,15 +65,10 @@ class PremiumAdminFormField extends StatelessWidget {
             HapticFeedback.selectionClick();
             onChanged(value);
           },
-          style: AppTextStyles.titleMedium.copyWith(
-            fontSize: 15,
-            color: AppColors.textPrimary,
-          ),
+          style: AppTextStyles.titleMedium,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.6),
-            ),
+            hintStyle: AppTextStyles.bodyMediumSecondary,
             prefixIcon: Icon(
               icon,
               size: 20,
@@ -127,8 +116,9 @@ class PremiumAdminFormField extends StatelessWidget {
               Expanded(
                 child: Text(
                   errorText!,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.red.shade400,
+                  style: AppTextStyles.withColor(
+                    AppTextStyles.bodySmall,
+                    Colors.red.shade400,
                   ),
                 ),
               ),

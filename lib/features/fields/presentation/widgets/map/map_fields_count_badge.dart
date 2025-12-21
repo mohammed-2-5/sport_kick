@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Count badge widget displayed on the map.
 class MapFieldsCountBadge extends StatelessWidget {
@@ -36,7 +37,7 @@ class MapFieldsCountBadge extends StatelessWidget {
                   count.toString(),
                   LocaleFormatters.formatNumber(context, count),
                 ),
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: AppTextStyles.labelLarge,
           ),
         ],
       ),

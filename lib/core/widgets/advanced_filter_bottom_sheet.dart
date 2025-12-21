@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Reusable advanced filter bottom sheet
 class AdvancedFilterBottomSheet extends StatefulWidget {
@@ -34,9 +35,12 @@ class _AdvancedFilterBottomSheetState extends State<AdvancedFilterBottomSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Advanced Filters',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text(
+                context.l10n.advancedFilters,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               IconButton(
                 icon: const Icon(Icons.close),
@@ -67,7 +71,7 @@ class _AdvancedFilterBottomSheetState extends State<AdvancedFilterBottomSheet> {
                     widget.onReset();
                     Navigator.pop(context);
                   },
-                  child: const Text('Reset'),
+                  child: Text(context.l10n.reset),
                 ),
               ),
               const SizedBox(width: 12),
@@ -78,7 +82,7 @@ class _AdvancedFilterBottomSheetState extends State<AdvancedFilterBottomSheet> {
                     widget.onApply();
                     Navigator.pop(context);
                   },
-                  child: const Text('Apply Filters'),
+                  child: Text(context.l10n.applyFilters),
                 ),
               ),
             ],
@@ -139,7 +143,7 @@ class DateRangeFilterWidget extends StatelessWidget {
       icon: const Icon(Icons.date_range),
       label: Text(
         dateRange == null
-            ? 'Select Date Range'
+            ? context.l10n.selectDateRange
             : '${dateRange!.start.toString().split(' ')[0]} - ${dateRange!.end.toString().split(' ')[0]}',
       ),
     );

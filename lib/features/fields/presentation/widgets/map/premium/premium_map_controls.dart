@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium glassmorphism map controls.
 ///
@@ -40,9 +42,8 @@ class PremiumMapControls extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                '$fieldsCount Fields',
-                style: const TextStyle(
-                  fontSize: 14,
+                context.l10n.fieldsCount(fieldsCount),
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),

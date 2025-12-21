@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for selecting delete type (soft or hard delete).
 ///
@@ -62,7 +64,7 @@ class DeleteOptionsDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildHeader(),
+            _buildHeader(context),
             _buildContent(context),
             _buildActions(context),
           ],
@@ -71,7 +73,7 @@ class DeleteOptionsDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
@@ -100,10 +102,9 @@ class DeleteOptionsDialog extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Delete Field',
-                  style: TextStyle(
-                    fontSize: 20,
+                Text(
+                  context.l10n.deleteField,
+                  style: AppTextStyles.titleLarge.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.darkGrey,
                   ),
@@ -111,8 +112,7 @@ class DeleteOptionsDialog extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   fieldName,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.mediumGrey,
                   ),
                   maxLines: 1,
@@ -132,10 +132,9 @@ class DeleteOptionsDialog extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Choose how to delete this field:',
-            style: TextStyle(
-              fontSize: 16,
+          Text(
+            context.l10n.chooseHowToDeleteThisField,
+            style: AppTextStyles.titleMedium.copyWith(
               color: AppColors.darkGrey,
               fontWeight: FontWeight.w500,
             ),
@@ -143,18 +142,16 @@ class DeleteOptionsDialog extends StatelessWidget {
           const SizedBox(height: 20),
           _buildOptionCard(
             icon: Icons.visibility_off,
-            title: 'Deactivate (Soft Delete)',
-            description:
-                'Field will be hidden from users but data is preserved. Can be reactivated later.',
+            title: context.l10n.deactivateSoftDelete,
+            description: context.l10n.fieldWillBeHiddenFromUsers,
             color: AppColors.warning,
             onTap: onSoftDelete,
           ),
           const SizedBox(height: 12),
           _buildOptionCard(
             icon: Icons.delete_forever,
-            title: 'Delete Permanently',
-            description:
-                'All data will be permanently removed. This action cannot be undone!',
+            title: context.l10n.deletePermanently,
+            description: context.l10n.allDataWillBePermanentlyRemoved,
             color: AppColors.error,
             onTap: onHardDelete,
           ),
@@ -199,8 +196,7 @@ class DeleteOptionsDialog extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: color,
                       ),
@@ -208,8 +204,7 @@ class DeleteOptionsDialog extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       description,
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.mediumGrey,
                       ),
                     ),
@@ -235,9 +230,9 @@ class DeleteOptionsDialog extends StatelessWidget {
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
-            child: const Text(
-              'Cancel',
-              style: TextStyle(
+            child: Text(
+              context.l10n.cancel,
+              style: AppTextStyles.labelLarge.copyWith(
                 color: AppColors.mediumGrey,
                 fontWeight: FontWeight.w500,
               ),

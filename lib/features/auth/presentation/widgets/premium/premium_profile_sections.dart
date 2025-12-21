@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium profile section card.
 ///
@@ -47,8 +49,7 @@ class PremiumProfileSection extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w700,
                       color: AppColors.textPrimary,
                     ),
@@ -66,19 +67,18 @@ class PremiumProfileSection extends StatelessWidget {
                         color: AppColors.accentCyan.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.edit_outlined,
                             size: 14,
                             color: AppColors.accentCyan,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
-                            'Edit',
-                            style: TextStyle(
-                              fontSize: 12,
+                            context.l10n.edit,
+                            style: AppTextStyles.labelSmall.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.accentCyan,
                             ),
@@ -134,16 +134,14 @@ class ProfileInfoItem extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   value,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -156,9 +154,9 @@ class ProfileInfoItem extends StatelessWidget {
               onTap: () {
                 Clipboard.setData(ClipboardData(text: value));
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Copied to clipboard'),
-                    duration: Duration(seconds: 1),
+                  SnackBar(
+                    content: Text(context.l10n.copiedToClipboard),
+                    duration: const Duration(seconds: 1),
                   ),
                 );
               },
@@ -239,8 +237,7 @@ class _ProfileActionItemState extends State<ProfileActionItem> {
             Expanded(
               child: Text(
                 widget.label,
-                style: TextStyle(
-                  fontSize: 15,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: widget.isDestructive
                       ? Colors.red
@@ -287,8 +284,7 @@ class ProfileStatsRow extends StatelessWidget {
               children: [
                 Text(
                   stat.value,
-                  style: const TextStyle(
-                    fontSize: 22,
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w800,
                     color: AppColors.textPrimary,
                   ),
@@ -296,8 +292,7 @@ class ProfileStatsRow extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   stat.label,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),

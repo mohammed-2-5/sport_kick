@@ -11,6 +11,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/admin_details
 import 'package:spo_kick/features/super_admin/presentation/widgets/admin_details/admin_profile_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/admin_details/admin_statistics_section.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/admin_details/assign_field_dialog.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Admin Details View - displays admin information with all sections.
 ///
@@ -24,7 +25,7 @@ class AdminDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Details'),
+        title: Text(context.l10n.adminDetails),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
@@ -32,7 +33,7 @@ class AdminDetailsView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => context.read<FieldsCubit>().loadAllFields(),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.refresh,
           ),
         ],
       ),

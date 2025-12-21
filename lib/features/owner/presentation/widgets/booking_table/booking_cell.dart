@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Individual cell in the booking grid.
 class BookingCell extends StatelessWidget {
@@ -39,7 +40,9 @@ class BookingCell extends StatelessWidget {
             bottom: BorderSide(color: AppColors.border.withValues(alpha: 0.15)),
           ),
         ),
-        child: booking != null ? _buildBookingContent() : _buildEmptyContent(),
+        child: booking != null
+            ? _buildBookingContent(context)
+            : _buildEmptyContent(),
       ),
     );
   }
@@ -99,7 +102,7 @@ class BookingCell extends StatelessWidget {
   }
 
   /// Build content for a booked cell.
-  Widget _buildBookingContent() {
+  Widget _buildBookingContent(BuildContext context) {
     final customerName = booking!.isManual
         ? booking!.customerName ?? 'Walk-in'
         : booking!.userName ?? 'Customer';
@@ -132,7 +135,7 @@ class BookingCell extends StatelessWidget {
               Icon(_getStatusIcon(), size: 10, color: _getStatusColor()),
               const SizedBox(width: 2),
               Text(
-                _getStatusLabel(),
+                _getStatusLabel(context),
                 style: AppTextStyles.labelSmall.copyWith(
                   fontSize: 8,
                   fontWeight: FontWeight.w500,
@@ -152,7 +155,7 @@ class BookingCell extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
-                  'Manual',
+                  context.l10n.manual,
                   style: AppTextStyles.labelSmall.copyWith(
                     fontSize: 7,
                     fontWeight: FontWeight.w500,
@@ -211,18 +214,18 @@ class BookingCell extends StatelessWidget {
   }
 
   /// Get short status label.
-  String _getStatusLabel() {
+  String _getStatusLabel(BuildContext context) {
     if (booking == null) return '';
 
     switch (booking!.status) {
       case BookingStatus.confirmed:
-        return 'Conf';
+        return context.l10n.bookingStatusConf;
       case BookingStatus.pending:
-        return 'Pend';
+        return context.l10n.bookingStatusPend;
       case BookingStatus.completed:
-        return 'Done';
+        return context.l10n.bookingStatusDone;
       case BookingStatus.canceled:
-        return 'Canc';
+        return context.l10n.bookingStatusCanc;
     }
   }
 }

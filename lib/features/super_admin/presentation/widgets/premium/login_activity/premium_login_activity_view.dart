@@ -10,6 +10,7 @@ import 'package:spo_kick/features/auth/presentation/cubit/login_activity_state.d
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/login_activity/premium_login_activity_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/login_activity/premium_login_activity_filter_chips.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/login_activity/premium_login_activity_stats_bar.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium login activity view for super admin.
 ///
@@ -126,8 +127,8 @@ class _PremiumLoginActivityViewState extends State<PremiumLoginActivityView> {
           // Premium Header
           SliverToBoxAdapter(
             child: PremiumCurvedHeader(
-              title: 'Login Activity',
-              subtitle: 'Platform security monitoring',
+              title: context.l10n.loginActivity,
+              subtitle: context.l10n.platformSecurityMonitoring,
               showBackButton: true,
               actions: [_RefreshButton(onTap: _loadData)],
             ),
@@ -250,7 +251,7 @@ class _LoadingView extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            'Loading login activity...',
+            context.l10n.loadingLoginActivity,
             style: AppTextStyles.labelLarge.copyWith(
               color: AppColors.textSecondary,
             ),
@@ -291,7 +292,7 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Failed to load activity',
+              context.l10n.failedToLoadActivity,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
@@ -308,7 +309,7 @@ class _ErrorView extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Try Again'),
+              label: Text(context.l10n.tryAgain),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.navyDeep,
                 foregroundColor: Colors.white,
@@ -355,14 +356,14 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'No login activity',
+              context.l10n.noLoginActivity,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'No login events match\nyour filter criteria',
+              context.l10n.noLoginEventsMatchNyourFilter,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),

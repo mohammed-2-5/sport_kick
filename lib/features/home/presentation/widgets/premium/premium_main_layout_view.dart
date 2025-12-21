@@ -11,7 +11,6 @@ import 'package:spo_kick/features/home/presentation/cubit/navigation/navigation_
 import 'package:spo_kick/features/home/presentation/pages/home_page.dart';
 import 'package:spo_kick/features/home/presentation/widgets/premium/navigation/premium_bottom_nav_bar.dart';
 import 'package:spo_kick/features/home/presentation/widgets/premium/navigation/premium_floating_action_button.dart';
-import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:spo_kick/features/settings/presentation/pages/user_settings_page.dart';
 
 /// Premium main layout view with glassmorphism navigation.
@@ -79,15 +78,14 @@ class _MainContent extends StatelessWidget {
 
         // Bookings
         BlocProvider(
-          create: (_) => sl<BookingCubit>()..loadUserBookings(),
+          create: (_) =>
+              sl<BookingCubit>()
+                ..loadUserBookings(loadingMessage: 'Loading your bookings...'),
           child: const MyBookingsPage(),
         ),
 
         // Settings
-        BlocProvider(
-          create: (_) => sl<SettingsCubit>(),
-          child: const UserSettingsPage(),
-        ),
+        const UserSettingsPage(),
       ],
     );
   }

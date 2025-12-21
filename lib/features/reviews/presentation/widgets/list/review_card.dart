@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/reviews/domain/entities/review_entity.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/rating/rating_stars.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Widget for displaying a single review.
 ///
@@ -62,7 +63,7 @@ class ReviewCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            review.userName ?? 'Anonymous',
+                            review.userName ?? context.l10n.anonymous,
                             style: AppTextStyles.bodyMedium.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -70,7 +71,7 @@ class ReviewCard extends StatelessWidget {
                           if (review.wasEdited) ...[
                             const SizedBox(width: 6),
                             Text(
-                              '(edited)',
+                              context.l10n.edited,
                               style: AppTextStyles.caption.copyWith(
                                 color: Colors.grey[600],
                                 fontStyle: FontStyle.italic,
@@ -145,7 +146,7 @@ class ReviewCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  'Recent Review',
+                  context.l10n.recentReview,
                   style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,

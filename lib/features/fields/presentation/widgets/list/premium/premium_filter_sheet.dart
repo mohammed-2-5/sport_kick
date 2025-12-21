@@ -4,6 +4,7 @@ import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium filter bottom sheet with glassmorphism.
 ///
@@ -94,8 +95,7 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
               children: [
                 Text(
                   context.l10n.filtersTitle,
-                  style: const TextStyle(
-                    fontSize: 22,
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w800,
                     color: AppColors.textPrimary,
                   ),
@@ -113,8 +113,7 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                   },
                   child: Text(
                     context.l10n.reset,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyles.labelLarge.copyWith(
                       fontWeight: FontWeight.w700,
                       color: AppColors.accentCyan,
                     ),
@@ -139,16 +138,14 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                     children: [
                       Text(
                         '${LocaleFormatters.formatNumber(context, _currentPriceRange.start)} ${context.l10n.perHour}',
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.accentCyan,
                         ),
                       ),
                       Text(
                         '${LocaleFormatters.formatNumber(context, _currentPriceRange.end)} ${context.l10n.perHour}',
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.accentCyan,
                         ),
@@ -179,25 +176,25 @@ class _PremiumFilterSheetState extends State<PremiumFilterSheet> {
                     children: [
                       _SortChip(
                         label: context.l10n.sortRelevance,
-                        value: 'recommended',
+                        value: context.l10n.recommended,
                         currentSort: _currentSort,
                         onTap: (value) => setState(() => _currentSort = value),
                       ),
                       _SortChip(
                         label: context.l10n.sortPriceLowToHigh,
-                        value: 'price_asc',
+                        value: context.l10n.priceAsc,
                         currentSort: _currentSort,
                         onTap: (value) => setState(() => _currentSort = value),
                       ),
                       _SortChip(
                         label: context.l10n.sortPriceHighToLow,
-                        value: 'price_desc',
+                        value: context.l10n.priceDesc,
                         currentSort: _currentSort,
                         onTap: (value) => setState(() => _currentSort = value),
                       ),
                       _SortChip(
                         label: context.l10n.sortRating,
-                        value: 'rating',
+                        value: context.l10n.ratingField,
                         currentSort: _currentSort,
                         onTap: (value) => setState(() => _currentSort = value),
                       ),
@@ -281,8 +278,7 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 16,
+      style: AppTextStyles.titleMedium.copyWith(
         fontWeight: FontWeight.w800,
         color: AppColors.textPrimary,
       ),
@@ -323,8 +319,7 @@ class _SortChip extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyle(
-            fontSize: 13,
+          style: AppTextStyles.labelMedium.copyWith(
             fontWeight: FontWeight.w700,
             color: isSelected ? Colors.white : AppColors.textPrimary,
           ),
@@ -377,8 +372,7 @@ class _AmenityChip extends StatelessWidget {
             if (isSelected) const SizedBox(width: 6),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w700,
                 color: isSelected
                     ? AppColors.accentCyan

@@ -6,6 +6,7 @@ import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for assigning a field to an admin.
 class AssignFieldDialog extends StatefulWidget {
@@ -24,7 +25,7 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Assign Field to Admin'),
+      title: Text(context.l10n.assignFieldToAdmin),
       content: SizedBox(
         width: double.maxFinite,
         child: Column(
@@ -32,7 +33,9 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Assigning to: ${widget.admin.fullName ?? widget.admin.email}',
+              context.l10n.assigningTo(
+                widget.admin.fullName ?? widget.admin.email,
+              ),
               style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
             ),
             const SizedBox(height: AdminUIConstants.spacingMedium),
@@ -52,9 +55,9 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
                   }
 
                   return DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(
-                      labelText: 'Select Field',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: context.l10n.selectField,
+                      border: const OutlineInputBorder(),
                     ),
                     items: availableFields.map((field) {
                       return DropdownMenuItem(
@@ -67,7 +70,7 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
                   );
                 }
 
-                return const Text('Unable to load fields');
+                return Text(context.l10n.unableToLoadFields);
               },
             ),
           ],
@@ -76,7 +79,7 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         ElevatedButton(
           onPressed: selectedFieldId == null || isLoading ? null : _assignField,
@@ -86,7 +89,7 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
                   height: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Assign'),
+              : Text(context.l10n.assign),
         ),
       ],
     );
@@ -111,7 +114,7 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
               const SizedBox(width: AdminUIConstants.listItemSpacing),
               Expanded(
                 child: Text(
-                  'All Available Fields Assigned',
+                  context.l10n.allAvailableFieldsAssigned,
                   style: AppTextStyles.titleSmall.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -120,8 +123,8 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
             ],
           ),
           const SizedBox(height: AdminUIConstants.spacingSmall),
-          const Text(
-            'This admin already has all available fields assigned.',
+          Text(
+            context.l10n.thisAdminAlreadyHasAllAvailable,
             style: AppTextStyles.bodySmall,
           ),
         ],

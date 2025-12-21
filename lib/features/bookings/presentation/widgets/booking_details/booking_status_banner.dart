@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/bookings/presentation/utils/booking_status_utils.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium status banner for booking details.
 ///
@@ -35,8 +36,7 @@ class BookingStatusBanner extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             BookingStatusUtils.getStatusLabel(context, status).toUpperCase(),
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w800,
               color: Colors.white,
               letterSpacing: 1.5,

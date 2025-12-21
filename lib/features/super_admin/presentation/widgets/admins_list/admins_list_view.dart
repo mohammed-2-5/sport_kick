@@ -14,6 +14,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/a
 import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/admin_list_loading_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/admins_list/bulk_action_dialogs.dart';
 import 'package:spo_kick/features/super_admin/utils/admin_filter_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Admins List View - displays and manages admin list with filtering and bulk actions.
 class AdminsListView extends StatefulWidget {
@@ -133,7 +134,7 @@ class _AdminsListViewState extends State<AdminsListView>
                   actions: [
                     BulkAction(
                       icon: Icons.download,
-                      label: 'Export CSV',
+                      label: context.l10n.exportCsv,
                       onPressed: () async {
                         final selected = getSelectedItems(
                           filteredAdmins,
@@ -147,20 +148,20 @@ class _AdminsListViewState extends State<AdminsListView>
                     ),
                     BulkAction(
                       icon: Icons.check_circle_outline,
-                      label: 'Activate',
+                      label: context.l10n.activate,
                       onPressed: _handleBulkActivate,
                       color: Colors.green,
                     ),
                     BulkAction(
                       icon: Icons.block,
-                      label: 'Deactivate',
+                      label: context.l10n.deactivate,
                       onPressed: _handleBulkDeactivate,
                       color: Colors.red,
                     ),
                   ],
                 )
               : AppBar(
-                  title: const Text('Field Owners (Admins)'),
+                  title: Text(context.l10n.fieldOwnersAdmins),
                   elevation: 0,
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
@@ -172,13 +173,13 @@ class _AdminsListViewState extends State<AdminsListView>
                         child: const Icon(Icons.filter_list),
                       ),
                       onPressed: _showFilterSheet,
-                      tooltip: 'Filter',
+                      tooltip: context.l10n.filterFields,
                     ),
                     IconButton(
                       icon: const Icon(Icons.refresh),
                       onPressed: () =>
                           context.read<SuperAdminCubit>().loadAdmins(),
-                      tooltip: 'Refresh',
+                      tooltip: context.l10n.refresh,
                     ),
                   ],
                 ),
@@ -187,7 +188,7 @@ class _AdminsListViewState extends State<AdminsListView>
               ? FloatingActionButton.extended(
                   onPressed: () => context.pushNamed('superAdminCreateAdmin'),
                   icon: const Icon(Icons.person_add),
-                  label: const Text('Create Admin'),
+                  label: Text(context.l10n.createAdmin),
                 )
               : null,
         );

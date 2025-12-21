@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Image section of the field card with hero animation, gradient overlay,
 /// and optional popular badge.
@@ -90,9 +91,8 @@ class FieldCardImage extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             context.l10n.noImage,
-            style: const TextStyle(
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary,
-              fontSize: 12,
             ),
           ),
         ],
@@ -131,10 +131,9 @@ class FieldCardImage extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               context.l10n.trending,
-              style: const TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: Colors.white,
+                fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
               ),
             ),

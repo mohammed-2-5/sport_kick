@@ -233,6 +233,7 @@ class _PremiumManualBookingViewState extends State<PremiumManualBookingView> {
       notes: _notesController.text.trim().isEmpty
           ? null
           : _notesController.text.trim(),
+      loadingMessage: context.l10n.creatingManualBooking,
     );
   }
 

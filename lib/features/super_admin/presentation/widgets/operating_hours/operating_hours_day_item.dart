@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/day_hours_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_settings_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Operating Hours Day Item Widget
 ///
@@ -73,7 +75,7 @@ class _DayLabel extends StatelessWidget {
       width: 80,
       child: Text(
         day.displayName,
-        style: const TextStyle(
+        style: AppTextStyles.bodyMedium.copyWith(
           fontSize: 15,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
@@ -101,7 +103,7 @@ class _TimeSelectors extends StatelessWidget {
       children: [
         _TimeButton(
           time: hours.openTime,
-          label: 'Open',
+          label: context.l10n.open,
           onTap: () =>
               _showTimePicker(context, hours.openTime, onOpenTimeChanged),
         ),
@@ -109,15 +111,14 @@ class _TimeSelectors extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             '-',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.6),
             ),
           ),
         ),
         _TimeButton(
           time: hours.closeTime,
-          label: 'Close',
+          label: context.l10n.close,
           onTap: () =>
               _showTimePicker(context, hours.closeTime, onCloseTimeChanged),
         ),
@@ -185,8 +186,7 @@ class _TimeButton extends StatelessWidget {
         ),
         child: Text(
           time,
-          style: const TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
@@ -208,10 +208,9 @@ class _ClosedLabel extends StatelessWidget {
         color: Colors.red.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Text(
-        'Closed',
-        style: TextStyle(
-          fontSize: 14,
+      child: Text(
+        context.l10n.closed,
+        style: AppTextStyles.bodyMedium.copyWith(
           fontWeight: FontWeight.w600,
           color: Colors.red,
         ),

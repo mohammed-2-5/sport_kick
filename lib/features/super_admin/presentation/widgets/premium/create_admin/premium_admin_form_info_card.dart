@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium info card explaining the admin creation process.
 ///
@@ -49,20 +50,13 @@ class PremiumAdminFormInfoCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Create Admin Account',
-                      style: AppTextStyles.titleMedium.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
-                      ),
+                      context.l10n.createAdminAccount,
+                      style: AppTextStyles.titleMediumBold,
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Field owner management',
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontSize: 13,
-                        color: AppColors.textSecondary,
-                      ),
+                      context.l10n.fieldOwnerManagement,
+                      style: AppTextStyles.bodyMediumSecondary,
                     ),
                   ],
                 ),
@@ -82,19 +76,19 @@ class PremiumAdminFormInfoCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const _InfoStepItem(
+                _InfoStepItem(
                   number: '1',
-                  text: 'Enter the admin\'s email and personal details',
+                  text: context.l10n.enterTheAdminsEmailAndPersonalDetails,
                 ),
                 const SizedBox(height: 12),
-                const _InfoStepItem(
+                _InfoStepItem(
                   number: '2',
-                  text: 'A temporary password will be generated automatically',
+                  text: context.l10n.aTemporaryPasswordWillBeGenerated,
                 ),
                 const SizedBox(height: 12),
-                const _InfoStepItem(
+                _InfoStepItem(
                   number: '3',
-                  text: 'Share credentials securely with the new admin',
+                  text: context.l10n.shareCredentialsSecurelyWithTheNew,
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -107,10 +101,10 @@ class PremiumAdminFormInfoCard extends StatelessWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Admin must change password on first login',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.premiumGold.withValues(alpha: 0.9),
+                        context.l10n.adminMustChangePasswordOnFirst,
+                        style: AppTextStyles.withColor(
+                          AppTextStyles.bold(AppTextStyles.bodySmall),
+                          AppColors.premiumGold,
                         ),
                       ),
                     ),
@@ -149,10 +143,9 @@ class _InfoStepItem extends StatelessWidget {
           child: Center(
             child: Text(
               number,
-              style: AppTextStyles.labelSmall.copyWith(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
+              style: AppTextStyles.withColor(
+                AppTextStyles.bold(AppTextStyles.labelSmall),
+                Colors.white,
               ),
             ),
           ),
@@ -161,13 +154,7 @@ class _InfoStepItem extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(top: 2),
-            child: Text(
-              text,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textPrimary,
-                height: 1.4,
-              ),
-            ),
+            child: Text(text, style: AppTextStyles.bodyMedium),
           ),
         ),
       ],

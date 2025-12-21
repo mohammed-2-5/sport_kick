@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Card displaying performance metrics (Average Booking Value, Occupancy Rate, etc.).
 class PerformanceMetricsCard extends StatelessWidget {
@@ -13,7 +14,7 @@ class PerformanceMetricsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Performance Metrics',
+          context.l10n.performanceMetrics,
           style: AppTextStyles.appBarTitle.copyWith(
             fontWeight: FontWeight.bold,
           ),

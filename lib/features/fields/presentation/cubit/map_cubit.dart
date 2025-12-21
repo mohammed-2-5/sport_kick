@@ -31,36 +31,45 @@ class MapCubit extends Cubit<MapState> {
   Future<LatLng?> getUserLocation() async {
     emit(const MapLocationLoading());
 
-    // Check if location services are enabled
-    final isAvailable = await LocationService.isLocationAvailable();
+    try {
+      // Check if location services are enabled
+      final isAvailable = await LocationService.isLocationAvailable();
 
-    if (!isAvailable) {
-      // Try to request permission
-      final granted = await LocationService.requestPermission();
+      if (!isAvailable) {
+        // Try to request permission
+        final granted = await LocationService.requestPermission();
 
-      if (!granted) {
+        if (!granted) {
+          emit(
+            const MapLocationPermissionDenied(
+              message: 'Please enable location permissions in settings.',
+            ),
+          );
+          return null;
+        }
+      }
+
+      // Get current location with an overall timeout
+      final location = await LocationService.getCurrentLocation().timeout(
+        const Duration(seconds: 15),
+        onTimeout: () => null,
+      );
+
+      if (location == null) {
         emit(
-          const MapLocationPermissionDenied(
-            message: 'Please enable location permissions in settings',
-          ),
+          const MapLocationError(message: 'Could not determine your location.'),
         );
         return null;
       }
-    }
 
-    // Get current location
-    final location = await LocationService.getCurrentLocation();
-
-    if (location == null) {
-      emit(
-        const MapLocationError(message: 'Could not determine your location'),
-      );
+      _userLocation = location;
+      emit(MapLocationLoaded(userLocation: location));
+      return location;
+    } catch (e) {
+      // Ensure we exit loading state on any error
+      emit(MapLocationError(message: 'Location error: ${e.toString()}'));
       return null;
     }
-
-    _userLocation = location;
-    emit(MapLocationLoaded(userLocation: location));
-    return location;
   }
 
   /// Update map filters.

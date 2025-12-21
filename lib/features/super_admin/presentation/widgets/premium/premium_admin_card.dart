@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium admin card for super admin management.
@@ -193,7 +195,7 @@ class PremiumAdminCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            'ADMIN',
+                            context.l10n.admin,
                             style: AppTextStyles.labelSmall.copyWith(
                               fontSize: 9,
                               fontWeight: FontWeight.w700,
@@ -230,13 +232,18 @@ class PremiumAdminCard extends StatelessWidget {
             children: [
               _StatChip(
                 icon: Icons.sports_soccer,
-                label: '$fieldsCount fields',
+                label: context.l10n.fieldsCount(fieldsCount),
                 color: AppColors.accentCyan,
               ),
               const SizedBox(width: 12),
               _StatChip(
                 icon: Icons.attach_money,
-                label: '${revenue?.toStringAsFixed(0) ?? '0'} EGP',
+                label: LocaleFormatters.formatPrice(
+                  context,
+                  amount: revenue ?? 0,
+                  currency: context.l10n.currencyEgp,
+                  decimalDigits: 0,
+                ),
                 color: Colors.green,
               ),
               if (phone != null) ...[
@@ -263,7 +270,7 @@ class PremiumAdminCard extends StatelessWidget {
                 if (onAssignField != null)
                   Expanded(
                     child: _ActionButton(
-                      label: 'Assign Field',
+                      label: context.l10n.assignField,
                       icon: Icons.add_circle_outline,
                       color: AppColors.accentCyan,
                       onTap: onAssignField!,
@@ -275,7 +282,9 @@ class PremiumAdminCard extends StatelessWidget {
                 if (onToggleStatus != null)
                   Expanded(
                     child: _ActionButton(
-                      label: isActive ? 'Deactivate' : 'Activate',
+                      label: isActive
+                          ? context.l10n.deactivate
+                          : context.l10n.activate,
                       icon: isActive ? Icons.block : Icons.check_circle_outline,
                       color: isActive ? Colors.orange : Colors.green,
                       onTap: onToggleStatus!,
@@ -286,7 +295,7 @@ class PremiumAdminCard extends StatelessWidget {
                 if (onDelete != null)
                   Expanded(
                     child: _ActionButton(
-                      label: 'Delete',
+                      label: context.l10n.delete,
                       icon: Icons.delete_outline,
                       color: Colors.red,
                       onTap: onDelete!,
@@ -316,7 +325,7 @@ class _StatusBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        isActive ? 'Active' : 'Inactive',
+        isActive ? context.l10n.active : context.l10n.inactive,
         style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w600,
           color: isActive ? Colors.green : Colors.grey,

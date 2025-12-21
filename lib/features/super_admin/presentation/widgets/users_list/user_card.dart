@@ -5,6 +5,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/us
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_card_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_info_row.dart';
 import 'package:spo_kick/features/super_admin/utils/user_card_utils.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// User card widget displaying customer information.
 class UserCard extends StatelessWidget {
@@ -49,7 +50,9 @@ class UserCard extends StatelessWidget {
               const SizedBox(height: 8),
               UserInfoRow(
                 icon: Icons.calendar_today_outlined,
-                text: 'Joined ${formatRelativeDate(user.createdAt)}',
+                text: context.l10n.joinedDate(
+                  formatRelativeDate(user.createdAt),
+                ),
                 iconColor: Colors.grey,
               ),
               const SizedBox(height: 12),

@@ -497,6 +497,306 @@ class AppTextStyles {
   static TextStyle italic(TextStyle style) {
     return style.copyWith(fontStyle: FontStyle.italic);
   }
+
+  // ==================== SEMANTIC VARIANTS (WHITE) ====================
+  // Used for text on dark backgrounds
+
+  /// Headline Large (White)
+  static const TextStyle headlineLargeWhite = TextStyle(
+    fontFamily: headingFontFamily,
+    fontSize: 32,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0,
+    height: 1.25,
+    color: Colors.white,
+  );
+
+  /// Headline Medium (White)
+  static const TextStyle headlineMediumWhite = TextStyle(
+    fontFamily: headingFontFamily,
+    fontSize: 28,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0,
+    height: 1.29,
+    color: Colors.white,
+  );
+
+  /// Headline Small (White)
+  static const TextStyle headlineSmallWhite = TextStyle(
+    fontFamily: headingFontFamily,
+    fontSize: 24,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0,
+    height: 1.33,
+    color: Colors.white,
+  );
+
+  /// Title Large (White)
+  static const TextStyle titleLargeWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 22,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0,
+    height: 1.27,
+    color: Colors.white,
+  );
+
+  /// Title Medium (White)
+  static const TextStyle titleMediumWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.15,
+    height: 1.50,
+    color: Colors.white,
+  );
+
+  /// Title Small (White)
+  static const TextStyle titleSmallWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.1,
+    height: 1.43,
+    color: Colors.white,
+  );
+
+  /// Title Medium (Primary)
+  /// Note: The default titleMedium is textPrimary (usually dark).
+  static const TextStyle titleMediumPrimary = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.15,
+    height: 1.50,
+    color: AppColors.primary,
+  );
+
+  /// Body Medium (White)
+  static const TextStyle bodyMediumWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.25,
+    height: 1.43,
+    color: Colors.white,
+  );
+
+  /// Body Small (White)
+  static const TextStyle bodySmallWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.4,
+    height: 1.33,
+    color: Colors.white,
+  );
+
+  /// Body Large (White)
+  static const TextStyle bodyLargeWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.5,
+    height: 1.50,
+    color: Colors.white,
+  );
+
+  /// Label Large (White)
+  static const TextStyle labelLargeWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.1,
+    height: 1.43,
+    color: Colors.white,
+  );
+
+  /// Label Medium (White)
+  static const TextStyle labelMediumWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.5,
+    height: 1.33,
+    color: Colors.white,
+  );
+
+  /// Label Small (White)
+  static const TextStyle labelSmallWhite = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 11,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.5,
+    height: 1.45,
+    color: Colors.white,
+  );
+
+  /// Label Medium (Secondary)
+  static const TextStyle labelMediumSecondary = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.5,
+    height: 1.33,
+    color: AppColors.textSecondary,
+  );
+
+  // ==================== STATUS VARIANTS ====================
+
+  /// Status: Active (Green)
+  static const TextStyle statusActive = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12, // labelMedium size
+    fontWeight: FontWeight.w600, // Medium/Bold
+    letterSpacing: 0.5,
+    height: 1.33,
+    color: Colors.green,
+  );
+
+  /// Status: Inactive (Red/Orange)
+  static const TextStyle statusInactive = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.5,
+    height: 1.33,
+    color: Colors.red,
+  );
+
+  /// Status Badge Text (Active) - Small
+  static const TextStyle statusBadgeActive = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 11, // labelSmall size
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.5,
+    height: 1.45,
+    color: Colors.green,
+  );
+
+  /// Status Badge Text (Inactive) - Small
+  static const TextStyle statusBadgeInactive = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 11,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.5,
+    height: 1.45,
+    color: Colors.orange,
+  );
+
+  /// Avatar Initial (Large)
+  static const TextStyle avatarInitial = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 36,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    height: 1.22,
+    color: AppColors.primary,
+  );
+
+  /// Status Large: Active (Green)
+  static const TextStyle statusLargeActive = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.1,
+    height: 1.43,
+    color: Colors.green,
+  );
+
+  /// Status Large: Inactive (Red)
+  static const TextStyle statusLargeInactive = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.1,
+    height: 1.43,
+    color: Colors.red,
+  );
+
+  // ==================== BOLD VARIANTS ====================
+
+  /// Headline Small (Bold)
+  static const TextStyle headlineSmallBold = TextStyle(
+    fontFamily: headingFontFamily,
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    height: 1.33,
+    color: AppColors.textPrimary,
+  );
+
+  /// Title Large (Bold)
+  static const TextStyle titleLargeBold = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    height: 1.27,
+    color: AppColors.textPrimary,
+  );
+
+  /// Title Medium (Bold)
+  static const TextStyle titleMediumBold = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.15,
+    height: 1.50,
+    color: AppColors.textPrimary,
+  );
+
+  /// Label Small (Bold)
+  static const TextStyle labelSmallBold = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 11,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.5,
+    height: 1.45,
+    color: AppColors.textPrimary,
+  );
+
+  // ==================== SECONDARY TEXT VARIANTS ====================
+
+  /// Title Small (Secondary)
+  static const TextStyle titleSmallSecondary = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.1,
+    height: 1.43,
+    color: AppColors.textSecondary,
+  );
+
+  /// Body Medium (Secondary)
+  static const TextStyle bodyMediumSecondary = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.25,
+    height: 1.43,
+    color: AppColors.textSecondary,
+  );
+
+  /// Body Small (Secondary)
+  static const TextStyle bodySmallSecondary = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.4,
+    height: 1.33,
+    color: AppColors.textSecondary,
+  );
+
+  /// Caption (Secondary)
+  static const TextStyle captionSecondary = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 11,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.5,
+    height: 1.45,
+    color: AppColors.textSecondary,
+  );
 }
 
 // ==================== DEVICE TYPE ENUM ====================

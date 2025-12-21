@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_state.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium step indicator for the booking wizard.
 ///
@@ -162,8 +164,8 @@ class _StepCircleState extends State<_StepCircle>
           ),
           const SizedBox(height: 8),
           Text(
-            widget.step.title,
-            style: TextStyle(
+            widget.step.title(context.l10n),
+            style: AppTextStyles.labelSmall.copyWith(
               fontSize: 11,
               fontWeight: widget.isActive ? FontWeight.w700 : FontWeight.w500,
               color: widget.isActive || widget.isCompleted
@@ -183,8 +185,7 @@ class _StepCircleState extends State<_StepCircle>
 
     return Text(
       '${widget.stepNumber}',
-      style: TextStyle(
-        fontSize: 16,
+      style: AppTextStyles.titleMedium.copyWith(
         fontWeight: FontWeight.w700,
         color: widget.isActive ? Colors.white : AppColors.textSecondary,
       ),

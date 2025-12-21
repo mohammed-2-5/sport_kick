@@ -117,7 +117,7 @@ class ReportsCubit extends Cubit<ReportsState> {
         'users_report_${DateTime.now().millisecondsSinceEpoch}',
       );
       debugPrint('✅ [ReportsCubit] Users exported successfully');
-      emit(const ReportsExportSuccess(message: 'Users exported to CSV'));
+      emit(ReportsExportSuccess(message: "Users exported to CSV"));
       _restoreLoadedState();
     } catch (e) {
       debugPrint('❌ [ReportsCubit] Error exporting users: $e');
@@ -143,7 +143,7 @@ class ReportsCubit extends Cubit<ReportsState> {
         'admins_report_${DateTime.now().millisecondsSinceEpoch}',
       );
       debugPrint('✅ [ReportsCubit] Admins exported successfully');
-      emit(const ReportsExportSuccess(message: 'Admins exported to CSV'));
+      emit(ReportsExportSuccess(message: "Admins exported to CSV"));
       _restoreLoadedState();
     } catch (e) {
       debugPrint('❌ [ReportsCubit] Error exporting admins: $e');
@@ -170,9 +170,7 @@ class ReportsCubit extends Cubit<ReportsState> {
         'platform_report_${DateTime.now().millisecondsSinceEpoch}',
       );
       debugPrint('✅ [ReportsCubit] All data exported successfully');
-      emit(
-        const ReportsExportSuccess(message: 'Platform data exported to CSV'),
-      );
+      emit(ReportsExportSuccess(message: "Platform data exported to CSV"));
       _restoreLoadedState();
     } catch (e) {
       debugPrint('❌ [ReportsCubit] Error exporting data: $e');
@@ -195,7 +193,7 @@ class ReportsCubit extends Cubit<ReportsState> {
     try {
       await _pdfExportService.exportPlatformStatisticsToPdf(_statistics!);
       debugPrint('✅ [ReportsCubit] Statistics exported successfully');
-      emit(const ReportsExportSuccess(message: 'Statistics exported to PDF'));
+      emit(ReportsExportSuccess(message: "Statistics exported to PDF"));
       _restoreLoadedState();
     } catch (e) {
       debugPrint('❌ [ReportsCubit] Error exporting statistics: $e');

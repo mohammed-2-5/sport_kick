@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/booking_status_badge.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Booking card widget for displaying booking information
 class BookingCard extends StatelessWidget {
@@ -39,14 +41,16 @@ class BookingCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Booking #${booking.id.substring(0, 8)}',
+                          context.l10n.bookingNumber(
+                            booking.id.substring(0, 8),
+                          ),
                           style: AppTextStyles.bodySmall.copyWith(
                             color: Colors.grey,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          booking.fieldName ?? 'Unknown Field',
+                          booking.fieldName ?? context.l10n.unknownField,
                           style: AppTextStyles.titleMedium.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -138,7 +142,12 @@ class BookingCard extends StatelessWidget {
                   ),
                   // Duration
                   Text(
-                    '${booking.durationInHours}h',
+                    context.l10n.recurringHoursShort(
+                      LocaleFormatters.formatNumber(
+                        context,
+                        booking.durationInHours,
+                      ),
+                    ),
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: Colors.grey[600],
                     ),

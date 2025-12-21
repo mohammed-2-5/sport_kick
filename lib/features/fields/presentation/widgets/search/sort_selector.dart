@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/search_filters_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Sort Selector Widget
 ///
@@ -23,9 +24,9 @@ class SortSelector extends StatelessWidget {
       children: [
         Text(
           context.l10n.sortBy,
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 12),
         ...SearchSortBy.values.map((sortOption) {
@@ -52,7 +53,7 @@ class SortSelector extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   sortOption.displayName(context.l10n),
-                  style: TextStyle(
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: isSelected
                         ? AppColors.primary
                         : AppColors.textPrimary,

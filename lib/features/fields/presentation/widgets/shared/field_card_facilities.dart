@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 
 /// Facilities display widget for field card.
@@ -63,7 +64,7 @@ class FieldCardFacilities extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             displayName,
-            style: const TextStyle(
+            style: AppTextStyles.labelSmall.copyWith(
               fontSize: 10,
               fontWeight: FontWeight.w600,
               color: Colors.white,

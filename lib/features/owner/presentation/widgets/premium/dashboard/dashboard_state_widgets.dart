@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Loading state widget for dashboard pages.
 ///
@@ -74,7 +75,7 @@ class DashboardErrorState extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    'Retry',
+                    context.l10n.retry,
                     style: AppTextStyles.labelLarge.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Price container widget displaying total booking price.
 class BookingListItemPrice extends StatelessWidget {
@@ -46,8 +47,7 @@ class BookingListItemPrice extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 context.l10n.totalPrice,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w500,
                   color: AppColors.textSecondary,
                 ),
@@ -56,8 +56,7 @@ class BookingListItemPrice extends StatelessWidget {
           ),
           Text(
             priceText,
-            style: const TextStyle(
-              fontSize: 18,
+            style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w800,
               color: AppColors.primary,
             ),

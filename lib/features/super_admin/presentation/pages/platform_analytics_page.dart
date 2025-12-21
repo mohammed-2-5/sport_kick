@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -13,6 +14,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/cit
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/monthly_bookings_chart.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/revenue_trends_chart.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/top_fields_list.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Platform Analytics Page
 ///
@@ -53,8 +55,8 @@ class _PlatformAnalyticsView extends StatelessWidget {
               slivers: [
                 SliverToBoxAdapter(
                   child: PremiumCurvedHeader(
-                    title: 'Analytics',
-                    subtitle: 'Platform performance metrics',
+                    title: context.l10n.analytics,
+                    subtitle: context.l10n.platformPerformanceMetrics,
                     showBackButton: true,
                     actions: [
                       IconButton(
@@ -127,15 +129,15 @@ class _AnalyticsContent extends StatelessWidget {
         delegate: SliverChildListDelegate([
           // Header
           Text(
-            'Platform Performance',
-            style: Theme.of(
-              context,
-            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+            context.l10n.platformPerformance,
+            style: AppTextStyles.headlineSmall.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Comprehensive overview of your platform metrics',
-            style: TextStyle(color: Colors.grey[600]),
+            context.l10n.comprehensiveOverviewOfYourPlatformMetrics,
+            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
           ),
           const SizedBox(height: 24),
 
@@ -173,7 +175,9 @@ class _AnalyticsContent extends StatelessWidget {
       child: Center(
         child: Text(
           message,
-          style: const TextStyle(color: AppColors.textSecondary),
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
       ),
     );
@@ -195,7 +199,7 @@ class _ErrorContent extends StatelessWidget {
           const Icon(Icons.error_outline, size: 64, color: Colors.red),
           const SizedBox(height: 16),
           Text(
-            'Error loading analytics',
+            context.l10n.errorLoadingAnalytics,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
@@ -208,7 +212,7 @@ class _ErrorContent extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.navyDeep,
               foregroundColor: Colors.white,

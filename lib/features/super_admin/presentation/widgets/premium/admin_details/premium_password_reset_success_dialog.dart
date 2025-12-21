@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium success dialog for password reset.
 ///
@@ -122,7 +123,7 @@ class _PremiumPasswordResetSuccessDialogState
                 const SizedBox(height: 24),
 
                 Text(
-                  'Password Reset Successfully!',
+                  context.l10n.passwordResetSuccessfully,
                   style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -133,7 +134,9 @@ class _PremiumPasswordResetSuccessDialogState
                 const SizedBox(height: 8),
 
                 Text(
-                  'Share this password securely with ${widget.admin.displayName}',
+                  context.l10n.sharePasswordSecurelyWith(
+                    widget.admin.displayName,
+                  ),
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
@@ -216,7 +219,7 @@ class _PremiumPasswordResetSuccessDialogState
                     ),
                   ),
                   child: _CredentialRow(
-                    label: 'New Password',
+                    label: context.l10n.newPassword,
                     value: widget.newPassword,
                     icon: Icons.lock_outline,
                   ),
@@ -244,7 +247,7 @@ class _PremiumPasswordResetSuccessDialogState
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Admin must change password on next login',
+                          context.l10n.adminMustChangePasswordOnNext,
                           style: AppTextStyles.labelMedium.copyWith(
                             fontWeight: FontWeight.w500,
                             color: Colors.orange.shade700,
@@ -258,7 +261,7 @@ class _PremiumPasswordResetSuccessDialogState
                 const SizedBox(height: 24),
 
                 PremiumButton(
-                  label: 'Done',
+                  label: context.l10n.done,
                   onPressed: widget.onDone,
                   icon: Icons.check,
                   fullWidth: true,

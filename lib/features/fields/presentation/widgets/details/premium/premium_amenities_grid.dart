@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium amenities/facilities grid with animations.
 ///
@@ -26,14 +28,17 @@ class PremiumAmenitiesGrid extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.star_outline, color: AppColors.accentCyan, size: 24),
-              SizedBox(width: 12),
+              const Icon(
+                Icons.star_outline,
+                color: AppColors.accentCyan,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
               Text(
-                'Amenities',
-                style: TextStyle(
-                  fontSize: 20,
+                context.l10n.amenities,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w800,
                   color: AppColors.textPrimary,
                 ),
@@ -93,8 +98,7 @@ class _AmenityCard extends StatelessWidget {
           const SizedBox(width: 10),
           Text(
             facility,
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               color: color,
               fontWeight: FontWeight.w700,
             ),

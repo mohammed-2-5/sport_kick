@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -129,8 +130,8 @@ class _PremiumAdminsListViewState extends State<PremiumAdminsListView> {
                 children: [
                   // Premium Header
                   PremiumCurvedHeader(
-                    title: 'Field Owners',
-                    subtitle: '${admins.length} total admins',
+                    title: context.l10n.fieldOwners,
+                    subtitle: context.l10n.totalAdminsCount(admins.length),
                     showBackButton: true,
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -171,7 +172,7 @@ class _PremiumAdminsListViewState extends State<PremiumAdminsListView> {
                             // Search bar
                             PremiumAdminSearchBar(
                               controller: _searchController,
-                              hintText: 'Search admins...',
+                              hintText: context.l10n.searchAdmins,
                               onChanged: (value) => setState(() {}),
                               hasActiveFilters: _selectedStatus != null,
                               onFilterTap: () {
@@ -397,9 +398,10 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              hasFilters ? 'No admins match your filters' : 'No admins found',
-              style: const TextStyle(
-                fontSize: 16,
+              hasFilters
+                  ? context.l10n.noAdminsMatchYourFilters
+                  : context.l10n.noAdminsFound,
+              style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -407,7 +409,7 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               hasFilters
-                  ? 'Try adjusting your search or filters'
+                  ? context.l10n.tryAdjustingYourSearchOrFilters
                   : 'Create your first admin to get started',
               style: AppTextStyles.labelMedium.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -419,7 +421,7 @@ class _EmptyState extends StatelessWidget {
               TextButton(
                 onPressed: onClearFilters,
                 child: Text(
-                  'Clear Filters',
+                  context.l10n.clearFilters,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.premiumGold,
                   ),
@@ -427,7 +429,7 @@ class _EmptyState extends StatelessWidget {
               )
             else
               PremiumButton(
-                label: 'Create Admin',
+                label: context.l10n.createAdmin,
                 onPressed: onCreateAdmin,
                 icon: Icons.person_add,
               ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium header for super admin users list.
 ///
@@ -58,17 +59,13 @@ class PremiumUsersListHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Manage Users',
-                      style: AppTextStyles.headlineSmall.copyWith(
-                        color: Colors.white,
-                      ),
+                      context.l10n.manageUsers,
+                      style: AppTextStyles.headlineSmallWhite,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'View and manage all customer accounts',
-                      style: AppTextStyles.labelMedium.copyWith(
-                        color: Colors.white70,
-                      ),
+                      context.l10n.viewAndManageAllCustomerAccounts,
+                      style: AppTextStyles.labelMediumWhite,
                     ),
                   ],
                 ),
@@ -95,17 +92,20 @@ class PremiumUsersListHeader extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _StatChip(label: 'Total', count: stats['total'] ?? 0),
+                _StatChip(
+                  label: context.l10n.total,
+                  count: stats[context.l10n.total2] ?? 0,
+                ),
                 const SizedBox(width: 8),
                 _StatChip(
-                  label: 'Active',
-                  count: stats['active'] ?? 0,
+                  label: context.l10n.active,
+                  count: stats[context.l10n.active2] ?? 0,
                   color: Colors.green,
                 ),
                 const SizedBox(width: 8),
                 _StatChip(
-                  label: 'Inactive',
-                  count: stats['inactive'] ?? 0,
+                  label: context.l10n.inactive,
+                  count: stats[context.l10n.inactive2] ?? 0,
                   color: Colors.grey,
                 ),
               ],
@@ -294,11 +294,12 @@ class _SearchBar extends StatelessWidget {
           ),
           child: TextField(
             onChanged: onChanged,
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
+            style: AppTextStyles.bodyMediumWhite,
             decoration: InputDecoration(
-              hintText: 'Search by name, email, or phone...',
-              hintStyle: AppTextStyles.bodyMedium.copyWith(
-                color: Colors.white.withValues(alpha: 0.5),
+              hintText: context.l10n.searchByNameEmailOrPhone,
+              hintStyle: AppTextStyles.withColor(
+                AppTextStyles.bodyMedium,
+                Colors.white54,
               ),
               prefixIcon: Icon(
                 Icons.search,
@@ -354,9 +355,9 @@ class _StatChip extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: AppTextStyles.labelSmall.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                style: AppTextStyles.withColor(
+                  AppTextStyles.labelSmallBold,
+                  Colors.white,
                 ),
               ),
               const SizedBox(width: 6),
@@ -368,9 +369,9 @@ class _StatChip extends StatelessWidget {
                 ),
                 child: Text(
                   count.toString(),
-                  style: AppTextStyles.labelSmall.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                  style: AppTextStyles.withColor(
+                    AppTextStyles.bold(AppTextStyles.labelSmall),
+                    Colors.white,
                   ),
                 ),
               ),

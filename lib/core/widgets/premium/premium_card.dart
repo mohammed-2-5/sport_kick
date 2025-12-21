@@ -20,7 +20,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 ///   accentColor: AppColors.accentCyan,
 ///   child: Padding(
 ///     padding: EdgeInsets.all(16),
-///     child: Text('Card content'),
+///     child: Text(context.l10n.cardContent),
 ///   ),
 /// )
 /// ```

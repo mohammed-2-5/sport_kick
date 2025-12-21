@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/dashboard_quick_action_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Quick actions section for dashboard.
 class DashboardQuickActionsSection extends StatelessWidget {
@@ -12,7 +13,7 @@ class DashboardQuickActionsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Quick Actions',
+          context.l10n.quickActions,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.premiumTextPrimary,
@@ -26,59 +27,59 @@ class DashboardQuickActionsSection extends StatelessWidget {
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
           childAspectRatio: 1.4,
-          children: const [
+          children: [
             DashboardQuickActionCard(
-              title: 'Create Admin',
-              subtitle: 'Add new field owner',
+              title: context.l10n.createAdmin,
+              subtitle: context.l10n.addNewFieldOwner,
               icon: Icons.person_add,
               color: Colors.purple,
               route: 'superAdminCreateAdmin',
             ),
             DashboardQuickActionCard(
-              title: 'Create Field',
-              subtitle: 'Add new sports field',
+              title: context.l10n.createField,
+              subtitle: context.l10n.addNewSportsField,
               icon: Icons.add_business,
               color: Colors.deepOrange,
               route: 'superAdminCreateField',
             ),
             DashboardQuickActionCard(
-              title: 'View Admins',
-              subtitle: 'Manage field owners',
+              title: context.l10n.viewAdmins,
+              subtitle: context.l10n.manageFieldOwners,
               icon: Icons.admin_panel_settings,
               color: Colors.blue,
               route: 'superAdminAdmins',
             ),
             DashboardQuickActionCard(
-              title: 'View Users',
-              subtitle: 'Manage customers',
+              title: context.l10n.viewUsers,
+              subtitle: context.l10n.manageCustomers,
               icon: Icons.people,
               color: Colors.green,
               route: 'superAdminUsers',
             ),
             DashboardQuickActionCard(
-              title: 'Manage Cities',
-              subtitle: 'Configure locations',
+              title: context.l10n.manageCities,
+              subtitle: context.l10n.configureLocations,
               icon: Icons.location_city,
               color: Colors.orange,
               route: 'superAdminCities',
             ),
             DashboardQuickActionCard(
-              title: 'All Fields',
-              subtitle: 'View all sports fields',
+              title: context.l10n.allFields,
+              subtitle: context.l10n.viewAllSportsFields,
               icon: Icons.sports_soccer,
               color: Colors.teal,
               route: 'superAdminFields',
             ),
             DashboardQuickActionCard(
-              title: 'All Bookings',
-              subtitle: 'View all reservations',
+              title: context.l10n.allBookings,
+              subtitle: context.l10n.viewAllReservations,
               icon: Icons.event_note,
               color: Colors.indigo,
               route: 'superAdminBookings',
             ),
             DashboardQuickActionCard(
-              title: 'Analytics',
-              subtitle: 'Platform insights',
+              title: context.l10n.analytics,
+              subtitle: context.l10n.platformInsights,
               icon: Icons.analytics,
               color: Colors.deepPurple,
               route: 'superAdminAnalytics',

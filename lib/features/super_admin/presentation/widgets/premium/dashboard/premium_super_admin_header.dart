@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium super admin header with gold accent theme.
 ///
@@ -73,22 +74,16 @@ class PremiumSuperAdminHeader extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      greeting,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white.withValues(alpha: 0.7),
-                      ),
-                    ),
+                    Text(greeting, style: AppTextStyles.bodyMediumWhite),
                     const SizedBox(height: 4),
                     Row(
                       children: [
                         Flexible(
                           child: Text(
                             adminName,
-                            style: AppTextStyles.titleLarge.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
+                            style: AppTextStyles.withColor(
+                              AppTextStyles.titleLargeBold,
+                              Colors.white,
                             ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
@@ -107,12 +102,7 @@ class PremiumSuperAdminHeader extends StatelessWidget {
                           color: AppColors.goldAccent.withValues(alpha: 0.8),
                         ),
                         const SizedBox(width: 6),
-                        Text(
-                          date,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: Colors.white.withValues(alpha: 0.6),
-                          ),
-                        ),
+                        Text(date, style: AppTextStyles.bodySmallWhite),
                       ],
                     ),
                   ],
@@ -301,9 +291,9 @@ class _NotificationButtonState extends State<_NotificationButton>
                   child: Text(
                     widget.count > 99 ? '99+' : widget.count.toString(),
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                    style: AppTextStyles.withColor(
+                      AppTextStyles.labelSmallBold,
+                      Colors.white,
                     ),
                   ),
                 ),
@@ -352,9 +342,9 @@ class _AdminAvatar extends StatelessWidget {
             child: Center(
               child: Text(
                 name.isNotEmpty ? name[0].toUpperCase() : 'A',
-                style: AppTextStyles.headlineSmall.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.goldAccent,
+                style: AppTextStyles.withColor(
+                  AppTextStyles.headlineSmallBold,
+                  AppColors.goldAccent,
                 ),
               ),
             ),
@@ -417,11 +407,10 @@ class _AdminBadge extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            'SUPER ADMIN',
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w700,
-              color: AppColors.goldAccent,
-              letterSpacing: 0.5,
+            context.l10n.superAdminRole,
+            style: AppTextStyles.withColor(
+              AppTextStyles.labelSmallBold,
+              AppColors.goldAccent,
             ),
           ),
         ],

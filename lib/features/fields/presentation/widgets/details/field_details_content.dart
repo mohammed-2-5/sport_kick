@@ -5,6 +5,7 @@ import 'package:spo_kick/features/favorites/presentation/cubit/favorites_state.d
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/field_details_body.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/field_details_sliver_app_bar.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Content widget for field details page.
 ///
@@ -35,7 +36,9 @@ class FieldDetailsContent extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            state.isFavorite ? 'Added to favorites' : 'Removed from favorites',
+            state.isFavorite
+                ? context.l10n.addedToFavorites
+                : context.l10n.removedFromFavorites,
           ),
           duration: const Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,

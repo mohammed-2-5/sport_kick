@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/time_slot_period_section.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium time slot grid with period sections and animations.
 ///
@@ -73,8 +74,7 @@ class _SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Text(
         context.l10n.availableTimeSlots,
-        style: const TextStyle(
-          fontSize: 18,
+        style: AppTextStyles.titleLarge.copyWith(
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
@@ -207,8 +207,7 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               context.l10n.noSlotsAvailable,
-              style: const TextStyle(
-                fontSize: 20,
+              style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
               ),
@@ -217,8 +216,7 @@ class _EmptyState extends StatelessWidget {
             Text(
               context.l10n.allSlotsBookedMessage,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
                 height: 1.5,
               ),
@@ -258,8 +256,7 @@ class _ErrorState extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               context.l10n.somethingWentWrong,
-              style: const TextStyle(
-                fontSize: 20,
+              style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
               ),
@@ -268,8 +265,7 @@ class _ErrorState extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
                 height: 1.5,
               ),

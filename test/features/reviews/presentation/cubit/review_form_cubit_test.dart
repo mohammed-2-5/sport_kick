@@ -72,7 +72,10 @@ void main() {
 
     group('submit -', () {
       test('should emit error when rating is 0', () async {
-        await cubit.submit();
+        await cubit.submit(
+          errorRating: 'Select valid rating',
+          errorLogin: 'User must be logged in',
+        );
 
         expect(cubit.state, isA<ReviewFormError>());
         expect((cubit.state as ReviewFormError).message, contains('rating'));
@@ -85,7 +88,10 @@ void main() {
         );
         noUserCubit.updateRating(4);
 
-        await noUserCubit.submit();
+        await noUserCubit.submit(
+          errorRating: 'Select valid rating',
+          errorLogin: 'User must be logged in',
+        );
 
         expect(noUserCubit.state, isA<ReviewFormError>());
         expect(
@@ -109,7 +115,10 @@ void main() {
 
         cubit.updateRating(5);
         cubit.updateComment('Great!');
-        await cubit.submit();
+        await cubit.submit(
+          errorRating: 'Select valid rating',
+          errorLogin: 'User must be logged in',
+        );
 
         verify(
           () => mockReviewsCubit.createReview(
@@ -139,7 +148,10 @@ void main() {
         );
 
         editCubit.updateRating(5);
-        await editCubit.submit();
+        await editCubit.submit(
+          errorRating: 'Select valid rating',
+          errorLogin: 'User must be logged in',
+        );
 
         verify(
           () => mockReviewsCubit.updateReview(

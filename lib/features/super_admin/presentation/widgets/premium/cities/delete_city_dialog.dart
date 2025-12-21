@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for confirming city deletion.
 ///
@@ -98,7 +99,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Delete City',
+                  context.l10n.deleteCity,
                   style: AppTextStyles.titleLarge.copyWith(
                     color: AppColors.white,
                   ),
@@ -148,7 +149,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'This action may be irreversible',
+                        context.l10n.thisActionMayBeIrreversible,
                         style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.warning,
@@ -156,9 +157,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        widget.city.fieldsCount > 0
-                            ? 'This city has ${widget.city.fieldsCount} field${widget.city.fieldsCount != 1 ? 's' : ''} associated with it.'
-                            : 'This city has no fields associated with it.',
+                        context.l10n.cityFieldsAssociatedCount(
+                          widget.city.fieldsCount,
+                        ),
                         style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -172,8 +173,8 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
           const SizedBox(height: 20),
           // Deactivate option
           _buildDeleteOption(
-            title: 'Deactivate City',
-            subtitle: 'Hide this city from users. Can be reactivated later.',
+            title: context.l10n.deactivateCity,
+            subtitle: context.l10n.hideThisCityFromUsersCanBeReactivatedLat,
             icon: Icons.visibility_off_outlined,
             isSelected: !_hardDelete,
             onTap: () => setState(() => _hardDelete = false),
@@ -181,8 +182,8 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
           const SizedBox(height: 12),
           // Permanent delete option
           _buildDeleteOption(
-            title: 'Permanent Delete',
-            subtitle: 'Remove city from database. Cannot be undone.',
+            title: context.l10n.permanentDelete,
+            subtitle: context.l10n.removeCityFromDatabaseCannotBeUndone,
             icon: Icons.delete_forever,
             isSelected: _hardDelete,
             isDangerous: true,
@@ -210,7 +211,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Permanent delete is disabled for cities with fields.',
+                        context.l10n.permanentDeleteIsDisabledForCities,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.info,
                         ),
@@ -318,7 +319,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                 ),
               ),
               child: Text(
-                'Cancel',
+                context.l10n.cancel,
                 style: AppTextStyles.labelMedium.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
@@ -345,7 +346,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                 elevation: 0,
               ),
               child: Text(
-                _hardDelete ? 'Delete Forever' : 'Deactivate',
+                _hardDelete
+                    ? context.l10n.deleteForever
+                    : context.l10n.deactivate,
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
                 ),

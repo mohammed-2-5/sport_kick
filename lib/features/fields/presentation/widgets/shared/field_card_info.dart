@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Field information section displaying name, location, and verified badge.
 ///
@@ -38,8 +39,7 @@ class FieldCardInfo extends StatelessWidget {
             Expanded(
               child: Text(
                 fieldName,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
                 maxLines: 1,
@@ -67,8 +67,7 @@ class FieldCardInfo extends StatelessWidget {
             Expanded(
               child: Text(
                 '$city - $fieldSize',
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary,
                 ),
                 maxLines: 1,
@@ -105,7 +104,7 @@ class FieldCardInfo extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             context.l10n.verified,
-            style: const TextStyle(
+            style: AppTextStyles.labelSmall.copyWith(
               fontSize: 10,
               fontWeight: FontWeight.bold,
               color: Colors.white,

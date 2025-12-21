@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/widgets/advanced_filter_bottom_sheet.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Booking filter bottom sheet widget
 ///
@@ -38,12 +39,12 @@ class BookingFilterSheet extends StatelessWidget {
       filterGroups: [
         // Status Filter
         FilterGroup(
-          title: 'Booking Status',
+          title: context.l10n.bookingStatus2,
           widget: DropdownFilterWidget(
             value: statusFilter?.name,
             hint: 'All Statuses',
             options: [
-              FilterOption(value: 'all', label: 'All'),
+              FilterOption(value: context.l10n.all2, label: context.l10n.all),
               FilterOption(
                 value: BookingStatus.pending.name,
                 label: BookingStatus.pending.displayName,
@@ -76,7 +77,7 @@ class BookingFilterSheet extends StatelessWidget {
         ),
         // Date Range Filter
         FilterGroup(
-          title: 'Booking Date',
+          title: context.l10n.bookingDate,
           widget: DateRangeFilterWidget(
             dateRange: dateRange,
             onChanged: onDateRangeChanged,
@@ -84,12 +85,12 @@ class BookingFilterSheet extends StatelessWidget {
         ),
         // Field Filter
         FilterGroup(
-          title: 'Field',
+          title: context.l10n.field,
           widget: DropdownFilterWidget(
             value: fieldFilter,
             hint: 'All Fields',
             options: [
-              FilterOption(value: 'all', label: 'All Fields'),
+              FilterOption(value: 'all', label: context.l10n.allFields),
               ...availableFields.map(
                 (field) => FilterOption(value: field, label: field),
               ),

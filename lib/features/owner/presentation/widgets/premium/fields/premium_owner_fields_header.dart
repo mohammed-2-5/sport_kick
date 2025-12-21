@@ -93,18 +93,18 @@ class PremiumOwnerFieldsHeader extends StatelessWidget {
               children: [
                 _StatChip(
                   label: context.l10n.total,
-                  count: stats['total'] ?? 0,
+                  count: stats[context.l10n.total2] ?? 0,
                 ),
                 const SizedBox(width: 8),
                 _StatChip(
                   label: context.l10n.active,
-                  count: stats['active'] ?? 0,
+                  count: stats[context.l10n.active2] ?? 0,
                   color: Colors.green,
                 ),
                 const SizedBox(width: 8),
                 _StatChip(
                   label: context.l10n.inactive,
-                  count: stats['inactive'] ?? 0,
+                  count: stats[context.l10n.inactive2] ?? 0,
                   color: Colors.grey,
                 ),
               ],

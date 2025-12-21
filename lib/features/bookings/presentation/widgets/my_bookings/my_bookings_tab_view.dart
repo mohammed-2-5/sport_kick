@@ -5,6 +5,7 @@ import 'package:spo_kick/core/widgets/premium/premium_empty_state.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Tab view widget for displaying bookings in tabs (Upcoming and History).
 ///
@@ -33,9 +34,11 @@ class MyBookingsTabView extends StatelessWidget {
     if (bookings.isEmpty) {
       return PremiumEmptyState(
         icon: isHistory ? Icons.history : Icons.event_available,
-        title: isHistory ? 'No Past Bookings' : 'No Upcoming Bookings',
+        title: isHistory
+            ? context.l10n.noPastBookings
+            : context.l10n.noUpcomingBookings2,
         message: emptyMessage,
-        actionLabel: onAction != null ? 'Browse Fields' : null,
+        actionLabel: onAction != null ? context.l10n.browseFields : null,
         onAction: onAction,
       );
     }

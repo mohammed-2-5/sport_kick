@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/user_details/user_details_state.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium user statistics grid.
 ///
@@ -21,37 +23,42 @@ class PremiumUserStatsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final statItems = [
       _StatItem(
-        label: 'Total Bookings',
+        label: context.l10n.totalBookings,
         value: stats.totalBookings.toString(),
         icon: Icons.calendar_month,
         color: AppColors.accentCyan,
       ),
       _StatItem(
-        label: 'Completed',
+        label: context.l10n.statusCompleted,
         value: stats.completedBookings.toString(),
         icon: Icons.check_circle,
         color: Colors.green,
       ),
       _StatItem(
-        label: 'Cancelled',
+        label: context.l10n.statusCancelled,
         value: stats.cancelledBookings.toString(),
         icon: Icons.cancel,
         color: Colors.red,
       ),
       _StatItem(
-        label: 'Pending',
+        label: context.l10n.pending,
         value: stats.pendingBookings.toString(),
         icon: Icons.pending,
         color: Colors.orange,
       ),
       _StatItem(
-        label: 'Total Spent',
-        value: 'EGP ${stats.totalSpent.toStringAsFixed(0)}',
+        label: context.l10n.totalSpent,
+        value: LocaleFormatters.formatPrice(
+          context,
+          amount: stats.totalSpent,
+          currency: context.l10n.currencyEgp,
+          decimalDigits: 0,
+        ),
         icon: Icons.payments,
         color: AppColors.premiumGold,
       ),
       _StatItem(
-        label: 'Member Days',
+        label: context.l10n.memberDays,
         value: stats.memberDays.toString(),
         icon: Icons.timer,
         color: Colors.purple,
@@ -63,7 +70,7 @@ class PremiumUserStatsGrid extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionHeader(title: 'Statistics', icon: Icons.bar_chart),
+          _SectionHeader(title: context.l10n.statistics, icon: Icons.bar_chart),
           const SizedBox(height: 12),
           AnimationLimiter(
             child: GridView.builder(
@@ -122,12 +129,7 @@ class _SectionHeader extends StatelessWidget {
           child: Icon(icon, size: 18, color: Colors.white),
         ),
         const SizedBox(width: 12),
-        Text(
-          title,
-          style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimary,
-          ),
-        ),
+        Text(title, style: AppTextStyles.titleMedium),
       ],
     );
   }
@@ -181,15 +183,13 @@ class _StatCard extends StatelessWidget {
             children: [
               Text(
                 item.value,
-                style: AppTextStyles.titleLarge.copyWith(color: item.color),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                item.label,
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary.withValues(alpha: 0.8),
+                style: AppTextStyles.withColor(
+                  AppTextStyles.titleLarge,
+                  item.color,
                 ),
               ),
+              const SizedBox(height: 2),
+              Text(item.label, style: AppTextStyles.bodySmallSecondary),
             ],
           ),
         ],
@@ -234,18 +234,13 @@ class _FavoriteFieldCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Favorite Field',
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.7),
-                  ),
+                  context.l10n.favoriteField,
+                  style: AppTextStyles.bodySmallSecondary,
                 ),
                 const SizedBox(height: 2),
                 Text(
                   fieldName,
-                  style: AppTextStyles.labelLarge.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppTextStyles.bold(AppTextStyles.labelLarge),
                 ),
               ],
             ),

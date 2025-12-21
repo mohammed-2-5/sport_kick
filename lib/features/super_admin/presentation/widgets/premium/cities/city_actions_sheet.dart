@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Bottom sheet with action buttons for city management.
 ///
@@ -71,15 +72,15 @@ class CityActionsSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildHeader(),
+          _buildHeader(context),
           const Divider(height: 1, color: AppColors.border),
-          _buildActions(),
+          _buildActions(context),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -133,7 +134,9 @@ class CityActionsSheet extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        city.isActive ? 'Active' : 'Inactive',
+                        city.isActive
+                            ? context.l10n.active
+                            : context.l10n.inactive,
                         style: AppTextStyles.labelSmall.copyWith(
                           color: city.isActive
                               ? AppColors.success
@@ -146,7 +149,7 @@ class CityActionsSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${city.fieldsCount} field${city.fieldsCount != 1 ? 's' : ''}',
+                  context.l10n.fieldsCount(city.fieldsCount),
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.mediumGrey,
                   ),
@@ -159,15 +162,15 @@ class CityActionsSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 20),
       child: Column(
         children: [
           _buildActionTile(
             icon: Icons.edit,
-            title: 'Edit City',
-            subtitle: 'Update city name',
+            title: context.l10n.editCity,
+            subtitle: context.l10n.updateCityName,
             color: AppColors.info,
             onTap: onEdit,
           ),
@@ -176,18 +179,20 @@ class CityActionsSheet extends StatelessWidget {
             icon: city.isActive
                 ? Icons.visibility_off_outlined
                 : Icons.visibility_outlined,
-            title: city.isActive ? 'Deactivate City' : 'Activate City',
+            title: city.isActive
+                ? context.l10n.deactivateCity
+                : context.l10n.activateCity,
             subtitle: city.isActive
-                ? 'Hide this city from users'
-                : 'Show this city to users',
+                ? context.l10n.hideThisCityFromUsers
+                : context.l10n.showThisCityToUsers,
             color: city.isActive ? AppColors.warning : AppColors.success,
             onTap: onToggleStatus,
           ),
           const SizedBox(height: 8),
           _buildActionTile(
             icon: Icons.delete,
-            title: 'Delete City',
-            subtitle: 'Permanently remove this city',
+            title: context.l10n.deleteCity,
+            subtitle: context.l10n.permanentlyRemoveThisCity,
             color: AppColors.error,
             onTap: onDelete,
           ),

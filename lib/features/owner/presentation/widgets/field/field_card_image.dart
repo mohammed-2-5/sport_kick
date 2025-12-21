@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Image header for the field card.
 class FieldCardImage extends StatelessWidget {
@@ -14,7 +15,7 @@ class FieldCardImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!field.hasImages) {
-      return _buildImagePlaceholder();
+      return _buildImagePlaceholder(context);
     }
 
     return ClipRRect(
@@ -29,8 +30,8 @@ class FieldCardImage extends StatelessWidget {
             height: 150,
             width: double.infinity,
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return _buildImagePlaceholder();
+            errorBuilder: (ctx, error, stackTrace) {
+              return _buildImagePlaceholder(ctx);
             },
           ),
           Container(
@@ -70,7 +71,7 @@ class FieldCardImage extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'VERIFIED',
+                      context.l10n.verifiedBadge,
                       style: AppTextStyles.labelSmall.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -86,7 +87,7 @@ class FieldCardImage extends StatelessWidget {
     );
   }
 
-  Widget _buildImagePlaceholder() {
+  Widget _buildImagePlaceholder(BuildContext context) {
     return Container(
       height: 150,
       decoration: const BoxDecoration(
@@ -107,7 +108,7 @@ class FieldCardImage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'No Image',
+              context.l10n.noImage,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Individual search tip item.
 class SearchTipItem extends StatelessWidget {
@@ -35,8 +36,7 @@ class SearchTipItem extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
                   ),
@@ -44,8 +44,7 @@ class SearchTipItem extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   example,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),

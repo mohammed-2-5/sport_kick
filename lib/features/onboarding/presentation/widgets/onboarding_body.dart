@@ -70,9 +70,10 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                 itemCount: pages.length,
                 onPageChanged: _onPageChanged,
                 itemBuilder: (context, index) => OnboardingContent(
-                  title: pages[index]['title'] as String,
-                  description: pages[index]['description'] as String,
-                  icon: pages[index]['icon'] as IconData,
+                  title: pages[index][context.l10n.title] as String,
+                  description:
+                      pages[index][context.l10n.descriptionField] as String,
+                  icon: pages[index][context.l10n.icon] as IconData,
                   isActive: _currentPage == index,
                 ),
               ),

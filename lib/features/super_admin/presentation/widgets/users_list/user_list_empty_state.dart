@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class UserListEmptyState extends StatelessWidget {
   final bool hasFilters;
@@ -19,18 +20,20 @@ class UserListEmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            hasFilters ? 'No Results Found' : 'No Users Yet',
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
+            hasFilters ? context.l10n.noResultsFound : context.l10n.noUsersYet,
+            style: AppTextStyles.bold(
+              AppTextStyles.withColor(
+                AppTextStyles.headlineSmall,
+                Colors.grey[700]!,
+              ),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             hasFilters
-                ? 'Try adjusting your filters'
+                ? context.l10n.tryAdjustingYourFilters
                 : 'Users will appear here once they register',
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
+            style: AppTextStyles.bodyMediumSecondary,
             textAlign: TextAlign.center,
           ),
         ],

@@ -20,7 +20,7 @@ mixin UserManagementOperations on Cubit<SuperAdminState> {
   /// Load list of all regular users.
   Future<void> loadUsers() async {
     debugPrint('🔄 [SuperAdminCubit] Loading users list...');
-    emit(const SuperAdminLoading(message: 'Loading users...'));
+    emit(SuperAdminLoading(message: "Loading users..."));
 
     final result = await getAllUsersUseCase();
 
@@ -41,7 +41,7 @@ mixin UserManagementOperations on Cubit<SuperAdminState> {
   /// Deactivate a user account.
   Future<void> deactivateUser(String userId) async {
     debugPrint('🔄 [SuperAdminCubit] Deactivating user: $userId');
-    emit(const SuperAdminLoading(message: 'Deactivating user...'));
+    emit(SuperAdminLoading(message: "Deactivating user..."));
 
     final result = await deactivateUserUseCase(userId: userId);
 
@@ -64,7 +64,7 @@ mixin UserManagementOperations on Cubit<SuperAdminState> {
   /// Activate a user account.
   Future<void> activateUser(String userId) async {
     debugPrint('🔄 [SuperAdminCubit] Activating user: $userId');
-    emit(const SuperAdminLoading(message: 'Activating user...'));
+    emit(SuperAdminLoading(message: "Activating user..."));
 
     final result = await activateUserUseCase(userId: userId);
 
@@ -87,7 +87,7 @@ mixin UserManagementOperations on Cubit<SuperAdminState> {
   /// Bulk activate multiple users.
   Future<void> bulkActivateUsers(List<String> userIds) async {
     debugPrint('🔄 [SuperAdminCubit] Bulk activating ${userIds.length} users');
-    emit(const SuperAdminLoading(message: 'Activating users...'));
+    emit(SuperAdminLoading(message: "Activating user..."));
 
     int successCount = 0;
     int failureCount = 0;
@@ -120,7 +120,7 @@ mixin UserManagementOperations on Cubit<SuperAdminState> {
     debugPrint(
       '🔄 [SuperAdminCubit] Bulk deactivating ${userIds.length} users',
     );
-    emit(const SuperAdminLoading(message: 'Deactivating users...'));
+    emit(SuperAdminLoading(message: "Deactivating user..."));
 
     int successCount = 0;
     int failureCount = 0;

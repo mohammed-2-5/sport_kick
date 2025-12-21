@@ -177,7 +177,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loggingIn => 'Logging in...';
 
   @override
-  String get currentSession => 'Current';
+  String get currentSession => 'Current Session';
 
   @override
   String get loginSuccess => 'Logged in successfully';
@@ -1220,7 +1220,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingAlreadyCancelled => 'Booking already cancelled';
 
   @override
-  String get cancellationReason => 'Cancellation Reason';
+  String get cancellationReason => 'Cancellation Reason *';
 
   @override
   String get copy => 'Copy';
@@ -1511,7 +1511,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createSubscription => 'Create Subscription';
 
   @override
-  String get activeStatus => 'Active';
+  String get activeStatus => 'Active Status';
 
   @override
   String get pendingApproval => 'Pending Approval';
@@ -1697,7 +1697,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacySettings => 'Privacy';
 
   @override
-  String get securitySettings => 'Security';
+  String get securitySettings => 'security';
 
   @override
   String get accountSettings => 'Account';
@@ -2431,6 +2431,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get priceLabel => 'Price';
+
+  @override
+  String get totalUsers => 'Total Users';
+
+  @override
+  String newUsersThisMonth(Object count) {
+    return '+$count this month';
+  }
+
+  @override
+  String get totalAdmins => 'Total Admins';
+
+  @override
+  String get fieldOwners => 'Field owners';
+
+  @override
+  String get activeFields => 'Active Fields';
+
+  @override
+  String inactiveCount(Object count) {
+    return '$count inactive';
+  }
+
+  @override
+  String pendingCount(Object count) {
+    return '$count pending';
+  }
 
   @override
   String get totalPriceLabel => 'Total Price';
@@ -3685,4 +3712,2319 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get supportContactDescription =>
       'If you have questions about our policies or need assistance, please contact us:';
+
+  @override
+  String get version100 => '1.0.0';
+
+  @override
+  String get version1001 => '1.0.0+1';
+
+  @override
+  String get oneHour => '1 Hour';
+
+  @override
+  String get phoneExample => '+20 123 456 7890';
+
+  @override
+  String get twoHours => '2 Hours';
+
+  @override
+  String get accountStatus => 'Account Status';
+
+  @override
+  String get activate => 'Activate';
+
+  @override
+  String get activateAdmins => 'Activate Admins';
+
+  @override
+  String get activateCity => 'Activate City';
+
+  @override
+  String get activateSelectedAdmins => 'Activate Selected Admins';
+
+  @override
+  String get activateSelectedUsers => 'Activate Selected Users';
+
+  @override
+  String get activateUser => 'Activate User?';
+
+  @override
+  String get activateUsers => 'Activate Users';
+
+  @override
+  String get activatingAdmins => 'Activating admins...';
+
+  @override
+  String get activatingUser => 'Activating user...';
+
+  @override
+  String get activatingUsers => 'Activating users...';
+
+  @override
+  String get active2 => 'active';
+
+  @override
+  String get activeNow => 'Active Now';
+
+  @override
+  String get addANewFieldOwner => 'Add a new field owner';
+
+  @override
+  String get addAnExtraLayerOfSecurity => 'Add an extra layer of security';
+
+  @override
+  String get addCity => 'Add City';
+
+  @override
+  String get addNewFieldOwner => 'Add new field owner';
+
+  @override
+  String get addNewSportsField => 'Add new sports field';
+
+  @override
+  String get adminAlerts => 'Admin Alerts';
+
+  @override
+  String get adminCreated => 'Admin Created!';
+
+  @override
+  String get adminDetails => 'Admin Details';
+
+  @override
+  String get adminExampleCom => 'admin@example.com';
+
+  @override
+  String get adminsExportedToCsv => 'Admins exported to CSV';
+
+  @override
+  String get ahmedMohamed => 'Ahmed Mohamed';
+
+  @override
+  String get all2 => 'all';
+
+  @override
+  String get allBookings => 'All Bookings';
+
+  @override
+  String get allCities => 'All Cities';
+
+  @override
+  String get allFields => 'All Fields';
+
+  @override
+  String get allSports => 'All Sports';
+
+  @override
+  String get allTimeEarnings => 'All time earnings';
+
+  @override
+  String get allowRegistrations => 'Allow Registrations';
+
+  @override
+  String get and => ' and ';
+
+  @override
+  String get applyToWeekdays => 'Apply to Weekdays';
+
+  @override
+  String get applyToWeekend => 'Apply to Weekend';
+
+  @override
+  String get approveThisBookingRequest => 'Approve this booking request';
+
+  @override
+  String get approvingBooking => 'Approving booking...';
+
+  @override
+  String areYouSureYouWantToActivateCountAdmins(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Are you sure you want to activate $count admins?',
+      one: 'Are you sure you want to activate $count admin?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String areYouSureYouWantToActivateCountUsers(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Are you sure you want to activate $count users?',
+      one: 'Are you sure you want to activate $count user?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String areYouSureYouWantToDeactivateCountAdmins(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Are you sure you want to deactivate $count admins?',
+      one: 'Are you sure you want to deactivate $count admin?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String areYouSureYouWantToDeactivateCountUsers(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Are you sure you want to deactivate $count users?',
+      one: 'Are you sure you want to deactivate $count user?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assign => 'Assign';
+
+  @override
+  String get assignField => 'Assign Field';
+
+  @override
+  String get assignFieldToAdmin => 'Assign Field to Admin';
+
+  @override
+  String get assignFirstField => 'Assign First Field';
+
+  @override
+  String get assignToAdmin => 'Assign to Admin';
+
+  @override
+  String get assigningField => 'Assigning field...';
+
+  @override
+  String get automaticallyApproveNewBookings =>
+      'Automatically approve new bookings';
+
+  @override
+  String get averageRating => 'Average Rating';
+
+  @override
+  String get avgRating => 'Avg Rating';
+
+  @override
+  String get avgRevenue => 'Avg. Revenue';
+
+  @override
+  String get beTheFirstToShareYourNexperience =>
+      'Be the first to share your\\nexperience!';
+
+  @override
+  String get bookYourFirstFieldAndStartNplayingToday =>
+      'Book your first field and start\\nplaying today!';
+
+  @override
+  String get bookingAnalytics => 'Booking Analytics';
+
+  @override
+  String get bookingDistribution => 'Booking Distribution';
+
+  @override
+  String get bookingHasBeenFulfilled => 'Booking has been fulfilled';
+
+  @override
+  String get bookingNotifications => 'Booking Notifications';
+
+  @override
+  String get bookingSettings => 'Booking Settings';
+
+  @override
+  String get bookingStatistics => 'Booking Statistics';
+
+  @override
+  String get bookingStatus2 => 'Booking Status';
+
+  @override
+  String get bookingscountBookings => '\$bookingsCount Bookings';
+
+  @override
+  String get bookingscountBookings2 => '\$bookingsCount bookings';
+
+  @override
+  String get briefDescription => 'Brief description';
+
+  @override
+  String get buildNumber => 'Build Number';
+
+  @override
+  String get byNumberOfBookings => 'By number of bookings';
+
+  @override
+  String get byStatus => 'By status';
+
+  @override
+  String get cancelSelection => 'Cancel selection';
+
+  @override
+  String get cancelThisBookingWithReason => 'Cancel this booking with reason';
+
+  @override
+  String get cancelingBooking => 'Canceling booking...';
+
+  @override
+  String get cancellingBooking => 'Cancelling booking...';
+
+  @override
+  String get cardContent => 'Card content';
+
+  @override
+  String get categoryDeletedSuccessfully => 'Category deleted successfully';
+
+  @override
+  String get categoryNameCreatedSuccessfully =>
+      'Category \"\$name\" created successfully';
+
+  @override
+  String get categoryUpdatedSuccessfully => 'Category updated successfully';
+
+  @override
+  String get chooseCurrency => 'Choose Currency';
+
+  @override
+  String get chooseDateFormat => 'Choose Date Format';
+
+  @override
+  String get chooseTheme => 'Choose Theme';
+
+  @override
+  String get cities => 'Cities';
+
+  @override
+  String get compareFields => 'Compare Fields';
+
+  @override
+  String get completion => 'Completion';
+
+  @override
+  String get configureDefaultPlatformHours =>
+      'Configure default platform hours';
+
+  @override
+  String get configureLocations => 'Configure locations';
+
+  @override
+  String get configurePaymentMethodsAndFees =>
+      'Configure payment methods and fees';
+
+  @override
+  String get connectionError => 'Connection Error';
+
+  @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get continueWithFacebook => 'Continue with Facebook';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get copyAll => 'Copy All';
+
+  @override
+  String get copyLabel => 'Copy \$label';
+
+  @override
+  String get couldNotDetermineYourLocation =>
+      'Could not determine your location';
+
+  @override
+  String get create => 'Create';
+
+  @override
+  String get createAStrongPassword => 'Create a strong password';
+
+  @override
+  String get createAdmin => 'Create Admin';
+
+  @override
+  String get createAdminAccount => 'Create Admin Account';
+
+  @override
+  String get createField => 'Create Field';
+
+  @override
+  String get createNewField2 => 'Create New Field';
+
+  @override
+  String get creatingAdminAccount => 'Creating admin account...';
+
+  @override
+  String get creatingBooking2 => 'Creating booking...';
+
+  @override
+  String get creatingCity => 'Creating city...';
+
+  @override
+  String get creatingField => 'Creating field...';
+
+  @override
+  String get creatingManualBooking => 'Creating manual booking...';
+
+  @override
+  String get creationDate => 'Creation Date';
+
+  @override
+  String get credentialsCopiedToClipboard => 'Credentials copied to clipboard';
+
+  @override
+  String get csv => 'CSV';
+
+  @override
+  String get customersUsers => 'Customers (Users)';
+
+  @override
+  String get customizeEmailNotifications => 'Customize email notifications';
+
+  @override
+  String get ddMmYyyy => 'DD/MM/YYYY';
+
+  @override
+  String get deactivate => 'Deactivate';
+
+  @override
+  String get deactivateAdmins => 'Deactivate Admins';
+
+  @override
+  String get deactivateCity => 'Deactivate City';
+
+  @override
+  String get deactivateOrPermanentlyRemoveThisField =>
+      'Deactivate or permanently remove this field';
+
+  @override
+  String get deactivateSelectedAdmins => 'Deactivate Selected Admins';
+
+  @override
+  String get deactivateSelectedUsers => 'Deactivate Selected Users';
+
+  @override
+  String get deactivateSoftDelete => 'Deactivate (Soft Delete)';
+
+  @override
+  String get deactivateUser => 'Deactivate User?';
+
+  @override
+  String get deactivateUsers => 'Deactivate Users';
+
+  @override
+  String get deactivatingAdmins => 'Deactivating admins...';
+
+  @override
+  String get deactivatingUser => 'Deactivating user...';
+
+  @override
+  String get deactivatingUsers => 'Deactivating users...';
+
+  @override
+  String get defaultHoursForNewFields => 'Default hours for new fields';
+
+  @override
+  String get deleteCategory => 'Delete Category';
+
+  @override
+  String get deleteCity => 'Delete City';
+
+  @override
+  String get deleteField2 => 'Delete field';
+
+  @override
+  String get deletePermanently => 'Delete Permanently';
+
+  @override
+  String get deleteReview => 'Delete Review?';
+
+  @override
+  String get deletingCity => 'Deleting city...';
+
+  @override
+  String get deletingField => 'Deleting field...';
+
+  @override
+  String get descriptionOptional => 'Description (Optional)';
+
+  @override
+  String get deselect => 'Deselect';
+
+  @override
+  String get deselectAll => 'Deselect all';
+
+  @override
+  String get eGFootballBasketball => 'e.g., Football, Basketball';
+
+  @override
+  String get editCity => 'Edit City';
+
+  @override
+  String get editField2 => 'Edit field';
+
+  @override
+  String get editReview => 'Edit Review';
+
+  @override
+  String get egp => 'EGP';
+
+  @override
+  String get egpEgyptianPound => 'EGP (Egyptian Pound)';
+
+  @override
+  String get egyptianPound => 'Egyptian Pound';
+
+  @override
+  String get emailTemplates => 'Email Templates';
+
+  @override
+  String get emailVerification => 'Email Verification';
+
+  @override
+  String get enable => 'Enable';
+
+  @override
+  String get enableDisablePlatformAccess => 'Enable/disable platform access';
+
+  @override
+  String get enterCityName => 'Enter city name';
+
+  @override
+  String get enterReasonForCancellation => 'Enter reason for cancellation...';
+
+  @override
+  String get enterYourFullName => 'Enter your full name';
+
+  @override
+  String get euro => 'Euro';
+
+  @override
+  String get exampleEmailCom => 'example@email.com';
+
+  @override
+  String get export => 'Export';
+
+  @override
+  String get exportCsv => 'Export CSV';
+
+  @override
+  String get featureWillBeAvailableInAFutureUpdate =>
+      '\$feature will be available in a future update.';
+
+  @override
+  String get featureWillBeAvailableSoonNstayTuned =>
+      '\$feature will be available soon.\\nStay tuned!';
+
+  @override
+  String get fieldAssignedSuccessfully => 'Field assigned successfully';
+
+  @override
+  String get fieldOwners2 => 'Field Owners';
+
+  @override
+  String get fieldOwnersAdmins => 'Field Owners (Admins)';
+
+  @override
+  String get fieldPerformance => 'Field Performance';
+
+  @override
+  String get fieldscountFields => '\$fieldsCount fields';
+
+  @override
+  String get getNotifiedAboutBookings => 'Get notified about bookings';
+
+  @override
+  String get glassEffect => 'Glass effect';
+
+  @override
+  String get goHome => 'Go Home';
+
+  @override
+  String get hello => 'Hello';
+
+  @override
+  String get hideThisCityFromUsersCanBeReactivatedLat =>
+      'Hide this city from users. Can be reactivated later.';
+
+  @override
+  String get inactive2 => 'inactive';
+
+  @override
+  String get invalidPrice => 'Invalid price';
+
+  @override
+  String get ipAddress => 'IP Address';
+
+  @override
+  String get joinDate => 'Join Date';
+
+  @override
+  String label(Object label) {
+    return '$label: ';
+  }
+
+  @override
+  String labelCopied(Object label) {
+    return '$label copied';
+  }
+
+  @override
+  String labelCount(Object count, Object label) {
+    return '$label ($count)';
+  }
+
+  @override
+  String get last6Months => 'Last 6 months';
+
+  @override
+  String get last6MonthsRevenue => 'Last 6 months revenue';
+
+  @override
+  String get loadingAdmins => 'Loading admins...';
+
+  @override
+  String get loadingAnalytics => 'Loading analytics...';
+
+  @override
+  String get loadingAvailableTimeSlots => 'Loading available time slots...';
+
+  @override
+  String get loadingBookingDetails => 'Loading booking details...';
+
+  @override
+  String get loadingBookings => 'Loading bookings...';
+
+  @override
+  String get loadingDashboard => 'Loading dashboard...';
+
+  @override
+  String get loadingPlatformData => 'Loading platform data...';
+
+  @override
+  String get loadingRevenueData => 'Loading revenue data...';
+
+  @override
+  String get loadingReviews => 'Loading reviews...';
+
+  @override
+  String get loadingUsers => 'Loading users...';
+
+  @override
+  String get loadingYourBookings => 'Loading your bookings...';
+
+  @override
+  String get loadingYourFields => 'Loading your fields...';
+
+  @override
+  String get logFailedLogins => 'Log Failed Logins';
+
+  @override
+  String get maintenanceMode => 'Maintenance Mode';
+
+  @override
+  String get manageCities => 'Manage Cities';
+
+  @override
+  String get manageCustomers => 'Manage customers';
+
+  @override
+  String get manageFieldOwners => 'Manage field owners';
+
+  @override
+  String get managePlatformLocations => 'Manage platform locations';
+
+  @override
+  String get managePlatformNotifications => 'Manage platform notifications';
+
+  @override
+  String get manageSportTypes => 'Manage sport types';
+
+  @override
+  String get manageUsers => 'Manage Users';
+
+  @override
+  String get management => 'Management';
+
+  @override
+  String get markAsCompleted => 'Mark as Completed';
+
+  @override
+  String get memberDays => 'Member Days';
+
+  @override
+  String minutesMinutes(num minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes minutes',
+      one: '$minutes minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mmDdYyyy => 'MM/DD/YYYY';
+
+  @override
+  String get moderatePlatformReviews => 'Moderate platform reviews';
+
+  @override
+  String get monthlyBookings => 'Monthly Bookings';
+
+  @override
+  String get mostBookedFields => 'Most booked fields';
+
+  @override
+  String get newFields => 'New Fields';
+
+  @override
+  String get newNotification => 'New Notification';
+
+  @override
+  String get noBookingsYet2 => 'No Bookings Yet';
+
+  @override
+  String get noFavoritesYet2 => 'No Favorites Yet';
+
+  @override
+  String get noFeaturedFieldsAvailable => 'No featured fields available';
+
+  @override
+  String get noFieldsAvailable2 => 'No Fields Available';
+
+  @override
+  String get noPastBookings => 'No Past Bookings';
+
+  @override
+  String get noResultsFound => 'No Results Found';
+
+  @override
+  String get noReviewsYet => 'No Reviews Yet';
+
+  @override
+  String get noUpcomingBookings2 => 'No Upcoming Bookings';
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get operatingHours => 'Operating Hours';
+
+  @override
+  String get paymentSettings => 'Payment Settings';
+
+  @override
+  String get pdf => 'PDF';
+
+  @override
+  String get perBooking => 'Per booking';
+
+  @override
+  String get performance => 'Performance';
+
+  @override
+  String get performanceMetrics => 'Performance Metrics';
+
+  @override
+  String get permanentDelete => 'Permanent Delete';
+
+  @override
+  String get permanentlyRemoveThisCity => 'Permanently remove this city';
+
+  @override
+  String get phone2 => 'Phone';
+
+  @override
+  String get platform => 'Platform';
+
+  @override
+  String get platformAnalyticsAndExports => 'Platform analytics & exports';
+
+  @override
+  String get platformConfiguration => 'Platform configuration';
+
+  @override
+  String get platformDataExportedToCsv => 'Platform data exported to CSV';
+
+  @override
+  String get platformInsights => 'Platform insights';
+
+  @override
+  String get platformPerformanceMetrics => 'Platform performance metrics';
+
+  @override
+  String get platformSecurityMonitoring => 'Platform security monitoring';
+
+  @override
+  String get pleaseAcceptTheTermsAndConditions =>
+      'Please accept the Terms & Conditions';
+
+  @override
+  String get pleaseEnableLocationPermissionsInSetting =>
+      'Please enable location permissions in settings';
+
+  @override
+  String get pleaseEnterACategoryName => 'Please enter a category name';
+
+  @override
+  String get pricePerHourEgp => 'Price per Hour (EGP)';
+
+  @override
+  String get pricing => 'Pricing';
+
+  @override
+  String get readOurPrivacyPolicy => 'Read our privacy policy';
+
+  @override
+  String get readOurTerms => 'Read our terms';
+
+  @override
+  String get receivePushNotifications => 'Receive push notifications';
+
+  @override
+  String get receiveUpdatesViaEmail => 'Receive updates via email';
+
+  @override
+  String get rejectingBooking => 'Rejecting booking...';
+
+  @override
+  String get removeCityFromDatabaseCannotBeUndone =>
+      'Remove city from database. Cannot be undone.';
+
+  @override
+  String get removeVerification => 'Remove Verification';
+
+  @override
+  String get removingVerification => 'Removing verification...';
+
+  @override
+  String get reports => 'Reports';
+
+  @override
+  String get response => 'Response';
+
+  @override
+  String get revenueReport => 'Revenue Report';
+
+  @override
+  String get role => 'Role';
+
+  @override
+  String get satisfaction => 'Satisfaction';
+
+  @override
+  String get saudiRiyal => 'Saudi Riyal';
+
+  @override
+  String get searchAdmins => 'Search admins...';
+
+  @override
+  String get searchAdminsByNameEmailOrPhone =>
+      'Search admins by name, email, or phone...';
+
+  @override
+  String get searchByCustomerFieldOrId => 'Search by customer, field, or ID...';
+
+  @override
+  String get searchByNameEmailOrPhone => 'Search by name, email, or phone...';
+
+  @override
+  String get searchByUserFieldOrBookingId =>
+      'Search by user, field, or booking ID...';
+
+  @override
+  String get searchByUserOrField => 'Search by user or field...';
+
+  @override
+  String get searchCustomers => 'Search customers...';
+
+  @override
+  String get searchFieldsByNameCityOrOwner =>
+      'Search fields by name, city, or owner...';
+
+  @override
+  String get searchUsers => 'Search users...';
+
+  @override
+  String get searchUsersByNameEmailOrPhone =>
+      'Search users by name, email, or phone...';
+
+  @override
+  String get selectAll => 'Select all';
+
+  @override
+  String get selectFieldLocation => 'Select Field Location';
+
+  @override
+  String get selectOnMap => 'Select on map';
+
+  @override
+  String get selectSportCategory => 'Select Sport Category';
+
+  @override
+  String get sendMessage => 'Send Message';
+
+  @override
+  String get sessionTimeout => 'Session Timeout';
+
+  @override
+  String get shareYourExperienceWithThisField =>
+      'Share your experience with this field...';
+
+  @override
+  String get somethingWentWrong2 => 'Something Went Wrong';
+
+  @override
+  String get sportCategories => 'Sport Categories';
+
+  @override
+  String get sportCategory => 'Sport Category';
+
+  @override
+  String get sports => 'Sports';
+
+  @override
+  String get startAddingFieldsToYourFavorites =>
+      'Start adding fields to your favorites';
+
+  @override
+  String get statisticsExportedToPdf => 'Statistics exported to PDF';
+
+  @override
+  String get streetAddressOrSelectOnMap => 'Street address or select on map';
+
+  @override
+  String get submittingReview => 'Submitting review...';
+
+  @override
+  String get subscriptions => 'Subscriptions';
+
+  @override
+  String get success2 => 'Success!';
+
+  @override
+  String get successRate => 'Success Rate';
+
+  @override
+  String get system => 'System';
+
+  @override
+  String get systemAlertsAndUpdates => 'System alerts and updates';
+
+  @override
+  String get systemPreferences => 'System Preferences';
+
+  @override
+  String get tellOthersAboutYourExperience =>
+      'Tell others about your experience...';
+
+  @override
+  String get termsAndConditions => 'Terms & Conditions';
+
+  @override
+  String get thereAreNoFieldsInYourAreaYetNcheckBackS =>
+      'There are no fields in your area yet.\\nCheck back soon!';
+
+  @override
+  String get thisWeek => 'This Week';
+
+  @override
+  String get title => 'title';
+
+  @override
+  String get todayBookings2 => 'Today Bookings';
+
+  @override
+  String get todaySActivity => 'Today\'s Activity';
+
+  @override
+  String get topFieldsByBookings => 'Top Fields by Bookings';
+
+  @override
+  String get total2 => 'total';
+
+  @override
+  String get totalCities => 'Total Cities';
+
+  @override
+  String get totalFields => 'Total Fields';
+
+  @override
+  String get totalLogins => 'Total Logins';
+
+  @override
+  String get totalSpent => 'Total Spent';
+
+  @override
+  String get tryAdjustingYourFiltersOrNsearchWithDiff =>
+      'Try adjusting your filters or\\nsearch with different keywords';
+
+  @override
+  String get twoFactorAuthentication => 'Two-Factor Authentication';
+
+  @override
+  String get unableToConnectToTheServerNpleaseCheckYo =>
+      'Unable to connect to the server.\\nPlease check your internet.';
+
+  @override
+  String get unableToLoadFields => 'Unable to load fields';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get updateCityName => 'Update city name';
+
+  @override
+  String get updateFieldDetailsPricingAndLocation =>
+      'Update field details, pricing, and location';
+
+  @override
+  String get updateReview => 'Update Review';
+
+  @override
+  String get updateYourLoginPassword => 'Update your login password';
+
+  @override
+  String get updateYourPassword => 'Update your password';
+
+  @override
+  String get updatingBooking => 'Updating booking...';
+
+  @override
+  String get updatingBookingStatus => 'Updating booking status...';
+
+  @override
+  String get updatingCity => 'Updating city...';
+
+  @override
+  String get updatingProfile => 'Updating profile...';
+
+  @override
+  String get usDollar => 'US Dollar';
+
+  @override
+  String get userActivated => 'User activated';
+
+  @override
+  String get userActivityReport => 'User Activity Report';
+
+  @override
+  String get userDeactivated => 'User deactivated';
+
+  @override
+  String get userDetails => 'User Details';
+
+  @override
+  String get users => 'Users';
+
+  @override
+  String get usersExportedToCsv => 'Users exported to CSV';
+
+  @override
+  String get verifyField => 'Verify Field';
+
+  @override
+  String get verifyingField => 'Verifying field...';
+
+  @override
+  String get viewAdmins => 'View Admins';
+
+  @override
+  String get viewAllReservations => 'View all reservations';
+
+  @override
+  String get viewAllSportsFields => 'View all sports fields';
+
+  @override
+  String get viewAndManageYourBookings => 'View and manage your bookings';
+
+  @override
+  String get viewBookings => 'View Bookings';
+
+  @override
+  String get viewFields => 'View Fields';
+
+  @override
+  String get viewRecentLoginAttempts => 'View recent login attempts';
+
+  @override
+  String get viewUsers => 'View Users';
+
+  @override
+  String get viewYourProfileDetails => 'View your profile details';
+
+  @override
+  String get vodafoneCash => 'vodafone_cash';
+
+  @override
+  String get weeklySchedule => 'Weekly Schedule';
+
+  @override
+  String get writeAReview => 'Write a Review';
+
+  @override
+  String get youMustBeLoggedInToReview => 'You must be logged in to review';
+
+  @override
+  String get yourRating => 'Your Rating *';
+
+  @override
+  String get yyyyMmDd => 'YYYY-MM-DD';
+
+  @override
+  String get rateYourExperience => 'Rate Your Experience';
+
+  @override
+  String get helpOthersMakeInformedDecisions =>
+      'Share your experience to help others make informed decisions';
+
+  @override
+  String get recentReviewsFromCustomers => 'Recent reviews from our customers';
+
+  @override
+  String errorLoadingFieldMessage(Object message) {
+    return 'Error loading field: $message';
+  }
+
+  @override
+  String updateFieldSubtitle(Object fieldName) {
+    return 'Update $fieldName';
+  }
+
+  @override
+  String reviewsSummaryForField(num count, Object fieldName) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$fieldName • $count reviews',
+      one: '$fieldName • $count review',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String totalAdminsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count total admins',
+      one: '$count total admin',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String totalUsersCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count total users',
+      one: '$count total user',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String totalBookingsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count total bookings',
+      one: '$count total booking',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String totalFieldsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count total fields',
+      one: '$count total field',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String errorWithMessage(Object message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String ownerIdShort(Object id) {
+    return 'Owner ID: $id...';
+  }
+
+  @override
+  String get bookingHistory => 'Booking History';
+
+  @override
+  String get advancedFilters => 'Advanced Filters';
+
+  @override
+  String get selectDateRange => 'Select Date Range';
+
+  @override
+  String get startAddingFavorites =>
+      'Start adding fields to your favorites\\nfor quick access anytime';
+
+  @override
+  String get bookAField => 'Book a Field';
+
+  @override
+  String get userRole => 'user';
+
+  @override
+  String get adminRole => 'admin';
+
+  @override
+  String get aZ => '[A-Z]';
+
+  @override
+  String get aToZ => '[a-z]';
+
+  @override
+  String get iAgreeToThe => 'I agree to the ';
+
+  @override
+  String get alreadyHaveAnAccount => 'Already have an account? ';
+
+  @override
+  String get mybookings => 'myBookings';
+
+  @override
+  String get eeeMmmD => 'EEE, MMM d';
+
+  @override
+  String get mmmmYyyy => 'MMMM yyyy';
+
+  @override
+  String get eee => 'EEE';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get addedToFavorites => 'Added to favorites';
+
+  @override
+  String get verifiedField => 'Verified Field';
+
+  @override
+  String get indoorType => 'indoor';
+
+  @override
+  String get outdoorType => 'outdoor';
+
+  @override
+  String get aboutThisField => 'About This Field';
+
+  @override
+  String get readMore => 'Read more';
+
+  @override
+  String get showLess => 'Show less';
+
+  @override
+  String get autoBookSameTimeEveryWeek => 'Auto-book same time every week';
+
+  @override
+  String get getDirections => 'Get Directions';
+
+  @override
+  String get recommended => 'recommended';
+
+  @override
+  String get priceAsc => 'price_asc';
+
+  @override
+  String get priceDesc => 'price_desc';
+
+  @override
+  String get ratingField => 'rating';
+
+  @override
+  String get profileTab => 'profile';
+
+  @override
+  String get fieldslist => 'fieldsList';
+
+  @override
+  String get favoritesTab => 'favorites';
+
+  @override
+  String get descriptionField => 'description';
+
+  @override
+  String get icon => 'icon';
+
+  @override
+  String get bookingsWillAppearHere => 'Bookings will appear here';
+
+  @override
+  String get manual => 'Manual';
+
+  @override
+  String get noBookingsForThisFieldIn =>
+      'No bookings for this field in this week';
+
+  @override
+  String get scrollRightToSeeAllDays =>
+      'Scroll right to see all days (Sat-Fri)';
+
+  @override
+  String get verifiedBadge => 'VERIFIED';
+
+  @override
+  String get createNewCustomer => 'Create New Customer';
+
+  @override
+  String get noFieldDataAvailable => 'No field data available';
+
+  @override
+  String get vsLastPeriod => 'vs last period';
+
+  @override
+  String get pendingStatus => 'pending';
+
+  @override
+  String get confirmed => 'confirmed';
+
+  @override
+  String get canceled => 'canceled';
+
+  @override
+  String get tryAdjustingYourFiltersOrSearch =>
+      'Try adjusting your filters or search';
+
+  @override
+  String get ownerbookings => 'ownerBookings';
+
+  @override
+  String get sportKickV100 => 'Sport Kick v1.0.0';
+
+  @override
+  String get o => 'O';
+
+  @override
+  String get noRecentBookings => 'No Recent Bookings';
+
+  @override
+  String get yourRecentBookingsWillAppearHere =>
+      'Your recent bookings will appear here';
+
+  @override
+  String get manageYourPreferences => 'Manage your preferences';
+
+  @override
+  String get howWouldYouRateThisField => 'How would you rate this field?';
+
+  @override
+  String get shareYourExperienceOptional => 'Share your experience (optional)';
+
+  @override
+  String get reviewing => 'Reviewing';
+
+  @override
+  String get yourReviewOptional => 'Your Review (Optional)';
+
+  @override
+  String get youCanUpdateYourRatingAnd =>
+      'You can update your rating and comment';
+
+  @override
+  String get noRatingsYet => 'No ratings yet';
+
+  @override
+  String get anonymous => 'Anonymous';
+
+  @override
+  String get edited => '(edited)';
+
+  @override
+  String get recentReview => 'Recent Review';
+
+  @override
+  String get filterByRating => 'Filter by Rating';
+
+  @override
+  String get clear => 'Clear';
+
+  @override
+  String get thisActionCannotBeUndoneAre =>
+      'This action cannot be undone. Are you sure you want to delete this review?';
+
+  @override
+  String get editedLabel => 'edited';
+
+  @override
+  String get editingReviewFor => 'Editing review for';
+
+  @override
+  String get shareYourExperienceToHelpOthers =>
+      'Share your experience to help others';
+
+  @override
+  String get updateRatingPrompt =>
+      'You can update your rating and comment anytime';
+
+  @override
+  String get shareDetailsAboutYourExperienceN =>
+      'Share details about your experience...\\n\\n';
+
+  @override
+  String get howWasTheFieldConditionN => '- How was the field condition?\\n';
+
+  @override
+  String get reviewUpdated => 'Review Updated!';
+
+  @override
+  String get reviewSubmittedSuccess => 'Review Submitted!';
+
+  @override
+  String get yourReviewHasBeenUpdatedSuccessfully =>
+      'Your review has been updated successfully';
+
+  @override
+  String get egpE => 'EGP (E£)';
+
+  @override
+  String get eur => 'EUR (€)';
+
+  @override
+  String get sar => 'SAR (﷼)';
+
+  @override
+  String get eG25122025 => 'e.g., 25/12/2025';
+
+  @override
+  String get eG12252025 => 'e.g., 12/25/2025';
+
+  @override
+  String get eG20251225 => 'e.g., 2025-12-25';
+
+  @override
+  String get loginactivity => 'loginActivity';
+
+  @override
+  String get notificationManagementWillBeNavailableIn =>
+      'Notification management will be\\navailable in a future update.';
+
+  @override
+  String get reviewsModerationWillBeNavailableIn =>
+      'Reviews moderation will be\\navailable in a future update.';
+
+  @override
+  String get failedToLoadCategories => 'Failed to load categories';
+
+  @override
+  String get noCategoriesYet => 'No Categories Yet';
+
+  @override
+  String get tapTheButtonToCreateNyour =>
+      'Tap the + button to create\\nyour first sport category';
+
+  @override
+  String get platformPerformance => 'Platform Performance';
+
+  @override
+  String get comprehensiveOverviewOfYourPlatformMetrics =>
+      'Comprehensive overview of your platform metrics';
+
+  @override
+  String get errorLoadingAnalytics => 'Error loading analytics';
+
+  @override
+  String get enforceOperatingHours => 'Enforce Operating Hours';
+
+  @override
+  String get applyToAllFieldBookings => 'Apply to all field bookings';
+
+  @override
+  String get saving => 'Saving...';
+
+  @override
+  String get userRegistrationsAndEngagement =>
+      'User registrations and engagement';
+
+  @override
+  String get platformWideRevenueAndTransactions =>
+      'Platform-wide revenue and transactions';
+
+  @override
+  String get bookingTrendsAndFieldUtilization =>
+      'Booking trends and field utilization';
+
+  @override
+  String get fieldRatingsAndReviewAnalysis =>
+      'Field ratings and review analysis';
+
+  @override
+  String get quickOverview => 'Quick Overview';
+
+  @override
+  String get exportData => 'Export Data';
+
+  @override
+  String get generateAndDownloadDetailedReportsIn =>
+      'Generate and download detailed reports in CSV or PDF format.';
+
+  @override
+  String get activatingAdmin => 'Activating admin...';
+
+  @override
+  String get deactivatingAdmin => 'Deactivating admin...';
+
+  @override
+  String get permanentlyDeletingField => 'Permanently deleting field...';
+
+  @override
+  String get deactivatingField => 'Deactivating field...';
+
+  @override
+  String get noAdminsYet => 'No Admins Yet';
+
+  @override
+  String get createYourFirstFieldOwnerAccount =>
+      'Create your first field owner account';
+
+  @override
+  String get errorLoadingAdmins => 'Error loading admins';
+
+  @override
+  String get assignedFields => 'Assigned Fields';
+
+  @override
+  String get noFieldsAssigned => 'No Fields Assigned';
+
+  @override
+  String get thisAdminDoesn => 'This admin doesn\\';
+
+  @override
+  String get superAdmin => 'super_admin';
+
+  @override
+  String get activeAccount => 'Active Account';
+
+  @override
+  String get inactiveAccount => 'Inactive Account';
+
+  @override
+  String get formatAdminCreatedat => ').format(admin.createdAt)';
+
+  @override
+  String get allAvailableFieldsAssigned => 'All Available Fields Assigned';
+
+  @override
+  String get thisAdminAlreadyHasAllAvailable =>
+      'This admin already has all available fields assigned.';
+
+  @override
+  String get tryAdjustingYourSearchOrFilters =>
+      'Try adjusting your search or filters';
+
+  @override
+  String get bookingsOverview => 'Bookings Overview';
+
+  @override
+  String get mmmDdYyyy => 'MMM dd, yyyy';
+
+  @override
+  String get longPressForActions => 'Long press for actions';
+
+  @override
+  String get tryAdjustingYourFilters => 'Try adjusting your filters';
+
+  @override
+  String get errorLoadingFields => 'Error loading fields';
+
+  @override
+  String get fieldsOverview => 'Fields Overview';
+
+  @override
+  String get noCitiesFound => 'No cities found';
+
+  @override
+  String get tryChangingTheFilter => 'Try changing the filter';
+
+  @override
+  String get platformCoverage => 'Platform Coverage';
+
+  @override
+  String get createFieldOwnerAccount => 'Create Field Owner Account';
+
+  @override
+  String get aSecurePasswordWillBeGenerated =>
+      'A secure password will be generated automatically. The admin must change it on first login.';
+
+  @override
+  String get adminAccountHasBeenCreatedSuccessfully =>
+      'Admin account has been created successfully. Please save these credentials:';
+
+  @override
+  String get adminMustChangePasswordOnFirst =>
+      'Admin must change password on first login';
+
+  @override
+  String get eGChampionsField => 'e.g., Champions Field';
+
+  @override
+  String get selectAvailableFacilities => 'Select Available Facilities';
+
+  @override
+  String get fillInDetailsAndAssignTo => 'Fill in details and assign to admin';
+
+  @override
+  String get indoorField => 'Indoor Field';
+
+  @override
+  String get vodafoneCashNumberForReceivingPayments =>
+      'Vodafone Cash number for receiving payments';
+
+  @override
+  String get instapayNumberForReceivingTransfers =>
+      'InstaPay number for receiving transfers';
+
+  @override
+  String get sportKickPlatform => 'Sport Kick Platform';
+
+  @override
+  String get platformOverview => 'Platform Overview';
+
+  @override
+  String get chooseHowToDeleteThisField => 'Choose how to delete this field:';
+
+  @override
+  String get fieldWillBeHiddenFromUsers =>
+      'Field will be hidden from users but data is preserved. Can be reactivated later.';
+
+  @override
+  String get allDataWillBePermanentlyRemoved =>
+      'All data will be permanently removed. This action cannot be undone!';
+
+  @override
+  String get removeVerifiedBadgeFromThisField =>
+      'Remove verified badge from this field';
+
+  @override
+  String get addVerifiedBadgeToThisField => 'Add verified badge to this field';
+
+  @override
+  String get noAdminsMatchYourFilters => 'No admins match your filters';
+
+  @override
+  String get noAdminsFound => 'No admins found';
+
+  @override
+  String get noUsersMatchYourFilters => 'No users match your filters';
+
+  @override
+  String get noUsersFound => 'No users found';
+
+  @override
+  String get areYouSureYouWantTo =>
+      'Are you sure you want to enable maintenance mode? ';
+
+  @override
+  String get thisWillPreventUsersFromAccessing =>
+      'This will prevent users from accessing the platform.';
+
+  @override
+  String get changepassword => 'changePassword';
+
+  @override
+  String get termsofservice => 'termsOfService';
+
+  @override
+  String get privacypolicy => 'privacyPolicy';
+
+  @override
+  String get editprofile => 'editProfile';
+
+  @override
+  String get dateFormatSettings => 'Date Format Settings';
+
+  @override
+  String get currencySettings => 'Currency Settings';
+
+  @override
+  String get notificationSettings => 'Notification Settings';
+
+  @override
+  String get noUsersYet => 'No Users Yet';
+
+  @override
+  String get errorLoadingUsers => 'Error loading users';
+
+  @override
+  String get deactivateAccount => 'Deactivate Account';
+
+  @override
+  String get activateAccount => 'Activate Account';
+
+  @override
+  String get mmmDY => 'MMM d, y';
+
+  @override
+  String get thisUserHasn => 'This user hasn\\';
+
+  @override
+  String get formatUserCreatedat => ').format(user.createdAt)';
+
+  @override
+  String get thisWillPreventTheUserFrom =>
+      'This will prevent the user from logging in and making new bookings.';
+
+  @override
+  String get manageAdmins => 'Manage Admins';
+
+  @override
+  String get viewAndManageFieldOwnerAccounts =>
+      'View and manage field owner accounts';
+
+  @override
+  String get failedToLoadAdmins => 'Failed to load admins';
+
+  @override
+  String get assignFieldsToThisAdminTo =>
+      'Assign fields to this admin to get started';
+
+  @override
+  String get selectAFieldToAssign => 'Select a field to assign';
+
+  @override
+  String get noAvailableFields => 'No available fields';
+
+  @override
+  String get passwordResetSuccessfully => 'Password Reset Successfully!';
+
+  @override
+  String get adminMustChangePasswordOnNext =>
+      'Admin must change password on next login';
+
+  @override
+  String get resetAdminPassword => 'Reset Admin Password?';
+
+  @override
+  String get aNewPasswordWillBeGenerated =>
+      'A new password will be generated for this admin. They will need to change it on their next login.';
+
+  @override
+  String get thisBookingHasBeenCompleted => 'This booking has been completed';
+
+  @override
+  String get tryAdjustingYourSearchNorFilters =>
+      'Try adjusting your search\\nor filters';
+
+  @override
+  String get hour => '/hour';
+
+  @override
+  String get hideThisCityFromUsers => 'Hide this city from users';
+
+  @override
+  String get showThisCityToUsers => 'Show this city to users';
+
+  @override
+  String get addNewCity => 'Add New City';
+
+  @override
+  String get createANewCityForThe => 'Create a new city for the platform';
+
+  @override
+  String get cityName => 'City Name';
+
+  @override
+  String get cityWillBeVisibleToUsers => 'City will be visible to users';
+
+  @override
+  String get createCity => 'Create City';
+
+  @override
+  String get thisActionMayBeIrreversible => 'This action may be irreversible';
+
+  @override
+  String get permanentDeleteIsDisabledForCities =>
+      'Permanent delete is disabled for cities with fields.';
+
+  @override
+  String get deleteForever => 'Delete Forever';
+
+  @override
+  String get cityIsVisibleToUsers => 'City is visible to users';
+
+  @override
+  String get oopsSomethingWentWrong => 'Oops! Something went wrong';
+
+  @override
+  String get tryAdjustingYourFiltersNorAdd =>
+      'Try adjusting your filters\\nor add a new city';
+
+  @override
+  String get fieldOwnerManagement => 'Field owner management';
+
+  @override
+  String get enterTheAdmin => 'Enter the admin\\';
+
+  @override
+  String get aTemporaryPasswordWillBeGenerated =>
+      'A temporary password will be generated automatically';
+
+  @override
+  String get shareCredentialsSecurelyWithTheNew =>
+      'Share credentials securely with the new admin';
+
+  @override
+  String get adminCreatedSuccessfully => 'Admin Created Successfully!';
+
+  @override
+  String get shareTheseCredentialsSecurely =>
+      'Share these credentials securely';
+
+  @override
+  String get sportKickAdminV100 => 'Sport Kick Admin v1.0.0';
+
+  @override
+  String get a => 'A';
+
+  @override
+  String get superAdminRole => 'SUPER ADMIN';
+
+  @override
+  String get platformRevenue => 'Platform Revenue';
+
+  @override
+  String get totalEarningsFromAllFields => 'Total earnings from all fields';
+
+  @override
+  String get successStatus => 'success';
+
+  @override
+  String get failed => 'failed';
+
+  @override
+  String get blocked => 'blocked';
+
+  @override
+  String get loadingLoginActivity => 'Loading login activity...';
+
+  @override
+  String get failedToLoadActivity => 'Failed to load activity';
+
+  @override
+  String get noLoginActivity => 'No login activity';
+
+  @override
+  String get noLoginEventsMatchNyourFilter =>
+      'No login events match\\nyour filter criteria';
+
+  @override
+  String get logoutAction => 'Logout?';
+
+  @override
+  String get confirmationPrompt =>
+      'Are you sure you want to logout?\\nYou will need to login again to access the admin panel.';
+
+  @override
+  String get platformSettings => 'platform';
+
+  @override
+  String get allowNewUserSignUps => 'Allow new user sign-ups';
+
+  @override
+  String get requireEmailVerificationForNewUsers =>
+      'Require email verification for new users';
+
+  @override
+  String get configureDefaults => 'Configure defaults';
+
+  @override
+  String get notificationsTab => 'notifications';
+
+  @override
+  String get receiveEmailAlerts => 'Receive email alerts';
+
+  @override
+  String get receivePushAlerts => 'Receive push alerts';
+
+  @override
+  String get importantAdminNotifications => 'Important admin notifications';
+
+  @override
+  String get trackFailedLoginAttempts => 'Track failed login attempts';
+
+  @override
+  String get loggingOut => 'Logging out...';
+
+  @override
+  String get value => 'value';
+
+  @override
+  String get editCategory => 'Edit Category';
+
+  @override
+  String get createCategory => 'Create Category';
+
+  @override
+  String get iconField => 'Icon';
+
+  @override
+  String get failedToLoadUsers => 'Failed to load users';
+
+  @override
+  String get viewAndManageAllCustomerAccounts =>
+      'View and manage all customer accounts';
+
+  @override
+  String get thisUserWillBeAbleTo =>
+      'This user will be able to login and make bookings again.';
+
+  @override
+  String get dd => 'dd';
+
+  @override
+  String get mmm => 'MMM';
+
+  @override
+  String get favoriteField => 'Favorite Field';
+
+  @override
+  String selectedCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count selected',
+      one: '$count selected',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fieldsFoundCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fields found',
+      one: '$count field found',
+      zero: 'No fields found',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookingsFoundCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bookings found',
+      one: '$count booking found',
+      zero: 'No bookings found',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fieldsSelectedCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fields selected',
+      one: '$count field selected',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String cityFieldsAssociatedCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'This city has # fields associated with it.',
+      one: 'This city has 1 field associated with it.',
+      zero: 'This city has no fields associated with it.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String cityFieldsRegisteredCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'This city has # fields registered.',
+      one: 'This city has 1 field registered.',
+      zero: 'This city has no fields registered.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cityIsHiddenFromUsers => 'City is hidden from users';
+
+  @override
+  String editingCity(Object name) {
+    return 'Editing: $name';
+  }
+
+  @override
+  String showingAdminsCount(Object filtered, Object total) {
+    return 'Showing $filtered of $total admins';
+  }
+
+  @override
+  String showingUsersCount(Object filtered, Object total) {
+    return 'Showing $filtered of $total users';
+  }
+
+  @override
+  String ofTotalAdmins(Object total) {
+    return 'of $total admins';
+  }
+
+  @override
+  String ofTotalUsers(Object total) {
+    return 'of $total users';
+  }
+
+  @override
+  String activeCount(Object count) {
+    return '$count active';
+  }
+
+  @override
+  String memberSinceDate(Object date) {
+    return 'Member since $date';
+  }
+
+  @override
+  String joinedDate(Object date) {
+    return 'Joined $date';
+  }
+
+  @override
+  String sinceDate(Object date) {
+    return 'Since $date';
+  }
+
+  @override
+  String bookingNumber(Object id) {
+    return 'Booking #$id';
+  }
+
+  @override
+  String basedOnReviews(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Based on $count reviews',
+      one: 'Based on $count review',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noStarReviewsYet(Object rating) {
+    return 'No $rating-star reviews yet';
+  }
+
+  @override
+  String allReviewsWithCount(Object count) {
+    return 'All Reviews ($count)';
+  }
+
+  @override
+  String countOfTotal(Object count, Object total) {
+    return '$count of $total';
+  }
+
+  @override
+  String viewAllBookingsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'View All $count Bookings',
+      one: 'View All $count Booking',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String assigningTo(Object name) {
+    return 'Assigning to: $name';
+  }
+
+  @override
+  String usingCurrentHours(Object hours) {
+    return 'Using current hours: $hours';
+  }
+
+  @override
+  String sharePasswordSecurelyWith(Object name) {
+    return 'Share this password securely with $name';
+  }
+
+  @override
+  String exportingReport(Object type) {
+    return 'Exporting $type...';
+  }
+
+  @override
+  String deleteCategoryConfirmation(Object name) {
+    return 'Are you sure you want to delete \"$name\"?\\n\\nThis action cannot be undone.';
+  }
+
+  @override
+  String gpsCoordinates(Object coordinates) {
+    return 'GPS: $coordinates';
+  }
+
+  @override
+  String labelWithValue(Object label, Object value) {
+    return '$label: $value';
+  }
+
+  @override
+  String usersCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count users',
+      one: '$count user',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get allStatuses => 'All Statuses';
+
+  @override
+  String effectiveDateLabel(Object date) {
+    return 'Effective Date: $date';
+  }
+
+  @override
+  String lastUpdatedLabel(Object date) {
+    return 'Last Updated: $date';
+  }
+
+  @override
+  String effectiveLabel(Object date) {
+    return 'Effective: $date';
+  }
+
+  @override
+  String beFirstToReviewField(Object fieldName) {
+    return 'Be the first to review $fieldName';
+  }
+
+  @override
+  String starReviewsWithCount(Object count, Object rating) {
+    return '$rating Star Reviews ($count)';
+  }
+
+  @override
+  String get thisUserHasntMadeAnyBookings =>
+      'This user hasn\'t made any bookings yet.';
+
+  @override
+  String get thisUserHasntMadeAnyBookingsYet =>
+      'This user hasn\'t made any bookings yet.';
+
+  @override
+  String get thisAdminDoesntHaveAnyFieldsAssignedYet =>
+      'This admin doesn\'t have any fields assigned yet.';
+
+  @override
+  String get enterTheAdminsEmailAndPersonalDetails =>
+      'Enter the admin\'s email and personal details';
+
+  @override
+  String get admins => 'Admins';
+
+  @override
+  String errorLoadingDashboard(Object message) {
+    return 'Error loading dashboard: $message';
+  }
+
+  @override
+  String get shareDetailsAboutYourExperience =>
+      'Share details about your experience:\\n- How was the field condition?\\n- Were the facilities good?\\n- Would you recommend it?';
+
+  @override
+  String get yourReviewHelpsOthersFindTheBestFields =>
+      'Your review helps others find the best fields';
+
+  @override
+  String get nameIsRequired => 'Name is required';
+
+  @override
+  String get nameIsTooShort => 'Name is too short';
+
+  @override
+  String get nameMustBeAtLeast3Characters =>
+      'Name must be at least 3 characters';
+
+  @override
+  String get emailIsRequired => 'Email is required';
+
+  @override
+  String get pleaseEnterAValidEmail => 'Please enter a valid email';
+
+  @override
+  String get phoneNumberIsRequired => 'Phone number is required';
+
+  @override
+  String get pleaseEnterAValidPhoneNumber =>
+      'Please enter a valid phone number';
+
+  @override
+  String get passwordIsRequired => 'Password is required';
+
+  @override
+  String get passwordMustBeAtLeast8Characters =>
+      'Password must be at least 8 characters';
+
+  @override
+  String get pleaseConfirmYourPassword => 'Please confirm your password';
+
+  @override
+  String get emailAddressRequired => 'Email Address *';
+
+  @override
+  String get fullNameRequired => 'Full Name *';
+
+  @override
+  String get phoneNumberOptional => 'Phone Number (Optional)';
+
+  @override
+  String get paymentPhoneNumber => 'Payment Phone Number';
+
+  @override
+  String get paymentPhoneIsRequired => 'Payment phone is required';
+
+  @override
+  String get enterValidEgyptianPhoneNumber =>
+      'Enter a valid Egyptian phone number';
+
+  @override
+  String get selectAdmin => 'Select Admin';
+
+  @override
+  String get pleaseSelectAnAdmin => 'Please select an admin';
+
+  @override
+  String get createFieldButton => 'Create Field';
+
+  @override
+  String get requiredField => 'Required';
+
+  @override
+  String get invalidNumber => 'Invalid number';
+
+  @override
+  String get loadingCities => 'Loading cities...';
+
+  @override
+  String get loadingCategories => 'Loading categories...';
+
+  @override
+  String get fieldNameIsRequired => 'Field name is required';
+
+  @override
+  String get addressIsRequired => 'Address is required';
+
+  @override
+  String get priceIsRequired => 'Price is required';
+
+  @override
+  String get pleaseEnterAValidNumber => 'Please enter a valid number';
+
+  @override
+  String get priceMustBeGreaterThanZero => 'Price must be greater than 0';
+
+  @override
+  String get pleaseSelectACity => 'Please select a city';
+
+  @override
+  String get pleaseSelectASportCategory => 'Please select a sport category';
+
+  @override
+  String get pleaseSelectAnAdminToAssignField =>
+      'Please select an admin to assign this field';
+
+  @override
+  String get pleaseEnterACityName => 'Please enter a city name';
+
+  @override
+  String get cityNameMustBeAtLeast2Characters =>
+      'City name must be at least 2 characters';
+
+  @override
+  String get pleaseEnterACancellationReason =>
+      'Please enter a cancellation reason';
+
+  @override
+  String get reasonMustBeAtLeast5Characters =>
+      'Reason must be at least 5 characters';
+
+  @override
+  String get categoryNameLabel => 'Category Name';
+
+  @override
+  String get ratingPoor => 'Poor';
+
+  @override
+  String get ratingFair => 'Fair';
+
+  @override
+  String get ratingGood => 'Good';
+
+  @override
+  String get ratingVeryGood => 'Very Good';
+
+  @override
+  String get ratingExcellent => 'Excellent';
+
+  @override
+  String get bookingStatusPending => 'Pending';
+
+  @override
+  String get bookingStatusConfirmed => 'Confirmed';
+
+  @override
+  String get bookingStatusCanceled => 'Canceled';
+
+  @override
+  String get bookingStatusCompleted => 'Completed';
+
+  @override
+  String get bookingStatusConf => 'Conf';
+
+  @override
+  String get bookingStatusPend => 'Pend';
+
+  @override
+  String get bookingStatusDone => 'Done';
+
+  @override
+  String get bookingStatusCanc => 'Canc';
+
+  @override
+  String get noBookingsMatchYourSearch => 'No bookings match your search';
+
+  @override
+  String get noPendingBookings => 'No pending bookings';
+
+  @override
+  String get noConfirmedBookings => 'No confirmed bookings';
+
+  @override
+  String get noCanceledBookings => 'No canceled bookings';
 }

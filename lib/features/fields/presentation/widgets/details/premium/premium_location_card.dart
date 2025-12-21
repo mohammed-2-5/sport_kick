@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium location card with map preview.
 ///
@@ -24,14 +27,17 @@ class PremiumLocationCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.location_on, color: AppColors.accentCyan, size: 24),
-              SizedBox(width: 12),
+              const Icon(
+                Icons.location_on,
+                color: AppColors.accentCyan,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
               Text(
-                'Location',
-                style: TextStyle(
-                  fontSize: 20,
+                context.l10n.location,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w800,
                   color: AppColors.textPrimary,
                 ),
@@ -44,7 +50,7 @@ class PremiumLocationCard extends StatelessWidget {
           // Address
           _InfoRow(
             icon: Icons.place_outlined,
-            label: 'Address',
+            label: context.l10n.searchTipAddressTitle,
             value: field.address,
           ),
 
@@ -113,12 +119,19 @@ class PremiumLocationCard extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: field.hasLocation
-                  ? () => _openMaps(field.latitude!, field.longitude!)
-                  : null,
+                  ? () => _openMaps(
+                      context,
+                      field.latitude!,
+                      field.longitude!,
+                      field.address,
+                    )
+                  : () => _openMapsByAddress(context, field.address),
               icon: const Icon(Icons.directions, size: 20),
-              label: const Text(
-                'Get Directions',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+              label: Text(
+                context.l10n.getDirections,
+                style: AppTextStyles.labelLarge.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.accentCyan,
@@ -136,12 +149,51 @@ class PremiumLocationCard extends StatelessWidget {
     );
   }
 
-  Future<void> _openMaps(double latitude, double longitude) async {
+  Future<void> _openMaps(
+    BuildContext context,
+    double latitude,
+    double longitude,
+    String address,
+  ) async {
+    // Try Google Maps with coordinates first
     final uri = Uri.parse(
       'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude',
     );
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        // Fallback to address-based search
+        if (context.mounted) {
+          await _openMapsByAddress(context, address);
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        SnackbarHelper.showError(context, context.l10n.homeErrorOpenMaps);
+      }
+    }
+  }
+
+  Future<void> _openMapsByAddress(BuildContext context, String address) async {
+    final query = Uri.encodeComponent(address);
+    final uri = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=$query',
+    );
+
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (context.mounted) {
+          SnackbarHelper.showError(context, context.l10n.homeErrorOpenMaps);
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        SnackbarHelper.showError(context, context.l10n.homeErrorOpenMaps);
+      }
     }
   }
 }
@@ -178,8 +230,7 @@ class _InfoRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -187,8 +238,7 @@ class _InfoRow extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 value,
-                style: const TextStyle(
-                  fontSize: 15,
+                style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.textPrimary,
                   fontWeight: FontWeight.w600,
                 ),

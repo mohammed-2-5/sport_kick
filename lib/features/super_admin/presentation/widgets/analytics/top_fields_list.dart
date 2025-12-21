@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
 
@@ -16,8 +18,8 @@ class TopFieldsList extends StatelessWidget {
     final topFields = sortedFields.take(5).toList();
 
     return AnalyticsChartCard(
-      title: 'Top Performing Fields',
-      subtitle: 'By number of bookings',
+      title: context.l10n.topPerformingFields,
+      subtitle: context.l10n.byNumberOfBookings,
       icon: Icons.emoji_events,
       color: Colors.amber,
       child: Column(
@@ -45,7 +47,7 @@ class TopFieldsList extends StatelessWidget {
                   child: Center(
                     child: Text(
                       '${index + 1}',
-                      style: const TextStyle(
+                      style: AppTextStyles.labelLarge.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -60,9 +62,8 @@ class TopFieldsList extends StatelessWidget {
                     children: [
                       Text(
                         field.name,
-                        style: const TextStyle(
+                        style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -70,7 +71,9 @@ class TopFieldsList extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         field.city,
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: Colors.grey[600],
+                        ),
                       ),
                     ],
                   ),
@@ -85,9 +88,8 @@ class TopFieldsList extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           '${field.totalBookings}',
-                          style: const TextStyle(
+                          style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
-                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -100,7 +102,7 @@ class TopFieldsList extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             field.ratingDisplay,
-                            style: const TextStyle(fontSize: 12),
+                            style: AppTextStyles.bodySmall,
                           ),
                         ],
                       ),

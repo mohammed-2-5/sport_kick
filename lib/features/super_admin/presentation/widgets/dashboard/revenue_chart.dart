@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium Revenue Chart Widget
 ///
@@ -63,7 +64,7 @@ class RevenueChart extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
                     labels[value.toInt()],
-                    style: const TextStyle(
+                    style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.premiumTextSecondary,
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
@@ -83,7 +84,7 @@ class RevenueChart extends StatelessWidget {
             getTitlesWidget: (value, meta) {
               return Text(
                 '${value.toInt()}K',
-                style: const TextStyle(
+                style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.premiumTextSecondary,
                   fontSize: 10,
                   fontWeight: FontWeight.w500,

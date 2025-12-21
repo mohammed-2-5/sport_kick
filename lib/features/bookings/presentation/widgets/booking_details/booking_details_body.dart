@@ -39,9 +39,12 @@ class BookingDetailsBody extends StatelessWidget {
 
             if (state is BookingError) {
               return EmptyStates.error(
+                context,
                 message: state.message,
-                onRetry: () =>
-                    context.read<BookingCubit>().loadBookingById(bookingId),
+                onRetry: () => context.read<BookingCubit>().loadBookingById(
+                  bookingId,
+                  loadingMessage: context.l10n.loadingBookingDetails,
+                ),
               );
             }
 

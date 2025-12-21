@@ -210,7 +210,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get passwordTooShort => 'يجب أن تتكون كلمة المرور من ٨ أحرف على الأقل';
 
   @override
-  String get passwordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
+  String get passwordsDoNotMatch => 'كلمات المرور غير متطابقة';
 
   @override
   String get nameTooShort => 'يجب أن يكون الاسم حرفين على الأقل';
@@ -1185,7 +1185,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get emailClientOpenFailed => 'فشل فتح تطبيق البريد';
 
   @override
-  String get noBookingsYet => 'لا توجد حجوزات حتى الآن';
+  String get noBookingsYet => 'لا توجد حجوزات بعد';
 
   @override
   String get bookingsWillAppearMessage =>
@@ -1217,7 +1217,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingAlreadyCancelled => 'تم إلغاء الحجز مسبقاً';
 
   @override
-  String get cancellationReason => 'سبب الإلغاء';
+  String get cancellationReason => 'سبب الإلغاء *';
 
   @override
   String get copy => 'نسخ';
@@ -1505,7 +1505,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get createSubscription => 'إنشاء اشتراك';
 
   @override
-  String get activeStatus => 'نشط';
+  String get activeStatus => 'الحالة النشطة';
 
   @override
   String get pendingApproval => 'في انتظار الموافقة';
@@ -1689,7 +1689,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get privacySettings => 'الخصوصية';
 
   @override
-  String get securitySettings => 'الأمان';
+  String get securitySettings => 'حماية';
 
   @override
   String get accountSettings => 'الحساب';
@@ -1833,7 +1833,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String loginDateTimeFormat(Object date, Object time) {
-    return '$date • $time';
+    return '‏$date • $time';
   }
 
   @override
@@ -2090,7 +2090,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get expiryDate => 'تاريخ الانتهاء';
 
   @override
-  String get cvv => 'CVV';
+  String get cvv => 'رمز CVV';
 
   @override
   String get paymentSuccessful => 'تم الدفع بنجاح';
@@ -2425,6 +2425,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get priceLabel => 'السعر';
 
   @override
+  String get totalUsers => 'إجمالي المستخدمين';
+
+  @override
+  String newUsersThisMonth(Object count) {
+    return '+$count هذا الشهر';
+  }
+
+  @override
+  String get totalAdmins => 'إجمالي المشرفين';
+
+  @override
+  String get fieldOwners => 'أصحاب الحقول';
+
+  @override
+  String get activeFields => 'الحقول النشطة';
+
+  @override
+  String inactiveCount(Object count) {
+    return '$count غير نشط';
+  }
+
+  @override
+  String pendingCount(Object count) {
+    return '$count قيد الانتظار';
+  }
+
+  @override
   String get totalPriceLabel => 'السعر الإجمالي';
 
   @override
@@ -2714,7 +2741,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeTapToViewOnMap => 'اضغط لعرضها على الخريطة';
 
   @override
-  String get homeShortcutBrowseTitle => 'تصفح\\nالملاعب';
+  String get homeShortcutBrowseTitle => 'تصفح\nالملاعب';
 
   @override
   String get homeShortcutBrowseSubtitle => 'ابحث عن الملاعب';
@@ -2985,7 +3012,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get customerNameTooShort => 'يجب أن يكون الاسم حرفين على الأقل';
 
   @override
-  String get phoneHint => '01XXXXXXXXX';
+  String get phoneHint => 'مثال: 01XXXXXXXXX';
 
   @override
   String get invalidEgyPhone => 'رقم هاتف مصري غير صالح';
@@ -2994,7 +3021,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get emailLabel => 'البريد الإلكتروني (اختياري)';
 
   @override
-  String get emailHint => 'customer@example.com';
+  String get emailHint => 'مثال: customer@example.com';
 
   @override
   String get notesLabel => 'ملاحظات (اختياري)';
@@ -3654,4 +3681,2364 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get supportContactDescription =>
       'إذا كانت لديك أسئلة حول سياساتنا أو تحتاج إلى مساعدة، يرجى التواصل معنا:';
+
+  @override
+  String get version100 => 'الإصدار 1.0.0';
+
+  @override
+  String get version1001 => 'الإصدار 1.0.0+1';
+
+  @override
+  String get oneHour => 'ساعة واحدة';
+
+  @override
+  String get phoneExample => 'مثال: +20 123 456 7890';
+
+  @override
+  String get twoHours => 'ساعتان';
+
+  @override
+  String get accountStatus => 'حالة الحساب';
+
+  @override
+  String get activate => 'فعل';
+
+  @override
+  String get activateAdmins => 'تفعيل المشرفين';
+
+  @override
+  String get activateCity => 'تفعيل المدينة';
+
+  @override
+  String get activateSelectedAdmins => 'تفعيل المسؤولين المحددين';
+
+  @override
+  String get activateSelectedUsers => 'تفعيل المستخدمين المحددين';
+
+  @override
+  String get activateUser => 'تفعيل المستخدم؟';
+
+  @override
+  String get activateUsers => 'تفعيل المستخدمين';
+
+  @override
+  String get activatingAdmins => 'تفعيل المشرفين...';
+
+  @override
+  String get activatingUser => 'جارٍ تفعيل المستخدم...';
+
+  @override
+  String get activatingUsers => 'تفعيل المستخدمين...';
+
+  @override
+  String get active2 => 'نشيط';
+
+  @override
+  String get activeNow => 'نشط الآن';
+
+  @override
+  String get addANewFieldOwner => 'إضافة مالك حقل جديد';
+
+  @override
+  String get addAnExtraLayerOfSecurity => 'أضف طبقة إضافية من الأمان';
+
+  @override
+  String get addCity => 'أضف مدينة';
+
+  @override
+  String get addNewFieldOwner => 'إضافة مالك حقل جديد';
+
+  @override
+  String get addNewSportsField => 'إضافة مجال رياضي جديد';
+
+  @override
+  String get adminAlerts => 'تنبيهات المشرف';
+
+  @override
+  String get adminCreated => 'تم إنشاء المشرف!';
+
+  @override
+  String get adminDetails => 'تفاصيل المشرف';
+
+  @override
+  String get adminExampleCom => 'مثال: admin@example.com';
+
+  @override
+  String get adminsExportedToCsv => 'تم تصدير المسؤولين إلى ملف CSV';
+
+  @override
+  String get ahmedMohamed => 'احمد محمد';
+
+  @override
+  String get all2 => 'الجميع';
+
+  @override
+  String get allBookings => 'جميع الحجوزات';
+
+  @override
+  String get allCities => 'جميع المدن';
+
+  @override
+  String get allFields => 'كافة المجالات';
+
+  @override
+  String get allSports => 'جميع الألعاب الرياضية';
+
+  @override
+  String get allTimeEarnings => 'أرباح كل الوقت';
+
+  @override
+  String get allowRegistrations => 'السماح بالتسجيلات';
+
+  @override
+  String get and => ' و ';
+
+  @override
+  String get applyToWeekdays => 'تنطبق على أيام الأسبوع';
+
+  @override
+  String get applyToWeekend => 'تنطبق على عطلة نهاية الأسبوع';
+
+  @override
+  String get approveThisBookingRequest => 'الموافقة على طلب الحجز هذا';
+
+  @override
+  String get approvingBooking => 'الموافقة على الحجز...';
+
+  @override
+  String areYouSureYouWantToActivateCountAdmins(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'هل أنت متأكد أنك تريد تفعيل $count مشرف؟',
+      many: 'هل أنت متأكد أنك تريد تفعيل $count مشرفًا؟',
+      few: 'هل أنت متأكد أنك تريد تفعيل $count مشرفين؟',
+      two: 'هل أنت متأكد أنك تريد تفعيل مشرفين؟',
+      one: 'هل أنت متأكد أنك تريد تفعيل مشرف واحد؟',
+      zero: 'هل أنت متأكد أنك تريد تفعيل $count مشرف؟',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String areYouSureYouWantToActivateCountUsers(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'هل أنت متأكد أنك تريد تفعيل $count مستخدم؟',
+      many: 'هل أنت متأكد أنك تريد تفعيل $count مستخدمًا؟',
+      few: 'هل أنت متأكد أنك تريد تفعيل $count مستخدمين؟',
+      two: 'هل أنت متأكد أنك تريد تفعيل مستخدمين؟',
+      one: 'هل أنت متأكد أنك تريد تفعيل مستخدم واحد؟',
+      zero: 'هل أنت متأكد أنك تريد تفعيل $count مستخدم؟',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String areYouSureYouWantToDeactivateCountAdmins(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'هل أنت متأكد أنك تريد إلغاء تنشيط $count مشرف؟',
+      many: 'هل أنت متأكد أنك تريد إلغاء تنشيط $count مشرفًا؟',
+      few: 'هل أنت متأكد أنك تريد إلغاء تنشيط $count مشرفين؟',
+      two: 'هل أنت متأكد أنك تريد إلغاء تنشيط مشرفين؟',
+      one: 'هل أنت متأكد أنك تريد إلغاء تنشيط مشرف واحد؟',
+      zero: 'هل أنت متأكد أنك تريد إلغاء تنشيط $count مشرف؟',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String areYouSureYouWantToDeactivateCountUsers(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'هل أنت متأكد أنك تريد إلغاء تنشيط $count مستخدم؟',
+      many: 'هل أنت متأكد أنك تريد إلغاء تنشيط $count مستخدمًا؟',
+      few: 'هل أنت متأكد أنك تريد إلغاء تنشيط $count مستخدمين؟',
+      two: 'هل أنت متأكد أنك تريد إلغاء تنشيط مستخدمين؟',
+      one: 'هل أنت متأكد أنك تريد إلغاء تنشيط مستخدم واحد؟',
+      zero: 'هل أنت متأكد أنك تريد إلغاء تنشيط $count مستخدم؟',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assign => 'تعيين';
+
+  @override
+  String get assignField => 'تعيين الحقل';
+
+  @override
+  String get assignFieldToAdmin => 'تعيين الحقل إلى المشرف';
+
+  @override
+  String get assignFirstField => 'تعيين الحقل الأول';
+
+  @override
+  String get assignToAdmin => 'تعيين إلى المشرف';
+
+  @override
+  String get assigningField => 'تعيين الحقل...';
+
+  @override
+  String get automaticallyApproveNewBookings =>
+      'الموافقة تلقائيا على الحجوزات الجديدة';
+
+  @override
+  String get averageRating => 'متوسط ​​التقييم';
+
+  @override
+  String get avgRating => 'متوسط ​​التقييم';
+
+  @override
+  String get avgRevenue => 'متوسط ربح';
+
+  @override
+  String get beTheFirstToShareYourNexperience => 'كن أول من يشارك\nتجربتك!';
+
+  @override
+  String get bookYourFirstFieldAndStartNplayingToday =>
+      'احجز ملعبك الأول وابدأ\nاللعب اليوم!';
+
+  @override
+  String get bookingAnalytics => 'تحليلات الحجز';
+
+  @override
+  String get bookingDistribution => 'توزيع الحجز';
+
+  @override
+  String get bookingHasBeenFulfilled => 'لقد تم الحجز';
+
+  @override
+  String get bookingNotifications => 'إشعارات الحجز';
+
+  @override
+  String get bookingSettings => 'إعدادات الحجز';
+
+  @override
+  String get bookingStatistics => 'إحصائيات الحجز';
+
+  @override
+  String get bookingStatus2 => 'حالة الحجز';
+
+  @override
+  String get bookingscountBookings => '\$bookingsCount الحجوزات';
+
+  @override
+  String get bookingscountBookings2 => '\$bookingsCount الحجوزات';
+
+  @override
+  String get briefDescription => 'وصف موجز';
+
+  @override
+  String get buildNumber => 'رقم البناء';
+
+  @override
+  String get byNumberOfBookings => 'حسب عدد الحجوزات';
+
+  @override
+  String get byStatus => 'حسب الحالة';
+
+  @override
+  String get cancelSelection => 'إلغاء التحديد';
+
+  @override
+  String get cancelThisBookingWithReason => 'إلغاء هذا الحجز مع السبب';
+
+  @override
+  String get cancelingBooking => 'جارٍ إلغاء الحجز...';
+
+  @override
+  String get cancellingBooking => 'جارٍ إلغاء الحجز...';
+
+  @override
+  String get cardContent => 'محتوى البطاقة';
+
+  @override
+  String get categoryDeletedSuccessfully => 'تم حذف الفئة بنجاح';
+
+  @override
+  String get categoryNameCreatedSuccessfully =>
+      'تم إنشاء الفئة \"\$name\" بنجاح';
+
+  @override
+  String get categoryUpdatedSuccessfully => 'تم تحديث الفئة بنجاح';
+
+  @override
+  String get chooseCurrency => 'اختر العملة';
+
+  @override
+  String get chooseDateFormat => 'اختر تنسيق التاريخ';
+
+  @override
+  String get chooseTheme => 'اختر الموضوع';
+
+  @override
+  String get cities => 'المدن';
+
+  @override
+  String get compareFields => 'قارن الحقول';
+
+  @override
+  String get completion => 'انتهاء';
+
+  @override
+  String get configureDefaultPlatformHours =>
+      'تكوين ساعات النظام الأساسي الافتراضية';
+
+  @override
+  String get configureLocations => 'تكوين المواقع';
+
+  @override
+  String get configurePaymentMethodsAndFees => 'تكوين طرق الدفع والرسوم';
+
+  @override
+  String get connectionError => 'خطأ في الاتصال';
+
+  @override
+  String get continueWithApple => 'تواصل مع أبل';
+
+  @override
+  String get continueWithFacebook => 'تواصل مع الفيسبوك';
+
+  @override
+  String get continueWithGoogle => 'تواصل مع جوجل';
+
+  @override
+  String get copyAll => 'نسخ الكل';
+
+  @override
+  String get copyLabel => 'نسخ \$label';
+
+  @override
+  String get couldNotDetermineYourLocation => 'لا يمكن تحديد موقعك';
+
+  @override
+  String get create => 'يخلق';
+
+  @override
+  String get createAStrongPassword => 'قم بإنشاء كلمة مرور قوية';
+
+  @override
+  String get createAdmin => 'إنشاء المشرف';
+
+  @override
+  String get createAdminAccount => 'إنشاء حساب المسؤول';
+
+  @override
+  String get createField => 'إنشاء حقل';
+
+  @override
+  String get createNewField2 => 'إنشاء حقل جديد';
+
+  @override
+  String get creatingAdminAccount => 'جارٍ إنشاء حساب المشرف...';
+
+  @override
+  String get creatingBooking2 => 'جارٍ إنشاء الحجز...';
+
+  @override
+  String get creatingCity => 'إنشاء مدينة...';
+
+  @override
+  String get creatingField => 'جارٍ إنشاء الحقل...';
+
+  @override
+  String get creatingManualBooking => 'جارٍ إنشاء الحجز اليدوي...';
+
+  @override
+  String get creationDate => 'تاريخ الإنشاء';
+
+  @override
+  String get credentialsCopiedToClipboard =>
+      'تم نسخ بيانات الاعتماد إلى الحافظة';
+
+  @override
+  String get csv => 'ملف CSV';
+
+  @override
+  String get customersUsers => 'العملاء (المستخدمون)';
+
+  @override
+  String get customizeEmailNotifications => 'تخصيص إشعارات البريد الإلكتروني';
+
+  @override
+  String get ddMmYyyy => 'يوم/شهر/سنة';
+
+  @override
+  String get deactivate => 'إلغاء التنشيط';
+
+  @override
+  String get deactivateAdmins => 'إلغاء تنشيط المشرفين';
+
+  @override
+  String get deactivateCity => 'إلغاء تنشيط المدينة';
+
+  @override
+  String get deactivateOrPermanentlyRemoveThisField =>
+      'قم بإلغاء تنشيط هذا الحقل أو إزالته نهائيًا';
+
+  @override
+  String get deactivateSelectedAdmins => 'قم بإلغاء تنشيط المسؤولين المختارين';
+
+  @override
+  String get deactivateSelectedUsers => 'إلغاء تنشيط المستخدمين المحددين';
+
+  @override
+  String get deactivateSoftDelete => 'إلغاء التنشيط (الحذف الناعم)';
+
+  @override
+  String get deactivateUser => 'إلغاء تنشيط المستخدم؟';
+
+  @override
+  String get deactivateUsers => 'إلغاء تنشيط المستخدمين';
+
+  @override
+  String get deactivatingAdmins => 'تعطيل المشرفين...';
+
+  @override
+  String get deactivatingUser => 'جارٍ إلغاء تنشيط المستخدم...';
+
+  @override
+  String get deactivatingUsers => 'جارٍ إلغاء تنشيط المستخدمين...';
+
+  @override
+  String get defaultHoursForNewFields => 'الساعات الافتراضية للحقول الجديدة';
+
+  @override
+  String get deleteCategory => 'حذف الفئة';
+
+  @override
+  String get deleteCity => 'حذف المدينة';
+
+  @override
+  String get deleteField2 => 'حذف الحقل';
+
+  @override
+  String get deletePermanently => 'حذف نهائيا';
+
+  @override
+  String get deleteReview => 'هل تريد حذف المراجعة؟';
+
+  @override
+  String get deletingCity => 'جارٍ حذف المدينة...';
+
+  @override
+  String get deletingField => 'جارٍ حذف الحقل...';
+
+  @override
+  String get descriptionOptional => 'الوصف (اختياري)';
+
+  @override
+  String get deselect => 'قم بإلغاء التحديد';
+
+  @override
+  String get deselectAll => 'قم بإلغاء تحديد الكل';
+
+  @override
+  String get eGFootballBasketball => 'على سبيل المثال، كرة القدم، كرة السلة';
+
+  @override
+  String get editCity => 'تحرير المدينة';
+
+  @override
+  String get editField2 => 'تحرير الحقل';
+
+  @override
+  String get editReview => 'تحرير المراجعة';
+
+  @override
+  String get egp => 'جنيه';
+
+  @override
+  String get egpEgyptianPound => 'جنيه مصري (جنيه مصري)';
+
+  @override
+  String get egyptianPound => 'جنيه مصري';
+
+  @override
+  String get emailTemplates => 'قوالب البريد الإلكتروني';
+
+  @override
+  String get emailVerification => 'التحقق من البريد الإلكتروني';
+
+  @override
+  String get enable => 'يُمكَِن';
+
+  @override
+  String get enableDisablePlatformAccess =>
+      'تمكين/تعطيل الوصول إلى النظام الأساسي';
+
+  @override
+  String get enterCityName => 'أدخل اسم المدينة';
+
+  @override
+  String get enterReasonForCancellation => 'أدخل سبب الإلغاء...';
+
+  @override
+  String get enterYourFullName => 'أدخل اسمك الكامل';
+
+  @override
+  String get euro => 'اليورو';
+
+  @override
+  String get exampleEmailCom => 'مثال: example@email.com';
+
+  @override
+  String get export => 'يصدّر';
+
+  @override
+  String get exportCsv => 'تصدير CSV';
+
+  @override
+  String get featureWillBeAvailableInAFutureUpdate =>
+      '\$feature سيكون متاحًا في التحديث المستقبلي.';
+
+  @override
+  String get featureWillBeAvailableSoonNstayTuned =>
+      'سيكون \$feature متاحًا قريبًا.\nتابعنا باستمرار!';
+
+  @override
+  String get fieldAssignedSuccessfully => 'تم تعيين الحقل بنجاح';
+
+  @override
+  String get fieldOwners2 => 'أصحاب الحقول';
+
+  @override
+  String get fieldOwnersAdmins => 'أصحاب الحقول (المسؤولين)';
+
+  @override
+  String get fieldPerformance => 'الأداء الميداني';
+
+  @override
+  String get fieldscountFields => '\$fieldsCount الحقول';
+
+  @override
+  String get getNotifiedAboutBookings => 'الحصول على إخطار حول الحجوزات';
+
+  @override
+  String get glassEffect => 'تأثير الزجاج';
+
+  @override
+  String get goHome => 'العودة إلى المنزل';
+
+  @override
+  String get hello => 'مرحبًا';
+
+  @override
+  String get hideThisCityFromUsersCanBeReactivatedLat =>
+      'إخفاء هذه المدينة عن المستخدمين. يمكن إعادة تفعيلها لاحقا.';
+
+  @override
+  String get inactive2 => 'غير نشط';
+
+  @override
+  String get invalidPrice => 'سعر غير صالح';
+
+  @override
+  String get ipAddress => 'عنوان IP';
+
+  @override
+  String get joinDate => 'تاريخ الانضمام';
+
+  @override
+  String label(Object label) {
+    return '$label: ';
+  }
+
+  @override
+  String labelCopied(Object label) {
+    return 'تم نسخ $label';
+  }
+
+  @override
+  String labelCount(Object count, Object label) {
+    return '$label ($count)';
+  }
+
+  @override
+  String get last6Months => 'آخر 6 أشهر';
+
+  @override
+  String get last6MonthsRevenue => 'إيرادات آخر 6 أشهر';
+
+  @override
+  String get loadingAdmins => 'جارٍ تحميل المشرفين...';
+
+  @override
+  String get loadingAnalytics => 'جارٍ تحميل التحليلات...';
+
+  @override
+  String get loadingAvailableTimeSlots =>
+      'جارٍ تحميل الفترات الزمنية المتاحة...';
+
+  @override
+  String get loadingBookingDetails => 'جارٍ تحميل تفاصيل الحجز...';
+
+  @override
+  String get loadingBookings => 'جارٍ تحميل الحجوزات...';
+
+  @override
+  String get loadingDashboard => 'جارٍ تحميل لوحة البيانات...';
+
+  @override
+  String get loadingPlatformData => 'جارٍ تحميل بيانات النظام الأساسي...';
+
+  @override
+  String get loadingRevenueData => 'جارٍ تحميل بيانات الإيرادات...';
+
+  @override
+  String get loadingReviews => 'جارٍ تحميل التقييمات...';
+
+  @override
+  String get loadingUsers => 'جارٍ تحميل المستخدمين...';
+
+  @override
+  String get loadingYourBookings => 'جارٍ تحميل حجوزاتك...';
+
+  @override
+  String get loadingYourFields => 'جارٍ تحميل حقولك...';
+
+  @override
+  String get logFailedLogins => 'تسجيل الدخول الفاشل';
+
+  @override
+  String get maintenanceMode => 'وضع الصيانة';
+
+  @override
+  String get manageCities => 'إدارة المدن';
+
+  @override
+  String get manageCustomers => 'إدارة العملاء';
+
+  @override
+  String get manageFieldOwners => 'إدارة أصحاب الحقول';
+
+  @override
+  String get managePlatformLocations => 'إدارة مواقع المنصة';
+
+  @override
+  String get managePlatformNotifications => 'إدارة إشعارات المنصة';
+
+  @override
+  String get manageSportTypes => 'إدارة أنواع الرياضة';
+
+  @override
+  String get manageUsers => 'إدارة المستخدمين';
+
+  @override
+  String get management => 'إدارة';
+
+  @override
+  String get markAsCompleted => 'وضع علامة كمكتمل';
+
+  @override
+  String get memberDays => 'أيام الأعضاء';
+
+  @override
+  String minutesMinutes(num minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes دقيقة',
+      many: '$minutes دقيقة',
+      few: '$minutes دقائق',
+      two: 'دقيقتان',
+      one: 'دقيقة واحدة',
+      zero: '$minutes دقيقة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mmDdYyyy => 'ش ش/ي ي/س س س س';
+
+  @override
+  String get moderatePlatformReviews => 'مراجعات منصة معتدلة';
+
+  @override
+  String get monthlyBookings => 'الحجوزات الشهرية';
+
+  @override
+  String get mostBookedFields => 'الحقول الأكثر حجزا';
+
+  @override
+  String get newFields => 'حقول جديدة';
+
+  @override
+  String get newNotification => 'إشعار جديد';
+
+  @override
+  String get noBookingsYet2 => 'لا توجد حجوزات حتى الآن';
+
+  @override
+  String get noFavoritesYet2 => 'لا توجد مفضلة بعد';
+
+  @override
+  String get noFeaturedFieldsAvailable => 'لا توجد حقول مميزة متاحة';
+
+  @override
+  String get noFieldsAvailable2 => 'لا توجد حقول متاحة';
+
+  @override
+  String get noPastBookings => 'لا توجد حجوزات سابقة';
+
+  @override
+  String get noResultsFound => 'لم يتم العثور على نتائج';
+
+  @override
+  String get noReviewsYet => 'لا توجد تعليقات حتى الآن';
+
+  @override
+  String get noUpcomingBookings2 => 'لا توجد حجوزات قادمة';
+
+  @override
+  String get notSet => 'لم يتم ضبطه';
+
+  @override
+  String get notes => 'ملحوظات';
+
+  @override
+  String get operatingHours => 'ساعات العمل';
+
+  @override
+  String get paymentSettings => 'إعدادات الدفع';
+
+  @override
+  String get pdf => 'ملف PDF';
+
+  @override
+  String get perBooking => 'لكل حجز';
+
+  @override
+  String get performance => 'أداء';
+
+  @override
+  String get performanceMetrics => 'مقاييس الأداء';
+
+  @override
+  String get permanentDelete => 'الحذف الدائم';
+
+  @override
+  String get permanentlyRemoveThisCity => 'قم بإزالة هذه المدينة نهائيًا';
+
+  @override
+  String get phone2 => 'هاتف';
+
+  @override
+  String get platform => 'منصة';
+
+  @override
+  String get platformAnalyticsAndExports => 'تحليلات المنصة والصادرات';
+
+  @override
+  String get platformConfiguration => 'تكوين المنصة';
+
+  @override
+  String get platformDataExportedToCsv =>
+      'تم تصدير بيانات النظام الأساسي إلى ملف CSV';
+
+  @override
+  String get platformInsights => 'رؤى المنصة';
+
+  @override
+  String get platformPerformanceMetrics => 'مقاييس أداء المنصة';
+
+  @override
+  String get platformSecurityMonitoring => 'مراقبة أمن المنصة';
+
+  @override
+  String get pleaseAcceptTheTermsAndConditions => 'يرجى قبول الشروط والأحكام';
+
+  @override
+  String get pleaseEnableLocationPermissionsInSetting =>
+      'يرجى تمكين أذونات الموقع في الإعدادات';
+
+  @override
+  String get pleaseEnterACategoryName => 'الرجاء إدخال اسم الفئة';
+
+  @override
+  String get pricePerHourEgp => 'سعر الساعة (جنيه مصري)';
+
+  @override
+  String get pricing => 'التسعير';
+
+  @override
+  String get readOurPrivacyPolicy => 'اقرأ سياسة الخصوصية الخاصة بنا';
+
+  @override
+  String get readOurTerms => 'اقرأ شروطنا';
+
+  @override
+  String get receivePushNotifications => 'تلقي إشعارات الدفع';
+
+  @override
+  String get receiveUpdatesViaEmail => 'تلقي التحديثات عبر البريد الإلكتروني';
+
+  @override
+  String get rejectingBooking => 'جارٍ رفض الحجز...';
+
+  @override
+  String get removeCityFromDatabaseCannotBeUndone =>
+      'إزالة المدينة من قاعدة البيانات. لا يمكن التراجع.';
+
+  @override
+  String get removeVerification => 'إزالة التحقق';
+
+  @override
+  String get removingVerification => 'جارٍ إزالة التحقق...';
+
+  @override
+  String get reports => 'التقارير';
+
+  @override
+  String get response => 'إجابة';
+
+  @override
+  String get revenueReport => 'تقرير الإيرادات';
+
+  @override
+  String get role => 'دور';
+
+  @override
+  String get satisfaction => 'إشباع';
+
+  @override
+  String get saudiRiyal => 'الريال السعودي';
+
+  @override
+  String get searchAdmins => 'بحث المشرفين...';
+
+  @override
+  String get searchAdminsByNameEmailOrPhone =>
+      'البحث عن المسؤولين حسب الاسم أو البريد الإلكتروني أو الهاتف...';
+
+  @override
+  String get searchByCustomerFieldOrId =>
+      'البحث حسب العميل أو الحقل أو المعرف...';
+
+  @override
+  String get searchByNameEmailOrPhone =>
+      'البحث بالاسم أو البريد الإلكتروني أو الهاتف...';
+
+  @override
+  String get searchByUserFieldOrBookingId =>
+      'البحث حسب المستخدم أو الحقل أو معرف الحجز...';
+
+  @override
+  String get searchByUserOrField => 'البحث حسب المستخدم أو الحقل...';
+
+  @override
+  String get searchCustomers => 'بحث عن العملاء...';
+
+  @override
+  String get searchFieldsByNameCityOrOwner =>
+      'البحث في الحقول حسب الاسم أو المدينة أو المالك...';
+
+  @override
+  String get searchUsers => 'البحث عن المستخدمين...';
+
+  @override
+  String get searchUsersByNameEmailOrPhone =>
+      'البحث عن المستخدمين حسب الاسم أو البريد الإلكتروني أو الهاتف...';
+
+  @override
+  String get selectAll => 'حدد الكل';
+
+  @override
+  String get selectFieldLocation => 'حدد موقع الحقل';
+
+  @override
+  String get selectOnMap => 'اختر على الخريطة';
+
+  @override
+  String get selectSportCategory => 'اختر فئة الرياضة';
+
+  @override
+  String get sendMessage => 'أرسل رسالة';
+
+  @override
+  String get sessionTimeout => 'مهلة الجلسة';
+
+  @override
+  String get shareYourExperienceWithThisField =>
+      'شاركنا تجربتك في هذا المجال...';
+
+  @override
+  String get somethingWentWrong2 => 'حدث خطأ ما';
+
+  @override
+  String get sportCategories => 'فئات الرياضة';
+
+  @override
+  String get sportCategory => 'فئة الرياضة';
+
+  @override
+  String get sports => 'الرياضة';
+
+  @override
+  String get startAddingFieldsToYourFavorites =>
+      'ابدأ بإضافة الحقول إلى مفضلاتك';
+
+  @override
+  String get statisticsExportedToPdf => 'تم تصدير الإحصائيات إلى PDF';
+
+  @override
+  String get streetAddressOrSelectOnMap => 'عنوان الشارع أو اختر على الخريطة';
+
+  @override
+  String get submittingReview => 'جارٍ إرسال المراجعة...';
+
+  @override
+  String get subscriptions => 'الاشتراكات';
+
+  @override
+  String get success2 => 'نجاح!';
+
+  @override
+  String get successRate => 'معدل النجاح';
+
+  @override
+  String get system => 'نظام';
+
+  @override
+  String get systemAlertsAndUpdates => 'تنبيهات النظام والتحديثات';
+
+  @override
+  String get systemPreferences => 'تفضيلات النظام';
+
+  @override
+  String get tellOthersAboutYourExperience => 'أخبر الآخرين عن تجربتك...';
+
+  @override
+  String get termsAndConditions => 'الشروط والأحكام';
+
+  @override
+  String get thereAreNoFieldsInYourAreaYetNcheckBackS =>
+      'لا توجد حقول في منطقتك حتى الآن.\nيرجى التحقق مرة أخرى قريبًا!';
+
+  @override
+  String get thisWeek => 'هذا الاسبوع';
+
+  @override
+  String get title => 'عنوان';
+
+  @override
+  String get todayBookings2 => 'حجوزات اليوم';
+
+  @override
+  String get todaySActivity => 'نشاط اليوم';
+
+  @override
+  String get topFieldsByBookings => 'أهم الحقول حسب الحجوزات';
+
+  @override
+  String get total2 => 'المجموع';
+
+  @override
+  String get totalCities => 'إجمالي المدن';
+
+  @override
+  String get totalFields => 'إجمالي الحقول';
+
+  @override
+  String get totalLogins => 'إجمالي تسجيلات الدخول';
+
+  @override
+  String get totalSpent => 'إجمالي الإنفاق';
+
+  @override
+  String get tryAdjustingYourFiltersOrNsearchWithDiff =>
+      'حاول تعديل عوامل التصفية أو\nابحث باستخدام كلمات رئيسية مختلفة';
+
+  @override
+  String get twoFactorAuthentication => 'المصادقة الثنائية';
+
+  @override
+  String get unableToConnectToTheServerNpleaseCheckYo =>
+      'غير قادر على الاتصال بالخادم.\nالرجاء التحقق من اتصالك بالإنترنت.';
+
+  @override
+  String get unableToLoadFields => 'غير قادر على تحميل الحقول';
+
+  @override
+  String get update => 'تحديث';
+
+  @override
+  String get updateCityName => 'تحديث اسم المدينة';
+
+  @override
+  String get updateFieldDetailsPricingAndLocation =>
+      'تحديث تفاصيل الحقل والتسعير والموقع';
+
+  @override
+  String get updateReview => 'مراجعة التحديث';
+
+  @override
+  String get updateYourLoginPassword =>
+      'قم بتحديث كلمة مرور تسجيل الدخول الخاصة بك';
+
+  @override
+  String get updateYourPassword => 'قم بتحديث كلمة المرور الخاصة بك';
+
+  @override
+  String get updatingBooking => 'جارٍ تحديث الحجز...';
+
+  @override
+  String get updatingBookingStatus => 'جارٍ تحديث حالة الحجز...';
+
+  @override
+  String get updatingCity => 'جارٍ تحديث المدينة...';
+
+  @override
+  String get updatingProfile => 'جارٍ تحديث الملف الشخصي...';
+
+  @override
+  String get usDollar => 'الدولار الأمريكي';
+
+  @override
+  String get userActivated => 'تم تفعيل المستخدم';
+
+  @override
+  String get userActivityReport => 'تقرير نشاط المستخدم';
+
+  @override
+  String get userDeactivated => 'تم إلغاء تنشيط المستخدم';
+
+  @override
+  String get userDetails => 'تفاصيل المستخدم';
+
+  @override
+  String get users => 'المستخدمين';
+
+  @override
+  String get usersExportedToCsv => 'تم تصدير المستخدمين إلى ملف CSV';
+
+  @override
+  String get verifyField => 'التحقق من الحقل';
+
+  @override
+  String get verifyingField => 'التحقق من المجال...';
+
+  @override
+  String get viewAdmins => 'عرض المسؤولين';
+
+  @override
+  String get viewAllReservations => 'عرض جميع التحفظات';
+
+  @override
+  String get viewAllSportsFields => 'عرض جميع الملاعب الرياضية';
+
+  @override
+  String get viewAndManageYourBookings => 'عرض وإدارة الحجوزات الخاصة بك';
+
+  @override
+  String get viewBookings => 'عرض الحجوزات';
+
+  @override
+  String get viewFields => 'عرض الحقول';
+
+  @override
+  String get viewRecentLoginAttempts => 'عرض محاولات تسجيل الدخول الأخيرة';
+
+  @override
+  String get viewUsers => 'عرض المستخدمين';
+
+  @override
+  String get viewYourProfileDetails => 'عرض تفاصيل ملفك الشخصي';
+
+  @override
+  String get vodafoneCash => 'فودافون كاش';
+
+  @override
+  String get weeklySchedule => 'الجدول الأسبوعي';
+
+  @override
+  String get writeAReview => 'اكتب مراجعة';
+
+  @override
+  String get youMustBeLoggedInToReview => 'يجب عليك تسجيل الدخول للمراجعة';
+
+  @override
+  String get yourRating => 'تقييمك *';
+
+  @override
+  String get yyyyMmDd => 'السنة-الشهر-اليوم';
+
+  @override
+  String get rateYourExperience => 'قيّم تجربتك';
+
+  @override
+  String get helpOthersMakeInformedDecisions =>
+      'شارك تجربتك لمساعدة الآخرين على اتخاذ قرارات مستنيرة';
+
+  @override
+  String get recentReviewsFromCustomers => 'آراء حديثة من عملائنا';
+
+  @override
+  String errorLoadingFieldMessage(Object message) {
+    return 'حدث خطأ أثناء تحميل الملعب: $message';
+  }
+
+  @override
+  String updateFieldSubtitle(Object fieldName) {
+    return 'تحديث $fieldName';
+  }
+
+  @override
+  String reviewsSummaryForField(num count, Object fieldName) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$fieldName • $count مراجعات',
+      one: '$fieldName • $count مراجعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String totalAdminsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مسؤولين إجمالي',
+      one: '$count مسؤول إجمالي',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String totalUsersCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مستخدمين إجمالي',
+      one: '$count مستخدم إجمالي',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String totalBookingsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count حجوزات إجمالي',
+      one: '$count حجز إجمالي',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String totalFieldsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ملاعب إجمالي',
+      one: '$count ملعب إجمالي',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String errorWithMessage(Object message) {
+    return 'خطأ: $message';
+  }
+
+  @override
+  String ownerIdShort(Object id) {
+    return 'معرف المالك: $id...';
+  }
+
+  @override
+  String get bookingHistory => 'سجل الحجوزات';
+
+  @override
+  String get advancedFilters => 'مرشحات متقدمة';
+
+  @override
+  String get selectDateRange => 'حدد النطاق الزمني';
+
+  @override
+  String get startAddingFavorites =>
+      'ابدأ بإضافة الحقول إلى مفضلاتك\nللوصول السريع إليها في أي وقت';
+
+  @override
+  String get bookAField => 'حجز حقل';
+
+  @override
+  String get userRole => 'مستخدم';
+
+  @override
+  String get adminRole => 'مسؤل';
+
+  @override
+  String get aZ => '[أ-ي]';
+
+  @override
+  String get aToZ => '[أ-ي]';
+
+  @override
+  String get iAgreeToThe => 'أنا أوافق على ';
+
+  @override
+  String get alreadyHaveAnAccount => 'هل لديك حساب بالفعل؟ ';
+
+  @override
+  String get mybookings => 'com.myBookings';
+
+  @override
+  String get eeeMmmD => 'EEE, MMM d';
+
+  @override
+  String get mmmmYyyy => 'MMMM yyyy';
+
+  @override
+  String get eee => 'EEE';
+
+  @override
+  String get remove => 'يزيل';
+
+  @override
+  String get addedToFavorites => 'تمت إضافتها إلى المفضلة';
+
+  @override
+  String get verifiedField => 'حقل تم التحقق منه';
+
+  @override
+  String get indoorType => 'داخلي';
+
+  @override
+  String get outdoorType => 'في الهواء الطلق';
+
+  @override
+  String get aboutThisField => 'حول هذا المجال';
+
+  @override
+  String get readMore => 'اقرأ المزيد';
+
+  @override
+  String get showLess => 'عرض أقل';
+
+  @override
+  String get autoBookSameTimeEveryWeek =>
+      'الحجز التلقائي في نفس الوقت كل أسبوع';
+
+  @override
+  String get getDirections => 'الحصول على الاتجاهات';
+
+  @override
+  String get recommended => 'مُستَحسَن';
+
+  @override
+  String get priceAsc => 'Price_asc';
+
+  @override
+  String get priceDesc => 'Price_desc';
+
+  @override
+  String get ratingField => 'تصنيف';
+
+  @override
+  String get profileTab => 'حساب تعريفي';
+
+  @override
+  String get fieldslist => 'قائمة الحقول';
+
+  @override
+  String get favoritesTab => 'المفضلة';
+
+  @override
+  String get descriptionField => 'وصف';
+
+  @override
+  String get icon => 'رمز';
+
+  @override
+  String get bookingsWillAppearHere => 'ستظهر الحجوزات هنا';
+
+  @override
+  String get manual => 'يدوي';
+
+  @override
+  String get noBookingsForThisFieldIn =>
+      'لا توجد حجوزات لهذا الحقل في هذا الأسبوع';
+
+  @override
+  String get scrollRightToSeeAllDays =>
+      'قم بالتمرير لليمين لرؤية جميع الأيام (السبت-الجمعة)';
+
+  @override
+  String get verifiedBadge => 'تم التحقق منه';
+
+  @override
+  String get createNewCustomer => 'إنشاء عميل جديد';
+
+  @override
+  String get noFieldDataAvailable => 'لا توجد بيانات ميدانية متاحة';
+
+  @override
+  String get vsLastPeriod => 'مقابل الفترة الماضية';
+
+  @override
+  String get pendingStatus => 'قيد الانتظار';
+
+  @override
+  String get confirmed => 'مؤكد';
+
+  @override
+  String get canceled => 'تم الإلغاء';
+
+  @override
+  String get tryAdjustingYourFiltersOrSearch =>
+      'حاول تعديل عوامل التصفية أو البحث';
+
+  @override
+  String get ownerbookings => 'com.ownerBookings';
+
+  @override
+  String get sportKickV100 => 'سبورت كيك v1.0.0';
+
+  @override
+  String get o => 'O';
+
+  @override
+  String get noRecentBookings => 'لا توجد حجوزات حديثة';
+
+  @override
+  String get yourRecentBookingsWillAppearHere => 'ستظهر حجوزاتك الأخيرة هنا';
+
+  @override
+  String get manageYourPreferences => 'إدارة تفضيلاتك';
+
+  @override
+  String get howWouldYouRateThisField => 'كيف تقيم هذا المجال؟';
+
+  @override
+  String get shareYourExperienceOptional => 'شارك تجربتك (اختياري)';
+
+  @override
+  String get reviewing => 'مراجعة';
+
+  @override
+  String get yourReviewOptional => 'مراجعتك (اختياري)';
+
+  @override
+  String get youCanUpdateYourRatingAnd => 'يمكنك تحديث تقييمك والتعليق';
+
+  @override
+  String get noRatingsYet => 'لا يوجد تقييمات حتى الآن';
+
+  @override
+  String get anonymous => 'مجهول';
+
+  @override
+  String get edited => '(تحرير)';
+
+  @override
+  String get recentReview => 'المراجعة الأخيرة';
+
+  @override
+  String get filterByRating => 'تصفية حسب التقييم';
+
+  @override
+  String get clear => 'واضح';
+
+  @override
+  String get thisActionCannotBeUndoneAre =>
+      'لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد أنك تريد حذف هذه المراجعة؟';
+
+  @override
+  String get editedLabel => 'تم تحريره';
+
+  @override
+  String get editingReviewFor => 'مراجعة التحرير ل';
+
+  @override
+  String get shareYourExperienceToHelpOthers => 'شارك تجربتك لمساعدة الآخرين';
+
+  @override
+  String get updateRatingPrompt => 'يمكنك تحديث تقييمك والتعليق في أي وقت';
+
+  @override
+  String get shareDetailsAboutYourExperienceN =>
+      'مشاركة تفاصيل حول تجربتك...\n\n';
+
+  @override
+  String get howWasTheFieldConditionN => '- كيف كانت حالة الحقل؟\n';
+
+  @override
+  String get reviewUpdated => 'تم تحديث المراجعة!';
+
+  @override
+  String get reviewSubmittedSuccess => 'تم إرسال المراجعة!';
+
+  @override
+  String get yourReviewHasBeenUpdatedSuccessfully => 'لقد تم تحديث رأيك بنجاح';
+
+  @override
+  String get egpE => 'EGP (E£)';
+
+  @override
+  String get eur => 'EUR (€)';
+
+  @override
+  String get sar => 'SAR (﷼)';
+
+  @override
+  String get eG25122025 => 'على سبيل المثال، 25/12/2025';
+
+  @override
+  String get eG12252025 => 'على سبيل المثال، 25/12/2025';
+
+  @override
+  String get eG20251225 => 'على سبيل المثال، 25-12-2025';
+
+  @override
+  String get loginactivity => 'تسجيل الدخولالنشاط';
+
+  @override
+  String get notificationManagementWillBeNavailableIn =>
+      'ستكون إدارة الإعلام\nمتاحة في التحديث المستقبلي.';
+
+  @override
+  String get reviewsModerationWillBeNavailableIn =>
+      'سيكون الإشراف على المراجعات\nمتاحًا في التحديث المستقبلي.';
+
+  @override
+  String get failedToLoadCategories => 'فشل تحميل الفئات';
+
+  @override
+  String get noCategoriesYet => 'لا توجد فئات حتى الآن';
+
+  @override
+  String get tapTheButtonToCreateNyour =>
+      'انقر على الزر + لإنشاء\nفئتك الرياضية الأولى';
+
+  @override
+  String get platformPerformance => 'أداء المنصة';
+
+  @override
+  String get comprehensiveOverviewOfYourPlatformMetrics =>
+      'نظرة عامة شاملة على مقاييس النظام الأساسي الخاص بك';
+
+  @override
+  String get errorLoadingAnalytics => 'حدث خطأ أثناء تحميل التحليلات';
+
+  @override
+  String get enforceOperatingHours => 'فرض ساعات العمل';
+
+  @override
+  String get applyToAllFieldBookings => 'تنطبق على جميع الحجوزات الميدانية';
+
+  @override
+  String get saving => 'توفير...';
+
+  @override
+  String get userRegistrationsAndEngagement => 'تسجيلات المستخدم والمشاركة';
+
+  @override
+  String get platformWideRevenueAndTransactions =>
+      'الإيرادات والمعاملات على مستوى المنصة';
+
+  @override
+  String get bookingTrendsAndFieldUtilization =>
+      'اتجاهات الحجز والاستفادة الميدانية';
+
+  @override
+  String get fieldRatingsAndReviewAnalysis =>
+      'التقييمات الميدانية وتحليل المراجعة';
+
+  @override
+  String get quickOverview => 'نظرة عامة سريعة';
+
+  @override
+  String get exportData => 'تصدير البيانات';
+
+  @override
+  String get generateAndDownloadDetailedReportsIn =>
+      'قم بإنشاء وتنزيل تقارير مفصلة بتنسيق CSV أو PDF.';
+
+  @override
+  String get activatingAdmin => 'تفعيل المشرف...';
+
+  @override
+  String get deactivatingAdmin => 'تعطيل المشرف...';
+
+  @override
+  String get permanentlyDeletingField => 'جارٍ حذف الحقل نهائيًا...';
+
+  @override
+  String get deactivatingField => 'جارٍ إلغاء تنشيط الحقل...';
+
+  @override
+  String get noAdminsYet => 'لا يوجد مدراء حتى الآن';
+
+  @override
+  String get createYourFirstFieldOwnerAccount =>
+      'قم بإنشاء حساب مالك الحقل الأول الخاص بك';
+
+  @override
+  String get errorLoadingAdmins => 'حدث خطأ أثناء تحميل المشرفين';
+
+  @override
+  String get assignedFields => 'الحقول المخصصة';
+
+  @override
+  String get noFieldsAssigned => 'لم يتم تعيين أي حقول';
+
+  @override
+  String get thisAdminDoesn => 'هذا المشرف لا\\';
+
+  @override
+  String get superAdmin => 'super_admin';
+
+  @override
+  String get activeAccount => 'الحساب النشط';
+
+  @override
+  String get inactiveAccount => 'حساب غير نشط';
+
+  @override
+  String get formatAdminCreatedat => '.format(admin.createdAt)';
+
+  @override
+  String get allAvailableFieldsAssigned => 'تم تعيين جميع الحقول المتاحة';
+
+  @override
+  String get thisAdminAlreadyHasAllAvailable =>
+      'لقد قام هذا المسؤول بالفعل بتعيين جميع الحقول المتاحة.';
+
+  @override
+  String get tryAdjustingYourSearchOrFilters =>
+      'حاول تعديل بحثك أو عوامل التصفية';
+
+  @override
+  String get bookingsOverview => 'نظرة عامة على الحجوزات';
+
+  @override
+  String get mmmDdYyyy => 'MMM dd, yyyy';
+
+  @override
+  String get longPressForActions => 'الضغط لفترة طويلة لاتخاذ الإجراءات';
+
+  @override
+  String get tryAdjustingYourFilters => 'حاول تعديل المرشحات الخاصة بك';
+
+  @override
+  String get errorLoadingFields => 'خطأ في تحميل الحقول';
+
+  @override
+  String get fieldsOverview => 'نظرة عامة على الحقول';
+
+  @override
+  String get noCitiesFound => 'لم يتم العثور على مدن';
+
+  @override
+  String get tryChangingTheFilter => 'حاول تغيير الفلتر';
+
+  @override
+  String get platformCoverage => 'تغطية المنصة';
+
+  @override
+  String get createFieldOwnerAccount => 'إنشاء حساب مالك الحقل';
+
+  @override
+  String get aSecurePasswordWillBeGenerated =>
+      'سيتم إنشاء كلمة مرور آمنة تلقائيًا. يجب على المشرف تغييره عند تسجيل الدخول لأول مرة.';
+
+  @override
+  String get adminAccountHasBeenCreatedSuccessfully =>
+      'تم إنشاء حساب المسؤول بنجاح. الرجاء حفظ بيانات الاعتماد هذه:';
+
+  @override
+  String get adminMustChangePasswordOnFirst =>
+      'يجب على المشرف تغيير كلمة المرور عند تسجيل الدخول الأول';
+
+  @override
+  String get eGChampionsField => 'على سبيل المثال، ميدان الأبطال';
+
+  @override
+  String get selectAvailableFacilities => 'حدد المرافق المتاحة';
+
+  @override
+  String get fillInDetailsAndAssignTo => 'املأ التفاصيل وقم بتعيينها للمسؤول';
+
+  @override
+  String get indoorField => 'المجال الداخلي';
+
+  @override
+  String get vodafoneCashNumberForReceivingPayments =>
+      'رقم فودافون كاش لاستقبال الدفعات';
+
+  @override
+  String get instapayNumberForReceivingTransfers =>
+      'رقم InstaPay لاستقبال التحويلات';
+
+  @override
+  String get sportKickPlatform => 'منصة ركلة الرياضة';
+
+  @override
+  String get platformOverview => 'نظرة عامة على المنصة';
+
+  @override
+  String get chooseHowToDeleteThisField => 'اختر كيفية حذف هذا الحقل:';
+
+  @override
+  String get fieldWillBeHiddenFromUsers =>
+      'سيتم إخفاء الحقل عن المستخدمين ولكن سيتم الاحتفاظ بالبيانات. يمكن إعادة تفعيلها لاحقا.';
+
+  @override
+  String get allDataWillBePermanentlyRemoved =>
+      'ستتم إزالة جميع البيانات نهائيًا. لا يمكن التراجع عن هذا الإجراء!';
+
+  @override
+  String get removeVerifiedBadgeFromThisField =>
+      'قم بإزالة الشارة التي تم التحقق منها من هذا الحقل';
+
+  @override
+  String get addVerifiedBadgeToThisField => 'أضف شارة التحقق إلى هذا الحقل';
+
+  @override
+  String get noAdminsMatchYourFilters =>
+      'لا يوجد مشرفون يطابقون عوامل التصفية الخاصة بك';
+
+  @override
+  String get noAdminsFound => 'لم يتم العثور على مدراء';
+
+  @override
+  String get noUsersMatchYourFilters =>
+      'لا يوجد مستخدمون يطابقون عوامل التصفية الخاصة بك';
+
+  @override
+  String get noUsersFound => 'لم يتم العثور على مستخدمين';
+
+  @override
+  String get areYouSureYouWantTo => 'هل أنت متأكد أنك تريد تمكين وضع الصيانة؟ ';
+
+  @override
+  String get thisWillPreventUsersFromAccessing =>
+      'سيؤدي هذا إلى منع المستخدمين من الوصول إلى النظام الأساسي.';
+
+  @override
+  String get changepassword => 'تغيير كلمة المرور';
+
+  @override
+  String get termsofservice => 'شروط الخدمة';
+
+  @override
+  String get privacypolicy => 'سياسة الخصوصية';
+
+  @override
+  String get editprofile => 'تحرير الملف الشخصي';
+
+  @override
+  String get dateFormatSettings => 'إعدادات تنسيق التاريخ';
+
+  @override
+  String get currencySettings => 'إعدادات العملة';
+
+  @override
+  String get notificationSettings => 'إعدادات الإخطار';
+
+  @override
+  String get noUsersYet => 'لا يوجد مستخدمين حتى الآن';
+
+  @override
+  String get errorLoadingUsers => 'حدث خطأ أثناء تحميل المستخدمين';
+
+  @override
+  String get deactivateAccount => 'تعطيل الحساب';
+
+  @override
+  String get activateAccount => 'تفعيل الحساب';
+
+  @override
+  String get mmmDY => 'MMM d, y';
+
+  @override
+  String get thisUserHasn => 'هذا المستخدم لديه\\';
+
+  @override
+  String get formatUserCreatedat => '.format(user.createdAt)';
+
+  @override
+  String get thisWillPreventTheUserFrom =>
+      'سيؤدي هذا إلى منع المستخدم من تسجيل الدخول وإجراء حجوزات جديدة.';
+
+  @override
+  String get manageAdmins => 'إدارة المسؤولين';
+
+  @override
+  String get viewAndManageFieldOwnerAccounts =>
+      'عرض وإدارة حسابات مالكي الحقول';
+
+  @override
+  String get failedToLoadAdmins => 'فشل تحميل المسؤولين';
+
+  @override
+  String get assignFieldsToThisAdminTo => 'قم بتعيين الحقول لهذا المسؤول للبدء';
+
+  @override
+  String get selectAFieldToAssign => 'حدد حقلاً لتعيينه';
+
+  @override
+  String get noAvailableFields => 'لا توجد حقول متاحة';
+
+  @override
+  String get passwordResetSuccessfully => 'تمت إعادة تعيين كلمة المرور بنجاح!';
+
+  @override
+  String get adminMustChangePasswordOnNext =>
+      'يجب على المشرف تغيير كلمة المرور عند تسجيل الدخول التالي';
+
+  @override
+  String get resetAdminPassword => 'إعادة تعيين كلمة مرور المسؤول؟';
+
+  @override
+  String get aNewPasswordWillBeGenerated =>
+      'سيتم إنشاء كلمة مرور جديدة لهذا المشرف. سيحتاجون إلى تغييره عند تسجيل الدخول التالي.';
+
+  @override
+  String get thisBookingHasBeenCompleted => 'تم الانتهاء من هذا الحجز';
+
+  @override
+  String get tryAdjustingYourSearchNorFilters =>
+      'حاول تعديل البحث\nأو عوامل التصفية';
+
+  @override
+  String get hour => '/ساعة';
+
+  @override
+  String get hideThisCityFromUsers => 'إخفاء هذه المدينة عن المستخدمين';
+
+  @override
+  String get showThisCityToUsers => 'إظهار هذه المدينة للمستخدمين';
+
+  @override
+  String get addNewCity => 'إضافة مدينة جديدة';
+
+  @override
+  String get createANewCityForThe => 'إنشاء مدينة جديدة للمنصة';
+
+  @override
+  String get cityName => 'اسم المدينة';
+
+  @override
+  String get cityWillBeVisibleToUsers => 'سوف تكون المدينة مرئية للمستخدمين';
+
+  @override
+  String get createCity => 'إنشاء مدينة';
+
+  @override
+  String get thisActionMayBeIrreversible => 'قد يكون هذا الإجراء لا رجعة فيه';
+
+  @override
+  String get permanentDeleteIsDisabledForCities =>
+      'تم تعطيل الحذف الدائم للمدن التي تحتوي على حقول.';
+
+  @override
+  String get deleteForever => 'حذف إلى الأبد';
+
+  @override
+  String get cityIsVisibleToUsers => 'المدينة مرئية للمستخدمين';
+
+  @override
+  String get oopsSomethingWentWrong => 'أُووبس! حدث خطأ ما';
+
+  @override
+  String get tryAdjustingYourFiltersNorAdd =>
+      'حاول تعديل عوامل التصفية\nأو إضافة مدينة جديدة';
+
+  @override
+  String get fieldOwnerManagement => 'إدارة مالك الحقل';
+
+  @override
+  String get enterTheAdmin => 'أدخل المشرف\\';
+
+  @override
+  String get aTemporaryPasswordWillBeGenerated =>
+      'سيتم إنشاء كلمة مرور مؤقتة تلقائيًا';
+
+  @override
+  String get shareCredentialsSecurelyWithTheNew =>
+      'مشاركة بيانات الاعتماد بشكل آمن مع المسؤول الجديد';
+
+  @override
+  String get adminCreatedSuccessfully => 'تم إنشاء المشرف بنجاح!';
+
+  @override
+  String get shareTheseCredentialsSecurely =>
+      'شارك بيانات الاعتماد هذه بشكل آمن';
+
+  @override
+  String get sportKickAdminV100 => 'مسؤول ركلة الرياضة v1.0.0';
+
+  @override
+  String get a => 'A';
+
+  @override
+  String get superAdminRole => 'المشرف الفائق';
+
+  @override
+  String get platformRevenue => 'إيرادات المنصة';
+
+  @override
+  String get totalEarningsFromAllFields => 'إجمالي الأرباح من جميع المجالات';
+
+  @override
+  String get successStatus => 'نجاح';
+
+  @override
+  String get failed => 'فشل';
+
+  @override
+  String get blocked => 'محظور';
+
+  @override
+  String get loadingLoginActivity => 'جارٍ تحميل نشاط تسجيل الدخول...';
+
+  @override
+  String get failedToLoadActivity => 'فشل تحميل النشاط';
+
+  @override
+  String get noLoginActivity => 'لا يوجد نشاط تسجيل الدخول';
+
+  @override
+  String get noLoginEventsMatchNyourFilter =>
+      'لا توجد أحداث تسجيل دخول تطابق\nمعايير التصفية الخاصة بك';
+
+  @override
+  String get logoutAction => 'تسجيل الخروج؟';
+
+  @override
+  String get confirmationPrompt =>
+      'هل أنت متأكد من أنك تريد تسجيل الخروج؟\nسوف تحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى لوحة الإدارة.';
+
+  @override
+  String get platformSettings => 'منصة';
+
+  @override
+  String get allowNewUserSignUps => 'السماح بالتسجيل للمستخدمين الجدد';
+
+  @override
+  String get requireEmailVerificationForNewUsers =>
+      'طلب التحقق من البريد الإلكتروني للمستخدمين الجدد';
+
+  @override
+  String get configureDefaults => 'تكوين الإعدادات الافتراضية';
+
+  @override
+  String get notificationsTab => 'إشعارات';
+
+  @override
+  String get receiveEmailAlerts => 'تلقي تنبيهات البريد الإلكتروني';
+
+  @override
+  String get receivePushAlerts => 'تلقي تنبيهات الدفع';
+
+  @override
+  String get importantAdminNotifications => 'إشعارات إدارية مهمة';
+
+  @override
+  String get trackFailedLoginAttempts => 'تتبع محاولات تسجيل الدخول الفاشلة';
+
+  @override
+  String get loggingOut => 'تسجيل الخروج...';
+
+  @override
+  String get value => 'قيمة';
+
+  @override
+  String get editCategory => 'تحرير الفئة';
+
+  @override
+  String get createCategory => 'إنشاء فئة';
+
+  @override
+  String get iconField => 'رمز';
+
+  @override
+  String get failedToLoadUsers => 'فشل تحميل المستخدمين';
+
+  @override
+  String get viewAndManageAllCustomerAccounts =>
+      'عرض وإدارة جميع حسابات العملاء';
+
+  @override
+  String get thisUserWillBeAbleTo =>
+      'سيتمكن هذا المستخدم من تسجيل الدخول وإجراء الحجوزات مرة أخرى.';
+
+  @override
+  String get dd => 'dd';
+
+  @override
+  String get mmm => 'MMM';
+
+  @override
+  String get favoriteField => 'المجال المفضل';
+
+  @override
+  String selectedCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم تحديد # عنصر',
+      many: 'تم تحديد # عنصرًا',
+      few: 'تم تحديد # عناصر',
+      two: 'تم تحديد عنصرين',
+      one: 'تم تحديد عنصر واحد',
+      zero: 'لم يتم تحديد أي عنصر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fieldsFoundCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم العثور على # ملعب',
+      many: 'تم العثور على # ملعبًا',
+      few: 'تم العثور على # ملاعب',
+      two: 'تم العثور على ملعبين',
+      one: 'تم العثور على ملعب واحد',
+      zero: 'لم يتم العثور على أي ملعب',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookingsFoundCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم العثور على # حجز',
+      many: 'تم العثور على # حجزًا',
+      few: 'تم العثور على # حجوزات',
+      two: 'تم العثور على حجزين',
+      one: 'تم العثور على حجز واحد',
+      zero: 'لم يتم العثور على أي حجز',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fieldsSelectedCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم تحديد # ملعب',
+      many: 'تم تحديد # ملعبًا',
+      few: 'تم تحديد # ملاعب',
+      two: 'تم تحديد ملعبين',
+      one: 'تم تحديد ملعب واحد',
+      zero: 'لم يتم تحديد أي ملعب',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String cityFieldsAssociatedCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يوجد # ملعب مرتبط بهذه المدينة.',
+      many: 'يوجد # ملعبًا مرتبطًا بهذه المدينة.',
+      few: 'يوجد # ملاعب مرتبطة بهذه المدينة.',
+      two: 'يوجد ملعبان مرتبطان بهذه المدينة.',
+      one: 'يوجد ملعب واحد مرتبط بهذه المدينة.',
+      zero: 'لا توجد ملاعب مرتبطة بهذه المدينة.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String cityFieldsRegisteredCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يوجد # ملعب مسجل لهذه المدينة.',
+      many: 'يوجد # ملعبًا مسجلًا لهذه المدينة.',
+      few: 'يوجد # ملاعب مسجلة لهذه المدينة.',
+      two: 'يوجد ملعبان مسجلان لهذه المدينة.',
+      one: 'يوجد ملعب واحد مسجل لهذه المدينة.',
+      zero: 'لا توجد ملاعب مسجلة لهذه المدينة.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cityIsHiddenFromUsers => 'المدينة مخفية عن المستخدمين';
+
+  @override
+  String editingCity(Object name) {
+    return 'تعديل: $name';
+  }
+
+  @override
+  String showingAdminsCount(Object filtered, Object total) {
+    return 'إظهار $filtered من أصل $total مسؤول';
+  }
+
+  @override
+  String showingUsersCount(Object filtered, Object total) {
+    return 'إظهار $filtered من أصل $total مستخدم';
+  }
+
+  @override
+  String ofTotalAdmins(Object total) {
+    return 'من أصل $total مسؤول';
+  }
+
+  @override
+  String ofTotalUsers(Object total) {
+    return 'من أصل $total مستخدم';
+  }
+
+  @override
+  String activeCount(Object count) {
+    return '$count نشط';
+  }
+
+  @override
+  String memberSinceDate(Object date) {
+    return 'عضو منذ $date';
+  }
+
+  @override
+  String joinedDate(Object date) {
+    return 'انضم في $date';
+  }
+
+  @override
+  String sinceDate(Object date) {
+    return 'منذ $date';
+  }
+
+  @override
+  String bookingNumber(Object id) {
+    return 'الحجز رقم $id';
+  }
+
+  @override
+  String basedOnReviews(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'بناءً على $count مراجعة',
+      many: 'بناءً على $count مراجعة',
+      few: 'بناءً على $count مراجعات',
+      two: 'بناءً على مراجعتين',
+      one: 'بناءً على مراجعة واحدة',
+      zero: 'بناءً على $count مراجعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noStarReviewsYet(Object rating) {
+    return 'لا توجد مراجعات بتقييم $rating نجوم حتى الآن';
+  }
+
+  @override
+  String allReviewsWithCount(Object count) {
+    return 'جميع المراجعات ($count)';
+  }
+
+  @override
+  String countOfTotal(Object count, Object total) {
+    return '$count من $total';
+  }
+
+  @override
+  String viewAllBookingsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'عرض $count حجز',
+      many: 'عرض $count حجزًا',
+      few: 'عرض $count حجوزات',
+      two: 'عرض $count حجزين',
+      one: 'عرض $count حجز',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String assigningTo(Object name) {
+    return 'إسناد إلى: $name';
+  }
+
+  @override
+  String usingCurrentHours(Object hours) {
+    return 'استخدام الساعات الحالية: $hours';
+  }
+
+  @override
+  String sharePasswordSecurelyWith(Object name) {
+    return 'شارك كلمة المرور هذه بأمان مع $name';
+  }
+
+  @override
+  String exportingReport(Object type) {
+    return 'جارٍ تصدير $type...';
+  }
+
+  @override
+  String deleteCategoryConfirmation(Object name) {
+    return 'هل أنت متأكد أنك تريد حذف \"$name\"؟\n\nلا يمكن التراجع عن هذا الإجراء.';
+  }
+
+  @override
+  String gpsCoordinates(Object coordinates) {
+    return 'GPS: $coordinates';
+  }
+
+  @override
+  String labelWithValue(Object label, Object value) {
+    return '$label: $value';
+  }
+
+  @override
+  String usersCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مستخدم',
+      many: '$count مستخدمًا',
+      few: '$count مستخدمين',
+      two: 'مستخدمان',
+      one: 'مستخدم واحد',
+      zero: '$count مستخدم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get allStatuses => 'كل الحالات';
+
+  @override
+  String effectiveDateLabel(Object date) {
+    return 'تاريخ السريان: $date';
+  }
+
+  @override
+  String lastUpdatedLabel(Object date) {
+    return 'آخر تحديث: $date';
+  }
+
+  @override
+  String effectiveLabel(Object date) {
+    return 'ساري من: $date';
+  }
+
+  @override
+  String beFirstToReviewField(Object fieldName) {
+    return 'كن أول من يراجع $fieldName';
+  }
+
+  @override
+  String starReviewsWithCount(Object count, Object rating) {
+    return 'مراجعات بتقييم $rating نجوم ($count)';
+  }
+
+  @override
+  String get thisUserHasntMadeAnyBookings =>
+      'لم يقم هذا المستخدم بأي حجوزات بعد.';
+
+  @override
+  String get thisUserHasntMadeAnyBookingsYet =>
+      'لم يقم هذا المستخدم بأي حجوزات بعد.';
+
+  @override
+  String get thisAdminDoesntHaveAnyFieldsAssignedYet =>
+      'هذا المشرف ليس لديه أي ملاعب معينة له بعد.';
+
+  @override
+  String get enterTheAdminsEmailAndPersonalDetails =>
+      'أدخل البريد الإلكتروني للمشرف والبيانات الشخصية';
+
+  @override
+  String get admins => 'المشرفون';
+
+  @override
+  String errorLoadingDashboard(Object message) {
+    return 'خطأ في تحميل لوحة التحكم: $message';
+  }
+
+  @override
+  String get shareDetailsAboutYourExperience =>
+      'شارك تفاصيل تجربتك:\n- كيف كانت حالة الملعب؟\n- هل كانت المرافق جيدة؟\n- هل توصي به؟';
+
+  @override
+  String get yourReviewHelpsOthersFindTheBestFields =>
+      'مراجعتك تساعد الآخرين في العثور على أفضل الملاعب';
+
+  @override
+  String get nameIsRequired => 'الاسم مطلوب';
+
+  @override
+  String get nameIsTooShort => 'الاسم قصير جداً';
+
+  @override
+  String get nameMustBeAtLeast3Characters =>
+      'يجب أن يكون الاسم 3 أحرف على الأقل';
+
+  @override
+  String get emailIsRequired => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get pleaseEnterAValidEmail => 'يرجى إدخال بريد إلكتروني صحيح';
+
+  @override
+  String get phoneNumberIsRequired => 'رقم الهاتف مطلوب';
+
+  @override
+  String get pleaseEnterAValidPhoneNumber => 'يرجى إدخال رقم هاتف صحيح';
+
+  @override
+  String get passwordIsRequired => 'كلمة المرور مطلوبة';
+
+  @override
+  String get passwordMustBeAtLeast8Characters =>
+      'يجب أن تكون كلمة المرور 8 أحرف على الأقل';
+
+  @override
+  String get pleaseConfirmYourPassword => 'يرجى تأكيد كلمة المرور';
+
+  @override
+  String get emailAddressRequired => 'البريد الإلكتروني *';
+
+  @override
+  String get fullNameRequired => 'الاسم الكامل *';
+
+  @override
+  String get phoneNumberOptional => 'رقم الهاتف (اختياري)';
+
+  @override
+  String get paymentPhoneNumber => 'رقم هاتف الدفع';
+
+  @override
+  String get paymentPhoneIsRequired => 'رقم هاتف الدفع مطلوب';
+
+  @override
+  String get enterValidEgyptianPhoneNumber => 'أدخل رقم هاتف مصري صحيح';
+
+  @override
+  String get selectAdmin => 'اختر المشرف';
+
+  @override
+  String get pleaseSelectAnAdmin => 'يرجى اختيار مشرف';
+
+  @override
+  String get createFieldButton => 'إنشاء الملعب';
+
+  @override
+  String get requiredField => 'مطلوب';
+
+  @override
+  String get invalidNumber => 'رقم غير صالح';
+
+  @override
+  String get loadingCities => 'جارٍ تحميل المدن...';
+
+  @override
+  String get loadingCategories => 'جارٍ تحميل التصنيفات...';
+
+  @override
+  String get fieldNameIsRequired => 'اسم الملعب مطلوب';
+
+  @override
+  String get addressIsRequired => 'العنوان مطلوب';
+
+  @override
+  String get priceIsRequired => 'السعر مطلوب';
+
+  @override
+  String get pleaseEnterAValidNumber => 'يرجى إدخال رقم صحيح';
+
+  @override
+  String get priceMustBeGreaterThanZero => 'يجب أن يكون السعر أكبر من صفر';
+
+  @override
+  String get pleaseSelectACity => 'يرجى اختيار مدينة';
+
+  @override
+  String get pleaseSelectASportCategory => 'يرجى اختيار تصنيف رياضي';
+
+  @override
+  String get pleaseSelectAnAdminToAssignField =>
+      'يرجى اختيار مشرف لتعيين هذا الملعب';
+
+  @override
+  String get pleaseEnterACityName => 'يرجى إدخال اسم المدينة';
+
+  @override
+  String get cityNameMustBeAtLeast2Characters =>
+      'يجب أن يكون اسم المدينة حرفين على الأقل';
+
+  @override
+  String get pleaseEnterACancellationReason => 'يرجى إدخال سبب الإلغاء';
+
+  @override
+  String get reasonMustBeAtLeast5Characters =>
+      'يجب أن يكون السبب 5 أحرف على الأقل';
+
+  @override
+  String get categoryNameLabel => 'اسم التصنيف';
+
+  @override
+  String get ratingPoor => 'سيء';
+
+  @override
+  String get ratingFair => 'مقبول';
+
+  @override
+  String get ratingGood => 'جيد';
+
+  @override
+  String get ratingVeryGood => 'جيد جداً';
+
+  @override
+  String get ratingExcellent => 'ممتاز';
+
+  @override
+  String get bookingStatusPending => 'قيد الانتظار';
+
+  @override
+  String get bookingStatusConfirmed => 'مؤكد';
+
+  @override
+  String get bookingStatusCanceled => 'ملغي';
+
+  @override
+  String get bookingStatusCompleted => 'مكتمل';
+
+  @override
+  String get bookingStatusConf => 'مؤكد';
+
+  @override
+  String get bookingStatusPend => 'انتظار';
+
+  @override
+  String get bookingStatusDone => 'مكتمل';
+
+  @override
+  String get bookingStatusCanc => 'ملغي';
+
+  @override
+  String get noBookingsMatchYourSearch => 'لا توجد حجوزات تطابق بحثك';
+
+  @override
+  String get noPendingBookings => 'لا توجد حجوزات قيد الانتظار';
+
+  @override
+  String get noConfirmedBookings => 'لا توجد حجوزات مؤكدة';
+
+  @override
+  String get noCanceledBookings => 'لا توجد حجوزات ملغاة';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_cubit.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Empty state widget for the map page.
 class MapEmptyState extends StatelessWidget {
@@ -25,7 +26,7 @@ class MapEmptyState extends StatelessWidget {
             hasFilters
                 ? context.l10n.noFieldsMatchFilters
                 : context.l10n.noFieldsWithLocation,
-            style: const TextStyle(fontSize: 16),
+            style: AppTextStyles.bodyLarge,
             textAlign: TextAlign.center,
           ),
           if (hasFilters) ...[

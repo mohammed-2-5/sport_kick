@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Booking card widget for user details page
 class UserBookingCard extends StatelessWidget {
@@ -54,10 +55,8 @@ class UserBookingCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      booking.fieldName ?? 'Unknown Field',
-                      style: AppTextStyles.bodyLarge.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      booking.fieldName ?? context.l10n.unknownField,
+                      style: AppTextStyles.bold(AppTextStyles.bodyLarge),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -72,9 +71,7 @@ class UserBookingCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           DateFormat('MMM d, y').format(booking.date),
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: Colors.grey[600],
-                          ),
+                          style: AppTextStyles.bodySmallSecondary,
                         ),
                         const SizedBox(width: AdminUIConstants.listItemSpacing),
                         Icon(
@@ -85,9 +82,7 @@ class UserBookingCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           booking.formattedTimeSlot,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: Colors.grey[600],
-                          ),
+                          style: AppTextStyles.bodySmallSecondary,
                         ),
                       ],
                     ),
@@ -114,18 +109,22 @@ class UserBookingCard extends StatelessWidget {
                     ),
                     child: Text(
                       booking.status.displayName,
-                      style: AppTextStyles.labelSmall.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: _getStatusColor(booking.status),
+                      style: AppTextStyles.bold(
+                        AppTextStyles.withColor(
+                          AppTextStyles.labelSmall,
+                          _getStatusColor(booking.status),
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     booking.formattedPrice,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.success,
+                    style: AppTextStyles.bold(
+                      AppTextStyles.withColor(
+                        AppTextStyles.bodyMedium,
+                        AppColors.success,
+                      ),
                     ),
                   ),
                 ],

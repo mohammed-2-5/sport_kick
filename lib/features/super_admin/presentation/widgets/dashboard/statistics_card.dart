@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class StatisticsCard extends StatelessWidget {
   final String title;
@@ -42,8 +43,7 @@ class StatisticsCard extends StatelessWidget {
           // Title
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w500,
               color: AppColors.premiumTextSecondary,
             ),
@@ -56,8 +56,7 @@ class StatisticsCard extends StatelessWidget {
           // Value
           Text(
             value,
-            style: TextStyle(
-              fontSize: 24,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
               color: color,
               shadows: [
@@ -89,9 +88,8 @@ class StatisticsCard extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           '${trend!.abs().toStringAsFixed(1)}%',
-          style: TextStyle(
+          style: AppTextStyles.labelMedium.copyWith(
             color: trendColor,
-            fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
         ),

@@ -10,6 +10,7 @@ import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/payment_proof_cubit.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Section for uploading and viewing payment proof.
 class PaymentProofSection extends StatelessWidget {
@@ -127,8 +128,7 @@ class _ImageSourceBottomSheet extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 context.l10n.selectPaymentProof,
-                style: const TextStyle(
-                  fontSize: 18,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -136,8 +136,7 @@ class _ImageSourceBottomSheet extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 context.l10n.choosePaymentUploadMethod,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
@@ -210,8 +209,7 @@ class _SourceOption extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -219,8 +217,7 @@ class _SourceOption extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     description,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -262,8 +259,7 @@ class _UploadProofCard extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 context.l10n.paymentProof,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -290,8 +286,7 @@ class _UploadProofCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       errorMessage!,
-                      style: const TextStyle(
-                        fontSize: 13,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.error,
                       ),
                     ),
@@ -333,8 +328,7 @@ class _UploadProofCard extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     context.l10n.uploadPaymentScreenshot,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -342,8 +336,7 @@ class _UploadProofCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.paymentUploadHint,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                     ),
                     textAlign: TextAlign.center,
@@ -387,8 +380,7 @@ class _SelectedProofCard extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 context.l10n.paymentProof,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -468,8 +460,7 @@ class _UploadingCard extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             context.l10n.uploadingPaymentProof,
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -477,8 +468,7 @@ class _UploadingCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             context.l10n.paymentUploadWait,
-            style: const TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary,
             ),
             textAlign: TextAlign.center,
@@ -514,8 +504,7 @@ class _ExistingPaymentProofCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   context.l10n.paymentProof,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -532,8 +521,7 @@ class _ExistingPaymentProofCard extends StatelessWidget {
                 ),
                 child: Text(
                   context.l10n.uploadedLabel,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.info,
                   ),
@@ -606,8 +594,7 @@ class _ExistingPaymentProofCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           context.l10n.tapToView,
-                          style: const TextStyle(
-                            fontSize: 12,
+                          style: AppTextStyles.labelSmall.copyWith(
                             color: Colors.white,
                           ),
                         ),
@@ -625,8 +612,7 @@ class _ExistingPaymentProofCard extends StatelessWidget {
               context.l10n.uploadedOn(
                 _formatDateTime(context, booking.paymentUploadedAt!),
               ),
-              style: const TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
@@ -667,7 +653,7 @@ class _FullScreenImage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           context.l10n.paymentProof,
-          style: const TextStyle(color: Colors.white),
+          style: AppTextStyles.titleLarge.copyWith(color: Colors.white),
         ),
       ),
       body: InteractiveViewer(
@@ -715,8 +701,7 @@ class _VerifiedPaymentCard extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             context.l10n.paymentVerified,
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.success,
             ),
@@ -724,8 +709,7 @@ class _VerifiedPaymentCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             context.l10n.paymentVerifiedMessage,
-            style: const TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary,
             ),
             textAlign: TextAlign.center,
@@ -736,8 +720,7 @@ class _VerifiedPaymentCard extends StatelessWidget {
               context.l10n.verifiedOn(
                 _formatDate(context, booking.paymentVerifiedAt!),
               ),
-              style: const TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),

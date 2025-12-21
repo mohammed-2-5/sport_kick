@@ -47,188 +47,215 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  context.l10n.filtersTitle,
-                  style: AppTextStyles.appBarTitle.copyWith(
-                    fontWeight: FontWeight.bold,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header - Close button only
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
+                ],
+              ),
+              // Scrollable content
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Verified Only
+                      SwitchListTile(
+                        title: Text(context.l10n.verifiedFieldsOnly),
+                        subtitle: Text(context.l10n.verifiedFieldsDescription),
+                        value: _verifiedOnly,
+                        activeThumbColor: AppColors.primary,
+                        contentPadding: EdgeInsets.zero,
+                        onChanged: (value) {
+                          setState(() => _verifiedOnly = value);
+                        },
+                      ),
+                      const Divider(),
 
-            // Verified Only
-            SwitchListTile(
-              title: Text(context.l10n.verifiedFieldsOnly),
-              subtitle: Text(context.l10n.verifiedFieldsDescription),
-              value: _verifiedOnly,
-              activeThumbColor: AppColors.primary,
-              contentPadding: EdgeInsets.zero,
-              onChanged: (value) {
-                setState(() => _verifiedOnly = value);
-              },
-            ),
-            const Divider(),
+                      // Sort by Distance
+                      SwitchListTile(
+                        title: Text(context.l10n.sortByDistance),
+                        subtitle: Text(context.l10n.sortByDistanceDescription),
+                        value: _sortByDistance,
+                        activeThumbColor: AppColors.primary,
+                        contentPadding: EdgeInsets.zero,
+                        onChanged: (value) {
+                          setState(() => _sortByDistance = value);
+                        },
+                      ),
+                      const Divider(),
 
-            // Sort by Distance
-            SwitchListTile(
-              title: Text(context.l10n.sortByDistance),
-              subtitle: Text(context.l10n.sortByDistanceDescription),
-              value: _sortByDistance,
-              activeThumbColor: AppColors.primary,
-              contentPadding: EdgeInsets.zero,
-              onChanged: (value) {
-                setState(() => _sortByDistance = value);
-              },
-            ),
-            const Divider(),
-
-            // Minimum Rating
-            Text(
-              context.l10n.minimumRating,
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              children: [null, 3.0, 3.5, 4.0, 4.5].map((rating) {
-                final isSelected = _minRating == rating;
-                return FilterChip(
-                  label: Text(
-                    rating == null
-                        ? context.l10n.anyOption
-                        : '${LocaleFormatters.formatNumber(context, rating, decimalDigits: rating % 1 == 0 ? 0 : 1)}+',
-                  ),
-                  selected: isSelected,
-                  onSelected: (_) {
-                    setState(() => _minRating = rating);
-                  },
-                  selectedColor: AppColors.primary.withValues(alpha: 0.2),
-                  checkmarkColor: AppColors.primary,
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16),
-
-            // Maximum Price
-            Text(
-              context.l10n.maximumPricePerHour,
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              children: [null, 100.0, 200.0, 300.0, 500.0].map((price) {
-                final isSelected = _maxPrice == price;
-                return FilterChip(
-                  label: Text(
-                    price == null
-                        ? context.l10n.anyOption
-                        : '${LocaleFormatters.formatNumber(context, price, decimalDigits: 0)} EGP/${context.l10n.perHour}',
-                  ),
-                  selected: isSelected,
-                  onSelected: (_) {
-                    setState(() => _maxPrice = price);
-                  },
-                  selectedColor: AppColors.primary.withValues(alpha: 0.2),
-                  checkmarkColor: AppColors.primary,
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16),
-
-            // Surface Type
-            Text(
-              context.l10n.surfaceType,
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              children: [null, 'Grass', 'Turf', 'Indoor'].map((surface) {
-                final isSelected = _surfaceType == surface;
-                final label = () {
-                  switch (surface) {
-                    case 'Grass':
-                      return context.l10n.surfaceGrass;
-                    case 'Turf':
-                      return context.l10n.surfaceTurf;
-                    case 'Indoor':
-                      return context.l10n.indoor;
-                    default:
-                      return context.l10n.anyOption;
-                  }
-                }();
-                return FilterChip(
-                  label: Text(label),
-                  selected: isSelected,
-                  onSelected: (_) {
-                    setState(() => _surfaceType = surface);
-                  },
-                  selectedColor: AppColors.primary.withValues(alpha: 0.2),
-                  checkmarkColor: AppColors.primary,
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 24),
-
-            // Action Buttons
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {
-                      setState(() {
-                        _verifiedOnly = false;
-                        _minRating = null;
-                        _maxPrice = null;
-                        _surfaceType = null;
-                        _sortByDistance = false;
-                      });
-                    },
-                    child: Text(context.l10n.clearAll),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  flex: 2,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      widget.onApply(
-                        MapFilters(
-                          verifiedOnly: _verifiedOnly,
-                          minRating: _minRating,
-                          maxPrice: _maxPrice,
-                          surfaceType: _surfaceType,
-                          sortByDistance: _sortByDistance,
+                      // Minimum Rating
+                      Text(
+                        context.l10n.minimumRating,
+                        style: AppTextStyles.titleSmall.copyWith(
+                          fontWeight: FontWeight.w600,
                         ),
-                      );
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
-                    ),
-                    child: Text(context.l10n.applyFilters),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        children: [null, 3.0, 3.5, 4.0, 4.5].map((rating) {
+                          final isSelected = _minRating == rating;
+                          return FilterChip(
+                            label: Text(
+                              rating == null
+                                  ? context.l10n.anyOption
+                                  : '${LocaleFormatters.formatNumber(context, rating, decimalDigits: rating % 1 == 0 ? 0 : 1)}+',
+                            ),
+                            selected: isSelected,
+                            onSelected: (_) {
+                              setState(() => _minRating = rating);
+                            },
+                            selectedColor: AppColors.primary.withValues(
+                              alpha: 0.2,
+                            ),
+                            checkmarkColor: AppColors.primary,
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Maximum Price
+                      Text(
+                        context.l10n.maximumPricePerHour,
+                        style: AppTextStyles.titleSmall.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [null, 100.0, 200.0, 300.0, 500.0].map((
+                          price,
+                        ) {
+                          final isSelected = _maxPrice == price;
+                          return FilterChip(
+                            label: Text(
+                              price == null
+                                  ? context.l10n.anyOption
+                                  : '${LocaleFormatters.formatNumber(context, price, decimalDigits: 0)} EGP/${context.l10n.perHour}',
+                            ),
+                            selected: isSelected,
+                            onSelected: (_) {
+                              setState(() => _maxPrice = price);
+                            },
+                            selectedColor: AppColors.primary.withValues(
+                              alpha: 0.2,
+                            ),
+                            checkmarkColor: AppColors.primary,
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Surface Type
+                      Text(
+                        context.l10n.surfaceType,
+                        style: AppTextStyles.titleSmall.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [null, 'Grass', 'Turf', 'Indoor'].map((
+                          surface,
+                        ) {
+                          final isSelected = _surfaceType == surface;
+                          final label = () {
+                            switch (surface) {
+                              case 'Grass':
+                                return context.l10n.surfaceGrass;
+                              case 'Turf':
+                                return context.l10n.surfaceTurf;
+                              case 'Indoor':
+                                return context.l10n.indoor;
+                              default:
+                                return context.l10n.anyOption;
+                            }
+                          }();
+                          return FilterChip(
+                            label: Text(label),
+                            selected: isSelected,
+                            onSelected: (_) {
+                              setState(() => _surfaceType = surface);
+                            },
+                            selectedColor: AppColors.primary.withValues(
+                              alpha: 0.2,
+                            ),
+                            checkmarkColor: AppColors.primary,
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(height: 16),
+              // Action Buttons - fixed at bottom
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        setState(() {
+                          _verifiedOnly = false;
+                          _minRating = null;
+                          _maxPrice = null;
+                          _surfaceType = null;
+                          _sortByDistance = false;
+                        });
+                      },
+                      child: Text(context.l10n.clearAll),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        widget.onApply(
+                          MapFilters(
+                            verifiedOnly: _verifiedOnly,
+                            minRating: _minRating,
+                            maxPrice: _maxPrice,
+                            surfaceType: _surfaceType,
+                            sortByDistance: _sortByDistance,
+                          ),
+                        );
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: Text(context.l10n.applyFilters),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

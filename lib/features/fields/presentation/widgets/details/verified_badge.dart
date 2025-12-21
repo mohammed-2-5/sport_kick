@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Verified field badge widget.
 class VerifiedBadge extends StatelessWidget {
@@ -22,16 +24,15 @@ class VerifiedBadge extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.verified_rounded, size: 18, color: Colors.white),
-          SizedBox(width: 6),
+          const Icon(Icons.verified_rounded, size: 18, color: Colors.white),
+          const SizedBox(width: 6),
           Text(
-            'Verified Field',
-            style: TextStyle(
+            context.l10n.verifiedField,
+            style: AppTextStyles.labelSmall.copyWith(
               color: Colors.white,
-              fontSize: 13,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,
             ),

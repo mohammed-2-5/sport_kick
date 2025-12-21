@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Card displaying booking statistics (Pending, Confirmed, Completed).
 class BookingStatsCard extends StatelessWidget {
@@ -14,7 +15,7 @@ class BookingStatsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Booking Statistics',
+          context.l10n.bookingStatistics,
           style: AppTextStyles.appBarTitle.copyWith(
             fontWeight: FontWeight.bold,
           ),

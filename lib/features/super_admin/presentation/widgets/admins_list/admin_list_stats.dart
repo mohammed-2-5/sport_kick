@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class AdminListStats extends StatelessWidget {
   final int filteredCount;
@@ -23,21 +25,21 @@ class AdminListStats extends StatelessWidget {
           Icon(Icons.admin_panel_settings, size: 20, color: Colors.grey[600]),
           const SizedBox(width: 8),
           Text(
-            'Showing $filteredCount of $totalCount admins',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
+            context.l10n.showingAdminsCount(filteredCount, totalCount),
+            style: AppTextStyles.withColor(
+              AppTextStyles.titleSmall,
+              Colors.grey[600]!,
             ),
           ),
           if (isSelectionMode) ...[
             const Spacer(),
             Text(
-              '$selectedCount selected',
-              style: TextStyle(
-                fontSize: 14,
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
+              context.l10n.selectedCount(selectedCount),
+              style: AppTextStyles.bold(
+                AppTextStyles.withColor(
+                  AppTextStyles.titleSmall,
+                  Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
           ],

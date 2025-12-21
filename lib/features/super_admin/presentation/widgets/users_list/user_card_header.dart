@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Header section for user/admin cards: avatar, name, optional status badge.
 class UserCardHeader extends StatelessWidget {
@@ -23,9 +24,8 @@ class UserCardHeader extends StatelessWidget {
           backgroundColor: Colors.blue.withValues(alpha: 0.1),
           child: Text(
             initials,
-            style: AppTextStyles.titleLarge.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
+            style: AppTextStyles.bold(
+              AppTextStyles.withColor(AppTextStyles.titleLarge, Colors.blue),
             ),
           ),
         ),
@@ -36,10 +36,7 @@ class UserCardHeader extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
+                style: AppTextStyles.titleMediumBold,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -56,10 +53,10 @@ class UserCardHeader extends StatelessWidget {
                     const Icon(Icons.person, size: 12, color: Colors.blue),
                     const SizedBox(width: 4),
                     Text(
-                      'Customer',
-                      style: AppTextStyles.labelSmall.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue,
+                      context.l10n.customerName,
+                      style: AppTextStyles.withColor(
+                        AppTextStyles.labelSmallBold,
+                        Colors.blue,
                       ),
                     ),
                   ],

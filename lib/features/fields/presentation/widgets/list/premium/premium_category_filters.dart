@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium animated category filter chips.
 ///
@@ -38,7 +40,7 @@ class PremiumCategoryFilters extends StatelessWidget {
                 horizontalOffset: 50.0,
                 child: FadeInAnimation(
                   child: _CategoryChip(
-                    label: 'All',
+                    label: context.l10n.all,
                     icon: Icons.apps,
                     isSelected: selectedCategoryId == null,
                     onTap: () => onCategorySelected(null),
@@ -167,7 +169,7 @@ class _CategoryChipState extends State<_CategoryChip> {
               const SizedBox(width: 8),
               Text(
                 widget.label,
-                style: TextStyle(
+                style: AppTextStyles.labelLarge.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: widget.isSelected

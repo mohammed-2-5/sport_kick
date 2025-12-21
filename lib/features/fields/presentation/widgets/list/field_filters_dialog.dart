@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/filter_widgets.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -114,7 +115,10 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
       children: [
         Text(
           context.l10n.filtersTitle,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleLarge.copyWith(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         IconButton(
           icon: const Icon(Icons.close),

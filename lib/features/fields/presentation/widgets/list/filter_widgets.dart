@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// A choice chip widget for filter dialogs.
 ///
@@ -52,8 +53,7 @@ class FilterChoiceChip extends StatelessWidget {
             ],
             Text(
               label,
-              style: TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.labelLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: isSelected ? Colors.white : AppColors.primary,
               ),
@@ -75,7 +75,7 @@ class FilterSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
     );
   }
 }
@@ -119,15 +119,13 @@ class PriceRangeFilter extends StatelessWidget {
           children: [
             Text(
               '${LocaleFormatters.formatNumber(context, priceRange.start.round())} EGP/${context.l10n.perHour}',
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
             Text(
               '${LocaleFormatters.formatNumber(context, priceRange.end.round())} EGP/${context.l10n.perHour}',
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
@@ -176,8 +174,7 @@ class RatingFilter extends StatelessWidget {
             minRating == 0
                 ? context.l10n.anyOption
                 : '${LocaleFormatters.formatNumber(context, minRating, decimalDigits: 1)}+',
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
             ),
           ),
@@ -219,7 +216,7 @@ class LocationTypeFilter extends StatelessWidget {
               child: FilterChoiceChip(
                 label: context.l10n.indoor,
                 icon: Icons.home,
-                isSelected: selectedType == 'indoor',
+                isSelected: selectedType == context.l10n.indoorType,
                 onSelected: () => onChanged('indoor'),
               ),
             ),
@@ -228,7 +225,7 @@ class LocationTypeFilter extends StatelessWidget {
               child: FilterChoiceChip(
                 label: context.l10n.outdoor,
                 icon: Icons.wb_sunny,
-                isSelected: selectedType == 'outdoor',
+                isSelected: selectedType == context.l10n.outdoorType,
                 onSelected: () => onChanged('outdoor'),
               ),
             ),
@@ -263,7 +260,7 @@ class VerificationFilter extends StatelessWidget {
           title: Text(context.l10n.verifiedFieldsOnly),
           subtitle: Text(
             context.l10n.verifiedFieldsDescription,
-            style: const TextStyle(fontSize: 12),
+            style: AppTextStyles.bodySmall,
           ),
           activeColor: AppColors.success,
           contentPadding: EdgeInsets.zero,

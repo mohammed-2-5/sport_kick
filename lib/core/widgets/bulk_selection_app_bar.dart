@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Reusable Bulk Selection App Bar
 ///
@@ -46,10 +47,10 @@ class BulkSelectionAppBar extends StatelessWidget
       leading: IconButton(
         icon: const Icon(Icons.close),
         onPressed: onCancel,
-        tooltip: 'Cancel selection',
+        tooltip: context.l10n.cancelSelection,
       ),
       title: Text(
-        '$selectedCount selected',
+        context.l10n.selectedCount(selectedCount),
         style: TextStyle(color: fgColor, fontWeight: FontWeight.bold),
       ),
       actions: [
@@ -58,13 +59,13 @@ class BulkSelectionAppBar extends StatelessWidget
           IconButton(
             icon: const Icon(Icons.select_all),
             onPressed: onSelectAll,
-            tooltip: 'Select all',
+            tooltip: context.l10n.selectAll,
           )
         else
           IconButton(
             icon: const Icon(Icons.deselect),
             onPressed: onDeselectAll,
-            tooltip: 'Deselect all',
+            tooltip: context.l10n.deselectAll,
           ),
 
         // Custom actions

@@ -15,6 +15,7 @@ import 'package:spo_kick/features/bookings/presentation/widgets/invoice/invoice_
 import 'package:spo_kick/features/bookings/presentation/widgets/invoice/payment_info_card.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/invoice/payment_proof_section.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Page displaying booking invoice with payment instructions.
 ///
@@ -186,8 +187,7 @@ class _InvoiceStatusBanner extends StatelessWidget {
               children: [
                 Text(
                   _statusLabel(context),
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: textColor,
                   ),
@@ -195,8 +195,7 @@ class _InvoiceStatusBanner extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   message,
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: textColor.withValues(alpha: 0.8),
                   ),
                 ),
@@ -237,7 +236,7 @@ class _ActionButtons extends StatelessWidget {
         children: [
           PremiumButton(
             label: context.l10n.viewMyBookings,
-            onPressed: () => context.goNamed('myBookings'),
+            onPressed: () => context.goNamed(context.l10n.mybookings),
             fullWidth: true,
             icon: Icons.list_alt_rounded,
           ),
@@ -276,8 +275,7 @@ class _ActionButtons extends StatelessWidget {
                 Expanded(
                   child: Text(
                     context.l10n.paymentProofSubmittedMessage,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                       height: 1.4,
                     ),
@@ -289,7 +287,7 @@ class _ActionButtons extends StatelessWidget {
           const SizedBox(height: 16),
           PremiumButton(
             label: context.l10n.viewMyBookings,
-            onPressed: () => context.goNamed('myBookings'),
+            onPressed: () => context.goNamed(context.l10n.mybookings),
             fullWidth: true,
             icon: Icons.list_alt_rounded,
           ),
@@ -302,7 +300,7 @@ class _ActionButtons extends StatelessWidget {
       children: [
         PremiumButton(
           label: context.l10n.viewMyBookings,
-          onPressed: () => context.goNamed('myBookings'),
+          onPressed: () => context.goNamed(context.l10n.mybookings),
           fullWidth: true,
           icon: Icons.list_alt_rounded,
         ),

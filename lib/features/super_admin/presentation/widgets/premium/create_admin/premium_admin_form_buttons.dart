@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium form buttons for admin creation.
 ///
@@ -30,7 +31,7 @@ class PremiumAdminFormButtons extends StatelessWidget {
       children: [
         // Submit button
         PremiumButton(
-          label: 'Create Admin Account',
+          label: context.l10n.createAdminAccount,
           onPressed: isSubmitting || !isValid
               ? () {}
               : () {
@@ -68,12 +69,11 @@ class PremiumAdminFormButtons extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'Cancel',
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: isSubmitting
-                      ? AppColors.textSecondary.withValues(alpha: 0.5)
+                context.l10n.cancel,
+                style: AppTextStyles.withColor(
+                  AppTextStyles.bold(AppTextStyles.titleMedium),
+                  isSubmitting
+                      ? AppColors.textSecondary
                       : AppColors.textSecondary,
                 ),
               ),

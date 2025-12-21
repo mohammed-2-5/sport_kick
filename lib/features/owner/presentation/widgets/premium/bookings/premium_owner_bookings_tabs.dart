@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium tab bar for owner bookings filtering.
 ///
@@ -40,28 +41,28 @@ class PremiumOwnerBookingsTabs extends StatelessWidget {
       child: Row(
         children: [
           _TabItem(
-            label: 'All',
-            count: stats['total'] ?? 0,
+            label: context.l10n.all,
+            count: stats[context.l10n.total2] ?? 0,
             isSelected: selectedIndex == 0,
             onTap: () => onTabChanged(0),
           ),
           _TabItem(
-            label: 'Pending',
-            count: stats['pending'] ?? 0,
+            label: context.l10n.pending,
+            count: stats[context.l10n.pendingStatus] ?? 0,
             isSelected: selectedIndex == 1,
             onTap: () => onTabChanged(1),
             color: Colors.orange,
           ),
           _TabItem(
-            label: 'Confirmed',
-            count: stats['confirmed'] ?? 0,
+            label: context.l10n.statusConfirmed,
+            count: stats[context.l10n.confirmed] ?? 0,
             isSelected: selectedIndex == 2,
             onTap: () => onTabChanged(2),
             color: Colors.green,
           ),
           _TabItem(
-            label: 'Canceled',
-            count: stats['canceled'] ?? 0,
+            label: context.l10n.statusCanceled,
+            count: stats[context.l10n.canceled] ?? 0,
             isSelected: selectedIndex == 3,
             onTap: () => onTabChanged(3),
             color: Colors.red,

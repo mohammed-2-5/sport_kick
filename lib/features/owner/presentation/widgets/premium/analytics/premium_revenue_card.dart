@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Premium Revenue Card with gradient design.
 ///
@@ -56,18 +58,18 @@ class PremiumRevenueCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
+            _buildHeader(context),
             const SizedBox(height: 20),
-            _buildRevenueAmount(),
+            _buildRevenueAmount(context),
             const SizedBox(height: 16),
-            _buildGrowthIndicator(isPositive),
+            _buildGrowthIndicator(context, isPositive),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
         Container(
@@ -87,7 +89,7 @@ class PremiumRevenueCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Total Revenue',
+              context.l10n.totalRevenue,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textOnNavySecondary,
                 fontWeight: FontWeight.w500,
@@ -105,14 +107,19 @@ class PremiumRevenueCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRevenueAmount() {
+  Widget _buildRevenueAmount(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: totalRevenue),
       duration: const Duration(milliseconds: 800),
       curve: Curves.easeOutCubic,
       builder: (context, value, child) {
         return Text(
-          '${value.toStringAsFixed(0)} $currency',
+          LocaleFormatters.formatPrice(
+            context,
+            amount: value,
+            currency: currency,
+            decimalDigits: 0,
+          ),
           style: AppTextStyles.displaySmall.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w800,
@@ -123,7 +130,7 @@ class PremiumRevenueCard extends StatelessWidget {
     );
   }
 
-  Widget _buildGrowthIndicator(bool isPositive) {
+  Widget _buildGrowthIndicator(BuildContext context, bool isPositive) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -156,7 +163,7 @@ class PremiumRevenueCard extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            'vs last period',
+            context.l10n.vsLastPeriod,
             style: AppTextStyles.labelSmall.copyWith(
               color: AppColors.textOnNavySecondary.withValues(alpha: 0.8),
             ),

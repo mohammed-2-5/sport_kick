@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/rating/rating_stars.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class ReviewsHeader extends StatelessWidget {
   final String fieldName;
@@ -39,14 +41,18 @@ class ReviewsHeader extends StatelessWidget {
                 RatingStars(rating: averageRating!, size: 24),
                 const SizedBox(width: 12),
                 Text(
-                  averageRating!.toStringAsFixed(1),
+                  LocaleFormatters.formatNumber(
+                    context,
+                    averageRating!,
+                    decimalDigits: 1,
+                  ),
                   style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '($totalReviews ${totalReviews == 1 ? 'review' : 'reviews'})',
+                  '(${context.l10n.reviewsSummary(totalReviews!)})',
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: Colors.grey[600],
                   ),
@@ -55,7 +61,7 @@ class ReviewsHeader extends StatelessWidget {
             ),
           ] else ...[
             Text(
-              'No ratings yet',
+              context.l10n.noRatingsYet,
               style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
             ),
           ],

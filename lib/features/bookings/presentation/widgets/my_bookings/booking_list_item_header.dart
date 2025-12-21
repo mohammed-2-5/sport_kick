@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/utils/booking_status_utils.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Status header widget with colored gradient background.
 ///
@@ -49,8 +50,7 @@ class BookingListItemHeader extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             BookingStatusUtils.getStatusLabel(context, status).toUpperCase(),
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w800,
               color: Colors.white,
               letterSpacing: 1.0,
@@ -65,8 +65,7 @@ class BookingListItemHeader extends StatelessWidget {
             ),
             child: Text(
               '#${bookingId.substring(0, 6).toUpperCase()}',
-              style: TextStyle(
-                fontSize: 11,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w700,
                 color: statusColor,
                 letterSpacing: 0.5,

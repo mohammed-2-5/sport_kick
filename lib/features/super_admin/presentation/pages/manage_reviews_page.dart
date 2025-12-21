@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Reviews moderation page for super admin.
 ///
@@ -18,10 +20,10 @@ class ManageReviewsPage extends StatelessWidget {
       backgroundColor: AppColors.backgroundLight,
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: PremiumCurvedHeader(
-              title: 'Reviews',
-              subtitle: 'Moderate platform reviews',
+              title: context.l10n.reviews,
+              subtitle: context.l10n.moderatePlatformReviews,
               showBackButton: true,
             ),
           ),
@@ -51,22 +53,17 @@ class ManageReviewsPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Text(
-                      'Coming Soon',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
-                      ),
+                    Text(
+                      context.l10n.homeComingSoonTitle,
+                      style: AppTextStyles.bold(AppTextStyles.headlineSmall),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Reviews moderation will be\navailable in a future update.',
+                    Text(
+                      context.l10n.reviewsModerationWillBeNavailableIn,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: AppColors.textSecondary,
-                        height: 1.5,
+                      style: AppTextStyles.withColor(
+                        AppTextStyles.bodyLarge,
+                        AppColors.textSecondary,
                       ),
                     ),
                   ],

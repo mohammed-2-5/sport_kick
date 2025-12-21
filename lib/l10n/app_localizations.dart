@@ -437,7 +437,7 @@ abstract class AppLocalizations {
   /// No description provided for @currentSession.
   ///
   /// In en, this message translates to:
-  /// **'Current'**
+  /// **'Current Session'**
   String get currentSession;
 
   /// No description provided for @loginSuccess.
@@ -2304,7 +2304,7 @@ abstract class AppLocalizations {
   /// No description provided for @cancellationReason.
   ///
   /// In en, this message translates to:
-  /// **'Cancellation Reason'**
+  /// **'Cancellation Reason *'**
   String get cancellationReason;
 
   /// No description provided for @copy.
@@ -2814,7 +2814,7 @@ abstract class AppLocalizations {
   /// No description provided for @activeStatus.
   ///
   /// In en, this message translates to:
-  /// **'Active'**
+  /// **'Active Status'**
   String get activeStatus;
 
   /// No description provided for @pendingApproval.
@@ -3180,7 +3180,7 @@ abstract class AppLocalizations {
   /// No description provided for @securitySettings.
   ///
   /// In en, this message translates to:
-  /// **'Security'**
+  /// **'security'**
   String get securitySettings;
 
   /// No description provided for @accountSettings.
@@ -4586,6 +4586,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Price'**
   String get priceLabel;
+
+  /// No description provided for @totalUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Users'**
+  String get totalUsers;
+
+  /// No description provided for @newUsersThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count} this month'**
+  String newUsersThisMonth(Object count);
+
+  /// No description provided for @totalAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Admins'**
+  String get totalAdmins;
+
+  /// No description provided for @fieldOwners.
+  ///
+  /// In en, this message translates to:
+  /// **'Field owners'**
+  String get fieldOwners;
+
+  /// No description provided for @activeFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Fields'**
+  String get activeFields;
+
+  /// No description provided for @inactiveCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} inactive'**
+  String inactiveCount(Object count);
+
+  /// No description provided for @pendingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pending'**
+  String pendingCount(Object count);
 
   /// No description provided for @totalPriceLabel.
   ///
@@ -6794,6 +6836,4014 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If you have questions about our policies or need assistance, please contact us:'**
   String get supportContactDescription;
+
+  /// No description provided for @version100.
+  ///
+  /// In en, this message translates to:
+  /// **'1.0.0'**
+  String get version100;
+
+  /// No description provided for @version1001.
+  ///
+  /// In en, this message translates to:
+  /// **'1.0.0+1'**
+  String get version1001;
+
+  /// No description provided for @oneHour.
+  ///
+  /// In en, this message translates to:
+  /// **'1 Hour'**
+  String get oneHour;
+
+  /// No description provided for @phoneExample.
+  ///
+  /// In en, this message translates to:
+  /// **'+20 123 456 7890'**
+  String get phoneExample;
+
+  /// No description provided for @twoHours.
+  ///
+  /// In en, this message translates to:
+  /// **'2 Hours'**
+  String get twoHours;
+
+  /// No description provided for @accountStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Status'**
+  String get accountStatus;
+
+  /// No description provided for @activate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get activate;
+
+  /// No description provided for @activateAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate Admins'**
+  String get activateAdmins;
+
+  /// No description provided for @activateCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate City'**
+  String get activateCity;
+
+  /// No description provided for @activateSelectedAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate Selected Admins'**
+  String get activateSelectedAdmins;
+
+  /// No description provided for @activateSelectedUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate Selected Users'**
+  String get activateSelectedUsers;
+
+  /// No description provided for @activateUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate User?'**
+  String get activateUser;
+
+  /// No description provided for @activateUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate Users'**
+  String get activateUsers;
+
+  /// No description provided for @activatingAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Activating admins...'**
+  String get activatingAdmins;
+
+  /// No description provided for @activatingUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Activating user...'**
+  String get activatingUser;
+
+  /// No description provided for @activatingUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Activating users...'**
+  String get activatingUsers;
+
+  /// No description provided for @active2.
+  ///
+  /// In en, this message translates to:
+  /// **'active'**
+  String get active2;
+
+  /// No description provided for @activeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Now'**
+  String get activeNow;
+
+  /// No description provided for @addANewFieldOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a new field owner'**
+  String get addANewFieldOwner;
+
+  /// No description provided for @addAnExtraLayerOfSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an extra layer of security'**
+  String get addAnExtraLayerOfSecurity;
+
+  /// No description provided for @addCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Add City'**
+  String get addCity;
+
+  /// No description provided for @addNewFieldOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new field owner'**
+  String get addNewFieldOwner;
+
+  /// No description provided for @addNewSportsField.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new sports field'**
+  String get addNewSportsField;
+
+  /// No description provided for @adminAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Alerts'**
+  String get adminAlerts;
+
+  /// No description provided for @adminCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Created!'**
+  String get adminCreated;
+
+  /// No description provided for @adminDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Details'**
+  String get adminDetails;
+
+  /// No description provided for @adminExampleCom.
+  ///
+  /// In en, this message translates to:
+  /// **'admin@example.com'**
+  String get adminExampleCom;
+
+  /// No description provided for @adminsExportedToCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins exported to CSV'**
+  String get adminsExportedToCsv;
+
+  /// No description provided for @ahmedMohamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Ahmed Mohamed'**
+  String get ahmedMohamed;
+
+  /// No description provided for @all2.
+  ///
+  /// In en, this message translates to:
+  /// **'all'**
+  String get all2;
+
+  /// No description provided for @allBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'All Bookings'**
+  String get allBookings;
+
+  /// No description provided for @allCities.
+  ///
+  /// In en, this message translates to:
+  /// **'All Cities'**
+  String get allCities;
+
+  /// No description provided for @allFields.
+  ///
+  /// In en, this message translates to:
+  /// **'All Fields'**
+  String get allFields;
+
+  /// No description provided for @allSports.
+  ///
+  /// In en, this message translates to:
+  /// **'All Sports'**
+  String get allSports;
+
+  /// No description provided for @allTimeEarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'All time earnings'**
+  String get allTimeEarnings;
+
+  /// No description provided for @allowRegistrations.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Registrations'**
+  String get allowRegistrations;
+
+  /// No description provided for @and.
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get and;
+
+  /// No description provided for @applyToWeekdays.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to Weekdays'**
+  String get applyToWeekdays;
+
+  /// No description provided for @applyToWeekend.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to Weekend'**
+  String get applyToWeekend;
+
+  /// No description provided for @approveThisBookingRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this booking request'**
+  String get approveThisBookingRequest;
+
+  /// No description provided for @approvingBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Approving booking...'**
+  String get approvingBooking;
+
+  /// No description provided for @areYouSureYouWantToActivateCountAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Are you sure you want to activate {count} admin?} other {Are you sure you want to activate {count} admins?}}'**
+  String areYouSureYouWantToActivateCountAdmins(num count);
+
+  /// No description provided for @areYouSureYouWantToActivateCountUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Are you sure you want to activate {count} user?} other {Are you sure you want to activate {count} users?}}'**
+  String areYouSureYouWantToActivateCountUsers(num count);
+
+  /// No description provided for @areYouSureYouWantToDeactivateCountAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Are you sure you want to deactivate {count} admin?} other {Are you sure you want to deactivate {count} admins?}}'**
+  String areYouSureYouWantToDeactivateCountAdmins(num count);
+
+  /// No description provided for @areYouSureYouWantToDeactivateCountUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Are you sure you want to deactivate {count} user?} other {Are you sure you want to deactivate {count} users?}}'**
+  String areYouSureYouWantToDeactivateCountUsers(num count);
+
+  /// No description provided for @assign.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign'**
+  String get assign;
+
+  /// No description provided for @assignField.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Field'**
+  String get assignField;
+
+  /// No description provided for @assignFieldToAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Field to Admin'**
+  String get assignFieldToAdmin;
+
+  /// No description provided for @assignFirstField.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign First Field'**
+  String get assignFirstField;
+
+  /// No description provided for @assignToAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign to Admin'**
+  String get assignToAdmin;
+
+  /// No description provided for @assigningField.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigning field...'**
+  String get assigningField;
+
+  /// No description provided for @automaticallyApproveNewBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically approve new bookings'**
+  String get automaticallyApproveNewBookings;
+
+  /// No description provided for @averageRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Rating'**
+  String get averageRating;
+
+  /// No description provided for @avgRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Rating'**
+  String get avgRating;
+
+  /// No description provided for @avgRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg. Revenue'**
+  String get avgRevenue;
+
+  /// No description provided for @beTheFirstToShareYourNexperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to share your\\nexperience!'**
+  String get beTheFirstToShareYourNexperience;
+
+  /// No description provided for @bookYourFirstFieldAndStartNplayingToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Book your first field and start\\nplaying today!'**
+  String get bookYourFirstFieldAndStartNplayingToday;
+
+  /// No description provided for @bookingAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Analytics'**
+  String get bookingAnalytics;
+
+  /// No description provided for @bookingDistribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Distribution'**
+  String get bookingDistribution;
+
+  /// No description provided for @bookingHasBeenFulfilled.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking has been fulfilled'**
+  String get bookingHasBeenFulfilled;
+
+  /// No description provided for @bookingNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Notifications'**
+  String get bookingNotifications;
+
+  /// No description provided for @bookingSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Settings'**
+  String get bookingSettings;
+
+  /// No description provided for @bookingStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Statistics'**
+  String get bookingStatistics;
+
+  /// No description provided for @bookingStatus2.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Status'**
+  String get bookingStatus2;
+
+  /// No description provided for @bookingscountBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'\$bookingsCount Bookings'**
+  String get bookingscountBookings;
+
+  /// No description provided for @bookingscountBookings2.
+  ///
+  /// In en, this message translates to:
+  /// **'\$bookingsCount bookings'**
+  String get bookingscountBookings2;
+
+  /// No description provided for @briefDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Brief description'**
+  String get briefDescription;
+
+  /// No description provided for @buildNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Build Number'**
+  String get buildNumber;
+
+  /// No description provided for @byNumberOfBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'By number of bookings'**
+  String get byNumberOfBookings;
+
+  /// No description provided for @byStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'By status'**
+  String get byStatus;
+
+  /// No description provided for @cancelSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel selection'**
+  String get cancelSelection;
+
+  /// No description provided for @cancelThisBookingWithReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this booking with reason'**
+  String get cancelThisBookingWithReason;
+
+  /// No description provided for @cancelingBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceling booking...'**
+  String get cancelingBooking;
+
+  /// No description provided for @cancellingBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelling booking...'**
+  String get cancellingBooking;
+
+  /// No description provided for @cardContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Card content'**
+  String get cardContent;
+
+  /// No description provided for @categoryDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Category deleted successfully'**
+  String get categoryDeletedSuccessfully;
+
+  /// No description provided for @categoryNameCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Category \"\$name\" created successfully'**
+  String get categoryNameCreatedSuccessfully;
+
+  /// No description provided for @categoryUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Category updated successfully'**
+  String get categoryUpdatedSuccessfully;
+
+  /// No description provided for @chooseCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Currency'**
+  String get chooseCurrency;
+
+  /// No description provided for @chooseDateFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Date Format'**
+  String get chooseDateFormat;
+
+  /// No description provided for @chooseTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Theme'**
+  String get chooseTheme;
+
+  /// No description provided for @cities.
+  ///
+  /// In en, this message translates to:
+  /// **'Cities'**
+  String get cities;
+
+  /// No description provided for @compareFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare Fields'**
+  String get compareFields;
+
+  /// No description provided for @completion.
+  ///
+  /// In en, this message translates to:
+  /// **'Completion'**
+  String get completion;
+
+  /// No description provided for @configureDefaultPlatformHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure default platform hours'**
+  String get configureDefaultPlatformHours;
+
+  /// No description provided for @configureLocations.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure locations'**
+  String get configureLocations;
+
+  /// No description provided for @configurePaymentMethodsAndFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure payment methods and fees'**
+  String get configurePaymentMethodsAndFees;
+
+  /// No description provided for @connectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Error'**
+  String get connectionError;
+
+  /// No description provided for @continueWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get continueWithApple;
+
+  /// No description provided for @continueWithFacebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Facebook'**
+  String get continueWithFacebook;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// No description provided for @copyAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy All'**
+  String get copyAll;
+
+  /// No description provided for @copyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy \$label'**
+  String get copyLabel;
+
+  /// No description provided for @couldNotDetermineYourLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not determine your location'**
+  String get couldNotDetermineYourLocation;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
+
+  /// No description provided for @createAStrongPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a strong password'**
+  String get createAStrongPassword;
+
+  /// No description provided for @createAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Admin'**
+  String get createAdmin;
+
+  /// No description provided for @createAdminAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Admin Account'**
+  String get createAdminAccount;
+
+  /// No description provided for @createField.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Field'**
+  String get createField;
+
+  /// No description provided for @createNewField2.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Field'**
+  String get createNewField2;
+
+  /// No description provided for @creatingAdminAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating admin account...'**
+  String get creatingAdminAccount;
+
+  /// No description provided for @creatingBooking2.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating booking...'**
+  String get creatingBooking2;
+
+  /// No description provided for @creatingCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating city...'**
+  String get creatingCity;
+
+  /// No description provided for @creatingField.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating field...'**
+  String get creatingField;
+
+  /// No description provided for @creatingManualBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating manual booking...'**
+  String get creatingManualBooking;
+
+  /// No description provided for @creationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Creation Date'**
+  String get creationDate;
+
+  /// No description provided for @credentialsCopiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials copied to clipboard'**
+  String get credentialsCopiedToClipboard;
+
+  /// No description provided for @csv.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV'**
+  String get csv;
+
+  /// No description provided for @customersUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers (Users)'**
+  String get customersUsers;
+
+  /// No description provided for @customizeEmailNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize email notifications'**
+  String get customizeEmailNotifications;
+
+  /// No description provided for @ddMmYyyy.
+  ///
+  /// In en, this message translates to:
+  /// **'DD/MM/YYYY'**
+  String get ddMmYyyy;
+
+  /// No description provided for @deactivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate'**
+  String get deactivate;
+
+  /// No description provided for @deactivateAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Admins'**
+  String get deactivateAdmins;
+
+  /// No description provided for @deactivateCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate City'**
+  String get deactivateCity;
+
+  /// No description provided for @deactivateOrPermanentlyRemoveThisField.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate or permanently remove this field'**
+  String get deactivateOrPermanentlyRemoveThisField;
+
+  /// No description provided for @deactivateSelectedAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Selected Admins'**
+  String get deactivateSelectedAdmins;
+
+  /// No description provided for @deactivateSelectedUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Selected Users'**
+  String get deactivateSelectedUsers;
+
+  /// No description provided for @deactivateSoftDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate (Soft Delete)'**
+  String get deactivateSoftDelete;
+
+  /// No description provided for @deactivateUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate User?'**
+  String get deactivateUser;
+
+  /// No description provided for @deactivateUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Users'**
+  String get deactivateUsers;
+
+  /// No description provided for @deactivatingAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivating admins...'**
+  String get deactivatingAdmins;
+
+  /// No description provided for @deactivatingUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivating user...'**
+  String get deactivatingUser;
+
+  /// No description provided for @deactivatingUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivating users...'**
+  String get deactivatingUsers;
+
+  /// No description provided for @defaultHoursForNewFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Default hours for new fields'**
+  String get defaultHoursForNewFields;
+
+  /// No description provided for @deleteCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Category'**
+  String get deleteCategory;
+
+  /// No description provided for @deleteCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete City'**
+  String get deleteCity;
+
+  /// No description provided for @deleteField2.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete field'**
+  String get deleteField2;
+
+  /// No description provided for @deletePermanently.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Permanently'**
+  String get deletePermanently;
+
+  /// No description provided for @deleteReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Review?'**
+  String get deleteReview;
+
+  /// No description provided for @deletingCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting city...'**
+  String get deletingCity;
+
+  /// No description provided for @deletingField.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting field...'**
+  String get deletingField;
+
+  /// No description provided for @descriptionOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (Optional)'**
+  String get descriptionOptional;
+
+  /// No description provided for @deselect.
+  ///
+  /// In en, this message translates to:
+  /// **'Deselect'**
+  String get deselect;
+
+  /// No description provided for @deselectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Deselect all'**
+  String get deselectAll;
+
+  /// No description provided for @eGFootballBasketball.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Football, Basketball'**
+  String get eGFootballBasketball;
+
+  /// No description provided for @editCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit City'**
+  String get editCity;
+
+  /// No description provided for @editField2.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit field'**
+  String get editField2;
+
+  /// No description provided for @editReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Review'**
+  String get editReview;
+
+  /// No description provided for @egp.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP'**
+  String get egp;
+
+  /// No description provided for @egpEgyptianPound.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP (Egyptian Pound)'**
+  String get egpEgyptianPound;
+
+  /// No description provided for @egyptianPound.
+  ///
+  /// In en, this message translates to:
+  /// **'Egyptian Pound'**
+  String get egyptianPound;
+
+  /// No description provided for @emailTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Templates'**
+  String get emailTemplates;
+
+  /// No description provided for @emailVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Verification'**
+  String get emailVerification;
+
+  /// No description provided for @enable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable'**
+  String get enable;
+
+  /// No description provided for @enableDisablePlatformAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable/disable platform access'**
+  String get enableDisablePlatformAccess;
+
+  /// No description provided for @enterCityName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter city name'**
+  String get enterCityName;
+
+  /// No description provided for @enterReasonForCancellation.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter reason for cancellation...'**
+  String get enterReasonForCancellation;
+
+  /// No description provided for @enterYourFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get enterYourFullName;
+
+  /// No description provided for @euro.
+  ///
+  /// In en, this message translates to:
+  /// **'Euro'**
+  String get euro;
+
+  /// No description provided for @exampleEmailCom.
+  ///
+  /// In en, this message translates to:
+  /// **'example@email.com'**
+  String get exampleEmailCom;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @exportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get exportCsv;
+
+  /// No description provided for @featureWillBeAvailableInAFutureUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'\$feature will be available in a future update.'**
+  String get featureWillBeAvailableInAFutureUpdate;
+
+  /// No description provided for @featureWillBeAvailableSoonNstayTuned.
+  ///
+  /// In en, this message translates to:
+  /// **'\$feature will be available soon.\\nStay tuned!'**
+  String get featureWillBeAvailableSoonNstayTuned;
+
+  /// No description provided for @fieldAssignedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Field assigned successfully'**
+  String get fieldAssignedSuccessfully;
+
+  /// No description provided for @fieldOwners2.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Owners'**
+  String get fieldOwners2;
+
+  /// No description provided for @fieldOwnersAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Owners (Admins)'**
+  String get fieldOwnersAdmins;
+
+  /// No description provided for @fieldPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Performance'**
+  String get fieldPerformance;
+
+  /// No description provided for @fieldscountFields.
+  ///
+  /// In en, this message translates to:
+  /// **'\$fieldsCount fields'**
+  String get fieldscountFields;
+
+  /// No description provided for @getNotifiedAboutBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified about bookings'**
+  String get getNotifiedAboutBookings;
+
+  /// No description provided for @glassEffect.
+  ///
+  /// In en, this message translates to:
+  /// **'Glass effect'**
+  String get glassEffect;
+
+  /// No description provided for @goHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Home'**
+  String get goHome;
+
+  /// No description provided for @hello.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello'**
+  String get hello;
+
+  /// No description provided for @hideThisCityFromUsersCanBeReactivatedLat.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide this city from users. Can be reactivated later.'**
+  String get hideThisCityFromUsersCanBeReactivatedLat;
+
+  /// No description provided for @inactive2.
+  ///
+  /// In en, this message translates to:
+  /// **'inactive'**
+  String get inactive2;
+
+  /// No description provided for @invalidPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid price'**
+  String get invalidPrice;
+
+  /// No description provided for @ipAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'IP Address'**
+  String get ipAddress;
+
+  /// No description provided for @joinDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Date'**
+  String get joinDate;
+
+  /// No description provided for @label.
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: '**
+  String label(Object label);
+
+  /// No description provided for @labelCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} copied'**
+  String labelCopied(Object label);
+
+  /// No description provided for @labelCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} ({count})'**
+  String labelCount(Object count, Object label);
+
+  /// No description provided for @last6Months.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 6 months'**
+  String get last6Months;
+
+  /// No description provided for @last6MonthsRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 6 months revenue'**
+  String get last6MonthsRevenue;
+
+  /// No description provided for @loadingAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading admins...'**
+  String get loadingAdmins;
+
+  /// No description provided for @loadingAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading analytics...'**
+  String get loadingAnalytics;
+
+  /// No description provided for @loadingAvailableTimeSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading available time slots...'**
+  String get loadingAvailableTimeSlots;
+
+  /// No description provided for @loadingBookingDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading booking details...'**
+  String get loadingBookingDetails;
+
+  /// No description provided for @loadingBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading bookings...'**
+  String get loadingBookings;
+
+  /// No description provided for @loadingDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading dashboard...'**
+  String get loadingDashboard;
+
+  /// No description provided for @loadingPlatformData.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading platform data...'**
+  String get loadingPlatformData;
+
+  /// No description provided for @loadingRevenueData.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading revenue data...'**
+  String get loadingRevenueData;
+
+  /// No description provided for @loadingReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading reviews...'**
+  String get loadingReviews;
+
+  /// No description provided for @loadingUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading users...'**
+  String get loadingUsers;
+
+  /// No description provided for @loadingYourBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading your bookings...'**
+  String get loadingYourBookings;
+
+  /// No description provided for @loadingYourFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading your fields...'**
+  String get loadingYourFields;
+
+  /// No description provided for @logFailedLogins.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Failed Logins'**
+  String get logFailedLogins;
+
+  /// No description provided for @maintenanceMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance Mode'**
+  String get maintenanceMode;
+
+  /// No description provided for @manageCities.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Cities'**
+  String get manageCities;
+
+  /// No description provided for @manageCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage customers'**
+  String get manageCustomers;
+
+  /// No description provided for @manageFieldOwners.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage field owners'**
+  String get manageFieldOwners;
+
+  /// No description provided for @managePlatformLocations.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage platform locations'**
+  String get managePlatformLocations;
+
+  /// No description provided for @managePlatformNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage platform notifications'**
+  String get managePlatformNotifications;
+
+  /// No description provided for @manageSportTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage sport types'**
+  String get manageSportTypes;
+
+  /// No description provided for @manageUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Users'**
+  String get manageUsers;
+
+  /// No description provided for @management.
+  ///
+  /// In en, this message translates to:
+  /// **'Management'**
+  String get management;
+
+  /// No description provided for @markAsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as Completed'**
+  String get markAsCompleted;
+
+  /// No description provided for @memberDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Member Days'**
+  String get memberDays;
+
+  /// No description provided for @minutesMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, plural, one {{minutes} minute} other {{minutes} minutes}}'**
+  String minutesMinutes(num minutes);
+
+  /// No description provided for @mmDdYyyy.
+  ///
+  /// In en, this message translates to:
+  /// **'MM/DD/YYYY'**
+  String get mmDdYyyy;
+
+  /// No description provided for @moderatePlatformReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate platform reviews'**
+  String get moderatePlatformReviews;
+
+  /// No description provided for @monthlyBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Bookings'**
+  String get monthlyBookings;
+
+  /// No description provided for @mostBookedFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Most booked fields'**
+  String get mostBookedFields;
+
+  /// No description provided for @newFields.
+  ///
+  /// In en, this message translates to:
+  /// **'New Fields'**
+  String get newFields;
+
+  /// No description provided for @newNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'New Notification'**
+  String get newNotification;
+
+  /// No description provided for @noBookingsYet2.
+  ///
+  /// In en, this message translates to:
+  /// **'No Bookings Yet'**
+  String get noBookingsYet2;
+
+  /// No description provided for @noFavoritesYet2.
+  ///
+  /// In en, this message translates to:
+  /// **'No Favorites Yet'**
+  String get noFavoritesYet2;
+
+  /// No description provided for @noFeaturedFieldsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No featured fields available'**
+  String get noFeaturedFieldsAvailable;
+
+  /// No description provided for @noFieldsAvailable2.
+  ///
+  /// In en, this message translates to:
+  /// **'No Fields Available'**
+  String get noFieldsAvailable2;
+
+  /// No description provided for @noPastBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'No Past Bookings'**
+  String get noPastBookings;
+
+  /// No description provided for @noResultsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Results Found'**
+  String get noResultsFound;
+
+  /// No description provided for @noReviewsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Reviews Yet'**
+  String get noReviewsYet;
+
+  /// No description provided for @noUpcomingBookings2.
+  ///
+  /// In en, this message translates to:
+  /// **'No Upcoming Bookings'**
+  String get noUpcomingBookings2;
+
+  /// No description provided for @notSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSet;
+
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @operatingHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Operating Hours'**
+  String get operatingHours;
+
+  /// No description provided for @paymentSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Settings'**
+  String get paymentSettings;
+
+  /// No description provided for @pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get pdf;
+
+  /// No description provided for @perBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Per booking'**
+  String get perBooking;
+
+  /// No description provided for @performance.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance'**
+  String get performance;
+
+  /// No description provided for @performanceMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance Metrics'**
+  String get performanceMetrics;
+
+  /// No description provided for @permanentDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanent Delete'**
+  String get permanentDelete;
+
+  /// No description provided for @permanentlyRemoveThisCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently remove this city'**
+  String get permanentlyRemoveThisCity;
+
+  /// No description provided for @phone2.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone2;
+
+  /// No description provided for @platform.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get platform;
+
+  /// No description provided for @platformAnalyticsAndExports.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform analytics & exports'**
+  String get platformAnalyticsAndExports;
+
+  /// No description provided for @platformConfiguration.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform configuration'**
+  String get platformConfiguration;
+
+  /// No description provided for @platformDataExportedToCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform data exported to CSV'**
+  String get platformDataExportedToCsv;
+
+  /// No description provided for @platformInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform insights'**
+  String get platformInsights;
+
+  /// No description provided for @platformPerformanceMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform performance metrics'**
+  String get platformPerformanceMetrics;
+
+  /// No description provided for @platformSecurityMonitoring.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform security monitoring'**
+  String get platformSecurityMonitoring;
+
+  /// No description provided for @pleaseAcceptTheTermsAndConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Please accept the Terms & Conditions'**
+  String get pleaseAcceptTheTermsAndConditions;
+
+  /// No description provided for @pleaseEnableLocationPermissionsInSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enable location permissions in settings'**
+  String get pleaseEnableLocationPermissionsInSetting;
+
+  /// No description provided for @pleaseEnterACategoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a category name'**
+  String get pleaseEnterACategoryName;
+
+  /// No description provided for @pricePerHourEgp.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per Hour (EGP)'**
+  String get pricePerHourEgp;
+
+  /// No description provided for @pricing.
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing'**
+  String get pricing;
+
+  /// No description provided for @readOurPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Read our privacy policy'**
+  String get readOurPrivacyPolicy;
+
+  /// No description provided for @readOurTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Read our terms'**
+  String get readOurTerms;
+
+  /// No description provided for @receivePushNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive push notifications'**
+  String get receivePushNotifications;
+
+  /// No description provided for @receiveUpdatesViaEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive updates via email'**
+  String get receiveUpdatesViaEmail;
+
+  /// No description provided for @rejectingBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejecting booking...'**
+  String get rejectingBooking;
+
+  /// No description provided for @removeCityFromDatabaseCannotBeUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove city from database. Cannot be undone.'**
+  String get removeCityFromDatabaseCannotBeUndone;
+
+  /// No description provided for @removeVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Verification'**
+  String get removeVerification;
+
+  /// No description provided for @removingVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Removing verification...'**
+  String get removingVerification;
+
+  /// No description provided for @reports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get reports;
+
+  /// No description provided for @response.
+  ///
+  /// In en, this message translates to:
+  /// **'Response'**
+  String get response;
+
+  /// No description provided for @revenueReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue Report'**
+  String get revenueReport;
+
+  /// No description provided for @role.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get role;
+
+  /// No description provided for @satisfaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Satisfaction'**
+  String get satisfaction;
+
+  /// No description provided for @saudiRiyal.
+  ///
+  /// In en, this message translates to:
+  /// **'Saudi Riyal'**
+  String get saudiRiyal;
+
+  /// No description provided for @searchAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Search admins...'**
+  String get searchAdmins;
+
+  /// No description provided for @searchAdminsByNameEmailOrPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Search admins by name, email, or phone...'**
+  String get searchAdminsByNameEmailOrPhone;
+
+  /// No description provided for @searchByCustomerFieldOrId.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by customer, field, or ID...'**
+  String get searchByCustomerFieldOrId;
+
+  /// No description provided for @searchByNameEmailOrPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, email, or phone...'**
+  String get searchByNameEmailOrPhone;
+
+  /// No description provided for @searchByUserFieldOrBookingId.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by user, field, or booking ID...'**
+  String get searchByUserFieldOrBookingId;
+
+  /// No description provided for @searchByUserOrField.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by user or field...'**
+  String get searchByUserOrField;
+
+  /// No description provided for @searchCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Search customers...'**
+  String get searchCustomers;
+
+  /// No description provided for @searchFieldsByNameCityOrOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Search fields by name, city, or owner...'**
+  String get searchFieldsByNameCityOrOwner;
+
+  /// No description provided for @searchUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Search users...'**
+  String get searchUsers;
+
+  /// No description provided for @searchUsersByNameEmailOrPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Search users by name, email, or phone...'**
+  String get searchUsersByNameEmailOrPhone;
+
+  /// No description provided for @selectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get selectAll;
+
+  /// No description provided for @selectFieldLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Field Location'**
+  String get selectFieldLocation;
+
+  /// No description provided for @selectOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Select on map'**
+  String get selectOnMap;
+
+  /// No description provided for @selectSportCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Sport Category'**
+  String get selectSportCategory;
+
+  /// No description provided for @sendMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get sendMessage;
+
+  /// No description provided for @sessionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Timeout'**
+  String get sessionTimeout;
+
+  /// No description provided for @shareYourExperienceWithThisField.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience with this field...'**
+  String get shareYourExperienceWithThisField;
+
+  /// No description provided for @somethingWentWrong2.
+  ///
+  /// In en, this message translates to:
+  /// **'Something Went Wrong'**
+  String get somethingWentWrong2;
+
+  /// No description provided for @sportCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport Categories'**
+  String get sportCategories;
+
+  /// No description provided for @sportCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport Category'**
+  String get sportCategory;
+
+  /// No description provided for @sports.
+  ///
+  /// In en, this message translates to:
+  /// **'Sports'**
+  String get sports;
+
+  /// No description provided for @startAddingFieldsToYourFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Start adding fields to your favorites'**
+  String get startAddingFieldsToYourFavorites;
+
+  /// No description provided for @statisticsExportedToPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics exported to PDF'**
+  String get statisticsExportedToPdf;
+
+  /// No description provided for @streetAddressOrSelectOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Street address or select on map'**
+  String get streetAddressOrSelectOnMap;
+
+  /// No description provided for @submittingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting review...'**
+  String get submittingReview;
+
+  /// No description provided for @subscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
+  String get subscriptions;
+
+  /// No description provided for @success2.
+  ///
+  /// In en, this message translates to:
+  /// **'Success!'**
+  String get success2;
+
+  /// No description provided for @successRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Success Rate'**
+  String get successRate;
+
+  /// No description provided for @system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get system;
+
+  /// No description provided for @systemAlertsAndUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'System alerts and updates'**
+  String get systemAlertsAndUpdates;
+
+  /// No description provided for @systemPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'System Preferences'**
+  String get systemPreferences;
+
+  /// No description provided for @tellOthersAboutYourExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell others about your experience...'**
+  String get tellOthersAboutYourExperience;
+
+  /// No description provided for @termsAndConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & Conditions'**
+  String get termsAndConditions;
+
+  /// No description provided for @thereAreNoFieldsInYourAreaYetNcheckBackS.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no fields in your area yet.\\nCheck back soon!'**
+  String get thereAreNoFieldsInYourAreaYetNcheckBackS;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get thisWeek;
+
+  /// No description provided for @title.
+  ///
+  /// In en, this message translates to:
+  /// **'title'**
+  String get title;
+
+  /// No description provided for @todayBookings2.
+  ///
+  /// In en, this message translates to:
+  /// **'Today Bookings'**
+  String get todayBookings2;
+
+  /// No description provided for @todaySActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Activity'**
+  String get todaySActivity;
+
+  /// No description provided for @topFieldsByBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Fields by Bookings'**
+  String get topFieldsByBookings;
+
+  /// No description provided for @total2.
+  ///
+  /// In en, this message translates to:
+  /// **'total'**
+  String get total2;
+
+  /// No description provided for @totalCities.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Cities'**
+  String get totalCities;
+
+  /// No description provided for @totalFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Fields'**
+  String get totalFields;
+
+  /// No description provided for @totalLogins.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Logins'**
+  String get totalLogins;
+
+  /// No description provided for @totalSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Spent'**
+  String get totalSpent;
+
+  /// No description provided for @tryAdjustingYourFiltersOrNsearchWithDiff.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your filters or\\nsearch with different keywords'**
+  String get tryAdjustingYourFiltersOrNsearchWithDiff;
+
+  /// No description provided for @twoFactorAuthentication.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-Factor Authentication'**
+  String get twoFactorAuthentication;
+
+  /// No description provided for @unableToConnectToTheServerNpleaseCheckYo.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to connect to the server.\\nPlease check your internet.'**
+  String get unableToConnectToTheServerNpleaseCheckYo;
+
+  /// No description provided for @unableToLoadFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load fields'**
+  String get unableToLoadFields;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @updateCityName.
+  ///
+  /// In en, this message translates to:
+  /// **'Update city name'**
+  String get updateCityName;
+
+  /// No description provided for @updateFieldDetailsPricingAndLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Update field details, pricing, and location'**
+  String get updateFieldDetailsPricingAndLocation;
+
+  /// No description provided for @updateReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Review'**
+  String get updateReview;
+
+  /// No description provided for @updateYourLoginPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your login password'**
+  String get updateYourLoginPassword;
+
+  /// No description provided for @updateYourPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your password'**
+  String get updateYourPassword;
+
+  /// No description provided for @updatingBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating booking...'**
+  String get updatingBooking;
+
+  /// No description provided for @updatingBookingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating booking status...'**
+  String get updatingBookingStatus;
+
+  /// No description provided for @updatingCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating city...'**
+  String get updatingCity;
+
+  /// No description provided for @updatingProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating profile...'**
+  String get updatingProfile;
+
+  /// No description provided for @usDollar.
+  ///
+  /// In en, this message translates to:
+  /// **'US Dollar'**
+  String get usDollar;
+
+  /// No description provided for @userActivated.
+  ///
+  /// In en, this message translates to:
+  /// **'User activated'**
+  String get userActivated;
+
+  /// No description provided for @userActivityReport.
+  ///
+  /// In en, this message translates to:
+  /// **'User Activity Report'**
+  String get userActivityReport;
+
+  /// No description provided for @userDeactivated.
+  ///
+  /// In en, this message translates to:
+  /// **'User deactivated'**
+  String get userDeactivated;
+
+  /// No description provided for @userDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'User Details'**
+  String get userDetails;
+
+  /// No description provided for @users.
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get users;
+
+  /// No description provided for @usersExportedToCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Users exported to CSV'**
+  String get usersExportedToCsv;
+
+  /// No description provided for @verifyField.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Field'**
+  String get verifyField;
+
+  /// No description provided for @verifyingField.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying field...'**
+  String get verifyingField;
+
+  /// No description provided for @viewAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'View Admins'**
+  String get viewAdmins;
+
+  /// No description provided for @viewAllReservations.
+  ///
+  /// In en, this message translates to:
+  /// **'View all reservations'**
+  String get viewAllReservations;
+
+  /// No description provided for @viewAllSportsFields.
+  ///
+  /// In en, this message translates to:
+  /// **'View all sports fields'**
+  String get viewAllSportsFields;
+
+  /// No description provided for @viewAndManageYourBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'View and manage your bookings'**
+  String get viewAndManageYourBookings;
+
+  /// No description provided for @viewBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'View Bookings'**
+  String get viewBookings;
+
+  /// No description provided for @viewFields.
+  ///
+  /// In en, this message translates to:
+  /// **'View Fields'**
+  String get viewFields;
+
+  /// No description provided for @viewRecentLoginAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'View recent login attempts'**
+  String get viewRecentLoginAttempts;
+
+  /// No description provided for @viewUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'View Users'**
+  String get viewUsers;
+
+  /// No description provided for @viewYourProfileDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View your profile details'**
+  String get viewYourProfileDetails;
+
+  /// No description provided for @vodafoneCash.
+  ///
+  /// In en, this message translates to:
+  /// **'vodafone_cash'**
+  String get vodafoneCash;
+
+  /// No description provided for @weeklySchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Schedule'**
+  String get weeklySchedule;
+
+  /// No description provided for @writeAReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a Review'**
+  String get writeAReview;
+
+  /// No description provided for @youMustBeLoggedInToReview.
+  ///
+  /// In en, this message translates to:
+  /// **'You must be logged in to review'**
+  String get youMustBeLoggedInToReview;
+
+  /// No description provided for @yourRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Rating *'**
+  String get yourRating;
+
+  /// No description provided for @yyyyMmDd.
+  ///
+  /// In en, this message translates to:
+  /// **'YYYY-MM-DD'**
+  String get yyyyMmDd;
+
+  /// No description provided for @rateYourExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Your Experience'**
+  String get rateYourExperience;
+
+  /// No description provided for @helpOthersMakeInformedDecisions.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience to help others make informed decisions'**
+  String get helpOthersMakeInformedDecisions;
+
+  /// No description provided for @recentReviewsFromCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent reviews from our customers'**
+  String get recentReviewsFromCustomers;
+
+  /// No description provided for @errorLoadingFieldMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading field: {message}'**
+  String errorLoadingFieldMessage(Object message);
+
+  /// No description provided for @updateFieldSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update {fieldName}'**
+  String updateFieldSubtitle(Object fieldName);
+
+  /// No description provided for @reviewsSummaryForField.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {{fieldName} • {count} review} other {{fieldName} • {count} reviews}}'**
+  String reviewsSummaryForField(num count, Object fieldName);
+
+  /// No description provided for @totalAdminsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {{count} total admin} other {{count} total admins}}'**
+  String totalAdminsCount(num count);
+
+  /// No description provided for @totalUsersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {{count} total user} other {{count} total users}}'**
+  String totalUsersCount(num count);
+
+  /// No description provided for @totalBookingsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {{count} total booking} other {{count} total bookings}}'**
+  String totalBookingsCount(num count);
+
+  /// No description provided for @totalFieldsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {{count} total field} other {{count} total fields}}'**
+  String totalFieldsCount(num count);
+
+  /// No description provided for @errorWithMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String errorWithMessage(Object message);
+
+  /// No description provided for @ownerIdShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner ID: {id}...'**
+  String ownerIdShort(Object id);
+
+  /// No description provided for @bookingHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking History'**
+  String get bookingHistory;
+
+  /// No description provided for @advancedFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Filters'**
+  String get advancedFilters;
+
+  /// No description provided for @selectDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date Range'**
+  String get selectDateRange;
+
+  /// No description provided for @startAddingFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Start adding fields to your favorites\\nfor quick access anytime'**
+  String get startAddingFavorites;
+
+  /// No description provided for @bookAField.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a Field'**
+  String get bookAField;
+
+  /// No description provided for @userRole.
+  ///
+  /// In en, this message translates to:
+  /// **'user'**
+  String get userRole;
+
+  /// No description provided for @adminRole.
+  ///
+  /// In en, this message translates to:
+  /// **'admin'**
+  String get adminRole;
+
+  /// No description provided for @aZ.
+  ///
+  /// In en, this message translates to:
+  /// **'[A-Z]'**
+  String get aZ;
+
+  /// No description provided for @aToZ.
+  ///
+  /// In en, this message translates to:
+  /// **'[a-z]'**
+  String get aToZ;
+
+  /// No description provided for @iAgreeToThe.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the '**
+  String get iAgreeToThe;
+
+  /// No description provided for @alreadyHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get alreadyHaveAnAccount;
+
+  /// No description provided for @mybookings.
+  ///
+  /// In en, this message translates to:
+  /// **'myBookings'**
+  String get mybookings;
+
+  /// No description provided for @eeeMmmD.
+  ///
+  /// In en, this message translates to:
+  /// **'EEE, MMM d'**
+  String get eeeMmmD;
+
+  /// No description provided for @mmmmYyyy.
+  ///
+  /// In en, this message translates to:
+  /// **'MMMM yyyy'**
+  String get mmmmYyyy;
+
+  /// No description provided for @eee.
+  ///
+  /// In en, this message translates to:
+  /// **'EEE'**
+  String get eee;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @addedToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to favorites'**
+  String get addedToFavorites;
+
+  /// No description provided for @verifiedField.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified Field'**
+  String get verifiedField;
+
+  /// No description provided for @indoorType.
+  ///
+  /// In en, this message translates to:
+  /// **'indoor'**
+  String get indoorType;
+
+  /// No description provided for @outdoorType.
+  ///
+  /// In en, this message translates to:
+  /// **'outdoor'**
+  String get outdoorType;
+
+  /// No description provided for @aboutThisField.
+  ///
+  /// In en, this message translates to:
+  /// **'About This Field'**
+  String get aboutThisField;
+
+  /// No description provided for @readMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Read more'**
+  String get readMore;
+
+  /// No description provided for @showLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Show less'**
+  String get showLess;
+
+  /// No description provided for @autoBookSameTimeEveryWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-book same time every week'**
+  String get autoBookSameTimeEveryWeek;
+
+  /// No description provided for @getDirections.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Directions'**
+  String get getDirections;
+
+  /// No description provided for @recommended.
+  ///
+  /// In en, this message translates to:
+  /// **'recommended'**
+  String get recommended;
+
+  /// No description provided for @priceAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'price_asc'**
+  String get priceAsc;
+
+  /// No description provided for @priceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'price_desc'**
+  String get priceDesc;
+
+  /// No description provided for @ratingField.
+  ///
+  /// In en, this message translates to:
+  /// **'rating'**
+  String get ratingField;
+
+  /// No description provided for @profileTab.
+  ///
+  /// In en, this message translates to:
+  /// **'profile'**
+  String get profileTab;
+
+  /// No description provided for @fieldslist.
+  ///
+  /// In en, this message translates to:
+  /// **'fieldsList'**
+  String get fieldslist;
+
+  /// No description provided for @favoritesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'favorites'**
+  String get favoritesTab;
+
+  /// No description provided for @descriptionField.
+  ///
+  /// In en, this message translates to:
+  /// **'description'**
+  String get descriptionField;
+
+  /// No description provided for @icon.
+  ///
+  /// In en, this message translates to:
+  /// **'icon'**
+  String get icon;
+
+  /// No description provided for @bookingsWillAppearHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings will appear here'**
+  String get bookingsWillAppearHere;
+
+  /// No description provided for @manual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get manual;
+
+  /// No description provided for @noBookingsForThisFieldIn.
+  ///
+  /// In en, this message translates to:
+  /// **'No bookings for this field in this week'**
+  String get noBookingsForThisFieldIn;
+
+  /// No description provided for @scrollRightToSeeAllDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll right to see all days (Sat-Fri)'**
+  String get scrollRightToSeeAllDays;
+
+  /// No description provided for @verifiedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'VERIFIED'**
+  String get verifiedBadge;
+
+  /// No description provided for @createNewCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Customer'**
+  String get createNewCustomer;
+
+  /// No description provided for @noFieldDataAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No field data available'**
+  String get noFieldDataAvailable;
+
+  /// No description provided for @vsLastPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'vs last period'**
+  String get vsLastPeriod;
+
+  /// No description provided for @pendingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'pending'**
+  String get pendingStatus;
+
+  /// No description provided for @confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'confirmed'**
+  String get confirmed;
+
+  /// No description provided for @canceled.
+  ///
+  /// In en, this message translates to:
+  /// **'canceled'**
+  String get canceled;
+
+  /// No description provided for @tryAdjustingYourFiltersOrSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your filters or search'**
+  String get tryAdjustingYourFiltersOrSearch;
+
+  /// No description provided for @ownerbookings.
+  ///
+  /// In en, this message translates to:
+  /// **'ownerBookings'**
+  String get ownerbookings;
+
+  /// No description provided for @sportKickV100.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport Kick v1.0.0'**
+  String get sportKickV100;
+
+  /// No description provided for @o.
+  ///
+  /// In en, this message translates to:
+  /// **'O'**
+  String get o;
+
+  /// No description provided for @noRecentBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'No Recent Bookings'**
+  String get noRecentBookings;
+
+  /// No description provided for @yourRecentBookingsWillAppearHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recent bookings will appear here'**
+  String get yourRecentBookingsWillAppearHere;
+
+  /// No description provided for @manageYourPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your preferences'**
+  String get manageYourPreferences;
+
+  /// No description provided for @howWouldYouRateThisField.
+  ///
+  /// In en, this message translates to:
+  /// **'How would you rate this field?'**
+  String get howWouldYouRateThisField;
+
+  /// No description provided for @shareYourExperienceOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience (optional)'**
+  String get shareYourExperienceOptional;
+
+  /// No description provided for @reviewing.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewing'**
+  String get reviewing;
+
+  /// No description provided for @yourReviewOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Review (Optional)'**
+  String get yourReviewOptional;
+
+  /// No description provided for @youCanUpdateYourRatingAnd.
+  ///
+  /// In en, this message translates to:
+  /// **'You can update your rating and comment'**
+  String get youCanUpdateYourRatingAnd;
+
+  /// No description provided for @noRatingsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No ratings yet'**
+  String get noRatingsYet;
+
+  /// No description provided for @anonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get anonymous;
+
+  /// No description provided for @edited.
+  ///
+  /// In en, this message translates to:
+  /// **'(edited)'**
+  String get edited;
+
+  /// No description provided for @recentReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Review'**
+  String get recentReview;
+
+  /// No description provided for @filterByRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Rating'**
+  String get filterByRating;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
+  /// No description provided for @thisActionCannotBeUndoneAre.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone. Are you sure you want to delete this review?'**
+  String get thisActionCannotBeUndoneAre;
+
+  /// No description provided for @editedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'edited'**
+  String get editedLabel;
+
+  /// No description provided for @editingReviewFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Editing review for'**
+  String get editingReviewFor;
+
+  /// No description provided for @shareYourExperienceToHelpOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience to help others'**
+  String get shareYourExperienceToHelpOthers;
+
+  /// No description provided for @updateRatingPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'You can update your rating and comment anytime'**
+  String get updateRatingPrompt;
+
+  /// No description provided for @shareDetailsAboutYourExperienceN.
+  ///
+  /// In en, this message translates to:
+  /// **'Share details about your experience...\\n\\n'**
+  String get shareDetailsAboutYourExperienceN;
+
+  /// No description provided for @howWasTheFieldConditionN.
+  ///
+  /// In en, this message translates to:
+  /// **'- How was the field condition?\\n'**
+  String get howWasTheFieldConditionN;
+
+  /// No description provided for @reviewUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Updated!'**
+  String get reviewUpdated;
+
+  /// No description provided for @reviewSubmittedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Submitted!'**
+  String get reviewSubmittedSuccess;
+
+  /// No description provided for @yourReviewHasBeenUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review has been updated successfully'**
+  String get yourReviewHasBeenUpdatedSuccessfully;
+
+  /// No description provided for @egpE.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP (E£)'**
+  String get egpE;
+
+  /// No description provided for @eur.
+  ///
+  /// In en, this message translates to:
+  /// **'EUR (€)'**
+  String get eur;
+
+  /// No description provided for @sar.
+  ///
+  /// In en, this message translates to:
+  /// **'SAR (﷼)'**
+  String get sar;
+
+  /// No description provided for @eG25122025.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 25/12/2025'**
+  String get eG25122025;
+
+  /// No description provided for @eG12252025.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 12/25/2025'**
+  String get eG12252025;
+
+  /// No description provided for @eG20251225.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 2025-12-25'**
+  String get eG20251225;
+
+  /// No description provided for @loginactivity.
+  ///
+  /// In en, this message translates to:
+  /// **'loginActivity'**
+  String get loginactivity;
+
+  /// No description provided for @notificationManagementWillBeNavailableIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification management will be\\navailable in a future update.'**
+  String get notificationManagementWillBeNavailableIn;
+
+  /// No description provided for @reviewsModerationWillBeNavailableIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews moderation will be\\navailable in a future update.'**
+  String get reviewsModerationWillBeNavailableIn;
+
+  /// No description provided for @failedToLoadCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load categories'**
+  String get failedToLoadCategories;
+
+  /// No description provided for @noCategoriesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Categories Yet'**
+  String get noCategoriesYet;
+
+  /// No description provided for @tapTheButtonToCreateNyour.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the + button to create\\nyour first sport category'**
+  String get tapTheButtonToCreateNyour;
+
+  /// No description provided for @platformPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Performance'**
+  String get platformPerformance;
+
+  /// No description provided for @comprehensiveOverviewOfYourPlatformMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Comprehensive overview of your platform metrics'**
+  String get comprehensiveOverviewOfYourPlatformMetrics;
+
+  /// No description provided for @errorLoadingAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading analytics'**
+  String get errorLoadingAnalytics;
+
+  /// No description provided for @enforceOperatingHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Enforce Operating Hours'**
+  String get enforceOperatingHours;
+
+  /// No description provided for @applyToAllFieldBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to all field bookings'**
+  String get applyToAllFieldBookings;
+
+  /// No description provided for @saving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get saving;
+
+  /// No description provided for @userRegistrationsAndEngagement.
+  ///
+  /// In en, this message translates to:
+  /// **'User registrations and engagement'**
+  String get userRegistrationsAndEngagement;
+
+  /// No description provided for @platformWideRevenueAndTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform-wide revenue and transactions'**
+  String get platformWideRevenueAndTransactions;
+
+  /// No description provided for @bookingTrendsAndFieldUtilization.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking trends and field utilization'**
+  String get bookingTrendsAndFieldUtilization;
+
+  /// No description provided for @fieldRatingsAndReviewAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Field ratings and review analysis'**
+  String get fieldRatingsAndReviewAnalysis;
+
+  /// No description provided for @quickOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Overview'**
+  String get quickOverview;
+
+  /// No description provided for @exportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data'**
+  String get exportData;
+
+  /// No description provided for @generateAndDownloadDetailedReportsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate and download detailed reports in CSV or PDF format.'**
+  String get generateAndDownloadDetailedReportsIn;
+
+  /// No description provided for @activatingAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Activating admin...'**
+  String get activatingAdmin;
+
+  /// No description provided for @deactivatingAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivating admin...'**
+  String get deactivatingAdmin;
+
+  /// No description provided for @permanentlyDeletingField.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently deleting field...'**
+  String get permanentlyDeletingField;
+
+  /// No description provided for @deactivatingField.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivating field...'**
+  String get deactivatingField;
+
+  /// No description provided for @noAdminsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Admins Yet'**
+  String get noAdminsYet;
+
+  /// No description provided for @createYourFirstFieldOwnerAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first field owner account'**
+  String get createYourFirstFieldOwnerAccount;
+
+  /// No description provided for @errorLoadingAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading admins'**
+  String get errorLoadingAdmins;
+
+  /// No description provided for @assignedFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned Fields'**
+  String get assignedFields;
+
+  /// No description provided for @noFieldsAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'No Fields Assigned'**
+  String get noFieldsAssigned;
+
+  /// No description provided for @thisAdminDoesn.
+  ///
+  /// In en, this message translates to:
+  /// **'This admin doesn\\'**
+  String get thisAdminDoesn;
+
+  /// No description provided for @superAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'super_admin'**
+  String get superAdmin;
+
+  /// No description provided for @activeAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Account'**
+  String get activeAccount;
+
+  /// No description provided for @inactiveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive Account'**
+  String get inactiveAccount;
+
+  /// No description provided for @formatAdminCreatedat.
+  ///
+  /// In en, this message translates to:
+  /// **').format(admin.createdAt)}'**
+  String get formatAdminCreatedat;
+
+  /// No description provided for @allAvailableFieldsAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'All Available Fields Assigned'**
+  String get allAvailableFieldsAssigned;
+
+  /// No description provided for @thisAdminAlreadyHasAllAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This admin already has all available fields assigned.'**
+  String get thisAdminAlreadyHasAllAvailable;
+
+  /// No description provided for @tryAdjustingYourSearchOrFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your search or filters'**
+  String get tryAdjustingYourSearchOrFilters;
+
+  /// No description provided for @bookingsOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings Overview'**
+  String get bookingsOverview;
+
+  /// No description provided for @mmmDdYyyy.
+  ///
+  /// In en, this message translates to:
+  /// **'MMM dd, yyyy'**
+  String get mmmDdYyyy;
+
+  /// No description provided for @longPressForActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Long press for actions'**
+  String get longPressForActions;
+
+  /// No description provided for @tryAdjustingYourFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your filters'**
+  String get tryAdjustingYourFilters;
+
+  /// No description provided for @errorLoadingFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading fields'**
+  String get errorLoadingFields;
+
+  /// No description provided for @fieldsOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Fields Overview'**
+  String get fieldsOverview;
+
+  /// No description provided for @noCitiesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No cities found'**
+  String get noCitiesFound;
+
+  /// No description provided for @tryChangingTheFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Try changing the filter'**
+  String get tryChangingTheFilter;
+
+  /// No description provided for @platformCoverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Coverage'**
+  String get platformCoverage;
+
+  /// No description provided for @createFieldOwnerAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Field Owner Account'**
+  String get createFieldOwnerAccount;
+
+  /// No description provided for @aSecurePasswordWillBeGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'A secure password will be generated automatically. The admin must change it on first login.'**
+  String get aSecurePasswordWillBeGenerated;
+
+  /// No description provided for @adminAccountHasBeenCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin account has been created successfully. Please save these credentials:'**
+  String get adminAccountHasBeenCreatedSuccessfully;
+
+  /// No description provided for @adminMustChangePasswordOnFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin must change password on first login'**
+  String get adminMustChangePasswordOnFirst;
+
+  /// No description provided for @eGChampionsField.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Champions Field'**
+  String get eGChampionsField;
+
+  /// No description provided for @selectAvailableFacilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Available Facilities'**
+  String get selectAvailableFacilities;
+
+  /// No description provided for @fillInDetailsAndAssignTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in details and assign to admin'**
+  String get fillInDetailsAndAssignTo;
+
+  /// No description provided for @indoorField.
+  ///
+  /// In en, this message translates to:
+  /// **'Indoor Field'**
+  String get indoorField;
+
+  /// No description provided for @vodafoneCashNumberForReceivingPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Vodafone Cash number for receiving payments'**
+  String get vodafoneCashNumberForReceivingPayments;
+
+  /// No description provided for @instapayNumberForReceivingTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'InstaPay number for receiving transfers'**
+  String get instapayNumberForReceivingTransfers;
+
+  /// No description provided for @sportKickPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport Kick Platform'**
+  String get sportKickPlatform;
+
+  /// No description provided for @platformOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Overview'**
+  String get platformOverview;
+
+  /// No description provided for @chooseHowToDeleteThisField.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how to delete this field:'**
+  String get chooseHowToDeleteThisField;
+
+  /// No description provided for @fieldWillBeHiddenFromUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Field will be hidden from users but data is preserved. Can be reactivated later.'**
+  String get fieldWillBeHiddenFromUsers;
+
+  /// No description provided for @allDataWillBePermanentlyRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'All data will be permanently removed. This action cannot be undone!'**
+  String get allDataWillBePermanentlyRemoved;
+
+  /// No description provided for @removeVerifiedBadgeFromThisField.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove verified badge from this field'**
+  String get removeVerifiedBadgeFromThisField;
+
+  /// No description provided for @addVerifiedBadgeToThisField.
+  ///
+  /// In en, this message translates to:
+  /// **'Add verified badge to this field'**
+  String get addVerifiedBadgeToThisField;
+
+  /// No description provided for @noAdminsMatchYourFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'No admins match your filters'**
+  String get noAdminsMatchYourFilters;
+
+  /// No description provided for @noAdminsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No admins found'**
+  String get noAdminsFound;
+
+  /// No description provided for @noUsersMatchYourFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'No users match your filters'**
+  String get noUsersMatchYourFilters;
+
+  /// No description provided for @noUsersFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No users found'**
+  String get noUsersFound;
+
+  /// No description provided for @areYouSureYouWantTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to enable maintenance mode? '**
+  String get areYouSureYouWantTo;
+
+  /// No description provided for @thisWillPreventUsersFromAccessing.
+  ///
+  /// In en, this message translates to:
+  /// **'This will prevent users from accessing the platform.'**
+  String get thisWillPreventUsersFromAccessing;
+
+  /// No description provided for @changepassword.
+  ///
+  /// In en, this message translates to:
+  /// **'changePassword'**
+  String get changepassword;
+
+  /// No description provided for @termsofservice.
+  ///
+  /// In en, this message translates to:
+  /// **'termsOfService'**
+  String get termsofservice;
+
+  /// No description provided for @privacypolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'privacyPolicy'**
+  String get privacypolicy;
+
+  /// No description provided for @editprofile.
+  ///
+  /// In en, this message translates to:
+  /// **'editProfile'**
+  String get editprofile;
+
+  /// No description provided for @dateFormatSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Format Settings'**
+  String get dateFormatSettings;
+
+  /// No description provided for @currencySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency Settings'**
+  String get currencySettings;
+
+  /// No description provided for @notificationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Settings'**
+  String get notificationSettings;
+
+  /// No description provided for @noUsersYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Users Yet'**
+  String get noUsersYet;
+
+  /// No description provided for @errorLoadingUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading users'**
+  String get errorLoadingUsers;
+
+  /// No description provided for @deactivateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Account'**
+  String get deactivateAccount;
+
+  /// No description provided for @activateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate Account'**
+  String get activateAccount;
+
+  /// No description provided for @mmmDY.
+  ///
+  /// In en, this message translates to:
+  /// **'MMM d, y'**
+  String get mmmDY;
+
+  /// No description provided for @thisUserHasn.
+  ///
+  /// In en, this message translates to:
+  /// **'This user hasn\\'**
+  String get thisUserHasn;
+
+  /// No description provided for @formatUserCreatedat.
+  ///
+  /// In en, this message translates to:
+  /// **').format(user.createdAt)}'**
+  String get formatUserCreatedat;
+
+  /// No description provided for @thisWillPreventTheUserFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'This will prevent the user from logging in and making new bookings.'**
+  String get thisWillPreventTheUserFrom;
+
+  /// No description provided for @manageAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Admins'**
+  String get manageAdmins;
+
+  /// No description provided for @viewAndManageFieldOwnerAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'View and manage field owner accounts'**
+  String get viewAndManageFieldOwnerAccounts;
+
+  /// No description provided for @failedToLoadAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load admins'**
+  String get failedToLoadAdmins;
+
+  /// No description provided for @assignFieldsToThisAdminTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign fields to this admin to get started'**
+  String get assignFieldsToThisAdminTo;
+
+  /// No description provided for @selectAFieldToAssign.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a field to assign'**
+  String get selectAFieldToAssign;
+
+  /// No description provided for @noAvailableFields.
+  ///
+  /// In en, this message translates to:
+  /// **'No available fields'**
+  String get noAvailableFields;
+
+  /// No description provided for @passwordResetSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password Reset Successfully!'**
+  String get passwordResetSuccessfully;
+
+  /// No description provided for @adminMustChangePasswordOnNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin must change password on next login'**
+  String get adminMustChangePasswordOnNext;
+
+  /// No description provided for @resetAdminPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Admin Password?'**
+  String get resetAdminPassword;
+
+  /// No description provided for @aNewPasswordWillBeGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'A new password will be generated for this admin. They will need to change it on their next login.'**
+  String get aNewPasswordWillBeGenerated;
+
+  /// No description provided for @thisBookingHasBeenCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'This booking has been completed'**
+  String get thisBookingHasBeenCompleted;
+
+  /// No description provided for @tryAdjustingYourSearchNorFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your search\\nor filters'**
+  String get tryAdjustingYourSearchNorFilters;
+
+  /// No description provided for @hour.
+  ///
+  /// In en, this message translates to:
+  /// **'/hour'**
+  String get hour;
+
+  /// No description provided for @hideThisCityFromUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide this city from users'**
+  String get hideThisCityFromUsers;
+
+  /// No description provided for @showThisCityToUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Show this city to users'**
+  String get showThisCityToUsers;
+
+  /// No description provided for @addNewCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New City'**
+  String get addNewCity;
+
+  /// No description provided for @createANewCityForThe.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new city for the platform'**
+  String get createANewCityForThe;
+
+  /// No description provided for @cityName.
+  ///
+  /// In en, this message translates to:
+  /// **'City Name'**
+  String get cityName;
+
+  /// No description provided for @cityWillBeVisibleToUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'City will be visible to users'**
+  String get cityWillBeVisibleToUsers;
+
+  /// No description provided for @createCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Create City'**
+  String get createCity;
+
+  /// No description provided for @thisActionMayBeIrreversible.
+  ///
+  /// In en, this message translates to:
+  /// **'This action may be irreversible'**
+  String get thisActionMayBeIrreversible;
+
+  /// No description provided for @permanentDeleteIsDisabledForCities.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanent delete is disabled for cities with fields.'**
+  String get permanentDeleteIsDisabledForCities;
+
+  /// No description provided for @deleteForever.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Forever'**
+  String get deleteForever;
+
+  /// No description provided for @cityIsVisibleToUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'City is visible to users'**
+  String get cityIsVisibleToUsers;
+
+  /// No description provided for @oopsSomethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops! Something went wrong'**
+  String get oopsSomethingWentWrong;
+
+  /// No description provided for @tryAdjustingYourFiltersNorAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your filters\\nor add a new city'**
+  String get tryAdjustingYourFiltersNorAdd;
+
+  /// No description provided for @fieldOwnerManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Field owner management'**
+  String get fieldOwnerManagement;
+
+  /// No description provided for @enterTheAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the admin\\'**
+  String get enterTheAdmin;
+
+  /// No description provided for @aTemporaryPasswordWillBeGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'A temporary password will be generated automatically'**
+  String get aTemporaryPasswordWillBeGenerated;
+
+  /// No description provided for @shareCredentialsSecurelyWithTheNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Share credentials securely with the new admin'**
+  String get shareCredentialsSecurelyWithTheNew;
+
+  /// No description provided for @adminCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Created Successfully!'**
+  String get adminCreatedSuccessfully;
+
+  /// No description provided for @shareTheseCredentialsSecurely.
+  ///
+  /// In en, this message translates to:
+  /// **'Share these credentials securely'**
+  String get shareTheseCredentialsSecurely;
+
+  /// No description provided for @sportKickAdminV100.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport Kick Admin v1.0.0'**
+  String get sportKickAdminV100;
+
+  /// No description provided for @a.
+  ///
+  /// In en, this message translates to:
+  /// **'A'**
+  String get a;
+
+  /// No description provided for @superAdminRole.
+  ///
+  /// In en, this message translates to:
+  /// **'SUPER ADMIN'**
+  String get superAdminRole;
+
+  /// No description provided for @platformRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Revenue'**
+  String get platformRevenue;
+
+  /// No description provided for @totalEarningsFromAllFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Total earnings from all fields'**
+  String get totalEarningsFromAllFields;
+
+  /// No description provided for @successStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'success'**
+  String get successStatus;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'failed'**
+  String get failed;
+
+  /// No description provided for @blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'blocked'**
+  String get blocked;
+
+  /// No description provided for @loadingLoginActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading login activity...'**
+  String get loadingLoginActivity;
+
+  /// No description provided for @failedToLoadActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load activity'**
+  String get failedToLoadActivity;
+
+  /// No description provided for @noLoginActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'No login activity'**
+  String get noLoginActivity;
+
+  /// No description provided for @noLoginEventsMatchNyourFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'No login events match\\nyour filter criteria'**
+  String get noLoginEventsMatchNyourFilter;
+
+  /// No description provided for @logoutAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout?'**
+  String get logoutAction;
+
+  /// No description provided for @confirmationPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to logout?\\nYou will need to login again to access the admin panel.'**
+  String get confirmationPrompt;
+
+  /// No description provided for @platformSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'platform'**
+  String get platformSettings;
+
+  /// No description provided for @allowNewUserSignUps.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow new user sign-ups'**
+  String get allowNewUserSignUps;
+
+  /// No description provided for @requireEmailVerificationForNewUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Require email verification for new users'**
+  String get requireEmailVerificationForNewUsers;
+
+  /// No description provided for @configureDefaults.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure defaults'**
+  String get configureDefaults;
+
+  /// No description provided for @notificationsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'notifications'**
+  String get notificationsTab;
+
+  /// No description provided for @receiveEmailAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive email alerts'**
+  String get receiveEmailAlerts;
+
+  /// No description provided for @receivePushAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive push alerts'**
+  String get receivePushAlerts;
+
+  /// No description provided for @importantAdminNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Important admin notifications'**
+  String get importantAdminNotifications;
+
+  /// No description provided for @trackFailedLoginAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'Track failed login attempts'**
+  String get trackFailedLoginAttempts;
+
+  /// No description provided for @loggingOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Logging out...'**
+  String get loggingOut;
+
+  /// No description provided for @value.
+  ///
+  /// In en, this message translates to:
+  /// **'value'**
+  String get value;
+
+  /// No description provided for @editCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Category'**
+  String get editCategory;
+
+  /// No description provided for @createCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Category'**
+  String get createCategory;
+
+  /// No description provided for @iconField.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get iconField;
+
+  /// No description provided for @failedToLoadUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load users'**
+  String get failedToLoadUsers;
+
+  /// No description provided for @viewAndManageAllCustomerAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'View and manage all customer accounts'**
+  String get viewAndManageAllCustomerAccounts;
+
+  /// No description provided for @thisUserWillBeAbleTo.
+  ///
+  /// In en, this message translates to:
+  /// **'This user will be able to login and make bookings again.'**
+  String get thisUserWillBeAbleTo;
+
+  /// No description provided for @dd.
+  ///
+  /// In en, this message translates to:
+  /// **'dd'**
+  String get dd;
+
+  /// No description provided for @mmm.
+  ///
+  /// In en, this message translates to:
+  /// **'MMM'**
+  String get mmm;
+
+  /// No description provided for @favoriteField.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite Field'**
+  String get favoriteField;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {{count} selected} other {{count} selected}}'**
+  String selectedCount(num count);
+
+  /// No description provided for @fieldsFoundCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, zero {No fields found} one {{count} field found} other {{count} fields found}}'**
+  String fieldsFoundCount(num count);
+
+  /// No description provided for @bookingsFoundCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, zero {No bookings found} one {{count} booking found} other {{count} bookings found}}'**
+  String bookingsFoundCount(num count);
+
+  /// No description provided for @fieldsSelectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {{count} field selected} other {{count} fields selected}}'**
+  String fieldsSelectedCount(num count);
+
+  /// No description provided for @cityFieldsAssociatedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, zero {This city has no fields associated with it.} one {This city has 1 field associated with it.} other {This city has # fields associated with it.}}'**
+  String cityFieldsAssociatedCount(num count);
+
+  /// No description provided for @cityFieldsRegisteredCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, zero {This city has no fields registered.} one {This city has 1 field registered.} other {This city has # fields registered.}}'**
+  String cityFieldsRegisteredCount(num count);
+
+  /// No description provided for @cityIsHiddenFromUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'City is hidden from users'**
+  String get cityIsHiddenFromUsers;
+
+  /// No description provided for @editingCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Editing: {name}'**
+  String editingCity(Object name);
+
+  /// No description provided for @showingAdminsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {filtered} of {total} admins'**
+  String showingAdminsCount(Object filtered, Object total);
+
+  /// No description provided for @showingUsersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {filtered} of {total} users'**
+  String showingUsersCount(Object filtered, Object total);
+
+  /// No description provided for @ofTotalAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'of {total} admins'**
+  String ofTotalAdmins(Object total);
+
+  /// No description provided for @ofTotalUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'of {total} users'**
+  String ofTotalUsers(Object total);
+
+  /// No description provided for @activeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} active'**
+  String activeCount(Object count);
+
+  /// No description provided for @memberSinceDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since {date}'**
+  String memberSinceDate(Object date);
+
+  /// No description provided for @joinedDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined {date}'**
+  String joinedDate(Object date);
+
+  /// No description provided for @sinceDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}'**
+  String sinceDate(Object date);
+
+  /// No description provided for @bookingNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking #{id}'**
+  String bookingNumber(Object id);
+
+  /// No description provided for @basedOnReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Based on {count} review} other {Based on {count} reviews}}'**
+  String basedOnReviews(num count);
+
+  /// No description provided for @noStarReviewsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No {rating}-star reviews yet'**
+  String noStarReviewsYet(Object rating);
+
+  /// No description provided for @allReviewsWithCount.
+  ///
+  /// In en, this message translates to:
+  /// **'All Reviews ({count})'**
+  String allReviewsWithCount(Object count);
+
+  /// No description provided for @countOfTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {total}'**
+  String countOfTotal(Object count, Object total);
+
+  /// No description provided for @viewAllBookingsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {View All {count} Booking} other {View All {count} Bookings}}'**
+  String viewAllBookingsCount(num count);
+
+  /// No description provided for @assigningTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigning to: {name}'**
+  String assigningTo(Object name);
+
+  /// No description provided for @usingCurrentHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Using current hours: {hours}'**
+  String usingCurrentHours(Object hours);
+
+  /// No description provided for @sharePasswordSecurelyWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Share this password securely with {name}'**
+  String sharePasswordSecurelyWith(Object name);
+
+  /// No description provided for @exportingReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting {type}...'**
+  String exportingReport(Object type);
+
+  /// No description provided for @deleteCategoryConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{name}\"?\\n\\nThis action cannot be undone.'**
+  String deleteCategoryConfirmation(Object name);
+
+  /// No description provided for @gpsCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS: {coordinates}'**
+  String gpsCoordinates(Object coordinates);
+
+  /// No description provided for @labelWithValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {value}'**
+  String labelWithValue(Object label, Object value);
+
+  /// No description provided for @usersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {{count} user} other {{count} users}}'**
+  String usersCount(num count);
+
+  /// No description provided for @allStatuses.
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get allStatuses;
+
+  /// No description provided for @effectiveDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Effective Date: {date}'**
+  String effectiveDateLabel(Object date);
+
+  /// No description provided for @lastUpdatedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated: {date}'**
+  String lastUpdatedLabel(Object date);
+
+  /// No description provided for @effectiveLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Effective: {date}'**
+  String effectiveLabel(Object date);
+
+  /// No description provided for @beFirstToReviewField.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to review {fieldName}'**
+  String beFirstToReviewField(Object fieldName);
+
+  /// No description provided for @starReviewsWithCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{rating} Star Reviews ({count})'**
+  String starReviewsWithCount(Object count, Object rating);
+
+  /// No description provided for @thisUserHasntMadeAnyBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'This user hasn\'t made any bookings yet.'**
+  String get thisUserHasntMadeAnyBookings;
+
+  /// No description provided for @thisUserHasntMadeAnyBookingsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'This user hasn\'t made any bookings yet.'**
+  String get thisUserHasntMadeAnyBookingsYet;
+
+  /// No description provided for @thisAdminDoesntHaveAnyFieldsAssignedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'This admin doesn\'t have any fields assigned yet.'**
+  String get thisAdminDoesntHaveAnyFieldsAssignedYet;
+
+  /// No description provided for @enterTheAdminsEmailAndPersonalDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the admin\'s email and personal details'**
+  String get enterTheAdminsEmailAndPersonalDetails;
+
+  /// No description provided for @admins.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins'**
+  String get admins;
+
+  /// No description provided for @errorLoadingDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading dashboard: {message}'**
+  String errorLoadingDashboard(Object message);
+
+  /// No description provided for @shareDetailsAboutYourExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Share details about your experience:\\n- How was the field condition?\\n- Were the facilities good?\\n- Would you recommend it?'**
+  String get shareDetailsAboutYourExperience;
+
+  /// No description provided for @yourReviewHelpsOthersFindTheBestFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review helps others find the best fields'**
+  String get yourReviewHelpsOthersFindTheBestFields;
+
+  /// No description provided for @nameIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get nameIsRequired;
+
+  /// No description provided for @nameIsTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is too short'**
+  String get nameIsTooShort;
+
+  /// No description provided for @nameMustBeAtLeast3Characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 3 characters'**
+  String get nameMustBeAtLeast3Characters;
+
+  /// No description provided for @emailIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailIsRequired;
+
+  /// No description provided for @pleaseEnterAValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get pleaseEnterAValidEmail;
+
+  /// No description provided for @phoneNumberIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneNumberIsRequired;
+
+  /// No description provided for @pleaseEnterAValidPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get pleaseEnterAValidPhoneNumber;
+
+  /// No description provided for @passwordIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordIsRequired;
+
+  /// No description provided for @passwordMustBeAtLeast8Characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordMustBeAtLeast8Characters;
+
+  /// No description provided for @pleaseConfirmYourPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get pleaseConfirmYourPassword;
+
+  /// No description provided for @emailAddressRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address *'**
+  String get emailAddressRequired;
+
+  /// No description provided for @fullNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name *'**
+  String get fullNameRequired;
+
+  /// No description provided for @phoneNumberOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number (Optional)'**
+  String get phoneNumberOptional;
+
+  /// No description provided for @paymentPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Phone Number'**
+  String get paymentPhoneNumber;
+
+  /// No description provided for @paymentPhoneIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment phone is required'**
+  String get paymentPhoneIsRequired;
+
+  /// No description provided for @enterValidEgyptianPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid Egyptian phone number'**
+  String get enterValidEgyptianPhoneNumber;
+
+  /// No description provided for @selectAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Admin'**
+  String get selectAdmin;
+
+  /// No description provided for @pleaseSelectAnAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an admin'**
+  String get pleaseSelectAnAdmin;
+
+  /// No description provided for @createFieldButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Field'**
+  String get createFieldButton;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get requiredField;
+
+  /// No description provided for @invalidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid number'**
+  String get invalidNumber;
+
+  /// No description provided for @loadingCities.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading cities...'**
+  String get loadingCities;
+
+  /// No description provided for @loadingCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading categories...'**
+  String get loadingCategories;
+
+  /// No description provided for @fieldNameIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Field name is required'**
+  String get fieldNameIsRequired;
+
+  /// No description provided for @addressIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is required'**
+  String get addressIsRequired;
+
+  /// No description provided for @priceIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Price is required'**
+  String get priceIsRequired;
+
+  /// No description provided for @pleaseEnterAValidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid number'**
+  String get pleaseEnterAValidNumber;
+
+  /// No description provided for @priceMustBeGreaterThanZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Price must be greater than 0'**
+  String get priceMustBeGreaterThanZero;
+
+  /// No description provided for @pleaseSelectACity.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a city'**
+  String get pleaseSelectACity;
+
+  /// No description provided for @pleaseSelectASportCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a sport category'**
+  String get pleaseSelectASportCategory;
+
+  /// No description provided for @pleaseSelectAnAdminToAssignField.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an admin to assign this field'**
+  String get pleaseSelectAnAdminToAssignField;
+
+  /// No description provided for @pleaseEnterACityName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a city name'**
+  String get pleaseEnterACityName;
+
+  /// No description provided for @cityNameMustBeAtLeast2Characters.
+  ///
+  /// In en, this message translates to:
+  /// **'City name must be at least 2 characters'**
+  String get cityNameMustBeAtLeast2Characters;
+
+  /// No description provided for @pleaseEnterACancellationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a cancellation reason'**
+  String get pleaseEnterACancellationReason;
+
+  /// No description provided for @reasonMustBeAtLeast5Characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason must be at least 5 characters'**
+  String get reasonMustBeAtLeast5Characters;
+
+  /// No description provided for @categoryNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Name'**
+  String get categoryNameLabel;
+
+  /// No description provided for @ratingPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get ratingPoor;
+
+  /// No description provided for @ratingFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get ratingFair;
+
+  /// No description provided for @ratingGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get ratingGood;
+
+  /// No description provided for @ratingVeryGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Good'**
+  String get ratingVeryGood;
+
+  /// No description provided for @ratingExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get ratingExcellent;
+
+  /// No description provided for @bookingStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get bookingStatusPending;
+
+  /// No description provided for @bookingStatusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get bookingStatusConfirmed;
+
+  /// No description provided for @bookingStatusCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get bookingStatusCanceled;
+
+  /// No description provided for @bookingStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get bookingStatusCompleted;
+
+  /// No description provided for @bookingStatusConf.
+  ///
+  /// In en, this message translates to:
+  /// **'Conf'**
+  String get bookingStatusConf;
+
+  /// No description provided for @bookingStatusPend.
+  ///
+  /// In en, this message translates to:
+  /// **'Pend'**
+  String get bookingStatusPend;
+
+  /// No description provided for @bookingStatusDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get bookingStatusDone;
+
+  /// No description provided for @bookingStatusCanc.
+  ///
+  /// In en, this message translates to:
+  /// **'Canc'**
+  String get bookingStatusCanc;
+
+  /// No description provided for @noBookingsMatchYourSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No bookings match your search'**
+  String get noBookingsMatchYourSearch;
+
+  /// No description provided for @noPendingBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending bookings'**
+  String get noPendingBookings;
+
+  /// No description provided for @noConfirmedBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed bookings'**
+  String get noConfirmedBookings;
+
+  /// No description provided for @noCanceledBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'No canceled bookings'**
+  String get noCanceledBookings;
 }
 
 class _AppLocalizationsDelegate

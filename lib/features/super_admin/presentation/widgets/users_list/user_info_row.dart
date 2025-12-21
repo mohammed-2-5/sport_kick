@@ -23,7 +23,10 @@ class UserInfoRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.labelMedium.copyWith(color: Colors.grey[700]),
+            style: AppTextStyles.withColor(
+              AppTextStyles.labelMedium,
+              Colors.grey[700]!,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

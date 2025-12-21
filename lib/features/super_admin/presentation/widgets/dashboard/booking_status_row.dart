@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/mini_stat_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class BookingStatusRow extends StatelessWidget {
   final PlatformStatisticsEntity statistics;
@@ -13,7 +14,7 @@ class BookingStatusRow extends StatelessWidget {
       children: [
         Expanded(
           child: MiniStatCard(
-            label: 'Confirmed',
+            label: context.l10n.statusConfirmed,
             value: statistics.confirmedBookings.toString(),
             color: Colors.green,
           ),
@@ -21,7 +22,7 @@ class BookingStatusRow extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: MiniStatCard(
-            label: 'Completed',
+            label: context.l10n.statusCompleted,
             value: statistics.completedBookings.toString(),
             color: Colors.blue,
           ),
@@ -29,7 +30,7 @@ class BookingStatusRow extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: MiniStatCard(
-            label: 'Cancelled',
+            label: context.l10n.statusCancelled,
             value: statistics.canceledBookings.toString(),
             color: Colors.red,
           ),

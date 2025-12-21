@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Bottom sheet with action buttons for field management.
 ///
@@ -70,15 +72,15 @@ class FieldActionsSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildHeader(),
+          _buildHeader(context),
           const Divider(height: 1, color: AppColors.border),
-          _buildActions(),
+          _buildActions(context),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -119,7 +121,7 @@ class FieldActionsSheet extends StatelessWidget {
                     Expanded(
                       child: Text(
                         field.name,
-                        style: const TextStyle(
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: AppColors.darkGrey,
@@ -138,19 +140,18 @@ class FieldActionsSheet extends StatelessWidget {
                           color: AppColors.successLight,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.verified,
                               size: 14,
                               color: AppColors.success,
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
-                              'Verified',
-                              style: TextStyle(
-                                fontSize: 12,
+                              context.l10n.verified,
+                              style: AppTextStyles.labelSmall.copyWith(
                                 color: AppColors.success,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -163,8 +164,7 @@ class FieldActionsSheet extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   '${field.city} • ${field.formattedPrice}',
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.mediumGrey,
                   ),
                 ),
@@ -176,33 +176,35 @@ class FieldActionsSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 20),
       child: Column(
         children: [
           _buildActionTile(
             icon: Icons.edit,
-            title: 'Edit Field',
-            subtitle: 'Update field details, pricing, and location',
+            title: context.l10n.editField,
+            subtitle: context.l10n.updateFieldDetailsPricingAndLocation,
             color: AppColors.info,
             onTap: onEdit,
           ),
           const SizedBox(height: 8),
           _buildActionTile(
             icon: field.isVerified ? Icons.verified_outlined : Icons.verified,
-            title: field.isVerified ? 'Remove Verification' : 'Verify Field',
+            title: field.isVerified
+                ? context.l10n.removeVerification
+                : context.l10n.verifyField,
             subtitle: field.isVerified
-                ? 'Remove verified badge from this field'
-                : 'Add verified badge to this field',
+                ? context.l10n.removeVerifiedBadgeFromThisField
+                : context.l10n.addVerifiedBadgeToThisField,
             color: AppColors.success,
             onTap: onToggleVerify,
           ),
           const SizedBox(height: 8),
           _buildActionTile(
             icon: Icons.delete,
-            title: 'Delete Field',
-            subtitle: 'Deactivate or permanently remove this field',
+            title: context.l10n.deleteField,
+            subtitle: context.l10n.deactivateOrPermanentlyRemoveThisField,
             color: AppColors.error,
             onTap: onDelete,
           ),
@@ -247,8 +249,7 @@ class FieldActionsSheet extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w600,
                         color: color,
                       ),
@@ -256,8 +257,7 @@ class FieldActionsSheet extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.mediumGrey,
                       ),
                     ),

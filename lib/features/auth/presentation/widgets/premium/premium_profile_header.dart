@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium profile header with curved design and avatar.
 ///
@@ -93,10 +95,9 @@ class PremiumProfileHeader extends StatelessWidget {
                         const SizedBox(width: 40),
 
                       // Title
-                      const Text(
-                        'My Profile',
-                        style: TextStyle(
-                          fontSize: 18,
+                      Text(
+                        context.l10n.myProfile,
+                        style: AppTextStyles.titleLarge.copyWith(
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
@@ -271,8 +272,7 @@ class _InitialsAvatar extends StatelessWidget {
       child: Center(
         child: Text(
           initials,
-          style: const TextStyle(
-            fontSize: 36,
+          style: AppTextStyles.displaySmall.copyWith(
             fontWeight: FontWeight.w800,
             color: Colors.white,
           ),
@@ -321,8 +321,7 @@ class PremiumProfileInfo extends StatelessWidget {
         // Name
         Text(
           name,
-          style: const TextStyle(
-            fontSize: 24,
+          style: AppTextStyles.headlineMedium.copyWith(
             fontWeight: FontWeight.w800,
             color: AppColors.textPrimary,
           ),
@@ -332,8 +331,7 @@ class PremiumProfileInfo extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             email!,
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
             ),
           ),
@@ -357,9 +355,8 @@ class PremiumProfileInfo extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'Member since $memberSince',
-                  style: const TextStyle(
-                    fontSize: 12,
+                  context.l10n.memberSinceDate(memberSince!),
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.accentCyan,
                   ),

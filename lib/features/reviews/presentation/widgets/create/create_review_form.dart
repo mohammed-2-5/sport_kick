@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/rating/rating_selector.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class CreateReviewForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -45,9 +46,9 @@ class CreateReviewForm extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Reviewing',
-                  style: TextStyle(
+                Text(
+                  context.l10n.reviewing,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -70,7 +71,7 @@ class CreateReviewForm extends StatelessWidget {
           RatingSelector(
             initialRating: rating,
             onRatingChanged: onRatingChanged,
-            label: 'Your Rating *',
+            label: context.l10n.yourRating,
             size: 40,
           ),
 
@@ -78,7 +79,7 @@ class CreateReviewForm extends StatelessWidget {
 
           // Comment field
           Text(
-            'Your Review (Optional)',
+            context.l10n.yourReviewOptional,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -89,7 +90,7 @@ class CreateReviewForm extends StatelessWidget {
             maxLines: 6,
             maxLength: 1000,
             decoration: InputDecoration(
-              hintText: 'Share your experience with this field...',
+              hintText: context.l10n.shareYourExperienceWithThisField,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -129,7 +130,9 @@ class CreateReviewForm extends StatelessWidget {
                       ),
                     )
                   : Text(
-                      isEditing ? 'Update Review' : 'Submit Review',
+                      isEditing
+                          ? context.l10n.updateReview
+                          : context.l10n.submitReview,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -144,7 +147,7 @@ class CreateReviewForm extends StatelessWidget {
           Center(
             child: Text(
               isEditing
-                  ? 'You can update your rating and comment'
+                  ? context.l10n.youCanUpdateYourRatingAnd
                   : 'Your review will help other users choose the best field',
               style: TextStyle(fontSize: 12, color: Colors.grey[600]),
               textAlign: TextAlign.center,

@@ -69,14 +69,17 @@ class ReviewFormCubit extends Cubit<ReviewFormState> {
   }
 
   /// Submit the review.
-  Future<void> submit() async {
+  Future<void> submit({
+    required String errorRating,
+    required String errorLogin,
+  }) async {
     if (_rating == 0) {
-      emit(const ReviewFormError(message: 'Please select a rating'));
+      emit(ReviewFormError(message: errorRating));
       return;
     }
 
     if (userId == null && !isEditing) {
-      emit(const ReviewFormError(message: 'You must be logged in to review'));
+      emit(ReviewFormError(message: errorLogin));
       return;
     }
 

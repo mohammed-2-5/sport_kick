@@ -86,7 +86,10 @@ class FieldRecentBookings extends StatelessWidget {
                 ),
               ),
               Text(
-                '${fieldBookings.length} of ${bookings.length}',
+                context.l10n.countOfTotal(
+                  LocaleFormatters.formatNumber(context, fieldBookings.length),
+                  LocaleFormatters.formatNumber(context, bookings.length),
+                ),
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary,
                 ),
@@ -205,22 +208,22 @@ class _StatusBadge extends StatelessWidget {
       case BookingStatus.confirmed:
         color = AppColors.success;
         icon = Icons.check_circle;
-        statusText = 'CONFIRMED';
+        statusText = context.l10n.statusConfirmed;
         break;
       case BookingStatus.pending:
         color = AppColors.warning;
         icon = Icons.pending;
-        statusText = 'PENDING';
+        statusText = context.l10n.statusPending;
         break;
       case BookingStatus.canceled:
         color = AppColors.error;
         icon = Icons.cancel;
-        statusText = 'CANCELED';
+        statusText = context.l10n.statusCancelled;
         break;
       case BookingStatus.completed:
         color = AppColors.info;
         icon = Icons.done_all;
-        statusText = 'COMPLETED';
+        statusText = context.l10n.statusCompleted;
         break;
     }
 

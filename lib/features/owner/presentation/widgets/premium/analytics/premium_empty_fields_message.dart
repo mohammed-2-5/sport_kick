@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium Empty Fields Message widget.
 ///
@@ -28,7 +29,7 @@ class PremiumEmptyFieldsMessage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'No field data available',
+              context.l10n.noFieldDataAvailable,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),

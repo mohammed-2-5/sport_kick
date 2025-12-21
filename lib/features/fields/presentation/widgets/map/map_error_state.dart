@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Error state widget for the map page.
 class MapErrorState extends StatelessWidget {
@@ -20,7 +21,7 @@ class MapErrorState extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             message,
-            style: const TextStyle(fontSize: 16),
+            style: AppTextStyles.bodyLarge,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),

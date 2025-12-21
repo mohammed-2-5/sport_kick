@@ -197,14 +197,18 @@ class _LoginBodyState extends State<LoginBody> {
           _buildModeOption(
             context,
             label: context.l10n.user,
-            isSelected: currentMode == 'user',
-            onTap: () => context.read<LoginCubit>().changeLoginMode('user'),
+            isSelected: currentMode == context.l10n.userRole,
+            onTap: () => context.read<LoginCubit>().changeLoginMode(
+              context.l10n.userRole,
+            ),
           ),
           _buildModeOption(
             context,
             label: context.l10n.fieldOwner,
-            isSelected: currentMode == 'admin',
-            onTap: () => context.read<LoginCubit>().changeLoginMode('admin'),
+            isSelected: currentMode == context.l10n.adminRole,
+            onTap: () => context.read<LoginCubit>().changeLoginMode(
+              context.l10n.adminRole,
+            ),
           ),
         ],
       ),

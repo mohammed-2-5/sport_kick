@@ -7,6 +7,7 @@ import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/owner_booking_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Displays a list of owner bookings with empty state and refresh functionality.
 class OwnerBookingsListWidget extends StatelessWidget {
@@ -30,14 +31,14 @@ class OwnerBookingsListWidget extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'No bookings found',
+                context.l10n.noBookingsFound,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 12),
               Text(
-                'Bookings will appear here',
+                context.l10n.bookingsWillAppearHere,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.textSecondary,
                 ),

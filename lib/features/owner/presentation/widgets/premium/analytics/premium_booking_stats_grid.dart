@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/analytics/premium_booking_stat_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium Stats Grid for bookings.
 ///
@@ -34,25 +35,25 @@ class PremiumBookingStatsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final stats = [
       BookingStatData(
-        label: 'Total',
+        label: context.l10n.total,
         value: totalBookings,
         icon: Icons.calendar_month_rounded,
         gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
       ),
       BookingStatData(
-        label: 'Confirmed',
+        label: context.l10n.statusConfirmed,
         value: confirmedBookings,
         icon: Icons.check_circle_rounded,
         gradient: const [Color(0xFF10B981), Color(0xFF059669)],
       ),
       BookingStatData(
-        label: 'Pending',
+        label: context.l10n.pending,
         value: pendingBookings,
         icon: Icons.schedule_rounded,
         gradient: const [Color(0xFFF59E0B), Color(0xFFD97706)],
       ),
       BookingStatData(
-        label: 'Canceled',
+        label: context.l10n.statusCanceled,
         value: canceledBookings,
         icon: Icons.cancel_rounded,
         gradient: const [Color(0xFFEF4444), Color(0xFFDC2626)],

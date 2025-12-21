@@ -124,7 +124,7 @@ class FieldsCubit extends Cubit<FieldsState> {
           },
           (categories) {
             if (fields.isEmpty) {
-              emit(const FieldsEmpty(message: 'No featured fields available'));
+              emit(const FieldsEmpty(message: 'No featured fields available.'));
             } else {
               emit(
                 FieldsLoaded(

@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/reviews/domain/entities/review_entity.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_star_rating_display.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium review card with enhanced styling.
 ///
@@ -73,7 +74,7 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
                         children: [
                           Flexible(
                             child: Text(
-                              widget.review.userName ?? 'Anonymous',
+                              widget.review.userName ?? context.l10n.anonymous,
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
@@ -96,9 +97,9 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
                                 ),
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              child: const Text(
-                                'edited',
-                                style: TextStyle(
+                              child: Text(
+                                context.l10n.editedLabel,
+                                style: const TextStyle(
                                   fontSize: 10,
                                   color: AppColors.textSecondary,
                                 ),
@@ -198,7 +199,7 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
                 GestureDetector(
                   onTap: () => setState(() => _isExpanded = !_isExpanded),
                   child: Text(
-                    _isExpanded ? 'Show less' : 'Read more',
+                    _isExpanded ? context.l10n.showLess : context.l10n.readMore,
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -229,18 +230,18 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
                     color: AppColors.accentCyan.withValues(alpha: 0.3),
                   ),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.new_releases,
                       size: 14,
                       color: AppColors.accentCyan,
                     ),
-                    SizedBox(width: 6),
+                    const SizedBox(width: 6),
                     Text(
-                      'Recent Review',
-                      style: TextStyle(
+                      context.l10n.recentReview,
+                      style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                         color: AppColors.accentCyan,

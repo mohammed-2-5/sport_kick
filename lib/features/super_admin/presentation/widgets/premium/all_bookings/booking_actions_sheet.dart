@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Bottom sheet with action buttons for booking management.
 ///
@@ -72,15 +73,15 @@ class BookingActionsSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildHeader(),
+          _buildHeader(context),
           const Divider(height: 1, color: AppColors.border),
-          _buildActions(),
+          _buildActions(context),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -107,7 +108,7 @@ class BookingActionsSheet extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        booking.fieldName ?? 'Unknown Field',
+                        booking.fieldName ?? context.l10n.unknownField,
                         style: AppTextStyles.titleMedium.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -141,7 +142,7 @@ class BookingActionsSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${booking.userName ?? 'Unknown'} • ${booking.formattedDate}',
+                  '${booking.userName ?? context.l10n.unknownUser} • ${booking.formattedDate}',
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.mediumGrey,
                   ),
@@ -160,7 +161,7 @@ class BookingActionsSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 20),
       child: Column(
@@ -169,8 +170,8 @@ class BookingActionsSheet extends StatelessWidget {
           if (booking.status == BookingStatus.pending)
             _buildActionTile(
               icon: Icons.check_circle_outline,
-              title: 'Confirm Booking',
-              subtitle: 'Approve this booking request',
+              title: context.l10n.confirmBooking,
+              subtitle: context.l10n.approveThisBookingRequest,
               color: AppColors.success,
               onTap: onConfirm,
             ),
@@ -182,8 +183,8 @@ class BookingActionsSheet extends StatelessWidget {
           if (booking.status == BookingStatus.confirmed)
             _buildActionTile(
               icon: Icons.task_alt_rounded,
-              title: 'Mark as Completed',
-              subtitle: 'Booking has been fulfilled',
+              title: context.l10n.markAsCompleted,
+              subtitle: context.l10n.bookingHasBeenFulfilled,
               color: AppColors.info,
               onTap: onComplete,
             ),
@@ -196,8 +197,8 @@ class BookingActionsSheet extends StatelessWidget {
               booking.status == BookingStatus.confirmed)
             _buildActionTile(
               icon: Icons.cancel_outlined,
-              title: 'Cancel Booking',
-              subtitle: 'Cancel this booking with reason',
+              title: context.l10n.cancelBooking,
+              subtitle: context.l10n.cancelThisBookingWithReason,
               color: AppColors.error,
               onTap: onCancel,
             ),
@@ -225,7 +226,7 @@ class BookingActionsSheet extends StatelessWidget {
                   Expanded(
                     child: Text(
                       booking.status == BookingStatus.completed
-                          ? 'This booking has been completed'
+                          ? context.l10n.thisBookingHasBeenCompleted
                           : 'This booking has been cancelled',
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,

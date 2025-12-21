@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class SettingsSectionHeader extends StatelessWidget {
   final String title;
@@ -18,10 +19,9 @@ class SettingsSectionHeader extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           title,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey[800],
+          style: AppTextStyles.withColor(
+            AppTextStyles.titleMediumBold,
+            Colors.grey[800]!,
           ),
         ),
       ],

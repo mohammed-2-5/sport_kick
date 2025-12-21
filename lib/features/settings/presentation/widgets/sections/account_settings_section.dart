@@ -26,7 +26,7 @@ class AccountSettingsSection extends StatelessWidget {
             color: AppColors.accentCyan,
           ),
           title: context.l10n.profile,
-          subtitle: 'View your profile details',
+          subtitle: context.l10n.viewYourProfileDetails,
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.pushNamed('profile'),
         ),

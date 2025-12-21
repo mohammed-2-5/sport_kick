@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Info card widget displayed when a field is selected on the map.
 class MapFieldInfoCard extends StatelessWidget {
@@ -97,7 +98,9 @@ class MapFieldInfoCard extends StatelessWidget {
       children: [
         Text(
           field.name,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
@@ -113,8 +116,7 @@ class MapFieldInfoCard extends StatelessWidget {
             Expanded(
               child: Text(
                 field.address,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary,
                 ),
                 maxLines: 1,
@@ -135,8 +137,7 @@ class MapFieldInfoCard extends StatelessWidget {
                   field.averageRating ?? 0,
                   decimalDigits: 1,
                 ),
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -144,8 +145,7 @@ class MapFieldInfoCard extends StatelessWidget {
             ],
             Text(
               '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.labelLarge.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,
               ),

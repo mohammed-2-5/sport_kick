@@ -22,7 +22,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 ///   borderRadius: BorderRadius.circular(16),
 ///   child: Padding(
 ///     padding: EdgeInsets.all(16),
-///     child: Text('Glass effect'),
+///     child: Text(context.l10n.glassEffect),
 ///   ),
 /// )
 /// ```

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Cancellation reason display widget.
 class BookingListItemCancellationReason extends StatelessWidget {
@@ -27,8 +28,7 @@ class BookingListItemCancellationReason extends StatelessWidget {
           Expanded(
             child: Text(
               reason,
-              style: const TextStyle(
-                fontSize: 13,
+              style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.error,
                 height: 1.4,
               ),

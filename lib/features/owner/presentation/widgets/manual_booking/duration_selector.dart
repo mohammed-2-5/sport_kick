@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Duration selector widget for manual booking.
 ///
@@ -23,7 +24,7 @@ class DurationSelector extends StatelessWidget {
         Expanded(
           child: _DurationOptionCard(
             duration: 1,
-            label: '1 Hour',
+            label: context.l10n.oneHour,
             isSelected: selectedDuration == 1,
             onTap: () => onDurationChanged(1),
           ),
@@ -32,7 +33,7 @@ class DurationSelector extends StatelessWidget {
         Expanded(
           child: _DurationOptionCard(
             duration: 2,
-            label: '2 Hours',
+            label: context.l10n.twoHours,
             isSelected: selectedDuration == 2,
             onTap: () => onDurationChanged(2),
           ),

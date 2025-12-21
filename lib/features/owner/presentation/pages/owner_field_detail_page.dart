@@ -16,6 +16,7 @@ import 'package:spo_kick/features/owner/presentation/widgets/field/business_hour
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_detail_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_detail_stats.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_recent_bookings.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Owner field detail page - shows detailed field information for owners.
 ///
@@ -53,7 +54,7 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
       body: Column(
         children: [
           PremiumCurvedHeader(
-            title: 'Field Details',
+            title: context.l10n.fieldDetails,
             subtitle: widget.field.name,
             showBackButton: true,
             height: 160,
@@ -68,7 +69,7 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
                   icon: const Icon(Icons.edit, color: AppColors.textOnNavy),
                   onPressed: () =>
                       context.pushNamed('ownerEditField', extra: widget.field),
-                  tooltip: 'Edit field',
+                  tooltip: context.l10n.editField2,
                 ),
               ),
               Container(
@@ -86,7 +87,7 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
                     context: context,
                     field: widget.field,
                   ),
-                  tooltip: 'Delete field',
+                  tooltip: context.l10n.deleteField2,
                 ),
               ),
             ],
@@ -136,9 +137,9 @@ class _OwnerFieldDetailPageState extends State<OwnerFieldDetailPage> {
                           ),
                         )
                       else if (state is OwnerLoading)
-                        const SliverFillRemaining(
+                        SliverFillRemaining(
                           child: LoadingIndicator.inline(
-                            message: 'Loading bookings...',
+                            message: context.l10n.loadingBookings,
                           ),
                         )
                       else if (state is OwnerError)

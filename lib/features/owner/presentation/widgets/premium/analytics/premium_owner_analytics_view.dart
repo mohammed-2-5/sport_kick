@@ -18,6 +18,7 @@ import 'package:spo_kick/features/owner/presentation/widgets/premium/analytics/p
 import 'package:spo_kick/features/owner/presentation/widgets/premium/analytics/premium_section_title.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/analytics/premium_top_field_card.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/analytics/premium_top_fields_list.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium Owner Analytics View.
 ///
@@ -67,10 +68,10 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
             },
             child: CustomScrollView(
               slivers: [
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: PremiumCurvedHeader(
-                    title: 'Analytics',
-                    subtitle: 'Track your performance',
+                    title: context.l10n.analytics,
+                    subtitle: context.l10n.trackPerformance,
                     showBackButton: true,
                   ),
                 ),
@@ -115,7 +116,7 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'Loading analytics...',
+                            context.l10n.loadingAnalytics,
                             style: AppTextStyles.bodyMedium.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -173,7 +174,7 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
               periodLabel: _selectedPeriod,
             ),
             const SizedBox(height: 24),
-            const PremiumSectionTitle(title: 'Booking Statistics'),
+            PremiumSectionTitle(title: context.l10n.bookingStatistics),
             const SizedBox(height: 12),
             PremiumBookingStatsGrid(
               totalBookings: bookings.length,
@@ -182,7 +183,7 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
               canceledBookings: canceledBookings,
             ),
             const SizedBox(height: 24),
-            const PremiumSectionTitle(title: 'Performance Metrics'),
+            PremiumSectionTitle(title: context.l10n.performanceMetrics),
             const SizedBox(height: 12),
             PremiumPerformanceMetrics(
               averageRating: avgRating,
@@ -191,7 +192,7 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
               satisfactionRate: 92.0,
             ),
             const SizedBox(height: 24),
-            const PremiumSectionTitle(title: 'Top Performing Fields'),
+            PremiumSectionTitle(title: context.l10n.topPerformingFields),
             const SizedBox(height: 12),
             if (fields.isNotEmpty)
               PremiumTopFieldsList(

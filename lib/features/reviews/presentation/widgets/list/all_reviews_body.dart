@@ -7,6 +7,8 @@ import 'package:spo_kick/features/reviews/presentation/cubit/reviews_state.dart'
 import 'package:spo_kick/features/reviews/presentation/widgets/list/reviews_header.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/list/reviews_list_content.dart';
 
+import '../../../../../core/localization/l10n_extensions.dart';
+
 /// Body content for all reviews page.
 ///
 /// Displays reviews header and list based on state.
@@ -27,11 +29,12 @@ class AllReviewsBody extends StatelessWidget {
     return BlocBuilder<ReviewsCubit, ReviewsState>(
       builder: (context, state) {
         if (state is ReviewsLoading) {
-          return const LoadingIndicator.inline(message: 'Loading reviews...');
+          return LoadingIndicator.inline(message: context.l10n.loadingReviews);
         }
 
         if (state is ReviewsError) {
           return EmptyStates.error(
+            context,
             message: state.message,
             onRetry: () =>
                 context.read<ReviewsCubit>().loadFieldReviews(fieldId: fieldId),
@@ -41,6 +44,7 @@ class AllReviewsBody extends StatelessWidget {
         if (state is ReviewsLoaded) {
           if (state.reviews.isEmpty) {
             return EmptyStates.noReviews(
+              context,
               onWrite: () {
                 // Navigate to create review
               },

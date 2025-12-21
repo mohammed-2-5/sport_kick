@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_empty_state.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Compact empty state for smaller areas.
 ///
@@ -61,94 +62,115 @@ class EmptyStates {
   EmptyStates._();
 
   /// No favorites found
-  static PremiumEmptyState noFavorites({VoidCallback? onBrowse}) {
+  static PremiumEmptyState noFavorites(
+    BuildContext context, {
+    VoidCallback? onBrowse,
+  }) {
     return PremiumEmptyState(
       icon: Icons.bookmark_border,
-      title: 'No Favorites Yet',
-      message:
-          'Start adding fields to your favorites\nfor quick access anytime',
-      actionLabel: onBrowse != null ? 'Browse Fields' : null,
+      title: context.l10n.noFavoritesYet2,
+      message: context.l10n.startAddingFavorites,
+      actionLabel: onBrowse != null ? context.l10n.browseFields : null,
       onAction: onBrowse,
     );
   }
 
   /// No bookings found
-  static PremiumEmptyState noBookings({VoidCallback? onBook}) {
+  static PremiumEmptyState noBookings(
+    BuildContext context, {
+    VoidCallback? onBook,
+  }) {
     return PremiumEmptyState(
       icon: Icons.calendar_today_outlined,
-      title: 'No Bookings Yet',
-      message: 'Book your first field and start\nplaying today!',
-      actionLabel: onBook != null ? 'Book a Field' : null,
+      title: context.l10n.noBookingsYet2,
+      message: context.l10n.bookYourFirstFieldAndStartNplayingToday,
+      actionLabel: onBook != null ? context.l10n.bookAField : null,
       onAction: onBook,
     );
   }
 
   /// No search results
-  static PremiumEmptyState noResults({VoidCallback? onClear}) {
+  static PremiumEmptyState noResults(
+    BuildContext context, {
+    VoidCallback? onClear,
+  }) {
     return PremiumEmptyState(
       icon: Icons.search_off,
-      title: 'No Results Found',
-      message: 'Try adjusting your filters or\nsearch with different keywords',
-      actionLabel: onClear != null ? 'Clear Filters' : null,
+      title: context.l10n.noResultsFound,
+      message: context.l10n.tryAdjustingYourFiltersOrNsearchWithDiff,
+      actionLabel: onClear != null ? context.l10n.clearFilters : null,
       onAction: onClear,
     );
   }
 
   /// No fields found
-  static PremiumEmptyState noFields({VoidCallback? onRefresh}) {
+  static PremiumEmptyState noFields(
+    BuildContext context, {
+    VoidCallback? onRefresh,
+  }) {
     return PremiumEmptyState(
       icon: Icons.sports_soccer,
-      title: 'No Fields Available',
-      message: 'There are no fields in your area yet.\nCheck back soon!',
-      actionLabel: onRefresh != null ? 'Refresh' : null,
+      title: context.l10n.noFieldsAvailable2,
+      message: context.l10n.thereAreNoFieldsInYourAreaYetNcheckBackS,
+      actionLabel: onRefresh != null ? context.l10n.refresh : null,
       onAction: onRefresh,
     );
   }
 
   /// No reviews found
-  static PremiumEmptyState noReviews({VoidCallback? onWrite}) {
+  static PremiumEmptyState noReviews(
+    BuildContext context, {
+    VoidCallback? onWrite,
+  }) {
     return PremiumEmptyState(
       icon: Icons.rate_review_outlined,
-      title: 'No Reviews Yet',
-      message: 'Be the first to share your\nexperience!',
-      actionLabel: onWrite != null ? 'Write Review' : null,
+      title: context.l10n.noReviewsYet,
+      message: context.l10n.beTheFirstToShareYourNexperience,
+      actionLabel: onWrite != null ? context.l10n.writeReview : null,
       onAction: onWrite,
     );
   }
 
   /// Network error
-  static PremiumEmptyState networkError({VoidCallback? onRetry}) {
+  static PremiumEmptyState networkError(
+    BuildContext context, {
+    VoidCallback? onRetry,
+  }) {
     return PremiumEmptyState(
       icon: Icons.wifi_off,
-      title: 'Connection Error',
-      message: 'Unable to connect to the server.\nPlease check your internet.',
-      actionLabel: onRetry != null ? 'Try Again' : null,
+      title: context.l10n.connectionError,
+      message: context.l10n.unableToConnectToTheServerNpleaseCheckYo,
+      actionLabel: onRetry != null ? context.l10n.tryAgain : null,
       onAction: onRetry,
       iconColor: AppColors.error,
     );
   }
 
   /// Generic error
-  static PremiumEmptyState error({
+  static PremiumEmptyState error(
+    BuildContext context, {
     required String message,
     VoidCallback? onRetry,
   }) {
     return PremiumEmptyState(
       icon: Icons.error_outline,
-      title: 'Something Went Wrong',
+      title: context.l10n.somethingWentWrong2,
       message: message,
-      actionLabel: onRetry != null ? 'Try Again' : null,
+      actionLabel: onRetry != null ? context.l10n.tryAgain : null,
       onAction: onRetry,
       iconColor: AppColors.error,
     );
   }
 
   /// Coming soon
-  static PremiumEmptyState comingSoon({required String feature}) {
+  static PremiumEmptyState comingSoon(
+    BuildContext context, {
+    required String feature,
+  }) {
     return PremiumEmptyState(
       icon: Icons.construction,
-      title: 'Coming Soon',
-      message: '$feature will be available soon.\nStay tuned!',
+      title: context.l10n.homeComingSoonTitle,
+      message: context.l10n.featureWillBeAvailableSoonNstayTuned,
       iconColor: AppColors.warning,
     );
   }

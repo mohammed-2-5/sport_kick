@@ -53,6 +53,7 @@ class FieldDetailsPage extends StatelessWidget {
 
     if (state is FieldsError) {
       return EmptyStates.error(
+        context,
         message: state.message,
         onRetry: () => context.read<FieldsCubit>().loadFieldDetails(fieldId),
       );
@@ -66,6 +67,7 @@ class FieldDetailsPage extends StatelessWidget {
     }
 
     return EmptyStates.error(
+      context,
       message: context.l10n.fieldNotFound,
       onRetry: () => context.read<FieldsCubit>().loadFieldDetails(fieldId),
     );

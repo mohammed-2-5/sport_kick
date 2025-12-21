@@ -9,6 +9,7 @@ import 'package:spo_kick/features/reviews/presentation/cubit/reviews_state.dart'
 import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_filter_chips.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_review_card.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_star_rating_display.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium all reviews view with enhanced UI.
 ///
@@ -44,11 +45,12 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
     return BlocBuilder<ReviewsCubit, ReviewsState>(
       builder: (context, state) {
         if (state is ReviewsLoading) {
-          return const LoadingIndicator.inline(message: 'Loading reviews...');
+          return LoadingIndicator.inline(message: context.l10n.loadingReviews);
         }
 
         if (state is ReviewsError) {
           return EmptyStates.error(
+            context,
             message: state.message,
             onRetry: () => context.read<ReviewsCubit>().loadFieldReviews(
               fieldId: widget.fieldId,
@@ -59,6 +61,7 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
         if (state is ReviewsLoaded) {
           if (state.reviews.isEmpty) {
             return EmptyStates.noReviews(
+              context,
               onWrite: () => _navigateToCreateReview(context),
             );
           }
@@ -111,11 +114,11 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
-                          'Filter by Rating',
-                          style: TextStyle(
+                          context.l10n.filterByRating,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                             color: AppColors.textPrimary,
@@ -144,8 +147,13 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                       children: [
                         Text(
                           _selectedRating == null
-                              ? 'All Reviews (${state.reviews.length})'
-                              : '$_selectedRating Star Reviews (${filteredReviews.length})',
+                              ? context.l10n.allReviewsWithCount(
+                                  state.reviews.length,
+                                )
+                              : context.l10n.starReviewsWithCount(
+                                  filteredReviews.length,
+                                  _selectedRating!,
+                                ),
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
@@ -155,9 +163,9 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                         if (_selectedRating != null)
                           GestureDetector(
                             onTap: () => setState(() => _selectedRating = null),
-                            child: const Text(
-                              'Clear',
-                              style: TextStyle(
+                            child: Text(
+                              context.l10n.clear,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.accentCyan,
@@ -188,7 +196,7 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'No $_selectedRating star reviews yet',
+                            context.l10n.noStarReviewsYet(_selectedRating!),
                             style: const TextStyle(
                               fontSize: 16,
                               color: AppColors.textSecondary,
@@ -285,16 +293,14 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Delete Review?'),
-        content: const Text(
-          'This action cannot be undone. Are you sure you want to delete this review?',
-        ),
+        title: Text(context.l10n.deleteReview),
+        content: Text(context.l10n.thisActionCannotBeUndoneAre),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Cancel',
-              style: TextStyle(color: AppColors.textSecondary),
+            child: Text(
+              context.l10n.cancel,
+              style: const TextStyle(color: AppColors.textSecondary),
             ),
           ),
           TextButton(
@@ -302,7 +308,10 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
               Navigator.pop(context);
               context.read<ReviewsCubit>().deleteReview(reviewId);
             },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text(
+              context.l10n.delete,
+              style: const TextStyle(color: Colors.red),
+            ),
           ),
         ],
       ),

@@ -13,6 +13,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_booking_list.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_profile_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_stats_grid.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium user details view.
 ///
@@ -244,7 +245,7 @@ class _ErrorState extends StatelessWidget {
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
+                style: AppTextStyles.bodyLargeWhite,
               ),
               const SizedBox(height: 24),
               GestureDetector(
@@ -259,10 +260,8 @@ class _ErrorState extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    'Retry',
-                    style: AppTextStyles.labelLarge.copyWith(
-                      color: Colors.white,
-                    ),
+                    context.l10n.retry,
+                    style: AppTextStyles.labelLargeWhite,
                   ),
                 ),
               ),

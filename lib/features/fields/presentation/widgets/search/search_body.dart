@@ -37,6 +37,7 @@ class SearchBody extends StatelessWidget {
 
         if (state is FieldsError) {
           return EmptyStates.error(
+            context,
             message: state.message,
             onRetry: () {
               if (searchController.text.isNotEmpty) {
@@ -51,6 +52,7 @@ class SearchBody extends StatelessWidget {
             final results = state.filteredFields;
             if (results.isEmpty) {
               return EmptyStates.noResults(
+                context,
                 onClear: () => searchController.clear(),
               );
             }

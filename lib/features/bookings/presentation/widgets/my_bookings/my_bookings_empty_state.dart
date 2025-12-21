@@ -16,6 +16,6 @@ class MyBookingsEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EmptyStates.noBookings(onBook: onBrowseFields);
+    return EmptyStates.noBookings(context, onBook: onBrowseFields);
   }
 }

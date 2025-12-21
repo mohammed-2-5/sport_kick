@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class AdminListEmptyState extends StatelessWidget {
   final bool isSearchEmpty;
@@ -21,19 +22,25 @@ class AdminListEmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            isSearchEmpty ? 'No Admins Yet' : 'No Results Found',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
+            isSearchEmpty
+                ? context.l10n.noAdminsYet
+                : context.l10n.noResultsFound,
+            style: AppTextStyles.bold(
+              AppTextStyles.withColor(
+                AppTextStyles.titleLarge,
+                Colors.grey[700]!,
+              ),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             isSearchEmpty
-                ? 'Create your first field owner account'
+                ? context.l10n.createYourFirstFieldOwnerAccount
                 : 'Try adjusting your filters',
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
+            style: AppTextStyles.withColor(
+              AppTextStyles.bodyMedium,
+              Colors.grey[600]!,
+            ),
           ),
         ],
       ),

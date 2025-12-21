@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/features/super_admin/utils/user_card_utils.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Profile header widget for admin details page
 class AdminProfileHeader extends StatelessWidget {
@@ -35,11 +37,7 @@ class AdminProfileHeader extends StatelessWidget {
             backgroundColor: Colors.white,
             child: Text(
               getInitials(admin.fullName),
-              style: TextStyle(
-                fontSize: AdminUIConstants.fontSizeTitle,
-                fontWeight: AdminUIConstants.fontWeightBold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              style: AppTextStyles.avatarInitial,
             ),
           ),
           const SizedBox(height: AdminUIConstants.spacingMedium),
@@ -47,11 +45,7 @@ class AdminProfileHeader extends StatelessWidget {
           // Name
           Text(
             admin.fullName ?? admin.email,
-            style: const TextStyle(
-              fontSize: AdminUIConstants.fontSizeXXLarge,
-              fontWeight: AdminUIConstants.fontWeightBold,
-              color: Colors.white,
-            ),
+            style: AppTextStyles.headlineSmallWhite,
             textAlign: TextAlign.center,
           ),
 
@@ -80,12 +74,10 @@ class AdminProfileHeader extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  admin.role == 'super_admin' ? 'Super Admin' : 'Field Owner',
-                  style: const TextStyle(
-                    fontSize: AdminUIConstants.fontSizeMedium,
-                    fontWeight: AdminUIConstants.fontWeightMedium,
-                    color: Colors.white,
-                  ),
+                  admin.role == context.l10n.superAdmin
+                      ? context.l10n.roleSuperAdmin
+                      : context.l10n.fieldOwner,
+                  style: AppTextStyles.labelLargeWhite,
                 ),
               ],
             ),
@@ -130,12 +122,12 @@ class AdminProfileHeader extends StatelessWidget {
                 ),
                 const SizedBox(width: AdminUIConstants.spacingSmall),
                 Text(
-                  admin.isActive ? 'Active Account' : 'Inactive Account',
-                  style: TextStyle(
-                    fontSize: AdminUIConstants.fontSizeMedium,
-                    fontWeight: AdminUIConstants.fontWeightBold,
-                    color: admin.isActive ? Colors.green : Colors.red,
-                  ),
+                  admin.isActive
+                      ? context.l10n.activeAccount
+                      : context.l10n.inactiveAccount,
+                  style: admin.isActive
+                      ? AppTextStyles.statusLargeActive
+                      : AppTextStyles.statusLargeInactive,
                 ),
               ],
             ),
@@ -145,11 +137,10 @@ class AdminProfileHeader extends StatelessWidget {
 
           // Member Since
           Text(
-            'Member since ${DateFormat('MMM d, y').format(admin.createdAt)}',
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.white.withValues(alpha: 0.9),
+            context.l10n.memberSinceDate(
+              DateFormat('MMM d, y').format(admin.createdAt),
             ),
+            style: AppTextStyles.bodySmallWhite,
           ),
         ],
       ),
@@ -165,10 +156,7 @@ class AdminProfileHeader extends StatelessWidget {
         Flexible(
           child: Text(
             text,
-            style: TextStyle(
-              fontSize: AdminUIConstants.fontSizeMedium,
-              color: color.withValues(alpha: 0.95),
-            ),
+            style: AppTextStyles.bodyMediumWhite,
             overflow: TextOverflow.ellipsis,
           ),
         ),

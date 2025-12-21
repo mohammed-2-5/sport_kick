@@ -7,6 +7,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Premium admin login view.
@@ -185,8 +186,7 @@ class _AdminLogo extends StatelessWidget {
         const SizedBox(height: 24),
         Text(
           l10n.adminPortalTitle,
-          style: const TextStyle(
-            fontSize: 28,
+          style: AppTextStyles.headlineSmall.copyWith(
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
@@ -194,8 +194,7 @@ class _AdminLogo extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           l10n.adminPortalLoginSubtitle,
-          style: TextStyle(
-            fontSize: 15,
+          style: AppTextStyles.bodyLarge.copyWith(
             color: Colors.white.withValues(alpha: 0.7),
           ),
         ),
@@ -326,8 +325,7 @@ class _FormField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.labelMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: Colors.white.withValues(alpha: 0.9),
           ),
@@ -338,10 +336,12 @@ class _FormField extends StatelessWidget {
           keyboardType: keyboardType,
           obscureText: obscureText,
           validator: validator,
-          style: const TextStyle(color: Colors.white),
+          style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
+            hintStyle: AppTextStyles.bodyMedium.copyWith(
+              color: Colors.white.withValues(alpha: 0.4),
+            ),
             prefixIcon: Icon(
               prefixIcon,
               size: 20,
@@ -381,7 +381,9 @@ class _FormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: Colors.red.shade400, width: 2),
             ),
-            errorStyle: TextStyle(color: Colors.red.shade300),
+            errorStyle: AppTextStyles.bodySmall.copyWith(
+              color: Colors.red.shade300,
+            ),
           ),
         ),
       ],
@@ -432,8 +434,7 @@ class _LoginButton extends StatelessWidget {
                     const SizedBox(width: 8),
                     Text(
                       context.l10n.signIn,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.labelLarge.copyWith(
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
@@ -466,8 +467,7 @@ class _BackToUserLogin extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             context.l10n.backToUserLogin,
-            style: TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: Colors.white.withValues(alpha: 0.7),
             ),
           ),

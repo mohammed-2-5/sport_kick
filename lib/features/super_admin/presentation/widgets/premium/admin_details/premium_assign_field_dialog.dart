@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium assign field dialog.
 ///
@@ -136,14 +137,14 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Assign Field',
+                              context.l10n.assignField,
                               style: AppTextStyles.titleMedium.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.textPrimary,
                               ),
                             ),
                             Text(
-                              'Select a field to assign',
+                              context.l10n.selectAFieldToAssign,
                               style: AppTextStyles.bodyMedium.copyWith(
                                 color: AppColors.textSecondary,
                               ),
@@ -170,7 +171,7 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                   child: TextField(
                     onChanged: (value) => setState(() => _searchQuery = value),
                     decoration: InputDecoration(
-                      hintText: 'Search fields...',
+                      hintText: context.l10n.searchFields,
                       prefixIcon: const Icon(Icons.search, size: 20),
                       filled: true,
                       fillColor: AppColors.backgroundLight,
@@ -227,7 +228,7 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                             ),
                             child: Center(
                               child: Text(
-                                'Cancel',
+                                context.l10n.cancel,
                                 style: AppTextStyles.labelLarge.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textSecondary,
@@ -264,7 +265,7 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                             ),
                             child: Center(
                               child: Text(
-                                'Assign',
+                                context.l10n.assign,
                                 style: AppTextStyles.labelLarge.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: widget.selectedFieldId != null
@@ -401,7 +402,7 @@ class _EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'No available fields',
+            context.l10n.noAvailableFields,
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),

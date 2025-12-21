@@ -29,6 +29,7 @@ class FieldsListBody extends StatelessWidget {
 
         if (state is FieldsError) {
           return EmptyStates.error(
+            context,
             message: state.message,
             onRetry: () => context.read<FieldsCubit>().loadAllFields(),
           );
@@ -41,6 +42,7 @@ class FieldsListBody extends StatelessWidget {
             // Check if it's search empty or just no fields
             if (state.searchQuery != null) {
               return EmptyStates.noResults(
+                context,
                 onClear: () {
                   onClearCategory?.call();
                   onClearSearch();
@@ -48,6 +50,7 @@ class FieldsListBody extends StatelessWidget {
               );
             }
             return EmptyStates.noFields(
+              context,
               onRefresh: () => context.read<FieldsCubit>().refresh(),
             );
           }

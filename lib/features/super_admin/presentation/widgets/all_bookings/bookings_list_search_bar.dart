@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Search bar widget for bookings list.
 class BookingsListSearchBar extends StatelessWidget {
@@ -22,7 +23,7 @@ class BookingsListSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          hintText: 'Search by user, field, or booking ID...',
+          hintText: context.l10n.searchByUserFieldOrBookingId,
           prefixIcon: const Icon(Icons.search),
           suffixIcon: searchQuery.isNotEmpty
               ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)

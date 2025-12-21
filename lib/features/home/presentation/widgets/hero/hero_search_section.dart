@@ -6,6 +6,7 @@ import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/home/presentation/widgets/hero/categories_slider.dart';
 import 'package:spo_kick/features/home/presentation/widgets/hero/city_dropdown_widget.dart';
 import 'package:spo_kick/features/home/presentation/widgets/hero/curved_header_clipper.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 
@@ -51,9 +52,8 @@ class HeroSearchSection extends StatelessWidget {
                           children: [
                             Text(
                               _getTimeBasedGreeting(context),
-                              style: const TextStyle(
+                              style: AppTextStyles.bodyMedium.copyWith(
                                 color: AppColors.textOnNavySecondary,
-                                fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -62,9 +62,8 @@ class HeroSearchSection extends StatelessWidget {
                               userName,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: AppTextStyles.headlineSmall.copyWith(
                                 color: AppColors.textOnNavy,
-                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -89,7 +88,7 @@ class HeroSearchSection extends StatelessWidget {
                               backgroundColor: AppColors.glassWhite,
                               child: Text(
                                 userInitials,
-                                style: const TextStyle(
+                                style: AppTextStyles.titleMedium.copyWith(
                                   color: AppColors.textOnNavy,
                                   fontWeight: FontWeight.bold,
                                 ),

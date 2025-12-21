@@ -5,6 +5,7 @@ import 'package:spo_kick/features/owner/presentation/constants/owner_ui_constant
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/manual_booking/booking_summary_row.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Step 2 of manual booking flow: Customer Information
 ///
@@ -113,7 +114,14 @@ class BookingStepTwoWidget extends StatelessWidget {
                   ),
                   BookingSummaryRow(
                     label: context.l10n.priceLabel,
-                    value: 'EGP ${totalPrice?.toStringAsFixed(0) ?? '-'}',
+                    value: totalPrice == null
+                        ? '-'
+                        : LocaleFormatters.formatPrice(
+                            context,
+                            amount: totalPrice!,
+                            currency: context.l10n.currencyEgp,
+                            decimalDigits: 0,
+                          ),
                   ),
                 ],
               ),

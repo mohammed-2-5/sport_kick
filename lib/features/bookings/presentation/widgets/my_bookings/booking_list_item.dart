@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
@@ -79,7 +80,9 @@ class BookingListItem extends StatelessWidget {
       (failure) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error loading field: ${failure.message}')),
+            SnackBar(
+              content: Text('${context.l10n.error}: ${failure.message}'),
+            ),
           );
         }
       },
@@ -105,6 +108,7 @@ class BookingListItem extends StatelessWidget {
         context.read<BookingCubit>().cancelBooking(
           bookingId: booking.id,
           reason: reason,
+          loadingMessage: context.l10n.cancelingBooking,
         );
       },
     );

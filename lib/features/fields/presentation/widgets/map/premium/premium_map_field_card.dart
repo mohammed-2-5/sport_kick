@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium glass field card for map view.
 ///
@@ -125,8 +126,7 @@ class PremiumMapFieldCard extends StatelessWidget {
                                 // Name
                                 Text(
                                   field.name,
-                                  style: const TextStyle(
-                                    fontSize: 16,
+                                  style: AppTextStyles.titleMedium.copyWith(
                                     fontWeight: FontWeight.w800,
                                     color: AppColors.textPrimary,
                                   ),
@@ -148,8 +148,7 @@ class PremiumMapFieldCard extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         field.city,
-                                        style: const TextStyle(
-                                          fontSize: 12,
+                                        style: AppTextStyles.bodySmall.copyWith(
                                           color: AppColors.textSecondary,
                                         ),
                                         maxLines: 1,
@@ -192,11 +191,11 @@ class PremiumMapFieldCard extends StatelessWidget {
                                             const SizedBox(width: 4),
                                             Text(
                                               field.ratingDisplay,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w800,
-                                                color: Colors.white,
-                                              ),
+                                              style: AppTextStyles.labelSmall
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w800,
+                                                    color: Colors.white,
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -205,8 +204,7 @@ class PremiumMapFieldCard extends StatelessWidget {
                                     const Spacer(),
                                     Text(
                                       field.formattedPrice,
-                                      style: const TextStyle(
-                                        fontSize: 16,
+                                      style: AppTextStyles.titleMedium.copyWith(
                                         fontWeight: FontWeight.w900,
                                         color: AppColors.accentCyan,
                                       ),

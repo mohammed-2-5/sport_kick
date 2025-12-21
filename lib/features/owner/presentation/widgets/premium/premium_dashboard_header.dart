@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium dashboard header.
 ///
@@ -14,28 +15,28 @@ class PremiumDashboardHeader extends StatelessWidget {
 
   const PremiumDashboardHeader({super.key, required this.ownerName});
 
-  String get _greeting {
+  String _getGreeting(BuildContext context) {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning';
-    if (hour < 17) return 'Good Afternoon';
-    return 'Good Evening';
+    if (hour < 12) return context.l10n.goodMorning;
+    if (hour < 17) return context.l10n.goodAfternoon;
+    return context.l10n.goodEvening;
   }
 
-  String get _formattedDate {
+  String _getFormattedDate(BuildContext context) {
     final now = DateTime.now();
     final months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+      context.l10n.january,
+      context.l10n.february,
+      context.l10n.march,
+      context.l10n.april,
+      context.l10n.may,
+      context.l10n.june,
+      context.l10n.july,
+      context.l10n.august,
+      context.l10n.september,
+      context.l10n.october,
+      context.l10n.november,
+      context.l10n.december,
     ];
     return '${months[now.month - 1]} ${now.day}, ${now.year}';
   }
@@ -63,7 +64,7 @@ class PremiumDashboardHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            _greeting,
+            _getGreeting(context),
             style: AppTextStyles.bodyMedium.copyWith(
               color: Colors.white.withValues(alpha: 0.8),
               letterSpacing: 0.5,
@@ -88,7 +89,7 @@ class PremiumDashboardHeader extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               Text(
-                _formattedDate,
+                _getFormattedDate(context),
                 style: AppTextStyles.bodySmall.copyWith(
                   color: Colors.white.withValues(alpha: 0.7),
                 ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/admin_details/admin_stats_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Displays statistics section for an admin based on their assigned fields.
 class AdminStatisticsSection extends StatelessWidget {
@@ -20,12 +22,9 @@ class AdminStatisticsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Statistics',
-            style: TextStyle(
-              fontSize: AdminUIConstants.fontSizeXLarge,
-              fontWeight: AdminUIConstants.fontWeightBold,
-            ),
+          Text(
+            context.l10n.statistics,
+            style: AppTextStyles.bold(AppTextStyles.titleLarge),
           ),
           const SizedBox(height: AdminUIConstants.listItemSpacing),
           BlocBuilder<FieldsCubit, FieldsState>(
@@ -38,7 +37,7 @@ class AdminStatisticsSection extends StatelessWidget {
                       children: [
                         Expanded(
                           child: AdminStatsCard(
-                            label: 'Total Fields',
+                            label: context.l10n.totalFields,
                             value: stats.totalFields.toString(),
                             icon: Icons.sports_soccer,
                             color: Colors.blue,
@@ -47,7 +46,7 @@ class AdminStatisticsSection extends StatelessWidget {
                         const SizedBox(width: AdminUIConstants.listItemSpacing),
                         Expanded(
                           child: AdminStatsCard(
-                            label: 'Active Fields',
+                            label: context.l10n.activeFields,
                             value: stats.activeFields.toString(),
                             icon: Icons.check_circle,
                             color: Colors.green,
@@ -60,7 +59,7 @@ class AdminStatisticsSection extends StatelessWidget {
                       children: [
                         Expanded(
                           child: AdminStatsCard(
-                            label: 'Total Bookings',
+                            label: context.l10n.totalBookings,
                             value: stats.totalBookings.toString(),
                             icon: Icons.event,
                             color: Colors.purple,
@@ -69,7 +68,7 @@ class AdminStatisticsSection extends StatelessWidget {
                         const SizedBox(width: AdminUIConstants.listItemSpacing),
                         Expanded(
                           child: AdminStatsCard(
-                            label: 'Avg Rating',
+                            label: context.l10n.avgRating,
                             value: stats.avgRating > 0
                                 ? stats.avgRating.toStringAsFixed(1)
                                 : 'N/A',

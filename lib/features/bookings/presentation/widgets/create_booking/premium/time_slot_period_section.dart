@@ -5,6 +5,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_slot_card.dart';
 import 'package:spo_kick/l10n/app_localizations.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Section displaying time slots for a specific period.
 ///
@@ -106,8 +107,7 @@ class _PeriodHeader extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             displayLabel,
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -121,8 +121,7 @@ class _PeriodHeader extends StatelessWidget {
             ),
             child: Text(
               availableText,
-              style: const TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w500,
                 color: AppColors.textSecondary,
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium logout confirmation dialog.
 ///
@@ -104,24 +105,17 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
 
                 // Title
                 Text(
-                  'Logout?',
-                  style: AppTextStyles.titleLarge.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                  ),
+                  context.l10n.logoutAction,
+                  style: AppTextStyles.titleLargeBold,
                 ),
 
                 const SizedBox(height: 12),
 
                 // Message
                 Text(
-                  'Are you sure you want to logout?\nYou will need to login again to access the admin panel.',
+                  context.l10n.confirmationPrompt,
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.8),
-                    height: 1.4,
-                  ),
+                  style: AppTextStyles.bodyMediumSecondary,
                 ),
 
                 const SizedBox(height: 24),
@@ -144,11 +138,10 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                           ),
                           child: Center(
                             child: Text(
-                              'Cancel',
-                              style: AppTextStyles.titleMedium.copyWith(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textSecondary,
+                              context.l10n.cancel,
+                              style: AppTextStyles.withColor(
+                                AppTextStyles.bold(AppTextStyles.titleMedium),
+                                AppColors.textSecondary,
                               ),
                             ),
                           ),
@@ -170,12 +163,8 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                           ),
                           child: Center(
                             child: Text(
-                              'Logout',
-                              style: AppTextStyles.titleMedium.copyWith(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
+                              context.l10n.logout,
+                              style: AppTextStyles.titleMediumWhite,
                             ),
                           ),
                         ),

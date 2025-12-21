@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/user_details/user_action_buttons.dart';
@@ -49,7 +50,7 @@ class _UserDetailsViewState extends State<UserDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('User Details')),
+      appBar: AppBar(title: Text(context.l10n.userDetails)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: AdminUIConstants.spacingXLarge),
         child: Column(

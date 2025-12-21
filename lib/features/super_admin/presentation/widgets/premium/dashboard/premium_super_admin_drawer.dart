@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium super admin navigation drawer with gold accent.
 ///
@@ -42,82 +43,82 @@ class PremiumSuperAdminDrawer extends StatelessWidget {
               children: [
                 _DrawerItem(
                   icon: Icons.dashboard_rounded,
-                  label: 'Dashboard',
+                  label: context.l10n.dashboard,
                   isSelected: selectedIndex == 0,
                   onTap: () => onItemTap(0),
                 ),
-                const _SectionDivider(title: 'Management'),
+                _SectionDivider(title: context.l10n.management),
                 _DrawerItem(
                   icon: Icons.people_rounded,
-                  label: 'Users',
+                  label: context.l10n.users,
                   isSelected: selectedIndex == 1,
                   onTap: () => onItemTap(1),
                 ),
                 _DrawerItem(
                   icon: Icons.admin_panel_settings_rounded,
-                  label: 'Field Owners',
+                  label: context.l10n.fieldOwners2,
                   isSelected: selectedIndex == 2,
                   onTap: () => onItemTap(2),
                 ),
                 _DrawerItem(
                   icon: Icons.sports_soccer_rounded,
-                  label: 'Fields',
+                  label: context.l10n.fields,
                   isSelected: selectedIndex == 3,
                   onTap: () => onItemTap(3),
                 ),
                 _DrawerItem(
                   icon: Icons.calendar_month_rounded,
-                  label: 'Bookings',
+                  label: context.l10n.bookings,
                   isSelected: selectedIndex == 4,
                   onTap: () => onItemTap(4),
                 ),
                 _DrawerItem(
                   icon: Icons.location_city_rounded,
-                  label: 'Cities',
+                  label: context.l10n.cities,
                   isSelected: selectedIndex == 5,
                   onTap: () => onItemTap(5),
                 ),
                 _DrawerItem(
                   icon: Icons.sports_rounded,
-                  label: 'Sports',
+                  label: context.l10n.sports,
                   isSelected: selectedIndex == 6,
                   onTap: () => onItemTap(6),
                 ),
                 _DrawerItem(
                   icon: Icons.rate_review_rounded,
-                  label: 'Reviews',
+                  label: context.l10n.reviews,
                   isSelected: selectedIndex == 7,
                   onTap: () => onItemTap(7),
                 ),
                 _DrawerItem(
                   icon: Icons.notifications_active_rounded,
-                  label: 'Notifications',
+                  label: context.l10n.notifications,
                   isSelected: selectedIndex == 8,
                   onTap: () => onItemTap(8),
                 ),
-                const _SectionDivider(title: 'Analytics'),
+                _SectionDivider(title: context.l10n.analytics),
                 _DrawerItem(
                   icon: Icons.analytics_rounded,
-                  label: 'Statistics',
+                  label: context.l10n.statistics,
                   isSelected: selectedIndex == 9,
                   onTap: () => onItemTap(9),
                 ),
                 _DrawerItem(
                   icon: Icons.assessment_rounded,
-                  label: 'Reports',
+                  label: context.l10n.reports,
                   isSelected: selectedIndex == 10,
                   onTap: () => onItemTap(10),
                 ),
                 _DrawerItem(
                   icon: Icons.security_rounded,
-                  label: 'Login Activity',
+                  label: context.l10n.loginActivity,
                   isSelected: selectedIndex == 11,
                   onTap: () => onItemTap(11),
                 ),
-                const _SectionDivider(title: 'System'),
+                _SectionDivider(title: context.l10n.system),
                 _DrawerItem(
                   icon: Icons.settings_rounded,
-                  label: 'Settings',
+                  label: context.l10n.settings,
                   isSelected: selectedIndex == 12,
                   onTap: () => onItemTap(12),
                 ),
@@ -132,9 +133,10 @@ class PremiumSuperAdminDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
-              'Sport Kick Admin v1.0.0',
-              style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.textSecondary.withValues(alpha: 0.5),
+              context.l10n.sportKickAdminV100,
+              style: AppTextStyles.withColor(
+                AppTextStyles.labelSmall,
+                AppColors.textSecondary,
               ),
             ),
           ),
@@ -196,9 +198,9 @@ class _DrawerHeader extends StatelessWidget {
                   child: Center(
                     child: Text(
                       name.isNotEmpty ? name[0].toUpperCase() : 'A',
-                      style: AppTextStyles.titleMedium.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.goldAccent,
+                      style: AppTextStyles.withColor(
+                        AppTextStyles.titleMediumBold,
+                        AppColors.goldAccent,
                       ),
                     ),
                   ),
@@ -240,19 +242,14 @@ class _DrawerHeader extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: AppTextStyles.titleMedium.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
+                  style: AppTextStyles.titleMediumWhite,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
                   email,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white.withValues(alpha: 0.7),
-                  ),
+                  style: AppTextStyles.bodySmallWhite,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -284,11 +281,10 @@ class _DrawerHeader extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'SUPER ADMIN',
-                        style: AppTextStyles.labelSmall.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.goldAccent,
-                          letterSpacing: 0.5,
+                        context.l10n.superAdminRole,
+                        style: AppTextStyles.withColor(
+                          AppTextStyles.labelSmallBold,
+                          AppColors.goldAccent,
                         ),
                       ),
                     ],
@@ -317,10 +313,9 @@ class _SectionDivider extends StatelessWidget {
         children: [
           Text(
             title.toUpperCase(),
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w700,
-              color: AppColors.textSecondary.withValues(alpha: 0.5),
-              letterSpacing: 1,
+            style: AppTextStyles.withColor(
+              AppTextStyles.labelSmallBold,
+              AppColors.textSecondary,
             ),
           ),
           const SizedBox(width: 8),
@@ -447,11 +442,11 @@ class _DrawerItemState extends State<_DrawerItem>
               Expanded(
                 child: Text(
                   widget.label,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontWeight: widget.isSelected
-                        ? FontWeight.w600
-                        : FontWeight.w500,
-                    color: widget.isSelected
+                  style: AppTextStyles.withColor(
+                    widget.isSelected
+                        ? AppTextStyles.bold(AppTextStyles.bodyMedium)
+                        : AppTextStyles.bodyMedium,
+                    widget.isSelected
                         ? AppColors.goldAccent
                         : AppColors.textPrimary,
                   ),
@@ -536,10 +531,10 @@ class _LogoutButtonState extends State<_LogoutButton>
               const Icon(Icons.logout_rounded, color: Colors.red, size: 20),
               const SizedBox(width: 8),
               Text(
-                'Logout',
-                style: AppTextStyles.labelLarge.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.error,
+                context.l10n.logout,
+                style: AppTextStyles.withColor(
+                  AppTextStyles.bold(AppTextStyles.labelLarge),
+                  AppColors.error,
                 ),
               ),
             ],

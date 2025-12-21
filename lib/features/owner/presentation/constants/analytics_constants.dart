@@ -124,7 +124,7 @@ class AnalyticsConstants {
   static const int maxFieldsInChart = 8;
 
   /// Reserved space for left axis titles
-  static const double leftAxisReservedSize = 60.0;
+  static const double leftAxisReservedSize = 75.0;
 
   // ==================== EMPTY STATE ====================
 

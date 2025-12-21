@@ -7,6 +7,7 @@ import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/localization/l10n_extensions.dart';
 import '../../../domain/entities/time_slot_entity.dart';
 import '../../constants/booking_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Content widget displaying time slots organized by period.
 class TimeSlotsContent extends StatelessWidget {
@@ -48,8 +49,7 @@ class TimeSlotsContent extends StatelessWidget {
         children: [
           Text(
             l10n.availableTimeSlots,
-            style: const TextStyle(
-              fontSize: 18,
+            style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),

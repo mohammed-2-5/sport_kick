@@ -12,6 +12,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_list_loading_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/booking_filter_sheet.dart';
 import 'package:spo_kick/features/super_admin/utils/booking_filter_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// All Bookings View - displays and manages the bookings list with filtering.
 class AllBookingsView extends StatefulWidget {
@@ -102,7 +103,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Bookings'),
+        title: Text(context.l10n.allBookings),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
@@ -117,7 +118,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
                   ),
                   onPressed: () =>
                       _showFilterSheet(state.bookings.cast<BookingEntity>()),
-                  tooltip: 'Filter',
+                  tooltip: context.l10n.filterFields,
                 );
               }
               return const SizedBox.shrink();
@@ -126,7 +127,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => context.read<SuperAdminCubit>().loadAllBookings(),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.refresh,
           ),
         ],
       ),

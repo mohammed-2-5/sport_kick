@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Data for a top field.
 class TopFieldData {
@@ -84,8 +86,8 @@ class PremiumTopFieldCard extends StatelessWidget {
         children: [
           _buildRankBadge(),
           const SizedBox(width: 12),
-          _buildFieldInfo(),
-          _buildRevenueBadge(),
+          _buildFieldInfo(context),
+          _buildRevenueBadge(context),
         ],
       ),
     );
@@ -113,7 +115,7 @@ class PremiumTopFieldCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFieldInfo() {
+  Widget _buildFieldInfo(BuildContext context) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +131,10 @@ class PremiumTopFieldCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            '${field.bookings} bookings',
+            context.l10n.bookingsCount(
+              field.bookings,
+              LocaleFormatters.formatNumber(context, field.bookings),
+            ),
             style: AppTextStyles.labelSmall.copyWith(
               color: AppColors.textSecondary,
             ),
@@ -139,7 +144,7 @@ class PremiumTopFieldCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRevenueBadge() {
+  Widget _buildRevenueBadge(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
@@ -147,7 +152,12 @@ class PremiumTopFieldCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        '${field.revenue.toStringAsFixed(0)} ${field.currency}',
+        LocaleFormatters.formatPrice(
+          context,
+          amount: field.revenue,
+          currency: field.currency,
+          decimalDigits: 0,
+        ),
         style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w700,
           color: AppColors.goldAccent,

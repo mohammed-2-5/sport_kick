@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Styled header for legal pages (Terms, Privacy, etc.)
 class LegalPageHeader extends StatelessWidget {
@@ -181,7 +182,7 @@ class LegalLastUpdated extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        'Last Updated: $date',
+        context.l10n.lastUpdatedLabel(date),
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
           color: AppColors.textSecondary,
           fontStyle: FontStyle.italic,

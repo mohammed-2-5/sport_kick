@@ -16,6 +16,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_password_reset_success_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_reset_password_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_status_toggle_dialog.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium admin details view.
 ///
@@ -360,7 +361,7 @@ class _ErrorState extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    'Retry',
+                    context.l10n.retry,
                     style: AppTextStyles.labelLarge.copyWith(
                       color: Colors.white,
                     ),

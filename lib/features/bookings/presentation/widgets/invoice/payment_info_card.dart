@@ -5,6 +5,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/payment_method.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Card displaying payment information with phone number and instructions.
 class PaymentInfoCard extends StatelessWidget {
@@ -41,8 +42,7 @@ class PaymentInfoCard extends StatelessWidget {
                   children: [
                     Text(
                       field.paymentMethod.displayName,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
@@ -50,8 +50,7 @@ class PaymentInfoCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       context.l10n.sendPaymentToNumber,
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.labelSmall.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -101,16 +100,14 @@ class PaymentInfoCard extends StatelessWidget {
                         children: [
                           Text(
                             context.l10n.paymentPhone,
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             field.paymentPhone!,
-                            style: const TextStyle(
-                              fontSize: 20,
+                            style: AppTextStyles.headlineSmall.copyWith(
                               fontWeight: FontWeight.w800,
                               color: AppColors.textPrimary,
                               letterSpacing: 1,
@@ -139,8 +136,7 @@ class PaymentInfoCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.copy,
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.accentCyan,
                             ),
@@ -170,8 +166,7 @@ class PaymentInfoCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       context.l10n.paymentPhoneMissing,
-                      style: const TextStyle(
-                        fontSize: 13,
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.warning,
                       ),
                     ),
@@ -206,8 +201,7 @@ class PaymentInfoCard extends StatelessWidget {
                     const SizedBox(width: 8),
                     Text(
                       context.l10n.paymentInstructions,
-                      style: const TextStyle(
-                        fontSize: 13,
+                      style: AppTextStyles.bodySmall.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.info,
                       ),
@@ -217,8 +211,7 @@ class PaymentInfoCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   field.effectivePaymentInstructions,
-                  style: const TextStyle(
-                    fontSize: 13,
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.5,
                   ),

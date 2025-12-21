@@ -4,6 +4,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/fields/domain/entities/search_filters_entity.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Active Filters Display
 ///
@@ -133,7 +134,7 @@ class ActiveFiltersDisplay extends StatelessWidget {
       deleteIcon: const Icon(Icons.close, size: 16),
       onDeleted: onRemove,
       backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-      labelStyle: const TextStyle(
+      labelStyle: AppTextStyles.labelSmall.copyWith(
         color: AppColors.primary,
         fontWeight: FontWeight.w600,
         fontSize: 12,

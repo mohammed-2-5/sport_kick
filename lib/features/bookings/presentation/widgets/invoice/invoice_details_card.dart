@@ -6,6 +6,7 @@ import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Card displaying invoice and booking details.
 class InvoiceDetailsCard extends StatelessWidget {
@@ -31,8 +32,7 @@ class InvoiceDetailsCard extends StatelessWidget {
             children: [
               Text(
                 context.l10n.invoiceDetails,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -55,8 +55,7 @@ class InvoiceDetailsCard extends StatelessWidget {
                       children: [
                         Text(
                           booking.invoiceNumber!,
-                          style: const TextStyle(
-                            fontSize: 12,
+                          style: AppTextStyles.labelSmall.copyWith(
                             fontWeight: FontWeight.w600,
                             color: AppColors.accentCyan,
                             letterSpacing: 0.5,
@@ -123,8 +122,7 @@ class InvoiceDetailsCard extends StatelessWidget {
             children: [
               Text(
                 context.l10n.totalAmount,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),
@@ -145,8 +143,7 @@ class InvoiceDetailsCard extends StatelessWidget {
                     currency: booking.currency,
                     decimalDigits: 0,
                   ),
-                  style: const TextStyle(
-                    fontSize: 18,
+                  style: AppTextStyles.titleLarge.copyWith(
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
                     letterSpacing: 0.5,
@@ -204,16 +201,14 @@ class _DetailRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 value,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),

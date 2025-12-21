@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_state.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Indicator widget showing that map filters are active.
 class MapFilterIndicator extends StatelessWidget {
@@ -29,9 +30,8 @@ class MapFilterIndicator extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 context.l10n.filtered,
-                style: const TextStyle(
+                style: AppTextStyles.labelSmall.copyWith(
                   color: Colors.white,
-                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
               ),

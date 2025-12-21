@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 
 /// Statistics card widget for admin details page
@@ -33,19 +34,14 @@ class AdminStatsCard extends StatelessWidget {
           const SizedBox(height: AdminUIConstants.spacingSmall),
           Text(
             value,
-            style: TextStyle(
-              fontSize: AdminUIConstants.statCardValueSize,
-              fontWeight: AdminUIConstants.fontWeightBold,
-              color: color,
+            style: AppTextStyles.bold(
+              AppTextStyles.withColor(AppTextStyles.headlineSmall, color),
             ),
           ),
           const SizedBox(height: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: AdminUIConstants.statCardLabelSize,
-              color: Colors.grey[600],
-            ),
+            style: AppTextStyles.bodySmall,
             textAlign: TextAlign.center,
           ),
         ],

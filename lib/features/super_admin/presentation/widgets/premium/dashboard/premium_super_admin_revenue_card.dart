@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium revenue card for super admin dashboard.
 ///
@@ -127,17 +128,15 @@ class _PremiumSuperAdminRevenueCardState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Platform Revenue',
-                              style: AppTextStyles.titleSmall.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white.withValues(alpha: 0.9),
-                              ),
+                              context.l10n.platformRevenue,
+                              style: AppTextStyles.titleSmallWhite,
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              'Total earnings from all fields',
-                              style: AppTextStyles.labelSmall.copyWith(
-                                color: Colors.white.withValues(alpha: 0.5),
+                              context.l10n.totalEarningsFromAllFields,
+                              style: AppTextStyles.withColor(
+                                AppTextStyles.labelSmall,
+                                Colors.white54,
                               ),
                             ),
                           ],
@@ -152,10 +151,9 @@ class _PremiumSuperAdminRevenueCardState
                 // Total revenue
                 Text(
                   widget.totalRevenue,
-                  style: AppTextStyles.displaySmall.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.goldAccent,
-                    letterSpacing: -0.5,
+                  style: AppTextStyles.withColor(
+                    AppTextStyles.displaySmall,
+                    AppColors.goldAccent,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -165,7 +163,7 @@ class _PremiumSuperAdminRevenueCardState
                   children: [
                     Expanded(
                       child: _RevenueBreakdownItem(
-                        label: 'This Week',
+                        label: context.l10n.thisWeek,
                         value: widget.weeklyRevenue,
                         icon: Icons.calendar_view_week_rounded,
                       ),
@@ -177,7 +175,7 @@ class _PremiumSuperAdminRevenueCardState
                     ),
                     Expanded(
                       child: _RevenueBreakdownItem(
-                        label: 'This Month',
+                        label: context.l10n.thisMonth,
                         value: widget.monthlyRevenue,
                         icon: Icons.calendar_month_rounded,
                       ),
@@ -227,17 +225,15 @@ class _RevenueBreakdownItem extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: Colors.white.withValues(alpha: 0.5),
+                  style: AppTextStyles.withColor(
+                    AppTextStyles.labelSmall,
+                    Colors.white54,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   value,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
+                  style: AppTextStyles.bold(AppTextStyles.bodyMediumWhite),
                 ),
               ],
             ),
@@ -284,9 +280,9 @@ class _GrowthBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             '${isPositive ? '+' : ''}${growth.toStringAsFixed(1)}%',
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: isPositive ? Colors.green : Colors.red,
+            style: AppTextStyles.withColor(
+              AppTextStyles.labelSmallBold,
+              isPositive ? Colors.green : Colors.red,
             ),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 
 /// Status badge widget for booking status
@@ -52,9 +53,8 @@ class BookingStatusBadge extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             status.displayName,
-            style: TextStyle(
+            style: AppTextStyles.labelSmall.copyWith(
               color: color,
-              fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),

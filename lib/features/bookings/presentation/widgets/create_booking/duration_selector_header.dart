@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 import '../../constants/booking_constants.dart';
 
@@ -24,8 +25,7 @@ class DurationSelectorHeader extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             context.l10n.bookingDuration,
-            style: const TextStyle(
-              fontSize: 18,
+            style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
             ),

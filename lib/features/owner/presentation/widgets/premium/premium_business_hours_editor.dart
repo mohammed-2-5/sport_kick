@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium business hours editor.
 ///
@@ -84,7 +85,7 @@ class PremiumBusinessHoursEditor extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Business Hours',
+          context.l10n.businessHours,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
@@ -228,7 +229,7 @@ class _DayScheduleCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'Add Time Slot',
+                      context.l10n.addTimeSlot,
                       style: AppTextStyles.bodySmall.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.accentCyan,
@@ -241,7 +242,7 @@ class _DayScheduleCard extends StatelessWidget {
           ] else ...[
             const SizedBox(height: 4),
             Text(
-              'Closed',
+              context.l10n.closed,
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.6),
               ),

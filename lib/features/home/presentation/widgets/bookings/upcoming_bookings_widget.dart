@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
@@ -26,7 +27,7 @@ class UpcomingBookingsWidget extends StatelessWidget {
         children: [
           Text(
             context.l10n.homeUpcomingMatch,
-            style: const TextStyle(
+            style: AppTextStyles.titleMedium.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.lightTextPrimary,
@@ -126,10 +127,9 @@ class UpcomingBookingsWidget extends StatelessWidget {
                       Text(
                         booking.fieldName ??
                             context.l10n.footballField, // fallback
-                        style: const TextStyle(
+                        style: AppTextStyles.titleMedium.copyWith(
                           color: AppColors.lightTextPrimary,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -137,9 +137,8 @@ class UpcomingBookingsWidget extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         '$dateStr • $timeStr',
-                        style: const TextStyle(
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.lightTextSecondary,
-                          fontSize: 14,
                         ),
                       ),
                     ],
@@ -159,9 +158,8 @@ class UpcomingBookingsWidget extends StatelessWidget {
                   ),
                   child: Text(
                     booking.status.name.toUpperCase(),
-                    style: const TextStyle(
+                    style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.success,
-                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -208,9 +206,15 @@ class UpcomingBookingsWidget extends StatelessWidget {
       'https://www.google.com/maps/search/?api=1&query=$query',
     );
 
-    if (await canLaunchUrl(mapsUrl)) {
-      await launchUrl(mapsUrl, mode: LaunchMode.externalApplication);
-    } else {
+    try {
+      if (await canLaunchUrl(mapsUrl)) {
+        await launchUrl(mapsUrl, mode: LaunchMode.externalApplication);
+      } else {
+        if (context.mounted) {
+          SnackbarHelper.showError(context, context.l10n.homeErrorOpenMaps);
+        }
+      }
+    } catch (e) {
       if (context.mounted) {
         SnackbarHelper.showError(context, context.l10n.homeErrorOpenMaps);
       }
@@ -285,6 +289,13 @@ ${context.l10n.homeBookingShareDescription}
 
         if (await canLaunchUrl(calendarUrl)) {
           await launchUrl(calendarUrl, mode: LaunchMode.externalApplication);
+        } else {
+          if (context.mounted) {
+            SnackbarHelper.showError(
+              context,
+              context.l10n.homeErrorAddCalendar,
+            );
+          }
         }
         return;
       }
@@ -300,7 +311,10 @@ ${context.l10n.homeBookingShareDescription}
         endDate: endDateTime,
       );
 
-      Add2Calendar.addEvent2Cal(event);
+      final success = await Add2Calendar.addEvent2Cal(event);
+      if (!success && context.mounted) {
+        SnackbarHelper.showError(context, context.l10n.homeErrorAddCalendar);
+      }
     } catch (e) {
       if (context.mounted) {
         SnackbarHelper.showError(context, context.l10n.homeErrorAddCalendar);
@@ -327,18 +341,16 @@ ${context.l10n.homeBookingShareDescription}
             const SizedBox(height: 16),
             Text(
               l10n.homeNoUpcomingMatches,
-              style: const TextStyle(
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.lightTextPrimary,
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               l10n.homeBookNextGame,
-              style: const TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.lightTextSecondary,
-                fontSize: 14,
               ),
             ),
           ],
@@ -369,7 +381,7 @@ ${context.l10n.homeBookingShareDescription}
       ),
       child: Text(
         '${context.l10n.homeErrorLoadingBookings}: $message',
-        style: const TextStyle(color: AppColors.error),
+        style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
       ),
     );
   }
@@ -391,9 +403,8 @@ ${context.l10n.homeBookingShareDescription}
             const SizedBox(width: 6),
             Text(
               label,
-              style: const TextStyle(
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.primary,
-                fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),

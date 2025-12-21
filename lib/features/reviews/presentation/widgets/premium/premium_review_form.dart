@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/premium/premium_star_rating_selector.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium review form with enhanced styling.
 ///
@@ -68,7 +69,9 @@ class PremiumReviewForm extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        isEditing ? 'Editing review for' : 'Reviewing',
+                        isEditing
+                            ? context.l10n.editingReviewFor
+                            : context.l10n.reviewing,
                         style: AppTextStyles.labelMedium.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -95,7 +98,7 @@ class PremiumReviewForm extends StatelessWidget {
           PremiumStarRatingSelector(
             initialRating: rating,
             onRatingChanged: onRatingChanged,
-            label: 'Your Rating *',
+            label: context.l10n.yourRating,
             size: 44,
           ),
 
@@ -103,14 +106,14 @@ class PremiumReviewForm extends StatelessWidget {
 
           // Comment field
           Text(
-            'Your Review (Optional)',
+            context.l10n.yourReviewOptional,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Share your experience to help others',
+            context.l10n.shareYourExperienceToHelpOthers,
             style: AppTextStyles.labelMedium.copyWith(
               color: AppColors.textSecondary,
             ),
@@ -123,7 +126,9 @@ class PremiumReviewForm extends StatelessWidget {
 
           // Submit button
           PremiumButton(
-            label: isEditing ? 'Update Review' : 'Submit Review',
+            label: isEditing
+                ? context.l10n.updateReview
+                : context.l10n.submitReview,
             onPressed: rating > 0 ? onSubmit : null,
             loading: isSubmitting,
             fullWidth: true,
@@ -146,7 +151,7 @@ class PremiumReviewForm extends StatelessWidget {
                 Flexible(
                   child: Text(
                     isEditing
-                        ? 'You can update your rating and comment anytime'
+                        ? context.l10n.updateRatingPrompt
                         : 'Your review helps others find the best fields',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.textSecondary.withValues(alpha: 0.6),
@@ -219,11 +224,7 @@ class _CommentFieldState extends State<_CommentField> {
             maxLength: _maxLength,
             style: AppTextStyles.bodyMedium.copyWith(height: 1.6),
             decoration: InputDecoration(
-              hintText:
-                  'Share details about your experience...\n\n'
-                  '- How was the field condition?\n'
-                  '- Were the facilities good?\n'
-                  '- Would you recommend it?',
+              hintText: context.l10n.shareDetailsAboutYourExperience,
               hintStyle: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.6),
                 height: 1.5,

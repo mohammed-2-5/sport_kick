@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Dialog for creating or editing a sport category.
 class SportCategoryFormDialog extends StatefulWidget {
@@ -67,7 +68,8 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
     _descriptionController = TextEditingController(
       text: widget.category?.description,
     );
-    _selectedIcon = widget.category?.icon ?? _iconOptions.first['value'];
+    _selectedIcon =
+        widget.category?.icon ?? _iconOptions.first[context.l10n.value];
   }
 
   @override
@@ -90,7 +92,9 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              isEditing ? 'Edit Category' : 'Create Category',
+              isEditing
+                  ? context.l10n.editCategory
+                  : context.l10n.createCategory,
               style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
@@ -102,8 +106,8 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText: 'Category Name',
-                hintText: 'e.g., Football, Basketball',
+                labelText: context.l10n.categoryNameLabel,
+                hintText: context.l10n.eGFootballBasketball,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -113,7 +117,7 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
 
             // Icon selector
             Text(
-              'Icon',
+              context.l10n.iconField,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
@@ -158,8 +162,8 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
               controller: _descriptionController,
               maxLines: 3,
               decoration: InputDecoration(
-                labelText: 'Description (Optional)',
-                hintText: 'Brief description...',
+                labelText: context.l10n.descriptionOptional,
+                hintText: context.l10n.briefDescription,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -173,7 +177,7 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.cancel),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
@@ -189,7 +193,9 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text(isEditing ? 'Update' : 'Create'),
+                  child: Text(
+                    isEditing ? context.l10n.update : context.l10n.create,
+                  ),
                 ),
               ],
             ),
@@ -203,7 +209,7 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
     final name = _nameController.text.trim();
     if (name.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a category name')),
+        SnackBar(content: Text(context.l10n.pleaseEnterACategoryName)),
       );
       return;
     }

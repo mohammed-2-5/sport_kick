@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium description card with expand/collapse.
 ///
@@ -28,18 +30,17 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.description_outlined,
                 color: AppColors.accentCyan,
                 size: 24,
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Text(
-                'About This Field',
-                style: TextStyle(
-                  fontSize: 20,
+                context.l10n.aboutThisField,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w800,
                   color: AppColors.textPrimary,
                 ),
@@ -59,8 +60,7 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
               children: [
                 Text(
                   widget.description,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.6,
                   ),
@@ -74,18 +74,17 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
                       _isExpanded = true;
                     });
                   },
-                  child: const Row(
+                  child: Row(
                     children: [
                       Text(
-                        'Read More',
-                        style: TextStyle(
-                          fontSize: 14,
+                        context.l10n.readMore,
+                        style: AppTextStyles.labelLarge.copyWith(
                           color: AppColors.accentCyan,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(width: 4),
-                      Icon(
+                      const SizedBox(width: 4),
+                      const Icon(
                         Icons.keyboard_arrow_down,
                         size: 18,
                         color: AppColors.accentCyan,
@@ -100,8 +99,7 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
               children: [
                 Text(
                   widget.description,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.6,
                   ),
@@ -113,18 +111,17 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
                       _isExpanded = false;
                     });
                   },
-                  child: const Row(
+                  child: Row(
                     children: [
                       Text(
-                        'Show Less',
-                        style: TextStyle(
-                          fontSize: 14,
+                        context.l10n.showLess,
+                        style: AppTextStyles.labelLarge.copyWith(
                           color: AppColors.accentCyan,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(width: 4),
-                      Icon(
+                      const SizedBox(width: 4),
+                      const Icon(
                         Icons.keyboard_arrow_up,
                         size: 18,
                         color: AppColors.accentCyan,

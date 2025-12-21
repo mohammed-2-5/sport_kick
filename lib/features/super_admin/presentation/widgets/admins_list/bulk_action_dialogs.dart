@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Confirmation dialog for bulk admin activation.
 ///
@@ -12,16 +13,16 @@ class BulkActivateAdminsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Activate Selected Admins'),
-      content: Text('Are you sure you want to activate $count admins?'),
+      title: Text(context.l10n.activateSelectedAdmins),
+      content: Text(context.l10n.areYouSureYouWantToActivateCountAdmins(count)),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Activate'),
+          child: Text(context.l10n.activate),
         ),
       ],
     );
@@ -40,12 +41,14 @@ class BulkDeactivateAdminsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Deactivate Selected Admins'),
-      content: Text('Are you sure you want to deactivate $count admins?'),
+      title: Text(context.l10n.deactivateSelectedAdmins),
+      content: Text(
+        context.l10n.areYouSureYouWantToDeactivateCountAdmins(count),
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         FilledButton(
           style: FilledButton.styleFrom(
@@ -53,7 +56,7 @@ class BulkDeactivateAdminsDialog extends StatelessWidget {
             foregroundColor: Colors.white,
           ),
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Deactivate'),
+          child: Text(context.l10n.deactivate),
         ),
       ],
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/search_tip_item.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Search tips widget.
 ///
@@ -42,7 +43,7 @@ class SearchTips extends StatelessWidget {
               children: [
                 Text(
                   context.l10n.recentSearches,
-                  style: const TextStyle(
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -85,16 +86,15 @@ class SearchTips extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   context.l10n.searchForFields,
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: AppTextStyles.titleLarge.copyWith(
                     fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   context.l10n.searchByNameCityAddressDescription,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                   ),
                   textAlign: TextAlign.center,

@@ -126,7 +126,7 @@ class _BookingsContent extends StatelessWidget {
             _handleViewPaymentProof(context, booking),
         onVerifyPayment: (id) => _handleVerifyPayment(context, id),
         onRejectPayment: (id) => _handleRejectPayment(context, id),
-        emptyMessage: _getEmptyMessage(loadedState),
+        emptyMessage: _getEmptyMessage(context, loadedState),
       );
     }
 
@@ -146,28 +146,28 @@ class _BookingsContent extends StatelessWidget {
     }
   }
 
-  String _getEmptyMessage(OwnerBookingsLoaded state) {
+  String _getEmptyMessage(BuildContext context, OwnerBookingsLoaded state) {
     if (state.searchQuery.isNotEmpty) {
-      return 'No bookings match your search';
+      return context.l10n.noBookingsMatchYourSearch;
     }
     switch (state.selectedTabIndex) {
       case 1:
-        return 'No pending bookings';
+        return context.l10n.noPendingBookings;
       case 2:
-        return 'No confirmed bookings';
+        return context.l10n.noConfirmedBookings;
       case 3:
-        return 'No canceled bookings';
+        return context.l10n.noCanceledBookings;
       default:
-        return 'No bookings yet';
+        return context.l10n.noBookingsYet;
     }
   }
 
   Future<void> _handleApprove(BuildContext context, String bookingId) async {
     final confirmed = await _showConfirmDialog(
       context,
-      title: 'Approve Booking',
-      message: 'Are you sure you want to approve this booking?',
-      confirmText: 'Approve',
+      title: context.l10n.approveBooking,
+      message: context.l10n.ownerApproveBookingConfirm,
+      confirmText: context.l10n.approve,
       confirmColor: Colors.green,
     );
     if (confirmed) {
@@ -178,9 +178,9 @@ class _BookingsContent extends StatelessWidget {
   Future<void> _handleReject(BuildContext context, String bookingId) async {
     final confirmed = await _showConfirmDialog(
       context,
-      title: 'Reject Booking',
-      message: 'Are you sure you want to reject this booking?',
-      confirmText: 'Reject',
+      title: context.l10n.rejectBooking,
+      message: context.l10n.ownerRejectBookingConfirm,
+      confirmText: context.l10n.reject,
       confirmColor: Colors.red,
     );
     if (confirmed) {
@@ -269,7 +269,7 @@ class _BookingsContent extends StatelessWidget {
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: Text(
-              'Cancel',
+              context.l10n.cancel,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,

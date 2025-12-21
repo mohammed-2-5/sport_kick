@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Premium field card with glassmorphism and animations.
 ///
@@ -319,7 +321,7 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isActive ? const Color(0xFF10B981) : const Color(0xFFEF4444);
-    final label = isActive ? 'Active' : 'Inactive';
+    final label = isActive ? context.l10n.active : context.l10n.inactive;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -359,7 +361,7 @@ class _RatingBadge extends StatelessWidget {
           const Icon(Icons.star_rounded, size: 14, color: Color(0xFFFBBF24)),
           const SizedBox(width: 4),
           Text(
-            rating.toStringAsFixed(1),
+            LocaleFormatters.formatNumber(context, rating, decimalDigits: 1),
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
@@ -367,7 +369,7 @@ class _RatingBadge extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            '($reviewCount)',
+            '(${LocaleFormatters.formatNumber(context, reviewCount)})',
             style: AppTextStyles.badge.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.8),
             ),
@@ -446,14 +448,19 @@ class _ContentSection extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  '\$${pricePerHour.toStringAsFixed(0)}',
+                  LocaleFormatters.formatPrice(
+                    context,
+                    amount: pricePerHour,
+                    currency: context.l10n.currencyEgp,
+                    decimalDigits: 0,
+                  ),
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
                   ),
                 ),
                 Text(
-                  '/hour',
+                  context.l10n.hour,
                   style: AppTextStyles.bodySmall.copyWith(
                     fontSize: 10,
                     color: Colors.white70,

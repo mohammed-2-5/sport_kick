@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Price display widget for field card.
 ///
@@ -28,8 +29,7 @@ class FieldCardPrice extends StatelessWidget {
       ),
       child: Text(
         formattedPrice,
-        style: const TextStyle(
-          fontSize: 15,
+        style: AppTextStyles.titleMedium.copyWith(
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),

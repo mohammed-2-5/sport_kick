@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_admin/admin_form_info_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_admin/admin_success_dialog.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Create Admin View - Form for creating new admin accounts.
 ///
@@ -65,7 +67,7 @@ class _CreateAdminViewState extends State<CreateAdminView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Admin Account'),
+        title: Text(context.l10n.createAdminAccount),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
@@ -103,8 +105,8 @@ class _CreateAdminViewState extends State<CreateAdminView> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      labelText: 'Email Address *',
-                      hintText: 'admin@example.com',
+                      labelText: context.l10n.emailAddressRequired,
+                      hintText: context.l10n.adminExampleCom,
                       prefixIcon: const Icon(Icons.email),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -112,13 +114,13 @@ class _CreateAdminViewState extends State<CreateAdminView> {
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Email is required';
+                        return context.l10n.emailIsRequired;
                       }
                       final emailRegex = RegExp(
                         r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                       );
                       if (!emailRegex.hasMatch(value.trim())) {
-                        return 'Please enter a valid email';
+                        return context.l10n.pleaseEnterAValidEmail;
                       }
                       return null;
                     },
@@ -133,8 +135,8 @@ class _CreateAdminViewState extends State<CreateAdminView> {
                     textInputAction: TextInputAction.next,
                     textCapitalization: TextCapitalization.words,
                     decoration: InputDecoration(
-                      labelText: 'Full Name *',
-                      hintText: 'Ahmed Mohamed',
+                      labelText: context.l10n.fullNameRequired,
+                      hintText: context.l10n.ahmedMohamed,
                       prefixIcon: const Icon(Icons.person),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -142,10 +144,10 @@ class _CreateAdminViewState extends State<CreateAdminView> {
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Full name is required';
+                        return context.l10n.nameIsRequired;
                       }
                       if (value.trim().length < 3) {
-                        return 'Name must be at least 3 characters';
+                        return context.l10n.nameMustBeAtLeast3Characters;
                       }
                       return null;
                     },
@@ -159,8 +161,8 @@ class _CreateAdminViewState extends State<CreateAdminView> {
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
-                      labelText: 'Phone Number (Optional)',
-                      hintText: '+20 123 456 7890',
+                      labelText: context.l10n.phoneNumberOptional,
+                      hintText: context.l10n.phoneExample,
                       prefixIcon: const Icon(Icons.phone),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -170,7 +172,7 @@ class _CreateAdminViewState extends State<CreateAdminView> {
                       if (value != null && value.trim().isNotEmpty) {
                         final phoneRegex = RegExp(r'^\+?[\d\s-]{10,}$');
                         if (!phoneRegex.hasMatch(value.trim())) {
-                          return 'Please enter a valid phone number';
+                          return context.l10n.pleaseEnterAValidPhoneNumber;
                         }
                       }
                       return null;
@@ -199,10 +201,9 @@ class _CreateAdminViewState extends State<CreateAdminView> {
                               ),
                             ),
                           )
-                        : const Text(
-                            'Create Admin Account',
-                            style: TextStyle(
-                              fontSize: 16,
+                        : Text(
+                            context.l10n.createAdminAccount,
+                            style: AppTextStyles.titleMedium.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -223,7 +224,7 @@ class _CreateAdminViewState extends State<CreateAdminView> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(context.l10n.cancel),
                   ),
                 ],
               ),

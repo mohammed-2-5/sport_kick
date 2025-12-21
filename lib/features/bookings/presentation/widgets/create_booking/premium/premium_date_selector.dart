@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium horizontal date selector with scrollable date cards.
 ///
@@ -94,16 +95,14 @@ class _PremiumDateSelectorState extends State<PremiumDateSelector> {
             children: [
               Text(
                 context.l10n.selectDate,
-                style: const TextStyle(
-                  fontSize: 18,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
               ),
               Text(
                 DateFormat('MMMM yyyy', locale).format(widget.selectedDate),
-                style: const TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w500,
                   color: AppColors.accentCyan,
                 ),
@@ -245,7 +244,7 @@ class _DateCardState extends State<_DateCard>
             children: [
               Text(
                 DateFormat('EEE', locale).format(widget.date).toUpperCase(),
-                style: TextStyle(
+                style: AppTextStyles.labelSmall.copyWith(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                   color: widget.isSelected
@@ -257,8 +256,7 @@ class _DateCardState extends State<_DateCard>
               const SizedBox(height: 4),
               Text(
                 '${widget.date.day}',
-                style: TextStyle(
-                  fontSize: 24,
+                style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.w800,
                   color: widget.isSelected
                       ? Colors.white

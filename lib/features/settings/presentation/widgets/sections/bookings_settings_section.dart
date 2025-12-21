@@ -38,7 +38,7 @@ class BookingsSettingsSection extends StatelessWidget {
           title: context.l10n.bookingsHistory,
           subtitle: context.l10n.bookingsHistoryDesc,
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => context.pushNamed('myBookings'),
+          onTap: () => context.pushNamed(context.l10n.mybookings),
         ),
         const SizedBox(height: SettingsConstants.itemSpacing),
         SettingsTile(
@@ -99,7 +99,7 @@ class BookingsSettingsSection extends StatelessWidget {
           title: context.l10n.favoritesTitle,
           subtitle: context.l10n.favoritesDesc,
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => context.pushNamed('favorites'),
+          onTap: () => context.pushNamed(context.l10n.favoritesTab),
         ),
       ],
     );

@@ -83,21 +83,21 @@ class HomeQuickActions extends StatelessWidget {
         title: context.l10n.homeBrowseFieldsTitle,
         subtitle: context.l10n.homeBrowseFieldsSubtitle,
         gradient: AppGradients.info,
-        onTap: () => context.pushNamed('fieldsList'),
+        onTap: () => context.pushNamed(context.l10n.fieldslist),
       ),
       _QuickActionData(
         icon: Icons.calendar_today_outlined,
         title: context.l10n.homeMyBookingsTitle,
         subtitle: context.l10n.homeMyBookingsSubtitle,
         gradient: AppGradients.success,
-        onTap: () => context.pushNamed('myBookings'),
+        onTap: () => context.pushNamed(context.l10n.mybookings),
       ),
       _QuickActionData(
         icon: Icons.star_outline,
         title: context.l10n.homeFavoritesTitle,
         subtitle: context.l10n.homeFavoritesSubtitle,
         gradient: AppGradients.warning,
-        onTap: () => context.pushNamed('favorites'),
+        onTap: () => context.pushNamed(context.l10n.favoritesTab),
       ),
     ];
   }

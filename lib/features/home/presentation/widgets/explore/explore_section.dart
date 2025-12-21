@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
@@ -22,7 +23,7 @@ class ExploreSection extends StatelessWidget {
             children: [
               Text(
                 context.l10n.homeExploreTitle,
-                style: const TextStyle(
+                style: AppTextStyles.titleMedium.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: AppColors.lightTextPrimary,
@@ -32,7 +33,7 @@ class ExploreSection extends StatelessWidget {
                 onPressed: () => context.pushNamed('fieldsList'),
                 child: Text(
                   context.l10n.homeViewAll,
-                  style: const TextStyle(
+                  style: AppTextStyles.labelLarge.copyWith(
                     color: AppColors.lightAccent,
                     fontWeight: FontWeight.w600,
                   ),
@@ -199,10 +200,9 @@ class ExploreSection extends StatelessWidget {
                 children: [
                   Text(
                     field.name,
-                    style: const TextStyle(
+                    style: AppTextStyles.titleMedium.copyWith(
                       color: AppColors.lightTextPrimary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -218,18 +218,16 @@ class ExploreSection extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         rating.toStringAsFixed(1),
-                        style: const TextStyle(
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.lightTextPrimary,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12,
                         ),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         '(${field.totalReviews}+)',
-                        style: const TextStyle(
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.lightTextSecondary,
-                          fontSize: 12,
                         ),
                       ),
                     ],
@@ -237,10 +235,9 @@ class ExploreSection extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)} / ${context.l10n.perHour}',
-                    style: const TextStyle(
+                    style: AppTextStyles.labelLarge.copyWith(
                       color: AppColors.lightAccent,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
                     ),
                   ),
                 ],
@@ -273,10 +270,9 @@ class ExploreSection extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               context.l10n.homeNoFieldsAvailable,
-              style: const TextStyle(
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.lightTextPrimary,
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
               ),
             ),
           ],

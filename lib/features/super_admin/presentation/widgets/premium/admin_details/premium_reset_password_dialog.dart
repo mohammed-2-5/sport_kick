@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium reset password confirmation dialog.
 ///
@@ -115,7 +116,7 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
 
                 // Title
                 Text(
-                  'Reset Admin Password?',
+                  context.l10n.resetAdminPassword,
                   style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -189,7 +190,7 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
 
                 // Warning message
                 Text(
-                  'A new password will be generated for this admin. They will need to change it on their next login.',
+                  context.l10n.aNewPasswordWillBeGenerated,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
@@ -217,7 +218,7 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                           ),
                           child: Center(
                             child: Text(
-                              'Cancel',
+                              context.l10n.cancel,
                               style: AppTextStyles.labelLarge.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textSecondary,
@@ -242,7 +243,7 @@ class _PremiumResetPasswordDialogState extends State<PremiumResetPasswordDialog>
                           ),
                           child: Center(
                             child: Text(
-                              'Reset Password',
+                              context.l10n.resetPassword,
                               style: AppTextStyles.labelLarge.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,

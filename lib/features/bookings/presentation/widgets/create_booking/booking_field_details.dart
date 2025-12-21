@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Field details widget for booking header.
 class BookingFieldDetails extends StatelessWidget {
@@ -22,8 +23,7 @@ class BookingFieldDetails extends StatelessWidget {
       children: [
         Text(
           name,
-          style: const TextStyle(
-            fontSize: 16,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
@@ -33,12 +33,16 @@ class BookingFieldDetails extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           city,
-          style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         const SizedBox(height: 4),
         Text(
           '${context.l10n.pricePerHour}: $formattedPrice',
-          style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
       ],
     );

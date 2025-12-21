@@ -15,6 +15,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/setti
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_settings_tile.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_settings_toggle.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_system_preferences_section.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium super admin settings view.
 ///
@@ -85,10 +86,10 @@ class PremiumSuperAdminSettingsView extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         // Premium Header
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: PremiumCurvedHeader(
-            title: 'Settings',
-            subtitle: 'Platform configuration',
+            title: context.l10n.settings,
+            subtitle: context.l10n.platformConfiguration,
             showBackButton: true,
           ),
         ),
@@ -139,29 +140,29 @@ class _PlatformSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PremiumSettingsSection(
-      title: 'Platform',
+      title: context.l10n.platform,
       icon: Icons.settings,
-      isSaving: state.savingSection == 'platform',
+      isSaving: state.savingSection == context.l10n.platformSettings,
       children: [
         PremiumSettingsToggle(
-          label: 'Allow Registrations',
-          description: 'Allow new user sign-ups',
+          label: context.l10n.allowRegistrations,
+          description: context.l10n.allowNewUserSignUps,
           icon: Icons.person_add,
           iconColor: Colors.green,
           value: state.allowNewRegistrations,
           onChanged: cubit.toggleAllowRegistrations,
         ),
         PremiumSettingsToggle(
-          label: 'Email Verification',
-          description: 'Require email verification for new users',
+          label: context.l10n.emailVerification,
+          description: context.l10n.requireEmailVerificationForNewUsers,
           icon: Icons.mark_email_read,
           iconColor: Colors.blue,
           value: state.requireEmailVerification,
           onChanged: cubit.toggleEmailVerification,
         ),
         PremiumSettingsTile(
-          label: 'Operating Hours',
-          value: 'Configure defaults',
+          label: context.l10n.operatingHours,
+          value: context.l10n.configureDefaults,
           icon: Icons.access_time,
           iconColor: AppColors.accentCyan,
           onTap: () => context.pushNamed('platformOperatingHours'),
@@ -181,29 +182,29 @@ class _NotificationsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PremiumSettingsSection(
-      title: 'Notifications',
+      title: context.l10n.notifications,
       icon: Icons.notifications,
-      isSaving: state.savingSection == 'notifications',
+      isSaving: state.savingSection == context.l10n.notificationsTab,
       children: [
         PremiumSettingsToggle(
-          label: 'Email Notifications',
-          description: 'Receive email alerts',
+          label: context.l10n.emailNotifications,
+          description: context.l10n.receiveEmailAlerts,
           icon: Icons.email,
           iconColor: Colors.blue,
           value: state.emailNotifications,
           onChanged: cubit.toggleEmailNotifications,
         ),
         PremiumSettingsToggle(
-          label: 'Push Notifications',
-          description: 'Receive push alerts',
+          label: context.l10n.pushNotifications,
+          description: context.l10n.receivePushAlerts,
           icon: Icons.phone_android,
           iconColor: Colors.purple,
           value: state.pushNotifications,
           onChanged: cubit.togglePushNotifications,
         ),
         PremiumSettingsToggle(
-          label: 'Admin Alerts',
-          description: 'Important admin notifications',
+          label: context.l10n.adminAlerts,
+          description: context.l10n.importantAdminNotifications,
           icon: Icons.warning_amber,
           iconColor: Colors.orange,
           value: state.adminAlerts,
@@ -224,34 +225,34 @@ class _SecuritySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PremiumSettingsSection(
-      title: 'Security',
+      title: context.l10n.security,
       icon: Icons.security,
-      isSaving: state.savingSection == 'security',
+      isSaving: state.savingSection == context.l10n.securitySettings,
       children: [
         PremiumSettingsTile(
-          label: 'Session Timeout',
-          value: '${state.sessionTimeout} min',
+          label: context.l10n.sessionTimeout,
+          value: context.l10n.minutesMinutes(state.sessionTimeout),
           icon: Icons.timer,
           iconColor: Colors.blue,
           onTap: () => _showTimeoutPicker(context, state.sessionTimeout, cubit),
         ),
         PremiumSettingsToggle(
-          label: 'Log Failed Logins',
-          description: 'Track failed login attempts',
+          label: context.l10n.logFailedLogins,
+          description: context.l10n.trackFailedLoginAttempts,
           icon: Icons.error_outline,
           iconColor: Colors.red,
           value: state.logFailedLogins,
           onChanged: cubit.toggleLogFailedLogins,
         ),
         PremiumSettingsTile(
-          label: 'Login Activity',
-          value: 'View history',
+          label: context.l10n.loginActivity,
+          value: context.l10n.viewHistory,
           icon: Icons.history,
           iconColor: Colors.teal,
           onTap: () => context.pushNamed('loginActivity'),
         ),
         PremiumSettingsTile(
-          label: 'Change Password',
+          label: context.l10n.changePassword,
           icon: Icons.lock,
           iconColor: AppColors.premiumGold,
           onTap: () => context.pushNamed('changePassword'),
@@ -288,7 +289,7 @@ class _SecuritySection extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'Session Timeout',
+              context.l10n.sessionTimeout,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
@@ -304,7 +305,7 @@ class _SecuritySection extends StatelessWidget {
                       ? AppColors.premiumGold
                       : AppColors.textSecondary,
                 ),
-                title: Text('$minutes minutes'),
+                title: Text(context.l10n.minutesMinutes(minutes)),
                 onTap: () {
                   HapticFeedback.selectionClick();
                   cubit.updateSessionTimeout(minutes);
@@ -329,11 +330,11 @@ class _AboutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PremiumSettingsSection(
-      title: 'About',
+      title: context.l10n.about,
       icon: Icons.info_outline,
       children: [
         PremiumSettingsTile(
-          label: 'App Version',
+          label: context.l10n.appVersion,
           value: cubit.appVersion,
           icon: Icons.apps,
           iconColor: AppColors.accentCyan,
@@ -341,7 +342,7 @@ class _AboutSection extends StatelessWidget {
           onTap: null,
         ),
         PremiumSettingsTile(
-          label: 'Build Number',
+          label: context.l10n.buildNumber,
           value: cubit.buildNumber,
           icon: Icons.build,
           iconColor: Colors.grey,
@@ -349,13 +350,13 @@ class _AboutSection extends StatelessWidget {
           onTap: null,
         ),
         PremiumSettingsTile(
-          label: 'Privacy Policy',
+          label: context.l10n.privacyPolicy,
           icon: Icons.privacy_tip,
           iconColor: Colors.blue,
           onTap: () => context.pushNamed('privacyPolicy'),
         ),
         PremiumSettingsTile(
-          label: 'Terms of Service',
+          label: context.l10n.termsOfService,
           icon: Icons.description,
           iconColor: Colors.green,
           onTap: () => context.pushNamed('termsOfService'),
@@ -392,7 +393,7 @@ class _LogoutButton extends StatelessWidget {
             const Icon(Icons.logout, color: Colors.red, size: 20),
             const SizedBox(width: 8),
             Text(
-              'Logout',
+              context.l10n.logout,
               style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.red,
@@ -420,7 +421,7 @@ class _LoadingOverlay extends StatelessWidget {
             const CircularProgressIndicator(color: AppColors.premiumGold),
             const SizedBox(height: 16),
             Text(
-              'Logging out...',
+              context.l10n.loggingOut,
               style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
             ),
           ],

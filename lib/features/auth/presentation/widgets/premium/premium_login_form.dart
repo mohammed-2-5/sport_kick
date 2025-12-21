@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/premium/premium_auth_text_field.dart';
@@ -147,8 +148,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                         const SizedBox(width: 10),
                         Text(
                           context.l10n.rememberMe,
-                          style: TextStyle(
-                            fontSize: 14,
+                          style: AppTextStyles.bodyMedium.copyWith(
                             color: Colors.white.withValues(alpha: 0.8),
                           ),
                         ),
@@ -161,8 +161,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                     onTap: () => context.pushNamed('forgot-password'),
                     child: Text(
                       context.l10n.forgotPassword,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.labelMedium.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.accentCyan,
                       ),
@@ -201,8 +200,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                 children: [
                   Text(
                     '${context.l10n.dontHaveAccount} ',
-                    style: TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyles.bodyMedium.copyWith(
                       color: Colors.white.withValues(alpha: 0.7),
                     ),
                   ),
@@ -210,8 +208,7 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                     onTap: () => context.pushNamed('register'),
                     child: Text(
                       context.l10n.signUp,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.labelLarge.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.accentCyan,
                       ),

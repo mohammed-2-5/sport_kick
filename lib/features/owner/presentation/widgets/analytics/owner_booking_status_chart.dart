@@ -29,8 +29,9 @@ class OwnerBookingStatusChart extends StatelessWidget {
         height: AnalyticsConstants.pieChartHeight,
         child: Row(
           children: [
-            Expanded(flex: 3, child: _buildPieChart(context)),
-            Expanded(flex: 2, child: _buildLegend(context)),
+            Expanded(flex: 2, child: _buildPieChart(context)),
+            const SizedBox(width: 8),
+            Expanded(flex: 3, child: _buildLegend(context)),
           ],
         ),
       ),

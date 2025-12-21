@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/statistics_card.dart';
 
 /// Revenue statistics row for dashboard.
@@ -14,9 +16,9 @@ class DashboardRevenueRow extends StatelessWidget {
       children: [
         Expanded(
           child: StatisticsCard(
-            title: 'Total Revenue',
-            value: 'EGP ${statistics.formattedRevenue}',
-            subtitle: 'All time earnings',
+            title: context.l10n.totalRevenue,
+            value: '${context.l10n.currencyEgp} ${statistics.formattedRevenue}',
+            subtitle: context.l10n.allTimeEarnings,
             icon: Icons.monetization_on,
             color: AppColors.premiumGold,
             trend: statistics.revenueGrowthRate,
@@ -25,10 +27,14 @@ class DashboardRevenueRow extends StatelessWidget {
         const SizedBox(width: 16),
         Expanded(
           child: StatisticsCard(
-            title: 'Avg. Revenue',
-            value:
-                'EGP ${statistics.averageRevenuePerBooking.toStringAsFixed(0)}',
-            subtitle: 'Per booking',
+            title: context.l10n.avgRevenue,
+            value: LocaleFormatters.formatPrice(
+              context,
+              amount: statistics.averageRevenuePerBooking,
+              currency: context.l10n.currencyEgp,
+              decimalDigits: 0,
+            ),
+            subtitle: context.l10n.perBooking,
             icon: Icons.analytics,
             color: Colors.indigo,
           ),

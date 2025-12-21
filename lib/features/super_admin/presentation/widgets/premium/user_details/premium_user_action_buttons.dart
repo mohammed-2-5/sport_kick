@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium user action buttons.
 ///
@@ -36,7 +37,9 @@ class PremiumUserActionButtons extends StatelessWidget {
           children: [
             Expanded(
               child: _ActionButton(
-                label: user.isActive ? 'Deactivate' : 'Activate',
+                label: user.isActive
+                    ? context.l10n.deactivate
+                    : context.l10n.activate,
                 icon: user.isActive ? Icons.block : Icons.check_circle_outline,
                 color: user.isActive ? Colors.orange : Colors.green,
                 isLoading: isTogglingStatus,
@@ -46,7 +49,7 @@ class PremiumUserActionButtons extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: _ActionButton(
-                label: 'Send Message',
+                label: context.l10n.sendMessage,
                 icon: Icons.message_outlined,
                 color: AppColors.accentCyan,
                 onTap: onSendMessage ?? () {},
@@ -152,9 +155,9 @@ class _ActionButtonState extends State<_ActionButton>
               const SizedBox(width: 8),
               Text(
                 widget.label,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: widget.color,
+                style: AppTextStyles.withColor(
+                  AppTextStyles.bold(AppTextStyles.bodyMedium),
+                  widget.color,
                 ),
               ),
             ],

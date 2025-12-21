@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -21,16 +22,15 @@ class MonthlyBookingsChart extends StatelessWidget {
       monthlyBookings[monthKey] = (monthlyBookings[monthKey] ?? 0) + 1;
     }
 
-    // Create bar groups for last 6 months
+    // Create bar groups for last 6 months (oldest to newest: left to right)
     final barGroups = <BarChartGroupData>[];
-    for (int i = 0; i < 6; i++) {
+    for (int i = 5; i >= 0; i--) {
       final month = now.month - i;
       final normalizedMonth = month <= 0 ? month + 12 : month;
       final count = monthlyBookings[normalizedMonth] ?? 0;
-      barGroups.insert(
-        0,
+      barGroups.add(
         BarChartGroupData(
-          x: i,
+          x: 5 - i, // 0 for oldest, 5 for current month
           barRods: [
             BarChartRodData(
               toY: count.toDouble(),
@@ -47,8 +47,8 @@ class MonthlyBookingsChart extends StatelessWidget {
     }
 
     return AnalyticsChartCard(
-      title: 'Monthly Bookings',
-      subtitle: 'Last 6 months',
+      title: context.l10n.monthlyBookings,
+      subtitle: context.l10n.last6Months,
       icon: Icons.bar_chart,
       color: Colors.blue,
       child: SizedBox(
@@ -74,13 +74,16 @@ class MonthlyBookingsChart extends StatelessWidget {
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
+                    reservedSize: 30,
                     getTitlesWidget: (value, meta) {
-                      final monthIndex = now.month - 5 + value.toInt();
-                      final month = monthIndex <= 0
-                          ? monthIndex + 12
-                          : monthIndex;
+                      // value 0 = oldest month, 5 = current month
+                      final monthOffset = 5 - value.toInt();
+                      final monthNum = now.month - monthOffset;
+                      final normalizedMonth = monthNum <= 0
+                          ? monthNum + 12
+                          : monthNum;
                       const months = [
-                        '',
+                        '', // index 0 unused
                         'Jan',
                         'Feb',
                         'Mar',
@@ -94,7 +97,13 @@ class MonthlyBookingsChart extends StatelessWidget {
                         'Nov',
                         'Dec',
                       ];
-                      return Text(months[month], style: AppTextStyles.badge);
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Text(
+                          months[normalizedMonth],
+                          style: AppTextStyles.badge,
+                        ),
+                      );
                     },
                   ),
                 ),

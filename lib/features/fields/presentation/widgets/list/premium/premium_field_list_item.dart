@@ -7,6 +7,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium field list item with enhanced animations and styling.
 ///
@@ -60,8 +61,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                         Expanded(
                           child: Text(
                             widget.field.name,
-                            style: const TextStyle(
-                              fontSize: 18,
+                            style: AppTextStyles.titleMedium.copyWith(
                               fontWeight: FontWeight.w800,
                               color: AppColors.textPrimary,
                             ),
@@ -93,8 +93,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                                 const SizedBox(width: 4),
                                 Text(
                                   context.l10n.verified,
-                                  style: const TextStyle(
-                                    fontSize: 11,
+                                  style: AppTextStyles.labelSmall.copyWith(
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.accentCyan,
                                   ),
@@ -119,8 +118,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                         Expanded(
                           child: Text(
                             '${widget.field.city} - ${widget.field.address}',
-                            style: const TextStyle(
-                              fontSize: 13,
+                            style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
                             maxLines: 1,
@@ -163,8 +161,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                                     widget.field.averageRating ?? 0,
                                     decimalDigits: 1,
                                   ),
-                                  style: const TextStyle(
-                                    fontSize: 13,
+                                  style: AppTextStyles.labelSmall.copyWith(
                                     fontWeight: FontWeight.w800,
                                     color: Colors.white,
                                   ),
@@ -186,8 +183,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                             ),
                             child: Text(
                               context.l10n.newLabel,
-                              style: const TextStyle(
-                                fontSize: 13,
+                              style: AppTextStyles.labelSmall.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.accentCyan,
                               ),
@@ -222,8 +218,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                           ),
                           child: Text(
                             priceText,
-                            style: const TextStyle(
-                              fontSize: 16,
+                            style: AppTextStyles.titleMedium.copyWith(
                               fontWeight: FontWeight.w900,
                               color: Colors.white,
                             ),
@@ -367,8 +362,7 @@ class _ImageSection extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       context.l10n.popular,
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: AppTextStyles.labelSmall.copyWith(
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
                       ),
@@ -400,8 +394,7 @@ class _FacilityChip extends StatelessWidget {
       ),
       child: Text(
         facility,
-        style: const TextStyle(
-          fontSize: 11,
+        style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w600,
           color: AppColors.accentCyan,
         ),

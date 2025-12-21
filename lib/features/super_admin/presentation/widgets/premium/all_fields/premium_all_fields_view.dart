@@ -6,6 +6,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -93,7 +94,7 @@ class _PremiumAllFieldsViewState extends State<PremiumAllFieldsView> {
       return _buildLoadedContent(context, state.fields.cast<FieldEntity>());
     }
 
-    return const _LoadingView(message: 'Loading fields...');
+    return _LoadingView(message: context.l10n.loadingFields);
   }
 
   Widget _buildLoadedContent(BuildContext context, List<FieldEntity> fields) {
@@ -112,8 +113,8 @@ class _PremiumAllFieldsViewState extends State<PremiumAllFieldsView> {
           // Premium Header
           SliverToBoxAdapter(
             child: PremiumCurvedHeader(
-              title: 'All Fields',
-              subtitle: '${fields.length} total fields',
+              title: context.l10n.allFields,
+              subtitle: context.l10n.totalFieldsCount(fields.length),
               showBackButton: true,
               actions: [
                 _RefreshButton(
@@ -242,7 +243,7 @@ class _SearchBar extends StatelessWidget {
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(
-          hintText: 'Search fields...',
+          hintText: context.l10n.searchFields,
           hintStyle: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondary.withValues(alpha: 0.6),
           ),
@@ -284,16 +285,20 @@ class _StatsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _StatChip(label: 'Total', count: totalCount, color: AppColors.navyDeep),
+        _StatChip(
+          label: context.l10n.total,
+          count: totalCount,
+          color: AppColors.navyDeep,
+        ),
         const SizedBox(width: 12),
         _StatChip(
-          label: 'Active',
+          label: context.l10n.active,
           count: activeCount,
           color: const Color(0xFF10B981),
         ),
         const SizedBox(width: 12),
         _StatChip(
-          label: 'Inactive',
+          label: context.l10n.inactive,
           count: inactiveCount,
           color: const Color(0xFFEF4444),
         ),
@@ -367,21 +372,21 @@ class _FilterChips extends StatelessWidget {
     return Row(
       children: [
         _FilterChip(
-          label: 'All',
-          isSelected: selectedFilter == 'all',
-          onTap: () => onFilterChanged('all'),
+          label: context.l10n.all,
+          isSelected: selectedFilter == context.l10n.all2,
+          onTap: () => onFilterChanged(context.l10n.all2),
         ),
         const SizedBox(width: 10),
         _FilterChip(
-          label: 'Active',
-          isSelected: selectedFilter == 'active',
-          onTap: () => onFilterChanged('active'),
+          label: context.l10n.active,
+          isSelected: selectedFilter == context.l10n.active2,
+          onTap: () => onFilterChanged(context.l10n.active2),
         ),
         const SizedBox(width: 10),
         _FilterChip(
-          label: 'Inactive',
-          isSelected: selectedFilter == 'inactive',
-          onTap: () => onFilterChanged('inactive'),
+          label: context.l10n.inactive,
+          isSelected: selectedFilter == context.l10n.inactive2,
+          onTap: () => onFilterChanged(context.l10n.inactive2),
         ),
       ],
     );
@@ -521,7 +526,7 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Failed to load fields',
+              context.l10n.failedToLoadFields,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
@@ -538,7 +543,7 @@ class _ErrorView extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Try Again'),
+              label: Text(context.l10n.tryAgain),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.navyDeep,
                 foregroundColor: Colors.white,
@@ -585,14 +590,14 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'No fields found',
+              context.l10n.noFieldsFound,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'Try adjusting your search\nor filters',
+              context.l10n.tryAdjustingYourSearchNorFilters,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),

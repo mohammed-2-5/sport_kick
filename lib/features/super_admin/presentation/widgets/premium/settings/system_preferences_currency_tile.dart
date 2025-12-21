@@ -4,6 +4,7 @@ import 'package:spo_kick/features/settings/domain/entities/user_preferences_enti
 import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/dialogs/currency_selector_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_settings_tile.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// System preferences currency tile.
 ///
@@ -23,7 +24,7 @@ class SystemPreferencesCurrencyTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PremiumSettingsTile(
-      label: 'Currency',
+      label: context.l10n.currency,
       value: value,
       icon: Icons.attach_money,
       iconColor: Colors.green,

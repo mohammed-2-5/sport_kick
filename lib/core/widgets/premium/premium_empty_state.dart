@@ -16,8 +16,8 @@ import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 /// ```dart
 /// PremiumEmptyState(
 ///   icon: Icons.bookmark_border,
-///   title: 'No Favorites Yet',
-///   message: 'Start adding fields to your favorites',
+///   title: context.l10n.noFavoritesYet2,
+///   message: context.l10n.startAddingFieldsToYourFavorites,
 ///   actionLabel: 'Browse Fields',
 ///   onAction: () => navigate(),
 /// )

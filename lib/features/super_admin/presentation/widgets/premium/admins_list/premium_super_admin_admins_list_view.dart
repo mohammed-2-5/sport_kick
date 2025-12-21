@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admins_list/super_admin_admins_list_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admins_list/super_admin_admins_list_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admins_list/premium_admins_list_header.dart';
@@ -48,7 +49,7 @@ class _PremiumSuperAdminAdminsListViewState
           if (state is SuperAdminAdminsListError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Error: ${state.message}'),
+                content: Text(context.l10n.errorWithMessage(state.message)),
                 backgroundColor: Colors.red,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
@@ -172,7 +173,7 @@ class _PremiumSuperAdminAdminsListViewState
                     const Icon(Icons.person_add_rounded, color: Colors.white),
                     const SizedBox(width: 10),
                     Text(
-                      'Create Admin',
+                      context.l10n.createAdmin,
                       style: AppTextStyles.labelLarge.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
@@ -232,7 +233,7 @@ class _PremiumSuperAdminAdminsListViewState
           const Icon(Icons.error_outline, size: 64, color: Colors.red),
           const SizedBox(height: 16),
           Text(
-            'Failed to load admins',
+            context.l10n.failedToLoadAdmins,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -242,7 +243,7 @@ class _PremiumSuperAdminAdminsListViewState
           ElevatedButton.icon(
             onPressed: () => cubit.loadAdmins(),
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.premiumGold,
               foregroundColor: Colors.white,
@@ -259,16 +260,14 @@ class _PremiumSuperAdminAdminsListViewState
 
   String _getEmptyMessage(SuperAdminAdminsListLoaded state) {
     if (state.searchQuery.isNotEmpty) {
-      return 'No admins match your search';
+      return context.l10n.noAdminsMatchYourFilters;
     }
 
     if (state.statusFilter != null) {
-      return state.statusFilter == 'Active'
-          ? 'No active admins'
-          : 'No inactive admins';
+      return context.l10n.noAdminsMatchYourFilters;
     }
 
-    return 'No admins yet';
+    return context.l10n.noAdminsYet;
   }
 
   Future<void> _handleBulkActivate(
@@ -278,10 +277,11 @@ class _PremiumSuperAdminAdminsListViewState
   ) async {
     final confirmed = await _showConfirmDialog(
       context,
-      title: 'Activate Admins',
-      message:
-          'Are you sure you want to activate ${state.selectedIds.length} admin${state.selectedIds.length > 1 ? 's' : ''}?',
-      confirmText: 'Activate',
+      title: context.l10n.activateAdmins,
+      message: context.l10n.areYouSureYouWantToActivateCountAdmins(
+        state.selectedIds.length,
+      ),
+      confirmText: context.l10n.activate,
       confirmColor: Colors.green,
     );
 
@@ -297,10 +297,11 @@ class _PremiumSuperAdminAdminsListViewState
   ) async {
     final confirmed = await _showConfirmDialog(
       context,
-      title: 'Deactivate Admins',
-      message:
-          'Are you sure you want to deactivate ${state.selectedIds.length} admin${state.selectedIds.length > 1 ? 's' : ''}?',
-      confirmText: 'Deactivate',
+      title: context.l10n.deactivateAdmins,
+      message: context.l10n.areYouSureYouWantToDeactivateCountAdmins(
+        state.selectedIds.length,
+      ),
+      confirmText: context.l10n.deactivate,
       confirmColor: Colors.red,
     );
 
@@ -334,7 +335,7 @@ class _PremiumSuperAdminAdminsListViewState
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: Text(
-              'Cancel',
+              context.l10n.cancel,
               style: AppTextStyles.labelLarge.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,

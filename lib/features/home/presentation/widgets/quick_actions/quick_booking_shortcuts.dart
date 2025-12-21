@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class QuickBookingShortcuts extends StatelessWidget {
   const QuickBookingShortcuts({super.key});
@@ -109,19 +110,17 @@ class QuickBookingShortcuts extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: AppTextStyles.labelLarge.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 15,
                     height: 1.2,
                   ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: Colors.white.withValues(alpha: 0.8),
-                    fontSize: 12,
                   ),
                 ),
               ],

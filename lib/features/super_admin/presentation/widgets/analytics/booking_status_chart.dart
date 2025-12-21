@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Booking status distribution pie chart
 class BookingStatusChart extends StatelessWidget {
@@ -30,8 +31,8 @@ class BookingStatusChart extends StatelessWidget {
     if (total == 0) return const SizedBox.shrink();
 
     return AnalyticsChartCard(
-      title: 'Booking Distribution',
-      subtitle: 'By status',
+      title: context.l10n.bookingDistribution,
+      subtitle: context.l10n.byStatus,
       icon: Icons.pie_chart,
       color: Colors.blue,
       child: SizedBox(
@@ -105,25 +106,25 @@ class BookingStatusChart extends StatelessWidget {
                   if (pending > 0)
                     ChartLegendItem(
                       color: Colors.orange,
-                      label: 'Pending',
+                      label: context.l10n.pending,
                       value: pending,
                     ),
                   if (confirmed > 0)
                     ChartLegendItem(
                       color: Colors.green,
-                      label: 'Confirmed',
+                      label: context.l10n.statusConfirmed,
                       value: confirmed,
                     ),
                   if (canceled > 0)
                     ChartLegendItem(
                       color: Colors.red,
-                      label: 'Canceled',
+                      label: context.l10n.statusCanceled,
                       value: canceled,
                     ),
                   if (completed > 0)
                     ChartLegendItem(
                       color: Colors.purple,
-                      label: 'Completed',
+                      label: context.l10n.statusCompleted,
                       value: completed,
                     ),
                 ],

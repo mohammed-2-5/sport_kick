@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Action buttons for field card (Edit/Delete).
 class FieldActionButtons extends StatelessWidget {
@@ -19,7 +20,7 @@ class FieldActionButtons extends StatelessWidget {
       children: [
         Expanded(
           child: _ActionButton(
-            label: 'Edit',
+            label: context.l10n.edit,
             icon: Icons.edit_rounded,
             gradient: const LinearGradient(
               colors: [Color(0xFF42A5F5), Color(0xFF64B5F6)],
@@ -30,7 +31,7 @@ class FieldActionButtons extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: _ActionButton(
-            label: 'Delete',
+            label: context.l10n.delete,
             icon: Icons.delete_rounded,
             gradient: AppGradients.error,
             onPressed: onDelete,

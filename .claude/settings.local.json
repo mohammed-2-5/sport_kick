@@ -48,10 +48,19 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(flutter clean:*)"
+      "Bash(flutter clean:*)",
+      "Bash(Select-String -Pattern \"premium_reviews_preview|booking_review_section|booking_details_content\" -Context 2,2)",
+      "Bash(python3:*)",
+      "Bash(for key in activatingUser activatingUsers assigningField cancellingBooking cityLoading creatingCity creatingField deactivatingField deactivatingUser deactivatingUsers deletingCity loadingAnalytics loadingBookings loadingStatistics loadingUsers permanentlyDeletingField removingVerification updatingBookingStatus updatingCity updatingFieldMessage verifyingField)",
+      "Bash(do)",
+      "Bash(if ! grep -q \"\"\"$key\"\":\" C:/Users/moham/StudioProjects/spo_kick/lib/l10n/app_en.arb)",
+      "Bash(then)",
+      "Bash(echo:*)",
+      "Bash(fi)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []
   },
-  "outputStyle": "Explanatory"
+  "outputStyle": "default"
 }

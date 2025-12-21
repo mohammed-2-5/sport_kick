@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/booking_table_helpers.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Header row for booking table showing day names and dates.
 ///
@@ -32,7 +33,7 @@ class BookingTableHeaderRow extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Time',
+            context.l10n.timeLabel,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,

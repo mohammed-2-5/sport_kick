@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/premium_owner_booking_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium list view for owner bookings.
 ///
@@ -202,7 +203,7 @@ class _EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Try adjusting your filters or search',
+            context.l10n.tryAdjustingYourFiltersOrSearch,
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),

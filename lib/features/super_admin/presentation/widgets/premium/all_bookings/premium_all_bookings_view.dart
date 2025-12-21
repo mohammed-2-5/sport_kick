@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -39,19 +40,34 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
   final _searchController = TextEditingController();
   Timer? _debounceTimer;
   String _searchQuery = '';
-
-  final _tabs = const [
-    _TabItem(label: 'All', status: null),
-    _TabItem(label: 'Pending', status: BookingStatus.pending),
-    _TabItem(label: 'Confirmed', status: BookingStatus.confirmed),
-    _TabItem(label: 'Completed', status: BookingStatus.completed),
-    _TabItem(label: 'Canceled', status: BookingStatus.canceled),
-  ];
+  late List<_TabItem> _tabs; // Declared late to be initialized with context
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize tabs here where context is available
+    _tabs = [
+      _TabItem(label: context.l10n.all, status: null),
+      _TabItem(label: context.l10n.pending, status: BookingStatus.pending),
+      _TabItem(
+        label: context.l10n.statusConfirmed,
+        status: BookingStatus.confirmed,
+      ),
+      _TabItem(
+        label: context.l10n.statusCompleted,
+        status: BookingStatus.completed,
+      ),
+      _TabItem(
+        label: context.l10n.statusCanceled,
+        status: BookingStatus.canceled,
+      ),
+    ];
   }
 
   @override
@@ -165,7 +181,7 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
       return _buildLoadedContent(context, state.bookings.cast<BookingEntity>());
     }
 
-    return const _LoadingView(message: 'Loading bookings...');
+    return _LoadingView(message: context.l10n.loadingBookings);
   }
 
   Widget _buildLoadedContent(
@@ -198,8 +214,8 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
             // Premium Header
             SliverToBoxAdapter(
               child: PremiumCurvedHeader(
-                title: 'All Bookings',
-                subtitle: '${bookings.length} total bookings',
+                title: context.l10n.allBookings,
+                subtitle: context.l10n.totalBookingsCount(bookings.length),
                 showBackButton: true,
                 actions: [
                   _RefreshButton(
@@ -234,25 +250,25 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
                   child: Row(
                     children: [
                       _StatChip(
-                        label: 'Pending',
+                        label: context.l10n.pending,
                         count: pendingCount,
                         color: const Color(0xFFF59E0B),
                       ),
                       const SizedBox(width: 10),
                       _StatChip(
-                        label: 'Confirmed',
+                        label: context.l10n.statusConfirmed,
                         count: confirmedCount,
                         color: const Color(0xFF10B981),
                       ),
                       const SizedBox(width: 10),
                       _StatChip(
-                        label: 'Completed',
+                        label: context.l10n.statusCompleted,
                         count: completedCount,
                         color: const Color(0xFF6366F1),
                       ),
                       const SizedBox(width: 10),
                       _StatChip(
-                        label: 'Canceled',
+                        label: context.l10n.statusCanceled,
                         count: canceledCount,
                         color: const Color(0xFFEF4444),
                       ),
@@ -415,7 +431,7 @@ class _SearchBar extends StatelessWidget {
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(
-          hintText: 'Search by user or field...',
+          hintText: context.l10n.searchByUserOrField,
           hintStyle: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondary.withValues(alpha: 0.6),
           ),
@@ -569,7 +585,7 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Failed to load bookings',
+              context.l10n.failedToLoadBookings,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
@@ -586,7 +602,7 @@ class _ErrorView extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Try Again'),
+              label: Text(context.l10n.tryAgain),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.navyDeep,
                 foregroundColor: Colors.white,
@@ -633,14 +649,14 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'No bookings found',
+              context.l10n.noBookingsFound,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'Try adjusting your search\nor filters',
+              context.l10n.tryAdjustingYourSearchNorFilters,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),

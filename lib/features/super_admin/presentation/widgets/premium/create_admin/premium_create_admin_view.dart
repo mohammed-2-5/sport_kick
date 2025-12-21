@@ -10,6 +10,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/creat
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/create_admin/premium_admin_form_field.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/create_admin/premium_admin_form_info_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/create_admin/premium_admin_success_overlay.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium create admin view.
 ///
@@ -38,10 +39,10 @@ class PremiumCreateAdminView extends StatelessWidget {
               body: CustomScrollView(
                 slivers: [
                   // Premium Header
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: PremiumCurvedHeader(
-                      title: 'Create Admin',
-                      subtitle: 'Add a new field owner',
+                      title: context.l10n.createAdmin,
+                      subtitle: context.l10n.addANewFieldOwner,
                       showBackButton: true,
                     ),
                   ),
@@ -107,8 +108,8 @@ class _FormFieldsSection extends StatelessWidget {
         child: Column(
           children: [
             PremiumAdminFormField(
-              label: 'Email Address',
-              hint: 'admin@example.com',
+              label: context.l10n.emailAddress,
+              hint: context.l10n.adminExampleCom,
               icon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress,
               isRequired: true,
@@ -117,8 +118,8 @@ class _FormFieldsSection extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             PremiumAdminFormField(
-              label: 'Full Name',
-              hint: 'Ahmed Mohamed',
+              label: context.l10n.fullName,
+              hint: context.l10n.ahmedMohamed,
               icon: Icons.person_outline,
               keyboardType: TextInputType.name,
               textCapitalization: TextCapitalization.words,
@@ -128,7 +129,7 @@ class _FormFieldsSection extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             PremiumAdminFormField(
-              label: 'Phone Number',
+              label: context.l10n.phone,
               hint: '+20 123 456 7890',
               icon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,

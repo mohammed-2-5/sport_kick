@@ -131,7 +131,7 @@ class OwnerBookingDetailView extends StatelessWidget {
   Future<void> _approveBooking(BuildContext context) async {
     final confirmed = await _showConfirmDialog(
       context,
-      title: 'Approve Booking',
+      title: context.l10n.approveBooking,
       message: context.l10n.ownerApproveBookingConfirm,
       confirmText: context.l10n.approve,
       confirmColor: AppColors.success,
@@ -158,7 +158,7 @@ class OwnerBookingDetailView extends StatelessWidget {
   Future<void> _rejectBooking(BuildContext context) async {
     final confirmed = await _showConfirmDialog(
       context,
-      title: 'Reject Booking',
+      title: context.l10n.rejectBooking,
       message: context.l10n.ownerRejectBookingConfirm,
       confirmText: context.l10n.reject,
       confirmColor: AppColors.error,

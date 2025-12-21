@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium success overlay for admin creation.
 ///
@@ -124,7 +125,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                 const SizedBox(height: 24),
 
                 Text(
-                  'Admin Created Successfully!',
+                  context.l10n.adminCreatedSuccessfully,
                   style: AppTextStyles.titleLarge.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -136,7 +137,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                 const SizedBox(height: 8),
 
                 Text(
-                  'Share these credentials securely',
+                  context.l10n.shareTheseCredentialsSecurely,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
@@ -157,7 +158,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                   child: Column(
                     children: [
                       _CredentialRow(
-                        label: 'Email',
+                        label: context.l10n.email,
                         value: widget.invitation.email,
                         icon: Icons.email_outlined,
                       ),
@@ -166,7 +167,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                         child: Divider(height: 1),
                       ),
                       _CredentialRow(
-                        label: 'Password',
+                        label: context.l10n.password,
                         value: widget.invitation.defaultPassword,
                         icon: Icons.lock_outline,
                         isPassword: true,
@@ -197,7 +198,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Admin must change password on first login',
+                          context.l10n.adminMustChangePasswordOnFirst,
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
@@ -212,7 +213,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                 const SizedBox(height: 24),
 
                 PremiumButton(
-                  label: 'Done',
+                  label: context.l10n.done,
                   onPressed: widget.onDone,
                   icon: Icons.check,
                   fullWidth: true,

@@ -12,6 +12,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_indoor_switch.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_location_selector.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_payment_selector.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Form body for creating a new field.
 ///
@@ -123,8 +124,8 @@ class CreateFieldFormBody extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Admin Assignment Section
-          const FieldFormSectionHeader(
-            title: 'Assign to Admin',
+          FieldFormSectionHeader(
+            title: context.l10n.assignToAdmin,
             icon: Icons.admin_panel_settings,
           ),
           const SizedBox(height: 12),
@@ -138,23 +139,25 @@ class CreateFieldFormBody extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Basic Information Section
-          const FieldFormSectionHeader(
-            title: 'Basic Information',
+          FieldFormSectionHeader(
+            title: context.l10n.basicInformation,
             icon: Icons.info_outline,
           ),
           const SizedBox(height: 12),
           FieldFormTextField(
             controller: nameController,
-            label: 'Field Name',
-            hint: 'e.g., Champions Field',
+            label: context.l10n.searchTipFieldNameTitle,
+            hint: context.l10n.eGChampionsField,
             icon: Icons.sports_soccer,
-            validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
+            validator: (v) => v == null || v.trim().isEmpty
+                ? context.l10n.requiredField
+                : null,
           ),
           const SizedBox(height: 16),
           FieldFormTextField(
             controller: descriptionController,
-            label: 'Description (Optional)',
-            hint: 'Brief description',
+            label: context.l10n.descriptionOptional,
+            hint: context.l10n.briefDescription,
             icon: Icons.description_outlined,
             maxLines: 3,
           ),
@@ -162,8 +165,8 @@ class CreateFieldFormBody extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Location Section
-          const FieldFormSectionHeader(
-            title: 'Location',
+          FieldFormSectionHeader(
+            title: context.l10n.location,
             icon: Icons.location_on_outlined,
           ),
           const SizedBox(height: 12),
@@ -171,11 +174,13 @@ class CreateFieldFormBody extends StatelessWidget {
             addressController: addressController,
             selectedLocation: selectedLocation,
             onLocationChanged: onLocationChanged,
-            validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
+            validator: (v) => v == null || v.trim().isEmpty
+                ? context.l10n.requiredField
+                : null,
           ),
           const SizedBox(height: 16),
           FieldFormDropdown<String>(
-            label: 'Select City',
+            label: context.l10n.citySelectCity,
             value: selectedCity,
             items: cities
                 .map(
@@ -186,12 +191,12 @@ class CreateFieldFormBody extends StatelessWidget {
             onChanged: onCityChanged,
             icon: Icons.location_city,
             isLoading: isLoadingCities,
-            loadingText: 'Loading cities...',
-            validator: (v) => v == null ? 'Please select a city' : null,
+            loadingText: context.l10n.loadingCities,
+            validator: (v) => v == null ? context.l10n.pleaseSelectACity : null,
           ),
           const SizedBox(height: 16),
           FieldFormDropdown<String>(
-            label: 'Select Sport Category',
+            label: context.l10n.selectSportCategory,
             value: selectedSportCategory,
             items: sportCategories.keys
                 .map((cat) => DropdownMenuItem(value: cat, child: Text(cat)))
@@ -199,20 +204,21 @@ class CreateFieldFormBody extends StatelessWidget {
             onChanged: onSportCategoryChanged,
             icon: Icons.sports,
             isLoading: isLoadingSportCategories,
-            loadingText: 'Loading categories...',
-            validator: (v) => v == null ? 'Please select a category' : null,
+            loadingText: context.l10n.loadingCategories,
+            validator: (v) =>
+                v == null ? context.l10n.pleaseSelectASportCategory : null,
           ),
 
           const SizedBox(height: 24),
 
           // Field Details Section
-          const FieldFormSectionHeader(
-            title: 'Field Details',
+          FieldFormSectionHeader(
+            title: context.l10n.fieldDetails,
             icon: Icons.settings_outlined,
           ),
           const SizedBox(height: 12),
           FieldFormDropdown<String>(
-            label: 'Field Size',
+            label: context.l10n.fieldSize,
             value: selectedSize,
             items: sizes
                 .map((size) => DropdownMenuItem(value: size, child: Text(size)))
@@ -222,7 +228,7 @@ class CreateFieldFormBody extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           FieldFormDropdown<String>(
-            label: 'Surface Type',
+            label: context.l10n.surfaceType,
             value: selectedSurface,
             items: surfaces
                 .map((s) => DropdownMenuItem(value: s, child: Text(s)))
@@ -236,20 +242,21 @@ class CreateFieldFormBody extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Pricing Section
-          const FieldFormSectionHeader(
-            title: 'Pricing',
+          FieldFormSectionHeader(
+            title: context.l10n.pricing,
             icon: Icons.monetization_on_outlined,
           ),
           const SizedBox(height: 12),
           FieldFormTextField(
             controller: priceController,
-            label: 'Price per Hour (EGP)',
+            label: context.l10n.pricePerHourEgp,
             hint: '200',
             icon: Icons.attach_money,
             keyboardType: TextInputType.number,
             validator: (v) {
-              if (v == null || v.trim().isEmpty) return 'Required';
-              if (double.tryParse(v) == null) return 'Invalid number';
+              if (v == null || v.trim().isEmpty)
+                return context.l10n.requiredField;
+              if (double.tryParse(v) == null) return context.l10n.invalidNumber;
               return null;
             },
           ),
@@ -257,8 +264,8 @@ class CreateFieldFormBody extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Payment Settings Section
-          const FieldFormSectionHeader(
-            title: 'Payment Settings',
+          FieldFormSectionHeader(
+            title: context.l10n.paymentSettings,
             icon: Icons.payment_rounded,
           ),
           const SizedBox(height: 12),
@@ -272,8 +279,8 @@ class CreateFieldFormBody extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Facilities Section
-          const FieldFormSectionHeader(
-            title: 'Facilities',
+          FieldFormSectionHeader(
+            title: context.l10n.facilities,
             icon: Icons.business_outlined,
           ),
           const SizedBox(height: 12),
@@ -289,7 +296,7 @@ class CreateFieldFormBody extends StatelessWidget {
           CustomButton(
             text: submitButtonLabel,
             onPressed: onSubmit,
-            icon: submitButtonLabel.contains('Update')
+            icon: submitButtonLabel.contains(context.l10n.update)
                 ? Icons.save_rounded
                 : Icons.add_rounded,
           ),

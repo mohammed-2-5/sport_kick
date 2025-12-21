@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Period header widget for time slot sections.
 class TimeSlotPeriodHeader extends StatelessWidget {
@@ -21,8 +22,7 @@ class TimeSlotPeriodHeader extends StatelessWidget {
         const SizedBox(width: BookingConstants.smallPadding),
         Text(
           period,
-          style: const TextStyle(
-            fontSize: 16,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),

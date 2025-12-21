@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/empty_states.dart';
@@ -53,6 +54,7 @@ class PremiumFavoritesPage extends StatelessWidget {
 
                   if (favoritesState is FavoritesError) {
                     return EmptyStates.error(
+                      context,
                       message: favoritesState.message,
                       onRetry: () =>
                           context.read<FavoritesCubit>().loadFavorites(),
@@ -62,6 +64,7 @@ class PremiumFavoritesPage extends StatelessWidget {
                   if (favoritesState is FavoritesListLoaded) {
                     if (favoritesState.isEmpty) {
                       return EmptyStates.noFavorites(
+                        context,
                         onBrowse: () => Navigator.pop(context),
                       );
                     }
@@ -69,8 +72,8 @@ class PremiumFavoritesPage extends StatelessWidget {
                     return BlocBuilder<FieldsCubit, FieldsState>(
                       builder: (context, fieldsState) {
                         if (fieldsState is! FieldsLoaded) {
-                          return const LoadingIndicator.inline(
-                            message: 'Loading fields...',
+                          return LoadingIndicator.inline(
+                            message: context.l10n.loadingFields,
                           );
                         }
 
@@ -120,23 +123,24 @@ class PremiumFavoritesPage extends StatelessWidget {
                                               16,
                                             ),
                                           ),
-                                          child: const Row(
+                                          child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: [
-                                              Icon(
+                                              const Icon(
                                                 Icons.delete_outline,
                                                 color: Colors.white,
                                                 size: 28,
                                               ),
-                                              SizedBox(width: 8),
+                                              const SizedBox(width: 8),
                                               Text(
-                                                'Remove',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                ),
+                                                context.l10n.remove,
+                                                style: AppTextStyles.titleMedium
+                                                    .copyWith(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
                                               ),
                                             ],
                                           ),

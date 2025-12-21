@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium filter chips for cities filtering.
 ///
@@ -40,19 +41,19 @@ class PremiumCityFilterChips extends StatelessWidget {
     final filters = [
       _FilterItem(
         id: 'all',
-        label: 'All',
+        label: context.l10n.all,
         count: allCount,
         color: AppColors.navyDeep,
       ),
       _FilterItem(
         id: 'active',
-        label: 'Active',
+        label: context.l10n.active,
         count: activeCount,
         color: const Color(0xFF10B981),
       ),
       _FilterItem(
         id: 'inactive',
-        label: 'Inactive',
+        label: context.l10n.inactive,
         count: inactiveCount,
         color: const Color(0xFFEF4444),
       ),

@@ -56,20 +56,11 @@ class PremiumSettingsToggle extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
+                    style: AppTextStyles.bold(AppTextStyles.titleMedium),
                   ),
                   if (description != null) ...[
                     const SizedBox(height: 2),
-                    Text(
-                      description!,
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textSecondary.withValues(alpha: 0.8),
-                      ),
-                    ),
+                    Text(description!, style: AppTextStyles.bodySmallSecondary),
                   ],
                 ],
               ),

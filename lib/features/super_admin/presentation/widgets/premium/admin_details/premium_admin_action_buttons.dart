@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium admin action buttons.
 ///
@@ -46,7 +47,9 @@ class PremiumAdminActionButtons extends StatelessWidget {
               children: [
                 Expanded(
                   child: _ActionButton(
-                    label: admin.isActive ? 'Deactivate' : 'Activate',
+                    label: admin.isActive
+                        ? context.l10n.deactivate
+                        : context.l10n.activate,
                     icon: admin.isActive
                         ? Icons.block
                         : Icons.check_circle_outline,
@@ -58,7 +61,7 @@ class PremiumAdminActionButtons extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: _ActionButton(
-                    label: 'Assign Field',
+                    label: context.l10n.assignField,
                     icon: Icons.add_business,
                     color: AppColors.premiumGold,
                     isLoading: isAssigningField,
@@ -72,7 +75,7 @@ class PremiumAdminActionButtons extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: _ActionButton(
-                label: 'Reset Password',
+                label: context.l10n.resetPassword,
                 icon: Icons.lock_reset,
                 color: Colors.blue,
                 isLoading: isResettingPassword,

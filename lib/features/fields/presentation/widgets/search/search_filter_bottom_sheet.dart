@@ -7,6 +7,7 @@ import 'package:spo_kick/features/fields/presentation/widgets/search/price_range
 import 'package:spo_kick/features/fields/presentation/widgets/search/sort_selector.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Search Filter Bottom Sheet
 ///
@@ -114,9 +115,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
         const SizedBox(width: 8),
         Text(
           context.l10n.filtersTitle,
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
         ),
         const Spacer(),
         if (_filters.hasActiveFilters)
@@ -163,10 +162,9 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                       _filters.activeFilterCount,
                     ),
                   ),
-                  style: const TextStyle(
+                  style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
-                    fontSize: 12,
                   ),
                 ),
               ],
@@ -189,7 +187,9 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
           ),
           child: Text(
             context.l10n.applyFilters,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: AppTextStyles.labelLarge.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

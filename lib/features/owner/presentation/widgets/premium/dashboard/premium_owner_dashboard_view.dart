@@ -144,7 +144,8 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
                   state.stats.monthlyRevenue,
                   context: context,
                 ),
-                onBookingsTap: () => context.pushNamed('ownerBookings'),
+                onBookingsTap: () =>
+                    context.pushNamed(context.l10n.ownerbookings),
                 onRevenueTap: () => context.pushNamed('ownerAnalytics'),
               ),
               const SizedBox(height: 24),

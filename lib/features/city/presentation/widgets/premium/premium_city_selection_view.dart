@@ -166,6 +166,7 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
 
     if (widget.errorMessage != null && widget.cities.isEmpty) {
       return EmptyStates.error(
+        context,
         message: widget.errorMessage!,
         onRetry: widget.onRetry,
       );
@@ -173,6 +174,7 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
 
     if (_filteredCities.isEmpty) {
       return EmptyStates.noResults(
+        context,
         onClear: () {
           _searchController.clear();
         },

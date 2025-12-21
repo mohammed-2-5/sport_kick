@@ -9,6 +9,7 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/sport_categorie
 import 'package:spo_kick/features/super_admin/presentation/cubit/sport_categories_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/sport_categories/premium_sport_category_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/sport_categories/sport_category_form_dialog.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Sport categories management page for super admin.
 ///
@@ -64,8 +65,8 @@ class _ManageSportCategoriesView extends StatelessWidget {
             slivers: [
               SliverToBoxAdapter(
                 child: PremiumCurvedHeader(
-                  title: 'Sport Categories',
-                  subtitle: 'Manage sport types',
+                  title: context.l10n.sportCategories,
+                  subtitle: context.l10n.manageSportTypes,
                   showBackButton: true,
                   actions: [
                     _AddButton(onTap: () => _showCreateDialog(context)),
@@ -161,14 +162,12 @@ class _ManageSportCategoriesView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Delete Category'),
-        content: Text(
-          'Are you sure you want to delete "${category.name}"?\n\nThis action cannot be undone.',
-        ),
+        title: Text(context.l10n.deleteCategory),
+        content: Text(context.l10n.deleteCategoryConfirmation(category.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -181,7 +180,7 @@ class _ManageSportCategoriesView extends StatelessWidget {
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Delete'),
+            child: Text(context.l10n.delete),
           ),
         ],
       ),
@@ -256,7 +255,7 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Failed to load categories',
+              context.l10n.failedToLoadCategories,
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
@@ -274,7 +273,7 @@ class _ErrorView extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Try Again'),
+              label: Text(context.l10n.tryAgain),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.navyDeep,
                 foregroundColor: Colors.white,
@@ -318,7 +317,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'No Categories Yet',
+              context.l10n.noCategoriesYet,
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
@@ -326,7 +325,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Tap the + button to create\nyour first sport category',
+              context.l10n.tapTheButtonToCreateNyour,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),

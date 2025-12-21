@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class CredentialField extends StatelessWidget {
   final String label;
@@ -33,7 +35,7 @@ class CredentialField extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontSize: 11,
                     color: Colors.grey[600],
                     fontWeight: FontWeight.w500,
@@ -42,8 +44,7 @@ class CredentialField extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   value,
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: isPassword
                         ? FontWeight.bold
                         : FontWeight.normal,
@@ -59,12 +60,12 @@ class CredentialField extends StatelessWidget {
               Clipboard.setData(ClipboardData(text: value));
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('$label copied'),
+                  content: Text(context.l10n.labelCopied(label)),
                   duration: const Duration(seconds: 1),
                 ),
               );
             },
-            tooltip: 'Copy $label',
+            tooltip: context.l10n.copyLabel,
           ),
         ],
       ),

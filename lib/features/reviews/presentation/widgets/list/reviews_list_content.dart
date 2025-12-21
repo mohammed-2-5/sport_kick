@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_state.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/list/review_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class ReviewsListContent extends StatefulWidget {
   final String fieldId;
@@ -102,7 +103,7 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
                     );
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: Text(context.l10n.retry),
                 ),
               ],
             ),
@@ -121,13 +122,13 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
                     color: Colors.grey[400],
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'No reviews yet',
+                  Text(
+                    context.l10n.noReviews,
                     style: AppTextStyles.titleMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Be the first to review ${widget.fieldName}',
+                    context.l10n.beFirstToReviewField(widget.fieldName),
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: Colors.grey[600],
                     ),

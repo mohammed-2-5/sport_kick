@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium booking confirmation widget with glassmorphism design.
 ///
@@ -43,8 +45,7 @@ class PremiumBookingConfirmation extends StatelessWidget {
         children: [
           Text(
             context.l10n.confirmYourBooking,
-            style: const TextStyle(
-              fontSize: 24,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.w800,
               color: AppColors.textPrimary,
             ),
@@ -52,8 +53,7 @@ class PremiumBookingConfirmation extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             context.l10n.reviewBookingDetails,
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
               height: 1.5,
             ),
@@ -100,8 +100,7 @@ class PremiumBookingConfirmation extends StatelessWidget {
                 Expanded(
                   child: Text(
                     context.l10n.bookingTermsNotice,
-                    style: const TextStyle(
-                      fontSize: 13,
+                    style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                       height: 1.4,
                     ),
@@ -231,8 +230,7 @@ class _BookingSummaryCard extends StatelessWidget {
                         children: [
                           Text(
                             fieldName,
-                            style: const TextStyle(
-                              fontSize: 18,
+                            style: AppTextStyles.titleLarge.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
@@ -240,8 +238,7 @@ class _BookingSummaryCard extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             context.l10n.footballField,
-                            style: TextStyle(
-                              fontSize: 14,
+                            style: AppTextStyles.bodyMedium.copyWith(
                               color: Colors.white.withValues(alpha: 0.7),
                             ),
                           ),
@@ -260,7 +257,7 @@ class _BookingSummaryCard extends StatelessWidget {
                         icon: Icons.calendar_today,
                         label: context.l10n.bookingDate,
                         value: DateFormat(
-                          'EEE, MMM d',
+                          context.l10n.eeeMmmD,
                           locale,
                         ).format(selectedDate),
                       ),
@@ -314,16 +311,14 @@ class _InfoItem extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyles.labelSmall.copyWith(
               color: Colors.white.withValues(alpha: 0.6),
             ),
           ),
           const SizedBox(height: 4),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),
@@ -369,8 +364,7 @@ class _PriceBreakdownCard extends StatelessWidget {
         children: [
           Text(
             l10n.priceBreakdown,
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
             ),
@@ -383,8 +377,12 @@ class _PriceBreakdownCard extends StatelessWidget {
           const SizedBox(height: 12),
           _PriceRow(
             label: l10n.ratePerHour,
-            value:
-                '${_pricePerHour.toStringAsFixed(0)} ${selectedSlot.currency}',
+            value: LocaleFormatters.formatPrice(
+              context,
+              amount: _pricePerHour,
+              currency: selectedSlot.currency,
+              decimalDigits: 0,
+            ),
           ),
           const SizedBox(height: 16),
           const Divider(height: 1),
@@ -394,8 +392,7 @@ class _PriceBreakdownCard extends StatelessWidget {
             children: [
               Text(
                 l10n.totalPrice,
-                style: const TextStyle(
-                  fontSize: 18,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -419,9 +416,13 @@ class _PriceBreakdownCard extends StatelessWidget {
                   ],
                 ),
                 child: Text(
-                  '${totalPrice.toStringAsFixed(0)} ${selectedSlot.currency}',
-                  style: const TextStyle(
-                    fontSize: 18,
+                  LocaleFormatters.formatPrice(
+                    context,
+                    amount: totalPrice,
+                    currency: selectedSlot.currency,
+                    decimalDigits: 0,
+                  ),
+                  style: AppTextStyles.titleLarge.copyWith(
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
                   ),
@@ -449,12 +450,13 @@ class _PriceRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 14,
+          style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w500,
             color: AppColors.textPrimary,
           ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
 import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/dialogs/currency_option_tile.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Currency Selector Dialog
 ///
@@ -15,13 +16,13 @@ class CurrencySelectorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Choose Currency'),
+      title: Text(context.l10n.chooseCurrency),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           CurrencyOptionTile(
-            label: 'Egyptian Pound',
-            code: 'EGP (E£)',
+            label: context.l10n.egyptianPound,
+            code: context.l10n.egpE,
             currency: CurrencyOption.egp,
             isSelected: preferences.currency == CurrencyOption.egp,
             onTap: () {
@@ -33,7 +34,7 @@ class CurrencySelectorDialog extends StatelessWidget {
             },
           ),
           CurrencyOptionTile(
-            label: 'US Dollar',
+            label: context.l10n.usDollar,
             code: 'USD (\$)',
             currency: CurrencyOption.usd,
             isSelected: preferences.currency == CurrencyOption.usd,
@@ -46,8 +47,8 @@ class CurrencySelectorDialog extends StatelessWidget {
             },
           ),
           CurrencyOptionTile(
-            label: 'Euro',
-            code: 'EUR (€)',
+            label: context.l10n.euro,
+            code: context.l10n.eur,
             currency: CurrencyOption.eur,
             isSelected: preferences.currency == CurrencyOption.eur,
             onTap: () {
@@ -59,8 +60,8 @@ class CurrencySelectorDialog extends StatelessWidget {
             },
           ),
           CurrencyOptionTile(
-            label: 'Saudi Riyal',
-            code: 'SAR (﷼)',
+            label: context.l10n.saudiRiyal,
+            code: context.l10n.sar,
             currency: CurrencyOption.sar,
             isSelected: preferences.currency == CurrencyOption.sar,
             onTap: () {

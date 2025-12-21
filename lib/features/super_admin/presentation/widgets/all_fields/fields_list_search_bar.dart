@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class FieldsListSearchBar extends StatelessWidget {
   final TextEditingController controller;
@@ -22,7 +23,7 @@ class FieldsListSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          hintText: 'Search fields by name, city, or owner...',
+          hintText: context.l10n.searchFieldsByNameCityOrOwner,
           prefixIcon: const Icon(Icons.search),
           suffixIcon: searchQuery.isNotEmpty
               ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)

@@ -62,7 +62,7 @@ class SportCategoriesCubit extends Cubit<SportCategoriesState> {
           final currentState = state as SportCategoriesLoaded;
           emit(
             SportCategoryOperationSuccess(
-              message: 'Category "$name" created successfully',
+              message: "Processing...",
               updatedCategories: currentState.categories,
             ),
           );
@@ -94,7 +94,7 @@ class SportCategoriesCubit extends Cubit<SportCategoriesState> {
           final currentState = state as SportCategoriesLoaded;
           emit(
             SportCategoryOperationSuccess(
-              message: 'Category updated successfully',
+              message: "Processing...",
               updatedCategories: currentState.categories,
             ),
           );
@@ -116,7 +116,7 @@ class SportCategoriesCubit extends Cubit<SportCategoriesState> {
           final currentState = state as SportCategoriesLoaded;
           emit(
             SportCategoryOperationSuccess(
-              message: 'Category deleted successfully',
+              message: "Processing...",
               updatedCategories: currentState.categories,
             ),
           );

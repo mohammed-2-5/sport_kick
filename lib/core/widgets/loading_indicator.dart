@@ -13,7 +13,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 /// Usage:
 /// ```dart
 /// // Full screen
-/// LoadingIndicator.fullScreen(message: 'Loading fields...')
+/// LoadingIndicator.fullScreen(message: context.l10n.loadingFields)
 ///
 /// // Inline
 /// LoadingIndicator.inline()

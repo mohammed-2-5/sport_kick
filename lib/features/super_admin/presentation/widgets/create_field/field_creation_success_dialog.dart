@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Success dialog shown after field creation.
 ///
@@ -15,11 +16,11 @@ class FieldCreationSuccessDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: const Row(
+      title: Row(
         children: [
-          Icon(Icons.check_circle, color: AppColors.success, size: 32),
-          SizedBox(width: 12),
-          Text('Success!'),
+          const Icon(Icons.check_circle, color: AppColors.success, size: 32),
+          const SizedBox(width: 12),
+          Text(context.l10n.success2),
         ],
       ),
       content: Text(message),
@@ -29,7 +30,7 @@ class FieldCreationSuccessDialog extends StatelessWidget {
             Navigator.pop(context); // Close dialog
             Navigator.pop(context); // Return to previous screen
           },
-          child: const Text('OK'),
+          child: Text(context.l10n.ok),
         ),
       ],
     );

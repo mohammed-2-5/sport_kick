@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -59,8 +60,7 @@ class FavoritesHeader extends StatelessWidget {
                 children: [
                   Text(
                     context.l10n.myFavorites,
-                    style: const TextStyle(
-                      fontSize: 12,
+                    style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
                       letterSpacing: 1.2,
@@ -74,8 +74,7 @@ class FavoritesHeader extends StatelessWidget {
                           count.toString(),
                           LocaleFormatters.formatNumber(context, count),
                         ),
-                    style: TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyles.labelLarge.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Colors.white.withValues(alpha: 0.9),
                     ),
@@ -91,8 +90,7 @@ class FavoritesHeader extends StatelessWidget {
               ),
               child: Text(
                 LocaleFormatters.formatNumber(context, count),
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: FieldConstants.favoritesGradientStart,
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Action buttons for admin details page
 class AdminActionButtons extends StatelessWidget {
@@ -25,7 +26,7 @@ class AdminActionButtons extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: onAssignField,
               icon: const Icon(Icons.add_business),
-              label: const Text('Assign Field'),
+              label: Text(context.l10n.assignField),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 foregroundColor: Colors.white,
@@ -41,7 +42,11 @@ class AdminActionButtons extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: admin.role == 'super_admin' ? null : onToggleStatus,
               icon: Icon(admin.isActive ? Icons.block : Icons.check_circle),
-              label: Text(admin.isActive ? 'Deactivate' : 'Activate'),
+              label: Text(
+                admin.isActive
+                    ? context.l10n.deactivate
+                    : context.l10n.activate,
+              ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: admin.isActive ? Colors.red : Colors.green,
                 side: BorderSide(

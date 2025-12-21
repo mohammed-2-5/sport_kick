@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Location section widget for field details.
 ///
@@ -25,7 +26,9 @@ class FieldLocationSection extends StatelessWidget {
         children: [
           Text(
             context.l10n.location,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: FieldConstants.itemSpacing),
           Row(
@@ -38,15 +41,13 @@ class FieldLocationSection extends StatelessWidget {
                   children: [
                     Text(
                       field.address,
-                      style: const TextStyle(
-                        fontSize: 15,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
                       field.city,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),

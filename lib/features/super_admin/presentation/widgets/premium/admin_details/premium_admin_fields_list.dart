@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium admin assigned fields list.
 ///
@@ -53,7 +54,7 @@ class PremiumAdminFieldsList extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'Assigned Fields',
+                  context.l10n.assignedFields,
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -132,7 +133,7 @@ class _AddFieldButton extends StatelessWidget {
             const Icon(Icons.add, size: 16, color: Colors.white),
             const SizedBox(width: 6),
             Text(
-              'Assign Field',
+              context.l10n.assignField,
               style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
@@ -271,7 +272,7 @@ class _FieldStatusBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        isActive ? 'Active' : 'Inactive',
+        isActive ? context.l10n.active : context.l10n.inactive,
         style: AppTextStyles.badge.copyWith(
           fontSize: 11,
           fontWeight: FontWeight.w600,
@@ -307,7 +308,7 @@ class _EmptyFieldsState extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No Fields Assigned',
+            context.l10n.noFieldsAssigned,
             style: AppTextStyles.titleSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -315,7 +316,7 @@ class _EmptyFieldsState extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Assign fields to this admin to get started',
+            context.l10n.assignFieldsToThisAdminTo,
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),

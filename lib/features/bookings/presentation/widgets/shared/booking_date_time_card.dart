@@ -4,6 +4,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class BookingDateTimeCard extends StatelessWidget {
   final BookingEntity booking;
@@ -24,8 +25,7 @@ class BookingDateTimeCard extends StatelessWidget {
         children: [
           Text(
             context.l10n.dateTimeLabel,
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -61,8 +61,7 @@ class BookingDateTimeCard extends StatelessWidget {
                 ),
                 child: Text(
                   context.l10n.durationHours(booking.durationInHours),
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.success,
                   ),
@@ -105,15 +104,13 @@ class _DateRow extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
             Text(
               value,
-              style: const TextStyle(
-                fontSize: 16,
+              style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),

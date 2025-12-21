@@ -4,6 +4,7 @@ import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium field information card.
 ///
@@ -29,8 +30,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
           // Field Name
           Text(
             field.name,
-            style: const TextStyle(
-              fontSize: 26,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.w800,
               color: AppColors.textPrimary,
               height: 1.2,
@@ -43,8 +43,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
           if (category != null)
             Text(
               category.name,
-              style: const TextStyle(
-                fontSize: 15,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.accentCyan,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
@@ -87,8 +86,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         field.ratingDisplay,
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
                         ),
@@ -96,8 +94,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '(${LocaleFormatters.formatNumber(context, field.totalReviews)})',
-                        style: TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: Colors.white.withValues(alpha: 0.9),
                           fontWeight: FontWeight.w600,
                         ),
@@ -133,8 +130,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         '${LocaleFormatters.formatNumber(context, field.totalBookings)} ${context.l10n.bookings}',
-                        style: const TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.accentCyan,
                           fontWeight: FontWeight.w700,
                         ),
@@ -180,8 +176,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.ratePerHour,
-                            style: TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: Colors.white.withValues(alpha: 0.9),
                               fontWeight: FontWeight.w600,
                             ),
@@ -191,8 +186,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
-                        style: const TextStyle(
-                          fontSize: 24,
+                        style: AppTextStyles.headlineSmall.copyWith(
                           fontWeight: FontWeight.w900,
                           color: Colors.white,
                           letterSpacing: -0.5,
@@ -230,8 +224,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.fieldSize,
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: AppColors.accentCyan,
                               fontWeight: FontWeight.w600,
                             ),
@@ -241,8 +234,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         field.fieldSize,
-                        style: const TextStyle(
-                          fontSize: 20,
+                        style: AppTextStyles.titleLarge.copyWith(
                           fontWeight: FontWeight.w900,
                           color: AppColors.accentCyan,
                           letterSpacing: -0.5,
@@ -295,8 +287,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.labelSmall.copyWith(
               color: color,
               fontWeight: FontWeight.w700,
             ),

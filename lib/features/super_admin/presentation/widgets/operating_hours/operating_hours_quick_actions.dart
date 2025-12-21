@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/day_hours_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Operating Hours Quick Actions Widget
 ///
@@ -38,10 +40,9 @@ class OperatingHoursQuickActions extends StatelessWidget {
                 color: AppColors.premiumGold.withValues(alpha: 0.8),
               ),
               const SizedBox(width: 8),
-              const Text(
-                'Quick Actions',
-                style: TextStyle(
-                  fontSize: 14,
+              Text(
+                context.l10n.quickActions,
+                style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),
@@ -53,7 +54,7 @@ class OperatingHoursQuickActions extends StatelessWidget {
             children: [
               Expanded(
                 child: _ActionButton(
-                  label: 'Apply to Weekdays',
+                  label: context.l10n.applyToWeekdays,
                   icon: Icons.work,
                   onTap: () {
                     HapticFeedback.mediumImpact();
@@ -64,7 +65,7 @@ class OperatingHoursQuickActions extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: _ActionButton(
-                  label: 'Apply to Weekend',
+                  label: context.l10n.applyToWeekend,
                   icon: Icons.weekend,
                   onTap: () {
                     HapticFeedback.mediumImpact();
@@ -76,9 +77,8 @@ class OperatingHoursQuickActions extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Using current hours: ${currentHours.displayString}',
-            style: TextStyle(
-              fontSize: 12,
+            context.l10n.usingCurrentHours(currentHours.displayString),
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),
           ),
@@ -121,8 +121,7 @@ class _ActionButton extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 label,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),

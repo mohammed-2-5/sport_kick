@@ -6,6 +6,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_list_search_bar.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/booking_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/all_bookings/bookings_statistics_section.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Main body widget for bookings list.
 class BookingsListBody extends StatelessWidget {
@@ -52,7 +53,7 @@ class BookingsListBody extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
-                '${filteredBookings.length} booking${filteredBookings.length != 1 ? 's' : ''} found',
+                context.l10n.bookingsFoundCount(filteredBookings.length),
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),

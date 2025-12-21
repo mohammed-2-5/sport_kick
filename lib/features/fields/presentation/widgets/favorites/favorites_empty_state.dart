@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -58,12 +59,14 @@ class FavoritesEmptyState extends StatelessWidget {
             const SizedBox(height: 32),
             Text(
               context.l10n.noFavoritesYet,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: AppTextStyles.headlineSmall.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 12),
             Text(
               context.l10n.favoritesHint,
-              style: const TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 fontSize: 15,
                 color: AppColors.textSecondary,
                 height: 1.5,
@@ -99,8 +102,7 @@ class FavoritesEmptyState extends StatelessWidget {
                         const SizedBox(width: 12),
                         Text(
                           context.l10n.exploreFields,
-                          style: const TextStyle(
-                            fontSize: 16,
+                          style: AppTextStyles.titleMedium.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             letterSpacing: 0.5,

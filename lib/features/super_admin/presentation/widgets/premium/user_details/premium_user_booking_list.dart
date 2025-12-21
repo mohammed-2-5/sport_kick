@@ -4,9 +4,11 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium user booking history list.
 ///
@@ -79,14 +81,7 @@ class _BookingListHeader extends StatelessWidget {
           child: const Icon(Icons.history, size: 18, color: Colors.white),
         ),
         const SizedBox(width: 12),
-        Text(
-          'Booking History',
-          style: AppTextStyles.titleMedium.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-          ),
-        ),
+        Text(context.l10n.bookingHistory, style: AppTextStyles.titleMediumBold),
       ],
     );
   }
@@ -131,17 +126,16 @@ class _BookingCard extends StatelessWidget {
                 children: [
                   Text(
                     DateFormat('dd').format(booking.date),
-                    style: AppTextStyles.titleLarge.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: _statusColor,
+                    style: AppTextStyles.withColor(
+                      AppTextStyles.titleLargeBold,
+                      _statusColor,
                     ),
                   ),
                   Text(
                     DateFormat('MMM').format(booking.date),
-                    style: AppTextStyles.labelSmall.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: _statusColor.withValues(alpha: 0.8),
+                    style: AppTextStyles.withColor(
+                      AppTextStyles.labelSmallBold,
+                      _statusColor,
                     ),
                   ),
                 ],
@@ -154,12 +148,8 @@ class _BookingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    booking.fieldName ?? 'Unknown Field',
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
+                    booking.fieldName ?? context.l10n.unknownField,
+                    style: AppTextStyles.bold(AppTextStyles.titleMedium),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -174,10 +164,7 @@ class _BookingCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '${booking.startTime} - ${booking.endTime}',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          fontSize: 13,
-                          color: AppColors.textSecondary.withValues(alpha: 0.8),
-                        ),
+                        style: AppTextStyles.bodyMediumSecondary,
                       ),
                     ],
                   ),
@@ -199,19 +186,21 @@ class _BookingCard extends StatelessWidget {
                   ),
                   child: Text(
                     booking.status.displayName,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: _statusColor,
+                    style: AppTextStyles.withColor(
+                      AppTextStyles.labelSmallBold,
+                      _statusColor,
                     ),
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'EGP ${booking.totalPrice.toStringAsFixed(0)}',
-                  style: AppTextStyles.priceSmall.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                  LocaleFormatters.formatPrice(
+                    context,
+                    amount: booking.totalPrice,
+                    currency: booking.currency,
+                    decimalDigits: 0,
                   ),
+                  style: AppTextStyles.bold(AppTextStyles.priceSmall),
                 ),
               ],
             ),
@@ -247,19 +236,13 @@ class _EmptyBookingsState extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No Bookings Yet',
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
+            context.l10n.noBookingsYet2,
+            style: AppTextStyles.bold(AppTextStyles.titleMedium),
           ),
           const SizedBox(height: 4),
           Text(
-            'This user hasn\'t made any bookings',
-            style: AppTextStyles.bodyMedium.copyWith(
-              fontSize: 13,
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
-            ),
+            context.l10n.thisUserHasntMadeAnyBookings,
+            style: AppTextStyles.bodyMediumSecondary,
           ),
         ],
       ),
@@ -289,10 +272,10 @@ class _ViewAllButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            'View All $totalCount Bookings',
-            style: AppTextStyles.labelLarge.copyWith(
-              fontWeight: FontWeight.w600, // already 500
-              color: AppColors.accentCyan,
+            context.l10n.viewAllBookingsCount(totalCount),
+            style: AppTextStyles.withColor(
+              AppTextStyles.bold(AppTextStyles.labelLarge),
+              AppColors.accentCyan,
             ),
           ),
         ),

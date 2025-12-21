@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Field info widget displaying field image and name.
 class BookingListItemFieldInfo extends StatelessWidget {
@@ -45,8 +46,7 @@ class BookingListItemFieldInfo extends StatelessWidget {
         Expanded(
           child: Text(
             fieldName,
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
             ),

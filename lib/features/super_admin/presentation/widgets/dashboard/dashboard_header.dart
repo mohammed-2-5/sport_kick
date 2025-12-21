@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class DashboardHeader extends StatelessWidget {
   const DashboardHeader({super.key});
@@ -17,7 +18,7 @@ class DashboardHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Super Admin',
+                  context.l10n.roleSuperAdmin,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.premiumTextPrimary,
@@ -25,7 +26,7 @@ class DashboardHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Platform Overview',
+                  context.l10n.platformOverview,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppColors.premiumTextSecondary,
                   ),
@@ -43,7 +44,7 @@ class DashboardHeader extends StatelessWidget {
                     Icons.settings,
                     color: AppColors.premiumTextSecondary,
                   ),
-                  tooltip: 'Settings',
+                  tooltip: context.l10n.settings,
                 ),
                 const SizedBox(width: 8),
                 // Profile Icon

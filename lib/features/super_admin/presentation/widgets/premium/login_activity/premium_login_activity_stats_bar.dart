@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Stats bar for login activity overview.
 ///
@@ -35,28 +36,28 @@ class PremiumLoginActivityStatsBar extends StatelessWidget {
         children: [
           _StatCard(
             icon: Icons.login_rounded,
-            label: 'Total Logins',
+            label: context.l10n.totalLogins,
             value: totalLogins.toString(),
             gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
           ),
           const SizedBox(width: 12),
           _StatCard(
             icon: Icons.trending_up_rounded,
-            label: 'Success Rate',
+            label: context.l10n.successRate,
             value: '${successRate.toStringAsFixed(1)}%',
             gradient: const [Color(0xFF10B981), Color(0xFF059669)],
           ),
           const SizedBox(width: 12),
           _StatCard(
             icon: Icons.error_outline_rounded,
-            label: 'Failed',
+            label: context.l10n.loginStatusFailed,
             value: failedLogins.toString(),
             gradient: const [Color(0xFFEF4444), Color(0xFFDC2626)],
           ),
           const SizedBox(width: 12),
           _StatCard(
             icon: Icons.block_rounded,
-            label: 'Blocked',
+            label: context.l10n.loginStatusBlocked,
             value: blockedLogins.toString(),
             gradient: const [Color(0xFFF59E0B), Color(0xFFD97706)],
           ),

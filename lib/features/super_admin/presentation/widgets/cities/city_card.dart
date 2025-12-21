@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class CityCard extends StatelessWidget {
   final CityEntity city;
@@ -47,7 +49,7 @@ class CityCard extends StatelessWidget {
                     children: [
                       Text(
                         city.name,
-                        style: const TextStyle(
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
@@ -57,8 +59,7 @@ class CityCard extends StatelessWidget {
                         const SizedBox(height: 2),
                         Text(
                           city.nameAr!,
-                          style: TextStyle(
-                            fontSize: 14,
+                          style: AppTextStyles.bodyMedium.copyWith(
                             color: Colors.grey[600],
                           ),
                           textDirection: TextDirection.rtl,
@@ -98,9 +99,10 @@ class CityCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        city.isActive ? 'Active' : 'Inactive',
-                        style: TextStyle(
-                          fontSize: 12,
+                        city.isActive
+                            ? context.l10n.active
+                            : context.l10n.inactive,
+                        style: AppTextStyles.labelSmall.copyWith(
                           fontWeight: FontWeight.w600,
                           color: city.isActive ? Colors.green : Colors.red,
                         ),
@@ -125,9 +127,8 @@ class CityCard extends StatelessWidget {
                   Icon(Icons.sports_soccer, size: 20, color: Colors.grey[700]),
                   const SizedBox(width: 8),
                   Text(
-                    '${city.fieldsCount} ${city.fieldsCount == 1 ? 'Field' : 'Fields'}',
-                    style: TextStyle(
-                      fontSize: 14,
+                    context.l10n.fieldsCount(city.fieldsCount),
+                    style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Colors.grey[700],
                     ),
@@ -141,7 +142,7 @@ class CityCard extends StatelessWidget {
                           context.read<SuperAdminCubit>().loadCities();
                         }
                       },
-                      child: const Text('View Fields'),
+                      child: Text(context.l10n.viewFields),
                     ),
                 ],
               ),

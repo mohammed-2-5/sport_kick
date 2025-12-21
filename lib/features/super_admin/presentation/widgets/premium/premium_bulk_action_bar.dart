@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium bulk action bar for list selections.
 ///
@@ -84,7 +85,7 @@ class PremiumBulkActionBar extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          '$selectedCount selected',
+                          context.l10n.selectedCount(selectedCount),
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
@@ -102,25 +103,25 @@ class PremiumBulkActionBar extends StatelessWidget {
                       if (onActivate != null)
                         _ActionIcon(
                           icon: Icons.check_circle_outline,
-                          tooltip: 'Activate',
+                          tooltip: context.l10n.activate,
                           onTap: onActivate!,
                         ),
                       if (onDeactivate != null)
                         _ActionIcon(
                           icon: Icons.block,
-                          tooltip: 'Deactivate',
+                          tooltip: context.l10n.deactivate,
                           onTap: onDeactivate!,
                         ),
                       if (onExport != null)
                         _ActionIcon(
                           icon: Icons.download,
-                          tooltip: 'Export',
+                          tooltip: context.l10n.export,
                           onTap: onExport!,
                         ),
                       if (onDelete != null)
                         _ActionIcon(
                           icon: Icons.delete_outline,
-                          tooltip: 'Delete',
+                          tooltip: context.l10n.delete,
                           onTap: onDelete!,
                           isDanger: true,
                         ),

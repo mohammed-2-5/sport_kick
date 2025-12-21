@@ -34,9 +34,9 @@ class UserStatsCard extends StatelessWidget {
           const SizedBox(height: AdminUIConstants.spacingSmall),
           Text(
             value,
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-              color: color,
+            style: AppTextStyles.withColor(
+              AppTextStyles.titleMediumBold,
+              color,
             ),
             textAlign: TextAlign.center,
             maxLines: 1,
@@ -45,7 +45,7 @@ class UserStatsCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             label,
-            style: AppTextStyles.bodySmall.copyWith(color: Colors.grey[600]),
+            style: AppTextStyles.bodySmallSecondary,
             textAlign: TextAlign.center,
           ),
         ],

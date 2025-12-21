@@ -10,6 +10,7 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/platform_settin
 import 'package:spo_kick/features/super_admin/presentation/cubit/platform_settings/platform_settings_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/operating_hours/operating_hours_day_item.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/operating_hours/operating_hours_quick_actions.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Platform Operating Hours Page
 ///
@@ -47,10 +48,10 @@ class _OperatingHoursContent extends StatelessWidget {
           backgroundColor: AppColors.backgroundLight,
           body: CustomScrollView(
             slivers: [
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: PremiumCurvedHeader(
-                  title: 'Operating Hours',
-                  subtitle: 'Default hours for new fields',
+                  title: context.l10n.operatingHours,
+                  subtitle: context.l10n.defaultHoursForNewFields,
                   showBackButton: true,
                 ),
               ),
@@ -123,7 +124,7 @@ class _LoadedContent extends StatelessWidget {
         const SizedBox(height: 24),
 
         // Section header
-        const _SectionHeader(title: 'Weekly Schedule'),
+        _SectionHeader(title: context.l10n.weeklySchedule),
         const SizedBox(height: 12),
 
         // Days list
@@ -193,14 +194,14 @@ class _EnforceToggle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Enforce Operating Hours',
+                  context.l10n.enforceOperatingHours,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
                 ),
                 Text(
-                  'Apply to all field bookings',
+                  context.l10n.applyToAllFieldBookings,
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
@@ -257,7 +258,7 @@ class _SavingIndicator extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Text(
-          'Saving...',
+          context.l10n.saving,
           style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondary,
           ),
@@ -295,7 +296,7 @@ class _ErrorState extends StatelessWidget {
             TextButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Retry'),
+              label: Text(context.l10n.retry),
             ),
           ],
         ),

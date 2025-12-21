@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Full-screen image gallery viewer with zoom and swipe.
 ///
@@ -125,9 +126,8 @@ class _PremiumFieldGalleryViewerState extends State<PremiumFieldGalleryViewer> {
                     ),
                     child: Text(
                       '${_currentPage + 1} / ${widget.images.length}',
-                      style: const TextStyle(
+                      style: AppTextStyles.labelLarge.copyWith(
                         color: Colors.white,
-                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

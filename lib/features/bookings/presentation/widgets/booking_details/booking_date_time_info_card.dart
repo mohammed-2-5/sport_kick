@@ -7,6 +7,7 @@ import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_duration_badge.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/shared/booking_info_row.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium card displaying booking date and time information.
 ///
@@ -27,8 +28,7 @@ class BookingDateTimeInfoCard extends StatelessWidget {
         children: [
           Text(
             context.l10n.dateTimeLabel,
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
             ),

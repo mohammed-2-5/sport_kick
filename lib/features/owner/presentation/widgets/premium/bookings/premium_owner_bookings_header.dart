@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium header for owner bookings page.
 ///
@@ -54,7 +55,7 @@ class PremiumOwnerBookingsHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Manage Bookings',
+                      context.l10n.manageBookings,
                       style: AppTextStyles.headlineSmall.copyWith(
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -62,7 +63,7 @@ class PremiumOwnerBookingsHeader extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Review and manage all bookings',
+                      context.l10n.reviewManageBookings,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: Colors.white70,
                       ),
@@ -88,23 +89,26 @@ class PremiumOwnerBookingsHeader extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _StatChip(label: 'Total', count: stats['total'] ?? 0),
+                _StatChip(
+                  label: context.l10n.total,
+                  count: stats[context.l10n.total2] ?? 0,
+                ),
                 const SizedBox(width: 8),
                 _StatChip(
-                  label: 'Pending',
-                  count: stats['pending'] ?? 0,
+                  label: context.l10n.pending,
+                  count: stats[context.l10n.pendingStatus] ?? 0,
                   color: Colors.orange,
                 ),
                 const SizedBox(width: 8),
                 _StatChip(
-                  label: 'Confirmed',
-                  count: stats['confirmed'] ?? 0,
+                  label: context.l10n.statusConfirmed,
+                  count: stats[context.l10n.confirmed] ?? 0,
                   color: Colors.green,
                 ),
                 const SizedBox(width: 8),
                 _StatChip(
-                  label: 'Canceled',
-                  count: stats['canceled'] ?? 0,
+                  label: context.l10n.statusCanceled,
+                  count: stats[context.l10n.canceled] ?? 0,
                   color: Colors.red,
                 ),
               ],
@@ -220,7 +224,7 @@ class _SearchBar extends StatelessWidget {
             onChanged: onChanged,
             style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
             decoration: InputDecoration(
-              hintText: 'Search by customer, field, or ID...',
+              hintText: context.l10n.searchByCustomerFieldOrId,
               hintStyle: AppTextStyles.bodyMedium.copyWith(
                 color: Colors.white.withValues(alpha: 0.5),
               ),

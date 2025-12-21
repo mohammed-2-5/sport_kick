@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Bulk activate users confirmation dialog.
 class BulkActivateUsersDialog extends StatelessWidget {
@@ -9,16 +10,16 @@ class BulkActivateUsersDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Activate Selected Users'),
-      content: Text('Are you sure you want to activate $count users?'),
+      title: Text(context.l10n.activateSelectedUsers),
+      content: Text(context.l10n.areYouSureYouWantToActivateCountUsers(count)),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Activate'),
+          child: Text(context.l10n.activate),
         ),
       ],
     );
@@ -34,12 +35,14 @@ class BulkDeactivateUsersDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Deactivate Selected Users'),
-      content: Text('Are you sure you want to deactivate $count users?'),
+      title: Text(context.l10n.deactivateSelectedUsers),
+      content: Text(
+        context.l10n.areYouSureYouWantToDeactivateCountUsers(count),
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         FilledButton(
           style: FilledButton.styleFrom(
@@ -47,7 +50,7 @@ class BulkDeactivateUsersDialog extends StatelessWidget {
             foregroundColor: Colors.white,
           ),
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Deactivate'),
+          child: Text(context.l10n.deactivate),
         ),
       ],
     );

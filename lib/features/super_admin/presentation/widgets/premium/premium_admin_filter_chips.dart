@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium filter chips for admin lists.
 ///
@@ -31,7 +32,7 @@ class PremiumAdminFilterChips extends StatelessWidget {
         children: [
           // All chip
           _FilterChip(
-            label: 'All',
+            label: context.l10n.all,
             count: filterCounts.values.fold(0, (a, b) => a + b),
             isSelected: selectedFilter == null,
             onTap: () {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Premium animated star rating display.
 ///
@@ -82,7 +84,11 @@ class _PremiumStarRatingDisplayState extends State<PremiumStarRatingDisplay>
         if (widget.showNumber) ...[
           const SizedBox(width: 8),
           Text(
-            widget.rating.toStringAsFixed(1),
+            LocaleFormatters.formatNumber(
+              context,
+              widget.rating,
+              decimalDigits: 1,
+            ),
             style: TextStyle(
               fontSize: widget.size * 0.8,
               fontWeight: FontWeight.w800,
@@ -171,7 +177,11 @@ class PremiumRatingOverview extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  averageRating.toStringAsFixed(1),
+                  LocaleFormatters.formatNumber(
+                    context,
+                    averageRating,
+                    decimalDigits: 1,
+                  ),
                   style: const TextStyle(
                     fontSize: 48,
                     fontWeight: FontWeight.w900,
@@ -187,7 +197,7 @@ class PremiumRatingOverview extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '$totalReviews ${totalReviews == 1 ? 'review' : 'reviews'}',
+                  context.l10n.reviewsSummary(totalReviews),
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.white.withValues(alpha: 0.7),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium booking card with status indicator.
 ///
@@ -188,9 +189,7 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
                             Expanded(
                               child: Text(
                                 widget.fieldName,
-                                style: AppTextStyles.titleMedium.copyWith(
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: AppTextStyles.titleMedium,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -281,9 +280,9 @@ class _StatusBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             status,
-            style: AppTextStyles.badge.copyWith(
-              fontWeight: FontWeight.w700,
-              color: color,
+            style: AppTextStyles.withColor(
+              AppTextStyles.bold(AppTextStyles.badge),
+              color,
             ),
           ),
         ],
@@ -313,10 +312,7 @@ class _InfoChip extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           text,
-          style: AppTextStyles.labelSmall.copyWith(
-            fontWeight: FontWeight.w500,
-            color: color.withValues(alpha: 0.9),
-          ),
+          style: AppTextStyles.withColor(AppTextStyles.labelSmall, color),
         ),
       ],
     );
@@ -334,11 +330,10 @@ class _ManualBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
-        'Manual',
-        style: AppTextStyles.badge.copyWith(
-          fontSize: 10,
-          fontWeight: FontWeight.w600,
-          color: AppColors.goldAccent,
+        context.l10n.manual,
+        style: AppTextStyles.withColor(
+          AppTextStyles.bold(AppTextStyles.badge),
+          AppColors.goldAccent,
         ),
       ),
     );
@@ -370,9 +365,9 @@ class _PriceBadge extends StatelessWidget {
       ),
       child: Text(
         price,
-        style: AppTextStyles.labelSmall.copyWith(
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
+        style: AppTextStyles.withColor(
+          AppTextStyles.bold(AppTextStyles.labelSmall),
+          Colors.white,
         ),
       ),
     );

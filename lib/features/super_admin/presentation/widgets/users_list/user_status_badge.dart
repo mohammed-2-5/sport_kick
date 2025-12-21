@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Badge showing whether a user is active or inactive.
 class UserStatusBadge extends StatelessWidget {
@@ -28,11 +29,8 @@ class UserStatusBadge extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            isActive ? 'Active' : 'Inactive',
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: color,
-            ),
+            isActive ? context.l10n.active : context.l10n.inactive,
+            style: AppTextStyles.withColor(AppTextStyles.labelSmallBold, color),
           ),
         ],
       ),

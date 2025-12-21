@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class CitiesStatsCard extends StatelessWidget {
   final int totalCities;
@@ -35,9 +37,9 @@ class CitiesStatsCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text(
-            'Platform Coverage',
-            style: TextStyle(
+          Text(
+            context.l10n.platformCoverage,
+            style: AppTextStyles.titleMedium.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -79,16 +81,14 @@ class CitiesStatsCard extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 24,
+          style: AppTextStyles.headlineSmall.copyWith(
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         Text(
           label,
-          style: TextStyle(
-            fontSize: 12,
+          style: AppTextStyles.labelSmall.copyWith(
             color: Colors.white.withValues(alpha: 0.9),
           ),
         ),

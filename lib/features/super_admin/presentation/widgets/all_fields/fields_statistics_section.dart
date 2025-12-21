@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/shared/stat_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Fields statistics section widget
 ///
@@ -37,7 +38,7 @@ class FieldsStatisticsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Fields Overview',
+            context.l10n.fieldsOverview,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -47,7 +48,7 @@ class FieldsStatisticsSection extends StatelessWidget {
             children: [
               Expanded(
                 child: StatCard(
-                  label: 'Total Fields',
+                  label: context.l10n.totalFields,
                   value: fields.length.toString(),
                   icon: Icons.sports_soccer,
                   color: Colors.blue,
@@ -56,7 +57,7 @@ class FieldsStatisticsSection extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: StatCard(
-                  label: 'Active',
+                  label: context.l10n.active,
                   value: activeFields.toString(),
                   icon: Icons.check_circle,
                   color: Colors.green,
@@ -69,7 +70,7 @@ class FieldsStatisticsSection extends StatelessWidget {
             children: [
               Expanded(
                 child: StatCard(
-                  label: 'Inactive',
+                  label: context.l10n.inactive,
                   value: inactiveFields.toString(),
                   icon: Icons.cancel,
                   color: Colors.orange,
@@ -78,7 +79,7 @@ class FieldsStatisticsSection extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: StatCard(
-                  label: 'Total Bookings',
+                  label: context.l10n.totalBookings,
                   value: totalBookings.toString(),
                   icon: Icons.event,
                   color: Colors.purple,
@@ -89,7 +90,7 @@ class FieldsStatisticsSection extends StatelessWidget {
           if (avgRating > 0) ...[
             const SizedBox(height: 12),
             StatCard(
-              label: 'Average Rating',
+              label: context.l10n.averageRating,
               value: avgRating.toStringAsFixed(1),
               icon: Icons.star,
               color: Colors.amber,

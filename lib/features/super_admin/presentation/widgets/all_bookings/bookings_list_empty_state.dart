@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Empty state widget for bookings list.
 class BookingsListEmptyState extends StatelessWidget {
@@ -19,13 +20,15 @@ class BookingsListEmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            hasFilters ? 'No Results Found' : 'No bookings found',
+            hasFilters
+                ? context.l10n.noResultsFound
+                : context.l10n.noBookingsFound,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
           Text(
             hasFilters
-                ? 'Try adjusting your search or filters'
+                ? context.l10n.tryAdjustingYourSearchOrFilters
                 : 'Bookings will appear here once made',
             style: Theme.of(
               context,

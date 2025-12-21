@@ -13,6 +13,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashb
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_revenue_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/dashboard/premium_super_admin_stats_grid.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium super admin dashboard view.
 ///
@@ -49,7 +50,7 @@ class _PremiumSuperAdminDashboardViewState
         if (state is SuperAdminDashboardError) {
           SnackbarHelper.showError(
             context,
-            'Error loading dashboard: ${state.message}',
+            context.l10n.errorLoadingDashboard(state.message),
           );
         }
       },
@@ -236,12 +237,12 @@ class _PremiumSuperAdminDashboardViewState
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
+        title: Text(context.l10n.logout),
+        content: Text(context.l10n.logoutConfirmationMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -250,8 +251,11 @@ class _PremiumSuperAdminDashboardViewState
               context.goNamed('login');
             },
             child: Text(
-              'Logout',
-              style: AppTextStyles.labelMedium.copyWith(color: AppColors.error),
+              context.l10n.logout,
+              style: AppTextStyles.withColor(
+                AppTextStyles.labelMedium,
+                AppColors.error,
+              ),
             ),
           ),
         ],
@@ -309,7 +313,7 @@ class _ErrorState extends StatelessWidget {
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
+                style: AppTextStyles.bodyLargeWhite,
               ),
               const SizedBox(height: 24),
               GestureDetector(
@@ -337,10 +341,8 @@ class _ErrorState extends StatelessWidget {
                       const Icon(Icons.refresh, size: 18, color: Colors.white),
                       const SizedBox(width: 8),
                       Text(
-                        'Retry',
-                        style: AppTextStyles.labelLarge.copyWith(
-                          color: Colors.white,
-                        ),
+                        context.l10n.retry,
+                        style: AppTextStyles.labelLargeWhite,
                       ),
                     ],
                   ),

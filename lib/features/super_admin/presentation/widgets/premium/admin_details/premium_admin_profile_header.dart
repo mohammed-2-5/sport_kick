@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium admin profile header with gold theme.
 ///
@@ -113,7 +114,7 @@ class PremiumAdminProfileHeader extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            'Admin',
+                            context.l10n.admin,
                             style: AppTextStyles.badge.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
@@ -183,7 +184,7 @@ class PremiumAdminProfileHeader extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        'Since $memberSince',
+                        context.l10n.sinceDate(memberSince),
                         style: AppTextStyles.labelMedium.copyWith(
                           color: Colors.white.withValues(alpha: 0.7),
                         ),
@@ -227,7 +228,7 @@ class _AdminStatusBadge extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            isActive ? 'Active' : 'Inactive',
+            isActive ? context.l10n.active : context.l10n.inactive,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: isActive ? Colors.green.shade300 : Colors.grey.shade300,

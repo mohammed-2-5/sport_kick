@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -144,15 +145,16 @@ class _RegisterBodyState extends State<RegisterBody> {
                   children: [
                     Text(
                       context.l10n.alreadyHaveAccount,
-                      style: TextStyle(color: Colors.grey[600], fontSize: 15),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: Colors.grey[600],
+                      ),
                     ),
                     TextButton(
                       onPressed: () => context.pop(),
                       child: Text(
                         context.l10n.login,
-                        style: const TextStyle(
+                        style: AppTextStyles.labelLarge.copyWith(
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
                         ),
                       ),
                     ),

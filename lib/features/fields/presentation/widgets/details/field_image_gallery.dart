@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/field_badges.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/image_placeholder.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Image gallery widget for field details page.
 ///
@@ -98,9 +99,8 @@ class _FieldImageGalleryState extends State<FieldImageGallery> {
               ),
               child: Text(
                 '${_currentImageIndex + 1}/${widget.images.length}',
-                style: const TextStyle(
+                style: AppTextStyles.labelLarge.copyWith(
                   color: Colors.white,
-                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),

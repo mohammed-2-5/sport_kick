@@ -3,6 +3,8 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Premium revenue statistics card.
 ///
@@ -54,14 +56,14 @@ class PremiumOwnerProfileStats extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Total Revenue',
+                        context.l10n.totalRevenue,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'This Month',
+                        context.l10n.thisMonth,
                         style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -108,7 +110,12 @@ class PremiumOwnerProfileStats extends StatelessWidget {
                 colors: [Colors.green, Colors.teal],
               ).createShader(bounds),
               child: Text(
-                '\$${revenue?.totalRevenue.toStringAsFixed(0) ?? '0'}',
+                LocaleFormatters.formatPrice(
+                  context,
+                  amount: revenue?.totalRevenue ?? 0,
+                  currency: context.l10n.currencyEgp,
+                  decimalDigits: 0,
+                ),
                 style: AppTextStyles.displaySmall.copyWith(
                   fontWeight: FontWeight.w800,
                   color: Colors.white,

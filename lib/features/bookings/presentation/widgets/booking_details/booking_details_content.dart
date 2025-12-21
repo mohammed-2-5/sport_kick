@@ -7,9 +7,11 @@ import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_field_image.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_id_card.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_price_card.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_review_section.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_status_banner.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_timeline_card.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_user_notes_card.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Main content widget for booking details page.
 ///
@@ -42,10 +44,9 @@ class BookingDetailsContent extends StatelessWidget {
                 if (booking.fieldName != null) ...[
                   Text(
                     booking.fieldName!,
-                    style: const TextStyle(
-                      fontSize: 26,
+                    style: AppTextStyles.headlineSmall.copyWith(
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF1A1F3A),
+                      color: const Color(0xFF1A1F3A),
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -79,6 +80,10 @@ class BookingDetailsContent extends StatelessWidget {
                   const SizedBox(height: BookingConstants.standardPadding),
                   BookingCancellationCard(reason: booking.cancellationReason!),
                 ],
+
+                // Review Section (for completed/verified bookings)
+                const SizedBox(height: BookingConstants.standardPadding),
+                BookingReviewSection(booking: booking),
 
                 // Bottom spacing for floating actions
                 const SizedBox(height: 100),

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Review success overlay with animations.
 ///
@@ -146,7 +147,9 @@ class _ReviewSuccessOverlayState extends State<ReviewSuccessOverlay>
 
                     // Success message
                     Text(
-                      widget.isEdit ? 'Review Updated!' : 'Review Submitted!',
+                      widget.isEdit
+                          ? context.l10n.reviewUpdated
+                          : context.l10n.reviewSubmittedSuccess,
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
@@ -158,7 +161,7 @@ class _ReviewSuccessOverlayState extends State<ReviewSuccessOverlay>
 
                     Text(
                       widget.isEdit
-                          ? 'Your review has been updated successfully'
+                          ? context.l10n.yourReviewHasBeenUpdatedSuccessfully
                           : 'Thank you for sharing your experience',
                       style: const TextStyle(
                         fontSize: 15,
@@ -173,7 +176,7 @@ class _ReviewSuccessOverlayState extends State<ReviewSuccessOverlay>
                     SizedBox(
                       width: 200,
                       child: PremiumButton(
-                        label: 'Done',
+                        label: context.l10n.done,
                         onPressed: widget.onDone,
                         icon: Icons.check,
                       ),

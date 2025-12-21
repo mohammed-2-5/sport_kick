@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 import '../../../../../../core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium settings sections.
 ///
@@ -44,14 +45,14 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
       children: [
         // Account Section
         _SettingsSection(
-          title: 'Account',
+          title: context.l10n.account,
           icon: Icons.person_outline,
           iconGradient: const [AppColors.accentCyan, AppColors.accentCyanDark],
           children: [
             _SettingsTile(
               icon: Icons.lock_outline,
-              title: 'Change Password',
-              subtitle: 'Update your password',
+              title: context.l10n.changePassword,
+              subtitle: context.l10n.updateYourPassword,
               onTap: () {
                 HapticFeedback.lightImpact();
                 context.pushNamed('changePassword');
@@ -64,14 +65,14 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
 
         // Notification Section
         _SettingsSection(
-          title: 'Notifications',
+          title: context.l10n.notifications,
           icon: Icons.notifications_outlined,
           iconGradient: const [Colors.orange, Colors.deepOrange],
           children: [
             _SwitchTile(
               icon: Icons.email_outlined,
-              title: 'Email Notifications',
-              subtitle: 'Receive updates via email',
+              title: context.l10n.emailNotifications,
+              subtitle: context.l10n.receiveUpdatesViaEmail,
               value: emailNotifications,
               onChanged: (value) {
                 HapticFeedback.lightImpact();
@@ -81,8 +82,8 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
             const Divider(height: 1),
             _SwitchTile(
               icon: Icons.phone_android,
-              title: 'Push Notifications',
-              subtitle: 'Receive push notifications',
+              title: context.l10n.pushNotifications,
+              subtitle: context.l10n.receivePushNotifications,
               value: pushNotifications,
               onChanged: (value) {
                 HapticFeedback.lightImpact();
@@ -92,8 +93,8 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
             const Divider(height: 1),
             _SwitchTile(
               icon: Icons.calendar_today,
-              title: 'Booking Notifications',
-              subtitle: 'Get notified about bookings',
+              title: context.l10n.bookingNotifications,
+              subtitle: context.l10n.getNotifiedAboutBookings,
               value: bookingNotifications,
               onChanged: (value) {
                 HapticFeedback.lightImpact();
@@ -107,14 +108,14 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
 
         // Booking Section
         _SettingsSection(
-          title: 'Booking Settings',
+          title: context.l10n.bookingSettings,
           icon: Icons.settings_outlined,
           iconGradient: const [Colors.purple, Colors.deepPurple],
           children: [
             _SwitchTile(
               icon: Icons.check_circle_outline,
-              title: 'Auto-Approve Bookings',
-              subtitle: 'Automatically approve new bookings',
+              title: context.l10n.autoApproveBookings,
+              subtitle: context.l10n.automaticallyApproveNewBookings,
               value: autoApproveBookings,
               onChanged: (value) {
                 HapticFeedback.lightImpact();
@@ -128,14 +129,14 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
 
         // About Section
         _SettingsSection(
-          title: 'About',
+          title: context.l10n.about,
           icon: Icons.info_outline,
           iconGradient: const [Colors.grey, Colors.blueGrey],
           children: [
             _SettingsTile(
               icon: Icons.article_outlined,
-              title: 'Terms & Conditions',
-              subtitle: 'Read our terms',
+              title: context.l10n.termsAndConditions,
+              subtitle: context.l10n.readOurTerms,
               onTap: () {
                 HapticFeedback.lightImpact();
                 // Navigate to terms
@@ -144,15 +145,19 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
             const Divider(height: 1),
             _SettingsTile(
               icon: Icons.privacy_tip_outlined,
-              title: 'Privacy Policy',
-              subtitle: 'Read our privacy policy',
+              title: context.l10n.privacyPolicy,
+              subtitle: context.l10n.readOurPrivacyPolicy,
               onTap: () {
                 HapticFeedback.lightImpact();
                 // Navigate to privacy
               },
             ),
             const Divider(height: 1),
-            const _InfoTile(icon: Icons.info, title: 'Version', value: '1.0.0'),
+            _InfoTile(
+              icon: Icons.info,
+              title: context.l10n.version,
+              value: '1.0.0',
+            ),
           ],
         ),
 
@@ -172,7 +177,7 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
                 const Icon(Icons.logout, color: Colors.red),
                 const SizedBox(width: 12),
                 Text(
-                  'Logout',
+                  context.l10n.logout,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
                     color: Colors.red,

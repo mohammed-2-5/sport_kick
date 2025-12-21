@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium settings section card.
 ///
@@ -51,16 +52,7 @@ class PremiumSettingsSection extends StatelessWidget {
               child: Icon(icon, size: 20, color: Colors.white),
             ),
             const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                title,
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ),
+            Expanded(child: Text(title, style: AppTextStyles.titleMediumBold)),
             if (isSaving) ...[
               SizedBox(
                 width: 16,
@@ -72,9 +64,10 @@ class PremiumSettingsSection extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'Saving...',
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.premiumGold.withValues(alpha: 0.8),
+                context.l10n.saving,
+                style: AppTextStyles.withColor(
+                  AppTextStyles.bodySmall,
+                  AppColors.premiumGold,
                 ),
               ),
             ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium city card with glassmorphism design.
 ///
@@ -239,10 +240,10 @@ class _FieldsBadge extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            '$count field${count != 1 ? 's' : ''}',
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.accentCyan.withValues(alpha: 0.9),
+            context.l10n.fieldsCount(count),
+            style: AppTextStyles.withColor(
+              AppTextStyles.labelSmallBold,
+              AppColors.accentCyan,
             ),
           ),
         ],
@@ -260,7 +261,7 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isActive ? const Color(0xFF10B981) : const Color(0xFFEF4444);
-    final label = isActive ? 'Active' : 'Inactive';
+    final label = isActive ? context.l10n.active : context.l10n.inactive;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

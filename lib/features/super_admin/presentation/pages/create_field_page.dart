@@ -14,6 +14,8 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_sta
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/create_field_form_body.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_creation_success_dialog.dart';
 
+import '../../../../core/localization/l10n_extensions.dart';
+
 /// Create Field Page for Super Admin
 ///
 /// Allows super admin to create new fields and assign them to admins.
@@ -60,7 +62,7 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
         ..loadCities(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Create New Field'),
+          title: Text(context.l10n.createNewField2),
           centerTitle: true,
           elevation: 0,
           flexibleSpace: Container(
@@ -89,8 +91,8 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
           },
           builder: (context, state) {
             if (state is SuperAdminLoading) {
-              return const LoadingIndicator.inline(
-                message: 'Creating field...',
+              return LoadingIndicator.inline(
+                message: context.l10n.creatingField,
               );
             }
 

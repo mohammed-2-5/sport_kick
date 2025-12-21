@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/analytics/premium_metric_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium Performance Metrics Row.
 ///
@@ -33,7 +34,7 @@ class PremiumPerformanceMetrics extends StatelessWidget {
   Widget build(BuildContext context) {
     final metrics = [
       MetricData(
-        label: 'Rating',
+        label: context.l10n.rating,
         value: averageRating,
         maxValue: 5,
         displayValue: averageRating.toStringAsFixed(1),
@@ -41,7 +42,7 @@ class PremiumPerformanceMetrics extends StatelessWidget {
         color: const Color(0xFFFBBF24),
       ),
       MetricData(
-        label: 'Completion',
+        label: context.l10n.completion,
         value: completionRate,
         maxValue: 100,
         displayValue: '${completionRate.toStringAsFixed(0)}%',
@@ -49,7 +50,7 @@ class PremiumPerformanceMetrics extends StatelessWidget {
         color: const Color(0xFF10B981),
       ),
       MetricData(
-        label: 'Response',
+        label: context.l10n.response,
         value: 24 - responseTime.clamp(0, 24),
         maxValue: 24,
         displayValue: '${responseTime.toStringAsFixed(0)}h',
@@ -57,7 +58,7 @@ class PremiumPerformanceMetrics extends StatelessWidget {
         color: const Color(0xFF3B82F6),
       ),
       MetricData(
-        label: 'Satisfaction',
+        label: context.l10n.satisfaction,
         value: satisfactionRate,
         maxValue: 100,
         displayValue: '${satisfactionRate.toStringAsFixed(0)}%',

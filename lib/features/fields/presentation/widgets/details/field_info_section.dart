@@ -44,8 +44,7 @@ class FieldInfoSection extends StatelessWidget {
           if (category != null)
             Text(
               category.name,
-              style: const TextStyle(
-                fontSize: 16,
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
               ),
@@ -89,8 +88,7 @@ class FieldInfoSection extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         field.ratingDisplay,
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -98,8 +96,7 @@ class FieldInfoSection extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '(${field.totalReviews})',
-                        style: TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: Colors.white.withValues(alpha: 0.9),
                         ),
                       ),
@@ -135,8 +132,7 @@ class FieldInfoSection extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         '${LocaleFormatters.formatNumber(context, field.totalBookings)} ${context.l10n.bookings}',
-                        style: const TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.info,
                           fontWeight: FontWeight.w600,
                         ),
@@ -173,8 +169,7 @@ class FieldInfoSection extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.ratePerHour,
-                            style: TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: Colors.white.withValues(alpha: 0.9),
                               fontWeight: FontWeight.w500,
                             ),
@@ -184,8 +179,7 @@ class FieldInfoSection extends StatelessWidget {
                       const SizedBox(height: 6),
                       Text(
                         '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
-                        style: const TextStyle(
-                          fontSize: 22,
+                        style: AppTextStyles.headlineSmall.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -224,8 +218,7 @@ class FieldInfoSection extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.fieldSize,
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: AppColors.info,
                               fontWeight: FontWeight.w500,
                             ),
@@ -235,8 +228,7 @@ class FieldInfoSection extends StatelessWidget {
                       const SizedBox(height: 6),
                       Text(
                         field.fieldSize,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: AppColors.info,
                         ),
@@ -327,8 +319,7 @@ class FieldInfoSection extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),

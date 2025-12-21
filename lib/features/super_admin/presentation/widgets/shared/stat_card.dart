@@ -32,16 +32,12 @@ class StatCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontWeight: FontWeight.bold,
-              color: color,
+            style: AppTextStyles.bold(
+              AppTextStyles.withColor(AppTextStyles.headlineSmall, color),
             ),
           ),
           const SizedBox(height: 4),
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(color: Colors.grey[600]),
-          ),
+          Text(label, style: AppTextStyles.captionSecondary),
         ],
       ),
     );

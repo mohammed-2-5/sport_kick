@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium navigation bar item with animations.
 ///
@@ -127,7 +128,7 @@ class _PremiumNavItemState extends State<PremiumNavItem>
                         padding: const EdgeInsets.only(left: 8),
                         child: Text(
                           widget.label,
-                          style: const TextStyle(
+                          style: AppTextStyles.labelSmall.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                             color: AppColors.accentCyan,

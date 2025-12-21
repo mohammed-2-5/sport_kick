@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium booking summary card for manual booking.
 ///
@@ -63,7 +64,7 @@ class PremiumBookingSummary extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Text(
-                'Booking Summary',
+                context.l10n.bookingSummary,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -77,30 +78,42 @@ class PremiumBookingSummary extends StatelessWidget {
           // Details
           _SummaryRow(
             icon: Icons.sports_soccer,
-            label: 'Field',
+            label: context.l10n.field,
             value: fieldName,
           ),
           const SizedBox(height: 12),
-          _SummaryRow(icon: Icons.calendar_today, label: 'Date', value: date),
+          _SummaryRow(
+            icon: Icons.calendar_today,
+            label: context.l10n.dateLabel,
+            value: date,
+          ),
           const SizedBox(height: 12),
-          _SummaryRow(icon: Icons.access_time, label: 'Time', value: timeSlot),
+          _SummaryRow(
+            icon: Icons.access_time,
+            label: context.l10n.timeLabel,
+            value: timeSlot,
+          ),
           const SizedBox(height: 12),
           _SummaryRow(
             icon: Icons.person,
-            label: 'Customer',
+            label: context.l10n.customerName,
             value: customerName,
           ),
           if (customerPhone != null) ...[
             const SizedBox(height: 12),
             _SummaryRow(
               icon: Icons.phone,
-              label: 'Phone',
+              label: context.l10n.phone2,
               value: customerPhone!,
             ),
           ],
           if (notes != null && notes!.isNotEmpty) ...[
             const SizedBox(height: 12),
-            _SummaryRow(icon: Icons.notes, label: 'Notes', value: notes!),
+            _SummaryRow(
+              icon: Icons.notes,
+              label: context.l10n.notes,
+              value: notes!,
+            ),
           ],
           const SizedBox(height: 16),
           const Divider(height: 1),
@@ -110,7 +123,7 @@ class PremiumBookingSummary extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Total Price',
+                context.l10n.totalPrice,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,

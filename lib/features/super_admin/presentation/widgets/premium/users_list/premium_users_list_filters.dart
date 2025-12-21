@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium filter chips for super admin users list.
 ///
@@ -39,22 +40,22 @@ class PremiumUsersListFilters extends StatelessWidget {
       child: Row(
         children: [
           _FilterChip(
-            label: 'All',
-            count: stats['total'] ?? 0,
+            label: context.l10n.all,
+            count: stats[context.l10n.total2] ?? 0,
             isSelected: selectedFilter == null,
             onTap: () => onFilterChanged(null),
           ),
           _FilterChip(
-            label: 'Active',
-            count: stats['active'] ?? 0,
-            isSelected: selectedFilter == 'Active',
+            label: context.l10n.active,
+            count: stats[context.l10n.active2] ?? 0,
+            isSelected: selectedFilter == context.l10n.active,
             onTap: () => onFilterChanged('Active'),
             color: Colors.green,
           ),
           _FilterChip(
-            label: 'Inactive',
-            count: stats['inactive'] ?? 0,
-            isSelected: selectedFilter == 'Inactive',
+            label: context.l10n.inactive,
+            count: stats[context.l10n.inactive2] ?? 0,
+            isSelected: selectedFilter == context.l10n.inactive,
             onTap: () => onFilterChanged('Inactive'),
             color: Colors.grey,
           ),
@@ -118,9 +119,11 @@ class _FilterChip extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: AppTextStyles.labelMedium.copyWith(
-                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                  color: isSelected ? Colors.white : AppColors.textSecondary,
+                style: AppTextStyles.withColor(
+                  isSelected
+                      ? AppTextStyles.bold(AppTextStyles.labelMedium)
+                      : AppTextStyles.labelMedium,
+                  isSelected ? Colors.white : AppColors.textSecondary,
                 ),
               ),
               if (count > 0) ...[
@@ -140,9 +143,9 @@ class _FilterChip extends StatelessWidget {
                   ),
                   child: Text(
                     count.toString(),
-                    style: AppTextStyles.labelSmall.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: isSelected
+                    style: AppTextStyles.withColor(
+                      AppTextStyles.bold(AppTextStyles.labelSmall),
+                      isSelected
                           ? Colors.white
                           : (color ?? AppColors.premiumGold),
                     ),

@@ -193,7 +193,7 @@ class _MissingHoursCard extends StatelessWidget {
           TextButton(
             onPressed: onSetup,
             child: Text(
-              'Set up',
+              context.l10n.setUp,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.goldAccent,

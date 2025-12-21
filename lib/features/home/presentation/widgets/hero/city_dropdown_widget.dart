@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class CityDropdownWidget extends StatelessWidget {
   const CityDropdownWidget({super.key});
@@ -51,10 +52,9 @@ class CityDropdownWidget extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   selectedCity.name,
-                  style: const TextStyle(
+                  style: AppTextStyles.labelLarge.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
-                    fontSize: 14,
                   ),
                 ),
               ],
@@ -78,10 +78,9 @@ class CityDropdownWidget extends StatelessWidget {
             ),
             dropdownColor: AppColors.primary,
             isDense: true,
-            style: const TextStyle(
+            style: AppTextStyles.labelLarge.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w600,
-              fontSize: 14,
             ),
             onChanged: (CityEntity? newValue) {
               if (newValue != null) {
@@ -101,10 +100,9 @@ class CityDropdownWidget extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       city.name,
-                      style: const TextStyle(
+                      style: AppTextStyles.labelLarge.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
-                        fontSize: 14,
                       ),
                     ),
                   ],

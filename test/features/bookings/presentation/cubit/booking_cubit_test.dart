@@ -101,8 +101,11 @@ void main() {
           ).thenAnswer((_) async => Right(tTimeSlots));
           return cubit;
         },
-        act: (cubit) =>
-            cubit.loadAvailableTimeSlots(fieldId: tFieldId, date: tDate),
+        act: (cubit) => cubit.loadAvailableTimeSlots(
+          fieldId: tFieldId,
+          date: tDate,
+          loadingMessage: 'Loading available time slots...',
+        ),
         expect: () => [
           const BookingLoading(message: 'Loading available time slots...'),
           TimeSlotsLoaded(
@@ -124,8 +127,11 @@ void main() {
           ).thenAnswer((_) async => const Right([]));
           return cubit;
         },
-        act: (cubit) =>
-            cubit.loadAvailableTimeSlots(fieldId: tFieldId, date: tDate),
+        act: (cubit) => cubit.loadAvailableTimeSlots(
+          fieldId: tFieldId,
+          date: tDate,
+          loadingMessage: 'Loading available time slots...',
+        ),
         expect: () => [
           const BookingLoading(message: 'Loading available time slots...'),
           const BookingsEmpty(),
@@ -161,6 +167,7 @@ void main() {
           startTime: tStartTime,
           endTime: tEndTime,
           totalPrice: tPrice,
+          loadingMessage: 'Creating booking...',
         ),
         expect: () => [
           const BookingLoading(message: 'Creating booking...'),
@@ -178,7 +185,8 @@ void main() {
           ).thenAnswer((_) async => Right(tBookings));
           return cubit;
         },
-        act: (cubit) => cubit.loadUserBookings(),
+        act: (cubit) =>
+            cubit.loadUserBookings(loadingMessage: 'Loading your bookings...'),
         expect: () => [
           const BookingLoading(message: 'Loading your bookings...'),
           BookingsLoaded(tBookings),
@@ -201,8 +209,11 @@ void main() {
           ).thenAnswer((_) async => Right(tBooking));
           return cubit;
         },
-        act: (cubit) =>
-            cubit.cancelBooking(bookingId: tBookingId, reason: tReason),
+        act: (cubit) => cubit.cancelBooking(
+          bookingId: tBookingId,
+          reason: tReason,
+          loadingMessage: 'Canceling booking...',
+        ),
         expect: () => [
           const BookingLoading(message: 'Canceling booking...'),
           BookingCanceled(tBooking),
@@ -228,7 +239,11 @@ void main() {
           ).thenAnswer((_) async => Right(tBookings));
           return cubit;
         },
-        act: (cubit) => cubit.updateBookingStatus(tBookingId, tStatus),
+        act: (cubit) => cubit.updateBookingStatus(
+          tBookingId,
+          tStatus,
+          loadingMessage: 'Updating booking...',
+        ),
         expect: () => [
           const BookingLoading(message: 'Updating booking...'),
           const BookingLoading(message: 'Loading bookings...'),

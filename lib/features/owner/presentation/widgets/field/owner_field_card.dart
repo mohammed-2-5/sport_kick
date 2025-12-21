@@ -3,10 +3,12 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_action_buttons.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_card_image.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field/field_stat_chip.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Owner Field Card widget for managing fields
 ///
@@ -99,13 +101,21 @@ class OwnerFieldCard extends StatelessWidget {
                   children: [
                     FieldStatChip(
                       icon: Icons.star_rounded,
-                      text: field.hasReviews ? field.ratingDisplay : 'New',
+                      text: field.hasReviews
+                          ? field.ratingDisplay
+                          : context.l10n.newLabel,
                       color: const Color(0xFFFFA726),
                     ),
                     const SizedBox(width: 8),
                     FieldStatChip(
                       icon: Icons.bookmark_rounded,
-                      text: '${field.totalBookings} bookings',
+                      text: context.l10n.bookingsCount(
+                        field.totalBookings,
+                        LocaleFormatters.formatNumber(
+                          context,
+                          field.totalBookings,
+                        ),
+                      ),
                       color: const Color(0xFF42A5F5),
                     ),
                     const Spacer(),

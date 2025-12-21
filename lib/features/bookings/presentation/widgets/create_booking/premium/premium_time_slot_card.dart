@@ -6,6 +6,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/next_day_badge.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium time slot card with selection animation.
 ///
@@ -190,7 +191,7 @@ class _TimeDisplay extends StatelessWidget {
             endTime: slot.endTime,
             isEndNextDay: slot.isNextDay,
           ),
-          style: TextStyle(
+          style: AppTextStyles.labelLarge.copyWith(
             fontSize: 13,
             fontWeight: FontWeight.w700,
             color: isSelected
@@ -256,7 +257,7 @@ class _PriceBadge extends StatelessWidget {
           currency: slot.currency,
           decimalDigits: 0,
         ),
-        style: TextStyle(
+        style: AppTextStyles.labelSmall.copyWith(
           fontSize: 12,
           fontWeight: FontWeight.w600,
           color: isSelected ? Colors.white : AppColors.success,
@@ -282,7 +283,7 @@ class _BookedBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             context.l10n.bookedLabel,
-            style: const TextStyle(
+            style: AppTextStyles.labelSmall.copyWith(
               fontSize: 11,
               fontWeight: FontWeight.w600,
               color: AppColors.error,
@@ -314,7 +315,7 @@ class _DurationUnavailableBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             context.l10n.durationUnavailable,
-            style: const TextStyle(
+            style: AppTextStyles.labelSmall.copyWith(
               fontSize: 11,
               fontWeight: FontWeight.w600,
               color: AppColors.warning,

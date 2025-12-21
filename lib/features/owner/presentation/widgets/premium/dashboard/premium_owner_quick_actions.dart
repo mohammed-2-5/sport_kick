@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium quick actions grid for owner dashboard.
 ///
@@ -39,51 +40,51 @@ class PremiumOwnerQuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final actions = [
       _QuickAction(
-        label: 'Create Booking',
+        label: context.l10n.createBooking,
         icon: Icons.add_circle_outline_rounded,
         gradient: const [AppColors.accentCyan, AppColors.accentCyanDark],
         onTap: onManualBooking,
         isPrimary: true,
       ),
       _QuickAction(
-        label: 'View Bookings',
+        label: context.l10n.viewBookings,
         icon: Icons.calendar_month_rounded,
         gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
         onTap: onViewBookings,
       ),
       _QuickAction(
-        label: 'Booking Table',
+        label: context.l10n.bookingTable,
         icon: Icons.table_chart_rounded,
         gradient: const [Color(0xFF14B8A6), Color(0xFF0D9488)],
         onTap: onBookingTable,
       ),
       _QuickAction(
-        label: 'Manage Fields',
+        label: context.l10n.manageFields,
         icon: Icons.sports_soccer_rounded,
         gradient: const [Color(0xFF10B981), Color(0xFF059669)],
         onTap: onManageFields,
       ),
       _QuickAction(
-        label: 'Subscriptions',
+        label: context.l10n.subscriptions,
         icon: Icons.event_repeat_rounded,
         gradient: const [Color(0xFFF59E0B), Color(0xFFD97706)],
         onTap: onRecurringRequests,
         badgeCount: pendingRecurringCount,
       ),
       _QuickAction(
-        label: 'Analytics',
+        label: context.l10n.analytics,
         icon: Icons.analytics_rounded,
         gradient: const [Color(0xFFEF4444), Color(0xFFDC2626)],
         onTap: onAnalytics,
       ),
       _QuickAction(
-        label: 'Settings',
+        label: context.l10n.settings,
         icon: Icons.settings_rounded,
         gradient: const [Color(0xFF8B5CF6), Color(0xFFEC4899)],
         onTap: onSettings,
       ),
       _QuickAction(
-        label: 'Profile',
+        label: context.l10n.profile,
         icon: Icons.person_rounded,
         gradient: const [Color(0xFF3B82F6), Color(0xFF1D4ED8)],
         onTap: onProfile,
@@ -95,7 +96,7 @@ class PremiumOwnerQuickActions extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionHeader(title: 'Quick Actions'),
+          _SectionHeader(title: context.l10n.quickActions),
           const SizedBox(height: 12),
           AnimationLimiter(
             child: GridView.builder(

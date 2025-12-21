@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
@@ -129,8 +130,8 @@ class _PremiumUsersListViewState extends State<PremiumUsersListView> {
                 children: [
                   // Premium Header
                   PremiumCurvedHeader(
-                    title: 'Users',
-                    subtitle: '${users.length} total users',
+                    title: context.l10n.users,
+                    subtitle: context.l10n.totalUsersCount(users.length),
                     showBackButton: true,
                     trailing: IconButton(
                       onPressed: _toggleSelectionMode,
@@ -156,7 +157,7 @@ class _PremiumUsersListViewState extends State<PremiumUsersListView> {
                             // Search bar
                             PremiumAdminSearchBar(
                               controller: _searchController,
-                              hintText: 'Search users...',
+                              hintText: context.l10n.searchUsers,
                               onChanged: (value) => setState(() {}),
                               hasActiveFilters: _selectedStatus != null,
                               onFilterTap: () {
@@ -365,7 +366,9 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              hasFilters ? 'No users match your filters' : 'No users found',
+              hasFilters
+                  ? context.l10n.noUsersMatchYourFilters
+                  : context.l10n.noUsersFound,
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
@@ -374,7 +377,7 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               hasFilters
-                  ? 'Try adjusting your search or filters'
+                  ? context.l10n.tryAdjustingYourSearchOrFilters
                   : 'Users will appear here once they register',
               style: AppTextStyles.labelMedium.copyWith(
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -386,7 +389,7 @@ class _EmptyState extends StatelessWidget {
               TextButton(
                 onPressed: onClearFilters,
                 child: Text(
-                  'Clear Filters',
+                  context.l10n.clearFilters,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.premiumGold,
                   ),

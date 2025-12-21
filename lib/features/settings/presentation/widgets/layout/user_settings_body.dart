@@ -55,6 +55,7 @@ class UserSettingsBody extends StatelessWidget {
 
     if (state is SettingsError) {
       return EmptyStates.error(
+        context,
         message: state.message,
         onRetry: () => _refreshSettings(context),
       );

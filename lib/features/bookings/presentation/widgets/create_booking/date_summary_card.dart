@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Card showing selected date with change option.
 class DateSummaryCard extends StatelessWidget {
@@ -36,8 +37,7 @@ class DateSummaryCard extends StatelessWidget {
             context.l10n.selectedDateLabel(
               DateFormat('EEE, MMM d', locale).format(selectedDate),
             ),
-            style: const TextStyle(
-              fontSize: 14,
+            style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.accentCyan,
             ),
@@ -47,8 +47,7 @@ class DateSummaryCard extends StatelessWidget {
             onTap: onChangePressed,
             child: Text(
               context.l10n.change,
-              style: const TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.labelLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.accentCyan,
                 decoration: TextDecoration.underline,

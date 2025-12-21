@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
 import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/dialogs/date_format_selector_dialog.dart';
@@ -23,7 +24,7 @@ class SystemPreferencesDateTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PremiumSettingsTile(
-      label: 'Date Format',
+      label: context.l10n.dateFormat,
       value: value,
       icon: Icons.calendar_today,
       iconColor: Colors.blue,

@@ -20,7 +20,7 @@ export 'premium_button_style.dart';
 /// Usage:
 /// ```dart
 /// PremiumButton(
-///   label: 'Book Now',
+///   label: context.l10n.bookNow,
 ///   onPressed: () => book(),
 ///   style: PremiumButtonStyle.primary,
 ///   icon: Icons.calendar_today,

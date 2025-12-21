@@ -1,6 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/analytics/analytics_chart_card.dart';
@@ -13,6 +16,7 @@ class RevenueTrendsChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).toString();
     // Group bookings by month and calculate revenue
     final Map<int, double> monthlyRevenue = {};
     final now = DateTime.now();
@@ -36,8 +40,8 @@ class RevenueTrendsChart extends StatelessWidget {
     }
 
     return AnalyticsChartCard(
-      title: 'Revenue Trends',
-      subtitle: 'Last 6 months revenue',
+      title: context.l10n.revenueTrendsTitle,
+      subtitle: context.l10n.last6MonthsRevenue,
       icon: Icons.trending_up,
       color: Colors.green,
       child: SizedBox(
@@ -54,7 +58,7 @@ class RevenueTrendsChart extends StatelessWidget {
                     reservedSize: 60,
                     getTitlesWidget: (value, meta) {
                       return Text(
-                        '${value.toInt()} EGP',
+                        '${LocaleFormatters.formatNumber(context, value.toInt())} ${context.l10n.currencyEgp}',
                         style: AppTextStyles.labelSmall.copyWith(fontSize: 10),
                       );
                     },
@@ -68,23 +72,11 @@ class RevenueTrendsChart extends StatelessWidget {
                       final month = monthIndex <= 0
                           ? monthIndex + 12
                           : monthIndex;
-                      const months = [
-                        '',
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'May',
-                        'Jun',
-                        'Jul',
-                        'Aug',
-                        'Sep',
-                        'Oct',
-                        'Nov',
-                        'Dec',
-                      ];
                       return Text(
-                        months[month],
+                        DateFormat(
+                          'MMM',
+                          locale,
+                        ).format(DateTime(now.year, month, 1)),
                         style: AppTextStyles.labelSmall.copyWith(fontSize: 10),
                       );
                     },

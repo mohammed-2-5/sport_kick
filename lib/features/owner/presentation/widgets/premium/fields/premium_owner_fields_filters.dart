@@ -41,20 +41,20 @@ class PremiumOwnerFieldsFilters extends StatelessWidget {
         children: [
           _FilterChip(
             label: context.l10n.all,
-            count: stats['total'] ?? 0,
+            count: stats[context.l10n.total2] ?? 0,
             isSelected: selectedFilter == null,
             onTap: () => onFilterChanged(null),
           ),
           _FilterChip(
             label: context.l10n.active,
-            count: stats['active'] ?? 0,
+            count: stats[context.l10n.active2] ?? 0,
             isSelected: selectedFilter == true,
             onTap: () => onFilterChanged(true),
             color: Colors.green,
           ),
           _FilterChip(
             label: context.l10n.inactive,
-            count: stats['inactive'] ?? 0,
+            count: stats[context.l10n.inactive2] ?? 0,
             isSelected: selectedFilter == false,
             onTap: () => onFilterChanged(false),
             color: Colors.grey,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class CityFilterChips extends StatelessWidget {
   final String selectedFilter;
@@ -24,7 +25,7 @@ class CityFilterChips extends StatelessWidget {
         children: [
           _buildFilterChip(
             context,
-            'All',
+            context.l10n.all,
             'all',
             allCount,
             Icons.location_city,
@@ -32,7 +33,7 @@ class CityFilterChips extends StatelessWidget {
           const SizedBox(width: 8),
           _buildFilterChip(
             context,
-            'Active',
+            context.l10n.active,
             'active',
             activeCount,
             Icons.check_circle,
@@ -40,7 +41,7 @@ class CityFilterChips extends StatelessWidget {
           const SizedBox(width: 8),
           _buildFilterChip(
             context,
-            'Inactive',
+            context.l10n.inactive,
             'inactive',
             inactiveCount,
             Icons.cancel,
@@ -64,7 +65,7 @@ class CityFilterChips extends StatelessWidget {
         children: [
           Icon(icon, size: 16),
           const SizedBox(width: 6),
-          Text('$label ($count)'),
+          Text(context.l10n.labelCount(count, label)),
         ],
       ),
       selected: isSelected,

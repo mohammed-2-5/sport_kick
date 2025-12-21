@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/settings_section.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/settings/settings_tile.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Account section widget for owner settings page.
 class OwnerAccountSection extends StatelessWidget {
@@ -11,13 +12,13 @@ class OwnerAccountSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsSection(
-      title: 'Account',
+      title: context.l10n.account,
       icon: Icons.person_outline,
       children: [
         SettingsTile(
           leading: const Icon(Icons.lock_reset, color: AppColors.primary),
-          title: 'Change Password',
-          subtitle: 'Update your account password',
+          title: context.l10n.changePassword,
+          subtitle: context.l10n.changePasswordDesc,
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
             context.pushNamed('changePassword');
@@ -26,8 +27,8 @@ class OwnerAccountSection extends StatelessWidget {
         const SizedBox(height: 8),
         SettingsTile(
           leading: const Icon(Icons.edit, color: AppColors.info),
-          title: 'Edit Profile',
-          subtitle: 'Update your personal information',
+          title: context.l10n.editProfile,
+          subtitle: context.l10n.editProfileDesc,
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
             context.pushNamed('ownerProfile');

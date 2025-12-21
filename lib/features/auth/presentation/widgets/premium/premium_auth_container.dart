@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium auth container with glassmorphism effect.
 ///
@@ -81,7 +82,7 @@ class PremiumAuthContainer extends StatelessWidget {
                           if (title != null) ...[
                             Text(
                               title!,
-                              style: TextStyle(
+                              style: AppTextStyles.displaySmall.copyWith(
                                 fontSize: isTablet ? 32 : 28,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
@@ -92,7 +93,7 @@ class PremiumAuthContainer extends StatelessWidget {
                               const SizedBox(height: 8),
                               Text(
                                 subtitle!,
-                                style: TextStyle(
+                                style: AppTextStyles.bodyMedium.copyWith(
                                   fontSize: isTablet ? 16 : 14,
                                   color: Colors.white.withValues(alpha: 0.7),
                                 ),
@@ -351,7 +352,7 @@ class PremiumAuthHeader extends StatelessWidget {
           if (onBack != null) const SizedBox(height: 16),
           Text(
             title,
-            style: const TextStyle(
+            style: AppTextStyles.headlineSmall.copyWith(
               fontSize: 28,
               fontWeight: FontWeight.w800,
               color: Colors.white,
@@ -361,7 +362,7 @@ class PremiumAuthHeader extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               subtitle!,
-              style: TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 fontSize: 14,
                 color: Colors.white.withValues(alpha: 0.7),
               ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium owner profile card.
 ///
@@ -160,7 +161,7 @@ class PremiumOwnerProfileCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _StatItem(
-                  label: 'Fields',
+                  label: context.l10n.fields,
                   value: '$fieldsCount',
                   icon: Icons.sports_soccer,
                 ),
@@ -168,7 +169,7 @@ class PremiumOwnerProfileCard extends StatelessWidget {
               Container(width: 1, height: 40, color: AppColors.border),
               Expanded(
                 child: _StatItem(
-                  label: 'Bookings',
+                  label: context.l10n.bookings,
                   value: '$bookingsCount',
                   icon: Icons.calendar_month,
                 ),

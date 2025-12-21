@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/list/all_reviews_body.dart';
@@ -32,8 +33,11 @@ class AllReviewsPage extends StatelessWidget {
         body: Column(
           children: [
             PremiumCurvedHeader(
-              title: 'Reviews',
-              subtitle: '$fieldName • ${totalReviews ?? 0} reviews',
+              title: context.l10n.reviews,
+              subtitle: context.l10n.reviewsSummaryForField(
+                totalReviews ?? 0,
+                fieldName,
+              ),
               showBackButton: true,
               height: 180,
             ),

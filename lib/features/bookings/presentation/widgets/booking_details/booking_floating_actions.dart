@@ -8,6 +8,7 @@ import 'package:spo_kick/core/widgets/premium/glass_container.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_details_actions_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/booking_details/booking_cancel_dialog.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Floating action buttons for booking details.
 ///
@@ -109,7 +110,7 @@ class _CancelButtonState extends State<_CancelButton>
               const SizedBox(width: 8),
               Text(
                 context.l10n.cancel,
-                style: const TextStyle(
+                style: AppTextStyles.titleMedium.copyWith(
                   color: AppColors.error,
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
@@ -192,7 +193,7 @@ class _ContactSupportButtonState extends State<_ContactSupportButton>
                 const SizedBox(width: 8),
                 Text(
                   context.l10n.contactSupport,
-                  style: const TextStyle(
+                  style: AppTextStyles.titleMedium.copyWith(
                     color: AppColors.accentCyan,
                     fontSize: 15,
                     fontWeight: FontWeight.w700,

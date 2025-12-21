@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/shared/field_card.dart';
@@ -54,8 +55,7 @@ class DismissibleFieldCard extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               context.l10n.removeFromFavorites,
-              style: const TextStyle(
-                fontSize: 11,
+              style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
                 letterSpacing: 0.8,
@@ -80,7 +80,9 @@ class DismissibleFieldCard extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(true),
                   child: Text(
                     context.l10n.removeFromFavorites,
-                    style: const TextStyle(color: AppColors.error),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.error,
+                    ),
                   ),
                 ),
               ],

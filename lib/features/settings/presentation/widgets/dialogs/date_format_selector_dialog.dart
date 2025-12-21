@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
 import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/dialogs/date_format_option_tile.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Date Format Selector Dialog
 ///
@@ -15,13 +16,13 @@ class DateFormatSelectorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Choose Date Format'),
+      title: Text(context.l10n.chooseDateFormat),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           DateFormatOptionTile(
-            label: 'DD/MM/YYYY',
-            example: 'e.g., 25/12/2025',
+            label: context.l10n.ddMmYyyy,
+            example: context.l10n.eG25122025,
             format: DateFormatOption.ddMMyyyy,
             isSelected: preferences.dateFormat == DateFormatOption.ddMMyyyy,
             onTap: () {
@@ -33,8 +34,8 @@ class DateFormatSelectorDialog extends StatelessWidget {
             },
           ),
           DateFormatOptionTile(
-            label: 'MM/DD/YYYY',
-            example: 'e.g., 12/25/2025',
+            label: context.l10n.mmDdYyyy,
+            example: context.l10n.eG12252025,
             format: DateFormatOption.mmDdYyyy,
             isSelected: preferences.dateFormat == DateFormatOption.mmDdYyyy,
             onTap: () {
@@ -46,8 +47,8 @@ class DateFormatSelectorDialog extends StatelessWidget {
             },
           ),
           DateFormatOptionTile(
-            label: 'YYYY-MM-DD',
-            example: 'e.g., 2025-12-25',
+            label: context.l10n.yyyyMmDd,
+            example: context.l10n.eG20251225,
             format: DateFormatOption.yyyyMmDd,
             isSelected: preferences.dateFormat == DateFormatOption.yyyyMmDd,
             onTap: () {

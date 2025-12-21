@@ -14,6 +14,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/us
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_error_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_loading_state.dart';
 import 'package:spo_kick/features/super_admin/utils/user_filter_helper.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Users List View - displays and manages users list with filtering and bulk actions.
 class UsersListView extends StatefulWidget {
@@ -138,7 +139,7 @@ class _UsersListViewState extends State<UsersListView>
                   actions: [
                     BulkAction(
                       icon: Icons.download,
-                      label: 'Export CSV',
+                      label: context.l10n.exportCsv,
                       onPressed: () async {
                         final selected = getSelectedItems(
                           filteredUsers,
@@ -152,20 +153,20 @@ class _UsersListViewState extends State<UsersListView>
                     ),
                     BulkAction(
                       icon: Icons.check_circle_outline,
-                      label: 'Activate',
+                      label: context.l10n.activate,
                       onPressed: _handleBulkActivate,
                       color: Colors.green,
                     ),
                     BulkAction(
                       icon: Icons.block,
-                      label: 'Deactivate',
+                      label: context.l10n.deactivate,
                       onPressed: _handleBulkDeactivate,
                       color: Colors.red,
                     ),
                   ],
                 )
               : AppBar(
-                  title: const Text('Customers (Users)'),
+                  title: Text(context.l10n.customersUsers),
                   elevation: 0,
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
@@ -177,13 +178,13 @@ class _UsersListViewState extends State<UsersListView>
                         child: const Icon(Icons.filter_list),
                       ),
                       onPressed: _showFilterSheet,
-                      tooltip: 'Filter',
+                      tooltip: context.l10n.filterFields,
                     ),
                     IconButton(
                       icon: const Icon(Icons.refresh),
                       onPressed: () =>
                           context.read<SuperAdminCubit>().loadUsers(),
-                      tooltip: 'Refresh',
+                      tooltip: context.l10n.refresh,
                     ),
                   ],
                 ),

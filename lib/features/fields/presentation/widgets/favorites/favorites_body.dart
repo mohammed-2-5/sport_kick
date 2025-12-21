@@ -28,6 +28,7 @@ class FavoritesBody extends StatelessWidget {
         // Error state
         if (favoritesState is FavoritesError) {
           return EmptyStates.error(
+            context,
             message: favoritesState.message,
             onRetry: () => context.read<FavoritesCubit>().loadFavorites(),
           );
@@ -41,13 +42,16 @@ class FavoritesBody extends StatelessWidget {
         // List loaded state
         if (favoritesState is FavoritesListLoaded) {
           if (favoritesState.isEmpty) {
-            return EmptyStates.noFavorites(onBrowse: () => context.pop());
+            return EmptyStates.noFavorites(
+              context,
+              onBrowse: () => context.pop(),
+            );
           }
           return _FavoritesFieldsLoader(favoritesState: favoritesState);
         }
 
         // Initial state
-        return EmptyStates.noFavorites(onBrowse: () => context.pop());
+        return EmptyStates.noFavorites(context, onBrowse: () => context.pop());
       },
     );
   }
@@ -69,6 +73,7 @@ class _FavoritesFieldsLoader extends StatelessWidget {
 
         if (fieldsState is FieldsError) {
           return EmptyStates.error(
+            context,
             message: fieldsState.message,
             onRetry: () => context.read<FieldsCubit>().loadAllFields(),
           );
@@ -82,7 +87,10 @@ class _FavoritesFieldsLoader extends StatelessWidget {
           );
 
           if (favoriteFields.isEmpty) {
-            return EmptyStates.noFavorites(onBrowse: () => context.pop());
+            return EmptyStates.noFavorites(
+              context,
+              onBrowse: () => context.pop(),
+            );
           }
 
           return RefreshIndicator(

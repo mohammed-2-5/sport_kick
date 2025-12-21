@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Rating display widget for field card.
 ///
@@ -57,8 +58,7 @@ class FieldCardRating extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             ratingDisplay,
-            style: const TextStyle(
-              fontSize: 13,
+            style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -66,7 +66,7 @@ class FieldCardRating extends StatelessWidget {
           const SizedBox(width: 3),
           Text(
             '(${LocaleFormatters.formatNumber(context, totalReviews)})',
-            style: TextStyle(
+            style: AppTextStyles.bodySmall.copyWith(
               fontSize: 11,
               color: Colors.white.withValues(alpha: 0.9),
             ),
@@ -107,8 +107,7 @@ class _NewLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       context.l10n.newLabel,
-      style: const TextStyle(
-        fontSize: 12,
+      style: AppTextStyles.labelSmall.copyWith(
         color: AppColors.textSecondary,
         fontWeight: FontWeight.w600,
       ),

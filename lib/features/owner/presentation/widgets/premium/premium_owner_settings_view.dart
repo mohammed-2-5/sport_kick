@@ -12,6 +12,11 @@ import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_settings/owner_settings_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_settings/owner_settings_state.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/premium_owner_settings_section.dart';
+import 'package:spo_kick/features/settings/domain/entities/user_preferences_entity.dart';
+import 'package:spo_kick/features/settings/presentation/constants/settings_constants.dart';
+import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:spo_kick/features/settings/presentation/cubit/settings_state.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/dialogs/language_selector_dialog.dart';
 
 /// Premium owner settings view with enhanced UI.
 ///
@@ -69,6 +74,10 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
 
                       // Booking Preferences Section
                       _buildBookingPreferencesSection(settingsState),
+                      const SizedBox(height: 16),
+
+                      // Appearance Section
+                      _buildAppearanceSection(),
                       const SizedBox(height: 16),
 
                       // Security Section
@@ -212,6 +221,51 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
           },
         ),
       ],
+    );
+  }
+
+  Widget _buildAppearanceSection() {
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
+        UserPreferencesEntity? preferences;
+        if (state is SettingsLoaded) {
+          preferences = state.preferences;
+        } else if (state is SettingsUpdated) {
+          preferences = state.preferences;
+        } else if (state is SettingsUpdating) {
+          preferences = state.currentPreferences;
+        }
+
+        final isLoading = state is SettingsLoading || state is SettingsInitial;
+        final languageValue = preferences == null
+            ? context.l10n.loading
+            : _languageLabel(context, preferences.language);
+
+        return PremiumOwnerSettingsSection(
+          title: context.l10n.appearance,
+          icon: Icons.palette_outlined,
+          children: [
+            OwnerSettingsTile(
+              label: context.l10n.language,
+              icon: Icons.language,
+              value: isLoading ? context.l10n.loading : languageValue,
+              onTap: () {
+                if (preferences == null) {
+                  return;
+                }
+                HapticFeedback.lightImpact();
+                showDialog(
+                  context: context,
+                  builder: (dialogContext) => BlocProvider.value(
+                    value: context.read<SettingsCubit>(),
+                    child: LanguageSelectorDialog(preferences: preferences!),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -448,5 +502,15 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
         ),
       ),
     );
+  }
+
+  String _languageLabel(BuildContext context, String code) {
+    switch (code) {
+      case SettingsConstants.languageArabic:
+        return context.l10n.languageArabic;
+      case SettingsConstants.languageEnglish:
+      default:
+        return context.l10n.languageEnglish;
+    }
   }
 }

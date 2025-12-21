@@ -10,7 +10,6 @@ import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/pages/fields_list_page.dart';
 import 'package:spo_kick/features/home/presentation/pages/home_page.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_cubit.dart';
-import 'package:spo_kick/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:spo_kick/features/settings/presentation/pages/user_settings_page.dart';
 
 class MainLayoutPage extends StatefulWidget {
@@ -36,7 +35,10 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
       ),
       MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_) => sl<BookingCubit>()..loadUserBookings()),
+          BlocProvider(
+            create: (_) => sl<BookingCubit>()
+              ..loadUserBookings(loadingMessage: 'Loading your bookings...'),
+          ),
           BlocProvider(
             create: (_) =>
                 sl<MyRecurringBookingsCubit>()..loadRecurringBookings(),
@@ -44,10 +46,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
         ],
         child: const MyBookingsPage(),
       ),
-      BlocProvider(
-        create: (_) => sl<SettingsCubit>(),
-        child: const UserSettingsPage(),
-      ),
+      const UserSettingsPage(),
     ];
   }
 

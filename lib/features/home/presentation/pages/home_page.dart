@@ -21,7 +21,11 @@ class HomePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => sl<FieldsCubit>()..loadAllFields()),
-        BlocProvider(create: (_) => sl<BookingCubit>()..loadUserBookings()),
+        BlocProvider(
+          create: (ctx) =>
+              sl<BookingCubit>()
+                ..loadUserBookings(loadingMessage: "Loading your bookings..."),
+        ),
       ],
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {

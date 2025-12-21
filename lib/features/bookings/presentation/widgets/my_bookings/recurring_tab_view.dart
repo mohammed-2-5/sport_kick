@@ -59,7 +59,9 @@ class RecurringTabView extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             context.l10n.loadingSubscriptions,
-            style: const TextStyle(color: AppColors.textSecondary),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ],
       ),
@@ -82,7 +84,9 @@ class RecurringTabView extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.textSecondary),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(

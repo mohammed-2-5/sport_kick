@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
@@ -144,7 +146,10 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                   Expanded(
                     child: _StatChip(
                       icon: Icons.calendar_month,
-                      label: '$bookingsCount Bookings',
+                      label: context.l10n.bookingsCount(
+                        bookingsCount!,
+                        bookingsCount!,
+                      ),
                       color: AppColors.accentCyan,
                     ),
                   ),
@@ -155,7 +160,12 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                   Expanded(
                     child: _StatChip(
                       icon: Icons.attach_money,
-                      label: '\$${revenue?.toStringAsFixed(0) ?? '0'}',
+                      label: LocaleFormatters.formatPrice(
+                        context,
+                        amount: revenue ?? 0,
+                        currency: context.l10n.currencyEgp,
+                        decimalDigits: 0,
+                      ),
                       color: Colors.green,
                     ),
                   ),
@@ -171,7 +181,7 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                 if (onEdit != null)
                   Expanded(
                     child: _ActionButton(
-                      label: 'Edit',
+                      label: context.l10n.edit,
                       icon: Icons.edit_outlined,
                       color: AppColors.accentCyan,
                       onTap: onEdit!,
@@ -182,7 +192,7 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                 if (onDelete != null)
                   Expanded(
                     child: _ActionButton(
-                      label: 'Delete',
+                      label: context.l10n.delete,
                       icon: Icons.delete_outline,
                       color: Colors.red,
                       onTap: onDelete!,
@@ -225,7 +235,7 @@ class _StatusIndicator extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            isActive ? 'Active' : 'Inactive',
+            isActive ? context.l10n.active : context.l10n.inactive,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.white,

@@ -13,6 +13,8 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cub
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/create_field_form_body.dart';
 
+import '../../../../core/localization/l10n_extensions.dart';
+
 /// Edit Field Page for Super Admin
 ///
 /// Allows super admin to edit existing field details.
@@ -103,7 +105,7 @@ class _EditFieldPageState extends State<EditFieldPage> {
         ..loadCities(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Edit Field'),
+          title: Text(context.l10n.editField),
           centerTitle: true,
           elevation: 0,
           flexibleSpace: Container(

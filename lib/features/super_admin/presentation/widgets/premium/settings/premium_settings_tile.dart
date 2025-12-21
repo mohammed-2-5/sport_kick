@@ -96,23 +96,14 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile>
               Expanded(
                 child: Text(
                   widget.label,
-                  style: AppTextStyles.titleMedium.copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppTextStyles.bold(AppTextStyles.titleMedium),
                 ),
               ),
               // Value or trailing
               if (widget.trailing != null)
                 widget.trailing!
               else if (widget.value != null) ...[
-                Text(
-                  widget.value!,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.8),
-                  ),
-                ),
+                Text(widget.value!, style: AppTextStyles.bodyMediumSecondary),
                 if (widget.showArrow) const SizedBox(width: 8),
               ],
               // Arrow

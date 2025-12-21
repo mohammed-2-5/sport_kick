@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Row widget displaying total price with gradient badge.
 class BookingTotalRow extends StatelessWidget {
@@ -15,8 +16,7 @@ class BookingTotalRow extends StatelessWidget {
       children: [
         Text(
           context.l10n.totalPrice,
-          style: const TextStyle(
-            fontSize: 16,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
@@ -36,7 +36,7 @@ class BookingTotalRow extends StatelessWidget {
           ),
           child: Text(
             formattedPrice,
-            style: const TextStyle(
+            style: AppTextStyles.headlineSmall.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.w800,
               color: Colors.white,
