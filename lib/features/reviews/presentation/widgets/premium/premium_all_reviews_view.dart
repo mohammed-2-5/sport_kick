@@ -88,13 +88,15 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                         state.reviews.length
                   : 0.0);
 
+          final colorScheme = Theme.of(context).colorScheme;
+
           return RefreshIndicator(
             onRefresh: () async {
               context.read<ReviewsCubit>().loadFieldReviews(
                 fieldId: widget.fieldId,
               );
             },
-            color: AppColors.accentCyan,
+            color: colorScheme.primary,
             child: CustomScrollView(
               slivers: [
                 // Rating overview
@@ -118,10 +120,10 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           context.l10n.filterByRating,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                       ),
@@ -154,10 +156,10 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                                   filteredReviews.length,
                                   _selectedRating!,
                                 ),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         if (_selectedRating != null)
@@ -165,10 +167,10 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                             onTap: () => setState(() => _selectedRating = null),
                             child: Text(
                               context.l10n.clear,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.accentCyan,
+                                color: colorScheme.primary,
                               ),
                             ),
                           ),
@@ -190,16 +192,16 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
                           Icon(
                             Icons.star_outline,
                             size: 64,
-                            color: AppColors.textSecondary.withValues(
+                            color: colorScheme.onSurfaceVariant.withValues(
                               alpha: 0.3,
                             ),
                           ),
                           const SizedBox(height: 16),
                           Text(
                             context.l10n.noStarReviewsYet(_selectedRating!),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
-                              color: AppColors.textSecondary,
+                              color: colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -296,22 +298,35 @@ class _PremiumAllReviewsViewState extends State<PremiumAllReviewsView> {
         title: Text(context.l10n.deleteReview),
         content: Text(context.l10n.thisActionCannotBeUndoneAre),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              context.l10n.cancel,
-              style: const TextStyle(color: AppColors.textSecondary),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              context.read<ReviewsCubit>().deleteReview(reviewId);
+          Builder(
+            builder: (context) {
+              final colorScheme = Theme.of(context).colorScheme;
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      context.l10n.cancel,
+                      style: TextStyle(color: colorScheme.onSurfaceVariant),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      context.read<ReviewsCubit>().deleteReview(reviewId);
+                    },
+                    child: Text(
+                      context.l10n.delete,
+                      style: TextStyle(
+                        color: isDark ? AppColors.darkError : AppColors.error,
+                      ),
+                    ),
+                  ),
+                ],
+              );
             },
-            child: Text(
-              context.l10n.delete,
-              style: const TextStyle(color: Colors.red),
-            ),
           ),
         ],
       ),

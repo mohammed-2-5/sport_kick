@@ -24,6 +24,9 @@ class ReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 1,
@@ -39,7 +42,7 @@ class ReviewCard extends StatelessWidget {
                 // User avatar
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                  backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
                   backgroundImage: review.userAvatar != null
                       ? NetworkImage(review.userAvatar!)
                       : null,
@@ -47,7 +50,7 @@ class ReviewCard extends StatelessWidget {
                       ? Text(
                           review.userInitials,
                           style: AppTextStyles.titleMedium.copyWith(
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         )
@@ -62,10 +65,14 @@ class ReviewCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            review.userName ?? context.l10n.anonymous,
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              fontWeight: FontWeight.bold,
+                          Flexible(
+                            child: Text(
+                              review.userName ?? context.l10n.anonymous,
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
                           if (review.wasEdited) ...[
@@ -73,7 +80,7 @@ class ReviewCard extends StatelessWidget {
                             Text(
                               context.l10n.edited,
                               style: AppTextStyles.caption.copyWith(
-                                color: Colors.grey[600],
+                                color: colorScheme.onSurfaceVariant,
                                 fontStyle: FontStyle.italic,
                               ),
                             ),
@@ -84,7 +91,7 @@ class ReviewCard extends StatelessWidget {
                       Text(
                         review.formattedDate,
                         style: AppTextStyles.caption.copyWith(
-                          color: Colors.grey[600],
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -107,7 +114,7 @@ class ReviewCard extends StatelessWidget {
                               onPressed: onEdit,
                               padding: EdgeInsets.zero,
                               constraints: const BoxConstraints(),
-                              color: AppColors.primary,
+                              color: colorScheme.primary,
                             ),
                           if (onDelete != null) ...[
                             const SizedBox(width: 8),
@@ -116,7 +123,9 @@ class ReviewCard extends StatelessWidget {
                               onPressed: onDelete,
                               padding: EdgeInsets.zero,
                               constraints: const BoxConstraints(),
-                              color: AppColors.error,
+                              color: isDark
+                                  ? AppColors.darkError
+                                  : AppColors.error,
                             ),
                           ],
                         ],
@@ -142,13 +151,13 @@ class ReviewCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
+                  color: colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   context.l10n.recentReview,
                   style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

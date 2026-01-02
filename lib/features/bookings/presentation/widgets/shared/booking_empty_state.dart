@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
@@ -18,6 +17,8 @@ class BookingEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -27,14 +28,14 @@ class BookingEmptyState extends StatelessWidget {
             Icon(
               Icons.event_busy,
               size: 80,
-              color: AppColors.textSecondary.withValues(alpha: 0.3),
+              color: colorScheme.outline.withValues(alpha: 0.3),
             ),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 16),

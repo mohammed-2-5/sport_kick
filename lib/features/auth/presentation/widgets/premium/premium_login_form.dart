@@ -128,11 +128,11 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
                             color: state.rememberMe
-                                ? AppColors.accentCyan
+                                ? Theme.of(context).colorScheme.secondary
                                 : Colors.transparent,
                             border: Border.all(
                               color: state.rememberMe
-                                  ? AppColors.accentCyan
+                                  ? Theme.of(context).colorScheme.secondary
                                   : Colors.white.withValues(alpha: 0.4),
                               width: 2,
                             ),

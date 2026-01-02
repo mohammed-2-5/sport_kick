@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -25,6 +24,8 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return PremiumCard(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -32,9 +33,9 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.description_outlined,
-                color: AppColors.accentCyan,
+                color: colorScheme.primary,
                 size: 24,
               ),
               const SizedBox(width: 12),
@@ -42,7 +43,7 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
                 context.l10n.aboutThisField,
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w800,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -61,7 +62,7 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
                 Text(
                   widget.description,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                     height: 1.6,
                   ),
                   maxLines: _maxLines,
@@ -79,15 +80,15 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
                       Text(
                         context.l10n.readMore,
                         style: AppTextStyles.labelLarge.copyWith(
-                          color: AppColors.accentCyan,
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const Icon(
+                      Icon(
                         Icons.keyboard_arrow_down,
                         size: 18,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.primary,
                       ),
                     ],
                   ),
@@ -100,7 +101,7 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
                 Text(
                   widget.description,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                     height: 1.6,
                   ),
                 ),
@@ -116,15 +117,15 @@ class _PremiumDescriptionCardState extends State<PremiumDescriptionCard> {
                       Text(
                         context.l10n.showLess,
                         style: AppTextStyles.labelLarge.copyWith(
-                          color: AppColors.accentCyan,
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const Icon(
+                      Icon(
                         Icons.keyboard_arrow_up,
                         size: 18,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.primary,
                       ),
                     ],
                   ),

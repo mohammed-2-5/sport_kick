@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
@@ -80,6 +79,7 @@ class TopFieldsCard extends StatelessWidget {
     String name,
     int bookings,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     final gradients = [
       const LinearGradient(
         colors: [Color(0xFFFFD700), Color(0xFFFFE44D)],
@@ -98,7 +98,7 @@ class TopFieldsCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.white,
+            colorScheme.surface,
             gradients[rank - 1].colors.first.withValues(alpha: 0.05),
           ],
         ),
@@ -159,17 +159,17 @@ class TopFieldsCard extends StatelessWidget {
                     ),
                   ),
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
             ),
           ),
-          const Icon(
+          Icon(
             Icons.arrow_forward_ios_rounded,
             size: 16,
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ],
       ),

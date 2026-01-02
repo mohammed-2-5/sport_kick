@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
-import 'package:spo_kick/features/owner/presentation/utils/booking_table_helpers.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_cell_handler.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_header_row.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_hint_banner.dart';
-import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_hour_row.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_day_row.dart';
 
-/// Excel-style booking grid showing 7 days and working hours.
+/// Excel-style booking grid showing 7 days (rows) and time slots (columns).
 ///
 /// Displays:
-/// - Header with day names and dates
-/// - Hourly time slots with booking status
-/// - Horizontal scrolling to see all 7 days
+/// - Header with time slots as columns
+/// - Day rows with time slot cells
+/// - Horizontal scrolling to see all time slots
 /// - Interactive cells for viewing/creating bookings
 class BookingGrid extends StatelessWidget {
   final BookingTableLoaded state;
@@ -21,12 +20,12 @@ class BookingGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hours = BookingTableHelpers.generateWorkingHours(state.businessHours);
     final hasBookings = state.bookingSlots.isNotEmpty;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -48,19 +47,20 @@ class BookingGrid extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Column(
               children: [
-                // Header row with day names
+                // Header row with time slots
                 BookingTableHeaderRow(state: state),
 
                 // Divider
                 Container(
                   height: 1,
-                  color: AppColors.border.withValues(alpha: 0.3),
+                  color: colorScheme.outline.withValues(alpha: 0.3),
                 ),
 
-                // Hour rows
-                ...hours.map(
-                  (hour) => BookingTableHourRow(
-                    hour: hour,
+                // Day rows (7 days: Sat-Fri)
+                ...List.generate(
+                  7,
+                  (dayIndex) => BookingTableDayRow(
+                    dayIndex: dayIndex,
                     state: state,
                     onCellTap: (dayIndex, hour) {
                       BookingTableCellHandler.onCellTap(

@@ -40,12 +40,15 @@ class OwnerBookingStatusChart extends StatelessWidget {
 
   Widget _buildPieChart(BuildContext context) {
     final sections = _createPieSections();
+    final colorScheme = Theme.of(context).colorScheme;
 
     if (sections.isEmpty) {
       return Center(
         child: Text(
           context.l10n.noDataAvailablePeriod,
-          style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: colorScheme.onSurfaceVariant,
+          ),
         ),
       );
     }
@@ -259,12 +262,17 @@ class _ChartCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        subtitle,
-                        style: AppTextStyles.bodySmall.copyWith(
-                          fontSize: AnalyticsConstants.chartAxisFontSize,
-                          color: Colors.grey[600],
-                        ),
+                      Builder(
+                        builder: (context) {
+                          final colorScheme = Theme.of(context).colorScheme;
+                          return Text(
+                            subtitle,
+                            style: AppTextStyles.bodySmall.copyWith(
+                              fontSize: AnalyticsConstants.chartAxisFontSize,
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

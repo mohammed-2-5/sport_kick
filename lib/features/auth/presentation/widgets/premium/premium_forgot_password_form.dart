@@ -50,10 +50,14 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.accentCyan.withValues(alpha: 0.1),
+              color: Theme.of(
+                context,
+              ).colorScheme.secondary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: AppColors.accentCyan.withValues(alpha: 0.2),
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondary.withValues(alpha: 0.2),
               ),
             ),
             child: Row(
@@ -207,12 +211,17 @@ class _PremiumForgotPasswordSuccessState
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: const LinearGradient(
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.secondary,
+                      Theme.of(context).colorScheme.secondaryContainer,
+                    ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.4),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.secondary.withValues(alpha: 0.4),
                       blurRadius: 20,
                       spreadRadius: 5,
                     ),
@@ -272,7 +281,7 @@ class _PremiumForgotPasswordSuccessState
                   widget.email,
                   style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.accentCyan,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ),

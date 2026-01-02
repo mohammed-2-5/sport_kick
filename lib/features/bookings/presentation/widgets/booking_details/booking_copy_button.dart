@@ -17,13 +17,18 @@ class BookingCopyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return IconButton(
       onPressed: () => _copyToClipboard(context),
       icon: const Icon(Icons.copy, size: 18),
-      color: AppColors.textSecondary,
+      color: colorScheme.onSurfaceVariant,
       tooltip: l10n.copy,
       style: IconButton.styleFrom(
-        backgroundColor: AppColors.backgroundLight,
+        backgroundColor: isDark
+            ? colorScheme.surfaceContainerHigh
+            : AppColors.backgroundLight,
         padding: const EdgeInsets.all(8),
       ),
     );
@@ -31,6 +36,8 @@ class BookingCopyButton extends StatelessWidget {
 
   void _copyToClipboard(BuildContext context) {
     final l10n = context.l10n;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     Clipboard.setData(ClipboardData(text: textToCopy));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -38,7 +45,7 @@ class BookingCopyButton extends StatelessWidget {
           successMessage.isNotEmpty ? successMessage : l10n.copiedToClipboard,
         ),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: AppColors.success,
+        backgroundColor: isDark ? AppColors.darkSuccess : AppColors.success,
         duration: const Duration(seconds: 2),
       ),
     );

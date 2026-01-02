@@ -15,15 +15,20 @@ class MapFieldInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.4)
+                : Colors.black.withValues(alpha: 0.15),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -77,22 +82,29 @@ class MapFieldInfoCard extends StatelessWidget {
   }
 
   Widget _buildImagePlaceholder() {
-    return Container(
-      width: 80,
-      height: 80,
-      decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: const Icon(
-        Icons.sports_soccer,
-        size: 40,
-        color: AppColors.primary,
-      ),
+    return Builder(
+      builder: (context) {
+        final colorScheme = Theme.of(context).colorScheme;
+        return Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            color: colorScheme.primary.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            Icons.sports_soccer,
+            size: 40,
+            color: colorScheme.primary,
+          ),
+        );
+      },
     );
   }
 
   Widget _buildFieldInfo(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -107,17 +119,17 @@ class MapFieldInfoCard extends StatelessWidget {
         const SizedBox(height: 4),
         Row(
           children: [
-            const Icon(
+            Icon(
               Icons.location_on,
               size: 14,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
             const SizedBox(width: 4),
             Expanded(
               child: Text(
                 field.address,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -129,7 +141,7 @@ class MapFieldInfoCard extends StatelessWidget {
         Row(
           children: [
             if (field.hasReviews) ...[
-              const Icon(Icons.star, size: 14, color: Colors.amber),
+              Icon(Icons.star, size: 14, color: AppColors.ratingActive),
               const SizedBox(width: 4),
               Text(
                 LocaleFormatters.formatNumber(
@@ -147,7 +159,7 @@ class MapFieldInfoCard extends StatelessWidget {
               '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
               style: AppTextStyles.labelLarge.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+                color: colorScheme.primary,
               ),
             ),
           ],
@@ -157,6 +169,8 @@ class MapFieldInfoCard extends StatelessWidget {
   }
 
   Widget _buildActionButtons(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Expanded(
@@ -165,7 +179,7 @@ class MapFieldInfoCard extends StatelessWidget {
             icon: const Icon(Icons.close, size: 18),
             label: Text(context.l10n.close),
             style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.textSecondary,
+              foregroundColor: colorScheme.onSurfaceVariant,
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
           ),
@@ -183,8 +197,8 @@ class MapFieldInfoCard extends StatelessWidget {
             icon: const Icon(Icons.info_outline, size: 18),
             label: Text(context.l10n.viewDetails),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_empty_state.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
@@ -45,7 +44,7 @@ class MyBookingsTabView extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: onRefresh,
-      color: AppColors.primary,
+      color: Theme.of(context).colorScheme.primary,
       child: AnimationLimiter(
         child: ListView.builder(
           padding: const EdgeInsets.all(BookingConstants.standardPadding),

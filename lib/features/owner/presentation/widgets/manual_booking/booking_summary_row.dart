@@ -15,6 +15,7 @@ class BookingSummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: OwnerUIConstants.spacingSmall),
       child: Row(
@@ -22,12 +23,15 @@ class BookingSummaryRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
           Text(
             value,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w600,
+              color: colorScheme.onSurface,
             ),
           ),
         ],

@@ -96,10 +96,11 @@ class BookingTableCellHandler {
 
   /// Show snackbar for past time slot.
   static void _showPastSlotMessage(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(context.l10n.pastSlotMessage),
-        backgroundColor: AppColors.textSecondary,
+        backgroundColor: colorScheme.onSurfaceVariant,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),

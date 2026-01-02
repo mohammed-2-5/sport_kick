@@ -16,34 +16,45 @@ class BookingStatusUtils {
   BookingStatusUtils._();
 
   /// Returns the primary color for a booking status.
-  static Color getStatusColor(BookingStatus status) {
+  /// Pass [isDark] to get theme-aware colors.
+  static Color getStatusColor(BookingStatus status, {bool isDark = false}) {
     switch (status) {
       case BookingStatus.pending:
-        return AppColors.warning;
+        return isDark ? AppColors.darkBookingPending : AppColors.bookingPending;
       case BookingStatus.confirmed:
-        return AppColors.success;
+        return isDark
+            ? AppColors.darkBookingConfirmed
+            : AppColors.bookingConfirmed;
       case BookingStatus.canceled:
-        return AppColors.error;
+        return isDark
+            ? AppColors.darkBookingCancelled
+            : AppColors.bookingCancelled;
       case BookingStatus.completed:
-        return AppColors.textSecondary;
+        return isDark
+            ? AppColors.darkBookingCompleted
+            : AppColors.bookingCompleted;
     }
   }
 
   /// Returns the gradient for a booking status.
-  static LinearGradient getStatusGradient(BookingStatus status) {
+  /// Pass [isDark] to get theme-aware gradients.
+  static LinearGradient getStatusGradient(
+    BookingStatus status, {
+    bool isDark = false,
+  }) {
     switch (status) {
       case BookingStatus.pending:
-        return AppGradients.warning;
+        return isDark ? AppGradients.darkWarning : AppGradients.warning;
       case BookingStatus.confirmed:
-        return AppGradients.success;
+        return isDark ? AppGradients.darkSuccess : AppGradients.success;
       case BookingStatus.canceled:
-        return AppGradients.error;
+        return isDark ? AppGradients.darkError : AppGradients.error;
       case BookingStatus.completed:
+        final completedColor = isDark
+            ? AppColors.darkBookingCompleted
+            : AppColors.bookingCompleted;
         return LinearGradient(
-          colors: [
-            AppColors.textSecondary,
-            AppColors.textSecondary.withValues(alpha: 0.8),
-          ],
+          colors: [completedColor, completedColor.withValues(alpha: 0.8)],
         );
     }
   }

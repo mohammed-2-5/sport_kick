@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/category_chip.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/sport_category_localizer.dart';
 
 /// Category filter chips widget for fields list.
 ///
@@ -45,7 +46,7 @@ class CategoryFilters extends StatelessWidget {
 
           final category = categories[index - 1];
           return CategoryChip(
-            label: category.name,
+            label: category.getLocalizedName(context),
             icon: category.icon ?? '⚽',
             isSelected: selectedCategoryId == category.id,
             onTap: () => onCategorySelected(category.id),

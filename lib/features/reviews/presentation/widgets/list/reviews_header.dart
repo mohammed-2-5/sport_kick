@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/rating/rating_stars.dart';
@@ -19,11 +18,15 @@ class ReviewsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.05),
-        border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+        color: colorScheme.primary.withValues(alpha: 0.05),
+        border: Border(
+          bottom: BorderSide(color: colorScheme.outline.withValues(alpha: 0.3)),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +34,7 @@ class ReviewsHeader extends StatelessWidget {
           Text(
             fieldName,
             style: AppTextStyles.appBarTitle.copyWith(
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 12),
@@ -54,7 +57,7 @@ class ReviewsHeader extends StatelessWidget {
                 Text(
                   '(${context.l10n.reviewsSummary(totalReviews!)})',
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: Colors.grey[600],
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -62,7 +65,9 @@ class ReviewsHeader extends StatelessWidget {
           ] else ...[
             Text(
               context.l10n.noRatingsYet,
-              style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ],

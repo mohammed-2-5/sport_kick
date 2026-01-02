@@ -23,15 +23,19 @@ class FieldPaymentSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Payment Method Selection
         Container(
           decoration: BoxDecoration(
-            color: Colors.grey[100],
+            color: colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey[300]!),
+            border: Border.all(
+              color: colorScheme.outline.withValues(alpha: 0.3),
+            ),
           ),
           child: Row(
             children: [
@@ -71,7 +75,9 @@ class FieldPaymentSelector extends StatelessWidget {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey[300]!),
+              borderSide: BorderSide(
+                color: colorScheme.outline.withValues(alpha: 0.3),
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -110,6 +116,8 @@ class _MethodOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -125,14 +133,18 @@ class _MethodOption extends StatelessWidget {
             Icon(
               _getIcon(),
               size: 20,
-              color: isSelected ? Colors.white : Colors.grey[600],
+              color: isSelected
+                  ? Colors.white
+                  : colorScheme.onSurface.withValues(alpha: 0.7),
             ),
             const SizedBox(width: 8),
             Text(
               method.displayName,
               style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected ? Colors.white : Colors.grey[600],
+                color: isSelected
+                    ? Colors.white
+                    : colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ],

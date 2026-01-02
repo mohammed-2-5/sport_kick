@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
+/// Login Mode Selector
+///
+/// Theme-aware: adapts to light/dark mode.
 class LoginModeSelector extends StatelessWidget {
   final String currentMode;
   final ValueChanged<String> onModeChanged;
@@ -16,11 +18,13 @@ class LoginModeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: colorScheme.outline),
       ),
       padding: const EdgeInsets.all(4),
       child: Row(
@@ -30,7 +34,7 @@ class LoginModeSelector extends StatelessWidget {
               mode: 'user',
               icon: Icons.person_outline,
               label: context.l10n.loginAsUser,
-              isSelected: currentMode == context.l10n.userRole,
+              isSelected: currentMode == 'user',
               onSelected: onModeChanged,
             ),
           ),
@@ -40,7 +44,7 @@ class LoginModeSelector extends StatelessWidget {
               mode: 'admin',
               icon: Icons.admin_panel_settings_outlined,
               label: context.l10n.loginAsAdmin,
-              isSelected: currentMode == context.l10n.adminRole,
+              isSelected: currentMode == 'admin',
               onSelected: onModeChanged,
             ),
           ),
@@ -50,6 +54,9 @@ class LoginModeSelector extends StatelessWidget {
   }
 }
 
+/// Login Mode Button
+///
+/// Theme-aware: adapts to light/dark mode.
 class LoginModeButton extends StatelessWidget {
   final String mode;
   final IconData icon;
@@ -68,6 +75,8 @@ class LoginModeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () => onSelected(mode),
       child: AnimatedContainer(
@@ -80,7 +89,7 @@ class LoginModeButton extends StatelessWidget {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.3),
+                    color: colorScheme.primary.withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -93,15 +102,16 @@ class LoginModeButton extends StatelessWidget {
             Icon(
               icon,
               size: 20,
-              color: isSelected ? Colors.white : AppColors.textSecondary,
+              color: isSelected ? Colors.white : colorScheme.onSurfaceVariant,
             ),
             const SizedBox(width: 6),
+            Flexible(
               child: Text(
                 label,
                 style: isSelected
                     ? AppTextStyles.labelSmallBold.copyWith(color: Colors.white)
                     : AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                 overflow: TextOverflow.ellipsis,
               ),

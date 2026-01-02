@@ -22,6 +22,8 @@ class BookingDateTimeInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return PremiumCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +32,7 @@ class BookingDateTimeInfoCard extends StatelessWidget {
             context.l10n.dateTimeLabel,
             style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: BookingConstants.standardPadding),

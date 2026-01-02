@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 
 /// Premium curved header with search bar.
@@ -99,16 +99,19 @@ class _PremiumSearchBarState extends State<PremiumSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+    final isDark = context.isDarkMode;
+
     return Container(
       height: 56,
       decoration: BoxDecoration(
-        color: AppColors.surfaceWhite,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: AppColors.shadow,
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
             blurRadius: 20,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -117,22 +120,17 @@ class _PremiumSearchBarState extends State<PremiumSearchBar> {
         onChanged: widget.onChanged,
         onTap: widget.onTap,
         readOnly: widget.onTap != null,
+        style: TextStyle(color: colorScheme.onSurface),
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: const TextStyle(
-            color: AppColors.lightTextSecondary,
+          hintStyle: TextStyle(
+            color: colorScheme.onSurfaceVariant,
             fontSize: 16,
           ),
-          prefixIcon: const Icon(
-            Icons.search,
-            color: AppColors.lightTextSecondary,
-          ),
+          prefixIcon: Icon(Icons.search, color: colorScheme.onSurfaceVariant),
           suffixIcon: _showClear
               ? IconButton(
-                  icon: const Icon(
-                    Icons.clear,
-                    color: AppColors.lightTextSecondary,
-                  ),
+                  icon: Icon(Icons.clear, color: colorScheme.onSurfaceVariant),
                   onPressed: () {
                     _effectiveController.clear();
                     widget.onChanged?.call('');

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 
 /// Premium interactive star rating selector.
 ///
@@ -110,16 +109,18 @@ class _PremiumStarRatingSelectorState extends State<PremiumStarRatingSelector>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.label != null) ...[
           Text(
             widget.label!,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 16),
@@ -129,12 +130,12 @@ class _PremiumStarRatingSelectorState extends State<PremiumStarRatingSelector>
         Container(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           decoration: BoxDecoration(
-            color: AppColors.backgroundLight,
+            color: colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: _currentRating > 0
                   ? _ratingColors[_currentRating].withValues(alpha: 0.3)
-                  : AppColors.border,
+                  : colorScheme.outline,
               width: 2,
             ),
           ),
@@ -173,10 +174,10 @@ class _PremiumStarRatingSelectorState extends State<PremiumStarRatingSelector>
                             colors: isSelected
                                 ? [Colors.orange, Colors.amber]
                                 : [
-                                    AppColors.textSecondary.withValues(
+                                    colorScheme.onSurfaceVariant.withValues(
                                       alpha: 0.3,
                                     ),
-                                    AppColors.textSecondary.withValues(
+                                    colorScheme.onSurfaceVariant.withValues(
                                       alpha: 0.2,
                                     ),
                                   ],

@@ -31,6 +31,9 @@ class BusinessHoursEditorHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
 
     return Row(
       children: [
@@ -51,7 +54,7 @@ class BusinessHoursEditorHeader extends StatelessWidget {
         Text(
           isOpen ? context.l10n.open : context.l10n.closed,
           style: theme.textTheme.bodyLarge?.copyWith(
-            color: isOpen ? AppColors.success : Colors.grey,
+            color: isOpen ? successColor : colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -64,7 +67,7 @@ class BusinessHoursEditorHeader extends StatelessWidget {
           child: Switch(
             value: isOpen,
             onChanged: onToggleChanged,
-            activeTrackColor: AppColors.success,
+            activeTrackColor: successColor,
           ),
         ),
       ],

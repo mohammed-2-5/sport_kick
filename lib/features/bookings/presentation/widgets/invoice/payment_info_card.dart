@@ -15,6 +15,7 @@ class PaymentInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -44,14 +45,14 @@ class PaymentInfoCard extends StatelessWidget {
                       field.paymentMethod.displayName,
                       style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       context.l10n.sendPaymentToNumber,
                       style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -68,28 +69,31 @@ class PaymentInfoCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
+                  color: colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.border, width: 1),
+                  border: Border.all(
+                    color: colorScheme.outline.withValues(alpha: 0.3),
+                    width: 1,
+                  ),
                 ),
                 child: Row(
                   children: [
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
+                            color: colorScheme.shadow.withValues(alpha: 0.05),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.phone_android_rounded,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.primary,
                         size: 24,
                       ),
                     ),
@@ -101,7 +105,7 @@ class PaymentInfoCard extends StatelessWidget {
                           Text(
                             context.l10n.paymentPhone,
                             style: AppTextStyles.labelSmall.copyWith(
-                              color: AppColors.textSecondary,
+                              color: colorScheme.onSurfaceVariant,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -109,7 +113,7 @@ class PaymentInfoCard extends StatelessWidget {
                             field.paymentPhone!,
                             style: AppTextStyles.headlineSmall.copyWith(
                               fontWeight: FontWeight.w800,
-                              color: AppColors.textPrimary,
+                              color: colorScheme.onSurface,
                               letterSpacing: 1,
                             ),
                           ),
@@ -122,23 +126,23 @@ class PaymentInfoCard extends StatelessWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.accentCyan.withValues(alpha: 0.1),
+                        color: colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.copy_rounded,
                             size: 16,
-                            color: AppColors.accentCyan,
+                            color: colorScheme.primary,
                           ),
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.copy,
                             style: AppTextStyles.labelSmall.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: AppColors.accentCyan,
+                              color: colorScheme.primary,
                             ),
                           ),
                         ],
@@ -149,75 +153,89 @@ class PaymentInfoCard extends StatelessWidget {
               ),
             )
           else
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.warningLight,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.warning_amber_rounded,
-                    color: AppColors.warning,
-                    size: 24,
+            Builder(
+              builder: (context) {
+                final isDark = Theme.of(context).brightness == Brightness.dark;
+                final warningColor = isDark
+                    ? AppColors.darkWarning
+                    : AppColors.warning;
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: warningColor.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      context.l10n.paymentPhoneMissing,
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.warning,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.warning_amber_rounded,
+                        color: warningColor,
+                        size: 24,
                       ),
-                    ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          context.l10n.paymentPhoneMissing,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: warningColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
 
           const SizedBox(height: 16),
 
           // Payment Instructions
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: AppColors.info.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: AppColors.info.withValues(alpha: 0.2),
-                width: 1,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          Builder(
+            builder: (context) {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              final infoColor = isDark ? AppColors.darkInfo : AppColors.info;
+              return Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: infoColor.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: infoColor.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.info_outline_rounded,
-                      color: AppColors.info,
-                      size: 18,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline_rounded,
+                          color: infoColor,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          context.l10n.paymentInstructions,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: infoColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(height: 10),
                     Text(
-                      context.l10n.paymentInstructions,
+                      field.effectivePaymentInstructions,
                       style: AppTextStyles.bodySmall.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.info,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        height: 1.5,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  field.effectivePaymentInstructions,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
@@ -14,6 +13,10 @@ class FieldCardPrice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    // Use onPrimary for content on primary gradient (white in both themes)
+    final contentColor = colorScheme.onPrimary;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -21,7 +24,7 @@ class FieldCardPrice extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.4),
+            color: colorScheme.primary.withValues(alpha: 0.4),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -31,7 +34,7 @@ class FieldCardPrice extends StatelessWidget {
         formattedPrice,
         style: AppTextStyles.titleMedium.copyWith(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: contentColor,
         ),
       ),
     );

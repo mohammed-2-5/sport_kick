@@ -24,6 +24,9 @@ class TimeSlotCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isAvailable = slot.isAvailable;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: BookingConstants.smallPadding),
@@ -34,17 +37,17 @@ class TimeSlotCard extends StatelessWidget {
           padding: const EdgeInsets.all(BookingConstants.standardPadding),
           decoration: BoxDecoration(
             color: isSelected
-                ? AppColors.primary.withValues(alpha: 0.1)
+                ? colorScheme.primary.withValues(alpha: 0.1)
                 : !isAvailable
-                ? AppColors.textSecondary.withValues(alpha: 0.05)
-                : Colors.white,
+                ? colorScheme.outline.withValues(alpha: 0.05)
+                : colorScheme.surface,
             borderRadius: BorderRadius.circular(BookingConstants.borderRadius),
             border: Border.all(
               color: isSelected
-                  ? AppColors.primary
+                  ? colorScheme.primary
                   : !isAvailable
-                  ? AppColors.textSecondary.withValues(alpha: 0.2)
-                  : AppColors.border,
+                  ? colorScheme.outline.withValues(alpha: 0.2)
+                  : colorScheme.outline.withValues(alpha: 0.2),
               width: isSelected ? 2 : 1,
             ),
           ),
@@ -64,15 +67,15 @@ class TimeSlotCard extends StatelessWidget {
                       style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w600,
                         color: isAvailable
-                            ? AppColors.textPrimary
-                            : AppColors.textSecondary,
+                            ? colorScheme.onSurface
+                            : colorScheme.onSurfaceVariant,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       periodLabel ?? slot.period,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -85,16 +88,16 @@ class TimeSlotCard extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.15),
+                    color: errorColor.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.block,
                         size: BookingConstants.statusIconSize,
-                        color: AppColors.error,
+                        color: errorColor,
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -102,7 +105,7 @@ class TimeSlotCard extends StatelessWidget {
                         style: AppTextStyles.labelSmall.copyWith(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.error,
+                          color: errorColor,
                         ),
                       ),
                     ],
@@ -114,17 +117,13 @@ class TimeSlotCard extends StatelessWidget {
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: isSelected
-                        ? AppColors.primary
-                        : AppColors.textPrimary,
+                        ? colorScheme.primary
+                        : colorScheme.onSurface,
                   ),
                 ),
               if (isSelected) ...[
                 const SizedBox(width: BookingConstants.smallPadding),
-                const Icon(
-                  Icons.check_circle,
-                  color: AppColors.primary,
-                  size: 24,
-                ),
+                Icon(Icons.check_circle, color: colorScheme.primary, size: 24),
               ],
             ],
           ),

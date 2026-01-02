@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/search_tip_item.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -56,17 +55,22 @@ class SearchTips extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             ...searchHistory.map(
-              (query) => ListTile(
-                leading: const Icon(
-                  Icons.history,
-                  color: AppColors.textSecondary,
-                ),
-                title: Text(query),
-                trailing: IconButton(
-                  icon: const Icon(Icons.close, size: 20),
-                  onPressed: () => onHistoryRemove?.call(query),
-                ),
-                onTap: () => onHistoryTap?.call(query),
+              (query) => Builder(
+                builder: (context) {
+                  final colorScheme = Theme.of(context).colorScheme;
+                  return ListTile(
+                    leading: Icon(
+                      Icons.history,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    title: Text(query),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.close, size: 20),
+                      onPressed: () => onHistoryRemove?.call(query),
+                    ),
+                    onTap: () => onHistoryTap?.call(query),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 24),
@@ -76,30 +80,35 @@ class SearchTips extends StatelessWidget {
 
           // Search Tips
           Center(
-            child: Column(
-              children: [
-                Icon(
-                  Icons.search,
-                  size: 64,
-                  color: AppColors.primary.withValues(alpha: 0.5),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  context.l10n.searchForFields,
-                  style: AppTextStyles.titleLarge.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  context.l10n.searchByNameCityAddressDescription,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+            child: Builder(
+              builder: (context) {
+                final colorScheme = Theme.of(context).colorScheme;
+                return Column(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      size: 64,
+                      color: colorScheme.primary.withValues(alpha: 0.5),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      context.l10n.searchForFields,
+                      style: AppTextStyles.titleLarge.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      context.l10n.searchByNameCityAddressDescription,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
           const SizedBox(height: 24),

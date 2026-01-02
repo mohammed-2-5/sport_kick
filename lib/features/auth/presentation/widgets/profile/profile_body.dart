@@ -41,6 +41,8 @@ class ProfileBody extends StatelessWidget {
   }
 
   Widget _buildUserInfo(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
         Text(user.displayName, style: AppTextStyles.headlineMediumBold),
@@ -48,19 +50,15 @@ class ProfileBody extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.1),
+            color: colorScheme.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Builder(
-            builder: (context) {
-              return Text(
-                _roleLabel(context),
-                style: AppTextStyles.labelSmallBold.copyWith(
-                  color: AppColors.primary,
-                  letterSpacing: 1.0,
-                ),
-              );
-            },
+          child: Text(
+            _roleLabel(context),
+            style: AppTextStyles.labelSmallBold.copyWith(
+              color: colorScheme.primary,
+              letterSpacing: 1.0,
+            ),
           ),
         ),
       ],
@@ -68,13 +66,16 @@ class ProfileBody extends StatelessWidget {
   }
 
   Widget _buildInfoCards(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Column(
       children: [
         ProfileInfoCard(
           icon: Icons.email_outlined,
           label: context.l10n.email,
           value: user.email,
-          iconColor: Colors.blue,
+          iconColor: Theme.of(context).colorScheme.primary,
         ),
         const SizedBox(height: 16),
         if (user.phone != null && user.phone!.isNotEmpty) ...[
@@ -82,7 +83,7 @@ class ProfileBody extends StatelessWidget {
             icon: Icons.phone_outlined,
             label: context.l10n.phone,
             value: user.phone!,
-            iconColor: AppColors.success,
+            iconColor: successColor,
           ),
           const SizedBox(height: 16),
         ],
@@ -90,7 +91,7 @@ class ProfileBody extends StatelessWidget {
           icon: Icons.calendar_today_outlined,
           label: context.l10n.memberSince,
           value: formatMemberSince(context, user.createdAt),
-          iconColor: Colors.purple,
+          iconColor: Theme.of(context).colorScheme.secondary,
         ),
       ],
     );

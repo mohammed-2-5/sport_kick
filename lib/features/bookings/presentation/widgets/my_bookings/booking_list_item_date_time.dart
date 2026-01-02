@@ -22,6 +22,9 @@ class BookingListItemDateTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final dateText = date != null
         ? LocaleFormatters.formatDate(context, date!)
         : formattedDate;
@@ -33,6 +36,7 @@ class BookingListItemDateTime extends StatelessWidget {
             baseDate: date,
           )
         : formattedTimeSlot;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
 
     return Row(
       children: [
@@ -40,7 +44,7 @@ class BookingListItemDateTime extends StatelessWidget {
           child: BookingListItemInfoBadge(
             icon: Icons.calendar_today,
             text: dateText,
-            color: AppColors.primary,
+            color: colorScheme.primary,
           ),
         ),
         const SizedBox(width: 12),
@@ -48,7 +52,7 @@ class BookingListItemDateTime extends StatelessWidget {
           child: BookingListItemInfoBadge(
             icon: Icons.access_time,
             text: timeText,
-            color: AppColors.success,
+            color: successColor,
           ),
         ),
       ],

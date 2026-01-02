@@ -20,6 +20,8 @@ class AnalyticsChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -52,7 +54,7 @@ class AnalyticsChartCard extends StatelessWidget {
                       Text(
                         subtitle,
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: Colors.grey[600],
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -84,6 +86,8 @@ class ChartLegendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
@@ -107,7 +111,7 @@ class ChartLegendItem extends StatelessWidget {
                 Text(
                   value.toString(),
                   style: AppTextStyles.caption.copyWith(
-                    color: Colors.grey[600],
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
               ],

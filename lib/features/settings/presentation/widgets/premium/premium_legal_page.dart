@@ -31,8 +31,9 @@ class PremiumLegalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: colorScheme.surface,
       body: Column(
         children: [
           PremiumCurvedHeader(title: title, showBackButton: true, height: 160),
@@ -77,6 +78,7 @@ class _LegalInfoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -109,7 +111,7 @@ class _LegalInfoHeader extends StatelessWidget {
                   title,
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w800,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -119,7 +121,7 @@ class _LegalInfoHeader extends StatelessWidget {
           Text(
             description,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
               height: 1.5,
             ),
           ),
@@ -127,7 +129,7 @@ class _LegalInfoHeader extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: AppColors.accentCyan.withValues(alpha: 0.3),
@@ -146,7 +148,7 @@ class _LegalInfoHeader extends StatelessWidget {
                   context.l10n.effectiveLabel(effectiveDate),
                   style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -171,6 +173,7 @@ class PremiumLegalSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -179,7 +182,7 @@ class PremiumLegalSection extends StatelessWidget {
           title,
           style: AppTextStyles.titleSmall.copyWith(
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 12),
@@ -208,7 +211,7 @@ class PremiumLegalSection extends StatelessWidget {
                   child: Text(
                     point,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                       height: 1.6,
                     ),
                   ),
@@ -235,12 +238,13 @@ class PremiumLegalContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +253,7 @@ class PremiumLegalContact extends StatelessWidget {
             context.l10n.contactUs,
             style: AppTextStyles.titleSmall.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 16),
@@ -270,6 +274,7 @@ class _ContactRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
@@ -286,7 +291,7 @@ class _ContactRow extends StatelessWidget {
           child: Text(
             label,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ),

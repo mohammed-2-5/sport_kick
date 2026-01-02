@@ -65,6 +65,10 @@ class PremiumAdminCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return PremiumCard(
       onTap: onTap,
       borderColor: isSelected ? AppColors.premiumGold : null,
@@ -94,16 +98,20 @@ class PremiumAdminCard extends StatelessWidget {
                               ],
                             )
                           : null,
-                      color: isSelected ? null : Colors.white,
+                      color: isSelected ? null : colorScheme.surface,
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(
                         color: isSelected
                             ? Colors.transparent
-                            : AppColors.border,
+                            : colorScheme.outline,
                       ),
                     ),
                     child: isSelected
-                        ? const Icon(Icons.check, size: 16, color: Colors.white)
+                        ? Icon(
+                            Icons.check,
+                            size: 16,
+                            color: colorScheme.onPrimary,
+                          )
                         : null,
                   ),
                 ),
@@ -150,9 +158,14 @@ class PremiumAdminCard extends StatelessWidget {
                       width: 14,
                       height: 14,
                       decoration: BoxDecoration(
-                        color: isActive ? Colors.green : Colors.grey,
+                        color: isActive
+                            ? successColor
+                            : colorScheme.onSurfaceVariant,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
+                        border: Border.all(
+                          color: colorScheme.surface,
+                          width: 2,
+                        ),
                       ),
                     ),
                   ),
@@ -172,7 +185,7 @@ class PremiumAdminCard extends StatelessWidget {
                             name,
                             style: AppTextStyles.labelLarge.copyWith(
                               fontWeight: FontWeight.w700,
-                              color: AppColors.textPrimary,
+                              color: colorScheme.onSurface,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -199,7 +212,7 @@ class PremiumAdminCard extends StatelessWidget {
                             style: AppTextStyles.labelSmall.copyWith(
                               fontSize: 9,
                               fontWeight: FontWeight.w700,
-                              color: Colors.white,
+                              color: colorScheme.onPrimary,
                             ),
                           ),
                         ),
@@ -209,7 +222,7 @@ class PremiumAdminCard extends StatelessWidget {
                     Text(
                       email,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary.withValues(alpha: 0.8),
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -244,7 +257,7 @@ class PremiumAdminCard extends StatelessWidget {
                   currency: context.l10n.currencyEgp,
                   decimalDigits: 0,
                 ),
-                color: Colors.green,
+                color: successColor,
               ),
               if (phone != null) ...[
                 const SizedBox(width: 12),
@@ -252,7 +265,7 @@ class PremiumAdminCard extends StatelessWidget {
                   child: _StatChip(
                     icon: Icons.phone,
                     label: phone!,
-                    color: AppColors.textSecondary,
+                    color: colorScheme.secondary,
                   ),
                 ),
               ],
@@ -286,7 +299,9 @@ class PremiumAdminCard extends StatelessWidget {
                           ? context.l10n.deactivate
                           : context.l10n.activate,
                       icon: isActive ? Icons.block : Icons.check_circle_outline,
-                      color: isActive ? Colors.orange : Colors.green,
+                      color: isActive
+                          ? (isDark ? AppColors.darkWarning : AppColors.warning)
+                          : successColor,
                       onTap: onToggleStatus!,
                     ),
                   ),
@@ -297,7 +312,7 @@ class PremiumAdminCard extends StatelessWidget {
                     child: _ActionButton(
                       label: context.l10n.delete,
                       icon: Icons.delete_outline,
-                      color: Colors.red,
+                      color: isDark ? AppColors.darkError : AppColors.error,
                       onTap: onDelete!,
                     ),
                   ),
@@ -318,17 +333,21 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final inactiveColor = Theme.of(context).colorScheme.onSurfaceVariant;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: (isActive ? Colors.green : Colors.grey).withValues(alpha: 0.1),
+        color: (isActive ? successColor : inactiveColor).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
         isActive ? context.l10n.active : context.l10n.inactive,
         style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w600,
-          color: isActive ? Colors.green : Colors.grey,
+          color: isActive ? successColor : inactiveColor,
         ),
       ),
     );

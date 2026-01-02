@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Empty state view for notifications.
@@ -12,6 +10,8 @@ class NotificationEmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +19,7 @@ class NotificationEmptyView extends StatelessWidget {
           Icon(
             Icons.notifications_off_outlined,
             size: 80,
-            color: AppColors.textSecondary.withValues(alpha: 0.5),
+            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(
@@ -27,7 +27,7 @@ class NotificationEmptyView extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 8),
@@ -35,7 +35,7 @@ class NotificationEmptyView extends StatelessWidget {
             context.l10n.notificationsEmptySubtitle,
             style: TextStyle(
               fontSize: 14,
-              color: AppColors.textSecondary.withValues(alpha: 0.5),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
           ),
         ],

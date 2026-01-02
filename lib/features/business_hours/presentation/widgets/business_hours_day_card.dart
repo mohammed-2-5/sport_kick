@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
 import 'package:spo_kick/features/business_hours/presentation/widgets/day_card/business_hours_day_card_compact_content.dart';
@@ -33,18 +32,19 @@ class BusinessHoursDayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDarkMode = theme.brightness == Brightness.dark;
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
 
     // Calculate background color
     final Color backgroundColor;
     if (isSelected) {
-      backgroundColor = AppColors.primary.withValues(
+      backgroundColor = colorScheme.primary.withValues(
         alpha: BusinessHoursConstants.selectedOpacity,
       );
     } else if (!businessHours.isOpen) {
-      backgroundColor = isDarkMode ? Colors.grey[850]! : Colors.grey[100]!;
+      backgroundColor = colorScheme.surfaceContainerHighest;
     } else {
-      backgroundColor = theme.cardColor;
+      backgroundColor = colorScheme.surface;
     }
 
     return Material(
@@ -67,8 +67,8 @@ class BusinessHoursDayCard extends StatelessWidget {
             ),
             border: Border.all(
               color: isSelected
-                  ? AppColors.primary
-                  : (isDarkMode ? Colors.grey[800]! : Colors.grey[300]!),
+                  ? colorScheme.primary
+                  : colorScheme.outline.withValues(alpha: isDark ? 0.5 : 0.3),
               width: isSelected ? 2.0 : 1.0,
             ),
           ),

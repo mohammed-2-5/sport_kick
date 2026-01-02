@@ -20,6 +20,11 @@ class UserBookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final statusColor = _getStatusColor(booking.status, isDark);
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Card(
       margin: const EdgeInsets.only(bottom: AdminUIConstants.cardMarginBottom),
       shape: RoundedRectangleBorder(
@@ -36,14 +41,14 @@ class UserBookingCard extends StatelessWidget {
               Container(
                 padding: AdminUIConstants.paddingCard,
                 decoration: BoxDecoration(
-                  color: _getStatusColor(
-                    booking.status,
-                  ).withValues(alpha: AdminUIConstants.opacityLight),
+                  color: statusColor.withValues(
+                    alpha: AdminUIConstants.opacityLight,
+                  ),
                   borderRadius: AdminUIConstants.borderRadiusMedium,
                 ),
                 child: Icon(
                   _getStatusIcon(booking.status),
-                  color: _getStatusColor(booking.status),
+                  color: statusColor,
                   size: AdminUIConstants.iconSizeMedium,
                 ),
               ),
@@ -56,7 +61,10 @@ class UserBookingCard extends StatelessWidget {
                   children: [
                     Text(
                       booking.fieldName ?? context.l10n.unknownField,
-                      style: AppTextStyles.bold(AppTextStyles.bodyLarge),
+                      style: AppTextStyles.bodyLarge.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -66,23 +74,27 @@ class UserBookingCard extends StatelessWidget {
                         Icon(
                           Icons.calendar_today,
                           size: AdminUIConstants.fontSizeMedium,
-                          color: Colors.grey[600],
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           DateFormat('MMM d, y').format(booking.date),
-                          style: AppTextStyles.bodySmallSecondary,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                         ),
                         const SizedBox(width: AdminUIConstants.listItemSpacing),
                         Icon(
                           Icons.access_time,
                           size: AdminUIConstants.fontSizeMedium,
-                          color: Colors.grey[600],
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           booking.formattedTimeSlot,
-                          style: AppTextStyles.bodySmallSecondary,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ],
                     ),
@@ -97,34 +109,28 @@ class UserBookingCard extends StatelessWidget {
                   Container(
                     padding: AdminUIConstants.badgePadding,
                     decoration: BoxDecoration(
-                      color: _getStatusColor(
-                        booking.status,
-                      ).withValues(alpha: AdminUIConstants.opacityLight),
+                      color: statusColor.withValues(
+                        alpha: AdminUIConstants.opacityLight,
+                      ),
                       borderRadius: BorderRadius.circular(
                         AdminUIConstants.radiusSmall,
                       ),
-                      border: Border.all(
-                        color: _getStatusColor(booking.status),
-                      ),
+                      border: Border.all(color: statusColor),
                     ),
                     child: Text(
                       booking.status.displayName,
-                      style: AppTextStyles.bold(
-                        AppTextStyles.withColor(
-                          AppTextStyles.labelSmall,
-                          _getStatusColor(booking.status),
-                        ),
+                      style: AppTextStyles.labelSmall.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: statusColor,
                       ),
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     booking.formattedPrice,
-                    style: AppTextStyles.bold(
-                      AppTextStyles.withColor(
-                        AppTextStyles.bodyMedium,
-                        AppColors.success,
-                      ),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: successColor,
                     ),
                   ),
                 ],
@@ -136,16 +142,16 @@ class UserBookingCard extends StatelessWidget {
     );
   }
 
-  Color _getStatusColor(BookingStatus status) {
+  Color _getStatusColor(BookingStatus status, bool isDark) {
     switch (status) {
       case BookingStatus.pending:
-        return AppColors.warning;
+        return isDark ? AppColors.darkWarning : AppColors.warning;
       case BookingStatus.confirmed:
-        return AppColors.success;
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       case BookingStatus.canceled:
-        return AppColors.error;
+        return isDark ? AppColors.darkError : AppColors.error;
       case BookingStatus.completed:
-        return Colors.purple;
+        return isDark ? Colors.purple[300]! : Colors.purple;
     }
   }
 

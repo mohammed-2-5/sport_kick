@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 
+/// City Selection Error View
+///
+/// Theme-aware: adapts to light/dark mode.
 class CitySelectionErrorView extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
@@ -15,13 +17,15 @@ class CitySelectionErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(CityConstants.screenPadding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, size: 64, color: AppColors.error),
+            Icon(Icons.error_outline, size: 64, color: colorScheme.error),
             const SizedBox(height: 16),
             Text(
               context.l10n.cityErrorLoading,
@@ -31,7 +35,7 @@ class CitySelectionErrorView extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               message,
-              style: const TextStyle(color: AppColors.textSecondary),
+              style: TextStyle(color: colorScheme.onSurfaceVariant),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),

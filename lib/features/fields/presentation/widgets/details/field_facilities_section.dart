@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
@@ -19,6 +18,8 @@ class FieldFacilitiesSection extends StatelessWidget {
     if (!field.hasFacilities) {
       return const SizedBox.shrink();
     }
+
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -43,10 +44,10 @@ class FieldFacilitiesSection extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryLight.withValues(alpha: 0.1),
+                      color: colorScheme.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: AppColors.primaryLight.withValues(alpha: 0.3),
+                        color: colorScheme.primary.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
@@ -55,13 +56,13 @@ class FieldFacilitiesSection extends StatelessWidget {
                         Icon(
                           _getFacilityIcon(facility),
                           size: FieldConstants.facilityIconSize,
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                         ),
                         const SizedBox(width: FieldConstants.chipSpacing),
                         Text(
                           FacilityLocalizer.localize(context, facility),
                           style: AppTextStyles.labelLarge.copyWith(
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

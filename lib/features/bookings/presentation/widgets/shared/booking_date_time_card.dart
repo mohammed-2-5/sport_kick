@@ -13,12 +13,14 @@ class BookingDateTimeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(BookingConstants.standardPadding),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(BookingConstants.borderRadius),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +29,7 @@ class BookingDateTimeCard extends StatelessWidget {
             context.l10n.dateTimeLabel,
             style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: BookingConstants.standardPadding),
@@ -56,14 +58,15 @@ class BookingDateTimeCard extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.success.withValues(alpha: 0.1),
+                  color: (isDark ? AppColors.darkSuccess : AppColors.success)
+                      .withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   context.l10n.durationHours(booking.durationInHours),
                   style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.success,
+                    color: isDark ? AppColors.darkSuccess : AppColors.success,
                   ),
                 ),
               ),
@@ -88,15 +91,16 @@ class _DateRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
           padding: const EdgeInsets.all(BookingConstants.smallPadding),
           decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.1),
+            color: colorScheme.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(BookingConstants.smallPadding),
           ),
-          child: Icon(icon, color: AppColors.primary, size: 20),
+          child: Icon(icon, color: colorScheme.primary, size: 20),
         ),
         const SizedBox(width: BookingConstants.itemSpacing),
         Column(
@@ -105,14 +109,14 @@ class _DateRow extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             Text(
               value,
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
           ],

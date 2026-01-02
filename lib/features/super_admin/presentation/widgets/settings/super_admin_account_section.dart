@@ -68,7 +68,7 @@ class SuperAdminAccountSection extends StatelessWidget {
                 icon: Icons.phone,
                 title: context.l10n.phone2,
                 subtitle: user.phone ?? context.l10n.notSet,
-                onTap: () => context.pushNamed("editProfile"),
+                onTap: () => context.pushNamed('editProfile'),
               ),
             ],
           );

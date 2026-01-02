@@ -10,6 +10,7 @@ import 'package:spo_kick/core/network/network_info.dart';
 import 'package:spo_kick/core/services/csv_export_service.dart';
 import 'package:spo_kick/core/services/error_logging_service.dart';
 import 'package:spo_kick/core/services/pdf_export_service.dart';
+import 'package:spo_kick/core/theme/theme_cubit.dart';
 
 // Auth Feature
 import 'package:spo_kick/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -102,6 +103,7 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/sport_categorie
 
 // Settings Feature
 import 'package:spo_kick/features/settings/data/datasources/settings_local_data_source.dart';
+import 'package:spo_kick/features/settings/data/datasources/settings_remote_data_source.dart';
 import 'package:spo_kick/features/settings/data/repositories/settings_repository_impl.dart';
 import 'package:spo_kick/features/settings/domain/repositories/settings_repository.dart';
 import 'package:spo_kick/features/settings/domain/usecases/get_user_preferences_usecase.dart';
@@ -356,6 +358,9 @@ Future<void> _initCore() async {
 
   // Localization - app locale
   sl.registerLazySingleton<AppLocaleCubit>(() => AppLocaleCubit(sl()));
+
+  // Theme Cubit - manages app theme mode
+  sl.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
 }
 
 // ==================== FEATURE: AUTH ====================
@@ -792,8 +797,9 @@ void _initOwner() {
 /// Registers all dependencies for user settings and preferences:
 /// - Settings cubit for state management
 /// - Use cases for preferences management
-/// - Repository for data access
-/// - Local data source for persistent storage
+/// - Repository for data access (remote + local)
+/// - Remote data source for Supabase sync
+/// - Local data source for persistent cache
 void _initSettings() {
   // Cubit
   sl.registerFactory(
@@ -811,10 +817,17 @@ void _initSettings() {
 
   // Repository
   sl.registerLazySingleton<SettingsRepository>(
-    () => SettingsRepositoryImpl(localDataSource: sl()),
+    () => SettingsRepositoryImpl(
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+      networkInfo: sl(),
+    ),
   );
 
   // Data Sources
+  sl.registerLazySingleton<SettingsRemoteDataSource>(
+    () => SettingsRemoteDataSourceImpl(supabaseClient: sl()),
+  );
   sl.registerLazySingleton<SettingsLocalDataSource>(
     () => SettingsLocalDataSourceImpl(sharedPreferences: sl()),
   );

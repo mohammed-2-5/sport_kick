@@ -60,7 +60,7 @@ class RecurringTabView extends StatelessWidget {
           Text(
             context.l10n.loadingSubscriptions,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -69,6 +69,7 @@ class RecurringTabView extends StatelessWidget {
   }
 
   Widget _buildError(BuildContext context, String message) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -78,14 +79,15 @@ class RecurringTabView extends StatelessWidget {
             Icon(
               Icons.error_outline_rounded,
               size: 56,
-              color: AppColors.error.withValues(alpha: 0.7),
+              color: (isDark ? AppColors.darkError : AppColors.error)
+                  .withValues(alpha: 0.7),
             ),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 24),
@@ -110,6 +112,7 @@ class RecurringTabView extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -134,7 +137,7 @@ class RecurringTabView extends StatelessWidget {
               context.l10n.noRecurringSubscriptions,
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.navyDeep,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 12),
@@ -142,7 +145,7 @@ class RecurringTabView extends StatelessWidget {
               context.l10n.recurringSlotHint,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 32),
@@ -208,7 +211,7 @@ class RecurringTabView extends StatelessWidget {
             _SectionHeader(
               title: context.l10n.historyTab,
               count: state.otherBookings.length,
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
             const SizedBox(height: 12),
             ...state.otherBookings.map(
@@ -312,6 +315,7 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
@@ -327,7 +331,7 @@ class _SectionHeader extends StatelessWidget {
           title,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.navyDeep,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(width: 8),

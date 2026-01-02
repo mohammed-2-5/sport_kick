@@ -21,6 +21,8 @@ class InvoiceDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return PremiumCard(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -34,7 +36,7 @@ class InvoiceDetailsCard extends StatelessWidget {
                 context.l10n.invoiceDetails,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
               if (booking.invoiceNumber != null)
@@ -74,7 +76,7 @@ class InvoiceDetailsCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          const Divider(height: 1, color: AppColors.border),
+          Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
           const SizedBox(height: 16),
 
           // Field Name
@@ -113,7 +115,7 @@ class InvoiceDetailsCard extends StatelessWidget {
             value: context.l10n.durationHours(booking.durationHours),
           ),
           const SizedBox(height: 16),
-          const Divider(height: 1, color: AppColors.border),
+          Divider(height: 1, color: colorScheme.outline.withValues(alpha: 0.2)),
           const SizedBox(height: 16),
 
           // Total Amount
@@ -124,7 +126,7 @@ class InvoiceDetailsCard extends StatelessWidget {
                 context.l10n.totalAmount,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
               Container(
@@ -184,15 +186,17 @@ class _DetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppColors.backgroundLight,
+            color: colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, size: 18, color: AppColors.textSecondary),
+          child: Icon(icon, size: 18, color: colorScheme.onSurfaceVariant),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -202,7 +206,7 @@ class _DetailRow extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 2),
@@ -210,7 +214,7 @@ class _DetailRow extends StatelessWidget {
                 value,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],

@@ -10,7 +10,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 /// Individual duration option card with premium styling.
 ///
 /// Shows duration, total price, and selection state with animations.
-/// Used by [BookingDurationSelector] to display duration options.
+/// Uses Column layout for proper badge positioning.
 class DurationOptionCard extends StatefulWidget {
   /// Duration in hours (1 or 2).
   final int duration;
@@ -99,15 +99,37 @@ class _DurationOptionCardState extends State<DurationOptionCard>
         },
         child: AnimatedContainer(
           duration: AppAnimations.fast,
-          height: widget.isCompact
-              ? BookingConstants.durationChipHeight - 10
-              : BookingConstants.durationChipHeight,
           decoration: _buildDecoration(),
-          child: Stack(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              _buildContent(l10n),
-              if (widget.badgeText != null && widget.isAvailable) _buildBadge(),
-              if (widget.isSelected) _buildSelectedIndicator(),
+              // Top row: Badge and Selected indicator
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Selected indicator (start side in RTL)
+                  if (widget.isSelected)
+                    const Icon(
+                      Icons.check_circle_rounded,
+                      size: 20,
+                      color: Colors.white,
+                    )
+                  else
+                    const SizedBox(width: 20),
+
+                  // Badge (end side in RTL)
+                  if (widget.badgeText != null && widget.isAvailable)
+                    _buildBadge()
+                  else
+                    const SizedBox(width: 20),
+                ],
+              ),
+
+              const SizedBox(height: 8),
+
+              // Main content
+              _buildMainContent(l10n),
             ],
           ),
         ),
@@ -116,13 +138,16 @@ class _DurationOptionCardState extends State<DurationOptionCard>
   }
 
   BoxDecoration _buildDecoration() {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (!widget.isAvailable) {
       return BoxDecoration(
-        color: AppColors.backgroundLight,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(
           BookingConstants.durationChipBorderRadius,
         ),
-        border: Border.all(color: AppColors.lightGrey),
+        border: Border.all(color: colorScheme.outlineVariant),
       );
     }
 
@@ -143,14 +168,16 @@ class _DurationOptionCardState extends State<DurationOptionCard>
     }
 
     return BoxDecoration(
-      color: Colors.white,
+      color: colorScheme.surface,
       borderRadius: BorderRadius.circular(
         BookingConstants.durationChipBorderRadius,
       ),
-      border: Border.all(color: AppColors.border, width: 1.5),
+      border: Border.all(color: colorScheme.outline, width: 1.5),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withValues(alpha: 0.04),
+          color: isDark
+              ? Colors.black.withValues(alpha: 0.2)
+              : Colors.black.withValues(alpha: 0.04),
           blurRadius: 8,
           offset: const Offset(0, 2),
         ),
@@ -158,98 +185,88 @@ class _DurationOptionCardState extends State<DurationOptionCard>
     );
   }
 
-  Widget _buildContent(AppLocalizations l10n) {
+  Widget _buildMainContent(AppLocalizations l10n) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     final textColor = widget.isSelected
         ? Colors.white
         : widget.isAvailable
-        ? AppColors.textPrimary
-        : AppColors.textSecondary;
+        ? colorScheme.onSurface
+        : colorScheme.onSurfaceVariant;
 
     final priceColor = widget.isSelected
         ? Colors.white.withValues(alpha: 0.9)
         : widget.isAvailable
         ? AppColors.accentCyan
-        : AppColors.textSecondary;
+        : colorScheme.onSurfaceVariant;
 
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.schedule_rounded, size: 18, color: textColor),
-              const SizedBox(width: 6),
-              Text(
-                l10n.durationHours(widget.duration),
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: textColor,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Text(
-            _formattedPrice,
-            style: AppTextStyles.labelLarge.copyWith(
-              fontWeight: FontWeight.w600,
-              color: priceColor,
-            ),
-          ),
-          if (!widget.isAvailable && widget.unavailableMessage != null) ...[
-            const SizedBox(height: 4),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.schedule_rounded, size: 18, color: textColor),
+            const SizedBox(width: 6),
             Text(
-              widget.unavailableMessage!,
-              style: AppTextStyles.labelSmall.copyWith(
-                fontSize: 10,
-                color: AppColors.error,
+              l10n.durationHours(widget.duration),
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.w700,
+                color: textColor,
               ),
-              textAlign: TextAlign.center,
             ),
           ],
+        ),
+        const SizedBox(height: 6),
+        Text(
+          _formattedPrice,
+          style: AppTextStyles.labelLarge.copyWith(
+            fontWeight: FontWeight.w600,
+            color: priceColor,
+          ),
+        ),
+        if (!widget.isAvailable && widget.unavailableMessage != null) ...[
+          const SizedBox(height: 4),
+          Text(
+            widget.unavailableMessage!,
+            style: AppTextStyles.labelSmall.copyWith(
+              fontSize: 10,
+              color: errorColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ],
-      ),
+      ],
     );
   }
 
   Widget _buildBadge() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     final bgColor = widget.isSelected
         ? Colors.white.withValues(alpha: 0.25)
-        : AppColors.statusSuccess.withValues(alpha: 0.1);
+        : successColor.withValues(alpha: 0.1);
 
-    final textColor = widget.isSelected
-        ? Colors.white
-        : AppColors.statusSuccess;
+    final textColor = widget.isSelected ? Colors.white : successColor;
 
-    return Positioned(
-      top: 8,
-      right: 8,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Text(
-          widget.badgeText!,
-          style: AppTextStyles.labelSmall.copyWith(
-            fontSize: 9,
-            fontWeight: FontWeight.w600,
-            color: textColor,
-          ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        widget.badgeText!,
+        style: AppTextStyles.labelSmall.copyWith(
+          fontSize: 10,
+          fontWeight: FontWeight.w600,
+          color: textColor,
         ),
       ),
-    );
-  }
-
-  Widget _buildSelectedIndicator() {
-    return const Positioned(
-      top: 8,
-      left: 8,
-      child: Icon(Icons.check_circle_rounded, size: 20, color: Colors.white),
     );
   }
 }

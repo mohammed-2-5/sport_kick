@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -14,6 +13,8 @@ class SearchEmptyResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -23,7 +24,7 @@ class SearchEmptyResults extends StatelessWidget {
             Icon(
               Icons.search_off,
               size: 80,
-              color: AppColors.textSecondary.withValues(alpha: 0.5),
+              color: colorScheme.outline.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 16),
             Text(
@@ -37,7 +38,7 @@ class SearchEmptyResults extends StatelessWidget {
             Text(
               context.l10n.searchTryDifferentKeywords,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),

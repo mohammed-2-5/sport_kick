@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 
@@ -13,7 +12,7 @@ Future<void> showLogoutConfirmation(BuildContext context) async {
   await showDialog(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       title: Text(context.l10n.logout),
       content: Text(context.l10n.logoutConfirmationMessage),
       actions: [
@@ -26,7 +25,9 @@ Future<void> showLogoutConfirmation(BuildContext context) async {
             Navigator.pop(dialogContext);
             cubit.logout();
           },
-          style: TextButton.styleFrom(foregroundColor: AppColors.error),
+          style: TextButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.error,
+          ),
           child: Text(context.l10n.logout),
         ),
       ],

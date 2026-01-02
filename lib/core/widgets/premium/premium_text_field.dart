@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium Text Field with animated label and interactions.
 ///
 /// Features:
+/// - Theme-aware colors (adapts to light/dark mode)
 /// - Animated focus border with color transition
 /// - Smooth shadow elevation on focus
 /// - Form validation support
@@ -81,6 +82,9 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+    final isDark = context.isDarkMode;
+
     return FormField<String>(
       validator: widget.validator,
       initialValue: widget.controller?.text,
@@ -99,8 +103,8 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
                 fontWeight: FontWeight.w600,
                 color:
                     _isFocused || (widget.controller?.text.isNotEmpty ?? false)
-                    ? AppColors.primary
-                    : AppColors.textSecondary,
+                    ? colorScheme.primary
+                    : colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 8),
@@ -117,27 +121,29 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
                 duration: AppAnimations.fast,
                 curve: AppAnimations.easeInOut,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: hasError
-                        ? AppColors.error
+                        ? colorScheme.error
                         : _isFocused
-                        ? AppColors.primary
-                        : AppColors.surface,
+                        ? colorScheme.primary
+                        : colorScheme.outline,
                     width: _isFocused || hasError ? 1.5 : 1.0,
                   ),
                   boxShadow: _isFocused
                       ? [
                           BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.1),
+                            color: colorScheme.primary.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
                         ]
                       : [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
+                            color: Colors.black.withValues(
+                              alpha: isDark ? 0.2 : 0.05,
+                            ),
                             blurRadius: 4,
                             offset: const Offset(0, 2),
                           ),
@@ -151,8 +157,8 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
                         child: Icon(
                           widget.prefixIcon,
                           color: _isFocused
-                              ? AppColors.primary
-                              : AppColors.icon,
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
                           size: 20,
                         ),
                       ),
@@ -170,14 +176,14 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
                         textInputAction: widget.textInputAction,
                         inputFormatters: widget.inputFormatters,
                         maxLines: widget.isPassword ? 1 : widget.maxLines,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onSurface,
                         ),
                         decoration: InputDecoration(
                           hintText: widget.hintText,
                           hintStyle: TextStyle(
-                            color: AppColors.textSecondary.withValues(
+                            color: colorScheme.onSurfaceVariant.withValues(
                               alpha: 0.5,
                             ),
                           ),
@@ -199,7 +205,7 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
                           widget.obscureText
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                           size: 20,
                         ),
                         onPressed: widget.onTogglePassword,
@@ -220,17 +226,17 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
                 padding: const EdgeInsets.only(top: 6, left: 4),
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.error_outline,
                       size: 14,
-                      color: AppColors.error,
+                      color: colorScheme.error,
                     ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         errorText,
-                        style: const TextStyle(
-                          color: AppColors.error,
+                        style: TextStyle(
+                          color: colorScheme.error,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),

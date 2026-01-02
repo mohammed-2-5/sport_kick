@@ -161,9 +161,9 @@ class _MetricCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               title,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

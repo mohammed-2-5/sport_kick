@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -22,6 +21,8 @@ class PremiumLocationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return PremiumCard(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -29,17 +30,13 @@ class PremiumLocationCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
-                Icons.location_on,
-                color: AppColors.accentCyan,
-                size: 24,
-              ),
+              Icon(Icons.location_on, color: colorScheme.primary, size: 24),
               const SizedBox(width: 12),
               Text(
                 context.l10n.location,
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w800,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -62,10 +59,10 @@ class PremiumLocationCard extends StatelessWidget {
           Container(
             height: 180,
             decoration: BoxDecoration(
-              color: AppColors.backgroundLight,
+              color: colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.accentCyan.withValues(alpha: 0.2),
+                color: colorScheme.primary.withValues(alpha: 0.2),
                 width: 2,
               ),
             ),
@@ -75,12 +72,14 @@ class PremiumLocationCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Container(
-                    color: AppColors.backgroundLight,
+                    color: colorScheme.surfaceContainerHighest,
                     child: Center(
                       child: Icon(
                         Icons.map,
                         size: 64,
-                        color: AppColors.textSecondary.withValues(alpha: 0.3),
+                        color: colorScheme.onSurfaceVariant.withValues(
+                          alpha: 0.3,
+                        ),
                       ),
                     ),
                   ),
@@ -91,19 +90,19 @@ class PremiumLocationCard extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.accentCyan,
+                      color: colorScheme.primary,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.accentCyan.withValues(alpha: 0.5),
+                          color: colorScheme.primary.withValues(alpha: 0.5),
                           blurRadius: 16,
                           offset: const Offset(0, 4),
                         ),
                       ],
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.location_on,
-                      color: Colors.white,
+                      color: colorScheme.onPrimary,
                       size: 28,
                     ),
                   ),
@@ -134,8 +133,8 @@ class PremiumLocationCard extends StatelessWidget {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accentCyan,
-                foregroundColor: Colors.white,
+                backgroundColor: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -212,16 +211,18 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppColors.accentCyan.withValues(alpha: 0.1),
+            color: colorScheme.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, size: 20, color: AppColors.accentCyan),
+          child: Icon(icon, size: 20, color: colorScheme.primary),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -231,7 +232,7 @@ class _InfoRow extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -239,7 +240,7 @@ class _InfoRow extends StatelessWidget {
               Text(
                 value,
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                   fontWeight: FontWeight.w600,
                 ),
               ),

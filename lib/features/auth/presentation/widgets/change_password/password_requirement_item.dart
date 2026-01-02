@@ -20,6 +20,10 @@ class PasswordRequirementItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
@@ -27,13 +31,13 @@ class PasswordRequirementItem extends StatelessWidget {
           Icon(
             isMet ? Icons.check_circle : Icons.circle_outlined,
             size: _iconSize,
-            color: isMet ? AppColors.success : AppColors.lightGrey,
+            color: isMet ? successColor : colorScheme.outline,
           ),
           const SizedBox(width: _spacing),
           Text(
             text,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: isMet ? AppColors.success : AppColors.textSecondary,
+              color: isMet ? successColor : colorScheme.onSurfaceVariant,
             ),
           ),
         ],

@@ -9,6 +9,8 @@ class FieldsListEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -16,7 +18,7 @@ class FieldsListEmptyState extends StatelessWidget {
           Icon(
             hasFilters ? Icons.search_off : Icons.sports_soccer_outlined,
             size: 80,
-            color: Colors.grey[400],
+            color: colorScheme.outline,
           ),
           const SizedBox(height: 16),
           Text(
@@ -26,7 +28,7 @@ class FieldsListEmptyState extends StatelessWidget {
             style: AppTextStyles.headlineSmall.copyWith(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
+              color: colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(height: 8),
@@ -34,7 +36,9 @@ class FieldsListEmptyState extends StatelessWidget {
             hasFilters
                 ? context.l10n.tryAdjustingYourFilters
                 : 'Fields will appear here once created',
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
             textAlign: TextAlign.center,
           ),
         ],

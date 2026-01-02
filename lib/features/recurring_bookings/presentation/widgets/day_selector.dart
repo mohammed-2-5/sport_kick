@@ -19,6 +19,7 @@ class DaySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final days = List.generate(
       7,
       (index) => (
@@ -35,14 +36,14 @@ class DaySelector extends StatelessWidget {
           context.l10n.selectDay,
           style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.navyDeep,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           context.l10n.selectDaySubtitle,
           style: AppTextStyles.labelMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: 16),
@@ -80,6 +81,7 @@ class _DayChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -87,9 +89,12 @@ class _DayChip extends StatelessWidget {
         width: 44,
         height: 56,
         decoration: BoxDecoration(
-          color: _backgroundColor,
+          color: _backgroundColor(colorScheme),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: _borderColor, width: isSelected ? 2 : 1),
+          border: Border.all(
+            color: _borderColor(colorScheme),
+            width: isSelected ? 2 : 1,
+          ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
@@ -107,7 +112,7 @@ class _DayChip extends StatelessWidget {
               shortName,
               style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: _textColor,
+                color: _textColor(colorScheme),
               ),
             ),
             if (isSelected) ...[
@@ -127,21 +132,21 @@ class _DayChip extends StatelessWidget {
     );
   }
 
-  Color get _backgroundColor {
-    if (isDisabled) return AppColors.textSecondary.withValues(alpha: 0.1);
+  Color _backgroundColor(ColorScheme colorScheme) {
+    if (isDisabled) return colorScheme.onSurface.withValues(alpha: 0.05);
     if (isSelected) return AppColors.accentCyan.withValues(alpha: 0.1);
-    return Colors.white;
+    return colorScheme.surface;
   }
 
-  Color get _borderColor {
-    if (isDisabled) return AppColors.textSecondary.withValues(alpha: 0.2);
+  Color _borderColor(ColorScheme colorScheme) {
+    if (isDisabled) return colorScheme.onSurface.withValues(alpha: 0.12);
     if (isSelected) return AppColors.accentCyan;
-    return AppColors.border;
+    return colorScheme.outline.withValues(alpha: 0.3);
   }
 
-  Color get _textColor {
-    if (isDisabled) return AppColors.textSecondary.withValues(alpha: 0.5);
+  Color _textColor(ColorScheme colorScheme) {
+    if (isDisabled) return colorScheme.onSurface.withValues(alpha: 0.38);
     if (isSelected) return AppColors.accentCyan;
-    return AppColors.navyDeep;
+    return colorScheme.onSurface;
   }
 }

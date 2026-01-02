@@ -16,6 +16,9 @@ class RecurringDetailStatsCard extends StatelessWidget {
     final progress = booking.totalBookingsCount > 0
         ? booking.completedBookingsCount / booking.totalBookingsCount
         : 0.0;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
 
     return RecurringDetailCard(
       title: context.l10n.statistics,
@@ -32,7 +35,7 @@ class RecurringDetailStatsCard extends StatelessWidget {
                   decimalDigits: 0,
                 ),
                 label: context.l10n.totalLabel,
-                color: AppColors.navyDeep,
+                color: colorScheme.primary,
               ),
               _StatItem(
                 value: LocaleFormatters.formatNumber(
@@ -41,7 +44,7 @@ class RecurringDetailStatsCard extends StatelessWidget {
                   decimalDigits: 0,
                 ),
                 label: context.l10n.completedLabel,
-                color: const Color(0xFF10B981),
+                color: successColor,
               ),
               _StatItem(
                 value: LocaleFormatters.formatNumber(
@@ -50,7 +53,7 @@ class RecurringDetailStatsCard extends StatelessWidget {
                   decimalDigits: 0,
                 ),
                 label: context.l10n.upcomingLabel,
-                color: AppColors.accentCyan,
+                color: colorScheme.tertiary,
               ),
             ],
           ),
@@ -59,10 +62,8 @@ class RecurringDetailStatsCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             child: LinearProgressIndicator(
               value: progress,
-              backgroundColor: AppColors.navyDeep.withValues(alpha: 0.1),
-              valueColor: const AlwaysStoppedAnimation<Color>(
-                Color(0xFF10B981),
-              ),
+              backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
+              valueColor: AlwaysStoppedAnimation<Color>(successColor),
               minHeight: 8,
             ),
           ),
@@ -75,10 +76,7 @@ class RecurringDetailStatsCard extends StatelessWidget {
                 decimalDigits: 0,
               ),
             ),
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondary,
-            ),
+            style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant),
           ),
         ],
       ),
@@ -99,6 +97,7 @@ class _StatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
         Text(
@@ -112,7 +111,7 @@ class _StatItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant),
         ),
       ],
     );

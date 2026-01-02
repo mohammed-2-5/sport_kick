@@ -27,6 +27,7 @@ class RecurringTimeSlotGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     if (selectedDayOfWeek == null) {
       return _buildSelectDayPrompt(context);
     }
@@ -48,14 +49,14 @@ class RecurringTimeSlotGrid extends StatelessWidget {
           context.l10n.selectTime,
           style: AppTextStyles.titleSmall.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.navyDeep,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           context.l10n.availableSlotsForDay(_getDayName(context)),
           style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: 16),
@@ -85,25 +86,26 @@ class RecurringTimeSlotGrid extends StatelessWidget {
   }
 
   Widget _buildSelectDayPrompt(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.navyDeep.withValues(alpha: 0.05),
+        color: colorScheme.onSurface.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.navyDeep.withValues(alpha: 0.1)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
           Icon(
             Icons.touch_app_rounded,
             size: 48,
-            color: AppColors.navyDeep.withValues(alpha: 0.3),
+            color: colorScheme.onSurface.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 12),
           Text(
             context.l10n.selectDayFirst,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -112,21 +114,24 @@ class RecurringTimeSlotGrid extends StatelessWidget {
   }
 
   Widget _buildClosedMessage(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.1),
+        color: errorColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
+        border: Border.all(color: errorColor.withValues(alpha: 0.2)),
       ),
       child: Column(
         children: [
-          const Icon(Icons.block_rounded, size: 48, color: AppColors.error),
+          Icon(Icons.block_rounded, size: 48, color: errorColor),
           const SizedBox(height: 12),
           Text(
             context.l10n.fieldClosedOnDay(_getDayName(context)),
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.error,
+              color: errorColor,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -134,7 +139,7 @@ class RecurringTimeSlotGrid extends StatelessWidget {
           Text(
             context.l10n.selectDifferentDay,
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -267,6 +272,9 @@ class _TimeSlotChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
     final displayTime = LocaleFormatters.formatTime(context, time);
     final reservedTooltip = isReserved
         ? context.l10n.reservedBy(
@@ -281,9 +289,12 @@ class _TimeSlotChip extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: _backgroundColor,
+            color: _backgroundColor(colorScheme, isDark),
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: _borderColor, width: isSelected ? 2 : 1),
+            border: Border.all(
+              color: _borderColor(colorScheme, isDark),
+              width: isSelected ? 2 : 1,
+            ),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
@@ -301,7 +312,7 @@ class _TimeSlotChip extends StatelessWidget {
                   displayTime,
                   style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: _textColor,
+                    color: _textColor(colorScheme, isDark),
                   ),
                 ),
               ),
@@ -312,8 +323,8 @@ class _TimeSlotChip extends StatelessWidget {
                   child: Container(
                     width: 8,
                     height: 8,
-                    decoration: const BoxDecoration(
-                      color: AppColors.error,
+                    decoration: BoxDecoration(
+                      color: errorColor,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -325,21 +336,24 @@ class _TimeSlotChip extends StatelessWidget {
     );
   }
 
-  Color get _backgroundColor {
-    if (isReserved) return AppColors.error.withValues(alpha: 0.1);
+  Color _backgroundColor(ColorScheme colorScheme, bool isDark) {
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+    if (isReserved) return errorColor.withValues(alpha: 0.1);
     if (isSelected) return AppColors.accentCyan.withValues(alpha: 0.1);
-    return Colors.white;
+    return colorScheme.surface;
   }
 
-  Color get _borderColor {
-    if (isReserved) return AppColors.error.withValues(alpha: 0.3);
+  Color _borderColor(ColorScheme colorScheme, bool isDark) {
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+    if (isReserved) return errorColor.withValues(alpha: 0.3);
     if (isSelected) return AppColors.accentCyan;
-    return AppColors.border;
+    return colorScheme.outline.withValues(alpha: 0.3);
   }
 
-  Color get _textColor {
-    if (isReserved) return AppColors.error.withValues(alpha: 0.7);
+  Color _textColor(ColorScheme colorScheme, bool isDark) {
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+    if (isReserved) return errorColor.withValues(alpha: 0.7);
     if (isSelected) return AppColors.accentCyan;
-    return AppColors.navyDeep;
+    return colorScheme.onSurface;
   }
 }

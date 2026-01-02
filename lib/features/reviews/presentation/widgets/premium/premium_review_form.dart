@@ -37,6 +37,9 @@ class PremiumReviewForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final onSurfaceVariant = colorScheme.onSurfaceVariant;
+
     return Form(
       key: formKey,
       child: Column(
@@ -73,7 +76,7 @@ class PremiumReviewForm extends StatelessWidget {
                             ? context.l10n.editingReviewFor
                             : context.l10n.reviewing,
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.textSecondary,
+                          color: onSurfaceVariant,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -114,9 +117,7 @@ class PremiumReviewForm extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             context.l10n.shareYourExperienceToHelpOthers,
-            style: AppTextStyles.labelMedium.copyWith(
-              color: AppColors.textSecondary,
-            ),
+            style: AppTextStyles.labelMedium.copyWith(color: onSurfaceVariant),
           ),
           const SizedBox(height: 12),
 
@@ -145,7 +146,7 @@ class PremiumReviewForm extends StatelessWidget {
                 Icon(
                   Icons.info_outline,
                   size: 14,
-                  color: AppColors.textSecondary.withValues(alpha: 0.6),
+                  color: onSurfaceVariant.withValues(alpha: 0.6),
                 ),
                 const SizedBox(width: 6),
                 Flexible(
@@ -154,7 +155,7 @@ class PremiumReviewForm extends StatelessWidget {
                         ? context.l10n.updateRatingPrompt
                         : 'Your review helps others find the best fields',
                     style: AppTextStyles.caption.copyWith(
-                      color: AppColors.textSecondary.withValues(alpha: 0.6),
+                      color: onSurfaceVariant.withValues(alpha: 0.6),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -199,6 +200,10 @@ class _CommentFieldState extends State<_CommentField> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final surface = colorScheme.surface;
+    final outline = colorScheme.outline;
+    final onSurfaceVariant = colorScheme.onSurfaceVariant;
     final currentLength = widget.controller.text.length;
     final isNearLimit = currentLength > _maxLength * 0.8;
 
@@ -207,9 +212,9 @@ class _CommentFieldState extends State<_CommentField> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: surface,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.border, width: 1.5),
+            border: Border.all(color: outline, width: 1.5),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.03),
@@ -226,7 +231,7 @@ class _CommentFieldState extends State<_CommentField> {
             decoration: InputDecoration(
               hintText: context.l10n.shareDetailsAboutYourExperience,
               hintStyle: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary.withValues(alpha: 0.6),
+                color: onSurfaceVariant.withValues(alpha: 0.6),
                 height: 1.5,
               ),
               border: InputBorder.none,
@@ -242,7 +247,7 @@ class _CommentFieldState extends State<_CommentField> {
             fontWeight: FontWeight.w600,
             color: isNearLimit
                 ? (currentLength >= _maxLength ? Colors.red : Colors.orange)
-                : AppColors.textSecondary,
+                : onSurfaceVariant,
           ),
         ),
       ],

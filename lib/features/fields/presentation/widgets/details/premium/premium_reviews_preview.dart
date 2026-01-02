@@ -69,7 +69,10 @@ class _ReviewsContent extends StatelessWidget {
               if (field.hasReviews)
                 TextButton(
                   onPressed: () {
-                    context.pushNamed('allReviews', extra: field);
+                    context.pushNamed(
+                      'allReviews',
+                      extra: {'fieldId': field.id, 'fieldName': field.name},
+                    );
                   },
                   child: Text(
                     context.l10n.viewAll,

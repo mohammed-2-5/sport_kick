@@ -42,7 +42,11 @@ class PremiumAuthContainer extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.navyDeep, AppColors.navyLight, Color(0xFF1E3A5F)],
+          colors: [
+            AppColors.navyDeep,
+            AppColors.navyLight,
+            AppColors.navyMedium,
+          ],
           stops: [0.0, 0.5, 1.0],
         ),
       ),
@@ -136,7 +140,9 @@ class _BackgroundDecorations extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  AppColors.accentCyan.withValues(alpha: 0.2),
+                  Theme.of(
+                    context,
+                  ).colorScheme.secondary.withValues(alpha: 0.2),
                   AppColors.accentCyan.withValues(alpha: 0.0),
                 ],
               ),
@@ -154,7 +160,9 @@ class _BackgroundDecorations extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  AppColors.accentCyan.withValues(alpha: 0.15),
+                  Theme.of(
+                    context,
+                  ).colorScheme.secondary.withValues(alpha: 0.15),
                   AppColors.accentCyan.withValues(alpha: 0.0),
                 ],
               ),
@@ -240,14 +248,17 @@ class _AnimatedLogoState extends State<_AnimatedLogo>
             height: 100,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: const LinearGradient(
-                colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).colorScheme.secondary,
+                  Theme.of(context).colorScheme.secondaryContainer,
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.accentCyan.withValues(
+                  color: Theme.of(context).colorScheme.secondary.withValues(
                     alpha: _glowAnimation.value,
                   ),
                   blurRadius: 30,

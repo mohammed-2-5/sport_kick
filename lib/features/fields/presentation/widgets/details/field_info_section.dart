@@ -4,9 +4,11 @@ import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/utils/sport_category_localizer.dart';
 
 /// Field information section widget.
 ///
@@ -19,12 +21,16 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 /// - Surface type and indoor/outdoor chips
 class FieldInfoSection extends StatelessWidget {
   final FieldEntity field;
-  final dynamic category;
+  final SportCategoryEntity? category;
 
   const FieldInfoSection({super.key, required this.field, this.category});
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final infoColor = isDark ? AppColors.darkInfo : AppColors.info;
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -43,9 +49,9 @@ class FieldInfoSection extends StatelessWidget {
           // Category
           if (category != null)
             Text(
-              category.name,
+              category!.getLocalizedName(context),
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.primary,
+                color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -56,52 +62,62 @@ class FieldInfoSection extends StatelessWidget {
           if (field.hasReviews)
             Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        FieldConstants.ratingGradientStart,
-                        FieldConstants.ratingGradientEnd,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.orange.withValues(alpha: 0.4),
-                        blurRadius: 8,
-                        offset: const Offset(0, 3),
+                Builder(
+                  builder: (context) {
+                    final warningColor = isDark
+                        ? AppColors.darkWarning
+                        : AppColors.warning;
+                    // Use onPrimary for content on colored gradients (white in both themes)
+                    final contentColor = colorScheme.onPrimary;
+
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.star_rounded,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        field.ratingDisplay,
-                        style: AppTextStyles.titleMedium.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            warningColor,
+                            warningColor.withValues(alpha: 0.8),
+                          ],
                         ),
+                        borderRadius: BorderRadius.circular(25),
+                        boxShadow: [
+                          BoxShadow(
+                            color: warningColor.withValues(alpha: 0.4),
+                            blurRadius: 8,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '(${field.totalReviews})',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: Colors.white.withValues(alpha: 0.9),
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.star_rounded,
+                            color: contentColor,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            field.ratingDisplay,
+                            style: AppTextStyles.titleMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: contentColor,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '(${field.totalReviews})',
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: contentColor.withValues(alpha: 0.9),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
                 const SizedBox(width: FieldConstants.itemSpacing),
                 Container(
@@ -112,28 +128,22 @@ class FieldInfoSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        AppColors.info.withValues(alpha: 0.2),
-                        AppColors.info.withValues(alpha: 0.1),
+                        infoColor.withValues(alpha: 0.2),
+                        infoColor.withValues(alpha: 0.1),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      color: AppColors.info.withValues(alpha: 0.3),
-                    ),
+                    border: Border.all(color: infoColor.withValues(alpha: 0.3)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.bookmark_rounded,
-                        color: AppColors.info,
-                        size: 16,
-                      ),
+                      Icon(Icons.bookmark_rounded, color: infoColor, size: 16),
                       const SizedBox(width: 6),
                       Text(
                         '${LocaleFormatters.formatNumber(context, field.totalBookings)} ${context.l10n.bookings}',
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.info,
+                          color: infoColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -149,43 +159,49 @@ class FieldInfoSection extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    gradient: AppGradients.primary,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: AppShadows.medium,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                child: Builder(
+                  builder: (context) {
+                    // Use onPrimary for content on primary gradient (white in both themes)
+                    final contentColor = colorScheme.onPrimary;
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        gradient: AppGradients.primary,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: AppShadows.medium,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.attach_money_rounded,
-                            color: Colors.white.withValues(alpha: 0.9),
-                            size: 18,
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.attach_money_rounded,
+                                color: contentColor.withValues(alpha: 0.9),
+                                size: 18,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                context.l10n.ratePerHour,
+                                style: AppTextStyles.labelSmall.copyWith(
+                                  color: contentColor.withValues(alpha: 0.9),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 4),
+                          const SizedBox(height: 6),
                           Text(
-                            context.l10n.ratePerHour,
-                            style: AppTextStyles.labelSmall.copyWith(
-                              color: Colors.white.withValues(alpha: 0.9),
-                              fontWeight: FontWeight.w500,
+                            '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
+                            style: AppTextStyles.headlineSmall.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: contentColor,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
-                      Text(
-                        '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
-                        style: AppTextStyles.headlineSmall.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: FieldConstants.itemSpacing),
@@ -195,13 +211,13 @@ class FieldInfoSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        AppColors.info.withValues(alpha: 0.2),
-                        AppColors.info.withValues(alpha: 0.1),
+                        infoColor.withValues(alpha: 0.2),
+                        infoColor.withValues(alpha: 0.1),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: AppColors.info.withValues(alpha: 0.3),
+                      color: infoColor.withValues(alpha: 0.3),
                       width: 1.5,
                     ),
                   ),
@@ -210,16 +226,16 @@ class FieldInfoSection extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.people_outline_rounded,
-                            color: AppColors.info,
+                            color: infoColor,
                             size: 18,
                           ),
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.fieldSize,
                             style: AppTextStyles.labelSmall.copyWith(
-                              color: AppColors.info,
+                              color: infoColor,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -230,7 +246,7 @@ class FieldInfoSection extends StatelessWidget {
                         field.fieldSize,
                         style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: AppColors.info,
+                          color: infoColor,
                         ),
                       ),
                     ],
@@ -247,6 +263,7 @@ class FieldInfoSection extends StatelessWidget {
             children: [
               if (field.surfaceType != null) ...[
                 _buildInfoChip(
+                  context,
                   Icons.grass,
                   _localizedSurface(context, field.surfaceType!),
                   rawValue: field.surfaceType!,
@@ -254,6 +271,7 @@ class FieldInfoSection extends StatelessWidget {
                 const SizedBox(width: FieldConstants.chipSpacing),
               ],
               _buildInfoChip(
+                context,
                 field.isIndoor ? Icons.home : Icons.wb_sunny,
                 field.isIndoor ? context.l10n.indoor : context.l10n.outdoor,
                 rawValue: field.isIndoor ? 'indoor' : 'outdoor',
@@ -265,7 +283,16 @@ class FieldInfoSection extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoChip(IconData icon, String label, {String? rawValue}) {
+  Widget _buildInfoChip(
+    BuildContext context,
+    IconData icon,
+    String label, {
+    String? rawValue,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    // Use onPrimary for content on colored gradients (white in both themes)
+    final contentColor = colorScheme.onPrimary;
+
     // Determine gradient based on label type
     final compare = (rawValue ?? label).toLowerCase();
     LinearGradient chipGradient;
@@ -315,12 +342,12 @@ class FieldInfoSection extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: Colors.white),
+          Icon(icon, size: 16, color: contentColor),
           const SizedBox(width: 6),
           Text(
             label,
             style: AppTextStyles.labelLarge.copyWith(
-              color: Colors.white,
+              color: contentColor,
               fontWeight: FontWeight.bold,
             ),
           ),

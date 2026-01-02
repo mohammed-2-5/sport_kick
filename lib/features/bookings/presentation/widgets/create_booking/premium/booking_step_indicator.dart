@@ -163,15 +163,22 @@ class _StepCircleState extends State<_StepCircle>
             },
           ),
           const SizedBox(height: 8),
-          Text(
-            widget.step.title(context.l10n),
-            style: AppTextStyles.labelSmall.copyWith(
-              fontSize: 11,
-              fontWeight: widget.isActive ? FontWeight.w700 : FontWeight.w500,
-              color: widget.isActive || widget.isCompleted
-                  ? AppColors.textPrimary
-                  : AppColors.textSecondary,
-            ),
+          Builder(
+            builder: (context) {
+              final colorScheme = Theme.of(context).colorScheme;
+              return Text(
+                widget.step.title(context.l10n),
+                style: AppTextStyles.labelSmall.copyWith(
+                  fontSize: 11,
+                  fontWeight: widget.isActive
+                      ? FontWeight.w700
+                      : FontWeight.w500,
+                  color: widget.isActive || widget.isCompleted
+                      ? colorScheme.onSurface
+                      : colorScheme.onSurfaceVariant,
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -179,6 +186,8 @@ class _StepCircleState extends State<_StepCircle>
   }
 
   Widget _buildContent() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     if (widget.isCompleted) {
       return const Icon(Icons.check, color: Colors.white, size: 20);
     }
@@ -187,21 +196,29 @@ class _StepCircleState extends State<_StepCircle>
       '${widget.stepNumber}',
       style: AppTextStyles.titleMedium.copyWith(
         fontWeight: FontWeight.w700,
-        color: widget.isActive ? Colors.white : AppColors.textSecondary,
+        color: widget.isActive ? Colors.white : colorScheme.onSurfaceVariant,
       ),
     );
   }
 
   Color _getBackgroundColor() {
-    if (widget.isCompleted) return AppColors.success;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    if (widget.isCompleted)
+      return isDark ? AppColors.darkSuccess : AppColors.success;
     if (widget.isActive) return AppColors.accentCyan;
-    return Colors.white;
+    return colorScheme.surface;
   }
 
   Color _getBorderColor() {
-    if (widget.isCompleted) return AppColors.success;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    if (widget.isCompleted)
+      return isDark ? AppColors.darkSuccess : AppColors.success;
     if (widget.isActive) return AppColors.accentCyan;
-    return AppColors.border;
+    return colorScheme.outline;
   }
 }
 
@@ -213,17 +230,19 @@ class _StepConnector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Container(
       height: 3,
       margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(1.5),
         gradient: isCompleted
-            ? const LinearGradient(
-                colors: [AppColors.success, AppColors.accentCyan],
-              )
+            ? LinearGradient(colors: [successColor, AppColors.accentCyan])
             : null,
-        color: isCompleted ? null : AppColors.border,
+        color: isCompleted ? null : colorScheme.outline,
       ),
     );
   }

@@ -27,6 +27,8 @@ class PremiumMapControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -45,7 +47,7 @@ class PremiumMapControls extends StatelessWidget {
                 context.l10n.fieldsCount(fieldsCount),
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -68,7 +70,7 @@ class PremiumMapControls extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.red,
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 1.5),
+                    border: Border.all(color: colorScheme.surface, width: 1.5),
                   ),
                 ),
               ),
@@ -92,6 +94,9 @@ class _GlassContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: BackdropFilter(
@@ -99,15 +104,15 @@ class _GlassContainer extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.9),
+            color: colorScheme.surface.withValues(alpha: 0.9),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: colorScheme.outline.withValues(alpha: 0.2),
               width: 1.5,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
+                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
                 blurRadius: 20,
                 offset: const Offset(0, 4),
               ),
@@ -136,6 +141,9 @@ class _GlassIconButtonState extends State<_GlassIconButton> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedScale(
       scale: _isPressed ? 0.9 : 1.0,
       duration: const Duration(milliseconds: 100),
@@ -154,15 +162,15 @@ class _GlassIconButtonState extends State<_GlassIconButton> {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.9),
+                color: colorScheme.surface.withValues(alpha: 0.9),
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.2),
+                  color: colorScheme.outline.withValues(alpha: 0.2),
                   width: 1.5,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
                     blurRadius: 20,
                     offset: const Offset(0, 4),
                   ),

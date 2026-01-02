@@ -36,6 +36,11 @@ class PremiumOwnerFieldCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return PremiumCard(
       onTap: onViewDetails,
       child: Column(
@@ -53,26 +58,26 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                           imageUrl: field.images.first,
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Container(
-                            color: AppColors.backgroundLight,
+                            color: colorScheme.surfaceContainerHighest,
                             child: const Center(
                               child: CircularProgressIndicator(strokeWidth: 2),
                             ),
                           ),
                           errorWidget: (context, url, error) => Container(
-                            color: AppColors.backgroundLight,
-                            child: const Icon(
+                            color: colorScheme.surfaceContainerHighest,
+                            child: Icon(
                               Icons.sports_soccer,
                               size: 48,
-                              color: AppColors.textSecondary,
+                              color: colorScheme.onSurfaceVariant,
                             ),
                           ),
                         )
                       : Container(
-                          color: AppColors.backgroundLight,
-                          child: const Icon(
+                          color: colorScheme.surfaceContainerHighest,
+                          child: Icon(
                             Icons.sports_soccer,
                             size: 48,
-                            color: AppColors.textSecondary,
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                 ),
@@ -166,7 +171,7 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                         currency: context.l10n.currencyEgp,
                         decimalDigits: 0,
                       ),
-                      color: Colors.green,
+                      color: successColor,
                     ),
                   ),
                 ],
@@ -194,7 +199,7 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                     child: _ActionButton(
                       label: context.l10n.delete,
                       icon: Icons.delete_outline,
-                      color: Colors.red,
+                      color: errorColor,
                       onTap: onDelete!,
                     ),
                   ),
@@ -214,12 +219,16 @@ class _StatusIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: isActive
-            ? Colors.green.withValues(alpha: 0.9)
-            : Colors.grey.withValues(alpha: 0.9),
+            ? successColor.withValues(alpha: 0.9)
+            : colorScheme.onSurfaceVariant.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(

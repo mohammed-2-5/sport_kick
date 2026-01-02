@@ -99,7 +99,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     letterSpacing: -0.25,
     height: 1.12,
-    color: AppColors.textPrimary,
   );
 
   /// Display Medium - 45sp
@@ -110,7 +109,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     letterSpacing: 0,
     height: 1.16,
-    color: AppColors.textPrimary,
   );
 
   /// Display Small - 36sp
@@ -121,7 +119,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     letterSpacing: 0,
     height: 1.22,
-    color: AppColors.textPrimary,
   );
 
   // ==================== HEADLINE STYLES ====================
@@ -135,7 +132,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
     height: 1.25,
-    color: AppColors.textPrimary,
   );
 
   /// Headline Medium - 28sp
@@ -146,7 +142,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
     height: 1.29,
-    color: AppColors.textPrimary,
   );
 
   /// Headline Small - 24sp
@@ -157,7 +152,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
     height: 1.33,
-    color: AppColors.textPrimary,
   );
 
   // ==================== TITLE STYLES ====================
@@ -171,7 +165,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     letterSpacing: 0,
     height: 1.27,
-    color: AppColors.textPrimary,
   );
 
   /// Title Medium - 16sp
@@ -182,7 +175,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.15,
     height: 1.50,
-    color: AppColors.textPrimary,
   );
 
   /// Title Small - 14sp
@@ -193,7 +185,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
     height: 1.43,
-    color: AppColors.textPrimary,
   );
 
   // ==================== BODY STYLES ====================
@@ -207,7 +198,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
     height: 1.50,
-    color: AppColors.textPrimary,
   );
 
   /// Body Medium - 14sp
@@ -218,7 +208,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     letterSpacing: 0.25,
     height: 1.43,
-    color: AppColors.textPrimary,
   );
 
   /// Body Small - 12sp
@@ -243,7 +232,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
     height: 1.43,
-    color: AppColors.textPrimary,
   );
 
   /// Label Medium - 12sp
@@ -254,7 +242,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
     height: 1.33,
-    color: AppColors.textPrimary,
   );
 
   /// Label Small - 11sp
@@ -265,7 +252,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
     height: 1.45,
-    color: AppColors.textPrimary,
   );
 
   // ==================== CUSTOM STYLES ====================
@@ -391,7 +377,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
     height: 1.50,
-    color: AppColors.textPrimary,
   );
 
   /// Input label text style - For floating labels
@@ -421,7 +406,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
     height: 1.43,
-    color: AppColors.textPrimary,
   );
 
   /// Chip text style - For chip labels
@@ -431,7 +415,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
     height: 1.43,
-    color: AppColors.textPrimary,
   );
 
   /// Badge text style - For notification badges
@@ -451,7 +434,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     letterSpacing: 0.15,
     height: 1.50,
-    color: AppColors.textPrimary,
   );
 
   // ==================== HELPER METHODS ====================
@@ -723,7 +705,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 1.25,
-    color: AppColors.textPrimary,
   );
 
   /// Headline Medium (Bold)
@@ -733,7 +714,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 1.29,
-    color: AppColors.textPrimary,
   );
 
   /// Headline Small (Bold)
@@ -743,7 +723,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 1.33,
-    color: AppColors.textPrimary,
   );
 
   /// Title Large (Bold)
@@ -753,7 +732,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 1.27,
-    color: AppColors.textPrimary,
   );
 
   /// Title Medium (Bold)
@@ -763,7 +741,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     letterSpacing: 0.15,
     height: 1.50,
-    color: AppColors.textPrimary,
   );
 
   /// Label Small (Bold)
@@ -773,7 +750,24 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     letterSpacing: 0.5,
     height: 1.45,
-    color: AppColors.textPrimary,
+  );
+
+  /// Label Medium (Bold)
+  static const TextStyle labelMediumBold = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.5,
+    height: 1.33,
+  );
+
+  /// Body Medium (Bold)
+  static const TextStyle bodyMediumBold = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.25,
+    height: 1.43,
   );
 
   // ==================== SECONDARY TEXT VARIANTS ====================

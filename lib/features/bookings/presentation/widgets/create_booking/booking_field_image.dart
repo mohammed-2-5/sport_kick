@@ -32,10 +32,12 @@ class _BookingFieldPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: 60,
       height: 60,
-      color: AppColors.border,
+      color: isDark ? AppColors.darkBorder : AppColors.border,
       child: const Icon(Icons.sports_soccer),
     );
   }

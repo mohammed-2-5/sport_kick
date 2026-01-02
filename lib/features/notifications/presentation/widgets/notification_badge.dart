@@ -24,6 +24,8 @@ class NotificationBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocBuilder<NotificationCubit, NotificationState>(
       builder: (context, state) {
         final unreadCount = state is NotificationLoaded ? state.unreadCount : 0;
@@ -35,7 +37,7 @@ class NotificationBadge extends StatelessWidget {
             children: [
               Icon(
                 Icons.notifications_outlined,
-                color: iconColor ?? AppColors.textPrimary,
+                color: iconColor ?? colorScheme.onSurface,
                 size: iconSize,
               ),
               if (unreadCount > 0)
@@ -60,21 +62,23 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final displayText = count > 99 ? '99+' : count.toString();
 
     return Container(
       constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
       padding: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: AppColors.error,
+        color: isDark ? AppColors.darkError : AppColors.error,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.premiumBackground, width: 1.5),
+        border: Border.all(color: colorScheme.surface, width: 1.5),
       ),
       child: Center(
         child: Text(
           displayText,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: colorScheme.onError,
             fontSize: 10,
             fontWeight: FontWeight.w700,
           ),
@@ -99,6 +103,8 @@ class NotificationIconSimple extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return IconButton(
       onPressed: onTap,
       icon: Stack(
@@ -106,7 +112,7 @@ class NotificationIconSimple extends StatelessWidget {
         children: [
           Icon(
             Icons.notifications_outlined,
-            color: iconColor ?? AppColors.textPrimary,
+            color: iconColor ?? colorScheme.onSurface,
             size: 26,
           ),
           if (count > 0)

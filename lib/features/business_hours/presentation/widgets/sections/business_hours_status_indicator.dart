@@ -15,17 +15,22 @@ class BusinessHoursStatusIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return Card(
       color: isOpen
-          ? AppColors.success.withValues(alpha: 0.1)
-          : AppColors.error.withValues(alpha: 0.1),
+          ? successColor.withValues(alpha: 0.1)
+          : errorColor.withValues(alpha: 0.1),
       child: Padding(
         padding: const EdgeInsets.all(BusinessHoursConstants.cardPadding),
         child: Row(
           children: [
             Icon(
               isOpen ? Icons.check_circle : Icons.cancel,
-              color: isOpen ? AppColors.success : AppColors.error,
+              color: isOpen ? successColor : errorColor,
               size: 32,
             ),
             const SizedBox(width: BusinessHoursConstants.itemSpacing),
@@ -41,7 +46,7 @@ class BusinessHoursStatusIndicator extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: isOpen ? AppColors.success : AppColors.error,
+                      color: isOpen ? successColor : errorColor,
                     ),
                   ),
                   const SizedBox(height: BusinessHoursConstants.tinySpacing),
@@ -49,7 +54,10 @@ class BusinessHoursStatusIndicator extends StatelessWidget {
                     isOpen
                         ? context.l10n.businessHoursAcceptingBookings
                         : context.l10n.businessHoursClosedForBookings,
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ],
               ),

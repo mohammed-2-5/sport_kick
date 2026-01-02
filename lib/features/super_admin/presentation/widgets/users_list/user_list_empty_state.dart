@@ -9,6 +9,7 @@ class UserListEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -16,16 +17,14 @@ class UserListEmptyState extends StatelessWidget {
           Icon(
             hasFilters ? Icons.search_off : Icons.people_outlined,
             size: 80,
-            color: Colors.grey[400],
+            color: colorScheme.outline,
           ),
           const SizedBox(height: 16),
           Text(
             hasFilters ? context.l10n.noResultsFound : context.l10n.noUsersYet,
-            style: AppTextStyles.bold(
-              AppTextStyles.withColor(
-                AppTextStyles.headlineSmall,
-                Colors.grey[700]!,
-              ),
+            style: AppTextStyles.headlineSmall.copyWith(
+              fontWeight: FontWeight.bold,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
@@ -33,7 +32,9 @@ class UserListEmptyState extends StatelessWidget {
             hasFilters
                 ? context.l10n.tryAdjustingYourFilters
                 : 'Users will appear here once they register',
-            style: AppTextStyles.bodyMediumSecondary,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
             textAlign: TextAlign.center,
           ),
         ],

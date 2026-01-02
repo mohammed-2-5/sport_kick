@@ -12,10 +12,14 @@ class HomeUpcomingFeatures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(HomeConstants.upcomingFeaturesPadding),
       decoration: BoxDecoration(
-        color: AppColors.infoLight,
+        color: isDark
+            ? AppColors.info.withValues(alpha: 0.15)
+            : AppColors.infoLight,
         borderRadius: BorderRadius.circular(
           HomeConstants.upcomingFeaturesBorderRadius,
         ),
@@ -78,9 +82,9 @@ class _FeatureItem extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.textPrimary),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
           ),
         ],

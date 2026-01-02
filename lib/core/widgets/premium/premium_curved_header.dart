@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/features/home/presentation/widgets/hero/curved_header_clipper.dart';
 
 /// Premium curved header component for user-facing screens.
 ///
 /// Features:
-/// - Dark navy gradient background
+/// - Dark navy gradient background (deeper in dark mode)
 /// - Curved bottom edge using ClipPath
 /// - Optional back button with haptic feedback
 /// - Flexible content area
@@ -44,6 +45,11 @@ class PremiumCurvedHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.isDarkMode;
+    final gradient = isDark
+        ? AppColors.darkNavyGradient
+        : AppColors.navyGradient;
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -52,7 +58,7 @@ class PremiumCurvedHeader extends StatelessWidget {
           clipper: CurvedHeaderClipper(),
           child: Container(
             height: height,
-            decoration: const BoxDecoration(gradient: AppColors.navyGradient),
+            decoration: BoxDecoration(gradient: gradient),
           ),
         ),
 

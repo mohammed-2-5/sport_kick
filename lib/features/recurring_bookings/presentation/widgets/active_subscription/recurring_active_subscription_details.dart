@@ -15,13 +15,16 @@ class RecurringActiveSubscriptionDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.navyDeep.withValues(alpha: 0.03),
+        color: colorScheme.primary.withValues(alpha: 0.03),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.navyDeep.withValues(alpha: 0.08)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [
@@ -35,7 +38,11 @@ class RecurringActiveSubscriptionDetails extends StatelessWidget {
               ),
             ),
           ),
-          Container(width: 1, height: 40, color: AppColors.border),
+          Container(
+            width: 1,
+            height: 40,
+            color: colorScheme.outline.withValues(alpha: 0.2),
+          ),
           Expanded(
             child: _DetailItem(
               icon: Icons.access_time_rounded,
@@ -47,7 +54,11 @@ class RecurringActiveSubscriptionDetails extends StatelessWidget {
               ),
             ),
           ),
-          Container(width: 1, height: 40, color: AppColors.border),
+          Container(
+            width: 1,
+            height: 40,
+            color: colorScheme.outline.withValues(alpha: 0.2),
+          ),
           Expanded(
             child: _DetailItem(
               icon: Icons.payments_outlined,
@@ -58,7 +69,7 @@ class RecurringActiveSubscriptionDetails extends StatelessWidget {
                 currency: 'EGP',
                 decimalDigits: 0,
               ),
-              valueColor: const Color(0xFF10B981),
+              valueColor: successColor,
             ),
           ),
         ],
@@ -82,13 +93,14 @@ class _DetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
-        Icon(icon, size: 18, color: AppColors.textSecondary),
+        Icon(icon, size: 18, color: colorScheme.onSurfaceVariant),
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
         ),
         const SizedBox(height: 2),
         Text(
@@ -96,7 +108,7 @@ class _DetailItem extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.bold,
-            color: valueColor ?? AppColors.navyDeep,
+            color: valueColor ?? colorScheme.onSurface,
           ),
           textAlign: TextAlign.center,
         ),

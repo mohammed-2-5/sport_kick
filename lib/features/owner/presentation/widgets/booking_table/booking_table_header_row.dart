@@ -5,118 +5,75 @@ import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking
 import 'package:spo_kick/features/owner/presentation/utils/booking_table_helpers.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
-/// Header row for booking table showing day names and dates.
+/// Header row for booking table showing TIME SLOTS across the top.
 ///
-/// Displays 7 columns (Sat-Fri) with day names and dates.
-/// Highlights today's column with gold accent color.
+/// Displays time slots (09:00, 10:00, etc.) as columns with "Day" label first.
 class BookingTableHeaderRow extends StatelessWidget {
   final BookingTableLoaded state;
 
   const BookingTableHeaderRow({required this.state, super.key});
 
-  /// Day names for header (Sat-Fri).
-  static const _dayNames = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-
   @override
   Widget build(BuildContext context) {
+    final hours = BookingTableHelpers.generateWorkingHours(state.businessHours);
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
-        // Time column header
+        // Day column header (first cell)
         Container(
-          width: 65,
+          width: 75,
           height: 56,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppColors.navyDeep.withValues(alpha: 0.05),
             border: Border(
-              right: BorderSide(color: AppColors.border.withValues(alpha: 0.3)),
+              right: BorderSide(
+                color: colorScheme.outline.withValues(alpha: 0.3),
+              ),
             ),
           ),
           child: Text(
-            context.l10n.timeLabel,
+            context.l10n.dayLabel,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ),
 
-        // Day columns
-        ...List.generate(7, (dayIndex) {
-          final date = state.weekStartDate.add(Duration(days: dayIndex));
-          final isToday = BookingTableHelpers.isToday(date);
-          final businessHours = state.getBusinessHoursForDay(dayIndex);
-          final isClosed = businessHours == null || !businessHours.isOpen;
-
-          return _DayColumnHeader(
-            dayName: _dayNames[dayIndex],
-            date: date,
-            isToday: isToday,
-            isClosed: isClosed,
-          );
-        }),
+        // Time columns headers
+        ...hours.map((hour) => _TimeColumnHeader(hour: hour)),
       ],
     );
   }
 }
 
-/// Individual day column header.
-class _DayColumnHeader extends StatelessWidget {
-  final String dayName;
-  final DateTime date;
-  final bool isToday;
-  final bool isClosed;
+/// Individual time column header.
+class _TimeColumnHeader extends StatelessWidget {
+  final String hour;
 
-  const _DayColumnHeader({
-    required this.dayName,
-    required this.date,
-    required this.isToday,
-    required this.isClosed,
-  });
+  const _TimeColumnHeader({required this.hour});
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      width: 80,
+      width: 65,
       height: 56,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: isToday
-            ? AppColors.goldAccent.withValues(alpha: 0.1)
-            : isClosed
-            ? AppColors.textSecondary.withValues(alpha: 0.05)
-            : Colors.transparent,
+        color: Colors.transparent,
         border: Border(
-          right: BorderSide(color: AppColors.border.withValues(alpha: 0.3)),
+          right: BorderSide(color: colorScheme.outline.withValues(alpha: 0.3)),
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            dayName,
-            style: AppTextStyles.bodySmall.copyWith(
-              fontWeight: FontWeight.w700,
-              color: isToday ? AppColors.goldAccent : AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            decoration: isToday
-                ? BoxDecoration(
-                    color: AppColors.goldAccent,
-                    borderRadius: BorderRadius.circular(10),
-                  )
-                : null,
-            child: Text(
-              '${date.day}',
-              style: AppTextStyles.labelSmall.copyWith(
-                fontWeight: FontWeight.w600,
-                color: isToday ? Colors.white : AppColors.textSecondary,
-              ),
-            ),
-          ),
-        ],
+      child: Text(
+        hour,
+        style: AppTextStyles.labelSmall.copyWith(
+          fontWeight: FontWeight.w700,
+          color: colorScheme.onSurface,
+        ),
       ),
     );
   }

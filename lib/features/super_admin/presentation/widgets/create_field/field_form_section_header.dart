@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
@@ -16,6 +15,8 @@ class FieldFormSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Container(
@@ -31,7 +32,7 @@ class FieldFormSectionHeader extends StatelessWidget {
           title,
           style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
       ],

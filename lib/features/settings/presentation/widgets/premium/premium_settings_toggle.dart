@@ -30,6 +30,7 @@ class PremiumSettingsToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -39,8 +40,8 @@ class PremiumSettingsToggle extends StatelessWidget {
               icon,
               size: 20,
               color: enabled
-                  ? AppColors.textSecondary
-                  : AppColors.textSecondary.withValues(alpha: 0.5),
+                  ? colorScheme.onSurfaceVariant
+                  : colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
             const SizedBox(width: 12),
           ],
@@ -54,8 +55,8 @@ class PremiumSettingsToggle extends StatelessWidget {
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                     color: enabled
-                        ? AppColors.textPrimary
-                        : AppColors.textSecondary.withValues(alpha: 0.5),
+                        ? colorScheme.onSurface
+                        : colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                   ),
                 ),
                 if (description != null) ...[
@@ -64,7 +65,9 @@ class PremiumSettingsToggle extends StatelessWidget {
                     description!,
                     style: TextStyle(
                       fontSize: 12,
-                      color: AppColors.textSecondary.withValues(alpha: 0.7),
+                      color: colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.7,
+                      ),
                     ),
                   ),
                 ],

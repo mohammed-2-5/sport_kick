@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/search_filters_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -19,6 +18,8 @@ class SortSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -47,16 +48,16 @@ class SortSelector extends StatelessWidget {
                   sortOption.icon,
                   size: 20,
                   color: isSelected
-                      ? AppColors.primary
-                      : AppColors.textSecondary,
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   sortOption.displayName(context.l10n),
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: isSelected
-                        ? AppColors.primary
-                        : AppColors.textPrimary,
+                        ? colorScheme.primary
+                        : colorScheme.onSurface,
                     fontWeight: isSelected
                         ? FontWeight.w600
                         : FontWeight.normal,
@@ -64,7 +65,7 @@ class SortSelector extends StatelessWidget {
                 ),
               ],
             ),
-            activeColor: AppColors.primary,
+            activeColor: colorScheme.primary,
             contentPadding: EdgeInsets.zero,
             dense: true,
           );

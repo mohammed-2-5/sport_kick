@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_state.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -12,6 +11,8 @@ class MapFilterIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocBuilder<MapCubit, MapState>(
       builder: (context, state) {
         final hasFilters = context.read<MapCubit>().filters.hasActiveFilters;
@@ -20,7 +21,7 @@ class MapFilterIndicator extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: AppColors.primary,
+            color: colorScheme.primary,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Row(

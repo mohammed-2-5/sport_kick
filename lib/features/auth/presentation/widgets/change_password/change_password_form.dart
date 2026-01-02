@@ -4,8 +4,6 @@ import 'package:spo_kick/features/auth/presentation/widgets/change_password/firs
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/change_password_fields.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/password_requirements_list.dart';
 
-import '../../../../../core/constants/app_colors.dart';
-
 /// Change password form widget.
 ///
 /// Contains all form fields and submit button for changing password.
@@ -49,9 +47,9 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
             // Header
             Text(
               context.l10n.changePasswordDesc,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 32),
 

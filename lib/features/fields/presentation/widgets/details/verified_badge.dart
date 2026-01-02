@@ -9,16 +9,27 @@ class VerifiedBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    // Use onPrimary for content on colored gradients (white in both themes)
+    final contentColor = colorScheme.onPrimary;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
+        gradient: LinearGradient(
+          colors: [
+            isDark ? AppColors.darkSuccess : AppColors.success,
+            isDark
+                ? AppColors.darkSuccess.withValues(alpha: 0.7)
+                : const Color(0xFF81C784),
+          ],
         ),
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: AppColors.success.withValues(alpha: 0.5),
+            color: successColor.withValues(alpha: 0.5),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -27,12 +38,12 @@ class VerifiedBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.verified_rounded, size: 18, color: Colors.white),
+          Icon(Icons.verified_rounded, size: 18, color: contentColor),
           const SizedBox(width: 6),
           Text(
             context.l10n.verifiedField,
             style: AppTextStyles.labelSmall.copyWith(
-              color: Colors.white,
+              color: contentColor,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,
             ),

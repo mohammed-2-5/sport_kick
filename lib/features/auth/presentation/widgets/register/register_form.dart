@@ -184,9 +184,9 @@ class _RegisterFormState extends State<RegisterForm> {
           // Password Requirements Text
           Text(
             context.l10n.passwordRequirementText,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
 
           const SizedBox(height: 32),
@@ -203,9 +203,9 @@ class _RegisterFormState extends State<RegisterForm> {
           // Terms and Privacy Text
           Text(
             context.l10n.termsAndPrivacyNote,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             textAlign: TextAlign.center,
           ),
         ],

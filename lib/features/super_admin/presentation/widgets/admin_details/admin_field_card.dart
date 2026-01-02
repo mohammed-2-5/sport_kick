@@ -14,6 +14,8 @@ class AdminFieldCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
       margin: const EdgeInsets.only(bottom: AdminUIConstants.cardMarginBottom),
       shape: RoundedRectangleBorder(
@@ -34,7 +36,7 @@ class AdminFieldCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                     AdminUIConstants.radiusSmall,
                   ),
-                  color: Colors.grey[200],
+                  color: colorScheme.surfaceContainerHighest,
                   image: field.mainImage != null
                       ? DecorationImage(
                           image: NetworkImage(field.mainImage!),
@@ -43,10 +45,10 @@ class AdminFieldCard extends StatelessWidget {
                       : null,
                 ),
                 child: field.mainImage == null
-                    ? const Icon(
+                    ? Icon(
                         Icons.sports_soccer,
                         size: 30,
-                        color: Colors.grey,
+                        color: colorScheme.onSurfaceVariant,
                       )
                     : null,
               ),
@@ -69,7 +71,7 @@ class AdminFieldCard extends StatelessWidget {
                         Icon(
                           Icons.location_city,
                           size: AdminUIConstants.fontSizeMedium,
-                          color: Colors.grey[600],
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                         const SizedBox(width: 4),
                         Text(field.city, style: AppTextStyles.bodySmall),
@@ -77,7 +79,7 @@ class AdminFieldCard extends StatelessWidget {
                         Icon(
                           Icons.event,
                           size: AdminUIConstants.fontSizeMedium,
-                          color: Colors.grey[600],
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                         const SizedBox(width: 4),
                         Text(

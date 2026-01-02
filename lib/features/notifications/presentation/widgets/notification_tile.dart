@@ -16,10 +16,12 @@ class NotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Material(
       color: notification.isRead
-          ? AppColors.premiumBackground
-          : AppColors.premiumSurface,
+          ? colorScheme.surface
+          : colorScheme.surfaceContainerHighest,
       child: InkWell(
         onTap: onTap,
         child: Container(
@@ -27,7 +29,7 @@ class NotificationTile extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: AppColors.premiumBorder.withValues(alpha: 0.3),
+                color: colorScheme.outline.withValues(alpha: 0.2),
                 width: 1,
               ),
             ),
@@ -51,8 +53,10 @@ class NotificationTile extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14,
                         color: notification.isRead
-                            ? AppColors.textSecondary.withValues(alpha: 0.7)
-                            : AppColors.textSecondary,
+                            ? colorScheme.onSurfaceVariant.withValues(
+                                alpha: 0.7,
+                              )
+                            : colorScheme.onSurfaceVariant,
                         height: 1.3,
                       ),
                       maxLines: 2,
@@ -63,7 +67,7 @@ class NotificationTile extends StatelessWidget {
                   ],
                 ),
               ),
-              if (!notification.isRead) _UnreadIndicator(),
+              if (!notification.isRead) const _UnreadIndicator(),
             ],
           ),
         ),
@@ -80,14 +84,18 @@ class _NotificationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = _getIconColor(colorScheme, isDark);
+
     return Container(
       width: 44,
       height: 44,
       decoration: BoxDecoration(
-        color: _backgroundColor,
+        color: iconColor.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Icon(_icon, color: _iconColor, size: 22),
+      child: Icon(_icon, color: iconColor, size: 22),
     );
   }
 
@@ -104,21 +112,17 @@ class _NotificationIcon extends StatelessWidget {
     }
   }
 
-  Color get _iconColor {
+  Color _getIconColor(ColorScheme colorScheme, bool isDark) {
     switch (type) {
       case NotificationType.booking:
-        return AppColors.accentCyan;
+        return colorScheme.primary;
       case NotificationType.payment:
-        return AppColors.success;
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       case NotificationType.review:
-        return Colors.amber;
+        return isDark ? AppColors.darkWarning : AppColors.warning;
       case NotificationType.system:
-        return AppColors.textSecondary;
+        return colorScheme.onSurfaceVariant;
     }
-  }
-
-  Color get _backgroundColor {
-    return _iconColor.withValues(alpha: 0.15);
   }
 }
 
@@ -131,14 +135,16 @@ class _TitleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Text(
       title,
       style: TextStyle(
         fontSize: 15,
         fontWeight: isRead ? FontWeight.w500 : FontWeight.w700,
         color: isRead
-            ? AppColors.textPrimary.withValues(alpha: 0.7)
-            : AppColors.textPrimary,
+            ? colorScheme.onSurface.withValues(alpha: 0.7)
+            : colorScheme.onSurface,
       ),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
@@ -154,11 +160,13 @@ class _TimeStamp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Text(
       _formatTime(context, createdAt),
       style: TextStyle(
         fontSize: 12,
-        color: AppColors.textSecondary.withValues(alpha: 0.6),
+        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
       ),
     );
   }
@@ -202,13 +210,17 @@ class _TimeStamp extends StatelessWidget {
 
 /// Unread indicator dot.
 class _UnreadIndicator extends StatelessWidget {
+  const _UnreadIndicator();
+
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       width: 10,
       height: 10,
-      decoration: const BoxDecoration(
-        color: AppColors.accentCyan,
+      decoration: BoxDecoration(
+        color: colorScheme.primary,
         shape: BoxShape.circle,
       ),
     );

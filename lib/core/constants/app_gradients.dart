@@ -49,6 +49,38 @@ class AppGradients {
     end: Alignment.bottomRight,
   );
 
+  // ============================================================================
+  // DARK THEME GRADIENTS
+  // ============================================================================
+
+  /// Dark success gradient
+  static const LinearGradient darkSuccess = LinearGradient(
+    colors: [Color(0xFF81C784), Color(0xFF66BB6A)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  /// Dark warning gradient
+  static const LinearGradient darkWarning = LinearGradient(
+    colors: [Color(0xFFFFB74D), Color(0xFFFFCC80)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  /// Dark error gradient
+  static const LinearGradient darkError = LinearGradient(
+    colors: [Color(0xFFEF5350), Color(0xFFE57373)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  /// Dark info gradient
+  static const LinearGradient darkInfo = LinearGradient(
+    colors: [Color(0xFF64B5F6), Color(0xFF90CAF9)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
   /// Dark gradient (for premium cards)
   static const LinearGradient dark = LinearGradient(
     colors: [Color(0xFF212121), Color(0xFF424242)],

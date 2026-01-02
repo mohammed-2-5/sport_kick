@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
@@ -9,6 +8,7 @@ import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/book
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item_field_info.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item_payment_status.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/booking_list_item_price.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Content section of the booking list item.
 ///
@@ -31,6 +31,8 @@ class BookingListItemContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+
     return Padding(
       padding: const EdgeInsets.all(BookingConstants.standardPadding),
       child: Column(
@@ -42,7 +44,7 @@ class BookingListItemContent extends StatelessWidget {
               fieldImage: booking.fieldImage,
             ),
             const SizedBox(height: BookingConstants.standardPadding),
-            const Divider(height: 1, color: AppColors.lightGrey),
+            Divider(height: 1, color: colorScheme.outlineVariant),
             const SizedBox(height: BookingConstants.standardPadding),
           ],
           BookingListItemDateTime(

@@ -15,6 +15,8 @@ import 'package:spo_kick/core/constants/app_theme.dart';
 import 'package:spo_kick/core/di/injection_container.dart' as di;
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/services/notification_service.dart';
+import 'package:spo_kick/core/theme/theme_cubit.dart';
+import 'package:spo_kick/core/theme/theme_state.dart';
 import 'package:spo_kick/core/utils/app_logger.dart';
 import 'package:spo_kick/firebase_options.dart';
 import 'package:spo_kick/core/routes/go_router_config.dart';
@@ -174,6 +176,7 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<AppLocaleCubit>()..loadSavedLocale(),
         ),
         BlocProvider(create: (context) => sl<SettingsCubit>()),
+        BlocProvider(create: (context) => sl<ThemeCubit>()),
       ],
       child: MultiBlocListener(
         listeners: [
@@ -193,93 +196,100 @@ class MyApp extends StatelessWidget {
                 current is SettingsLoaded || current is SettingsUpdated,
             listener: (context, state) {
               final localeCubit = context.read<AppLocaleCubit>();
+              final themeCubit = context.read<ThemeCubit>();
+
               if (state is SettingsLoaded) {
                 localeCubit.setLocale(state.preferences.language);
+                themeCubit.setThemeMode(state.preferences.themeMode);
               } else if (state is SettingsUpdated) {
                 localeCubit.setLocale(state.preferences.language);
+                themeCubit.setThemeMode(state.preferences.themeMode);
               }
             },
           ),
         ],
         child: BlocBuilder<AppLocaleCubit, Locale>(
           builder: (context, locale) {
-            return MaterialApp.router(
-              // ==================== APP INFO ====================
-              title: AppConstants.appName,
-              debugShowCheckedModeBanner: false,
+            return BlocBuilder<ThemeCubit, ThemeState>(
+              builder: (context, themeState) {
+                return MaterialApp.router(
+                  // ==================== APP INFO ====================
+                  title: AppConstants.appName,
+                  debugShowCheckedModeBanner: false,
 
-              // ==================== LOCALIZATION ====================
-              locale: locale,
-              supportedLocales: AppLocalizations.supportedLocales,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              localeResolutionCallback: (deviceLocale, supportedLocales) {
-                final languageCode = locale.languageCode;
-                final hasSaved = supportedLocales.any(
-                  (l) => l.languageCode == languageCode,
-                );
-                if (hasSaved) {
-                  return locale;
-                }
-                if (deviceLocale != null) {
-                  final match = supportedLocales.firstWhere(
-                    (l) => l.languageCode == deviceLocale.languageCode,
-                    orElse: () => supportedLocales.first,
-                  );
-                  return match;
-                }
-                return supportedLocales.first;
-              },
-
-              // ==================== THEME ====================
-              theme: AppTheme.lightTheme,
-
-              // TODO: Add dark theme when ready
-              // darkTheme: AppTheme.darkTheme,
-              // themeMode: ThemeMode.system,
-
-              // ==================== ROUTING (GoRouter) ====================
-              routerConfig: router,
-
-              // ==================== BUILDER ====================
-              builder: (context, child) {
-                // Wrap with custom error widget in production
-                ErrorWidget.builder = (FlutterErrorDetails details) {
-                  // In production, show user-friendly error
-                  if (const bool.fromEnvironment('dart.vm.product')) {
-                    return Material(
-                      child: Container(
-                        padding: const EdgeInsets.all(32),
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.error_outline,
-                              size: 64,
-                              color: Colors.red,
-                            ),
-                            SizedBox(height: 16),
-                            Text(
-                              'Something went wrong',
-                              style: TextStyle(fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Please restart the app',
-                              style: TextStyle(fontSize: 14),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
+                  // ==================== LOCALIZATION ====================
+                  locale: locale,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  localeResolutionCallback: (deviceLocale, supportedLocales) {
+                    final languageCode = locale.languageCode;
+                    final hasSaved = supportedLocales.any(
+                      (l) => l.languageCode == languageCode,
                     );
-                  }
+                    if (hasSaved) {
+                      return locale;
+                    }
+                    if (deviceLocale != null) {
+                      final match = supportedLocales.firstWhere(
+                        (l) => l.languageCode == deviceLocale.languageCode,
+                        orElse: () => supportedLocales.first,
+                      );
+                      return match;
+                    }
+                    return supportedLocales.first;
+                  },
 
-                  // In debug mode, show detailed error
-                  return ErrorWidget(details.exception);
-                };
+                  // ==================== THEME ====================
+                  theme: AppTheme.lightTheme,
+                  darkTheme: AppTheme.darkTheme,
+                  themeMode: themeState.themeMode,
 
-                return child ?? const SizedBox.shrink();
+                  // ==================== ROUTING (GoRouter) ====================
+                  routerConfig: router,
+
+                  // ==================== BUILDER ====================
+                  builder: (context, child) {
+                    // Wrap with custom error widget in production
+                    ErrorWidget.builder = (FlutterErrorDetails details) {
+                      // In production, show user-friendly error
+                      if (const bool.fromEnvironment('dart.vm.product')) {
+                        return Material(
+                          child: Container(
+                            padding: const EdgeInsets.all(32),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  size: 64,
+                                  color: Colors.red,
+                                ),
+                                SizedBox(height: 16),
+                                Text(
+                                  'Something went wrong',
+                                  style: TextStyle(fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'Please restart the app',
+                                  style: TextStyle(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
+                      // In debug mode, show detailed error
+                      return ErrorWidget(details.exception);
+                    };
+
+                    return child ?? const SizedBox.shrink();
+                  },
+                );
               },
             );
           },

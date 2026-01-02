@@ -7,24 +7,32 @@ class CitiesEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.location_city_outlined, size: 80, color: Colors.grey[400]),
+          Icon(
+            Icons.location_city_outlined,
+            size: 80,
+            color: colorScheme.outline,
+          ),
           const SizedBox(height: 16),
           Text(
             context.l10n.noCitiesFound,
             style: AppTextStyles.headlineSmall.copyWith(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
+              color: colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             context.l10n.tryChangingTheFilter,
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
           ),
         ],
       ),

@@ -13,6 +13,8 @@ class CityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 2,
@@ -29,14 +31,12 @@ class CityCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.1),
+                    color: colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     Icons.location_city,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: colorScheme.primary,
                     size: 28,
                   ),
                 ),
@@ -52,7 +52,7 @@ class CityCard extends StatelessWidget {
                         style: AppTextStyles.titleMedium.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                       if (city.nameAr != null) ...[
@@ -60,7 +60,7 @@ class CityCard extends StatelessWidget {
                         Text(
                           city.nameAr!,
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: Colors.grey[600],
+                            color: colorScheme.onSurface.withValues(alpha: 0.7),
                           ),
                           textDirection: TextDirection.rtl,
                         ),
@@ -119,18 +119,22 @@ class CityCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
+                color: colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.sports_soccer, size: 20, color: Colors.grey[700]),
+                  Icon(
+                    Icons.sports_soccer,
+                    size: 20,
+                    color: colorScheme.onSurface.withValues(alpha: 0.8),
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     context.l10n.fieldsCount(city.fieldsCount),
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Colors.grey[700],
+                      color: colorScheme.onSurface.withValues(alpha: 0.8),
                     ),
                   ),
                   const Spacer(),

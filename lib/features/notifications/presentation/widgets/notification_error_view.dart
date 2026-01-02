@@ -19,6 +19,10 @@ class NotificationErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -28,23 +32,23 @@ class NotificationErrorView extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: AppColors.error.withValues(alpha: 0.7),
+              color: errorColor.withValues(alpha: 0.7),
             ),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: onRetry,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accentCyan,
-                foregroundColor: Colors.black,
+                backgroundColor: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
               ),
               child: Text(context.l10n.retry),
             ),

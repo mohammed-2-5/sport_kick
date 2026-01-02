@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -12,18 +11,20 @@ class BusinessHoursHelpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
-      color: AppColors.primary.withValues(alpha: 0.05),
+      color: colorScheme.primaryContainer.withValues(alpha: 0.3),
       child: Padding(
         padding: const EdgeInsets.all(BusinessHoursConstants.cardPadding),
         child: Row(
           children: [
-            const Icon(Icons.info_outline, color: AppColors.primary),
+            Icon(Icons.info_outline, color: colorScheme.primary),
             const SizedBox(width: BusinessHoursConstants.itemSpacing),
             Expanded(
               child: Text(
                 context.l10n.businessHoursHelpText,
-                style: const TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 14, color: colorScheme.onSurface),
               ),
             ),
           ],

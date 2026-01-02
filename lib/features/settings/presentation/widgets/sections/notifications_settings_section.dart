@@ -34,17 +34,6 @@ class NotificationsSettingsSection extends StatelessWidget {
         ),
         const SizedBox(height: SettingsConstants.itemSpacing),
         SettingsSwitchTile(
-          icon: Icons.email_outlined,
-          iconColor: AppColors.secondary,
-          title: context.l10n.emailNotifications,
-          subtitle: context.l10n.emailNotificationsDesc,
-          value: preferences.emailNotificationsEnabled,
-          onChanged: (_) => context
-              .read<SettingsCubit>()
-              .toggleEmailNotifications(preferences),
-        ),
-        const SizedBox(height: SettingsConstants.itemSpacing),
-        SettingsSwitchTile(
           icon: Icons.check_circle_outline,
           iconColor: AppColors.success,
           title: context.l10n.bookingConfirmations,

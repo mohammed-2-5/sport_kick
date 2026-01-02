@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/map_state.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
@@ -45,6 +44,8 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: ConstrainedBox(
@@ -81,7 +82,7 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
                         title: Text(context.l10n.verifiedFieldsOnly),
                         subtitle: Text(context.l10n.verifiedFieldsDescription),
                         value: _verifiedOnly,
-                        activeThumbColor: AppColors.primary,
+                        activeThumbColor: colorScheme.primary,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
                           setState(() => _verifiedOnly = value);
@@ -94,7 +95,7 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
                         title: Text(context.l10n.sortByDistance),
                         subtitle: Text(context.l10n.sortByDistanceDescription),
                         value: _sortByDistance,
-                        activeThumbColor: AppColors.primary,
+                        activeThumbColor: colorScheme.primary,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
                           setState(() => _sortByDistance = value);
@@ -124,10 +125,10 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
                             onSelected: (_) {
                               setState(() => _minRating = rating);
                             },
-                            selectedColor: AppColors.primary.withValues(
+                            selectedColor: colorScheme.primary.withValues(
                               alpha: 0.2,
                             ),
-                            checkmarkColor: AppColors.primary,
+                            checkmarkColor: colorScheme.primary,
                           );
                         }).toList(),
                       ),
@@ -158,10 +159,10 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
                             onSelected: (_) {
                               setState(() => _maxPrice = price);
                             },
-                            selectedColor: AppColors.primary.withValues(
+                            selectedColor: colorScheme.primary.withValues(
                               alpha: 0.2,
                             ),
-                            checkmarkColor: AppColors.primary,
+                            checkmarkColor: colorScheme.primary,
                           );
                         }).toList(),
                       ),
@@ -200,10 +201,10 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
                             onSelected: (_) {
                               setState(() => _surfaceType = surface);
                             },
-                            selectedColor: AppColors.primary.withValues(
+                            selectedColor: colorScheme.primary.withValues(
                               alpha: 0.2,
                             ),
-                            checkmarkColor: AppColors.primary,
+                            checkmarkColor: colorScheme.primary,
                           );
                         }).toList(),
                       ),
@@ -246,8 +247,8 @@ class _MapFilterDialogState extends State<MapFilterDialog> {
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
+                        backgroundColor: colorScheme.primary,
+                        foregroundColor: colorScheme.onPrimary,
                       ),
                       child: Text(context.l10n.applyFilters),
                     ),

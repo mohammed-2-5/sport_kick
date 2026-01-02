@@ -80,7 +80,15 @@ final List<GoRoute> userRoutes = [
     path: '/create-booking',
     name: 'createBooking',
     pageBuilder: (context, state) {
-      final field = state.extra as FieldEntity?;
+      // Handle both FieldEntity directly and Map with 'field' key
+      FieldEntity? field;
+      if (state.extra is FieldEntity) {
+        field = state.extra as FieldEntity;
+      } else if (state.extra is Map<String, dynamic>) {
+        final extra = state.extra as Map<String, dynamic>;
+        field = extra['field'] as FieldEntity?;
+      }
+
       if (field == null) {
         return buildPage(
           child: const ErrorPage(error: 'Field data is required'),
@@ -170,7 +178,15 @@ final List<GoRoute> userRoutes = [
     path: '/createRecurring',
     name: 'createRecurring',
     pageBuilder: (context, state) {
-      final field = state.extra as FieldEntity?;
+      // Handle both FieldEntity directly and Map with 'field' key
+      FieldEntity? field;
+      if (state.extra is FieldEntity) {
+        field = state.extra as FieldEntity;
+      } else if (state.extra is Map<String, dynamic>) {
+        final extra = state.extra as Map<String, dynamic>;
+        field = extra['field'] as FieldEntity?;
+      }
+
       if (field == null) {
         return buildPage(
           child: const ErrorPage(error: 'Field data is required'),

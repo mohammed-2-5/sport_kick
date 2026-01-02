@@ -19,7 +19,7 @@ mixin StatisticsOperations on Cubit<SuperAdminState> {
   /// Load platform-wide statistics for dashboard.
   Future<void> loadPlatformStatistics() async {
     debugPrint('🔄 [SuperAdminCubit] Loading platform statistics...');
-    emit(SuperAdminLoading(message: "Loading statistics..."));
+    emit(const SuperAdminLoading(message: 'Loading statistics...'));
 
     final result = await getPlatformStatisticsUseCase();
 
@@ -47,7 +47,7 @@ mixin StatisticsOperations on Cubit<SuperAdminState> {
   /// a single combined state with all the data.
   Future<void> loadAnalyticsData() async {
     debugPrint('🔄 [SuperAdminCubit] Loading analytics data...');
-    emit(SuperAdminLoading(message: "Loading analytics..."));
+    emit(const SuperAdminLoading(message: 'Loading analytics...'));
 
     // Load bookings
     final bookingsResult = await getAllBookingsUseCase();

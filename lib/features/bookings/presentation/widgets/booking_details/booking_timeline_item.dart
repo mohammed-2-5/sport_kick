@@ -30,11 +30,14 @@ class BookingTimelineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final color = isError
-        ? AppColors.error
+        ? (isDark ? AppColors.darkError : AppColors.error)
         : isCompleted
-        ? AppColors.success
-        : AppColors.textSecondary;
+        ? (isDark ? AppColors.darkSuccess : AppColors.success)
+        : colorScheme.onSurfaceVariant;
 
     return IntrinsicHeight(
       child: Row(
@@ -81,7 +84,7 @@ class BookingTimelineItem extends StatelessWidget {
                   Text(
                     time,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],

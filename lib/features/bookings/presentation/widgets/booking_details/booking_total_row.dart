@@ -11,6 +11,8 @@ class BookingTotalRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -18,7 +20,7 @@ class BookingTotalRow extends StatelessWidget {
           context.l10n.totalPrice,
           style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
         Container(
@@ -39,7 +41,7 @@ class BookingTotalRow extends StatelessWidget {
             style: AppTextStyles.headlineSmall.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              color: Colors.white,
+              color: AppColors.textOnPrimary,
             ),
           ),
         ),

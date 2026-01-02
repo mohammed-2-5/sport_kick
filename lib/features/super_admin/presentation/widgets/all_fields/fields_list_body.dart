@@ -85,15 +85,17 @@ class FieldsListBody extends StatelessWidget {
                   Expanded(
                     child: Text(
                       context.l10n.fieldsFoundCount(filteredFields.length),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.7),
+                      ),
                     ),
                   ),
                   Text(
                     context.l10n.longPressForActions,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey[400],
+                      color: Theme.of(context).colorScheme.outline,
                       fontStyle: FontStyle.italic,
                     ),
                   ),

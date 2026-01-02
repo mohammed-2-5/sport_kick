@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/settings/presentation/constants/settings_constants.dart';
 
 /// Settings Section Widget
 ///
 /// Displays a titled section with a card containing child widgets.
+/// Uses theme colors for proper dark mode support.
 class SettingsSection extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -19,6 +19,8 @@ class SettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,15 +34,14 @@ class SettingsSection extends StatelessWidget {
               Icon(
                 icon,
                 size: SettingsConstants.sectionIconSize,
-                color: AppColors.primary,
+                color: colorScheme.primary,
               ),
               const SizedBox(width: 8),
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),

@@ -18,6 +18,11 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final infoColor = isDark ? AppColors.darkInfo : AppColors.info;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AuthConstants.formPadding),
@@ -27,20 +32,20 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.success.withValues(alpha: 0.1),
+                color: successColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.mark_email_read,
                 size: AuthConstants.logoSize,
-                color: AppColors.success,
+                color: successColor,
               ),
             ),
             const SizedBox(height: AuthConstants.formFieldSpacing * 2),
             Text(
               context.l10n.resetEmailSentTitle,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -48,28 +53,28 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
             const SizedBox(height: AuthConstants.formFieldSpacing),
             Text(
               context.l10n.resetEmailSentMessage,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AuthConstants.formFieldSpacing),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.infoLight,
+                color: infoColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AuthConstants.borderRadius),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.email, color: AppColors.info, size: 20),
+                  Icon(Icons.email, color: infoColor, size: 20),
                   const SizedBox(width: 8),
                   Flexible(
                     child: Text(
                       email,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.info,
+                        color: infoColor,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
@@ -93,8 +98,8 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  backgroundColor: colorScheme.primary,
+                  foregroundColor: colorScheme.onPrimary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                       AuthConstants.borderRadius,

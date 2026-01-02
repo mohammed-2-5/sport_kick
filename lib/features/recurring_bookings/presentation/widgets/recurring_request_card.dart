@@ -21,14 +21,17 @@ class RecurringRequestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.navyDeep.withValues(alpha: 0.08),
+            color: colorScheme.onSurface.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -38,9 +41,9 @@ class RecurringRequestCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(context),
-          _buildUserInfo(context),
-          _buildScheduleInfo(context),
-          _buildActionButtons(context),
+          _buildUserInfo(context, colorScheme, isDark),
+          _buildScheduleInfo(context, colorScheme, isDark),
+          _buildActionButtons(context, isDark),
         ],
       ),
     );
@@ -122,7 +125,11 @@ class RecurringRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildUserInfo(BuildContext context) {
+  Widget _buildUserInfo(
+    BuildContext context,
+    ColorScheme colorScheme,
+    bool isDark,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -156,26 +163,26 @@ class RecurringRequestCard extends StatelessWidget {
               children: [
                 Text(
                   request.userName ?? context.l10n.unknownUser,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.navyDeep,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 if (request.userPhone != null)
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.phone_outlined,
                         size: 12,
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         request.userPhone!,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -188,14 +195,20 @@ class RecurringRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildScheduleInfo(BuildContext context) {
+  Widget _buildScheduleInfo(
+    BuildContext context,
+    ColorScheme colorScheme,
+    bool isDark,
+  ) {
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.navyDeep.withValues(alpha: 0.03),
+        color: colorScheme.onSurface.withValues(alpha: 0.03),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.navyDeep.withValues(alpha: 0.08)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -209,9 +222,10 @@ class RecurringRequestCard extends StatelessWidget {
                     context,
                     request.dayOfWeek,
                   ),
+                  colorScheme: colorScheme,
                 ),
               ),
-              Container(width: 1, height: 40, color: AppColors.border),
+              Container(width: 1, height: 40, color: colorScheme.outline),
               Expanded(
                 child: _buildScheduleItem(
                   icon: Icons.access_time_rounded,
@@ -221,6 +235,7 @@ class RecurringRequestCard extends StatelessWidget {
                     startTime: request.startTime,
                     endTime: request.endTime,
                   ),
+                  colorScheme: colorScheme,
                 ),
               ),
             ],
@@ -242,9 +257,10 @@ class RecurringRequestCard extends StatelessWidget {
                       decimalDigits: 0,
                     ),
                   ),
+                  colorScheme: colorScheme,
                 ),
               ),
-              Container(width: 1, height: 40, color: AppColors.border),
+              Container(width: 1, height: 40, color: colorScheme.outline),
               Expanded(
                 child: _buildScheduleItem(
                   icon: Icons.payments_outlined,
@@ -255,7 +271,8 @@ class RecurringRequestCard extends StatelessWidget {
                     currency: 'EGP',
                     decimalDigits: 0,
                   ),
-                  valueColor: const Color(0xFF10B981),
+                  valueColor: successColor,
+                  colorScheme: colorScheme,
                 ),
               ),
             ],
@@ -269,15 +286,16 @@ class RecurringRequestCard extends StatelessWidget {
     required IconData icon,
     required String label,
     required String value,
+    required ColorScheme colorScheme,
     Color? valueColor,
   }) {
     return Column(
       children: [
-        Icon(icon, size: 18, color: AppColors.textSecondary),
+        Icon(icon, size: 18, color: colorScheme.onSurfaceVariant),
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
         ),
         const SizedBox(height: 2),
         Text(
@@ -285,14 +303,17 @@ class RecurringRequestCard extends StatelessWidget {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
-            color: valueColor ?? AppColors.navyDeep,
+            color: valueColor ?? colorScheme.onSurface,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(BuildContext context, bool isDark) {
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -302,8 +323,8 @@ class RecurringRequestCard extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: isProcessing ? null : onReject,
               style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.error,
-                side: BorderSide(color: AppColors.error.withValues(alpha: 0.5)),
+                foregroundColor: errorColor,
+                side: BorderSide(color: errorColor.withValues(alpha: 0.5)),
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -320,7 +341,7 @@ class RecurringRequestCard extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: isProcessing ? null : onApprove,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF10B981),
+                backgroundColor: successColor,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(

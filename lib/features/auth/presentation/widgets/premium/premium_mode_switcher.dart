@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
@@ -110,15 +109,20 @@ class _ModeOptionState extends State<_ModeOption>
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
               gradient: widget.isSelected
-                  ? const LinearGradient(
-                      colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                  ? LinearGradient(
+                      colors: [
+                        Theme.of(context).colorScheme.secondary,
+                        Theme.of(context).colorScheme.secondaryContainer,
+                      ],
                     )
                   : null,
               borderRadius: BorderRadius.circular(10),
               boxShadow: widget.isSelected
                   ? [
                       BoxShadow(
-                        color: AppColors.accentCyan.withValues(alpha: 0.4),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.secondary.withValues(alpha: 0.4),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -173,14 +177,19 @@ class PremiumModeIndicator extends StatelessWidget {
         gradient: LinearGradient(
           colors: isAdmin
               ? [Colors.orange, Colors.deepOrange]
-              : [AppColors.accentCyan, AppColors.accentCyanDark],
+              : [
+                  Theme.of(context).colorScheme.secondary,
+                  Theme.of(context).colorScheme.secondaryContainer,
+                ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: (isAdmin ? Colors.orange : AppColors.accentCyan).withValues(
-              alpha: 0.3,
-            ),
+            color:
+                (isAdmin
+                        ? Colors.orange
+                        : Theme.of(context).colorScheme.secondary)
+                    .withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),

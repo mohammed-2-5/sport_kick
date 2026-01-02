@@ -92,13 +92,17 @@ class ActiveFiltersDisplay extends StatelessWidget {
       }
     }
 
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -113,7 +117,7 @@ class ActiveFiltersDisplay extends StatelessWidget {
             icon: const Icon(Icons.clear_all, size: 16),
             label: Text(context.l10n.clearAll),
             style: TextButton.styleFrom(
-              foregroundColor: AppColors.error,
+              foregroundColor: errorColor,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
           ),
@@ -128,14 +132,16 @@ class ActiveFiltersDisplay extends StatelessWidget {
     required IconData icon,
     required VoidCallback onRemove,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Chip(
-      avatar: Icon(icon, size: 16, color: AppColors.primary),
+      avatar: Icon(icon, size: 16, color: colorScheme.primary),
       label: Text(label),
       deleteIcon: const Icon(Icons.close, size: 16),
       onDeleted: onRemove,
-      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+      backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
       labelStyle: AppTextStyles.labelSmall.copyWith(
-        color: AppColors.primary,
+        color: colorScheme.primary,
         fontWeight: FontWeight.w600,
         fontSize: 12,
       ),

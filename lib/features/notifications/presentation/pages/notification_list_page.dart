@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/notifications/domain/entities/notification_entity.dart';
 import 'package:spo_kick/features/notifications/presentation/cubit/notification_cubit.dart';
@@ -47,21 +46,23 @@ class _NotificationListPageState extends State<NotificationListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: AppColors.premiumBackground,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: AppColors.premiumBackground,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         title: Text(
           context.l10n.notifications,
-          style: const TextStyle(
-            color: AppColors.textPrimary,
+          style: TextStyle(
+            color: colorScheme.onSurface,
             fontSize: 20,
             fontWeight: FontWeight.w700,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
@@ -73,10 +74,7 @@ class _NotificationListPageState extends State<NotificationListPage> {
                       context.read<NotificationCubit>().markAllAsRead(),
                   child: Text(
                     context.l10n.markAllRead,
-                    style: const TextStyle(
-                      color: AppColors.accentCyan,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(color: colorScheme.primary, fontSize: 14),
                   ),
                 );
               }
@@ -88,8 +86,8 @@ class _NotificationListPageState extends State<NotificationListPage> {
       body: BlocBuilder<NotificationCubit, NotificationState>(
         builder: (context, state) {
           if (state is NotificationLoading) {
-            return const Center(
-              child: LoadingIndicator.inline(color: AppColors.accentCyan),
+            return Center(
+              child: LoadingIndicator.inline(color: colorScheme.primary),
             );
           }
 
@@ -108,20 +106,20 @@ class _NotificationListPageState extends State<NotificationListPage> {
 
             return RefreshIndicator(
               onRefresh: () => context.read<NotificationCubit>().refresh(),
-              color: AppColors.accentCyan,
-              backgroundColor: AppColors.premiumSurface,
+              color: colorScheme.primary,
+              backgroundColor: colorScheme.surfaceContainerHighest,
               child: ListView.builder(
                 controller: _scrollController,
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 itemCount: state.notifications.length + (state.hasMore ? 1 : 0),
                 itemBuilder: (context, index) {
                   if (index >= state.notifications.length) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16),
+                    return Padding(
+                      padding: const EdgeInsets.all(16),
                       child: Center(
                         child: LoadingIndicator.inline(
                           size: 24,
-                          color: AppColors.accentCyan,
+                          color: colorScheme.primary,
                         ),
                       ),
                     );

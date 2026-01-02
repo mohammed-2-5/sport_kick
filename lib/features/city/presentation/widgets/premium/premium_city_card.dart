@@ -12,6 +12,7 @@ import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 /// - Tap animation
 /// - Checkmark indicator
 /// - Haptic feedback
+/// - Theme-aware: adapts to light/dark mode
 class PremiumCityCard extends StatefulWidget {
   final CityEntity city;
   final bool isSelected;
@@ -54,6 +55,13 @@ class _PremiumCityCardState extends State<PremiumCityCard>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    // Use accent cyan for selected state, adapts border/shadow for dark mode
+    const selectedColor = AppColors.accentCyan;
+    const selectedColorDark = AppColors.accentCyanDark;
+
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) {
@@ -67,25 +75,25 @@ class _PremiumCityCardState extends State<PremiumCityCard>
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               width: 2,
-              color: widget.isSelected
-                  ? AppColors.accentCyan
-                  : AppColors.border,
+              color: widget.isSelected ? selectedColor : colorScheme.outline,
             ),
             boxShadow: widget.isSelected
                 ? [
                     BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.2),
+                      color: selectedColor.withValues(alpha: 0.2),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),
                   ]
                 : [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
+                      color: isDark
+                          ? Colors.black.withValues(alpha: 0.3)
+                          : Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -105,12 +113,12 @@ class _PremiumCityCardState extends State<PremiumCityCard>
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: widget.isSelected
-                              ? [AppColors.accentCyan, AppColors.accentCyanDark]
+                              ? [selectedColor, selectedColorDark]
                               : [
-                                  AppColors.textSecondary.withValues(
+                                  colorScheme.onSurfaceVariant.withValues(
                                     alpha: 0.1,
                                   ),
-                                  AppColors.textSecondary.withValues(
+                                  colorScheme.onSurfaceVariant.withValues(
                                     alpha: 0.05,
                                   ),
                                 ],
@@ -122,7 +130,7 @@ class _PremiumCityCardState extends State<PremiumCityCard>
                         size: 32,
                         color: widget.isSelected
                             ? Colors.white
-                            : AppColors.textSecondary,
+                            : colorScheme.onSurfaceVariant,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -133,8 +141,8 @@ class _PremiumCityCardState extends State<PremiumCityCard>
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                         color: widget.isSelected
-                            ? AppColors.accentCyan
-                            : AppColors.textPrimary,
+                            ? selectedColor
+                            : colorScheme.onSurface,
                       ),
                       textAlign: TextAlign.center,
                       maxLines: 2,
@@ -146,7 +154,9 @@ class _PremiumCityCardState extends State<PremiumCityCard>
                         context.l10n.fieldsCount(widget.city.fieldsCount!),
                         style: TextStyle(
                           fontSize: 12,
-                          color: AppColors.textSecondary.withValues(alpha: 0.7),
+                          color: colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.7,
+                          ),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -164,15 +174,12 @@ class _PremiumCityCardState extends State<PremiumCityCard>
                     height: 28,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [
-                          AppColors.accentCyan,
-                          AppColors.accentCyanDark,
-                        ],
+                        colors: [selectedColor, selectedColorDark],
                       ),
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.accentCyan.withValues(alpha: 0.3),
+                          color: selectedColor.withValues(alpha: 0.3),
                           blurRadius: 8,
                           spreadRadius: 2,
                         ),

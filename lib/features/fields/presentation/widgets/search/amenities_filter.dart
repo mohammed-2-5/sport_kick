@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/constants/search_constants.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -20,6 +19,8 @@ class AmenitiesFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -48,10 +49,10 @@ class AmenitiesFilter extends StatelessWidget {
                 }
                 onChanged(updated);
               },
-              selectedColor: AppColors.primary.withValues(alpha: 0.2),
-              checkmarkColor: AppColors.primary,
+              selectedColor: colorScheme.primary.withValues(alpha: 0.2),
+              checkmarkColor: colorScheme.primary,
               labelStyle: AppTextStyles.bodyMedium.copyWith(
-                color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                color: isSelected ? colorScheme.primary : colorScheme.onSurface,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
             );

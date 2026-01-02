@@ -139,15 +139,19 @@ class CreateRecurringContent extends StatelessWidget {
     CreateRecurringEditing editingState,
   ) {
     final field = editingState.field;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.navyDeep.withValues(alpha: 0.08),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : AppColors.navyDeep.withValues(alpha: 0.08),
             blurRadius: 15,
             offset: const Offset(0, 4),
           ),
@@ -188,10 +192,10 @@ class CreateRecurringContent extends StatelessWidget {
               children: [
                 Text(
                   field.name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.navyDeep,
+                    color: colorScheme.onSurface,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -199,17 +203,17 @@ class CreateRecurringContent extends StatelessWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.payments_outlined,
                       size: 14,
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: 'EGP', decimalDigits: 0)} / ${context.l10n.perHour}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -271,8 +275,8 @@ class CreateRecurringContent extends StatelessWidget {
         children: [
           Text(
             context.l10n.weeklyReservationSummaryTitle,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -282,6 +286,7 @@ class CreateRecurringContent extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildSummaryItem(
+                  context: context,
                   icon: Icons.calendar_today_rounded,
                   label: context.l10n.dayLabel,
                   value: _localizedDayName(
@@ -292,6 +297,7 @@ class CreateRecurringContent extends StatelessWidget {
               ),
               Expanded(
                 child: _buildSummaryItem(
+                  context: context,
                   icon: Icons.access_time_rounded,
                   label: context.l10n.timeLabel,
                   value: LocaleFormatters.formatTimeRange(
@@ -308,6 +314,7 @@ class CreateRecurringContent extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildSummaryItem(
+                  context: context,
                   icon: Icons.timer_outlined,
                   label: context.l10n.durationLabel,
                   value: context.l10n.recurringHoursLabel(
@@ -321,6 +328,7 @@ class CreateRecurringContent extends StatelessWidget {
               ),
               Expanded(
                 child: _buildSummaryItem(
+                  context: context,
                   icon: Icons.payments_outlined,
                   label: context.l10n.weeklyCostLabel,
                   value: LocaleFormatters.formatPrice(
@@ -339,20 +347,22 @@ class CreateRecurringContent extends StatelessWidget {
   }
 
   Widget _buildSummaryItem({
+    required BuildContext context,
     required IconData icon,
     required String label,
     required String value,
   }) {
+    final onPrimary = Theme.of(context).colorScheme.onPrimary;
     return Row(
       children: [
         Container(
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.15),
+            color: onPrimary.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, size: 16, color: Colors.white),
+          child: Icon(icon, size: 16, color: onPrimary),
         ),
         const SizedBox(width: 8),
         Column(
@@ -362,15 +372,15 @@ class CreateRecurringContent extends StatelessWidget {
               label,
               style: TextStyle(
                 fontSize: 11,
-                color: Colors.white.withValues(alpha: 0.7),
+                color: onPrimary.withValues(alpha: 0.7),
               ),
             ),
             Text(
               value,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: onPrimary,
               ),
             ),
           ],
@@ -383,13 +393,17 @@ class CreateRecurringContent extends StatelessWidget {
     BuildContext context,
     CreateRecurringEditing editingState,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: AppColors.navyDeep.withValues(alpha: 0.1),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : AppColors.navyDeep.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, -4),
           ),
@@ -402,11 +416,13 @@ class CreateRecurringContent extends StatelessWidget {
             onPressed: editingState.isValid ? onSubmit : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.accentCyan,
-              foregroundColor: Colors.white,
-              disabledBackgroundColor: AppColors.textSecondary.withValues(
-                alpha: 0.2,
+              foregroundColor: colorScheme.onPrimary,
+              disabledBackgroundColor: colorScheme.onSurface.withValues(
+                alpha: 0.12,
               ),
-              disabledForegroundColor: AppColors.textSecondary,
+              disabledForegroundColor: colorScheme.onSurface.withValues(
+                alpha: 0.38,
+              ),
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
@@ -424,6 +440,7 @@ class CreateRecurringContent extends StatelessWidget {
   }
 
   Widget _buildSubmittingContent(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -445,19 +462,16 @@ class CreateRecurringContent extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             context.l10n.submittingRequest,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AppColors.navyDeep,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             context.l10n.submittingRequestDescription,
-            style: const TextStyle(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-            ),
+            style: TextStyle(fontSize: 14, color: colorScheme.onSurfaceVariant),
           ),
         ],
       ),

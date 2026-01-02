@@ -18,7 +18,7 @@ class SecuritySection extends StatelessWidget {
           icon: Icons.lock,
           title: context.l10n.changePassword,
           subtitle: context.l10n.updateYourLoginPassword,
-          onTap: () => context.pushNamed("changePassword"),
+          onTap: () => context.pushNamed('changePassword'),
         ),
         const Divider(height: 1, indent: 56),
         // Login Activity - To be implemented

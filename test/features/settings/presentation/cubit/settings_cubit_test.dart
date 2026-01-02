@@ -31,7 +31,6 @@ void main() {
     language: 'en',
     themeMode: AppThemeMode.system,
     pushNotificationsEnabled: true,
-    emailNotificationsEnabled: true,
     bookingConfirmationNotifications: true,
     bookingReminderNotifications: true,
     bookingStatusNotifications: true,

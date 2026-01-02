@@ -14,6 +14,8 @@ class ExploreSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
         Padding(
@@ -26,7 +28,7 @@ class ExploreSection extends StatelessWidget {
                 style: AppTextStyles.titleMedium.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.lightTextPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
               TextButton(
@@ -34,7 +36,7 @@ class ExploreSection extends StatelessWidget {
                 child: Text(
                   context.l10n.homeViewAll,
                   style: AppTextStyles.labelLarge.copyWith(
-                    color: AppColors.lightAccent,
+                    color: colorScheme.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -46,12 +48,10 @@ class ExploreSection extends StatelessWidget {
         BlocBuilder<FieldsCubit, FieldsState>(
           builder: (context, state) {
             if (state is FieldsLoading) {
-              return const SizedBox(
+              return SizedBox(
                 height: 240,
                 child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.lightAccent,
-                  ),
+                  child: CircularProgressIndicator(color: colorScheme.primary),
                 ),
               );
             } else if (state is FieldsLoaded) {
@@ -89,6 +89,8 @@ class ExploreSection extends StatelessWidget {
     BuildContext context, {
     required dynamic field, // Should be FieldEntity
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final imageUrl = field.images.isNotEmpty ? field.images.first : null;
     final rating = field.averageRating ?? 0.0;
 
@@ -103,12 +105,12 @@ class ExploreSection extends StatelessWidget {
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-          color: AppColors.lightSurface,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: colorScheme.outline),
           boxShadow: [
             BoxShadow(
-              color: AppColors.shadow.withValues(alpha: 0.05),
+              color: colorScheme.shadow.withValues(alpha: 0.05),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -121,7 +123,9 @@ class ExploreSection extends StatelessWidget {
             Container(
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: isDark
+                    ? colorScheme.surfaceContainerHighest
+                    : Colors.grey[300],
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(24),
                 ),
@@ -139,19 +143,23 @@ class ExploreSection extends StatelessWidget {
                         height: 120,
                         fit: BoxFit.cover,
                         placeholder: (context, url) => Container(
-                          color: Colors.grey[300],
-                          child: const Center(
+                          color: isDark
+                              ? colorScheme.surfaceContainerHighest
+                              : Colors.grey[300],
+                          child: Center(
                             child: CircularProgressIndicator(
-                              color: AppColors.lightAccent,
+                              color: colorScheme.primary,
                               strokeWidth: 2,
                             ),
                           ),
                         ),
                         errorWidget: (context, url, error) => Container(
-                          color: Colors.grey[300],
-                          child: const Icon(
+                          color: isDark
+                              ? colorScheme.surfaceContainerHighest
+                              : Colors.grey[300],
+                          child: Icon(
                             Icons.sports_soccer,
-                            color: Colors.grey,
+                            color: colorScheme.onSurfaceVariant,
                             size: 40,
                           ),
                         ),
@@ -159,11 +167,13 @@ class ExploreSection extends StatelessWidget {
                     )
                   else
                     Container(
-                      color: Colors.grey[300],
-                      child: const Center(
+                      color: isDark
+                          ? colorScheme.surfaceContainerHighest
+                          : Colors.grey[300],
+                      child: Center(
                         child: Icon(
                           Icons.sports_soccer,
-                          color: Colors.grey,
+                          color: colorScheme.onSurfaceVariant,
                           size: 40,
                         ),
                       ),
@@ -174,18 +184,18 @@ class ExploreSection extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        color: AppColors.lightSurface.withValues(alpha: 0.9),
+                        color: colorScheme.surface.withValues(alpha: 0.9),
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
+                            color: colorScheme.shadow.withValues(alpha: 0.1),
                             blurRadius: 4,
                           ),
                         ],
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.favorite_border,
-                        color: AppColors.lightTextPrimary,
+                        color: colorScheme.onSurface,
                         size: 16,
                       ),
                     ),
@@ -201,7 +211,7 @@ class ExploreSection extends StatelessWidget {
                   Text(
                     field.name,
                     style: AppTextStyles.titleMedium.copyWith(
-                      color: AppColors.lightTextPrimary,
+                      color: colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                     ),
                     maxLines: 1,
@@ -219,7 +229,7 @@ class ExploreSection extends StatelessWidget {
                       Text(
                         rating.toStringAsFixed(1),
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.lightTextPrimary,
+                          color: colorScheme.onSurface,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -227,7 +237,7 @@ class ExploreSection extends StatelessWidget {
                       Text(
                         '(${field.totalReviews}+)',
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.lightTextSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -236,7 +246,7 @@ class ExploreSection extends StatelessWidget {
                   Text(
                     '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)} / ${context.l10n.perHour}',
                     style: AppTextStyles.labelLarge.copyWith(
-                      color: AppColors.lightAccent,
+                      color: colorScheme.primary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -250,13 +260,15 @@ class ExploreSection extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       height: 240,
       margin: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Center(
         child: Column(
@@ -265,13 +277,13 @@ class ExploreSection extends StatelessWidget {
             Icon(
               Icons.explore_outlined,
               size: 48,
-              color: AppColors.lightTextSecondary.withValues(alpha: 0.5),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 16),
             Text(
               context.l10n.homeNoFieldsAvailable,
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.lightTextPrimary,
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.w600,
               ),
             ),

@@ -46,3 +46,7 @@ app.*.map.json
 
 # Environment Variables
 .env
+
+# Test output files
+test_output.txt
+test_results.json

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/utils/password_validator.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/password_requirement_item.dart';
@@ -27,7 +26,7 @@ class PasswordRequirementsList extends StatelessWidget {
         Text(
           l10n.passwordRequirementsTitle,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.bold,
           ),
         ),

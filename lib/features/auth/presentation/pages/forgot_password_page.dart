@@ -18,7 +18,6 @@ class ForgotPasswordPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => ForgotPasswordCubit(),
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is PasswordResetEmailSent) {

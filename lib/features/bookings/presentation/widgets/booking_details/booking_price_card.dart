@@ -23,6 +23,7 @@ class BookingPriceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hourlyRate = booking.totalPrice / booking.durationInHours;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return PremiumCard(
       accentColor: AppColors.accentCyan,
@@ -49,7 +50,7 @@ class BookingPriceCard extends StatelessWidget {
                 context.l10n.priceBreakdown,
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -60,9 +61,12 @@ class BookingPriceCard extends StatelessWidget {
             value:
                 '${LocaleFormatters.formatPrice(context, amount: hourlyRate, currency: booking.currency, decimalDigits: 0)}/${context.l10n.perHour}',
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12),
-            child: Divider(height: 1, color: AppColors.border),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Divider(
+              height: 1,
+              color: colorScheme.outline.withValues(alpha: 0.2),
+            ),
           ),
           BookingTotalRow(formattedPrice: booking.formattedPrice),
         ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -26,10 +25,12 @@ class AllReviewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocProvider(
       create: (_) => sl<ReviewsCubit>()..loadFieldReviews(fieldId: fieldId),
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: colorScheme.surface,
         body: Column(
           children: [
             PremiumCurvedHeader(

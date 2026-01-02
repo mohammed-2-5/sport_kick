@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 
 /// Field information section displaying name, location, and verified badge.
 ///
@@ -30,6 +31,8 @@ class FieldCardInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -58,17 +61,17 @@ class FieldCardInfo extends StatelessWidget {
         // Location
         Row(
           children: [
-            const Icon(
+            Icon(
               Icons.location_on_outlined,
               size: 14,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
             const SizedBox(width: 4),
             Expanded(
               child: Text(
                 '$city - $fieldSize',
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -82,16 +85,22 @@ class FieldCardInfo extends StatelessWidget {
 
   /// Builds the verified badge with gradient background
   Widget _buildVerifiedBadge(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    // Use onPrimary for content on colored gradients (white in both themes)
+    final contentColor = colorScheme.onPrimary;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
+        gradient: LinearGradient(
+          colors: [successColor, successColor.withValues(alpha: 0.7)],
         ),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: AppColors.success.withValues(alpha: 0.3),
+            color: successColor.withValues(alpha: 0.3),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -100,14 +109,14 @@ class FieldCardInfo extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.verified, size: 14, color: Colors.white),
+          Icon(Icons.verified, size: 14, color: contentColor),
           const SizedBox(width: 4),
           Text(
             context.l10n.verified,
             style: AppTextStyles.labelSmall.copyWith(
               fontSize: 10,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: contentColor,
             ),
           ),
         ],

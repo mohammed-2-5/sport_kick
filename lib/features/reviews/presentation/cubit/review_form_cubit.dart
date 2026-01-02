@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
+import 'package:spo_kick/features/reviews/presentation/cubit/reviews_state.dart';
 
 /// Cubit for managing review form state.
 ///
@@ -104,7 +105,16 @@ class ReviewFormCubit extends Cubit<ReviewFormState> {
         );
       }
 
-      emit(ReviewFormSuccess(isEdit: isEditing));
+      // Check if the operation succeeded by examining ReviewsCubit's state
+      final reviewsState = reviewsCubit.state;
+      if (reviewsState is ReviewCreated || reviewsState is ReviewUpdated) {
+        emit(ReviewFormSuccess(isEdit: isEditing));
+      } else if (reviewsState is ReviewsError) {
+        emit(ReviewFormError(message: reviewsState.message));
+      } else {
+        // Fallback - assume success if no error state
+        emit(ReviewFormSuccess(isEdit: isEditing));
+      }
     } catch (e) {
       emit(ReviewFormError(message: e.toString()));
     }

@@ -41,8 +41,9 @@ class _PlatformAnalyticsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: colorScheme.surface,
       body: BlocBuilder<SuperAdminCubit, SuperAdminState>(
         builder: (context, state) {
           return RefreshIndicator(
@@ -137,7 +138,9 @@ class _AnalyticsContent extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             context.l10n.comprehensiveOverviewOfYourPlatformMetrics,
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 24),
 
@@ -165,21 +168,26 @@ class _AnalyticsContent extends StatelessWidget {
   }
 
   Widget _buildEmptyMessage(String message) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      margin: const EdgeInsets.only(bottom: 24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Center(
-        child: Text(
-          message,
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+    return Builder(
+      builder: (context) {
+        final colorScheme = Theme.of(context).colorScheme;
+        return Container(
+          padding: const EdgeInsets.all(24),
+          margin: const EdgeInsets.only(bottom: 24),
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(14),
           ),
-        ),
-      ),
+          child: Center(
+            child: Text(
+              message,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

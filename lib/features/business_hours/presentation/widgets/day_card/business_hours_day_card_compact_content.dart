@@ -34,6 +34,7 @@ class BusinessHoursDayCardCompactContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Row(
       children: [
@@ -44,7 +45,7 @@ class BusinessHoursDayCardCompactContent extends StatelessWidget {
             BusinessHoursFormatters.getDayNameShort(context, dayOfWeek),
             style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: isOpen ? null : Colors.grey,
+              color: isOpen ? null : colorScheme.onSurfaceVariant,
             ),
           ),
         ),
@@ -65,7 +66,7 @@ class BusinessHoursDayCardCompactContent extends StatelessWidget {
               : Text(
                   context.l10n.closed,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: Colors.grey,
+                    color: colorScheme.onSurfaceVariant,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
@@ -73,7 +74,11 @@ class BusinessHoursDayCardCompactContent extends StatelessWidget {
 
         // Edit icon
         if (hasTapAction)
-          const Icon(Icons.edit_outlined, size: 16, color: Colors.grey),
+          Icon(
+            Icons.edit_outlined,
+            size: 16,
+            color: colorScheme.onSurfaceVariant,
+          ),
       ],
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -15,7 +15,6 @@ import 'package:spo_kick/features/bookings/presentation/widgets/invoice/invoice_
 import 'package:spo_kick/features/bookings/presentation/widgets/invoice/payment_info_card.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/invoice/payment_proof_section.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Page displaying booking invoice with payment instructions.
 ///
@@ -80,7 +79,6 @@ class _BookingInvoiceViewState extends State<_BookingInvoiceView> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
         body: Column(
           children: [
             // Header
@@ -143,6 +141,9 @@ class _InvoiceStatusBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final status = booking.paymentStatus;
     final l10n = context.l10n;
+    final colorScheme = context.colors;
+    final textTheme = context.textTheme;
+
     final Color backgroundColor;
     final Color textColor;
     final IconData icon;
@@ -150,23 +151,23 @@ class _InvoiceStatusBanner extends StatelessWidget {
 
     switch (status) {
       case PaymentStatus.verified:
-        backgroundColor = AppColors.successLight;
-        textColor = AppColors.success;
+        backgroundColor = colorScheme.success.withAlpha(26);
+        textColor = colorScheme.success;
         icon = Icons.check_circle_rounded;
         message = l10n.paymentVerified;
       case PaymentStatus.uploaded:
-        backgroundColor = AppColors.infoLight;
-        textColor = AppColors.info;
+        backgroundColor = colorScheme.info.withAlpha(26);
+        textColor = colorScheme.info;
         icon = Icons.hourglass_empty_rounded;
         message = l10n.paymentAwaitingVerification;
       case PaymentStatus.rejected:
-        backgroundColor = AppColors.errorLight;
-        textColor = AppColors.error;
+        backgroundColor = colorScheme.error.withAlpha(26);
+        textColor = colorScheme.error;
         icon = Icons.error_rounded;
         message = booking.paymentRejectionReason ?? l10n.paymentRejected;
       case PaymentStatus.pending:
-        backgroundColor = AppColors.warningLight;
-        textColor = AppColors.warning;
+        backgroundColor = colorScheme.warning.withAlpha(26);
+        textColor = colorScheme.warning;
         icon = Icons.payment_rounded;
         message = l10n.paymentRequired;
     }
@@ -187,7 +188,7 @@ class _InvoiceStatusBanner extends StatelessWidget {
               children: [
                 Text(
                   _statusLabel(context),
-                  style: AppTextStyles.labelLarge.copyWith(
+                  style: textTheme.labelLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: textColor,
                   ),
@@ -195,7 +196,7 @@ class _InvoiceStatusBanner extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   message,
-                  style: AppTextStyles.bodySmall.copyWith(
+                  style: textTheme.bodySmall?.copyWith(
                     color: textColor.withValues(alpha: 0.8),
                   ),
                 ),
@@ -230,6 +231,9 @@ class _ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+    final textTheme = context.textTheme;
+
     // If payment is verified, show "View My Bookings" button
     if (booking.paymentStatus.isComplete) {
       return Column(
@@ -262,12 +266,12 @@ class _ActionButtons extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AppColors.info.withValues(alpha: 0.1),
+                    color: colorScheme.info.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.info_outline_rounded,
-                    color: AppColors.info,
+                    color: colorScheme.info,
                     size: 20,
                   ),
                 ),
@@ -275,8 +279,8 @@ class _ActionButtons extends StatelessWidget {
                 Expanded(
                   child: Text(
                     context.l10n.paymentProofSubmittedMessage,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
                       height: 1.4,
                     ),
                   ),

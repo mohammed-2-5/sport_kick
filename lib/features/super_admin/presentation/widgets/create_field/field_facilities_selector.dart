@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -19,13 +18,15 @@ class FieldFacilitiesSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.3),
+          color: colorScheme.primary.withValues(alpha: 0.3),
           width: 2,
         ),
         boxShadow: AppShadows.small,
@@ -37,7 +38,7 @@ class FieldFacilitiesSelector extends StatelessWidget {
             context.l10n.selectAvailableFacilities,
             style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 12),
@@ -58,12 +59,12 @@ class FieldFacilitiesSelector extends StatelessWidget {
                   }
                   onChanged(newFacilities);
                 },
-                selectedColor: AppColors.primary.withValues(alpha: 0.2),
-                checkmarkColor: AppColors.primary,
+                selectedColor: colorScheme.primary.withValues(alpha: 0.2),
+                checkmarkColor: colorScheme.primary,
                 labelStyle: AppTextStyles.labelMedium.copyWith(
                   color: isSelected
-                      ? AppColors.primary
-                      : AppColors.textSecondary,
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 ),
               );

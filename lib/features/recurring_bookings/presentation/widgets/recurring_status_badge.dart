@@ -16,27 +16,29 @@ class RecurringStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isCompact ? 8 : 12,
         vertical: isCompact ? 4 : 6,
       ),
       decoration: BoxDecoration(
-        color: _backgroundColor,
+        color: _backgroundColor(isDark),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _borderColor, width: 1),
+        border: Border.all(color: _borderColor(isDark), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(_icon, size: isCompact ? 12 : 14, color: _iconColor),
+          Icon(_icon, size: isCompact ? 12 : 14, color: _iconColor(isDark)),
           SizedBox(width: isCompact ? 4 : 6),
           Text(
             _label(context),
             style: TextStyle(
               fontSize: isCompact ? 10 : 12,
               fontWeight: FontWeight.w600,
-              color: _textColor,
+              color: _textColor(isDark),
             ),
           ),
         ],
@@ -44,46 +46,52 @@ class RecurringStatusBadge extends StatelessWidget {
     );
   }
 
-  Color get _backgroundColor {
+  Color _backgroundColor(bool isDark) {
     switch (status) {
       case RecurringBookingStatus.active:
-        return const Color(0xFF10B981).withValues(alpha: 0.1);
+        final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+        return successColor.withValues(alpha: 0.1);
       case RecurringBookingStatus.pendingApproval:
         return AppColors.goldAccent.withValues(alpha: 0.1);
       case RecurringBookingStatus.canceled:
-        return AppColors.error.withValues(alpha: 0.1);
+        final errorColor = isDark ? AppColors.darkError : AppColors.error;
+        return errorColor.withValues(alpha: 0.1);
       case RecurringBookingStatus.rejected:
-        return AppColors.error.withValues(alpha: 0.1);
+        final errorColor = isDark ? AppColors.darkError : AppColors.error;
+        return errorColor.withValues(alpha: 0.1);
     }
   }
 
-  Color get _borderColor {
+  Color _borderColor(bool isDark) {
     switch (status) {
       case RecurringBookingStatus.active:
-        return const Color(0xFF10B981).withValues(alpha: 0.3);
+        final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+        return successColor.withValues(alpha: 0.3);
       case RecurringBookingStatus.pendingApproval:
         return AppColors.goldAccent.withValues(alpha: 0.3);
       case RecurringBookingStatus.canceled:
-        return AppColors.error.withValues(alpha: 0.3);
+        final errorColor = isDark ? AppColors.darkError : AppColors.error;
+        return errorColor.withValues(alpha: 0.3);
       case RecurringBookingStatus.rejected:
-        return AppColors.error.withValues(alpha: 0.3);
+        final errorColor = isDark ? AppColors.darkError : AppColors.error;
+        return errorColor.withValues(alpha: 0.3);
     }
   }
 
-  Color get _iconColor {
+  Color _iconColor(bool isDark) {
     switch (status) {
       case RecurringBookingStatus.active:
-        return const Color(0xFF10B981);
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       case RecurringBookingStatus.pendingApproval:
         return AppColors.goldAccent;
       case RecurringBookingStatus.canceled:
-        return AppColors.error;
+        return isDark ? AppColors.darkError : AppColors.error;
       case RecurringBookingStatus.rejected:
-        return AppColors.error;
+        return isDark ? AppColors.darkError : AppColors.error;
     }
   }
 
-  Color get _textColor => _iconColor;
+  Color _textColor(bool isDark) => _iconColor(isDark);
 
   IconData get _icon {
     switch (status) {

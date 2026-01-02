@@ -24,6 +24,7 @@ class BookingInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final color = iconColor ?? AppColors.accentCyan;
 
     return Row(
@@ -44,7 +45,7 @@ class BookingInfoRow extends StatelessWidget {
               Text(
                 title,
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -53,7 +54,7 @@ class BookingInfoRow extends StatelessWidget {
                 value,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],

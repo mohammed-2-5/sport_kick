@@ -15,8 +15,10 @@ class BookingFieldHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
-      color: Colors.white,
+      color: colorScheme.surface,
       padding: const EdgeInsets.all(BookingConstants.standardPadding),
       child: Row(
         children: [

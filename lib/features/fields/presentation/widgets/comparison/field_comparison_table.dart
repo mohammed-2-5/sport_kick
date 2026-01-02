@@ -13,10 +13,13 @@ class FieldComparisonTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return DataTable(
       columnSpacing: 20,
       headingRowColor: WidgetStateProperty.all(
-        AppColors.primaryLight.withValues(alpha: 0.1),
+        colorScheme.primary.withValues(alpha: 0.1),
       ),
       columns: [
         DataColumn(
@@ -71,10 +74,13 @@ class FieldComparisonTable extends StatelessWidget {
                         width: 100,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceVariant,
+                          color: colorScheme.surfaceContainerHighest,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(Icons.sports_soccer),
+                        child: Icon(
+                          Icons.sports_soccer,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                       ),
               ),
             ),
@@ -97,7 +103,7 @@ class FieldComparisonTable extends StatelessWidget {
                 Text(
                   '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -121,7 +127,11 @@ class FieldComparisonTable extends StatelessWidget {
               (field) => DataCell(
                 Row(
                   children: [
-                    const Icon(Icons.star, size: 16, color: AppColors.warning),
+                    Icon(
+                      Icons.star,
+                      size: 16,
+                      color: isDark ? AppColors.darkWarning : AppColors.warning,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       field.hasReviews
@@ -219,7 +229,7 @@ class FieldComparisonTable extends StatelessWidget {
                     Icon(
                       field.isIndoor ? Icons.home : Icons.wb_sunny,
                       size: 16,
-                      color: AppColors.primary,
+                      color: colorScheme.primary,
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -249,10 +259,10 @@ class FieldComparisonTable extends StatelessWidget {
               (field) => DataCell(
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.location_city,
                       size: 16,
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                     const SizedBox(width: 4),
                     Text(field.city),
@@ -278,7 +288,9 @@ class FieldComparisonTable extends StatelessWidget {
               (field) => DataCell(
                 Icon(
                   field.isVerified ? Icons.verified : Icons.cancel,
-                  color: field.isVerified ? AppColors.success : AppColors.error,
+                  color: field.isVerified
+                      ? (isDark ? AppColors.darkSuccess : AppColors.success)
+                      : (isDark ? AppColors.darkError : AppColors.error),
                   size: 20,
                 ),
               ),

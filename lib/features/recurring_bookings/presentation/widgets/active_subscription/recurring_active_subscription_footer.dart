@@ -15,6 +15,9 @@ class RecurringActiveSubscriptionFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -26,13 +29,13 @@ class RecurringActiveSubscriptionFooter extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: AppColors.accentCyan.withValues(alpha: 0.1),
+                    color: colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.event_available_rounded,
                     size: 18,
-                    color: AppColors.accentCyan,
+                    color: colorScheme.primary,
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -41,9 +44,9 @@ class RecurringActiveSubscriptionFooter extends StatelessWidget {
                   children: [
                     Text(
                       context.l10n.nextBooking,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                     Text(
@@ -54,10 +57,10 @@ class RecurringActiveSubscriptionFooter extends StatelessWidget {
                               pattern: 'MMM d, yyyy',
                             )
                           : context.l10n.generatingBooking,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.navyDeep,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ],
@@ -68,17 +71,13 @@ class RecurringActiveSubscriptionFooter extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0xFF10B981).withValues(alpha: 0.1),
+              color: successColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.check_circle_rounded,
-                  size: 16,
-                  color: Color(0xFF10B981),
-                ),
+                Icon(Icons.check_circle_rounded, size: 16, color: successColor),
                 const SizedBox(width: 6),
                 Text(
                   context.l10n.completedCount(
@@ -88,10 +87,10 @@ class RecurringActiveSubscriptionFooter extends StatelessWidget {
                       decimalDigits: 0,
                     ),
                   ),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF10B981),
+                    color: successColor,
                   ),
                 ),
               ],

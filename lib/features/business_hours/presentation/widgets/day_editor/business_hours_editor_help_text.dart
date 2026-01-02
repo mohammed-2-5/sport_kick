@@ -11,16 +11,17 @@ class BusinessHoursEditorHelpText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Row(
       children: [
-        Icon(Icons.info_outline, size: 16, color: Colors.grey[600]),
+        Icon(Icons.info_outline, size: 16, color: colorScheme.onSurfaceVariant),
         const SizedBox(width: BusinessHoursConstants.tinySpacing),
         Expanded(
           child: Text(
             context.l10n.businessHoursHelpTimeSelection,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: Colors.grey[600],
+              color: colorScheme.onSurfaceVariant,
               fontStyle: FontStyle.italic,
             ),
           ),

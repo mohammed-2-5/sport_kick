@@ -15,6 +15,7 @@ import 'package:spo_kick/features/city/presentation/widgets/premium/premium_city
 /// - Loading states
 /// - Empty states
 /// - Floating continue button
+/// - Theme-aware: adapts to light/dark mode
 class PremiumCitySelectionView extends StatefulWidget {
   final List<CityEntity> cities;
   final String? selectedCityId;
@@ -80,19 +81,20 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: colorScheme.surface,
       body: Column(
         children: [
           // Header
           Container(
             padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [AppColors.navyDeep, AppColors.navyLight],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+            decoration: BoxDecoration(
+              gradient: isDark
+                  ? AppColors.darkNavyGradient
+                  : AppColors.navyGradient,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,14 +116,19 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
                 // Search field
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: TextField(
                     controller: _searchController,
+                    style: TextStyle(color: colorScheme.onSurface),
                     decoration: InputDecoration(
                       hintText: context.l10n.citySearchHint,
-                      prefixIcon: const Icon(Icons.search),
+                      hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -139,9 +146,11 @@ class _PremiumCitySelectionViewState extends State<PremiumCitySelectionView> {
       ),
       // Continue button
       bottomNavigationBar: widget.isSaving
-          ? const LinearProgressIndicator(
+          ? LinearProgressIndicator(
               backgroundColor: Colors.transparent,
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentCyan),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                isDark ? AppColors.accentCyanLight : AppColors.accentCyan,
+              ),
             )
           : SafeArea(
               child: Padding(

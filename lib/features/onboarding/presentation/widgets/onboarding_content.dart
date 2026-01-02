@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 
 class OnboardingContent extends StatelessWidget {
@@ -18,6 +17,8 @@ class OnboardingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
@@ -33,10 +34,10 @@ class OnboardingContent extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(32),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
+                  color: colorScheme.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, size: 80, color: AppColors.primary),
+                child: Icon(icon, size: 80, color: colorScheme.primary),
               ),
             ),
           ),
@@ -52,7 +53,7 @@ class OnboardingContent extends StatelessWidget {
                 title,
                 style: AppTextStyles.displaySmall.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: colorScheme.primary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -69,7 +70,7 @@ class OnboardingContent extends StatelessWidget {
               child: Text(
                 description,
                 style: AppTextStyles.bodyLarge.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,

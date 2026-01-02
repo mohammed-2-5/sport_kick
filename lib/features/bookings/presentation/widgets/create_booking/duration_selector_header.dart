@@ -11,6 +11,8 @@ class DurationSelectorHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: BookingConstants.standardPadding,
@@ -27,7 +29,7 @@ class DurationSelectorHeader extends StatelessWidget {
             context.l10n.bookingDuration,
             style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ],

@@ -15,6 +15,8 @@ class FieldCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -42,7 +44,7 @@ class FieldCard extends StatelessWidget {
                     height: 80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey[200],
+                      color: colorScheme.surfaceContainerHighest,
                       image: field.mainImage != null
                           ? DecorationImage(
                               image: NetworkImage(field.mainImage!),
@@ -51,10 +53,10 @@ class FieldCard extends StatelessWidget {
                           : null,
                     ),
                     child: field.mainImage == null
-                        ? const Icon(
+                        ? Icon(
                             Icons.sports_soccer,
                             size: 40,
-                            color: Colors.grey,
+                            color: colorScheme.onSurfaceVariant,
                           )
                         : null,
                   ),
@@ -85,16 +87,18 @@ class FieldCard extends StatelessWidget {
                         // City and price
                         Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.location_city,
                               size: 14,
-                              color: Colors.grey,
+                              color: colorScheme.onSurfaceVariant,
                             ),
                             const SizedBox(width: 4),
                             Text(
                               field.city,
                               style: AppTextStyles.bodyMedium.copyWith(
-                                color: Colors.grey[600],
+                                color: colorScheme.onSurface.withValues(
+                                  alpha: 0.7,
+                                ),
                               ),
                             ),
                           ],
@@ -146,12 +150,16 @@ class FieldCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Icon(Icons.person, size: 16, color: Colors.grey),
+                    Icon(
+                      Icons.person,
+                      size: 16,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       context.l10n.ownerIdShort(field.ownerId!.substring(0, 8)),
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: Colors.grey[600],
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],

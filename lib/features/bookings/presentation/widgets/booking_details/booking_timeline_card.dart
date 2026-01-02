@@ -20,6 +20,7 @@ class BookingTimelineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +44,7 @@ class BookingTimelineCard extends StatelessWidget {
                 context.l10n.bookingTimeline,
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],

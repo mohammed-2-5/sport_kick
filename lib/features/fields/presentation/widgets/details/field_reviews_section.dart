@@ -60,79 +60,95 @@ class FieldReviewsSection extends StatelessWidget {
 
           // Rating summary
           if (field.hasReviews)
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                ),
-              ),
-              child: Row(
-                children: [
-                  Column(
+            Builder(
+              builder: (context) {
+                final colorScheme = Theme.of(context).colorScheme;
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary.withValues(alpha: 0.05),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: colorScheme.primary.withValues(alpha: 0.2),
+                    ),
+                  ),
+                  child: Row(
                     children: [
-                      Text(
-                        LocaleFormatters.formatNumber(
-                          context,
-                          field.averageRating ?? 0,
-                          decimalDigits: 1,
-                        ),
-                        style: AppTextStyles.displaySmall.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                      Column(
+                        children: [
+                          Text(
+                            LocaleFormatters.formatNumber(
+                              context,
+                              field.averageRating ?? 0,
+                              decimalDigits: 1,
+                            ),
+                            style: AppTextStyles.displaySmall.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                          RatingStars(
+                            rating: field.averageRating ?? 0,
+                            size: 16,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.l10n
+                                  .reviewsSummary(field.totalReviews)
+                                  .replaceFirst(
+                                    field.totalReviews.toString(),
+                                    LocaleFormatters.formatNumber(
+                                      context,
+                                      field.totalReviews,
+                                    ),
+                                  ),
+                              style: AppTextStyles.titleMedium.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      RatingStars(rating: field.averageRating ?? 0, size: 16),
                     ],
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.l10n
-                              .reviewsSummary(field.totalReviews)
-                              .replaceFirst(
-                                field.totalReviews.toString(),
-                                LocaleFormatters.formatNumber(
-                                  context,
-                                  field.totalReviews,
-                                ),
-                              ),
-                          style: AppTextStyles.titleMedium.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             )
           else
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.rate_review_outlined, color: Colors.grey),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      context.l10n.noReviews,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: Colors.grey,
-                      ),
-                    ),
+            Builder(
+              builder: (context) {
+                final colorScheme = Theme.of(context).colorScheme;
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceContainerHighest,
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                ],
-              ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.rate_review_outlined,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          context.l10n.noReviews,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
 
           const SizedBox(height: 16),
@@ -141,6 +157,7 @@ class FieldReviewsSection extends StatelessWidget {
           BlocBuilder<AuthCubit, AuthState>(
             builder: (context, authState) {
               if (authState is Authenticated) {
+                final colorScheme = Theme.of(context).colorScheme;
                 return SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
@@ -158,8 +175,8 @@ class FieldReviewsSection extends StatelessWidget {
                     label: Text(context.l10n.writeReview),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
-                      side: const BorderSide(color: AppColors.primary),
-                      foregroundColor: AppColors.primary,
+                      side: BorderSide(color: colorScheme.primary),
+                      foregroundColor: colorScheme.primary,
                     ),
                   ),
                 );
@@ -178,36 +195,40 @@ class FieldReviewsSection extends StatelessWidget {
                     ..loadFieldReviews(fieldId: field.id, limit: 3),
               child: BlocBuilder<ReviewsCubit, ReviewsState>(
                 builder: (context, state) {
+                  final colorScheme = Theme.of(context).colorScheme;
+                  final isDark =
+                      Theme.of(context).brightness == Brightness.dark;
+
                   if (state is ReviewsLoading) {
-                    return const Center(
+                    return Center(
                       child: Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: CircularProgressIndicator(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                         ),
                       ),
                     );
                   }
 
                   if (state is ReviewsError) {
+                    final errorColor = isDark
+                        ? AppColors.darkError
+                        : AppColors.error;
                     return Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: AppColors.errorLight,
+                        color: errorColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
-                          const Icon(
-                            Icons.error_outline,
-                            color: AppColors.error,
-                          ),
+                          Icon(Icons.error_outline, color: errorColor),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               context.l10n.failedToLoadReviews,
                               style: AppTextStyles.bodyMedium.copyWith(
-                                color: AppColors.error,
+                                color: errorColor,
                               ),
                             ),
                           ),

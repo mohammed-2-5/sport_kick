@@ -13,6 +13,9 @@ class RecurringDetailScheduleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
     return RecurringDetailCard(
       title: context.l10n.scheduleTitle,
       icon: Icons.schedule_rounded,
@@ -24,7 +27,7 @@ class RecurringDetailScheduleCard extends StatelessWidget {
             value: context.l10n.everyDay(
               LocaleFormatters.weekdayName(context, booking.dayOfWeek),
             ),
-            color: AppColors.accentCyan,
+            color: colorScheme.primary,
           ),
           const Divider(height: 24),
           _InfoRow(
@@ -35,7 +38,7 @@ class RecurringDetailScheduleCard extends StatelessWidget {
               startTime: booking.startTime,
               endTime: booking.endTime,
             ),
-            color: AppColors.navyDeep,
+            color: colorScheme.secondary,
           ),
           const Divider(height: 24),
           _InfoRow(
@@ -49,7 +52,7 @@ class RecurringDetailScheduleCard extends StatelessWidget {
                 decimalDigits: 0,
               ),
             ),
-            color: Colors.orange,
+            color: isDark ? Colors.orange[300]! : Colors.orange,
           ),
           const Divider(height: 24),
           _InfoRow(
@@ -61,7 +64,7 @@ class RecurringDetailScheduleCard extends StatelessWidget {
               currency: 'EGP',
               decimalDigits: 0,
             ),
-            color: const Color(0xFF10B981),
+            color: successColor,
           ),
         ],
       ),
@@ -84,6 +87,7 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
@@ -99,18 +103,15 @@ class _InfoRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-            ),
+            style: TextStyle(fontSize: 14, color: colorScheme.onSurfaceVariant),
           ),
         ),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: AppColors.navyDeep,
+            color: colorScheme.onSurface,
           ),
         ),
       ],

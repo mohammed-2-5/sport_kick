@@ -26,7 +26,7 @@ class BookingConfirmButton extends StatelessWidget {
             onPressed: isLoading ? null : onConfirm,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.textOnPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                   BookingConstants.borderRadius,
@@ -40,14 +40,16 @@ class BookingConfirmButton extends StatelessWidget {
                     height: 24,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColors.textOnPrimary,
+                      ),
                     ),
                   )
                 : Text(
                     context.l10n.confirmBooking,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: AppColors.textOnPrimary,
                     ),
                   ),
           ),

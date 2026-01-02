@@ -21,6 +21,9 @@ class BookingDatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,7 +31,7 @@ class BookingDatePicker extends StatelessWidget {
           context.l10n.selectDate,
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: BookingConstants.itemSpacing),
@@ -38,17 +41,19 @@ class BookingDatePicker extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(BookingConstants.standardPadding),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(
                 BookingConstants.borderRadius,
               ),
-              border: Border.all(color: AppColors.border),
+              border: Border.all(
+                color: isDark ? AppColors.darkBorder : AppColors.border,
+              ),
             ),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.calendar_today,
-                  color: AppColors.primary,
+                  color: colorScheme.primary,
                   size: 20,
                 ),
                 const SizedBox(width: BookingConstants.itemSpacing),
@@ -60,13 +65,13 @@ class BookingDatePicker extends StatelessWidget {
                   ),
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 const Spacer(),
-                const Icon(
+                Icon(
                   Icons.arrow_drop_down,
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ],
             ),
@@ -77,6 +82,9 @@ class BookingDatePicker extends StatelessWidget {
   }
 
   Future<void> _selectDate(BuildContext context) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
@@ -87,11 +95,18 @@ class BookingDatePicker extends StatelessWidget {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: AppColors.primary,
-              onPrimary: Colors.white,
-              onSurface: AppColors.textPrimary,
-            ),
+            colorScheme: isDark
+                ? ColorScheme.dark(
+                    primary: colorScheme.primary,
+                    onPrimary: colorScheme.onPrimary,
+                    onSurface: colorScheme.onSurface,
+                    surface: colorScheme.surface,
+                  )
+                : ColorScheme.light(
+                    primary: AppColors.primary,
+                    onPrimary: AppColors.textOnPrimary,
+                    onSurface: AppColors.textPrimary,
+                  ),
           ),
           child: child!,
         );

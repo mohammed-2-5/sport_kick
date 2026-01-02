@@ -138,7 +138,10 @@ class PremiumProfileHeader extends StatelessWidget {
           right: 0,
           child: ClipPath(
             clipper: _CurveClipper(),
-            child: Container(height: 40, color: AppColors.lightBackground),
+            child: Container(
+              height: 40,
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
           ),
         ),
 
@@ -323,7 +326,7 @@ class PremiumProfileInfo extends StatelessWidget {
           name,
           style: AppTextStyles.headlineMedium.copyWith(
             fontWeight: FontWeight.w800,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
 
@@ -332,7 +335,7 @@ class PremiumProfileInfo extends StatelessWidget {
           Text(
             email!,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],

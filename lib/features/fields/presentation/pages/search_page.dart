@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/core/widgets/premium/premium_search_bar.dart';
@@ -74,7 +73,6 @@ class _SearchPageState extends State<SearchPage> {
           }
         },
         child: Scaffold(
-          backgroundColor: AppColors.lightBackground,
           body: Column(
             children: [
               PremiumCurvedHeader(

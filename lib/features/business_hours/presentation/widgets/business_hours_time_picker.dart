@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
@@ -40,6 +39,7 @@ class BusinessHoursTimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +50,7 @@ class BusinessHoursTimePicker extends StatelessWidget {
           label,
           style: theme.textTheme.titleSmall?.copyWith(
             fontWeight: FontWeight.w600,
-            color: enabled ? null : Colors.grey,
+            color: enabled ? null : colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: BusinessHoursConstants.smallSpacing),
@@ -65,11 +65,11 @@ class BusinessHoursTimePicker extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 color: enabled
-                    ? theme.cardColor
-                    : Colors.grey.withValues(alpha: 0.1),
+                    ? colorScheme.surface
+                    : colorScheme.onSurface.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: enabled ? AppColors.primary : Colors.grey,
+                  color: enabled ? colorScheme.primary : colorScheme.outline,
                   width: 1,
                 ),
               ),
@@ -79,20 +79,22 @@ class BusinessHoursTimePicker extends StatelessWidget {
                   Icon(
                     Icons.access_time,
                     size: BusinessHoursConstants.timeIconSize,
-                    color: enabled ? AppColors.primary : Colors.grey,
+                    color: enabled ? colorScheme.primary : colorScheme.outline,
                   ),
                   const SizedBox(width: BusinessHoursConstants.itemSpacing),
                   Text(
                     _formatTimeDisplay(context, selectedTime),
                     style: theme.textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: enabled ? null : Colors.grey,
+                      color: enabled ? null : colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(width: BusinessHoursConstants.smallSpacing),
                   Icon(
                     Icons.arrow_drop_down,
-                    color: enabled ? Colors.grey : Colors.grey[400],
+                    color: enabled
+                        ? colorScheme.onSurfaceVariant
+                        : colorScheme.outline,
                   ),
                 ],
               ),
@@ -163,10 +165,11 @@ class BusinessHoursTimePicker extends StatelessWidget {
 
   /// Shows error message for invalid time selection
   void _showTimeError(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(context.l10n.businessHoursInvalidTimeRange),
-        backgroundColor: AppColors.error,
+        backgroundColor: colorScheme.error,
         behavior: SnackBarBehavior.floating,
       ),
     );

@@ -34,7 +34,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
 
           // Active subscriptions section
           if (state.hasActive) ...[
-            _buildSectionHeader(context.l10n.activeSubscriptions),
+            _buildSectionHeader(context, context.l10n.activeSubscriptions),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final booking = state.activeBookings[index];
@@ -53,7 +53,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
 
           // Pending approvals section
           if (state.hasPending) ...[
-            _buildSectionHeader(context.l10n.pendingApproval),
+            _buildSectionHeader(context, context.l10n.pendingApproval),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final booking = state.pendingBookings[index];
@@ -67,7 +67,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
 
           // History section (canceled/rejected)
           if (state.otherBookings.isNotEmpty) ...[
-            _buildSectionHeader(context.l10n.history),
+            _buildSectionHeader(context, context.l10n.history),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final booking = state.otherBookings[index];
@@ -90,6 +90,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
   }
 
   Widget _buildSummaryHeader(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
@@ -117,12 +118,12 @@ class MyRecurringBookingsContent extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: colorScheme.onPrimary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.event_repeat_rounded,
-              color: Colors.white,
+              color: colorScheme.onPrimary,
               size: 28,
             ),
           ),
@@ -133,8 +134,8 @@ class MyRecurringBookingsContent extends StatelessWidget {
               children: [
                 Text(
                   context.l10n.weeklyReservations,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: colorScheme.onPrimary,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -154,7 +155,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
                     ),
                   ),
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
+                    color: colorScheme.onPrimary.withValues(alpha: 0.8),
                     fontSize: 14,
                   ),
                 ),
@@ -166,7 +167,8 @@ class MyRecurringBookingsContent extends StatelessWidget {
     );
   }
 
-  SliverToBoxAdapter _buildSectionHeader(String title) {
+  SliverToBoxAdapter _buildSectionHeader(BuildContext context, String title) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
@@ -183,10 +185,10 @@ class MyRecurringBookingsContent extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.navyDeep,
+                color: colorScheme.onSurface,
               ),
             ),
           ],
@@ -196,6 +198,7 @@ class MyRecurringBookingsContent extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -218,19 +221,19 @@ class MyRecurringBookingsContent extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               context.l10n.noSubscriptionsYet,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: AppColors.navyDeep,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 12),
             Text(
               context.l10n.noSubscriptionsSubtitle,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 32),
@@ -245,14 +248,17 @@ class MyRecurringBookingsContent extends StatelessWidget {
     return Column(
       children: [
         _buildBenefitItem(
+          context,
           icon: Icons.lock_clock_rounded,
           text: context.l10n.guaranteedWeeklySlot,
         ),
         _buildBenefitItem(
+          context,
           icon: Icons.autorenew_rounded,
           text: context.l10n.autoRenewsWeekly,
         ),
         _buildBenefitItem(
+          context,
           icon: Icons.notifications_active_rounded,
           text: context.l10n.paymentReminders,
         ),
@@ -260,7 +266,14 @@ class MyRecurringBookingsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildBenefitItem({required IconData icon, required String text}) {
+  Widget _buildBenefitItem(
+    BuildContext context, {
+    required IconData icon,
+    required String text,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -270,15 +283,15 @@ class MyRecurringBookingsContent extends StatelessWidget {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: const Color(0xFF10B981).withValues(alpha: 0.1),
+              color: successColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, size: 16, color: const Color(0xFF10B981)),
+            child: Icon(icon, size: 16, color: successColor),
           ),
           const SizedBox(width: 12),
           Text(
             text,
-            style: const TextStyle(fontSize: 14, color: AppColors.navyDeep),
+            style: TextStyle(fontSize: 14, color: colorScheme.onSurface),
           ),
         ],
       ),

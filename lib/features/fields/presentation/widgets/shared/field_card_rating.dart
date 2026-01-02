@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Rating display widget for field card.
 ///
@@ -36,16 +37,22 @@ class FieldCardRating extends StatelessWidget {
 
   /// Builds the rating badge with gradient background when reviews exist
   Widget _buildRatingBadge(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final warningColor = isDark ? AppColors.darkWarning : AppColors.warning;
+    // Use onPrimary for content on colored gradients (white in both themes)
+    final contentColor = colorScheme.onPrimary;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFFA726), Color(0xFFFFB74D)],
+        gradient: LinearGradient(
+          colors: [warningColor, warningColor.withValues(alpha: 0.8)],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.orange.withValues(alpha: 0.3),
+            color: warningColor.withValues(alpha: 0.3),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -54,13 +61,13 @@ class FieldCardRating extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.star_rounded, size: 16, color: Colors.white),
+          Icon(Icons.star_rounded, size: 16, color: contentColor),
           const SizedBox(width: 4),
           Text(
             ratingDisplay,
             style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: contentColor,
             ),
           ),
           const SizedBox(width: 3),
@@ -68,7 +75,7 @@ class FieldCardRating extends StatelessWidget {
             '(${LocaleFormatters.formatNumber(context, totalReviews)})',
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 11,
-              color: Colors.white.withValues(alpha: 0.9),
+              color: contentColor.withValues(alpha: 0.9),
             ),
           ),
         ],
@@ -78,22 +85,24 @@ class FieldCardRating extends StatelessWidget {
 
   /// Builds the "New" badge when no reviews exist
   Widget _buildNewBadge(BuildContext context) {
+    final colorScheme = context.colors;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             Icons.star_outline_rounded,
             size: 14,
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
-          SizedBox(width: 4),
-          _NewLabel(),
+          const SizedBox(width: 4),
+          const _NewLabel(),
         ],
       ),
     );
@@ -105,10 +114,12 @@ class _NewLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+
     return Text(
       context.l10n.newLabel,
       style: AppTextStyles.labelSmall.copyWith(
-        color: AppColors.textSecondary,
+        color: colorScheme.onSurfaceVariant,
         fontWeight: FontWeight.w600,
       ),
     );

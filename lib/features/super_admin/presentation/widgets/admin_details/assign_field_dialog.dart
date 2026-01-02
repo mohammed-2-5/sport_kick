@@ -36,7 +36,11 @@ class _AssignFieldDialogState extends State<AssignFieldDialog> {
               context.l10n.assigningTo(
                 widget.admin.fullName ?? widget.admin.email,
               ),
-              style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey[600]),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
             ),
             const SizedBox(height: AdminUIConstants.spacingMedium),
             BlocBuilder<FieldsCubit, FieldsState>(

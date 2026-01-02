@@ -117,6 +117,9 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
   }
 
   BoxDecoration _buildDecoration() {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (_showAsSelected) {
       return BoxDecoration(
         gradient: widget.isSecondSlot
@@ -146,19 +149,21 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
 
     if (!_isAvailable) {
       return BoxDecoration(
-        color: AppColors.backgroundLight,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.lightGrey),
+        border: Border.all(color: colorScheme.outlineVariant),
       );
     }
 
     return BoxDecoration(
-      color: Colors.white,
+      color: colorScheme.surface,
       borderRadius: BorderRadius.circular(14),
-      border: Border.all(color: AppColors.border),
+      border: Border.all(color: colorScheme.outline),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withValues(alpha: 0.04),
+          color: isDark
+              ? Colors.black.withValues(alpha: 0.2)
+              : Colors.black.withValues(alpha: 0.04),
           blurRadius: 8,
           offset: const Offset(0, 2),
         ),
@@ -180,6 +185,7 @@ class _TimeDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -197,8 +203,8 @@ class _TimeDisplay extends StatelessWidget {
             color: isSelected
                 ? Colors.white
                 : isAvailable
-                ? AppColors.textPrimary
-                : AppColors.textSecondary,
+                ? colorScheme.onSurface
+                : colorScheme.onSurfaceVariant,
           ),
         ),
         if (slot.isNextDay) ...[const SizedBox(width: 4), const NextDayBadge()],
@@ -242,12 +248,14 @@ class _PriceBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: isSelected
             ? Colors.white.withValues(alpha: 0.2)
-            : AppColors.success.withValues(alpha: 0.1),
+            : successColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -260,7 +268,7 @@ class _PriceBadge extends StatelessWidget {
         style: AppTextStyles.labelSmall.copyWith(
           fontSize: 12,
           fontWeight: FontWeight.w600,
-          color: isSelected ? Colors.white : AppColors.success,
+          color: isSelected ? Colors.white : successColor,
         ),
       ),
     );
@@ -270,23 +278,25 @@ class _PriceBadge extends StatelessWidget {
 class _BookedBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.1),
+        color: errorColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.block, size: 12, color: AppColors.error),
+          Icon(Icons.block, size: 12, color: errorColor),
           const SizedBox(width: 4),
           Text(
             context.l10n.bookedLabel,
             style: AppTextStyles.labelSmall.copyWith(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: AppColors.error,
+              color: errorColor,
             ),
           ),
         ],
@@ -298,27 +308,30 @@ class _BookedBadge extends StatelessWidget {
 class _DurationUnavailableBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final warningColor = isDark ? AppColors.darkWarning : AppColors.warning;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      constraints: const BoxConstraints(maxWidth: 90),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.warning.withValues(alpha: 0.1),
+        color: warningColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.timer_off_outlined,
-            size: 12,
-            color: AppColors.warning,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            context.l10n.durationUnavailable,
-            style: AppTextStyles.labelSmall.copyWith(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: AppColors.warning,
+          Icon(Icons.timer_off_outlined, size: 12, color: warningColor),
+          const SizedBox(width: 2),
+          Flexible(
+            child: Text(
+              context.l10n.durationUnavailable,
+              style: AppTextStyles.labelSmall.copyWith(
+                fontSize: 9,
+                fontWeight: FontWeight.w600,
+                color: warningColor,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           ),
         ],

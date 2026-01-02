@@ -9,30 +9,36 @@ class UserEmptyBookingsState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(AdminUIConstants.emptyStatePadding),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: AdminUIConstants.borderRadiusMedium,
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
           Icon(
             Icons.event_busy,
             size: AdminUIConstants.emptyStateIconSize,
-            color: Colors.grey[400],
+            color: colorScheme.outline,
           ),
           const SizedBox(height: AdminUIConstants.listItemSpacing),
           Text(
             context.l10n.noBookingsYet2,
-            style: AppTextStyles.titleLargeBold,
+            style: AppTextStyles.titleLarge.copyWith(
+              fontWeight: FontWeight.bold,
+              color: colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: AdminUIConstants.spacingSmall),
           Text(
             context.l10n.thisUserHasntMadeAnyBookingsYet,
             textAlign: TextAlign.center,
-            style: AppTextStyles.bodyMediumSecondary,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),

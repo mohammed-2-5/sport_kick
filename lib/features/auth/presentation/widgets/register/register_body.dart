@@ -146,7 +146,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                     Text(
                       context.l10n.alreadyHaveAccount,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: Colors.grey[600],
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                     TextButton(

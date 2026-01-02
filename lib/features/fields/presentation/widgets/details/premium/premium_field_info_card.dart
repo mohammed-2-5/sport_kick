@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/utils/sport_category_localizer.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 
 /// Premium field information card.
 ///
@@ -16,12 +19,14 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 /// - Booking count badge
 class PremiumFieldInfoCard extends StatelessWidget {
   final FieldEntity field;
-  final dynamic category;
+  final SportCategoryEntity? category;
 
   const PremiumFieldInfoCard({super.key, required this.field, this.category});
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+
     return PremiumCard(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -32,7 +37,6 @@ class PremiumFieldInfoCard extends StatelessWidget {
             field.name,
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.w800,
-              color: AppColors.textPrimary,
               height: 1.2,
             ),
           ),
@@ -42,9 +46,9 @@ class PremiumFieldInfoCard extends StatelessWidget {
           // Category
           if (category != null)
             Text(
-              category.name,
+              category!.getLocalizedName(context),
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.accentCyan,
+                color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
               ),
@@ -112,26 +116,26 @@ class PremiumFieldInfoCard extends StatelessWidget {
                     vertical: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.accentCyan.withValues(alpha: 0.1),
+                    color: colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(
-                      color: AppColors.accentCyan.withValues(alpha: 0.3),
+                      color: colorScheme.primary.withValues(alpha: 0.3),
                       width: 1.5,
                     ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.bookmark_rounded,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.primary,
                         size: 18,
                       ),
                       const SizedBox(width: 6),
                       Text(
                         '${LocaleFormatters.formatNumber(context, field.totalBookings)} ${context.l10n.bookings}',
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.accentCyan,
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -151,13 +155,16 @@ class PremiumFieldInfoCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                    gradient: LinearGradient(
+                      colors: [
+                        colorScheme.primary,
+                        colorScheme.primaryContainer,
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.accentCyan.withValues(alpha: 0.4),
+                        color: colorScheme.primary.withValues(alpha: 0.4),
                         blurRadius: 16,
                         offset: const Offset(0, 6),
                       ),
@@ -204,10 +211,10 @@ class PremiumFieldInfoCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
+                    color: colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: AppColors.accentCyan.withValues(alpha: 0.2),
+                      color: colorScheme.primary.withValues(alpha: 0.2),
                       width: 2,
                     ),
                   ),
@@ -216,16 +223,16 @@ class PremiumFieldInfoCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.people_outline_rounded,
-                            color: AppColors.accentCyan,
+                            color: colorScheme.primary,
                             size: 18,
                           ),
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.fieldSize,
                             style: AppTextStyles.labelSmall.copyWith(
-                              color: AppColors.accentCyan,
+                              color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -236,7 +243,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                         field.fieldSize,
                         style: AppTextStyles.titleLarge.copyWith(
                           fontWeight: FontWeight.w900,
-                          color: AppColors.accentCyan,
+                          color: colorScheme.primary,
                           letterSpacing: -0.5,
                         ),
                       ),
@@ -250,22 +257,31 @@ class PremiumFieldInfoCard extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Surface Type and Indoor/Outdoor Chips
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              if (field.surfaceType != null)
-                _buildInfoChip(
-                  Icons.grass,
-                  field.surfaceType!,
-                  AppColors.success,
-                ),
-              _buildInfoChip(
-                field.isIndoor ? Icons.home : Icons.wb_sunny,
-                field.isIndoor ? 'Indoor' : 'Outdoor',
-                field.isIndoor ? AppColors.navyDeep : Colors.orange,
-              ),
-            ],
+          Builder(
+            builder: (context) {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              final successColor = isDark
+                  ? AppColors.darkSuccess
+                  : AppColors.success;
+
+              return Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  if (field.surfaceType != null)
+                    _buildInfoChip(
+                      Icons.grass,
+                      field.surfaceType!,
+                      successColor,
+                    ),
+                  _buildInfoChip(
+                    field.isIndoor ? Icons.home : Icons.wb_sunny,
+                    field.isIndoor ? 'Indoor' : 'Outdoor',
+                    field.isIndoor ? colorScheme.secondary : Colors.orange,
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),

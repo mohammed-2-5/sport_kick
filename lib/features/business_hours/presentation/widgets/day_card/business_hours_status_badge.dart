@@ -15,13 +15,16 @@ class BusinessHoursStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: isOpen
-            ? AppColors.success.withValues(alpha: 0.1)
-            : Colors.grey.withValues(alpha: 0.1),
+            ? successColor.withValues(alpha: 0.1)
+            : colorScheme.onSurface.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -30,13 +33,13 @@ class BusinessHoursStatusBadge extends StatelessWidget {
           Icon(
             isOpen ? Icons.check_circle : Icons.cancel,
             size: 12,
-            color: isOpen ? AppColors.success : Colors.grey,
+            color: isOpen ? successColor : colorScheme.onSurfaceVariant,
           ),
           const SizedBox(width: BusinessHoursConstants.tinySpacing),
           Text(
             isOpen ? context.l10n.open : context.l10n.closed,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: isOpen ? AppColors.success : Colors.grey,
+              color: isOpen ? successColor : colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,
             ),
           ),

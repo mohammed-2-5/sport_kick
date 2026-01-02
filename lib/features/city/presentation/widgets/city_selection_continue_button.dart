@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 
+/// City Selection Continue Button
+///
+/// Theme-aware: adapts to light/dark mode.
 class CitySelectionContinueButton extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onContinue;
@@ -14,13 +17,18 @@ class CitySelectionContinueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(CityConstants.screenPadding),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),

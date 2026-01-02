@@ -18,6 +18,8 @@ class BookingsListSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: TextField(
@@ -30,7 +32,7 @@ class BookingsListSearchBar extends StatelessWidget {
               : null,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           filled: true,
-          fillColor: Colors.grey[100],
+          fillColor: colorScheme.surfaceContainerHighest,
         ),
         onChanged: onChanged,
       ),

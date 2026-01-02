@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/list/filter_widgets.dart';
@@ -160,6 +159,8 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
   }
 
   Widget _buildActionButtons() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Expanded(
@@ -170,7 +171,7 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              side: const BorderSide(color: AppColors.primary),
+              side: BorderSide(color: colorScheme.primary),
             ),
             child: Text(context.l10n.reset),
           ),
@@ -182,8 +183,8 @@ class _FieldFiltersDialogState extends State<FieldFiltersDialog> {
             onPressed: _applyFilters,
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 12),
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),

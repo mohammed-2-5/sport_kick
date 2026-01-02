@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -20,10 +21,10 @@ class CreateBookingAppBar extends StatelessWidget
         context.l10n.bookFieldTitle,
         style: AppTextStyles.titleLarge.copyWith(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: AppColors.textOnPrimary,
         ),
       ),
-      iconTheme: const IconThemeData(color: Colors.white),
+      iconTheme: const IconThemeData(color: AppColors.textOnPrimary),
       elevation: 0,
     );
   }

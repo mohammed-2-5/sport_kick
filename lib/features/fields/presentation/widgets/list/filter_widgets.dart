@@ -23,6 +23,8 @@ class FilterChoiceChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return InkWell(
       onTap: onSelected,
       borderRadius: BorderRadius.circular(8),
@@ -30,13 +32,13 @@ class FilterChoiceChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary
-              : AppColors.primaryLight.withValues(alpha: 0.1),
+              ? colorScheme.primary
+              : colorScheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected
-                ? AppColors.primary
-                : AppColors.primaryLight.withValues(alpha: 0.3),
+                ? colorScheme.primary
+                : colorScheme.primary.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -47,7 +49,7 @@ class FilterChoiceChip extends StatelessWidget {
               Icon(
                 icon,
                 size: 16,
-                color: isSelected ? Colors.white : AppColors.primary,
+                color: isSelected ? colorScheme.onPrimary : colorScheme.primary,
               ),
               const SizedBox(width: 4),
             ],
@@ -55,7 +57,7 @@ class FilterChoiceChip extends StatelessWidget {
               label,
               style: AppTextStyles.labelLarge.copyWith(
                 fontWeight: FontWeight.w600,
-                color: isSelected ? Colors.white : AppColors.primary,
+                color: isSelected ? colorScheme.onPrimary : colorScheme.primary,
               ),
             ),
           ],
@@ -97,6 +99,8 @@ class PriceRangeFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -111,7 +115,7 @@ class PriceRangeFilter extends StatelessWidget {
             LocaleFormatters.formatNumber(context, priceRange.start.round()),
             LocaleFormatters.formatNumber(context, priceRange.end.round()),
           ),
-          activeColor: AppColors.primary,
+          activeColor: colorScheme.primary,
           onChanged: onChanged,
         ),
         Row(
@@ -120,13 +124,13 @@ class PriceRangeFilter extends StatelessWidget {
             Text(
               '${LocaleFormatters.formatNumber(context, priceRange.start.round())} EGP/${context.l10n.perHour}',
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             Text(
               '${LocaleFormatters.formatNumber(context, priceRange.end.round())} EGP/${context.l10n.perHour}',
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ],
@@ -149,6 +153,9 @@ class RatingFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -166,7 +173,7 @@ class RatingFilter extends StatelessWidget {
                   minRating,
                   decimalDigits: 1,
                 ),
-          activeColor: AppColors.warning,
+          activeColor: isDark ? AppColors.darkWarning : AppColors.warning,
           onChanged: onChanged,
         ),
         Center(
@@ -175,7 +182,7 @@ class RatingFilter extends StatelessWidget {
                 ? context.l10n.anyOption
                 : '${LocaleFormatters.formatNumber(context, minRating, decimalDigits: 1)}+',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ),
@@ -249,6 +256,8 @@ class VerificationFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -262,7 +271,7 @@ class VerificationFilter extends StatelessWidget {
             context.l10n.verifiedFieldsDescription,
             style: AppTextStyles.bodySmall,
           ),
-          activeColor: AppColors.success,
+          activeColor: isDark ? AppColors.darkSuccess : AppColors.success,
           contentPadding: EdgeInsets.zero,
           controlAffinity: ListTileControlAffinity.leading,
         ),

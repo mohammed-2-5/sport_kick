@@ -48,6 +48,10 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final onSurface = colorScheme.onSurface;
+    final onSurfaceVariant = colorScheme.onSurfaceVariant;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: PremiumCard(
@@ -75,10 +79,10 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
                           Flexible(
                             child: Text(
                               widget.review.userName ?? context.l10n.anonymous,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.textPrimary,
+                                color: onSurface,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -92,16 +96,14 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: AppColors.textSecondary.withValues(
-                                  alpha: 0.1,
-                                ),
+                                color: onSurfaceVariant.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
                                 context.l10n.editedLabel,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 10,
-                                  color: AppColors.textSecondary,
+                                  color: onSurfaceVariant,
                                 ),
                               ),
                             ),
@@ -114,18 +116,14 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
                           Icon(
                             Icons.access_time,
                             size: 12,
-                            color: AppColors.textSecondary.withValues(
-                              alpha: 0.7,
-                            ),
+                            color: onSurfaceVariant.withValues(alpha: 0.7),
                           ),
                           const SizedBox(width: 4),
                           Text(
                             widget.review.formattedDate,
                             style: TextStyle(
                               fontSize: 12,
-                              color: AppColors.textSecondary.withValues(
-                                alpha: 0.7,
-                              ),
+                              color: onSurfaceVariant.withValues(alpha: 0.7),
                             ),
                           ),
                         ],
@@ -175,19 +173,11 @@ class _PremiumReviewCardState extends State<PremiumReviewCard> {
               AnimatedCrossFade(
                 firstChild: Text(
                   _displayComment,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    height: 1.6,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: TextStyle(fontSize: 14, height: 1.6, color: onSurface),
                 ),
                 secondChild: Text(
                   widget.review.comment!,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    height: 1.6,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: TextStyle(fontSize: 14, height: 1.6, color: onSurface),
                 ),
                 crossFadeState: _isExpanded
                     ? CrossFadeState.showSecond
@@ -294,7 +284,7 @@ class _UserAvatar extends StatelessWidget {
       ),
       child: CircleAvatar(
         radius: 22,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         child: avatarUrl != null
             ? ClipOval(
                 child: CachedNetworkImage(

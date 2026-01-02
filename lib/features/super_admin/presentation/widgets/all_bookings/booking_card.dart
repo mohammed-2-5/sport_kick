@@ -15,6 +15,8 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -45,7 +47,7 @@ class BookingCard extends StatelessWidget {
                             booking.id.substring(0, 8),
                           ),
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: Colors.grey,
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -70,7 +72,11 @@ class BookingCard extends StatelessWidget {
               if (booking.userName != null) ...[
                 Row(
                   children: [
-                    const Icon(Icons.person, size: 16, color: Colors.grey),
+                    Icon(
+                      Icons.person,
+                      size: 16,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -86,10 +92,10 @@ class BookingCard extends StatelessWidget {
               // Date and time
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.calendar_today,
                     size: 16,
-                    color: Colors.grey,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -97,7 +103,11 @@ class BookingCard extends StatelessWidget {
                     style: AppTextStyles.bodyMedium,
                   ),
                   const SizedBox(width: 16),
-                  const Icon(Icons.access_time, size: 16, color: Colors.grey),
+                  Icon(
+                    Icons.access_time,
+                    size: 16,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     booking.formattedTimeSlot,
@@ -149,7 +159,7 @@ class BookingCard extends StatelessWidget {
                       ),
                     ),
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: Colors.grey[600],
+                      color: colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
@@ -161,19 +171,23 @@ class BookingCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.grey[100],
+                    color: colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.note, size: 16, color: Colors.grey[600]),
+                      Icon(
+                        Icons.note,
+                        size: 16,
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           booking.notes!,
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: Colors.grey[700],
+                            color: colorScheme.onSurface.withValues(alpha: 0.8),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,

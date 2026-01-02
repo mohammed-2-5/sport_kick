@@ -19,50 +19,61 @@ class DismissibleFieldCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return Dismissible(
       key: Key(field.id),
       direction: DismissDirection.endToStart,
-      background: Container(
-        margin: const EdgeInsets.only(bottom: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        decoration: BoxDecoration(
-          gradient: AppGradients.error,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.error.withValues(alpha: 0.4),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+      background: Builder(
+        builder: (context) {
+          final colorScheme = Theme.of(context).colorScheme;
+          // Use onPrimary for content on colored gradients (white in both themes)
+          final contentColor = colorScheme.onPrimary;
+
+          return Container(
+            margin: const EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            decoration: BoxDecoration(
+              gradient: AppGradients.error,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: errorColor.withValues(alpha: 0.4),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-          ],
-        ),
-        alignment: Alignment.centerRight,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Icon(
-                Icons.delete_rounded,
-                color: Colors.white,
-                size: 28,
-              ),
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: contentColor.withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.delete_rounded,
+                    color: contentColor,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  context.l10n.removeFromFavorites,
+                  style: AppTextStyles.labelSmall.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: contentColor,
+                    letterSpacing: 0.8,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 6),
-            Text(
-              context.l10n.removeFromFavorites,
-              style: AppTextStyles.labelSmall.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 0.8,
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
       confirmDismiss: (direction) async {
         return await showDialog<bool>(
@@ -80,9 +91,7 @@ class DismissibleFieldCard extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(true),
                   child: Text(
                     context.l10n.removeFromFavorites,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.error,
-                    ),
+                    style: AppTextStyles.bodyMedium.copyWith(color: errorColor),
                   ),
                 ),
               ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_cubit.dart';
 import 'package:spo_kick/features/city/presentation/cubit/city_state.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
@@ -47,7 +46,6 @@ class _FieldsListViewState extends State<FieldsListView> {
     return BlocListener<CityCubit, CityState>(
       listener: (context, state) => _handleCityChange(context, state),
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
         body: Column(
           children: [
             FieldsListHeader(

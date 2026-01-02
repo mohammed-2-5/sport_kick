@@ -254,8 +254,9 @@ class CreateFieldFormBody extends StatelessWidget {
             icon: Icons.attach_money,
             keyboardType: TextInputType.number,
             validator: (v) {
-              if (v == null || v.trim().isEmpty)
+              if (v == null || v.trim().isEmpty) {
                 return context.l10n.requiredField;
+              }
               if (double.tryParse(v) == null) return context.l10n.invalidNumber;
               return null;
             },

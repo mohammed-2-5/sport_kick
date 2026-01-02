@@ -9,6 +9,7 @@ import 'package:spo_kick/features/city/presentation/widgets/city_selector_launch
 /// City Switcher Button
 ///
 /// App bar button that displays current city and allows switching.
+/// Theme-aware: uses onPrimary color for text/icons on primary background.
 class CitySwitcherButton extends StatelessWidget {
   final CityEntity? currentCity;
 
@@ -16,17 +17,19 @@ class CitySwitcherButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocBuilder<CityCubit, CityState>(
       builder: (context, state) {
         final city = context.read<CityCubit>().resolveCityFromState(state);
 
         return TextButton.icon(
           onPressed: () => CitySelectorLauncher.show(context),
-          icon: const Icon(Icons.location_on, color: Colors.white, size: 20),
+          icon: Icon(Icons.location_on, color: colorScheme.onPrimary, size: 20),
           label: Text(
             city?.name ?? context.l10n.citySelectCity,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: colorScheme.onPrimary,
               fontWeight: FontWeight.w600,
             ),
           ),

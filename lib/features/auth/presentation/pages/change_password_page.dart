@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/change_password_form.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/change_password/change_password_loading_state.dart';
@@ -46,8 +46,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       appBar: AppBar(
         title: Text(context.l10n.changePassword),
         elevation: 0,
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
         // Prevent back navigation on first login
         automaticallyImplyLeading: !widget.isFirstLogin,
       ),
@@ -84,10 +82,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
       if (!mounted) return;
 
+      final colorScheme = context.colors;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.l10n.passwordChanged),
-          backgroundColor: AppColors.success,
+          backgroundColor: colorScheme.success,
         ),
       );
 
@@ -101,10 +100,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     } catch (e) {
       if (!mounted) return;
 
+      final colorScheme = context.colors;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${context.l10n.errorOccurred}: ${e.toString()}'),
-          backgroundColor: AppColors.error,
+          backgroundColor: colorScheme.error,
         ),
       );
     } finally {

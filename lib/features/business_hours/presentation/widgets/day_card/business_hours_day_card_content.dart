@@ -31,6 +31,7 @@ class BusinessHoursDayCardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +42,7 @@ class BusinessHoursDayCardContent extends StatelessWidget {
           BusinessHoursFormatters.getDayName(context, dayOfWeek),
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
-            color: isOpen ? null : Colors.grey,
+            color: isOpen ? null : colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: BusinessHoursConstants.smallSpacing),

@@ -111,12 +111,93 @@ class AppTheme {
   }
 
   // ==================== DARK THEME ====================
-  // TODO: Implement dark theme when needed
 
+  /// Premium dark theme with comfortable luxury feel
   static ThemeData get darkTheme {
-    return lightTheme.copyWith(
+    return ThemeData(
+      // Use Material 3
+      useMaterial3: true,
+
+      // Color scheme
+      colorScheme: _darkColorScheme,
+
+      // Scaffold background
+      scaffoldBackgroundColor: AppColors.darkBackground,
+
+      // App bar theme
+      appBarTheme: _darkAppBarTheme,
+
+      // Text theme
+      textTheme: _darkTextTheme,
+
+      // Icon theme
+      iconTheme: _darkIconTheme,
+
+      // Button themes
+      elevatedButtonTheme: _darkElevatedButtonTheme,
+      textButtonTheme: _darkTextButtonTheme,
+      outlinedButtonTheme: _darkOutlinedButtonTheme,
+      filledButtonTheme: _darkFilledButtonTheme,
+
+      // Input decoration theme
+      inputDecorationTheme: _darkInputDecorationTheme,
+
+      // Card theme
+      cardTheme: _darkCardTheme,
+
+      // Chip theme
+      chipTheme: _darkChipTheme,
+
+      // Bottom navigation bar theme
+      bottomNavigationBarTheme: _darkBottomNavigationBarTheme,
+
+      // Navigation rail theme
+      navigationRailTheme: _darkNavigationRailTheme,
+
+      // Divider theme
+      dividerTheme: _darkDividerTheme,
+
+      // Dialog theme
+      dialogTheme: _darkDialogTheme,
+
+      // Floating action button theme
+      floatingActionButtonTheme: _darkFabTheme,
+
+      // Snackbar theme
+      snackBarTheme: _darkSnackBarTheme,
+
+      // Tab bar theme
+      tabBarTheme: _darkTabBarTheme,
+
+      // Tooltip theme
+      tooltipTheme: _darkTooltipTheme,
+
+      // Bottom sheet theme
+      bottomSheetTheme: _darkBottomSheetTheme,
+
+      // List tile theme
+      listTileTheme: _darkListTileTheme,
+
+      // Switch theme
+      switchTheme: _darkSwitchTheme,
+
+      // Checkbox theme
+      checkboxTheme: _darkCheckboxTheme,
+
+      // Radio theme
+      radioTheme: _darkRadioTheme,
+
+      // Slider theme
+      sliderTheme: _darkSliderTheme,
+
+      // Progress indicator theme
+      progressIndicatorTheme: _darkProgressIndicatorTheme,
+
+      // Visual density
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+
+      // Platform brightness
       brightness: Brightness.dark,
-      // Add dark theme customizations here
     );
   }
 
@@ -137,6 +218,7 @@ class AppTheme {
     onErrorContainer: AppColors.error,
     surface: AppColors.white,
     onSurface: AppColors.textPrimary,
+    onSurfaceVariant: AppColors.textSecondary,
     surfaceContainerHighest: AppColors.veryLightGrey,
     outline: AppColors.border,
     shadow: AppColors.shadow,
@@ -157,23 +239,28 @@ class AppTheme {
 
   // ==================== TEXT THEME ====================
 
-  static const TextTheme _textTheme = TextTheme(
-    displayLarge: AppTextStyles.displayLarge,
-    displayMedium: AppTextStyles.displayMedium,
-    displaySmall: AppTextStyles.displaySmall,
-    headlineLarge: AppTextStyles.headlineLarge,
-    headlineMedium: AppTextStyles.headlineMedium,
-    headlineSmall: AppTextStyles.headlineSmall,
-    titleLarge: AppTextStyles.titleLarge,
-    titleMedium: AppTextStyles.titleMedium,
-    titleSmall: AppTextStyles.titleSmall,
-    bodyLarge: AppTextStyles.bodyLarge,
-    bodyMedium: AppTextStyles.bodyMedium,
-    bodySmall: AppTextStyles.bodySmall,
-    labelLarge: AppTextStyles.labelLarge,
-    labelMedium: AppTextStyles.labelMedium,
-    labelSmall: AppTextStyles.labelSmall,
-  );
+  static TextTheme get _textTheme {
+    return const TextTheme(
+      displayLarge: AppTextStyles.displayLarge,
+      displayMedium: AppTextStyles.displayMedium,
+      displaySmall: AppTextStyles.displaySmall,
+      headlineLarge: AppTextStyles.headlineLarge,
+      headlineMedium: AppTextStyles.headlineMedium,
+      headlineSmall: AppTextStyles.headlineSmall,
+      titleLarge: AppTextStyles.titleLarge,
+      titleMedium: AppTextStyles.titleMedium,
+      titleSmall: AppTextStyles.titleSmall,
+      bodyLarge: AppTextStyles.bodyLarge,
+      bodyMedium: AppTextStyles.bodyMedium,
+      bodySmall: AppTextStyles.bodySmall,
+      labelLarge: AppTextStyles.labelLarge,
+      labelMedium: AppTextStyles.labelMedium,
+      labelSmall: AppTextStyles.labelSmall,
+    ).apply(
+      bodyColor: AppColors.textPrimary,
+      displayColor: AppColors.textPrimary,
+    );
+  }
 
   // ==================== ICON THEME ====================
 
@@ -478,5 +565,382 @@ class AppTheme {
         color: AppColors.primary,
         linearTrackColor: AppColors.primaryLight,
         circularTrackColor: AppColors.primaryLight,
+      );
+
+  // ==================== DARK COLOR SCHEME ====================
+
+  static const ColorScheme _darkColorScheme = ColorScheme.dark(
+    primary: AppColors.darkPrimary,
+    onPrimary: AppColors.darkBackground,
+    primaryContainer: AppColors.darkPrimaryContainer,
+    onPrimaryContainer: AppColors.darkPrimary,
+    secondary: AppColors.darkSecondary,
+    onSecondary: AppColors.darkBackground,
+    secondaryContainer: AppColors.darkSecondaryContainer,
+    onSecondaryContainer: AppColors.darkSecondary,
+    error: AppColors.darkError,
+    onError: AppColors.darkBackground,
+    errorContainer: AppColors.darkErrorLight,
+    onErrorContainer: AppColors.darkError,
+    surface: AppColors.darkSurface,
+    onSurface: AppColors.darkTextPrimary,
+    onSurfaceVariant: AppColors.darkTextSecondary,
+    surfaceContainerHighest: AppColors.darkSurfaceContainerHigh,
+    outline: AppColors.darkBorder,
+    shadow: AppColors.darkShadow,
+  );
+
+  // ==================== DARK APP BAR THEME ====================
+
+  static const AppBarTheme _darkAppBarTheme = AppBarTheme(
+    backgroundColor: AppColors.darkAppBarBackground,
+    foregroundColor: AppColors.darkTextPrimary,
+    elevation: 0,
+    centerTitle: true,
+    titleTextStyle: TextStyle(
+      fontFamily: AppTextStyles.headingFontFamily,
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.15,
+      height: 1.20,
+      color: AppColors.darkTextPrimary,
+    ),
+    iconTheme: IconThemeData(color: AppColors.darkTextPrimary, size: 24),
+    actionsIconTheme: IconThemeData(color: AppColors.darkTextPrimary, size: 24),
+    systemOverlayStyle: SystemUiOverlayStyle.light,
+  );
+
+  // ==================== DARK TEXT THEME ====================
+
+  static TextTheme get _darkTextTheme {
+    return _textTheme.apply(
+      bodyColor: AppColors.darkTextPrimary,
+      displayColor: AppColors.darkTextPrimary,
+    );
+  }
+
+  // ==================== DARK ICON THEME ====================
+
+  static const IconThemeData _darkIconTheme = IconThemeData(
+    color: AppColors.darkTextPrimary,
+    size: 24,
+  );
+
+  // ==================== DARK BUTTON THEMES ====================
+
+  static final ElevatedButtonThemeData
+  _darkElevatedButtonTheme = ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: AppColors.darkPrimary,
+      foregroundColor: AppColors.darkBackground,
+      disabledBackgroundColor: AppColors.darkSurfaceVariant,
+      disabledForegroundColor: AppColors.darkTextDisabled,
+      elevation: 2,
+      shadowColor: AppColors.darkShadow,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      textStyle: AppTextStyles.button.copyWith(color: AppColors.darkBackground),
+      minimumSize: const Size(88, 48),
+    ),
+  );
+
+  static final TextButtonThemeData _darkTextButtonTheme = TextButtonThemeData(
+    style: TextButton.styleFrom(
+      foregroundColor: AppColors.darkPrimary,
+      disabledForegroundColor: AppColors.darkTextDisabled,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      textStyle: AppTextStyles.labelLarge.copyWith(
+        color: AppColors.darkPrimary,
+      ),
+    ),
+  );
+
+  static final OutlinedButtonThemeData
+  _darkOutlinedButtonTheme = OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      foregroundColor: AppColors.darkPrimary,
+      disabledForegroundColor: AppColors.darkTextDisabled,
+      side: const BorderSide(color: AppColors.darkPrimary, width: 1.5),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      textStyle: AppTextStyles.button.copyWith(color: AppColors.darkPrimary),
+      minimumSize: const Size(88, 48),
+    ),
+  );
+
+  static final FilledButtonThemeData
+  _darkFilledButtonTheme = FilledButtonThemeData(
+    style: FilledButton.styleFrom(
+      backgroundColor: AppColors.darkPrimary,
+      foregroundColor: AppColors.darkBackground,
+      disabledBackgroundColor: AppColors.darkSurfaceVariant,
+      disabledForegroundColor: AppColors.darkTextDisabled,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      textStyle: AppTextStyles.button.copyWith(color: AppColors.darkBackground),
+      minimumSize: const Size(88, 48),
+    ),
+  );
+
+  // ==================== DARK INPUT DECORATION THEME ====================
+
+  static final InputDecorationTheme _darkInputDecorationTheme =
+      InputDecorationTheme(
+        filled: true,
+        fillColor: AppColors.darkInputBackground,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.darkBorder, width: 1),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.darkBorder, width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.darkPrimary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.darkError, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.darkError, width: 2),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: AppColors.darkBorder.withAlpha(128),
+            width: 1,
+          ),
+        ),
+        labelStyle: AppTextStyles.inputLabel.copyWith(
+          color: AppColors.darkTextSecondary,
+        ),
+        hintStyle: AppTextStyles.inputHint.copyWith(
+          color: AppColors.darkTextSecondary,
+        ),
+        errorStyle: AppTextStyles.error.copyWith(color: AppColors.darkError),
+        helperStyle: AppTextStyles.caption.copyWith(
+          color: AppColors.darkTextSecondary,
+        ),
+      );
+
+  // ==================== DARK CARD THEME ====================
+
+  static final CardThemeData _darkCardTheme = CardThemeData(
+    color: AppColors.darkCardBackground,
+    elevation: 2,
+    shadowColor: AppColors.darkShadow,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    margin: const EdgeInsets.all(8),
+  );
+
+  // ==================== DARK CHIP THEME ====================
+
+  static final ChipThemeData _darkChipTheme = ChipThemeData(
+    backgroundColor: AppColors.darkSurfaceVariant,
+    deleteIconColor: AppColors.darkTextSecondary,
+    disabledColor: AppColors.darkSurfaceContainer,
+    selectedColor: AppColors.darkPrimary,
+    secondarySelectedColor: AppColors.darkPrimaryContainer,
+    labelStyle: AppTextStyles.chip.copyWith(color: AppColors.darkTextPrimary),
+    secondaryLabelStyle: AppTextStyles.chip.copyWith(
+      color: AppColors.darkTextPrimary,
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  );
+
+  // ==================== DARK BOTTOM NAV BAR THEME ====================
+
+  static const BottomNavigationBarThemeData _darkBottomNavigationBarTheme =
+      BottomNavigationBarThemeData(
+        backgroundColor: AppColors.darkBottomNavBackground,
+        selectedItemColor: AppColors.darkPrimary,
+        unselectedItemColor: AppColors.darkTextSecondary,
+        selectedLabelStyle: AppTextStyles.labelSmall,
+        unselectedLabelStyle: AppTextStyles.labelSmall,
+        type: BottomNavigationBarType.fixed,
+        elevation: 8,
+      );
+
+  // ==================== DARK NAVIGATION RAIL THEME ====================
+
+  static const NavigationRailThemeData _darkNavigationRailTheme =
+      NavigationRailThemeData(
+        backgroundColor: AppColors.darkSurface,
+        selectedIconTheme: IconThemeData(
+          color: AppColors.darkPrimary,
+          size: 24,
+        ),
+        unselectedIconTheme: IconThemeData(
+          color: AppColors.darkTextSecondary,
+          size: 24,
+        ),
+        selectedLabelTextStyle: AppTextStyles.labelSmall,
+        unselectedLabelTextStyle: AppTextStyles.labelSmall,
+      );
+
+  // ==================== DARK DIVIDER THEME ====================
+
+  static const DividerThemeData _darkDividerTheme = DividerThemeData(
+    color: AppColors.darkDivider,
+    thickness: 1,
+    space: 1,
+  );
+
+  // ==================== DARK DIALOG THEME ====================
+
+  static final DialogThemeData _darkDialogTheme = DialogThemeData(
+    backgroundColor: AppColors.darkSurface,
+    elevation: 24,
+    shadowColor: AppColors.darkShadow,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+    titleTextStyle: AppTextStyles.headlineSmall.copyWith(
+      color: AppColors.darkTextPrimary,
+    ),
+    contentTextStyle: AppTextStyles.bodyMedium.copyWith(
+      color: AppColors.darkTextPrimary,
+    ),
+  );
+
+  // ==================== DARK FAB THEME ====================
+
+  static const FloatingActionButtonThemeData _darkFabTheme =
+      FloatingActionButtonThemeData(
+        backgroundColor: AppColors.darkPrimary,
+        foregroundColor: AppColors.darkBackground,
+        elevation: 6,
+        highlightElevation: 12,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
+      );
+
+  // ==================== DARK SNACKBAR THEME ====================
+
+  static final SnackBarThemeData _darkSnackBarTheme = SnackBarThemeData(
+    backgroundColor: AppColors.darkSurfaceContainerHigh,
+    contentTextStyle: AppTextStyles.bodyMedium.copyWith(
+      color: AppColors.darkTextPrimary,
+    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    behavior: SnackBarBehavior.floating,
+    elevation: 6,
+  );
+
+  // ==================== DARK TAB BAR THEME ====================
+
+  static const TabBarThemeData _darkTabBarTheme = TabBarThemeData(
+    labelColor: AppColors.darkPrimary,
+    unselectedLabelColor: AppColors.darkTextSecondary,
+    labelStyle: AppTextStyles.tab,
+    unselectedLabelStyle: AppTextStyles.tab,
+    indicator: UnderlineTabIndicator(
+      borderSide: BorderSide(color: AppColors.darkPrimary, width: 2),
+    ),
+  );
+
+  // ==================== DARK TOOLTIP THEME ====================
+
+  static final TooltipThemeData _darkTooltipTheme = TooltipThemeData(
+    decoration: BoxDecoration(
+      color: AppColors.darkSurfaceContainerHigh,
+      borderRadius: BorderRadius.circular(4),
+    ),
+    textStyle: AppTextStyles.caption.copyWith(color: AppColors.darkTextPrimary),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    waitDuration: const Duration(milliseconds: 500),
+  );
+
+  // ==================== DARK BOTTOM SHEET THEME ====================
+
+  static const BottomSheetThemeData _darkBottomSheetTheme =
+      BottomSheetThemeData(
+        backgroundColor: AppColors.darkSurface,
+        elevation: 16,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+      );
+
+  // ==================== DARK LIST TILE THEME ====================
+
+  static const ListTileThemeData _darkListTileTheme = ListTileThemeData(
+    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    minLeadingWidth: 40,
+    iconColor: AppColors.darkTextPrimary,
+    textColor: AppColors.darkTextPrimary,
+  );
+
+  // ==================== DARK SWITCH THEME ====================
+
+  static final SwitchThemeData _darkSwitchTheme = SwitchThemeData(
+    thumbColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return AppColors.darkPrimary;
+      }
+      return AppColors.darkTextSecondary;
+    }),
+    trackColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return AppColors.darkPrimaryContainer;
+      }
+      return AppColors.darkSurfaceVariant;
+    }),
+  );
+
+  // ==================== DARK CHECKBOX THEME ====================
+
+  static final CheckboxThemeData _darkCheckboxTheme = CheckboxThemeData(
+    fillColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return AppColors.darkPrimary;
+      }
+      return AppColors.darkSurfaceVariant;
+    }),
+    checkColor: WidgetStateProperty.all(AppColors.darkBackground),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+  );
+
+  // ==================== DARK RADIO THEME ====================
+
+  static final RadioThemeData _darkRadioTheme = RadioThemeData(
+    fillColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return AppColors.darkPrimary;
+      }
+      return AppColors.darkTextSecondary;
+    }),
+  );
+
+  // ==================== DARK SLIDER THEME ====================
+
+  static final SliderThemeData _darkSliderTheme = SliderThemeData(
+    activeTrackColor: AppColors.darkPrimary,
+    inactiveTrackColor: AppColors.darkPrimaryContainer,
+    thumbColor: AppColors.darkPrimary,
+    overlayColor: AppColors.darkPrimary.withAlpha(51),
+    valueIndicatorColor: AppColors.darkPrimary,
+    valueIndicatorTextStyle: AppTextStyles.caption.copyWith(
+      color: AppColors.darkBackground,
+    ),
+  );
+
+  // ==================== DARK PROGRESS INDICATOR THEME ====================
+
+  static const ProgressIndicatorThemeData _darkProgressIndicatorTheme =
+      ProgressIndicatorThemeData(
+        color: AppColors.darkPrimary,
+        linearTrackColor: AppColors.darkPrimaryContainer,
+        circularTrackColor: AppColors.darkPrimaryContainer,
       );
 }

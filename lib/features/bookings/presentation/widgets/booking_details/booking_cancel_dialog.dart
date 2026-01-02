@@ -72,7 +72,7 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
           Text(
             context.l10n.cancelBookingConfirm,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: BookingConstants.standardPadding),
@@ -91,7 +91,7 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
           child: Text(
             context.l10n.keepBooking,
             style: AppTextStyles.labelLarge.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,
             ),
           ),

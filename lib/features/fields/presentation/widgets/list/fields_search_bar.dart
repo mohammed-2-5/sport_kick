@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
@@ -27,13 +26,18 @@ class FieldsSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -44,31 +48,27 @@ class FieldsSearchBar extends StatelessWidget {
         decoration: InputDecoration(
           hintText: context.l10n.searchByNameCityAddress,
           hintStyle: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.lightTextSecondary.withValues(alpha: 0.6),
+            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
           ),
-          prefixIcon: const Icon(
-            Icons.search,
-            color: AppColors.lightAccent,
-            size: 24,
-          ),
+          prefixIcon: Icon(Icons.search, color: colorScheme.primary, size: 24),
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               if (controller.text.isNotEmpty)
                 IconButton(
-                  icon: const Icon(Icons.clear, color: Colors.grey),
+                  icon: Icon(Icons.clear, color: colorScheme.onSurfaceVariant),
                   onPressed: onClear,
                 ),
               Container(
                 margin: const EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.lightBackground,
+                  color: colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.tune,
-                    color: AppColors.lightTextSecondary,
+                    color: colorScheme.onSurfaceVariant,
                     size: 20,
                   ),
                   onPressed: onFilter,

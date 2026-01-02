@@ -7,6 +7,8 @@ class AdminFormInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -33,7 +35,7 @@ class AdminFormInfoCard extends StatelessWidget {
                 Text(
                   context.l10n.aSecurePasswordWillBeGenerated,
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: Colors.grey[700],
+                    color: colorScheme.onSurface.withValues(alpha: 0.8),
                   ),
                 ),
               ],

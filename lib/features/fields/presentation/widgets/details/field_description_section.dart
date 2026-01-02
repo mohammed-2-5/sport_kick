@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/field_constants.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -19,6 +18,8 @@ class FieldDescriptionSection extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -34,7 +35,7 @@ class FieldDescriptionSection extends StatelessWidget {
           Text(
             field.description!,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
               height: 1.5,
             ),
           ),

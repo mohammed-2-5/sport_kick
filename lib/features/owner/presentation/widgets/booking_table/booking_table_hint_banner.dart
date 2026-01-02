@@ -32,29 +32,30 @@ class _EmptyStateHint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.textSecondary.withValues(alpha: 0.1),
+        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.textSecondary.withValues(alpha: 0.3),
+          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
+          Icon(
             Icons.info_outline_rounded,
             size: 16,
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
           const SizedBox(width: 6),
           Text(
             context.l10n.noBookingsForThisFieldIn,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],

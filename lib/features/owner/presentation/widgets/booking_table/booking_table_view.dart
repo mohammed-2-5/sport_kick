@@ -17,10 +17,11 @@ class BookingTableView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return BlocBuilder<BookingTableCubit, BookingTableState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: colorScheme.surface,
           body: _buildBody(context, state),
         );
       },
@@ -130,8 +131,10 @@ class BookingTableView extends StatelessWidget {
             ),
           ),
 
-          // Bottom spacing
-          const SliverToBoxAdapter(child: SizedBox(height: 32)),
+          // Bottom spacing with SafeArea
+          const SliverToBoxAdapter(
+            child: SafeArea(top: false, child: SizedBox(height: 32)),
+          ),
         ],
       ),
     );
@@ -147,6 +150,7 @@ class _MissingHoursCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -160,7 +164,7 @@ class _MissingHoursCard extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
@@ -177,14 +181,14 @@ class _MissingHoursCard extends StatelessWidget {
                   context.l10n.businessHoursMissingTitle,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   context.l10n.businessHoursMissingBody(fieldName),
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -244,6 +248,7 @@ class _LoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -266,7 +271,7 @@ class _LoadingView extends StatelessWidget {
           Text(
             message,
             style: AppTextStyles.bodyLarge.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -285,6 +290,9 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -295,12 +303,12 @@ class _ErrorView extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.1),
+                color: errorColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.error_outline_rounded,
-                color: Colors.red,
+                color: errorColor,
                 size: 40,
               ),
             ),
@@ -309,14 +317,14 @@ class _ErrorView extends StatelessWidget {
               context.l10n.failedToLoad,
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),

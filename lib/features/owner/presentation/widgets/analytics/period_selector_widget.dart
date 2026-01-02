@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
@@ -18,12 +17,16 @@ class PeriodSelectorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant.withValues(alpha: 0.5),
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.divider, width: 1),
+        border: Border.all(
+          color: colorScheme.outline.withValues(alpha: 0.3),
+          width: 1,
+        ),
       ),
       child: Row(
         children: OwnerConstants.analyticsPeriods.map((period) {
@@ -43,7 +46,9 @@ class PeriodSelectorWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: isSelected ? Colors.white : AppColors.textSecondary,
+                    color: isSelected
+                        ? Colors.white
+                        : colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),

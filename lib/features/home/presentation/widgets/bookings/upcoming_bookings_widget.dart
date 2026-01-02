@@ -20,6 +20,8 @@ class UpcomingBookingsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -30,14 +32,14 @@ class UpcomingBookingsWidget extends StatelessWidget {
             style: AppTextStyles.titleMedium.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AppColors.lightTextPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 16),
           BlocBuilder<BookingCubit, BookingState>(
             builder: (context, state) {
               if (state is BookingLoading) {
-                return _buildLoadingState();
+                return _buildLoadingState(context);
               } else if (state is BookingsLoaded) {
                 // Filter for future bookings and sort
                 final now = DateTime.now();
@@ -52,17 +54,17 @@ class UpcomingBookingsWidget extends StatelessWidget {
                       ..sort((a, b) => a.date.compareTo(b.date));
 
                 if (futureBookings.isEmpty) {
-                  return _buildEmptyState(context.l10n);
+                  return _buildEmptyState(context, context.l10n);
                 }
 
                 final nextBooking = futureBookings.first;
                 return _buildBookingCard(context, nextBooking);
               } else if (state is BookingsEmpty) {
-                return _buildEmptyState(context.l10n);
+                return _buildEmptyState(context, context.l10n);
               } else if (state is BookingError) {
                 return _buildErrorState(context, state.message);
               }
-              return _buildEmptyState(context.l10n); // Default/Initial
+              return _buildEmptyState(context, context.l10n); // Default/Initial
             },
           ),
         ],
@@ -71,6 +73,10 @@ class UpcomingBookingsWidget extends StatelessWidget {
   }
 
   Widget _buildBookingCard(BuildContext context, BookingEntity booking) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     final dateStr = LocaleFormatters.formatDate(
       context,
       booking.date,
@@ -90,14 +96,12 @@ class UpcomingBookingsWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColors.lightSurface,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(
-            color: AppColors.lightAccent.withValues(alpha: 0.3),
-          ),
+          border: Border.all(color: colorScheme.primary.withValues(alpha: 0.3)),
           boxShadow: [
             BoxShadow(
-              color: AppColors.lightAccent.withValues(alpha: 0.1),
+              color: colorScheme.primary.withValues(alpha: isDark ? 0.2 : 0.1),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -110,12 +114,12 @@ class UpcomingBookingsWidget extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.lightAccent.withValues(alpha: 0.1),
+                    color: colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.sports_soccer,
-                    color: AppColors.lightAccent,
+                    color: colorScheme.primary,
                     size: 24,
                   ),
                 ),
@@ -128,7 +132,7 @@ class UpcomingBookingsWidget extends StatelessWidget {
                         booking.fieldName ??
                             context.l10n.footballField, // fallback
                         style: AppTextStyles.titleMedium.copyWith(
-                          color: AppColors.lightTextPrimary,
+                          color: colorScheme.onSurface,
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 1,
@@ -138,7 +142,7 @@ class UpcomingBookingsWidget extends StatelessWidget {
                       Text(
                         '$dateStr • $timeStr',
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.lightTextSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -150,16 +154,16 @@ class UpcomingBookingsWidget extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.success.withValues(alpha: 0.1),
+                    color: successColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: AppColors.success.withValues(alpha: 0.3),
+                      color: successColor.withValues(alpha: 0.3),
                     ),
                   ),
                   child: Text(
                     booking.status.name.toUpperCase(),
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.success,
+                      color: successColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -167,7 +171,7 @@ class UpcomingBookingsWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            const Divider(color: AppColors.border),
+            Divider(color: colorScheme.outline.withValues(alpha: 0.2)),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,13 +326,15 @@ ${context.l10n.homeBookingShareDescription}
     }
   }
 
-  Widget _buildEmptyState(AppLocalizations l10n) {
+  Widget _buildEmptyState(BuildContext context, AppLocalizations l10n) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: Center(
         child: Column(
@@ -336,13 +342,13 @@ ${context.l10n.homeBookingShareDescription}
             Icon(
               Icons.calendar_today_outlined,
               size: 48,
-              color: AppColors.lightTextSecondary.withValues(alpha: 0.5),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 16),
             Text(
               l10n.homeNoUpcomingMatches,
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.lightTextPrimary,
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -350,7 +356,7 @@ ${context.l10n.homeBookingShareDescription}
             Text(
               l10n.homeBookNextGame,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.lightTextSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ],
@@ -359,29 +365,34 @@ ${context.l10n.homeBookingShareDescription}
     );
   }
 
-  Widget _buildLoadingState() {
+  Widget _buildLoadingState(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       height: 180,
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
       ),
-      child: const Center(
-        child: CircularProgressIndicator(color: AppColors.lightAccent),
+      child: Center(
+        child: CircularProgressIndicator(color: colorScheme.primary),
       ),
     );
   }
 
   Widget _buildErrorState(BuildContext context, String message) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.1),
+        color: errorColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         '${context.l10n.homeErrorLoadingBookings}: $message',
-        style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+        style: AppTextStyles.bodyMedium.copyWith(color: errorColor),
       ),
     );
   }
@@ -392,6 +403,8 @@ ${context.l10n.homeBookingShareDescription}
     String label,
     VoidCallback onTap,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
@@ -399,12 +412,12 @@ ${context.l10n.homeBookingShareDescription}
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Row(
           children: [
-            Icon(icon, size: 16, color: AppColors.primary),
+            Icon(icon, size: 16, color: colorScheme.primary),
             const SizedBox(width: 6),
             Text(
               label,
               style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.primary,
+                color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
               ),
             ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
@@ -71,6 +70,8 @@ class _BusinessHoursDayEditorState extends State<BusinessHoursDayEditor> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -117,7 +118,7 @@ class _BusinessHoursDayEditorState extends State<BusinessHoursDayEditor> {
                           content: Text(
                             context.l10n.businessHoursInvalidTimeRange,
                           ),
-                          backgroundColor: AppColors.error,
+                          backgroundColor: colorScheme.error,
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
@@ -144,7 +145,7 @@ class _BusinessHoursDayEditorState extends State<BusinessHoursDayEditor> {
                           content: Text(
                             context.l10n.businessHoursInvalidTimeRange,
                           ),
-                          backgroundColor: AppColors.error,
+                          backgroundColor: colorScheme.error,
                           behavior: SnackBarBehavior.floating,
                         ),
                       );

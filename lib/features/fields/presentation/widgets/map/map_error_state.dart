@@ -13,11 +13,17 @@ class MapErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.error_outline, size: 64, color: AppColors.error),
+          Icon(
+            Icons.error_outline,
+            size: 64,
+            color: isDark ? AppColors.darkError : AppColors.error,
+          ),
           const SizedBox(height: 16),
           Text(
             message,

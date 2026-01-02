@@ -7,6 +7,8 @@ class BookingDetailsLoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -18,7 +20,7 @@ class BookingDetailsLoadingView extends StatelessWidget {
               ),
               height: 400,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(
                   BookingConstants.borderRadius,
                 ),

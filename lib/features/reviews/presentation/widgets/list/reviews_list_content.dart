@@ -62,6 +62,9 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocConsumer<ReviewsCubit, ReviewsState>(
       listener: (context, state) {
         if (state is ReviewsLoaded || state is ReviewsError) {
@@ -74,8 +77,8 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
       },
       builder: (context, state) {
         if (state is ReviewsLoading) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
+          return Center(
+            child: CircularProgressIndicator(color: colorScheme.primary),
           );
         }
 
@@ -84,10 +87,10 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.error_outline,
                   size: 64,
-                  color: AppColors.error,
+                  color: isDark ? AppColors.darkError : AppColors.error,
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -119,7 +122,7 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
                   Icon(
                     Icons.rate_review_outlined,
                     size: 64,
-                    color: Colors.grey[400],
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -130,7 +133,7 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
                   Text(
                     context.l10n.beFirstToReviewField(widget.fieldName),
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: Colors.grey[600],
+                      color: colorScheme.onSurfaceVariant,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -146,10 +149,12 @@ class _ReviewsListContentState extends State<ReviewsListContent> {
             itemBuilder: (context, index) {
               if (index >= state.reviews.length) {
                 // Loading indicator for pagination
-                return const Center(
+                return Center(
                   child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: CircularProgressIndicator(color: AppColors.primary),
+                    padding: const EdgeInsets.all(16),
+                    child: CircularProgressIndicator(
+                      color: colorScheme.primary,
+                    ),
                   ),
                 );
               }

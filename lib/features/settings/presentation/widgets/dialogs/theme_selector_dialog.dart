@@ -19,48 +19,74 @@ class ThemeSelectorDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildThemeOption(
-            context,
-            'Light',
-            AppThemeMode.light,
-            preferences.themeMode == AppThemeMode.light,
+          _ThemeOptionTile(
+            label: context.l10n.themeLight,
+            icon: Icons.light_mode,
+            mode: AppThemeMode.light,
+            isSelected: preferences.themeMode == AppThemeMode.light,
+            onSelected: () => _selectTheme(context, AppThemeMode.light),
           ),
-          _buildThemeOption(
-            context,
-            'Dark',
-            AppThemeMode.dark,
-            preferences.themeMode == AppThemeMode.dark,
+          _ThemeOptionTile(
+            label: context.l10n.themeDark,
+            icon: Icons.dark_mode,
+            mode: AppThemeMode.dark,
+            isSelected: preferences.themeMode == AppThemeMode.dark,
+            onSelected: () => _selectTheme(context, AppThemeMode.dark),
           ),
-          _buildThemeOption(
-            context,
-            'System Default',
-            AppThemeMode.system,
-            preferences.themeMode == AppThemeMode.system,
+          _ThemeOptionTile(
+            label: context.l10n.themeSystem,
+            icon: Icons.settings_suggest,
+            mode: AppThemeMode.system,
+            isSelected: preferences.themeMode == AppThemeMode.system,
+            onSelected: () => _selectTheme(context, AppThemeMode.system),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildThemeOption(
-    BuildContext context,
-    String label,
-    AppThemeMode mode,
-    bool isSelected,
-  ) {
-    // ignore: deprecated_member_use
-    return RadioListTile<AppThemeMode>(
-      title: Text(label),
-      value: mode,
-      // ignore: deprecated_member_use
-      groupValue: preferences.themeMode,
-      // ignore: deprecated_member_use
-      onChanged: (value) {
-        if (value != null) {
-          context.read<SettingsCubit>().updateThemeMode(preferences, value);
-          Navigator.pop(context);
-        }
-      },
+  void _selectTheme(BuildContext context, AppThemeMode mode) {
+    context.read<SettingsCubit>().updateThemeMode(preferences, mode);
+    Navigator.pop(context);
+  }
+}
+
+/// Individual theme option tile
+class _ThemeOptionTile extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final AppThemeMode mode;
+  final bool isSelected;
+  final VoidCallback onSelected;
+
+  const _ThemeOptionTile({
+    required this.label,
+    required this.icon,
+    required this.mode,
+    required this.isSelected,
+    required this.onSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: isSelected ? colorScheme.primary : colorScheme.onSurface,
+      ),
+      title: Text(
+        label,
+        style: TextStyle(
+          color: isSelected ? colorScheme.primary : colorScheme.onSurface,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+        ),
+      ),
+      trailing: isSelected
+          ? Icon(Icons.check_circle, color: colorScheme.primary)
+          : Icon(Icons.circle_outlined, color: colorScheme.outline),
+      onTap: onSelected,
     );
   }
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 
+/// City Subtitle Text
+///
+/// Theme-aware: adapts to light/dark mode.
 class CitySubtitleText extends StatelessWidget {
   final CityEntity city;
 
@@ -15,9 +17,9 @@ class CitySubtitleText extends StatelessWidget {
 
     return Text(
       subtitle,
-      style: Theme.of(
-        context,
-      ).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
     );
   }
 

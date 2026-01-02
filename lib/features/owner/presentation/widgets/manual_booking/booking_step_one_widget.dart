@@ -94,9 +94,9 @@ class BookingStepOneWidget extends StatelessWidget {
                 const SizedBox(height: OwnerUIConstants.spacingSmall),
                 Text(
                   context.l10n.bookingDetailsSubtitle,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 const SizedBox(height: OwnerUIConstants.spacingLarge),
 
@@ -110,7 +110,11 @@ class BookingStepOneWidget extends StatelessWidget {
                 const SizedBox(height: 12),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[300]!),
+                    border: Border.all(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.outline.withValues(alpha: 0.3),
+                    ),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: DropdownButtonFormField<FieldEntity>(
@@ -158,12 +162,19 @@ class BookingStepOneWidget extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey[300]!),
+                      border: Border.all(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.outline.withValues(alpha: 0.3),
+                      ),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.calendar_today),
+                        Icon(
+                          Icons.calendar_today,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(width: 12),
                         Text(
                           selectedDate == null
@@ -175,8 +186,8 @@ class BookingStepOneWidget extends StatelessWidget {
                                 ),
                           style: AppTextStyles.bodyLarge.copyWith(
                             color: selectedDate == null
-                                ? Colors.grey[600]
-                                : Colors.black,
+                                ? Theme.of(context).colorScheme.onSurfaceVariant
+                                : Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ],
@@ -309,7 +320,9 @@ class BookingStepOneWidget extends StatelessWidget {
                                 ),
                               ),
                               style: AppTextStyles.labelSmall.copyWith(
-                                color: Colors.grey[600],
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
                               ),
                             ),
                         ],
@@ -355,7 +368,11 @@ class BookingStepOneWidget extends StatelessWidget {
 
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey[300]!),
+            border: Border.all(
+              color: Theme.of(
+                context,
+              ).colorScheme.outline.withValues(alpha: 0.3),
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
           child: DropdownButtonFormField<String>(

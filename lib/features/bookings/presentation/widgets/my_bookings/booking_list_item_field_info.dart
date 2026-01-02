@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Field info widget displaying field image and name.
 class BookingListItemFieldInfo extends StatelessWidget {
@@ -15,6 +15,8 @@ class BookingListItemFieldInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+
     return Row(
       children: [
         if (fieldImage != null) ...[
@@ -48,13 +50,12 @@ class BookingListItemFieldInfo extends StatelessWidget {
             fieldName,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
             ),
           ),
         ),
-        const Icon(
+        Icon(
           Icons.chevron_right,
-          color: AppColors.textSecondary,
+          color: colorScheme.onSurfaceVariant,
           size: 20,
         ),
       ],
@@ -68,18 +69,16 @@ class _FieldImagePlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+
     return Container(
       width: 50,
       height: 50,
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
+        color: colorScheme.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: const Icon(
-        Icons.sports_soccer,
-        color: AppColors.primary,
-        size: 24,
-      ),
+      child: Icon(Icons.sports_soccer, color: colorScheme.primary, size: 24),
     );
   }
 }

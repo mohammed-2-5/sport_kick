@@ -69,26 +69,6 @@ class SettingsCubit extends Cubit<SettingsState> {
     await updatePreference(currentPreferences, updatedPreferences);
   }
 
-  /// Update date format
-  Future<void> updateDateFormat(
-    UserPreferencesEntity currentPreferences,
-    DateFormatOption dateFormat,
-  ) async {
-    final updatedPreferences = currentPreferences.copyWith(
-      dateFormat: dateFormat,
-    );
-    await updatePreference(currentPreferences, updatedPreferences);
-  }
-
-  /// Update currency
-  Future<void> updateCurrency(
-    UserPreferencesEntity currentPreferences,
-    CurrencyOption currency,
-  ) async {
-    final updatedPreferences = currentPreferences.copyWith(currency: currency);
-    await updatePreference(currentPreferences, updatedPreferences);
-  }
-
   /// Toggle push notifications
   Future<void> togglePushNotifications(
     UserPreferencesEntity currentPreferences,
@@ -112,16 +92,6 @@ class SettingsCubit extends Cubit<SettingsState> {
       debugPrint('[SettingsCubit] Error toggling push: $e');
     }
 
-    await updatePreference(currentPreferences, updatedPreferences);
-  }
-
-  /// Toggle email notifications
-  Future<void> toggleEmailNotifications(
-    UserPreferencesEntity currentPreferences,
-  ) async {
-    final updatedPreferences = currentPreferences.copyWith(
-      emailNotificationsEnabled: !currentPreferences.emailNotificationsEnabled,
-    );
     await updatePreference(currentPreferences, updatedPreferences);
   }
 

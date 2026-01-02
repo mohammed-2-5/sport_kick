@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -59,6 +58,7 @@ class _DurationOptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -66,12 +66,12 @@ class _DurationOptionCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.navyDeep.withValues(alpha: 0.1)
+              ? colorScheme.primary.withValues(alpha: 0.1)
               : Colors.transparent,
           border: Border.all(
             color: isSelected
-                ? AppColors.navyDeep
-                : Colors.grey.withValues(alpha: 0.3),
+                ? colorScheme.primary
+                : colorScheme.outline.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(12),
@@ -83,7 +83,7 @@ class _DurationOptionCard extends StatelessWidget {
               isSelected
                   ? Icons.radio_button_checked
                   : Icons.radio_button_unchecked,
-              color: isSelected ? AppColors.navyDeep : Colors.grey,
+              color: isSelected ? colorScheme.primary : colorScheme.outline,
               size: 20,
             ),
             const SizedBox(width: 8),
@@ -91,7 +91,9 @@ class _DurationOptionCard extends StatelessWidget {
               label,
               style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                color: isSelected ? AppColors.navyDeep : Colors.grey[700],
+                color: isSelected
+                    ? colorScheme.primary
+                    : colorScheme.onSurfaceVariant,
               ),
             ),
           ],

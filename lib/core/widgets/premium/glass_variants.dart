@@ -68,38 +68,51 @@ class _GlassFloatingButtonState extends State<GlassFloatingButton>
       },
       child: ScaleTransition(
         scale: _scaleAnimation,
-        child: GlassContainer(
-          blur: 20,
-          opacity: 0.15,
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: accent.withValues(alpha: 0.3), width: 2),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [accent, accent.withValues(alpha: 0.85)],
+            ),
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: accent.withValues(alpha: 0.4),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+                spreadRadius: 0,
+              ),
+              BoxShadow(
+                color: accent.withValues(alpha: 0.2),
+                blurRadius: 24,
+                offset: const Offset(0, 10),
+                spreadRadius: 4,
+              ),
+            ],
+          ),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
             child: Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: accent,
+                    color: Colors.white.withValues(alpha: 0.25),
                     shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: accent.withValues(alpha: 0.4),
-                        blurRadius: 12,
-                        spreadRadius: 2,
-                      ),
-                    ],
                   ),
                   child: Icon(widget.icon, color: Colors.white, size: 20),
                 ),
                 const SizedBox(width: 12),
                 Text(
                   widget.label,
-                  style: TextStyle(
-                    color: accent,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.5,
                   ),
                 ),
               ],

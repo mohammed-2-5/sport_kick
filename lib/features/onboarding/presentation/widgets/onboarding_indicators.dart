@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
 
 class OnboardingIndicators extends StatelessWidget {
   final int count;
@@ -13,6 +12,8 @@ class OnboardingIndicators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(count, (index) {
@@ -24,12 +25,14 @@ class OnboardingIndicators extends StatelessWidget {
           height: 8,
           width: isSelected ? 32 : 8,
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : AppColors.lightGrey,
+            color: isSelected
+                ? colorScheme.primary
+                : colorScheme.outline.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(4),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.3),
+                      color: colorScheme.primary.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),

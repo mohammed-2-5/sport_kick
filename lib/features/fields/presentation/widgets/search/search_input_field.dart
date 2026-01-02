@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Search input widget for the search page.
@@ -22,13 +21,16 @@ class SearchInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -39,12 +41,12 @@ class SearchInputField extends StatelessWidget {
         focusNode: focusNode,
         decoration: InputDecoration(
           hintText: context.l10n.searchByNameCityAddress,
-          prefixIcon: const Icon(Icons.search, color: AppColors.primary),
+          prefixIcon: Icon(Icons.search, color: colorScheme.primary),
           suffixIcon: controller.text.isNotEmpty
               ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)
               : null,
           filled: true,
-          fillColor: AppColors.surfaceVariant,
+          fillColor: colorScheme.surfaceContainerHighest,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
@@ -55,7 +57,7 @@ class SearchInputField extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+            borderSide: BorderSide(color: colorScheme.primary, width: 2),
           ),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,

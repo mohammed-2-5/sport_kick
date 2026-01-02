@@ -20,33 +20,35 @@ class UserListStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          Icon(Icons.people, size: 20, color: Colors.grey[600]),
+          Icon(Icons.people, size: 20, color: colorScheme.onSurfaceVariant),
           const SizedBox(width: 8),
           Text(
             context.l10n.showingUsersCount(filteredCount, totalCount),
-            style: AppTextStyles.bodyMediumSecondary,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
           const Spacer(),
           if (isSelectionMode)
             Text(
               context.l10n.selectedCount(selectedCount),
-              style: AppTextStyles.bold(
-                AppTextStyles.withColor(
-                  AppTextStyles.bodyMedium,
-                  Theme.of(context).colorScheme.primary,
-                ),
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.primary,
               ),
             )
           else
             Text(
               context.l10n.activeCount(activeCount),
-              style: AppTextStyles.withColor(
-                AppTextStyles.labelSmallBold,
-                Colors.green[700]!,
+              style: AppTextStyles.labelSmall.copyWith(
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.green[400] : Colors.green[700],
               ),
             ),
         ],

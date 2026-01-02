@@ -11,23 +11,26 @@ class FirstLoginBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final infoColor = isDark ? AppColors.darkInfo : AppColors.info;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.infoLight,
+        color: infoColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.info),
+        border: Border.all(color: infoColor),
       ),
       child: Row(
         children: [
-          const Icon(Icons.info_outline, color: AppColors.info),
+          Icon(Icons.info_outline, color: infoColor),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               context.l10n.firstLoginMessage,
               style: Theme.of(
                 context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.info),
+              ).textTheme.bodyMedium?.copyWith(color: infoColor),
             ),
           ),
         ],

@@ -83,17 +83,22 @@ class _PremiumStarRatingDisplayState extends State<PremiumStarRatingDisplay>
         }),
         if (widget.showNumber) ...[
           const SizedBox(width: 8),
-          Text(
-            LocaleFormatters.formatNumber(
-              context,
-              widget.rating,
-              decimalDigits: 1,
-            ),
-            style: TextStyle(
-              fontSize: widget.size * 0.8,
-              fontWeight: FontWeight.w800,
-              color: AppColors.textPrimary,
-            ),
+          Builder(
+            builder: (context) {
+              final colorScheme = Theme.of(context).colorScheme;
+              return Text(
+                LocaleFormatters.formatNumber(
+                  context,
+                  widget.rating,
+                  decimalDigits: 1,
+                ),
+                style: TextStyle(
+                  fontSize: widget.size * 0.8,
+                  fontWeight: FontWeight.w800,
+                  color: colorScheme.onSurface,
+                ),
+              );
+            },
           ),
         ],
       ],
@@ -101,38 +106,43 @@ class _PremiumStarRatingDisplayState extends State<PremiumStarRatingDisplay>
   }
 
   Widget _buildStar(int index) {
-    final difference = widget.rating - index;
+    return Builder(
+      builder: (context) {
+        final colorScheme = Theme.of(context).colorScheme;
+        final difference = widget.rating - index;
 
-    IconData icon;
-    List<Color> colors;
+        IconData icon;
+        List<Color> colors;
 
-    if (difference >= 1) {
-      // Full star
-      icon = Icons.star_rounded;
-      colors = [Colors.orange, Colors.amber];
-    } else if (difference >= 0.5) {
-      // Half star
-      icon = Icons.star_half_rounded;
-      colors = [Colors.orange, Colors.amber];
-    } else {
-      // Empty star
-      icon = Icons.star_outline_rounded;
-      colors = [
-        AppColors.textSecondary.withValues(alpha: 0.3),
-        AppColors.textSecondary.withValues(alpha: 0.2),
-      ];
-    }
+        if (difference >= 1) {
+          // Full star
+          icon = Icons.star_rounded;
+          colors = [Colors.orange, Colors.amber];
+        } else if (difference >= 0.5) {
+          // Half star
+          icon = Icons.star_half_rounded;
+          colors = [Colors.orange, Colors.amber];
+        } else {
+          // Empty star
+          icon = Icons.star_outline_rounded;
+          colors = [
+            colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
+            colorScheme.onSurfaceVariant.withValues(alpha: 0.2),
+          ];
+        }
 
-    return Padding(
-      padding: EdgeInsets.only(right: index < 4 ? 2 : 0),
-      child: ShaderMask(
-        shaderCallback: (bounds) => LinearGradient(
-          colors: colors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ).createShader(bounds),
-        child: Icon(icon, size: widget.size, color: Colors.white),
-      ),
+        return Padding(
+          padding: EdgeInsets.only(right: index < 4 ? 2 : 0),
+          child: ShaderMask(
+            shaderCallback: (bounds) => LinearGradient(
+              colors: colors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ).createShader(bounds),
+            child: Icon(icon, size: widget.size, color: Colors.white),
+          ),
+        );
+      },
     );
   }
 }

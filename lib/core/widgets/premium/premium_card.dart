@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium card component with elevation shadow and optional interactions.
 ///
 /// Features:
-/// - Clean white background
+/// - Theme-aware background (adapts to light/dark mode)
 /// - Subtle elevation shadow
 /// - 16px border radius
 /// - Optional tap animation (scale effect)
@@ -34,6 +34,7 @@ class PremiumCard extends StatefulWidget {
   final List<BoxShadow>? boxShadow;
   final Color? borderColor;
   final double borderWidth;
+  final Color? backgroundColor;
 
   const PremiumCard({
     super.key,
@@ -46,6 +47,7 @@ class PremiumCard extends StatefulWidget {
     this.boxShadow,
     this.borderColor,
     this.borderWidth = 1.0,
+    this.backgroundColor,
   });
 
   @override
@@ -105,6 +107,14 @@ class _PremiumCardState extends State<PremiumCard>
   @override
   Widget build(BuildContext context) {
     final borderRadius = widget.borderRadius ?? BorderRadius.circular(16);
+    final colorScheme = context.colors;
+    final isDark = context.isDarkMode;
+
+    // Use theme-aware colors
+    final backgroundColor = widget.backgroundColor ?? colorScheme.surface;
+    final shadowColor = isDark
+        ? Colors.black.withValues(alpha: 0.3)
+        : Colors.black.withValues(alpha: 0.08);
 
     return GestureDetector(
       onTapDown: _onTapDown,
@@ -115,18 +125,18 @@ class _PremiumCardState extends State<PremiumCard>
         scale: _scaleAnimation,
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.surfaceWhite,
+            color: backgroundColor,
             borderRadius: borderRadius,
             boxShadow:
                 widget.boxShadow ??
                 [
-                  const BoxShadow(
-                    color: AppColors.shadow,
+                  BoxShadow(
+                    color: shadowColor,
                     blurRadius: 12,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                   ),
                   BoxShadow(
-                    color: AppColors.shadow.withValues(alpha: 0.04),
+                    color: shadowColor.withValues(alpha: 0.04),
                     blurRadius: 6,
                     offset: const Offset(0, 2),
                   ),

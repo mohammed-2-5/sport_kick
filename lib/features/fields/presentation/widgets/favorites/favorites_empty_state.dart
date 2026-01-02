@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -18,6 +17,8 @@ class FavoritesEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -45,9 +46,9 @@ class FavoritesEmptyState extends StatelessWidget {
               ),
               child: Container(
                 padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white,
+                  color: colorScheme.surface,
                 ),
                 child: Icon(
                   Icons.favorite_border_rounded,
@@ -68,7 +69,7 @@ class FavoritesEmptyState extends StatelessWidget {
               context.l10n.favoritesHint,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontSize: 15,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
                 height: 1.5,
               ),
               textAlign: TextAlign.center,

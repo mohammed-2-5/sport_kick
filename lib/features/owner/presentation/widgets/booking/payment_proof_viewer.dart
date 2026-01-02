@@ -30,11 +30,12 @@ class PaymentProofViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       height: MediaQuery.of(context).size.height * 0.9,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
         children: [
@@ -53,10 +54,11 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
@@ -72,7 +74,7 @@ class _Header extends StatelessWidget {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: AppColors.lightGrey,
+              color: colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -100,14 +102,14 @@ class _Header extends StatelessWidget {
                       context.l10n.paymentProof,
                       style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     if (bookingId != null)
                       Text(
                         context.l10n.bookingShortId(bookingId!.substring(0, 8)),
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                   ],
@@ -117,7 +119,7 @@ class _Header extends StatelessWidget {
                 onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.close_rounded),
                 style: IconButton.styleFrom(
-                  backgroundColor: AppColors.backgroundLight,
+                  backgroundColor: colorScheme.surfaceContainerHighest,
                 ),
               ),
             ],
@@ -155,6 +157,9 @@ class _ImageViewer extends StatelessWidget {
 class _ErrorPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -162,13 +167,13 @@ class _ErrorPlaceholder extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.error.withValues(alpha: 0.1),
+              color: errorColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.broken_image_outlined,
               size: 48,
-              color: AppColors.error,
+              color: errorColor,
             ),
           ),
           const SizedBox(height: 16),
@@ -176,14 +181,14 @@ class _ErrorPlaceholder extends StatelessWidget {
             context.l10n.paymentProofLoadFailed,
             style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             context.l10n.paymentProofTryLater,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],

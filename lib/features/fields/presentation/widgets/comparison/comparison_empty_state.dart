@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -11,17 +10,15 @@ class ComparisonEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.compare_arrows,
-              size: 80,
-              color: AppColors.textSecondary,
-            ),
+            Icon(Icons.compare_arrows, size: 80, color: colorScheme.outline),
             const SizedBox(height: 24),
             Text(
               context.l10n.noFieldsFound,
@@ -33,7 +30,7 @@ class ComparisonEmptyState extends StatelessWidget {
             Text(
               context.l10n.searchForFields,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),

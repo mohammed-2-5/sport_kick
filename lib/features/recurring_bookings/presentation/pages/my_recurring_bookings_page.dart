@@ -25,14 +25,15 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded),
-          color: AppColors.navyDeep,
+          color: colorScheme.onSurface,
           onPressed: () {
             if (context.canPop()) {
               context.pop();
@@ -43,8 +44,8 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
         ),
         title: Text(
           context.l10n.mySubscriptions,
-          style: const TextStyle(
-            color: AppColors.navyDeep,
+          style: TextStyle(
+            color: colorScheme.onSurface,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -52,7 +53,7 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle_outline_rounded),
-            color: AppColors.accentCyan,
+            color: colorScheme.primary,
             tooltip: context.l10n.newSubscription,
             onPressed: () => _navigateToFieldSelection(),
           ),
@@ -105,7 +106,9 @@ class _MyRecurringBookingsPageState extends State<MyRecurringBookingsPage> {
                   : context.l10n.subscriptionCancelFailed,
             ),
             backgroundColor: success
-                ? const Color(0xFF10B981)
+                ? (Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.darkSuccess
+                      : AppColors.success)
                 : AppColors.error,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(

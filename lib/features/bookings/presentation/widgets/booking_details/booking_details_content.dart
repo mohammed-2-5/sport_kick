@@ -46,7 +46,7 @@ class BookingDetailsContent extends StatelessWidget {
                     booking.fieldName!,
                     style: AppTextStyles.headlineSmall.copyWith(
                       fontWeight: FontWeight.w800,
-                      color: const Color(0xFF1A1F3A),
+                      color: Theme.of(context).colorScheme.onSurface,
                       letterSpacing: -0.5,
                     ),
                   ),

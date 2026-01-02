@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button_style.dart';
 
 export 'premium_button_style.dart';
@@ -10,6 +11,7 @@ export 'premium_button_style.dart';
 ///
 /// Features:
 /// - Multiple styles (primary, secondary, outline, text)
+/// - Theme-aware colors (adapts to light/dark mode)
 /// - Loading state with spinner
 /// - Icon support (left/right)
 /// - Full-width variant
@@ -121,15 +123,15 @@ class _PremiumButtonState extends State<PremiumButton>
         child: Container(
           width: widget.fullWidth ? double.infinity : widget.width,
           height: widget.height,
-          decoration: _getDecoration(isDisabled),
+          decoration: _getDecoration(context, isDisabled),
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: _buildContent(isDisabled),
+          child: _buildContent(context, isDisabled),
         ),
       ),
     );
   }
 
-  Widget _buildContent(bool isDisabled) {
+  Widget _buildContent(BuildContext context, bool isDisabled) {
     if (widget.loading) {
       return Center(
         child: SizedBox(
@@ -137,7 +139,9 @@ class _PremiumButtonState extends State<PremiumButton>
           height: 24,
           child: CircularProgressIndicator(
             strokeWidth: 2.5,
-            valueColor: AlwaysStoppedAnimation<Color>(_getLoadingColor()),
+            valueColor: AlwaysStoppedAnimation<Color>(
+              _getLoadingColor(context),
+            ),
           ),
         ),
       );
@@ -148,13 +152,17 @@ class _PremiumButtonState extends State<PremiumButton>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (widget.icon != null) ...[
-          Icon(widget.icon, color: _getTextColor(isDisabled), size: 20),
+          Icon(
+            widget.icon,
+            color: _getTextColor(context, isDisabled),
+            size: 20,
+          ),
           const SizedBox(width: 8),
         ],
         Text(
           widget.label,
           style: TextStyle(
-            color: _getTextColor(isDisabled),
+            color: _getTextColor(context, isDisabled),
             fontSize: 16,
             fontWeight: FontWeight.bold,
             letterSpacing: 0.5,
@@ -162,16 +170,23 @@ class _PremiumButtonState extends State<PremiumButton>
         ),
         if (widget.rightIcon != null) ...[
           const SizedBox(width: 8),
-          Icon(widget.rightIcon, color: _getTextColor(isDisabled), size: 20),
+          Icon(
+            widget.rightIcon,
+            color: _getTextColor(context, isDisabled),
+            size: 20,
+          ),
         ],
       ],
     );
   }
 
-  BoxDecoration _getDecoration(bool isDisabled) {
+  BoxDecoration _getDecoration(BuildContext context, bool isDisabled) {
+    final colorScheme = context.colors;
+    final isDark = context.isDarkMode;
+
     if (isDisabled) {
       return BoxDecoration(
-        color: AppColors.disabled,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(widget.borderRadius),
       );
     }
@@ -183,7 +198,7 @@ class _PremiumButtonState extends State<PremiumButton>
           borderRadius: BorderRadius.circular(widget.borderRadius),
           boxShadow: [
             BoxShadow(
-              color: AppColors.accentCyan.withValues(alpha: 0.3),
+              color: AppColors.accentCyan.withValues(alpha: isDark ? 0.4 : 0.3),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -192,14 +207,14 @@ class _PremiumButtonState extends State<PremiumButton>
 
       case PremiumButtonStyle.secondary:
         return BoxDecoration(
-          color: AppColors.surfaceWhite,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(widget.borderRadius),
           border: Border.all(color: AppColors.accentCyan, width: 2),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: AppColors.shadow,
+              color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.08),
               blurRadius: 12,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         );
@@ -208,7 +223,7 @@ class _PremiumButtonState extends State<PremiumButton>
         return BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(widget.borderRadius),
-          border: Border.all(color: AppColors.lightTextSecondary, width: 1.5),
+          border: Border.all(color: colorScheme.outline, width: 1.5),
         );
 
       case PremiumButtonStyle.text:
@@ -219,9 +234,11 @@ class _PremiumButtonState extends State<PremiumButton>
     }
   }
 
-  Color _getTextColor(bool isDisabled) {
+  Color _getTextColor(BuildContext context, bool isDisabled) {
+    final colorScheme = context.colors;
+
     if (isDisabled) {
-      return AppColors.buttonDisabledText;
+      return colorScheme.onSurfaceVariant;
     }
 
     switch (widget.style) {
@@ -230,13 +247,15 @@ class _PremiumButtonState extends State<PremiumButton>
       case PremiumButtonStyle.secondary:
         return AppColors.accentCyan;
       case PremiumButtonStyle.outline:
-        return AppColors.lightTextPrimary;
+        return colorScheme.onSurface;
       case PremiumButtonStyle.text:
         return AppColors.accentCyan;
     }
   }
 
-  Color _getLoadingColor() {
+  Color _getLoadingColor(BuildContext context) {
+    final colorScheme = context.colors;
+
     switch (widget.style) {
       case PremiumButtonStyle.primary:
         return AppColors.textOnNavy;
@@ -244,7 +263,7 @@ class _PremiumButtonState extends State<PremiumButton>
       case PremiumButtonStyle.text:
         return AppColors.accentCyan;
       case PremiumButtonStyle.outline:
-        return AppColors.lightTextPrimary;
+        return colorScheme.onSurface;
     }
   }
 }

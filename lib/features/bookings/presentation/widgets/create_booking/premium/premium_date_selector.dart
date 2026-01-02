@@ -97,7 +97,7 @@ class _PremiumDateSelectorState extends State<PremiumDateSelector> {
                 context.l10n.selectDate,
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               Text(
@@ -202,81 +202,93 @@ class _DateCardState extends State<_DateCard>
         builder: (context, child) {
           return Transform.scale(scale: _scaleAnimation.value, child: child);
         },
-        child: AnimatedContainer(
-          duration: AppAnimations.fast,
-          width: 68,
-          decoration: BoxDecoration(
-            gradient: widget.isSelected
-                ? const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
-                  )
-                : null,
-            color: widget.isSelected ? null : Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: widget.isSelected
-                ? null
-                : Border.all(
-                    color: widget.isToday
-                        ? AppColors.accentCyan.withValues(alpha: 0.5)
-                        : AppColors.border,
-                    width: widget.isToday ? 2 : 1,
-                  ),
-            boxShadow: widget.isSelected
-                ? [
-                    BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.4),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ]
-                : [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.04),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                DateFormat('EEE', locale).format(widget.date).toUpperCase(),
-                style: AppTextStyles.labelSmall.copyWith(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: widget.isSelected
-                      ? Colors.white.withValues(alpha: 0.9)
-                      : AppColors.textSecondary,
-                  letterSpacing: 0.5,
-                ),
+        child: Builder(
+          builder: (context) {
+            final colorScheme = Theme.of(context).colorScheme;
+            final isDark = Theme.of(context).brightness == Brightness.dark;
+
+            return AnimatedContainer(
+              duration: AppAnimations.fast,
+              width: 68,
+              decoration: BoxDecoration(
+                gradient: widget.isSelected
+                    ? const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppColors.accentCyan,
+                          AppColors.accentCyanDark,
+                        ],
+                      )
+                    : null,
+                color: widget.isSelected ? null : colorScheme.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: widget.isSelected
+                    ? null
+                    : Border.all(
+                        color: widget.isToday
+                            ? AppColors.accentCyan.withValues(alpha: 0.5)
+                            : colorScheme.outline,
+                        width: widget.isToday ? 2 : 1,
+                      ),
+                boxShadow: widget.isSelected
+                    ? [
+                        BoxShadow(
+                          color: AppColors.accentCyan.withValues(alpha: 0.4),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ]
+                    : [
+                        BoxShadow(
+                          color: isDark
+                              ? Colors.black.withValues(alpha: 0.2)
+                              : Colors.black.withValues(alpha: 0.04),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
               ),
-              const SizedBox(height: 4),
-              Text(
-                '${widget.date.day}',
-                style: AppTextStyles.headlineSmall.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: widget.isSelected
-                      ? Colors.white
-                      : AppColors.textPrimary,
-                ),
-              ),
-              const SizedBox(height: 2),
-              if (widget.isToday && !widget.isSelected)
-                Container(
-                  width: 6,
-                  height: 6,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.accentCyan,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    DateFormat('EEE', locale).format(widget.date).toUpperCase(),
+                    style: AppTextStyles.labelSmall.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: widget.isSelected
+                          ? Colors.white.withValues(alpha: 0.9)
+                          : colorScheme.onSurfaceVariant,
+                      letterSpacing: 0.5,
+                    ),
                   ),
-                )
-              else
-                const SizedBox(height: 6),
-            ],
-          ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${widget.date.day}',
+                    style: AppTextStyles.headlineSmall.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: widget.isSelected
+                          ? Colors.white
+                          : colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  if (widget.isToday && !widget.isSelected)
+                    Container(
+                      width: 6,
+                      height: 6,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.accentCyan,
+                      ),
+                    )
+                  else
+                    const SizedBox(height: 6),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

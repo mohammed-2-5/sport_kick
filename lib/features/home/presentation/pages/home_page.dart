@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
@@ -24,7 +23,7 @@ class HomePage extends StatelessWidget {
         BlocProvider(
           create: (ctx) =>
               sl<BookingCubit>()
-                ..loadUserBookings(loadingMessage: "Loading your bookings..."),
+                ..loadUserBookings(loadingMessage: 'Loading your bookings...'),
         ),
       ],
       child: BlocListener<AuthCubit, AuthState>(
@@ -34,7 +33,6 @@ class HomePage extends StatelessWidget {
           }
         },
         child: Scaffold(
-          backgroundColor: AppColors.lightBackground,
           body: SingleChildScrollView(
             child: AnimationLimiter(
               child: Column(

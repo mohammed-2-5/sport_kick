@@ -17,23 +17,29 @@ class BusinessHoursEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(BusinessHoursConstants.cardPadding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.schedule, size: 64, color: Colors.grey[400]),
+            Icon(Icons.schedule, size: 64, color: colorScheme.outline),
             const SizedBox(height: BusinessHoursConstants.itemSpacing),
             Text(
               context.l10n.businessHoursNoHoursSet,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: BusinessHoursConstants.smallSpacing),
             Text(
               context.l10n.businessHoursNoHoursSetDescription,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.grey),
+              style: TextStyle(color: colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: BusinessHoursConstants.sectionSpacing),
             FilledButton.icon(

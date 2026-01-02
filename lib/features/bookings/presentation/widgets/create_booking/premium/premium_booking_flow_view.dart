@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/error_handler.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
@@ -14,7 +13,7 @@ import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/p
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_booking_confirmation.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_date_selector.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_selection_step.dart';
-import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_slot_grid.dart';
+
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/l10n/app_localizations.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -41,12 +40,12 @@ class PremiumBookingFlowView extends StatelessWidget {
           return BookingSuccessOverlay(
             booking: state.booking,
             field: field,
-            onViewBookings: () => context.goNamed('myBookings'),
+            onViewBookings: () => context.pushNamed('myBookings'),
             onViewInvoice: () => context.pushNamed(
               'bookingInvoice',
               extra: {'booking': state.booking, 'field': field},
             ),
-            onDone: () => context.pop(),
+            onDone: () => context.go('/home'),
           );
         }
 
@@ -79,7 +78,7 @@ class PremiumBookingFlowView extends StatelessWidget {
 
   Widget _buildFlowContent(BuildContext context, BookingFlowActive state) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           // Header
@@ -168,14 +167,15 @@ class PremiumBookingFlowView extends StatelessWidget {
   }
 
   Widget _buildSubmittingState(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CircularProgressIndicator(
-              color: AppColors.accentCyan,
+            CircularProgressIndicator(
+              color: colorScheme.primary,
               strokeWidth: 3,
             ),
             const SizedBox(height: 24),
@@ -183,14 +183,14 @@ class PremiumBookingFlowView extends StatelessWidget {
               context.l10n.creatingBooking,
               style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               context.l10n.pleaseWaitMoment,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ],
@@ -200,11 +200,16 @@ class PremiumBookingFlowView extends StatelessWidget {
   }
 
   Widget _buildLoadingState() {
-    return const Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: CircularProgressIndicator(color: AppColors.accentCyan),
-      ),
+    return Builder(
+      builder: (context) {
+        final colorScheme = Theme.of(context).colorScheme;
+        return Scaffold(
+          backgroundColor: colorScheme.surface,
+          body: Center(
+            child: CircularProgressIndicator(color: colorScheme.primary),
+          ),
+        );
+      },
     );
   }
 }
@@ -229,17 +234,6 @@ class _DateSelectionStep extends StatelessWidget {
             onDateSelected: cubit.selectDate,
           ),
           const SizedBox(height: 24),
-          PremiumTimeSlotGrid(
-            slotsByPeriod: state.slotsByPeriod,
-            selectedSlot: state.selectedTimeSlot,
-            secondSlot: state.secondTimeSlot,
-            selectedDuration: state.selectedDuration,
-            canSelectSlot: cubit.canSelectSlot,
-            onSlotSelected: cubit.selectTimeSlotIfValid,
-            isLoading: state.isLoadingSlots,
-            errorMessage: state.slotsError,
-          ),
-          const SizedBox(height: 100),
         ],
       ),
     );
@@ -256,13 +250,17 @@ class _BottomActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, -4),
           ),
@@ -281,7 +279,7 @@ class _BottomActionBar extends StatelessWidget {
                     Text(
                       l10n.totalWithHours(state.selectedDuration),
                       style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                     Text(
@@ -295,7 +293,7 @@ class _BottomActionBar extends StatelessWidget {
                       ),
                       style: AppTextStyles.headlineSmall.copyWith(
                         fontWeight: FontWeight.w800,
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ],
@@ -319,14 +317,13 @@ class _BottomActionBar extends StatelessWidget {
   }
 
   String _getButtonLabel(AppLocalizations l10n) {
-    if (!state.canProceed) {
-      return l10n.selectTimeSlotPrompt;
-    }
-
     switch (state.currentStep) {
       case BookingFlowStep.selectDate:
         return l10n.continueLabel;
       case BookingFlowStep.selectTime:
+        if (!state.canProceed) {
+          return l10n.selectTimeSlotPrompt;
+        }
         return l10n.reviewBooking;
       default:
         return l10n.continueLabel;

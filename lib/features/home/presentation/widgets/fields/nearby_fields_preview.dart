@@ -13,6 +13,8 @@ class NearbyFieldsPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
         Padding(
@@ -23,22 +25,22 @@ class NearbyFieldsPreview extends StatelessWidget {
               Text(
                 context.l10n.homeNearbyFieldsTitle,
                 style: AppTextStyles.titleMedium.copyWith(
-                  color: AppColors.lightTextPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
               TextButton.icon(
                 onPressed: () {
                   context.pushNamed('fieldsMap');
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.map_outlined,
                   size: 18,
-                  color: AppColors.lightAccent,
+                  color: colorScheme.primary,
                 ),
                 label: Text(
                   context.l10n.homeViewMap,
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.lightAccent,
+                    color: colorScheme.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -126,7 +128,7 @@ class NearbyFieldsPreview extends StatelessWidget {
                     builder: (context, state) {
                       if (state is FieldsLoaded) {
                         if (state.fields.isEmpty) {
-                          return _buildEmptyState(context.l10n);
+                          return _buildEmptyState(context, context.l10n);
                         }
                         final fields = state.fields.take(3).toList();
                         return Stack(
@@ -164,13 +166,13 @@ class NearbyFieldsPreview extends StatelessWidget {
                           ],
                         );
                       } else if (state is FieldsEmpty || state is FieldsError) {
-                        return _buildEmptyState(context.l10n);
+                        return _buildEmptyState(context, context.l10n);
                       }
 
                       // Loading state
-                      return const Center(
+                      return Center(
                         child: CircularProgressIndicator(
-                          color: AppColors.lightAccent,
+                          color: colorScheme.primary,
                         ),
                       );
                     },
@@ -184,7 +186,9 @@ class NearbyFieldsPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState(AppLocalizations l10n) {
+  Widget _buildEmptyState(BuildContext context, AppLocalizations l10n) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -192,13 +196,13 @@ class NearbyFieldsPreview extends StatelessWidget {
           Icon(
             Icons.map_outlined,
             size: 48,
-            color: AppColors.lightTextSecondary.withValues(alpha: 0.5),
+            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(
             l10n.homeNoFieldsNearby,
             style: AppTextStyles.bodyLarge.copyWith(
-              color: AppColors.lightTextPrimary,
+              color: colorScheme.onSurface,
               fontWeight: FontWeight.w600,
             ),
           ),

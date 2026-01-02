@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/initials_avatar.dart';
@@ -7,6 +6,7 @@ import 'package:spo_kick/features/auth/presentation/widgets/profile/initials_ava
 /// Profile page header with curved background and avatar.
 ///
 /// Refactored to use [PremiumCurvedHeader] for consistent styling.
+/// Theme-aware: adapts to light/dark mode.
 class ProfileHeader extends StatelessWidget {
   final String? avatarUrl;
   final String initials;
@@ -21,6 +21,9 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
@@ -37,10 +40,12 @@ class ProfileHeader extends StatelessWidget {
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white,
+              color: colorScheme.surface,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
+                  color: isDark
+                      ? Colors.black.withValues(alpha: 0.4)
+                      : Colors.black.withValues(alpha: 0.15),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -48,7 +53,7 @@ class ProfileHeader extends StatelessWidget {
             ),
             child: CircleAvatar(
               radius: 60,
-              backgroundColor: AppColors.lightBackground,
+              backgroundColor: colorScheme.surfaceContainerHighest,
               child: _buildAvatarImage(),
             ),
           ),

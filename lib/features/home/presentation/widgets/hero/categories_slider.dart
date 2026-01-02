@@ -7,6 +7,7 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_state.dart';
+import 'package:spo_kick/core/utils/sport_category_localizer.dart';
 
 class CategoriesSlider extends StatefulWidget {
   const CategoriesSlider({super.key});
@@ -52,7 +53,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
                   final category = state.categories[index];
                   return _buildCategoryCard(
                     context,
-                    category.name,
+                    category.getLocalizedName(context),
                     _getCategoryImage(category.name),
                     category.id,
                   );

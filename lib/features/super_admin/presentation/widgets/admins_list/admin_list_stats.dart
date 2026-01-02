@@ -18,17 +18,23 @@ class AdminListStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          Icon(Icons.admin_panel_settings, size: 20, color: Colors.grey[600]),
+          Icon(
+            Icons.admin_panel_settings,
+            size: 20,
+            color: colorScheme.onSurface.withValues(alpha: 0.7),
+          ),
           const SizedBox(width: 8),
           Text(
             context.l10n.showingAdminsCount(filteredCount, totalCount),
             style: AppTextStyles.withColor(
               AppTextStyles.titleSmall,
-              Colors.grey[600]!,
+              colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
           if (isSelectionMode) ...[

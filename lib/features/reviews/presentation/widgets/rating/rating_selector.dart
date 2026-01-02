@@ -86,12 +86,19 @@ class _RatingSelectorState extends State<RatingSelector> {
               onTap: () => _updateRating(starIndex),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  _currentRating >= starIndex ? Icons.star : Icons.star_border,
-                  size: widget.size,
-                  color: _currentRating >= starIndex
-                      ? widget.color
-                      : Colors.grey[400],
+                child: Builder(
+                  builder: (context) {
+                    final colorScheme = Theme.of(context).colorScheme;
+                    return Icon(
+                      _currentRating >= starIndex
+                          ? Icons.star
+                          : Icons.star_border,
+                      size: widget.size,
+                      color: _currentRating >= starIndex
+                          ? widget.color
+                          : colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                    );
+                  },
                 ),
               ),
             );
@@ -100,12 +107,17 @@ class _RatingSelectorState extends State<RatingSelector> {
         if (_currentRating > 0) ...[
           const SizedBox(height: 8),
           Center(
-            child: Text(
-              _getRatingLabel(context, _currentRating),
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w500,
-              ),
+            child: Builder(
+              builder: (context) {
+                final colorScheme = Theme.of(context).colorScheme;
+                return Text(
+                  _getRatingLabel(context, _currentRating),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w500,
+                  ),
+                );
+              },
             ),
           ),
         ],

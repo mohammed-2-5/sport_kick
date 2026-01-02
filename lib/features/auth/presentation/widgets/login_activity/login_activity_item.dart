@@ -17,17 +17,23 @@ class LoginActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: activity.isCurrentSession
-            ? Border.all(color: AppColors.success, width: 2)
+            ? Border.all(color: successColor, width: 2)
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -60,14 +66,15 @@ class _DeviceIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: 48,
       height: 48,
       decoration: BoxDecoration(
-        color: _getBackgroundColor(),
+        color: _getBackgroundColor(isDark),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Icon(_getIcon(), color: _getIconColor(), size: 24),
+      child: Icon(_getIcon(), color: _getIconColor(isDark), size: 24),
     );
   }
 
@@ -82,25 +89,28 @@ class _DeviceIcon extends StatelessWidget {
     }
   }
 
-  Color _getBackgroundColor() {
+  Color _getBackgroundColor(bool isDark) {
     switch (status) {
       case LoginStatus.success:
-        return AppColors.success.withValues(alpha: 0.1);
+        final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+        return successColor.withValues(alpha: 0.1);
       case LoginStatus.failed:
-        return Colors.red.withValues(alpha: 0.1);
+        final errorColor = isDark ? AppColors.darkError : AppColors.error;
+        return errorColor.withValues(alpha: 0.1);
       case LoginStatus.blocked:
-        return Colors.orange.withValues(alpha: 0.1);
+        final warningColor = isDark ? AppColors.darkWarning : AppColors.warning;
+        return warningColor.withValues(alpha: 0.1);
     }
   }
 
-  Color _getIconColor() {
+  Color _getIconColor(bool isDark) {
     switch (status) {
       case LoginStatus.success:
-        return AppColors.success;
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       case LoginStatus.failed:
-        return Colors.red;
+        return isDark ? AppColors.darkError : AppColors.error;
       case LoginStatus.blocked:
-        return Colors.orange;
+        return isDark ? AppColors.darkWarning : AppColors.warning;
     }
   }
 }
@@ -114,6 +124,10 @@ class _ActivityDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -121,10 +135,10 @@ class _ActivityDetails extends StatelessWidget {
           children: [
             Text(
               activity.deviceName ?? _deviceLabel(context, activity.deviceType),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
             if (activity.isCurrentSession) ...[
@@ -132,7 +146,7 @@ class _ActivityDetails extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: AppColors.success,
+                  color: successColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -152,7 +166,7 @@ class _ActivityDetails extends StatelessWidget {
           _formatTimestamp(context, activity.timestamp),
           style: TextStyle(
             fontSize: 13,
-            color: AppColors.textSecondary.withValues(alpha: 0.8),
+            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
           ),
         ),
         if (activity.location != null) ...[
@@ -162,14 +176,14 @@ class _ActivityDetails extends StatelessWidget {
               Icon(
                 Icons.location_on_outlined,
                 size: 14,
-                color: AppColors.textSecondary.withValues(alpha: 0.6),
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
               ),
               const SizedBox(width: 4),
               Text(
                 activity.location!,
                 style: TextStyle(
                   fontSize: 12,
-                  color: AppColors.textSecondary.withValues(alpha: 0.6),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                 ),
               ),
             ],
@@ -222,10 +236,13 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final color = _getColor(isDark);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: _getColor().withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -233,20 +250,20 @@ class _StatusBadge extends StatelessWidget {
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
-          color: _getColor(),
+          color: color,
         ),
       ),
     );
   }
 
-  Color _getColor() {
+  Color _getColor(bool isDark) {
     switch (status) {
       case LoginStatus.success:
-        return AppColors.success;
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       case LoginStatus.failed:
-        return Colors.red;
+        return isDark ? AppColors.darkError : AppColors.error;
       case LoginStatus.blocked:
-        return Colors.orange;
+        return isDark ? AppColors.darkWarning : AppColors.warning;
     }
   }
 

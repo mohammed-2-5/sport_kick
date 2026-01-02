@@ -3,7 +3,6 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/time_slot_card.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/time_slot_period_header.dart';
 
-import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/localization/l10n_extensions.dart';
 import '../../../domain/entities/time_slot_entity.dart';
 import '../../constants/booking_constants.dart';
@@ -41,6 +40,7 @@ class TimeSlotsContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
     int animationIndex = 0;
 
     return AnimationLimiter(
@@ -51,7 +51,7 @@ class TimeSlotsContent extends StatelessWidget {
             l10n.availableTimeSlots,
             style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: BookingConstants.itemSpacing),

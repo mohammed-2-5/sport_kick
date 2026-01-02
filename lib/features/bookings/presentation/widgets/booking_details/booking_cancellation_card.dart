@@ -14,15 +14,18 @@ class BookingCancellationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return Container(
       padding: const EdgeInsets.all(BookingConstants.standardPadding),
       decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.05),
+        color: errorColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+        border: Border.all(color: errorColor.withValues(alpha: 0.3)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.error.withValues(alpha: 0.1),
+            color: errorColor.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -36,21 +39,17 @@ class BookingCancellationCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.error.withValues(alpha: 0.15),
+                  color: errorColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(
-                  Icons.info_outline,
-                  color: AppColors.error,
-                  size: 18,
-                ),
+                child: Icon(Icons.info_outline, color: errorColor, size: 18),
               ),
               const SizedBox(width: 12),
               Text(
                 context.l10n.cancellationReason,
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.error,
+                  color: errorColor,
                 ),
               ),
             ],
@@ -59,7 +58,7 @@ class BookingCancellationCard extends StatelessWidget {
           Text(
             reason,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.error.withValues(alpha: 0.8),
+              color: errorColor.withValues(alpha: 0.8),
               height: 1.5,
             ),
           ),

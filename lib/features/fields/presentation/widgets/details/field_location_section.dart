@@ -19,6 +19,10 @@ class FieldLocationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final locationIconColor = isDark ? AppColors.darkError : AppColors.error;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -33,7 +37,7 @@ class FieldLocationSection extends StatelessWidget {
           const SizedBox(height: FieldConstants.itemSpacing),
           Row(
             children: [
-              const Icon(Icons.location_on, color: AppColors.error, size: 20),
+              Icon(Icons.location_on, color: locationIconColor, size: 20),
               const SizedBox(width: FieldConstants.chipSpacing),
               Expanded(
                 child: Column(
@@ -48,7 +52,7 @@ class FieldLocationSection extends StatelessWidget {
                     Text(
                       field.city,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -84,9 +88,9 @@ class FieldLocationSection extends StatelessWidget {
                           point: LatLng(field.latitude!, field.longitude!),
                           width: 40,
                           height: 40,
-                          child: const Icon(
+                          child: Icon(
                             Icons.location_pin,
-                            color: AppColors.error,
+                            color: locationIconColor,
                             size: 40,
                           ),
                         ),

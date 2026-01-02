@@ -4,6 +4,9 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/city/presentation/constants/city_constants.dart';
 import 'package:spo_kick/features/city/presentation/widgets/city_card.dart';
 
+/// City Selection Grid
+///
+/// Theme-aware: adapts to light/dark mode.
 class CitySelectionGrid extends StatelessWidget {
   final List<CityEntity> cities;
   final String? selectedCityId;
@@ -18,6 +21,8 @@ class CitySelectionGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(CityConstants.screenPadding),
       child: Column(
@@ -25,9 +30,9 @@ class CitySelectionGrid extends StatelessWidget {
         children: [
           Text(
             context.l10n.citySelectionSubtitle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: Colors.black54),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: CityConstants.sectionSpacing),
           LayoutBuilder(

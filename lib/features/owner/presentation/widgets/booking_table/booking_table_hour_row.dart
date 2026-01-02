@@ -22,6 +22,7 @@ class BookingTableHourRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         // Time label
@@ -32,9 +33,11 @@ class BookingTableHourRow extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.navyDeep.withValues(alpha: 0.03),
             border: Border(
-              right: BorderSide(color: AppColors.border.withValues(alpha: 0.3)),
+              right: BorderSide(
+                color: colorScheme.outline.withValues(alpha: 0.3),
+              ),
               bottom: BorderSide(
-                color: AppColors.border.withValues(alpha: 0.15),
+                color: colorScheme.outline.withValues(alpha: 0.15),
               ),
             ),
           ),
@@ -42,7 +45,7 @@ class BookingTableHourRow extends StatelessWidget {
             hour,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ),

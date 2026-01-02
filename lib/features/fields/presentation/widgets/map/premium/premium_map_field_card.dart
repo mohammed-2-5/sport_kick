@@ -20,6 +20,9 @@ class PremiumMapFieldCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       child: BackdropFilter(
@@ -27,15 +30,15 @@ class PremiumMapFieldCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.95),
+            color: colorScheme.surface.withValues(alpha: 0.95),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: colorScheme.outline.withValues(alpha: 0.2),
               width: 1.5,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
+                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
                 blurRadius: 30,
                 offset: const Offset(0, -4),
               ),
@@ -50,7 +53,7 @@ class PremiumMapFieldCard extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: AppColors.textSecondary.withValues(alpha: 0.3),
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -63,11 +66,13 @@ class PremiumMapFieldCard extends StatelessWidget {
                       context.pushNamed('fieldDetails', extra: field.id),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
+                          color: Colors.black.withValues(
+                            alpha: isDark ? 0.2 : 0.05,
+                          ),
                           blurRadius: 10,
                           offset: const Offset(0, 2),
                         ),
@@ -87,7 +92,7 @@ class PremiumMapFieldCard extends StatelessWidget {
                                   height: 120,
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => Container(
-                                    color: AppColors.backgroundLight,
+                                    color: colorScheme.surfaceContainerHighest,
                                     child: const Center(
                                       child: CircularProgressIndicator(
                                         color: AppColors.accentCyan,
@@ -96,22 +101,23 @@ class PremiumMapFieldCard extends StatelessWidget {
                                   ),
                                   errorWidget: (context, url, error) =>
                                       Container(
-                                        color: AppColors.backgroundLight,
-                                        child: const Icon(
+                                        color:
+                                            colorScheme.surfaceContainerHighest,
+                                        child: Icon(
                                           Icons.sports_soccer,
                                           size: 40,
-                                          color: AppColors.textSecondary,
+                                          color: colorScheme.onSurfaceVariant,
                                         ),
                                       ),
                                 )
                               : Container(
                                   width: 120,
                                   height: 120,
-                                  color: AppColors.backgroundLight,
-                                  child: const Icon(
+                                  color: colorScheme.surfaceContainerHighest,
+                                  child: Icon(
                                     Icons.sports_soccer,
                                     size: 40,
-                                    color: AppColors.textSecondary,
+                                    color: colorScheme.onSurfaceVariant,
                                   ),
                                 ),
                         ),
@@ -128,7 +134,7 @@ class PremiumMapFieldCard extends StatelessWidget {
                                   field.name,
                                   style: AppTextStyles.titleMedium.copyWith(
                                     fontWeight: FontWeight.w800,
-                                    color: AppColors.textPrimary,
+                                    color: colorScheme.onSurface,
                                   ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -139,17 +145,17 @@ class PremiumMapFieldCard extends StatelessWidget {
                                 // Location
                                 Row(
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.location_on,
                                       size: 14,
-                                      color: AppColors.textSecondary,
+                                      color: colorScheme.onSurfaceVariant,
                                     ),
                                     const SizedBox(width: 4),
                                     Expanded(
                                       child: Text(
                                         field.city,
                                         style: AppTextStyles.bodySmall.copyWith(
-                                          color: AppColors.textSecondary,
+                                          color: colorScheme.onSurfaceVariant,
                                         ),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,

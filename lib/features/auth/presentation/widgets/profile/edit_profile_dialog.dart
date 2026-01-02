@@ -47,25 +47,26 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is ProfileUpdated) {
           Navigator.pop(context);
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: AppColors.error,
-            ),
+            SnackBar(content: Text(state.message), backgroundColor: errorColor),
           );
         }
       },
       child: AlertDialog(
-        backgroundColor: AppColors.lightSurface,
+        backgroundColor: colorScheme.surface,
         title: Text(
           context.l10n.editProfile,
-          style: const TextStyle(
-            color: AppColors.lightTextPrimary,
+          style: TextStyle(
+            color: colorScheme.onSurface,
             fontWeight: FontWeight.bold,
           ),
         ),

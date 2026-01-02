@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Data model for performance metric.
@@ -46,13 +45,14 @@ class PremiumMetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final progress = (metric.value / metric.maxValue).clamp(0.0, 1.0);
 
     return Container(
       width: 100,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -109,9 +109,16 @@ class PremiumMetricCard extends StatelessWidget {
   }
 
   Widget _buildLabel() {
-    return Text(
-      metric.label,
-      style: AppTextStyles.labelSmall.copyWith(color: AppColors.textSecondary),
+    return Builder(
+      builder: (context) {
+        final colorScheme = Theme.of(context).colorScheme;
+        return Text(
+          metric.label,
+          style: AppTextStyles.labelSmall.copyWith(
+            color: colorScheme.onSurfaceVariant,
+          ),
+        );
+      },
     );
   }
 }

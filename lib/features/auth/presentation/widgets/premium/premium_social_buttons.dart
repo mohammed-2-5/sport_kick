@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
@@ -143,33 +142,38 @@ class _SocialButtonState extends State<_SocialButton>
       onTapCancel: () => _controller.reverse(),
       child: ScaleTransition(
         scale: _scaleAnimation,
-        child: Container(
-          height: 52,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
+        child: Builder(
+          builder: (context) {
+            final colorScheme = Theme.of(context).colorScheme;
+            return Container(
+              height: 52,
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              widget.icon,
-              const SizedBox(width: 10),
-              Text(
-                widget.label,
-                style: AppTextStyles.labelLarge.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget.icon,
+                  const SizedBox(width: 10),
+                  Text(
+                    widget.label,
+                    style: AppTextStyles.labelLarge.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -308,16 +312,16 @@ class _FullWidthSocialButton extends StatefulWidget {
   final String label;
   final VoidCallback? onPressed;
   final bool isLoading;
-  final Color backgroundColor;
-  final Color textColor;
+  final Color? backgroundColor;
+  final Color? textColor;
 
   const _FullWidthSocialButton({
     required this.icon,
     required this.label,
     this.onPressed,
     this.isLoading = false,
-    this.backgroundColor = Colors.white,
-    this.textColor = AppColors.textPrimary,
+    this.backgroundColor,
+    this.textColor,
   });
 
   @override
@@ -362,34 +366,41 @@ class _FullWidthSocialButtonState extends State<_FullWidthSocialButton>
       onTapCancel: () => _controller.reverse(),
       child: ScaleTransition(
         scale: _scaleAnimation,
-        child: Container(
-          height: 52,
-          decoration: BoxDecoration(
-            color: widget.backgroundColor,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              widget.icon,
-              const SizedBox(width: 12),
-              Text(
-                widget.label,
-                style: AppTextStyles.labelMedium.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: widget.textColor,
+        child: Builder(
+          builder: (context) {
+            final colorScheme = Theme.of(context).colorScheme;
+            return Container(
+              height: 52,
+              decoration: BoxDecoration(
+                color: widget.backgroundColor ?? colorScheme.surface,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: colorScheme.outline.withValues(alpha: 0.2),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
-            ],
-          ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget.icon,
+                  const SizedBox(width: 12),
+                  Text(
+                    widget.label,
+                    style: AppTextStyles.labelMedium.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: widget.textColor ?? colorScheme.onSurface,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

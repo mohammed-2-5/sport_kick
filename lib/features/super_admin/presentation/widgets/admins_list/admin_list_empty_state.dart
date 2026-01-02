@@ -9,6 +9,8 @@ class AdminListEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -18,7 +20,7 @@ class AdminListEmptyState extends StatelessWidget {
                 ? Icons.admin_panel_settings_outlined
                 : Icons.search_off,
             size: 80,
-            color: Colors.grey[400],
+            color: colorScheme.outline,
           ),
           const SizedBox(height: 16),
           Text(
@@ -28,7 +30,7 @@ class AdminListEmptyState extends StatelessWidget {
             style: AppTextStyles.bold(
               AppTextStyles.withColor(
                 AppTextStyles.titleLarge,
-                Colors.grey[700]!,
+                colorScheme.onSurface.withValues(alpha: 0.8),
               ),
             ),
           ),
@@ -39,7 +41,7 @@ class AdminListEmptyState extends StatelessWidget {
                 : 'Try adjusting your filters',
             style: AppTextStyles.withColor(
               AppTextStyles.bodyMedium,
-              Colors.grey[600]!,
+              colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
         ],

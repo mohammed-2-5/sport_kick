@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/domain/entities/search_filters_entity.dart';
 import 'package:spo_kick/features/fields/presentation/constants/search_constants.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/search/amenities_filter.dart';
@@ -38,11 +37,13 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(SearchConstants.filterPadding),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -109,9 +110,11 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
-        const Icon(Icons.filter_list, color: AppColors.primary),
+        Icon(Icons.filter_list, color: colorScheme.primary),
         const SizedBox(width: 8),
         Text(
           context.l10n.filtersTitle,
@@ -136,6 +139,8 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
   }
 
   Widget _buildActions(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         // Active filters count
@@ -143,17 +148,13 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
+              color: colorScheme.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.check_circle,
-                  size: 16,
-                  color: AppColors.primary,
-                ),
+                Icon(Icons.check_circle, size: 16, color: colorScheme.primary),
                 const SizedBox(width: 4),
                 Text(
                   context.l10n.activeFiltersCount(
@@ -163,7 +164,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                     ),
                   ),
                   style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -178,8 +179,8 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
             Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            foregroundColor: Colors.white,
+            backgroundColor: colorScheme.primary,
+            foregroundColor: colorScheme.onPrimary,
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),

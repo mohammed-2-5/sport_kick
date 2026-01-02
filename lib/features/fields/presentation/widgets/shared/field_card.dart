@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -30,6 +29,9 @@ class FieldCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final priceText =
         '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}';
     final ratingText = LocaleFormatters.formatNumber(
@@ -43,9 +45,12 @@ class FieldCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           FieldConstants.cardBorderRadius + 8,
         ),
-        boxShadow: AppShadows.large,
+        boxShadow: isDark ? null : AppShadows.large,
         gradient: LinearGradient(
-          colors: [Colors.white, AppColors.primary.withValues(alpha: 0.02)],
+          colors: [
+            colorScheme.surface,
+            colorScheme.primary.withValues(alpha: 0.02),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -56,7 +61,7 @@ class FieldCard extends StatelessWidget {
             FieldConstants.cardBorderRadius + 8,
           ),
           border: Border.all(
-            color: AppColors.primary.withValues(alpha: 0.1),
+            color: colorScheme.primary.withValues(alpha: 0.1),
             width: 1,
           ),
         ),

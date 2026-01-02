@@ -28,29 +28,34 @@ class BookingCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 80,
+        width: 65,
         height: 52,
         decoration: BoxDecoration(
-          color: _getBackgroundColor(),
+          color: _getBackgroundColor(colorScheme),
           border: Border(
-            right: BorderSide(color: AppColors.border.withValues(alpha: 0.3)),
-            bottom: BorderSide(color: AppColors.border.withValues(alpha: 0.15)),
+            right: BorderSide(
+              color: colorScheme.outline.withValues(alpha: 0.3),
+            ),
+            bottom: BorderSide(
+              color: colorScheme.outline.withValues(alpha: 0.15),
+            ),
           ),
         ),
         child: booking != null
             ? _buildBookingContent(context)
-            : _buildEmptyContent(),
+            : _buildEmptyContent(colorScheme),
       ),
     );
   }
 
   /// Get cell background color based on state.
-  Color _getBackgroundColor() {
+  Color _getBackgroundColor(ColorScheme colorScheme) {
     if (!isOpen) {
-      return AppColors.textSecondary.withValues(alpha: 0.08);
+      return colorScheme.onSurfaceVariant.withValues(alpha: 0.08);
     }
 
     if (booking != null) {
@@ -59,7 +64,7 @@ class BookingCell extends StatelessWidget {
 
     // Gray out past empty slots
     if (isPast) {
-      return AppColors.textSecondary.withValues(alpha: 0.05);
+      return colorScheme.onSurfaceVariant.withValues(alpha: 0.05);
     }
 
     if (isToday) {
@@ -170,13 +175,13 @@ class BookingCell extends StatelessWidget {
   }
 
   /// Build content for an empty cell.
-  Widget _buildEmptyContent() {
+  Widget _buildEmptyContent(ColorScheme colorScheme) {
     if (!isOpen) {
       return Center(
         child: Icon(
           Icons.block_rounded,
           size: 14,
-          color: AppColors.textSecondary.withValues(alpha: 0.3),
+          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
         ),
       );
     }
@@ -187,7 +192,7 @@ class BookingCell extends StatelessWidget {
         child: Icon(
           Icons.history_rounded,
           size: 14,
-          color: AppColors.textSecondary.withValues(alpha: 0.2),
+          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.2),
         ),
       );
     }

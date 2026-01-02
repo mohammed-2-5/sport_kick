@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/premium_time_slot_card.dart';
@@ -92,6 +91,8 @@ class _PeriodHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -99,31 +100,35 @@ class _PeriodHeader extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: _getPeriodColor().withValues(alpha: 0.1),
+              color: _getPeriodColor(context).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(_getPeriodIcon(), size: 18, color: _getPeriodColor()),
+            child: Icon(
+              _getPeriodIcon(),
+              size: 18,
+              color: _getPeriodColor(context),
+            ),
           ),
           const SizedBox(width: 12),
           Text(
             displayLabel,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(width: 8),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(
-              color: AppColors.backgroundLight,
+              color: colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
               availableText,
               style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w500,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ),
@@ -147,7 +152,8 @@ class _PeriodHeader extends StatelessWidget {
     }
   }
 
-  Color _getPeriodColor() {
+  Color _getPeriodColor(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (period) {
       case 'Morning':
         return const Color(0xFFFFB347);
@@ -158,7 +164,7 @@ class _PeriodHeader extends StatelessWidget {
       case 'Late Night':
         return const Color(0xFF2C3E50);
       default:
-        return AppColors.accentCyan;
+        return colorScheme.primary;
     }
   }
 }

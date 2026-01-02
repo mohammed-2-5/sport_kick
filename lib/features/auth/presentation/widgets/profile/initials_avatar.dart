@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
+/// Initials Avatar Widget
+///
+/// Theme-aware: adapts to light/dark mode.
 class InitialsAvatar extends StatelessWidget {
   final String initials;
   final double fontSize;
@@ -10,17 +12,19 @@ class InitialsAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.primary.withValues(alpha: 0.1),
+        color: colorScheme.primary.withValues(alpha: 0.1),
       ),
       child: Center(
         child: Text(
           initials,
           style: AppTextStyles.headlineLargeBold.copyWith(
             fontSize: fontSize,
-            color: AppColors.primary,
+            color: colorScheme.primary,
           ),
         ),
       ),

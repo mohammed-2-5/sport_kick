@@ -55,11 +55,12 @@ class _PremiumAdminSearchBarState extends State<PremiumAdminSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: _isFocused ? AppColors.premiumGold : AppColors.border,
+          color: _isFocused ? AppColors.premiumGold : colorScheme.outline,
           width: _isFocused ? 2 : 1,
         ),
         boxShadow: _isFocused
@@ -81,24 +82,24 @@ class _PremiumAdminSearchBarState extends State<PremiumAdminSearchBar> {
               focusNode: _focusNode,
               onChanged: widget.onChanged,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
               decoration: InputDecoration(
                 hintText: widget.hintText,
                 hintStyle: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondary.withValues(alpha: 0.6),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                 ),
                 prefixIcon: Icon(
                   Icons.search,
                   size: 20,
                   color: _isFocused
                       ? AppColors.premiumGold
-                      : AppColors.textSecondary,
+                      : colorScheme.onSurfaceVariant,
                 ),
                 suffixIcon: _controller.text.isNotEmpty
                     ? IconButton(
                         icon: const Icon(Icons.clear, size: 18),
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                         onPressed: () {
                           _controller.clear();
                           widget.onChanged?.call('');
@@ -116,7 +117,7 @@ class _PremiumAdminSearchBarState extends State<PremiumAdminSearchBar> {
 
           // Filter button
           if (widget.onFilterTap != null) ...[
-            Container(width: 1, height: 30, color: AppColors.border),
+            Container(width: 1, height: 30, color: colorScheme.outline),
             _FilterButton(
               hasActiveFilters: widget.hasActiveFilters,
               onTap: () {
@@ -140,6 +141,7 @@ class _FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
       borderRadius: const BorderRadius.horizontal(right: Radius.circular(14)),
@@ -153,7 +155,7 @@ class _FilterButton extends StatelessWidget {
               size: 20,
               color: hasActiveFilters
                   ? AppColors.premiumGold
-                  : AppColors.textSecondary,
+                  : colorScheme.onSurfaceVariant,
             ),
             if (hasActiveFilters)
               Positioned(

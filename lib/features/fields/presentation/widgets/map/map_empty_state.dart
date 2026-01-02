@@ -12,6 +12,8 @@ class MapEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +21,7 @@ class MapEmptyState extends StatelessWidget {
           Icon(
             hasFilters ? Icons.filter_list_off : Icons.location_off,
             size: 64,
-            color: Colors.grey[400],
+            color: colorScheme.outline,
           ),
           const SizedBox(height: 16),
           Text(

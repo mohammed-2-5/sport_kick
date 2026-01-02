@@ -62,69 +62,76 @@ class BookingStepTwoWidget extends StatelessWidget {
             const SizedBox(height: OwnerUIConstants.spacingSmall),
             Text(
               context.l10n.enterCustomerDetails,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: OwnerUIConstants.spacingLarge),
 
             // Booking summary card
-            Container(
-              padding: const EdgeInsets.all(OwnerUIConstants.spacingMedium),
-              decoration: BoxDecoration(
-                color: Colors.blue[50],
-                borderRadius: BorderRadius.circular(
-                  OwnerUIConstants.cardBorderRadiusSmall,
-                ),
-                border: Border.all(color: Colors.blue[200]!),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+            Builder(
+              builder: (context) {
+                final colorScheme = Theme.of(context).colorScheme;
+                return Container(
+                  padding: const EdgeInsets.all(OwnerUIConstants.spacingMedium),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(
+                      OwnerUIConstants.cardBorderRadiusSmall,
+                    ),
+                    border: Border.all(
+                      color: colorScheme.primary.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.info_outline, color: Colors.blue[700]),
-                      const SizedBox(width: OwnerUIConstants.spacingSmall),
-                      Text(
-                        context.l10n.bookingSummary,
-                        style: AppTextStyles.bodyLarge.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue[900],
-                        ),
+                      Row(
+                        children: [
+                          Icon(Icons.info_outline, color: colorScheme.primary),
+                          const SizedBox(width: OwnerUIConstants.spacingSmall),
+                          Text(
+                            context.l10n.bookingSummary,
+                            style: AppTextStyles.bodyLarge.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onSurface,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: OwnerUIConstants.spacingMedium),
+                      BookingSummaryRow(
+                        label: context.l10n.fieldLabel,
+                        value: selectedField?.name ?? '-',
+                      ),
+                      BookingSummaryRow(
+                        label: context.l10n.bookingDate,
+                        value: selectedDate == null
+                            ? '-'
+                            : DateFormat(
+                                'MMM d, y',
+                                context.l10n.localeName,
+                              ).format(selectedDate!),
+                      ),
+                      BookingSummaryRow(
+                        label: context.l10n.timeSlot,
+                        value: '$selectedStartTime - $selectedEndTime',
+                      ),
+                      BookingSummaryRow(
+                        label: context.l10n.priceLabel,
+                        value: totalPrice == null
+                            ? '-'
+                            : LocaleFormatters.formatPrice(
+                                context,
+                                amount: totalPrice!,
+                                currency: context.l10n.currencyEgp,
+                                decimalDigits: 0,
+                              ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: OwnerUIConstants.spacingMedium),
-                  BookingSummaryRow(
-                    label: context.l10n.fieldLabel,
-                    value: selectedField?.name ?? '-',
-                  ),
-                  BookingSummaryRow(
-                    label: context.l10n.bookingDate,
-                    value: selectedDate == null
-                        ? '-'
-                        : DateFormat(
-                            'MMM d, y',
-                            context.l10n.localeName,
-                          ).format(selectedDate!),
-                  ),
-                  BookingSummaryRow(
-                    label: context.l10n.timeSlot,
-                    value: '$selectedStartTime - $selectedEndTime',
-                  ),
-                  BookingSummaryRow(
-                    label: context.l10n.priceLabel,
-                    value: totalPrice == null
-                        ? '-'
-                        : LocaleFormatters.formatPrice(
-                            context,
-                            amount: totalPrice!,
-                            currency: context.l10n.currencyEgp,
-                            decimalDigits: 0,
-                          ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
 
             const SizedBox(height: OwnerUIConstants.spacingLarge),

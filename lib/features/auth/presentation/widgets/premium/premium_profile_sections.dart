@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -27,6 +26,8 @@ class PremiumProfileSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: PremiumCard(
@@ -40,10 +41,10 @@ class PremiumProfileSection extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.accentCyan.withValues(alpha: 0.1),
+                    color: colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(icon, color: AppColors.accentCyan, size: 20),
+                  child: Icon(icon, color: colorScheme.primary, size: 20),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -51,7 +52,7 @@ class PremiumProfileSection extends StatelessWidget {
                     title,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ),
@@ -64,23 +65,23 @@ class PremiumProfileSection extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.accentCyan.withValues(alpha: 0.1),
+                        color: colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.edit_outlined,
                             size: 14,
-                            color: AppColors.accentCyan,
+                            color: colorScheme.primary,
                           ),
                           const SizedBox(width: 4),
                           Text(
                             context.l10n.edit,
                             style: AppTextStyles.labelSmall.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: AppColors.accentCyan,
+                              color: colorScheme.primary,
                             ),
                           ),
                         ],
@@ -120,12 +121,14 @@ class ProfileInfoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 18, color: AppColors.textSecondary),
+            Icon(icon, size: 18, color: colorScheme.onSurfaceVariant),
             const SizedBox(width: 12),
           ],
           Expanded(
@@ -135,7 +138,7 @@ class ProfileInfoItem extends StatelessWidget {
                 Text(
                   label,
                   style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -143,7 +146,7 @@ class ProfileInfoItem extends StatelessWidget {
                   value,
                   style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -160,10 +163,10 @@ class ProfileInfoItem extends StatelessWidget {
                   ),
                 );
               },
-              child: const Icon(
+              child: Icon(
                 Icons.copy_outlined,
                 size: 18,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           if (trailing != null) trailing!,
@@ -203,9 +206,10 @@ class _ProfileActionItemState extends State<ProfileActionItem> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final color = widget.isDestructive
         ? Colors.red
-        : (widget.iconColor ?? AppColors.textPrimary);
+        : (widget.iconColor ?? colorScheme.onSurface);
 
     return GestureDetector(
       onTapDown: (_) => setState(() => _isPressed = true),
@@ -219,7 +223,9 @@ class _ProfileActionItemState extends State<ProfileActionItem> {
         duration: const Duration(milliseconds: 100),
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: _isPressed ? AppColors.backgroundLight : Colors.transparent,
+          color: _isPressed
+              ? colorScheme.surfaceContainerHighest
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -241,7 +247,7 @@ class _ProfileActionItemState extends State<ProfileActionItem> {
                   fontWeight: FontWeight.w600,
                   color: widget.isDestructive
                       ? Colors.red
-                      : AppColors.textPrimary,
+                      : colorScheme.onSurface,
                 ),
               ),
             ),
@@ -251,7 +257,7 @@ class _ProfileActionItemState extends State<ProfileActionItem> {
               Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: AppColors.textSecondary.withValues(alpha: 0.5),
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
               ),
           ],
         ),
@@ -268,6 +274,8 @@ class ProfileStatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: stats.asMap().entries.map((entry) {
         final index = entry.key;
@@ -277,7 +285,7 @@ class ProfileStatsRow extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16),
             decoration: BoxDecoration(
               border: index < stats.length - 1
-                  ? const Border(right: BorderSide(color: AppColors.border))
+                  ? Border(right: BorderSide(color: colorScheme.outline))
                   : null,
             ),
             child: Column(
@@ -286,14 +294,14 @@ class ProfileStatsRow extends StatelessWidget {
                   stat.value,
                   style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.w800,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   stat.label,
                   style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],

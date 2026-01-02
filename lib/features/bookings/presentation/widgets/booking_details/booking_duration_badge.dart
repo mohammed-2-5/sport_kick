@@ -12,19 +12,23 @@ class BookingDurationBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final successColorEnd = isDark
+        ? const Color(0xFF4ADE80)
+        : const Color(0xFF2ECC71);
+
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: BookingConstants.itemSpacing,
         vertical: 6,
       ),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.success, Color(0xFF2ECC71)],
-        ),
+        gradient: LinearGradient(colors: [successColor, successColorEnd]),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.success.withValues(alpha: 0.3),
+            color: successColor.withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -34,7 +38,7 @@ class BookingDurationBadge extends StatelessWidget {
         context.l10n.durationHours(durationInHours),
         style: AppTextStyles.labelLarge.copyWith(
           fontWeight: FontWeight.w700,
-          color: Colors.white,
+          color: AppColors.onSuccess,
         ),
       ),
     );

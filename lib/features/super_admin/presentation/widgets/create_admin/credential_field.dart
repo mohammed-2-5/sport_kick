@@ -19,15 +19,21 @@ class CredentialField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Colors.grey[600]),
+          Icon(
+            icon,
+            size: 20,
+            color: colorScheme.onSurface.withValues(alpha: 0.7),
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -37,7 +43,7 @@ class CredentialField extends StatelessWidget {
                   label,
                   style: AppTextStyles.labelSmall.copyWith(
                     fontSize: 11,
-                    color: Colors.grey[600],
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -48,7 +54,9 @@ class CredentialField extends StatelessWidget {
                     fontWeight: isPassword
                         ? FontWeight.bold
                         : FontWeight.normal,
-                    color: isPassword ? Colors.deepPurple : Colors.black87,
+                    color: isPassword
+                        ? Colors.deepPurple
+                        : colorScheme.onSurface,
                   ),
                 ),
               ],

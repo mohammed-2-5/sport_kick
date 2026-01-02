@@ -19,24 +19,29 @@ class BookingStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final foregroundColor = _getForegroundColor(isDark);
+    final backgroundColor = foregroundColor.withValues(alpha: 0.15);
+    final glowColor = foregroundColor.withValues(alpha: 0.3);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: _backgroundColor,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
         boxShadow: showGlow
-            ? [BoxShadow(color: _glowColor, blurRadius: 12, spreadRadius: 2)]
+            ? [BoxShadow(color: glowColor, blurRadius: 12, spreadRadius: 2)]
             : null,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(_icon, color: _foregroundColor, size: 16),
+          Icon(_icon, color: foregroundColor, size: 16),
           const SizedBox(width: 6),
           Text(
             BookingStatusUtils.getStatusLabel(context, status),
             style: AppTextStyles.labelSmall.copyWith(
-              color: _foregroundColor,
+              color: foregroundColor,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -45,42 +50,16 @@ class BookingStatusBadge extends StatelessWidget {
     );
   }
 
-  Color get _backgroundColor {
+  Color _getForegroundColor(bool isDark) {
     switch (status) {
       case BookingStatus.pending:
-        return AppColors.warning.withValues(alpha: 0.15);
+        return isDark ? AppColors.darkWarning : AppColors.warning;
       case BookingStatus.confirmed:
-        return AppColors.success.withValues(alpha: 0.15);
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       case BookingStatus.completed:
-        return AppColors.info.withValues(alpha: 0.15);
+        return isDark ? AppColors.darkInfo : AppColors.info;
       case BookingStatus.canceled:
-        return AppColors.error.withValues(alpha: 0.15);
-    }
-  }
-
-  Color get _foregroundColor {
-    switch (status) {
-      case BookingStatus.pending:
-        return AppColors.warning;
-      case BookingStatus.confirmed:
-        return AppColors.success;
-      case BookingStatus.completed:
-        return AppColors.info;
-      case BookingStatus.canceled:
-        return AppColors.error;
-    }
-  }
-
-  Color get _glowColor {
-    switch (status) {
-      case BookingStatus.pending:
-        return AppColors.warning.withValues(alpha: 0.3);
-      case BookingStatus.confirmed:
-        return AppColors.success.withValues(alpha: 0.3);
-      case BookingStatus.completed:
-        return AppColors.info.withValues(alpha: 0.3);
-      case BookingStatus.canceled:
-        return AppColors.error.withValues(alpha: 0.3);
+        return isDark ? AppColors.darkError : AppColors.error;
     }
   }
 

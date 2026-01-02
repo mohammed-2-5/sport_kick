@@ -16,6 +16,7 @@ class UserInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Icon(icon, size: 16, color: iconColor),
@@ -23,9 +24,8 @@ class UserInfoRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.withColor(
-              AppTextStyles.labelMedium,
-              Colors.grey[700]!,
+            style: AppTextStyles.labelMedium.copyWith(
+              color: colorScheme.onSurfaceVariant,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

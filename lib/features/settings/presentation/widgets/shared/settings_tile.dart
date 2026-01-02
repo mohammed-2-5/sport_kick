@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/settings/presentation/constants/settings_constants.dart';
 
 /// Settings Tile Widget
 ///
 /// A clickable tile with leading icon, title, subtitle, and trailing widget.
+/// Uses theme colors for proper dark mode support.
 class SettingsTile extends StatelessWidget {
   final Widget leading;
   final String title;
@@ -23,6 +23,9 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(SettingsConstants.tileBorderRadius),
@@ -38,13 +41,13 @@ class SettingsTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: Theme.of(context).textTheme.bodyLarge),
+                  Text(title, style: textTheme.bodyLarge),
                   if (subtitle != null) ...[
                     const SizedBox(height: 4),
                     Text(
                       subtitle!,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],

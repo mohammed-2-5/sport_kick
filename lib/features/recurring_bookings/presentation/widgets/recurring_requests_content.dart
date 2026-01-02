@@ -73,7 +73,9 @@ class RecurringRequestsContent extends StatelessWidget {
                 state.activeCount,
                 decimalDigits: 0,
               ),
-              badgeColor: const Color(0xFF10B981),
+              badgeColor: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.darkSuccess
+                  : AppColors.success,
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
@@ -143,7 +145,9 @@ class RecurringRequestsContent extends StatelessWidget {
                 decimalDigits: 0,
               ),
               label: context.l10n.statusActive,
-              color: const Color(0xFF10B981),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.darkSuccess
+                  : AppColors.success,
             ),
           ),
         ],

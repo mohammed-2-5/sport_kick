@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
@@ -52,16 +52,18 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+    final isDark = context.isDarkMode;
+
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
       body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
-              color: Colors.black.withValues(alpha: 0.1),
+              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
             ),
           ],
         ),
@@ -69,15 +71,19 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: Colors.grey[300]!,
-              hoverColor: Colors.grey[100]!,
+              rippleColor: isDark
+                  ? colorScheme.surfaceContainerHighest
+                  : colorScheme.surfaceContainerHigh,
+              hoverColor: isDark
+                  ? colorScheme.surfaceContainerHigh
+                  : colorScheme.surfaceContainerLowest,
               gap: 8,
-              activeColor: AppColors.primary,
+              activeColor: colorScheme.primary,
               iconSize: 24,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: const Duration(milliseconds: 400),
-              tabBackgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              color: AppColors.textSecondary,
+              tabBackgroundColor: colorScheme.primary.withValues(alpha: 0.1),
+              color: colorScheme.onSurfaceVariant,
               tabs: [
                 GButton(
                   icon: Icons.home_rounded,

@@ -13,10 +13,12 @@ class BookingStatusBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       decoration: BoxDecoration(
-        gradient: BookingStatusUtils.getStatusGradient(status),
+        gradient: BookingStatusUtils.getStatusGradient(status, isDark: isDark),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +26,7 @@ class BookingStatusBanner extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: Colors.white.withValues(alpha: isDark ? 0.15 : 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(

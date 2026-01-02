@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -28,22 +27,27 @@ class PremiumAmenitiesGrid extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.star_outline,
-                color: AppColors.accentCyan,
-                size: 24,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                context.l10n.amenities,
-                style: AppTextStyles.titleLarge.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
+          Builder(
+            builder: (context) {
+              final colorScheme = Theme.of(context).colorScheme;
+              return Row(
+                children: [
+                  Icon(
+                    Icons.star_outline,
+                    color: colorScheme.primary,
+                    size: 24,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    context.l10n.amenities,
+                    style: AppTextStyles.titleLarge.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
 
           const SizedBox(height: 20),
@@ -82,7 +86,7 @@ class _AmenityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final icon = _getFacilityIcon(facility);
-    final color = _getFacilityColor(facility);
+    final color = _getFacilityColor(context, facility);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -139,9 +143,10 @@ class _AmenityCard extends StatelessWidget {
     return Icons.check_circle;
   }
 
-  Color _getFacilityColor(String facility) {
+  Color _getFacilityColor(BuildContext context, String facility) {
+    final colorScheme = Theme.of(context).colorScheme;
     final lowerFacility = facility.toLowerCase();
-    if (lowerFacility.contains('parking')) return AppColors.accentCyan;
+    if (lowerFacility.contains('parking')) return colorScheme.primary;
     if (lowerFacility.contains('shower') ||
         lowerFacility.contains('changing')) {
       return Colors.blue;
@@ -157,6 +162,6 @@ class _AmenityCard extends StatelessWidget {
     }
     if (lowerFacility.contains('wifi')) return Colors.purple;
     if (lowerFacility.contains('security')) return Colors.red;
-    return AppColors.success;
+    return colorScheme.tertiary;
   }
 }

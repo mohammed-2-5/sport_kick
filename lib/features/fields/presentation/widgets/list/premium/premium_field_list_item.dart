@@ -8,6 +8,7 @@ import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/fields/presentation/utils/facility_localizer.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium field list item with enhanced animations and styling.
 ///
@@ -31,6 +32,7 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
     final priceText =
         '${LocaleFormatters.formatPrice(context, amount: widget.field.pricePerHour, currency: widget.field.currency, decimalDigits: 0)}/${context.l10n.perHour}';
     return AnimatedScale(
@@ -63,7 +65,6 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                             widget.field.name,
                             style: AppTextStyles.titleMedium.copyWith(
                               fontWeight: FontWeight.w800,
-                              color: AppColors.textPrimary,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -109,17 +110,17 @@ class _PremiumFieldListItemState extends State<PremiumFieldListItem> {
                     // Location
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.location_on,
                           size: 16,
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
                             '${widget.field.city} - ${widget.field.address}',
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.textSecondary,
+                              color: colorScheme.onSurfaceVariant,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -265,6 +266,8 @@ class _ImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+
     return SizedBox(
       height: 180,
       child: Stack(
@@ -283,7 +286,7 @@ class _ImageSection extends StatelessWidget {
                       height: 180,
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Container(
-                        color: AppColors.backgroundLight,
+                        color: colorScheme.surfaceContainerHighest,
                         child: const Center(
                           child: CircularProgressIndicator(
                             color: AppColors.accentCyan,
@@ -291,20 +294,20 @@ class _ImageSection extends StatelessWidget {
                         ),
                       ),
                       errorWidget: (context, url, error) => Container(
-                        color: AppColors.backgroundLight,
-                        child: const Icon(
+                        color: colorScheme.surfaceContainerHighest,
+                        child: Icon(
                           Icons.sports_soccer,
                           size: 48,
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     )
                   : Container(
-                      color: AppColors.backgroundLight,
-                      child: const Icon(
+                      color: colorScheme.surfaceContainerHighest,
+                      child: Icon(
                         Icons.sports_soccer,
                         size: 48,
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
             ),

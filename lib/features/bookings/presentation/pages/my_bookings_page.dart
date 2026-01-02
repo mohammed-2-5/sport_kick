@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/error_handler.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
@@ -44,7 +43,6 @@ class _MyBookingsPageState extends State<MyBookingsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
       body: Stack(
         children: [
           Column(

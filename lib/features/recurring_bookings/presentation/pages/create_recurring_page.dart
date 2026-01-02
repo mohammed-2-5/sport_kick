@@ -56,48 +56,55 @@ class _CreateRecurringPageState extends State<CreateRecurringPage> {
         getReservedSlotsUseCase: sl<GetReservedSlotsUseCase>(),
         field: widget.field,
       ),
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_rounded),
-            color: AppColors.navyDeep,
-            onPressed: () => context.pop(),
-          ),
-          title: Text(
-            context.l10n.reserveWeeklySlot,
-            style: const TextStyle(
-              color: AppColors.navyDeep,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        body: _isLoadingHours
-            ? const Center(
-                child: CircularProgressIndicator(color: AppColors.accentCyan),
-              )
-            : BlocConsumer<CreateRecurringCubit, CreateRecurringState>(
-                listener: _handleStateChanges,
-                builder: (context, state) {
-                  return CreateRecurringContent(
-                    state: state,
-                    businessHours: _businessHours,
-                    onDaySelected: context
-                        .read<CreateRecurringCubit>()
-                        .selectDayOfWeek,
-                    onTimeSelected: context
-                        .read<CreateRecurringCubit>()
-                        .selectTime,
-                    onDurationChanged: context
-                        .read<CreateRecurringCubit>()
-                        .setDuration,
-                    onSubmit: context.read<CreateRecurringCubit>().submit,
-                  );
-                },
+      child: Builder(
+        builder: (context) {
+          final colorScheme = Theme.of(context).colorScheme;
+          return Scaffold(
+            backgroundColor: colorScheme.surface,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_rounded),
+                color: colorScheme.onSurface,
+                onPressed: () => context.pop(),
               ),
+              title: Text(
+                context.l10n.reserveWeeklySlot,
+                style: TextStyle(
+                  color: colorScheme.onSurface,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            body: _isLoadingHours
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.accentCyan,
+                    ),
+                  )
+                : BlocConsumer<CreateRecurringCubit, CreateRecurringState>(
+                    listener: _handleStateChanges,
+                    builder: (context, state) {
+                      return CreateRecurringContent(
+                        state: state,
+                        businessHours: _businessHours,
+                        onDaySelected: context
+                            .read<CreateRecurringCubit>()
+                            .selectDayOfWeek,
+                        onTimeSelected: context
+                            .read<CreateRecurringCubit>()
+                            .selectTime,
+                        onDurationChanged: context
+                            .read<CreateRecurringCubit>()
+                            .setDuration,
+                        onSubmit: context.read<CreateRecurringCubit>().submit,
+                      );
+                    },
+                  ),
+          );
+        },
       ),
     );
   }
@@ -129,36 +136,49 @@ class _CreateRecurringPageState extends State<CreateRecurringPage> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: const Color(0xFF10B981).withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.check_circle_rounded,
-                size: 48,
-                color: Color(0xFF10B981),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              context.l10n.recurringRequestSubmittedTitle,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.navyDeep,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              context.l10n.recurringRequestSubmittedBody,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-              ),
+            Builder(
+              builder: (context) {
+                final isDark = Theme.of(context).brightness == Brightness.dark;
+                final successColor = isDark
+                    ? AppColors.darkSuccess
+                    : AppColors.success;
+                final colorScheme = Theme.of(context).colorScheme;
+                return Column(
+                  children: [
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: successColor.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.check_circle_rounded,
+                        size: 48,
+                        color: successColor,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      context.l10n.recurringRequestSubmittedTitle,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      context.l10n.recurringRequestSubmittedBody,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
             const SizedBox(height: 24),
             SizedBox(

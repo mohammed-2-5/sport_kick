@@ -73,6 +73,8 @@ class _PremiumNavItemState extends State<PremiumNavItem>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) {
@@ -106,7 +108,7 @@ class _PremiumNavItemState extends State<PremiumNavItem>
           ),
           decoration: BoxDecoration(
             color: widget.isSelected
-                ? AppColors.accentCyan.withValues(alpha: 0.15)
+                ? colorScheme.primary.withValues(alpha: 0.15)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(16),
           ),
@@ -131,7 +133,7 @@ class _PremiumNavItemState extends State<PremiumNavItem>
                           style: AppTextStyles.labelSmall.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.accentCyan,
+                            color: colorScheme.primary,
                           ),
                         ),
                       )
@@ -154,12 +156,21 @@ class _NavIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final primaryColor = colorScheme.primary;
+    final primaryLightColor = isDark
+        ? colorScheme.primary.withValues(alpha: 0.7)
+        : AppColors.accentCyanLight;
+    final inactiveColor = colorScheme.onSurfaceVariant;
+
     return Container(
       decoration: isSelected
           ? BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.accentCyan.withValues(alpha: 0.4),
+                  color: primaryColor.withValues(alpha: 0.4),
                   blurRadius: 12,
                   spreadRadius: 1,
                 ),
@@ -170,8 +181,8 @@ class _NavIcon extends StatelessWidget {
         shaderCallback: (bounds) {
           return LinearGradient(
             colors: isSelected
-                ? [AppColors.accentCyan, AppColors.accentCyanLight]
-                : [AppColors.textSecondary, AppColors.textSecondary],
+                ? [primaryColor, primaryLightColor]
+                : [inactiveColor, inactiveColor],
           ).createShader(bounds);
         },
         child: Icon(icon, size: 24, color: Colors.white),

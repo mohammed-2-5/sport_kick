@@ -125,7 +125,7 @@ class BookingReviewSection extends StatelessWidget {
           Text(
             context.l10n.helpOthersMakeInformedDecisions,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 16),

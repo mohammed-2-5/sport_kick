@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/business_hours/presentation/constants/business_hours_constants.dart';
 import 'package:spo_kick/features/business_hours/presentation/utils/business_hours_formatters.dart';
@@ -27,12 +26,13 @@ class BusinessHoursDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     if (!isOpen) {
       return Text(
         context.l10n.businessHoursClosedAllDay,
         style: theme.textTheme.bodyMedium?.copyWith(
-          color: Colors.grey,
+          color: colorScheme.onSurfaceVariant,
           fontStyle: FontStyle.italic,
         ),
       );
@@ -42,12 +42,12 @@ class BusinessHoursDisplay extends StatelessWidget {
     if (BusinessHoursFormatters.is24Hours(isOpen, openingTime, closingTime)) {
       return Row(
         children: [
-          const Icon(Icons.access_time, size: 16, color: AppColors.primary),
+          Icon(Icons.access_time, size: 16, color: colorScheme.primary),
           const SizedBox(width: BusinessHoursConstants.tinySpacing),
           Text(
             context.l10n.businessHoursOpen24Hours,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: AppColors.primary,
+              color: colorScheme.primary,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -58,11 +58,7 @@ class BusinessHoursDisplay extends StatelessWidget {
     // Show time range
     return Row(
       children: [
-        Icon(
-          Icons.access_time,
-          size: 16,
-          color: theme.iconTheme.color?.withValues(alpha: 0.7),
-        ),
+        Icon(Icons.access_time, size: 16, color: colorScheme.onSurfaceVariant),
         const SizedBox(width: BusinessHoursConstants.tinySpacing),
         Flexible(
           child: Text(

@@ -13,13 +13,18 @@ class RecurringDetailNextBookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPaid = booking.nextBookingPaid ?? false;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final successColorDark = isDark
+        ? const Color(0xFF059669)
+        : const Color(0xFF047857);
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isPaid
-              ? [const Color(0xFF10B981), const Color(0xFF059669)]
+              ? [successColor, successColorDark]
               : [
                   AppColors.goldAccent,
                   AppColors.goldAccent.withValues(alpha: 0.8),
@@ -30,8 +35,9 @@ class RecurringDetailNextBookingCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: (isPaid ? const Color(0xFF10B981) : AppColors.goldAccent)
-                .withValues(alpha: 0.3),
+            color: (isPaid ? successColor : AppColors.goldAccent).withValues(
+              alpha: 0.3,
+            ),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -91,7 +97,7 @@ class RecurringDetailNextBookingCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: isPaid ? const Color(0xFF10B981) : AppColors.goldAccent,
+                color: isPaid ? successColor : AppColors.goldAccent,
               ),
             ),
           ),

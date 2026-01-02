@@ -24,12 +24,16 @@ class BookingListItemPaymentStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final statusColor = _getStatusColor(isDark);
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _getBackgroundColor(),
+        color: statusColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: _getBorderColor()),
+        border: Border.all(color: statusColor.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -43,7 +47,7 @@ class BookingListItemPaymentStatus extends StatelessWidget {
                   context.l10n.paymentStatusLabel,
                   style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -51,7 +55,7 @@ class BookingListItemPaymentStatus extends StatelessWidget {
                   _statusLabel(context),
                   style: AppTextStyles.labelLarge.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: _getTextColor(),
+                    color: statusColor,
                   ),
                 ),
               ],
@@ -68,42 +72,16 @@ class BookingListItemPaymentStatus extends StatelessWidget {
     );
   }
 
-  Color _getBackgroundColor() {
+  Color _getStatusColor(bool isDark) {
     switch (paymentStatus) {
       case PaymentStatus.pending:
-        return AppColors.warning.withValues(alpha: 0.1);
+        return isDark ? AppColors.darkWarning : AppColors.warning;
       case PaymentStatus.uploaded:
-        return AppColors.info.withValues(alpha: 0.1);
+        return isDark ? AppColors.darkInfo : AppColors.info;
       case PaymentStatus.verified:
-        return AppColors.success.withValues(alpha: 0.1);
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       case PaymentStatus.rejected:
-        return AppColors.error.withValues(alpha: 0.1);
-    }
-  }
-
-  Color _getBorderColor() {
-    switch (paymentStatus) {
-      case PaymentStatus.pending:
-        return AppColors.warning.withValues(alpha: 0.3);
-      case PaymentStatus.uploaded:
-        return AppColors.info.withValues(alpha: 0.3);
-      case PaymentStatus.verified:
-        return AppColors.success.withValues(alpha: 0.3);
-      case PaymentStatus.rejected:
-        return AppColors.error.withValues(alpha: 0.3);
-    }
-  }
-
-  Color _getTextColor() {
-    switch (paymentStatus) {
-      case PaymentStatus.pending:
-        return AppColors.warning;
-      case PaymentStatus.uploaded:
-        return AppColors.info;
-      case PaymentStatus.verified:
-        return AppColors.success;
-      case PaymentStatus.rejected:
-        return AppColors.error;
+        return isDark ? AppColors.darkError : AppColors.error;
     }
   }
 
@@ -130,11 +108,13 @@ class _PaymentStatusIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: _getIconBackgroundColor(),
+        color: _getIconBackgroundColor(isDark),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Icon(_getIcon(), size: 20, color: Colors.white),
@@ -154,16 +134,16 @@ class _PaymentStatusIcon extends StatelessWidget {
     }
   }
 
-  Color _getIconBackgroundColor() {
+  Color _getIconBackgroundColor(bool isDark) {
     switch (paymentStatus) {
       case PaymentStatus.pending:
-        return AppColors.warning;
+        return isDark ? AppColors.darkWarning : AppColors.warning;
       case PaymentStatus.uploaded:
-        return AppColors.info;
+        return isDark ? AppColors.darkInfo : AppColors.info;
       case PaymentStatus.verified:
-        return AppColors.success;
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       case PaymentStatus.rejected:
-        return AppColors.error;
+        return isDark ? AppColors.darkError : AppColors.error;
     }
   }
 }
@@ -184,6 +164,10 @@ class _PaymentActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final infoColor = isDark ? AppColors.darkInfo : AppColors.info;
+
     if (paymentStatus == PaymentStatus.verified) {
       return const SizedBox.shrink();
     }
@@ -192,7 +176,7 @@ class _PaymentActionButton extends StatelessWidget {
       return _ActionButton(
         label: context.l10n.payNow,
         icon: Icons.payment,
-        color: AppColors.primary,
+        color: colorScheme.primary,
         onPressed: onPayNowPressed,
       );
     }
@@ -201,7 +185,7 @@ class _PaymentActionButton extends StatelessWidget {
       return _ActionButton(
         label: context.l10n.view,
         icon: Icons.visibility,
-        color: AppColors.info,
+        color: infoColor,
         onPressed: onViewProofPressed,
       );
     }

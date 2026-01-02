@@ -76,23 +76,25 @@ class FieldCardImage extends StatelessWidget {
   /// Builds the placeholder widget shown when no image is available
   /// or when image is loading/failed
   Widget _buildPlaceholder(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       height: FieldConstants.fieldCardImageHeight + 20,
       width: double.infinity,
-      color: AppColors.surfaceVariant,
+      color: colorScheme.surfaceContainerHighest,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.sports_soccer,
             size: 48,
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
           const SizedBox(height: 8),
           Text(
             context.l10n.noImage,
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -102,19 +104,28 @@ class FieldCardImage extends StatelessWidget {
 
   /// Builds the popular/trending badge positioned at top-left
   Widget _buildPopularBadge(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+    // Use onPrimary for content on colored gradients (white in both themes)
+    final contentColor = colorScheme.onPrimary;
+
     return Positioned(
       top: 12,
       left: 12,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFFFF6B6B), Color(0xFFFF8E53)],
+          gradient: LinearGradient(
+            colors: [
+              errorColor,
+              isDark ? AppColors.darkWarning : const Color(0xFFFF8E53),
+            ],
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.red.withValues(alpha: 0.4),
+              color: errorColor.withValues(alpha: 0.4),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),
@@ -123,16 +134,16 @@ class FieldCardImage extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+            Icon(
               Icons.local_fire_department_rounded,
               size: 14,
-              color: Colors.white,
+              color: contentColor,
             ),
             const SizedBox(width: 4),
             Text(
               context.l10n.trending,
               style: AppTextStyles.labelSmall.copyWith(
-                color: Colors.white,
+                color: contentColor,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
               ),

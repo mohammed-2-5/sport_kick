@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 class AdminEmailField extends StatelessWidget {
@@ -93,7 +92,7 @@ class AdminForgotPasswordLink extends StatelessWidget {
         },
         child: Text(
           context.l10n.forgotPassword,
-          style: const TextStyle(color: AppColors.primary),
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -113,8 +112,8 @@ class AdminLoginButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -143,8 +142,8 @@ class AdminUserLoginLink extends StatelessWidget {
           },
           child: Text(
             context.l10n.userLogin,
-            style: const TextStyle(
-              color: AppColors.primary,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,
             ),
           ),

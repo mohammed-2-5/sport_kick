@@ -9,6 +9,8 @@ class BookingsListEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -16,7 +18,7 @@ class BookingsListEmptyState extends StatelessWidget {
           Icon(
             hasFilters ? Icons.search_off : Icons.event_note_outlined,
             size: 64,
-            color: Colors.grey[400],
+            color: colorScheme.outline,
           ),
           const SizedBox(height: 16),
           Text(
@@ -30,9 +32,9 @@ class BookingsListEmptyState extends StatelessWidget {
             hasFilters
                 ? context.l10n.tryAdjustingYourSearchOrFilters
                 : 'Bookings will appear here once made',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
           ),
         ],
       ),

@@ -109,7 +109,7 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
             fontWeight: FontWeight.w600,
             color: widget.isDark
                 ? Colors.white.withValues(alpha: 0.9)
-                : AppColors.textPrimary,
+                : Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 8),
@@ -123,7 +123,7 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
                   color: hasError
-                      ? Colors.red
+                      ? Theme.of(context).colorScheme.error
                       : _isFocused
                       ? AppColors.accentCyan
                       : (widget.isDark
@@ -158,7 +158,7 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
                     style: AppTextStyles.bodyLarge.copyWith(
                       color: widget.isDark
                           ? Colors.white
-                          : AppColors.textPrimary,
+                          : Theme.of(context).colorScheme.onSurface,
                     ),
                     onChanged: (value) {
                       setState(() {
@@ -171,7 +171,8 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
                       hintStyle: AppTextStyles.bodyMedium.copyWith(
                         color: widget.isDark
                             ? Colors.white.withValues(alpha: 0.4)
-                            : AppColors.textSecondary.withValues(alpha: 0.6),
+                            : Theme.of(context).colorScheme.onSurfaceVariant
+                                  .withValues(alpha: 0.6),
                       ),
                       prefixIcon: widget.prefixIcon != null
                           ? Icon(
@@ -180,7 +181,9 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
                                   ? AppColors.accentCyan
                                   : (widget.isDark
                                         ? Colors.white.withValues(alpha: 0.5)
-                                        : AppColors.textSecondary),
+                                        : Theme.of(
+                                            context,
+                                          ).colorScheme.onSurfaceVariant),
                               size: 20,
                             )
                           : null,
@@ -203,7 +206,9 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
                                         : Icons.visibility_outlined,
                                     color: widget.isDark
                                         ? Colors.white.withValues(alpha: 0.5)
-                                        : AppColors.textSecondary,
+                                        : Theme.of(
+                                            context,
+                                          ).colorScheme.onSurfaceVariant,
                                     size: 20,
                                   ),
                                   onPressed: widget.onTogglePassword,
@@ -229,12 +234,18 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(Icons.error_outline, size: 14, color: Colors.red),
+              Icon(
+                Icons.error_outline,
+                size: 14,
+                color: Theme.of(context).colorScheme.error,
+              ),
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
                   widget.errorText!,
-                  style: AppTextStyles.bodySmall.copyWith(color: Colors.red),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 ),
               ),
             ],

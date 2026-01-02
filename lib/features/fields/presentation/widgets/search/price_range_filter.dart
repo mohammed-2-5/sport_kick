@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/fields/presentation/constants/search_constants.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -22,6 +21,8 @@ class PriceRangeFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,7 +38,7 @@ class PriceRangeFilter extends StatelessWidget {
             Text(
               '${LocaleFormatters.formatNumber(context, minPrice, decimalDigits: 0)} - ${LocaleFormatters.formatNumber(context, maxPrice, decimalDigits: 0)} EGP/${context.l10n.perHour}',
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.primary,
+                color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -55,7 +56,7 @@ class PriceRangeFilter extends StatelessWidget {
             LocaleFormatters.formatNumber(context, maxPrice, decimalDigits: 0),
           ),
           onChanged: onChanged,
-          activeColor: AppColors.primary,
+          activeColor: colorScheme.primary,
         ),
       ],
     );

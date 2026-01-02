@@ -11,19 +11,21 @@ class AdminEmptyFieldsState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(AdminUIConstants.emptyStatePadding),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: AdminUIConstants.borderRadiusMedium,
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
           Icon(
             Icons.sports_soccer_outlined,
             size: AdminUIConstants.emptyStateIconSize,
-            color: Colors.grey[400],
+            color: colorScheme.outline,
           ),
           const SizedBox(height: AdminUIConstants.listItemSpacing),
           Text(
@@ -36,7 +38,7 @@ class AdminEmptyFieldsState extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.withColor(
               AppTextStyles.bodyMedium,
-              Colors.grey[600]!,
+              colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: AdminUIConstants.spacingMedium),

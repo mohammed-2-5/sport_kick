@@ -102,6 +102,7 @@ class PaymentProofSection extends StatelessWidget {
 class _ImageSourceBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SafeArea(
       child: Container(
         margin: const EdgeInsets.all(16),
@@ -109,7 +110,7 @@ class _ImageSourceBottomSheet extends StatelessWidget {
           maxHeight: MediaQuery.of(context).size.height * 0.5,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(20),
         ),
         child: SingleChildScrollView(
@@ -121,7 +122,7 @@ class _ImageSourceBottomSheet extends StatelessWidget {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppColors.border,
+                  color: colorScheme.outline,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -130,14 +131,14 @@ class _ImageSourceBottomSheet extends StatelessWidget {
                 context.l10n.selectPaymentProof,
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 context.l10n.choosePaymentUploadMethod,
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 24),
@@ -188,6 +189,7 @@ class _SourceOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -211,22 +213,22 @@ class _SourceOption extends StatelessWidget {
                     label,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     description,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
               ),
             ),
-            const Icon(
+            Icon(
               Icons.chevron_right_rounded,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ],
         ),
@@ -244,6 +246,8 @@ class _UploadProofCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PremiumCard(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -261,7 +265,7 @@ class _UploadProofCard extends StatelessWidget {
                 context.l10n.paymentProof,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -272,14 +276,15 @@ class _UploadProofCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.errorLight,
+                color: (isDark ? AppColors.darkError : AppColors.error)
+                    .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.error_outline_rounded,
-                    color: AppColors.error,
+                    color: isDark ? AppColors.darkError : AppColors.error,
                     size: 20,
                   ),
                   const SizedBox(width: 8),
@@ -287,7 +292,7 @@ class _UploadProofCard extends StatelessWidget {
                     child: Text(
                       errorMessage!,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.error,
+                        color: isDark ? AppColors.darkError : AppColors.error,
                       ),
                     ),
                   ),
@@ -303,7 +308,7 @@ class _UploadProofCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
               decoration: BoxDecoration(
-                color: AppColors.backgroundLight,
+                color: colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   color: AppColors.accentCyan.withValues(alpha: 0.3),
@@ -330,14 +335,14 @@ class _UploadProofCard extends StatelessWidget {
                     context.l10n.uploadPaymentScreenshot,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.paymentUploadHint,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -365,6 +370,7 @@ class _SelectedProofCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -382,7 +388,7 @@ class _SelectedProofCard extends StatelessWidget {
                 context.l10n.paymentProof,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -400,11 +406,11 @@ class _SelectedProofCard extends StatelessWidget {
               errorBuilder: (context, error, stackTrace) {
                 return Container(
                   height: 200,
-                  color: AppColors.backgroundLight,
-                  child: const Center(
+                  color: colorScheme.surfaceContainerHighest,
+                  child: Center(
                     child: Icon(
                       Icons.broken_image_rounded,
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                       size: 40,
                     ),
                   ),

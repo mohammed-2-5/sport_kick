@@ -16,12 +16,13 @@ class StepIndicatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: OwnerUIConstants.spacingLarge,
         horizontal: OwnerUIConstants.spacingMedium,
       ),
-      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
+      color: colorScheme.primary.withValues(alpha: 0.05),
       child: Row(
         children: [
           _buildStepCircle(
@@ -34,8 +35,8 @@ class StepIndicatorWidget extends StatelessWidget {
             child: Container(
               height: 2,
               color: currentStep >= 1
-                  ? Theme.of(context).colorScheme.primary
-                  : Colors.grey[300],
+                  ? colorScheme.primary
+                  : colorScheme.outline.withValues(alpha: 0.3),
             ),
           ),
           _buildStepCircle(
@@ -55,9 +56,10 @@ class StepIndicatorWidget extends StatelessWidget {
     String label,
     bool isActive,
   ) {
-    final color = isActive
-        ? Theme.of(context).colorScheme.primary
-        : Colors.grey[300]!;
+    final colorScheme = Theme.of(context).colorScheme;
+    final activeColor = colorScheme.primary;
+    final inactiveColor = colorScheme.outline.withValues(alpha: 0.3);
+    final color = isActive ? activeColor : inactiveColor;
 
     return Column(
       children: [
@@ -66,14 +68,14 @@ class StepIndicatorWidget extends StatelessWidget {
           height: OwnerUIConstants.stepCircleSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive ? color : Colors.white,
+            color: isActive ? color : colorScheme.surface,
             border: Border.all(color: color, width: 2),
           ),
           child: Center(
             child: Text(
               LocaleFormatters.formatNumber(context, step),
               style: AppTextStyles.bodyLarge.copyWith(
-                color: isActive ? Colors.white : color,
+                color: isActive ? colorScheme.onPrimary : color,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -83,7 +85,7 @@ class StepIndicatorWidget extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.labelSmall.copyWith(
-            color: isActive ? color : Colors.grey[600],
+            color: isActive ? activeColor : colorScheme.onSurfaceVariant,
             fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
           ),
         ),

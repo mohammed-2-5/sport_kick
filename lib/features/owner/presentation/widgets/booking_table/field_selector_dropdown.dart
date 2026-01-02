@@ -18,10 +18,11 @@ class FieldSelectorDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
@@ -35,6 +36,7 @@ class FieldSelectorDropdown extends StatelessWidget {
         child: DropdownButton<String>(
           value: selectedField.id,
           isExpanded: true,
+          dropdownColor: colorScheme.surface,
           icon: Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
@@ -77,7 +79,7 @@ class FieldSelectorDropdown extends StatelessWidget {
                           field.name,
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -85,7 +87,7 @@ class FieldSelectorDropdown extends StatelessWidget {
                           Text(
                             field.city,
                             style: AppTextStyles.labelSmall.copyWith(
-                              color: AppColors.textSecondary.withValues(
+                              color: colorScheme.onSurfaceVariant.withValues(
                                 alpha: 0.7,
                               ),
                             ),

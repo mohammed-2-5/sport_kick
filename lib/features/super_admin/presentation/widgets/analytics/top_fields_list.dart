@@ -12,6 +12,8 @@ class TopFieldsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     // Sort fields by total bookings
     final sortedFields = fields.toList()
       ..sort((a, b) => b.totalBookings.compareTo(a.totalBookings));
@@ -30,9 +32,11 @@ class TopFieldsList extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.grey[50],
+              color: colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey[200]!),
+              border: Border.all(
+                color: colorScheme.outline.withValues(alpha: 0.3),
+              ),
             ),
             child: Row(
               children: [
@@ -41,7 +45,7 @@ class TopFieldsList extends StatelessWidget {
                   width: 32,
                   height: 32,
                   decoration: BoxDecoration(
-                    color: _getRankColor(index),
+                    color: _getRankColor(index, colorScheme),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -72,7 +76,7 @@ class TopFieldsList extends StatelessWidget {
                       Text(
                         field.city,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: Colors.grey[600],
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -117,12 +121,12 @@ class TopFieldsList extends StatelessWidget {
     );
   }
 
-  Color _getRankColor(int index) {
+  Color _getRankColor(int index, ColorScheme colorScheme) {
     switch (index) {
       case 0:
         return Colors.amber;
       case 1:
-        return Colors.grey[400]!;
+        return colorScheme.outline;
       case 2:
         return Colors.brown[300]!;
       default:

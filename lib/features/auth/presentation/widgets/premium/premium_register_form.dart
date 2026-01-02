@@ -52,7 +52,7 @@ class _PremiumRegisterFormState extends State<PremiumRegisterForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.l10n.pleaseAcceptTheTermsAndConditions),
-          backgroundColor: Colors.red,
+          backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
       return;

@@ -25,55 +25,65 @@ class PasswordStrengthIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final strength = _calculateStrength(password);
     final l10n = context.l10n;
-    final strengthInfo = _getStrengthInfo(strength, l10n);
+    final strengthInfo = _getStrengthInfo(strength, l10n, context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Strength bars
-        Row(
-          children: List.generate(4, (index) {
-            final isActive = index < strength;
-            return Expanded(
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                height: 4,
-                margin: EdgeInsets.only(right: index < 3 ? 4 : 0),
-                decoration: BoxDecoration(
-                  color: isActive
-                      ? strengthInfo.color
-                      : AppColors.textSecondary.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
+        Builder(
+          builder: (context) {
+            final colorScheme = Theme.of(context).colorScheme;
+            return Row(
+              children: List.generate(4, (index) {
+                final isActive = index < strength;
+                return Expanded(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    height: 4,
+                    margin: EdgeInsets.only(right: index < 3 ? 4 : 0),
+                    decoration: BoxDecoration(
+                      color: isActive
+                          ? strengthInfo.color
+                          : colorScheme.outline.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                );
+              }),
             );
-          }),
+          },
         ),
 
         const SizedBox(height: 8),
 
         // Strength label
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              l10n.passwordStrength,
-              style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              child: Text(
-                strengthInfo.label,
-                key: ValueKey(strengthInfo.label),
-                style: AppTextStyles.labelSmall.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: strengthInfo.color,
+        Builder(
+          builder: (context) {
+            final colorScheme = Theme.of(context).colorScheme;
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  l10n.passwordStrength,
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
-              ),
-            ),
-          ],
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: Text(
+                    strengthInfo.label,
+                    key: ValueKey(strengthInfo.label),
+                    style: AppTextStyles.labelSmall.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: strengthInfo.color,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
 
         // Requirements checklist
@@ -128,20 +138,37 @@ class PasswordStrengthIndicator extends StatelessWidget {
     return strength.clamp(0, 4);
   }
 
-  _StrengthInfo _getStrengthInfo(int strength, AppLocalizations l10n) {
+  _StrengthInfo _getStrengthInfo(
+    int strength,
+    AppLocalizations l10n,
+    BuildContext context,
+  ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     switch (strength) {
       case 0:
-        return _StrengthInfo('', Colors.grey);
+        return _StrengthInfo('', Theme.of(context).colorScheme.outline);
       case 1:
-        return _StrengthInfo(l10n.passwordStrengthWeak, Colors.red);
+        return _StrengthInfo(
+          l10n.passwordStrengthWeak,
+          isDark ? AppColors.darkError : AppColors.error,
+        );
       case 2:
-        return _StrengthInfo(l10n.passwordStrengthFair, Colors.orange);
+        return _StrengthInfo(
+          l10n.passwordStrengthFair,
+          isDark ? AppColors.darkWarning : AppColors.warning,
+        );
       case 3:
-        return _StrengthInfo(l10n.passwordStrengthGood, Colors.lightGreen);
+        return _StrengthInfo(
+          l10n.passwordStrengthGood,
+          isDark ? AppColors.darkInfo : AppColors.info,
+        );
       case 4:
-        return _StrengthInfo(l10n.passwordStrengthStrong, Colors.green);
+        return _StrengthInfo(
+          l10n.passwordStrengthStrong,
+          isDark ? AppColors.darkSuccess : AppColors.success,
+        );
       default:
-        return _StrengthInfo('', Colors.grey);
+        return _StrengthInfo('', Theme.of(context).colorScheme.outline);
     }
   }
 }
@@ -162,6 +189,10 @@ class _RequirementItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(
@@ -173,19 +204,19 @@ class _RequirementItem extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isMet
-                  ? Colors.green.withValues(alpha: 0.1)
-                  : AppColors.textSecondary.withValues(alpha: 0.1),
+                  ? successColor.withValues(alpha: 0.1)
+                  : colorScheme.outline.withValues(alpha: 0.1),
               border: Border.all(
                 color: isMet
-                    ? Colors.green
-                    : AppColors.textSecondary.withValues(alpha: 0.3),
+                    ? successColor
+                    : colorScheme.outline.withValues(alpha: 0.3),
                 width: 1.5,
               ),
             ),
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
               child: isMet
-                  ? const Icon(Icons.check, size: 12, color: Colors.green)
+                  ? Icon(Icons.check, size: 12, color: successColor)
                   : const SizedBox.shrink(),
             ),
           ),
@@ -194,7 +225,7 @@ class _RequirementItem extends StatelessWidget {
             child: Text(
               label,
               style: AppTextStyles.labelSmall.copyWith(
-                color: isMet ? Colors.green : AppColors.textSecondary,
+                color: isMet ? successColor : colorScheme.onSurfaceVariant,
                 fontWeight: isMet ? FontWeight.w500 : FontWeight.normal,
               ),
             ),
@@ -214,7 +245,8 @@ class CompactPasswordStrength extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strength = _calculateStrength(password);
-    final color = _getColor(strength);
+    final color = _getColor(strength, context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -227,7 +259,7 @@ class CompactPasswordStrength extends StatelessWidget {
             shape: BoxShape.circle,
             color: index < strength
                 ? color
-                : Colors.grey.withValues(alpha: 0.3),
+                : colorScheme.outline.withValues(alpha: 0.3),
           ),
         );
       }),
@@ -250,18 +282,19 @@ class CompactPasswordStrength extends StatelessWidget {
     return strength.clamp(0, 4);
   }
 
-  Color _getColor(int strength) {
+  Color _getColor(int strength, BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     switch (strength) {
       case 1:
-        return Colors.red;
+        return isDark ? AppColors.darkError : AppColors.error;
       case 2:
-        return Colors.orange;
+        return isDark ? AppColors.darkWarning : AppColors.warning;
       case 3:
-        return Colors.lightGreen;
+        return isDark ? AppColors.darkInfo : AppColors.info;
       case 4:
-        return Colors.green;
+        return isDark ? AppColors.darkSuccess : AppColors.success;
       default:
-        return Colors.grey;
+        return Theme.of(context).colorScheme.outline;
     }
   }
 }

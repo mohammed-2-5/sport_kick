@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium rating filter chips for reviews.
@@ -119,6 +118,8 @@ class _FilterChipState extends State<_FilterChip>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) {
@@ -135,19 +136,26 @@ class _FilterChipState extends State<_FilterChip>
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
             gradient: widget.isSelected
-                ? const LinearGradient(
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                ? LinearGradient(
+                    colors: [
+                      colorScheme.primary,
+                      colorScheme.primary.withValues(alpha: 0.8),
+                    ],
                   )
                 : null,
-            color: widget.isSelected ? null : AppColors.backgroundLight,
+            color: widget.isSelected
+                ? null
+                : colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(22),
             border: Border.all(
-              color: widget.isSelected ? Colors.transparent : AppColors.border,
+              color: widget.isSelected
+                  ? Colors.transparent
+                  : colorScheme.outline,
             ),
             boxShadow: widget.isSelected
                 ? [
                     BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.3),
+                      color: colorScheme.primary.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -161,7 +169,9 @@ class _FilterChipState extends State<_FilterChip>
                 Icon(
                   Icons.star_rounded,
                   size: 16,
-                  color: widget.isSelected ? Colors.white : Colors.amber,
+                  color: widget.isSelected
+                      ? colorScheme.onPrimary
+                      : Colors.amber,
                 ),
                 const SizedBox(width: 4),
                 Text(
@@ -170,8 +180,8 @@ class _FilterChipState extends State<_FilterChip>
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: widget.isSelected
-                        ? Colors.white
-                        : AppColors.textPrimary,
+                        ? colorScheme.onPrimary
+                        : colorScheme.onSurface,
                   ),
                 ),
               ] else
@@ -181,8 +191,8 @@ class _FilterChipState extends State<_FilterChip>
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: widget.isSelected
-                        ? Colors.white
-                        : AppColors.textPrimary,
+                        ? colorScheme.onPrimary
+                        : colorScheme.onSurface,
                   ),
                 ),
               if (widget.count != null) ...[
@@ -194,8 +204,8 @@ class _FilterChipState extends State<_FilterChip>
                   ),
                   decoration: BoxDecoration(
                     color: widget.isSelected
-                        ? Colors.white.withValues(alpha: 0.2)
-                        : AppColors.textSecondary.withValues(alpha: 0.1),
+                        ? colorScheme.onPrimary.withValues(alpha: 0.2)
+                        : colorScheme.onSurfaceVariant.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
@@ -204,8 +214,8 @@ class _FilterChipState extends State<_FilterChip>
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       color: widget.isSelected
-                          ? Colors.white
-                          : AppColors.textSecondary,
+                          ? colorScheme.onPrimary
+                          : colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ),

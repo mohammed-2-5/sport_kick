@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
@@ -37,6 +36,7 @@ class CreateReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final authState = context.read<AuthCubit>().state;
     final userId = authState is Authenticated ? authState.user.id : null;
 
@@ -53,7 +53,7 @@ class CreateReviewPage extends StatelessWidget {
       child: BlocListener<ReviewFormCubit, ReviewFormState>(
         listener: (context, state) => _handleStateChange(context, state),
         child: Scaffold(
-          backgroundColor: AppColors.lightBackground,
+          backgroundColor: colorScheme.surface,
           body: Column(
             children: [
               PremiumCurvedHeader(

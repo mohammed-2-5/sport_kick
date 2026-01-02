@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -42,6 +41,9 @@ class _LoginBodyState extends State<LoginBody> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+    final textTheme = context.textTheme;
+
     return BlocBuilder<LoginCubit, LoginState>(
       builder: (context, state) {
         return Padding(
@@ -91,7 +93,7 @@ class _LoginBodyState extends State<LoginBody> {
                       children: [
                         Checkbox(
                           value: state.rememberMe,
-                          activeColor: AppColors.primary,
+                          activeColor: colorScheme.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),
@@ -100,8 +102,8 @@ class _LoginBodyState extends State<LoginBody> {
                         ),
                         Text(
                           context.l10n.rememberMe,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textSecondary,
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -112,8 +114,9 @@ class _LoginBodyState extends State<LoginBody> {
                       },
                       child: Text(
                         context.l10n.forgotPassword,
-                        style: AppTextStyles.labelMediumBold.copyWith(
-                          color: AppColors.primary,
+                        style: textTheme.labelMedium?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -138,8 +141,8 @@ class _LoginBodyState extends State<LoginBody> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         context.l10n.or,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ),
@@ -155,16 +158,17 @@ class _LoginBodyState extends State<LoginBody> {
                   children: [
                     Text(
                       context.l10n.dontHaveAccount,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                     TextButton(
                       onPressed: () => context.pushNamed('register'),
                       child: Text(
                         context.l10n.signUp,
-                        style: AppTextStyles.bodyMediumBold.copyWith(
-                          color: AppColors.primary,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -179,30 +183,28 @@ class _LoginBodyState extends State<LoginBody> {
   }
 
   Widget _buildModeSwitcher(BuildContext context, String currentMode) {
+    final colorScheme = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Row(
         children: [
           _buildModeOption(
             context,
             label: context.l10n.user,
-            isSelected: currentMode == context.l10n.userRole,
-            onTap: () => context.read<LoginCubit>().changeLoginMode(
-              context.l10n.userRole,
-            ),
+            isSelected: currentMode == 'user',
+            onTap: () => context.read<LoginCubit>().changeLoginMode('user'),
           ),
           _buildModeOption(
             context,
             label: context.l10n.fieldOwner,
-            isSelected: currentMode == context.l10n.adminRole,
-            onTap: () => context.read<LoginCubit>().changeLoginMode(
-              context.l10n.adminRole,
-            ),
+            isSelected: currentMode == 'admin',
+            onTap: () => context.read<LoginCubit>().changeLoginMode('admin'),
           ),
         ],
       ),
@@ -215,6 +217,9 @@ class _LoginBodyState extends State<LoginBody> {
     required bool isSelected,
     required VoidCallback onTap,
   }) {
+    final colorScheme = context.colors;
+    final textTheme = context.textTheme;
+
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -222,12 +227,12 @@ class _LoginBodyState extends State<LoginBody> {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : Colors.transparent,
+            color: isSelected ? colorScheme.primary : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.3),
+                      color: colorScheme.primary.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -238,9 +243,12 @@ class _LoginBodyState extends State<LoginBody> {
             label,
             textAlign: TextAlign.center,
             style: isSelected
-                ? AppTextStyles.labelMediumBold.copyWith(color: Colors.white)
-                : AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.textSecondary,
+                ? textTheme.labelMedium?.copyWith(
+                    color: colorScheme.onPrimary,
+                    fontWeight: FontWeight.bold,
+                  )
+                : textTheme.labelMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
                   ),
           ),
         ),

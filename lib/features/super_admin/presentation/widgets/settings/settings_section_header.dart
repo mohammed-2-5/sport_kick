@@ -13,15 +13,16 @@ class SettingsSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
-        Icon(icon, size: 20, color: Colors.grey[700]),
+        Icon(icon, size: 20, color: colorScheme.onSurfaceVariant),
         const SizedBox(width: 8),
         Text(
           title,
-          style: AppTextStyles.withColor(
-            AppTextStyles.titleMediumBold,
-            Colors.grey[800]!,
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: colorScheme.onSurface,
           ),
         ),
       ],
