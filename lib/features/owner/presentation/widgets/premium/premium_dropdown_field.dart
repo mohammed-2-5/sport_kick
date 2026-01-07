@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium dropdown field.
@@ -29,6 +28,7 @@ class PremiumDropdownField<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,15 +36,15 @@ class PremiumDropdownField<T> extends StatelessWidget {
           label,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: colorScheme.outlineVariant),
           ),
           child: DropdownButtonFormField<T>(
             initialValue: value,
@@ -54,7 +54,7 @@ class PremiumDropdownField<T> extends StatelessWidget {
                 child: Text(
                   itemLabel(item),
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               );
@@ -62,7 +62,11 @@ class PremiumDropdownField<T> extends StatelessWidget {
             onChanged: onChanged,
             decoration: InputDecoration(
               prefixIcon: prefixIcon != null
-                  ? Icon(prefixIcon, size: 20, color: AppColors.textSecondary)
+                  ? Icon(
+                      prefixIcon,
+                      size: 20,
+                      color: colorScheme.onSurfaceVariant,
+                    )
                   : null,
               border: InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(
@@ -70,10 +74,10 @@ class PremiumDropdownField<T> extends StatelessWidget {
                 vertical: 14,
               ),
             ),
-            dropdownColor: Colors.white,
-            icon: const Icon(
+            dropdownColor: colorScheme.surface,
+            icon: Icon(
               Icons.keyboard_arrow_down,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ),

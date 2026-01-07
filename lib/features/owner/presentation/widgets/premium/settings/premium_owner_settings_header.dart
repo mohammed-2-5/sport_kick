@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium settings header with navy gradient and glassmorphism.
 class PremiumOwnerSettingsHeader extends StatelessWidget {
@@ -14,13 +14,7 @@ class PremiumOwnerSettingsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      decoration: BoxDecoration(gradient: context.navyGradient),
       child: SafeArea(
         bottom: false,
         child: Padding(

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -35,6 +34,7 @@ class PremiumOwnerProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Column(
         children: [
@@ -43,15 +43,18 @@ class PremiumOwnerProfileCard extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                    colors: [
+                      colorScheme.secondary,
+                      colorScheme.secondaryContainer,
+                    ],
                   ),
                 ),
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundColor: Colors.white,
+                  backgroundColor: colorScheme.surface,
                   child: imageUrl != null
                       ? ClipOval(
                           child: CachedNetworkImage(
@@ -77,16 +80,16 @@ class PremiumOwnerProfileCard extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [
-                            AppColors.accentCyan,
-                            AppColors.accentCyanDark,
+                            colorScheme.secondary,
+                            colorScheme.secondaryContainer,
                           ],
                         ),
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.accentCyan.withValues(alpha: 0.3),
+                            color: colorScheme.secondary.withValues(alpha: 0.3),
                             blurRadius: 8,
                             spreadRadius: 2,
                           ),
@@ -108,7 +111,7 @@ class PremiumOwnerProfileCard extends StatelessWidget {
             name,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -121,13 +124,13 @@ class PremiumOwnerProfileCard extends StatelessWidget {
                 Icon(
                   Icons.email,
                   size: 14,
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
                 const SizedBox(width: 6),
                 Text(
                   email!,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.8),
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -141,13 +144,13 @@ class PremiumOwnerProfileCard extends StatelessWidget {
                 Icon(
                   Icons.phone,
                   size: 14,
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
                 const SizedBox(width: 6),
                 Text(
                   phone!,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.8),
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -166,7 +169,11 @@ class PremiumOwnerProfileCard extends StatelessWidget {
                   icon: Icons.sports_soccer,
                 ),
               ),
-              Container(width: 1, height: 40, color: AppColors.border),
+              Container(
+                width: 1,
+                height: 40,
+                color: colorScheme.outlineVariant,
+              ),
               Expanded(
                 child: _StatItem(
                   label: context.l10n.bookings,
@@ -198,13 +205,14 @@ class _InitialsAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       width: 96,
       height: 96,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
-          colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+          colors: [colorScheme.secondary, colorScheme.secondaryContainer],
         ),
       ),
       child: Center(
@@ -234,22 +242,23 @@ class _StatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
-        Icon(icon, size: 24, color: AppColors.accentCyan),
+        Icon(icon, size: 24, color: colorScheme.secondary),
         const SizedBox(height: 8),
         Text(
           value,
           style: AppTextStyles.headlineSmall.copyWith(
             fontWeight: FontWeight.w800,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: AppTextStyles.labelSmall.copyWith(
-            color: AppColors.textSecondary.withValues(alpha: 0.7),
+            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
           ),
         ),
       ],

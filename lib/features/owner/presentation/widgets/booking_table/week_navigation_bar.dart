@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -30,7 +29,7 @@ class WeekNavigationBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.08),
+            color: colorScheme.shadow.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -64,14 +63,14 @@ class WeekNavigationBar extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.goldAccent.withValues(alpha: 0.15),
+                          color: colorScheme.tertiary.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           context.l10n.goToToday,
                           style: AppTextStyles.labelSmall.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: AppColors.goldAccent,
+                            color: colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -99,7 +98,7 @@ class _NavButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.navyDeep,
+      color: Theme.of(context).colorScheme.primary,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,

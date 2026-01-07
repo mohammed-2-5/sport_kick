@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -33,8 +32,9 @@ class PremiumOwnerDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       child: Column(
         children: [
           // Header
@@ -102,7 +102,7 @@ class PremiumOwnerDrawer extends StatelessWidget {
             child: Text(
               context.l10n.sportKickV100,
               style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.textSecondary.withValues(alpha: 0.5),
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
               ),
             ),
           ),
@@ -126,6 +126,7 @@ class _DrawerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 24,
@@ -133,9 +134,9 @@ class _DrawerHeader extends StatelessWidget {
         right: 20,
         bottom: 24,
       ),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
+          colors: [colorScheme.primary, colorScheme.primaryContainer],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -148,16 +149,16 @@ class _DrawerHeader extends StatelessWidget {
             height: 56,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.accentCyan, width: 2),
+              border: Border.all(color: colorScheme.secondary, width: 2),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.accentCyan.withValues(alpha: 0.3),
+                  color: colorScheme.secondary.withValues(alpha: 0.3),
                   blurRadius: 12,
                 ),
               ],
             ),
             child: CircleAvatar(
-              backgroundColor: AppColors.accentCyan.withValues(alpha: 0.2),
+              backgroundColor: colorScheme.secondary.withValues(alpha: 0.2),
               backgroundImage: avatarUrl != null
                   ? NetworkImage(avatarUrl!)
                   : null,
@@ -166,7 +167,7 @@ class _DrawerHeader extends StatelessWidget {
                       name.isNotEmpty ? name[0].toUpperCase() : context.l10n.o,
                       style: AppTextStyles.headlineSmall.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.secondary,
                       ),
                     )
                   : null,
@@ -183,7 +184,7 @@ class _DrawerHeader extends StatelessWidget {
                   name,
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    color: colorScheme.onPrimary,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -192,7 +193,7 @@ class _DrawerHeader extends StatelessWidget {
                 Text(
                   email,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white.withValues(alpha: 0.7),
+                    color: colorScheme.onPrimary.withValues(alpha: 0.7),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -204,14 +205,14 @@ class _DrawerHeader extends StatelessWidget {
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.accentCyan.withValues(alpha: 0.2),
+                    color: colorScheme.secondary.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     context.l10n.fieldOwner,
                     style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.accentCyan,
+                      color: colorScheme.secondary,
                     ),
                   ),
                 ),
@@ -271,6 +272,7 @@ class _DrawerItemState extends State<_DrawerItem>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) => _controller.reverse(),
@@ -289,7 +291,7 @@ class _DrawerItemState extends State<_DrawerItem>
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: widget.isSelected
-                ? AppColors.accentCyan.withValues(alpha: 0.1)
+                ? colorScheme.secondary.withValues(alpha: 0.1)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
           ),
@@ -301,16 +303,16 @@ class _DrawerItemState extends State<_DrawerItem>
                 height: 36,
                 decoration: BoxDecoration(
                   color: widget.isSelected
-                      ? AppColors.accentCyan.withValues(alpha: 0.15)
-                      : AppColors.backgroundLight,
+                      ? colorScheme.secondary.withValues(alpha: 0.15)
+                      : colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
                   widget.icon,
                   size: 20,
                   color: widget.isSelected
-                      ? AppColors.accentCyan
-                      : AppColors.textSecondary,
+                      ? colorScheme.secondary
+                      : colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(width: 12),
@@ -324,8 +326,8 @@ class _DrawerItemState extends State<_DrawerItem>
                         ? FontWeight.w600
                         : FontWeight.w500,
                     color: widget.isSelected
-                        ? AppColors.accentCyan
-                        : AppColors.textPrimary,
+                        ? colorScheme.secondary
+                        : colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -338,7 +340,7 @@ class _DrawerItemState extends State<_DrawerItem>
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: colorScheme.error,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
@@ -347,17 +349,17 @@ class _DrawerItemState extends State<_DrawerItem>
                         : widget.badgeCount.toString(),
                     style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: colorScheme.onError,
                     ),
                   ),
                 ),
 
               // Arrow for selected
               if (widget.isSelected)
-                const Icon(
+                Icon(
                   Icons.chevron_right,
                   size: 20,
-                  color: AppColors.accentCyan,
+                  color: colorScheme.secondary,
                 ),
             ],
           ),
@@ -403,6 +405,7 @@ class _LogoutButtonState extends State<_LogoutButton>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) => _controller.reverse(),
@@ -420,20 +423,20 @@ class _LogoutButtonState extends State<_LogoutButton>
           margin: const EdgeInsets.symmetric(horizontal: 16),
           padding: const EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
-            color: Colors.red.withValues(alpha: 0.1),
+            color: colorScheme.error.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
+            border: Border.all(color: colorScheme.error.withValues(alpha: 0.3)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.logout_rounded, color: Colors.red, size: 20),
+              Icon(Icons.logout_rounded, color: colorScheme.error, size: 20),
               const SizedBox(width: 8),
               Text(
                 context.l10n.logout,
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Colors.red,
+                  color: colorScheme.error,
                 ),
               ),
             ],

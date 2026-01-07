@@ -27,12 +27,12 @@ class PaymentInfoCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  gradient: _getPaymentMethodGradient(),
+                  gradient: _getPaymentMethodGradient(context),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   _getPaymentMethodIcon(),
-                  color: Colors.white,
+                  color: colorScheme.onPrimary,
                   size: 24,
                 ),
               ),
@@ -65,7 +65,7 @@ class PaymentInfoCard extends StatelessWidget {
           // Phone Number
           if (field.paymentPhone != null && field.paymentPhone!.isNotEmpty)
             GestureDetector(
-              onTap: () => _copyPhoneNumber(context),
+              onTap: () => copyPhoneNumber(context, field.paymentPhone!),
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -251,30 +251,37 @@ class PaymentInfoCard extends StatelessWidget {
     }
   }
 
-  LinearGradient _getPaymentMethodGradient() {
+  LinearGradient _getPaymentMethodGradient(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (field.paymentMethod) {
       case PaymentMethod.vodafoneCash:
-        return const LinearGradient(
-          colors: [Color(0xFFE60000), Color(0xFFCC0000)], // Vodafone red
+        // Vodafone red - brand color (intentional)
+        return LinearGradient(
+          colors: [
+            colorScheme.error,
+            colorScheme.error.withValues(alpha: 0.85),
+          ],
         );
       case PaymentMethod.instapay:
-        return const LinearGradient(
-          colors: [Color(0xFF1E3A5F), Color(0xFF0F1E32)], // InstaPay dark blue
+        // InstaPay dark blue - use primary for theme awareness
+        return LinearGradient(
+          colors: [
+            colorScheme.primary,
+            colorScheme.primary.withValues(alpha: 0.85),
+          ],
         );
     }
   }
 
-  void _copyPhoneNumber(BuildContext context) {
-    if (field.paymentPhone != null) {
-      Clipboard.setData(ClipboardData(text: field.paymentPhone!));
-      HapticFeedback.lightImpact();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.l10n.phoneCopied(field.paymentPhone!)),
-          behavior: SnackBarBehavior.floating,
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
+  static void copyPhoneNumber(BuildContext context, String phoneNumber) {
+    Clipboard.setData(ClipboardData(text: phoneNumber));
+    HapticFeedback.lightImpact();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(context.l10n.phoneCopied(phoneNumber)),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 }

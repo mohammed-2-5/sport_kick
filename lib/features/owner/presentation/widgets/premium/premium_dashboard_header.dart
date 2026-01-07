@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium dashboard header.
 ///
@@ -43,18 +43,15 @@ class PremiumDashboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        gradient: context.navyGradient,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.navyDeep.withValues(alpha: 0.3),
+            color: colorScheme.primary.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),

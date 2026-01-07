@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/premium_user_card.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -51,13 +52,15 @@ class PremiumUsersListContent extends StatelessWidget {
       return _EmptyState(message: emptyMessage);
     }
 
+    final colorScheme = Theme.of(context).colorScheme;
+
     return RefreshIndicator(
       onRefresh: () async {
         onRefresh();
         await Future.delayed(const Duration(milliseconds: 500));
       },
       color: AppColors.premiumGold,
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       child: _buildUsersList(context),
     );
   }
@@ -187,16 +190,17 @@ class _LoadingShimmerState extends State<_LoadingShimmer>
         return AnimatedBuilder(
           animation: _animation,
           builder: (context, child) {
+            final colorScheme = Theme.of(context).colorScheme;
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: const [
-                    AppColors.shimmerBase,
-                    AppColors.shimmerHighlight,
-                    AppColors.shimmerBase,
+                  colors: [
+                    colorScheme.shimmerBase,
+                    colorScheme.shimmerHighlight,
+                    colorScheme.shimmerBase,
                   ],
                   stops: [
                     (0.3 + _animation.value / 4).clamp(0.0, 1.0),
@@ -221,6 +225,8 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -240,15 +246,22 @@ class _EmptyState extends StatelessWidget {
             child: Icon(
               Icons.people_outline,
               size: 60,
-              color: AppColors.textSecondary.withValues(alpha: 0.5),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
           ),
           const SizedBox(height: 24),
-          Text(message, style: AppTextStyles.bold(AppTextStyles.titleMedium)),
+          Text(
+            message,
+            style: AppTextStyles.bold(
+              AppTextStyles.titleMedium,
+            ).copyWith(color: colorScheme.onSurface),
+          ),
           const SizedBox(height: 8),
           Text(
             context.l10n.tryAdjustingYourSearchOrFilters,
-            style: AppTextStyles.bodyMediumSecondary,
+            style: AppTextStyles.bodyMediumSecondary.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),

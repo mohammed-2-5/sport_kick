@@ -193,6 +193,81 @@ SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
+## Theme & Dark Mode
+
+The app uses Material 3 with comprehensive dark mode support.
+
+**Core Pattern:**
+```dart
+// Access theme-aware colors via BuildContext extension
+final colorScheme = Theme.of(context).colorScheme;
+final isDark = Theme.of(context).brightness == Brightness.dark;
+
+// Shortcuts via extension
+context.colors.primary
+context.colors.surface
+context.cardShadow  // Auto-adapts (empty in dark, shadow in light)
+
+// Semantic colors (success/error/warning) adapt to theme
+final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+```
+
+**Theme Management:** `ThemeCubit` stores preference in SharedPreferences
+
+**Key Files:**
+- `lib/core/theme/theme_cubit.dart` - State management
+- `lib/core/constants/app_theme.dart` - Light/Dark ThemeData
+- `lib/core/constants/app_colors.dart` - Color palette
+- `lib/core/theme/theme_extensions.dart` - Context extensions
+
+## Premium UI Components
+
+Reusable premium widgets in `lib/core/widgets/premium/`:
+
+**Animations** (`animations/micro_interactions.dart`):
+- `TapScaleAnimation` - Scale-down with haptic feedback
+- `BounceAnimation` - Spring-like bounce effect
+- `ShakeAnimation` - Horizontal shake for errors
+- `PulseAnimation` - Continuous pulsing
+- `SlideInAnimation` - Slide and fade entrance
+
+**Skeletons** (`skeletons/`): Shimmer loading states for all major screens
+**Transitions** (`transitions/`): Premium page transitions with hero animations
+**Cards/Buttons** (`premium_card.dart`, `premium_button.dart`): Theme-aware variants
+
+## Multi-Step Flows
+
+Complex features use dedicated flow cubits (separate from general CRUD):
+- `BookingFlowCubit` - Create booking wizard (date → time → confirm → success)
+- `CreateRecurringCubit` - Recurring booking setup
+
+**Pattern:**
+```dart
+// Flow cubit manages steps
+enum BookingFlowStep { selectDate, selectTime, confirm, success }
+
+// State tracks current step + accumulated data
+class BookingFlowActive {
+  final BookingFlowStep currentStep;
+  final DateTime selectedDate;
+  final TimeSlotEntity? selectedSlot;
+  // ...
+}
+```
+
+## Cubit Organization Patterns
+
+**Simple features:** Single cubit per feature (AuthCubit, FieldsCubit)
+
+**Complex features with sub-concerns:** Nested cubit folders
+```
+super_admin/presentation/cubit/
+  super_admin_cubit.dart              # Main cubit
+  admin_details/admin_details_cubit.dart
+  users_list/super_admin_users_list_cubit.dart
+  dashboard/super_admin_dashboard_cubit.dart
+```
+
 ## Naming Conventions
 
 - Cubits: `FeatureCubit` (AuthCubit, BookingCubit)
@@ -201,6 +276,7 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 - Models: `FeatureModel` (UserModel, FieldModel)
 - UseCases: `VerbNounUseCase` (GetAllFieldsUseCase, CreateBookingUseCase)
 - Files: snake_case (user_settings_page.dart)
+- Private helper methods: `_buildSectionName` or `_handleAction`
 
 ## Key Rules
 
@@ -210,6 +286,20 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 - Cubits are Factory (new instance), UseCases/Repositories are LazySingleton
 - Complex objects passed between routes via `state.extra`
 - Use named instances when same UseCase type exists for different roles
+- NEVER hardcode colors - always use Theme.of(context).colorScheme or AppColors with theme detection
+- Avoid magic numbers/strings - use named constants
+- Widget files should focus on UI only - no business logic, no direct API calls
+- Extract reusable widgets to avoid duplication
+- Use `context.colors`, `context.textTheme`, `context.cardShadow` extensions
+
+## Code Quality Standards
+
+See `docs/CODE_QUALITY_STANDARDS.md` for full details. Key principles:
+- Single Responsibility Principle - one widget/class does one thing
+- DRY - extract repeated code into reusables
+- Functions < 20 lines ideally
+- Meaningful names (booleans: `isActive`, `hasError`; functions: verb phrases)
+- No duplicate constants - define once in `core/constants` or feature domain layer
 
 ## Commit Convention
 

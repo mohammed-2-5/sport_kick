@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/fields/domain/entities/search_filters_entity.dart';
+import 'package:spo_kick/features/fields/presentation/extensions/search_filters_ui_extension.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 

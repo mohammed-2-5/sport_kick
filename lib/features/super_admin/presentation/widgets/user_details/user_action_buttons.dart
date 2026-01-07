@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Action buttons for user details page
 class UserActionButtons extends StatelessWidget {
@@ -31,9 +31,11 @@ class UserActionButtons extends StatelessWidget {
           ),
           style: ElevatedButton.styleFrom(
             backgroundColor: user.isActive
-                ? AppColors.error
-                : AppColors.success,
-            foregroundColor: Colors.white,
+                ? Theme.of(context).colorScheme.error
+                : Theme.of(context).colorScheme.success,
+            foregroundColor: user.isActive
+                ? Theme.of(context).colorScheme.onError
+                : Theme.of(context).colorScheme.onSuccess,
             padding: AdminUIConstants.paddingButton,
             shape: RoundedRectangleBorder(
               borderRadius: AdminUIConstants.borderRadiusMedium,

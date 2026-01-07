@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
@@ -26,14 +25,14 @@ class RecurringDurationSelector extends StatelessWidget {
           context.l10n.recurringDurationTitle,
           style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.navyDeep,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           context.l10n.recurringDurationSubtitle,
           style: AppTextStyles.labelMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: 16),
@@ -85,17 +84,21 @@ class _DurationCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.accentCyan.withValues(alpha: 0.1)
-              : Colors.white,
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
+              : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? AppColors.accentCyan : AppColors.border,
+            color: isSelected
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.outlineVariant,
             width: isSelected ? 2 : 1,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.accentCyan.withValues(alpha: 0.2),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.2),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -111,7 +114,9 @@ class _DurationCard extends StatelessWidget {
                 Icon(
                   Icons.timer_outlined,
                   size: 20,
-                  color: isSelected ? AppColors.accentCyan : AppColors.navyDeep,
+                  color: isSelected
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.onSurface,
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -122,8 +127,8 @@ class _DurationCard extends StatelessWidget {
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isSelected
-                        ? AppColors.accentCyan
-                        : AppColors.navyDeep,
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -134,8 +139,12 @@ class _DurationCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.accentCyan.withValues(alpha: 0.2)
-                    : AppColors.navyDeep.withValues(alpha: 0.05),
+                    ? Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: 0.2)
+                    : Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
@@ -147,7 +156,9 @@ class _DurationCard extends StatelessWidget {
                 ),
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: isSelected ? AppColors.accentCyan : AppColors.navyDeep,
+                  color: isSelected
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),
@@ -156,16 +167,16 @@ class _DurationCard extends StatelessWidget {
             Text(
               context.l10n.perWeek,
               style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             // Selection indicator
             if (isSelected) ...[
               const SizedBox(height: 8),
-              const Icon(
+              Icon(
                 Icons.check_circle_rounded,
                 size: 20,
-                color: AppColors.accentCyan,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ],
           ],

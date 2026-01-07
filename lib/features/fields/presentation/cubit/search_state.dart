@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 /// Base state for search feature.
-abstract class SearchState extends Equatable {
+sealed class SearchState extends Equatable {
   const SearchState();
 
   @override

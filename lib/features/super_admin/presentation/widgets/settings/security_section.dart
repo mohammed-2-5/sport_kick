@@ -21,7 +21,6 @@ class SecuritySection extends StatelessWidget {
           onTap: () => context.pushNamed('changePassword'),
         ),
         const Divider(height: 1, indent: 56),
-        // Login Activity - To be implemented
         SettingsTile(
           icon: Icons.history,
           title: context.l10n.loginActivity,
@@ -29,14 +28,6 @@ class SecuritySection extends StatelessWidget {
           onTap: () =>
               showComingSoonDialog(context, context.l10n.loginActivity),
         ),
-        // Two-Factor Authentication - Future implementation
-        // const Divider(height: 1, indent: 56),
-        // SettingsTile(
-        //   icon: Icons.security,
-        //   title: context.l10n.twoFactorAuthentication,
-        //   subtitle: context.l10n.addAnExtraLayerOfSecurity,
-        //   onTap: () => showComingSoonDialog(context, '2FA Settings'),
-        // ),
       ],
     );
   }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 class FieldFormDropdown extends StatelessWidget {
@@ -26,22 +24,28 @@ class FieldFormDropdown extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.2),
+          color: Theme.of(context).colorScheme.outlineVariant,
           width: 1.5,
         ),
-        boxShadow: AppShadows.small,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.primary),
+          Icon(icon, color: Theme.of(context).colorScheme.primary),
           const SizedBox(width: 12),
           Text(
             label,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,
             ),
           ),

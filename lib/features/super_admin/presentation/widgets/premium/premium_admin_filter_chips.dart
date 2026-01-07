@@ -124,10 +124,14 @@ class _FilterChipState extends State<_FilterChip>
                     colors: [AppColors.premiumGold, AppColors.premiumGoldDark],
                   )
                 : null,
-            color: widget.isSelected ? null : Colors.white,
+            color: widget.isSelected
+                ? null
+                : Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: widget.isSelected ? Colors.transparent : AppColors.border,
+              color: widget.isSelected
+                  ? Colors.transparent
+                  : Theme.of(context).colorScheme.outline,
             ),
             boxShadow: widget.isSelected
                 ? [
@@ -148,7 +152,7 @@ class _FilterChipState extends State<_FilterChip>
                   fontWeight: FontWeight.w600,
                   color: widget.isSelected
                       ? Colors.white
-                      : AppColors.textPrimary,
+                      : Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const SizedBox(width: 6),
@@ -157,7 +161,7 @@ class _FilterChipState extends State<_FilterChip>
                 decoration: BoxDecoration(
                   color: widget.isSelected
                       ? Colors.white.withValues(alpha: 0.2)
-                      : AppColors.backgroundLight,
+                      : Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
@@ -166,7 +170,7 @@ class _FilterChipState extends State<_FilterChip>
                     fontWeight: FontWeight.w700,
                     color: widget.isSelected
                         ? Colors.white
-                        : AppColors.textSecondary,
+                        : Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),

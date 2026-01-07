@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -97,7 +96,7 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
                   : context.l10n.createCategory,
               style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 24),
@@ -120,7 +119,7 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
               context.l10n.iconField,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 8),
@@ -135,21 +134,25 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
                     height: 60,
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? AppColors.goldAccent.withValues(alpha: 0.2)
-                          : AppColors.backgroundLight,
+                          ? Theme.of(
+                              context,
+                            ).colorScheme.tertiary.withValues(alpha: 0.2)
+                          : Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         color: isSelected
-                            ? AppColors.goldAccent
-                            : AppColors.divider,
+                            ? Theme.of(context).colorScheme.tertiary
+                            : Theme.of(context).colorScheme.outline,
                         width: 2,
                       ),
                     ),
                     child: Icon(
                       option['icon'],
                       color: isSelected
-                          ? AppColors.goldAccent
-                          : AppColors.textSecondary,
+                          ? Theme.of(context).colorScheme.tertiary
+                          : Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 );
@@ -183,8 +186,8 @@ class _SportCategoryFormDialogState extends State<SportCategoryFormDialog> {
                 ElevatedButton(
                   onPressed: _submit,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.goldAccent,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.tertiary,
+                    foregroundColor: Theme.of(context).colorScheme.onTertiary,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,
                       vertical: 12,

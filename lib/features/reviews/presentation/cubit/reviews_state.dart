@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/reviews/domain/entities/review_entity.dart';
 
 /// Base class for all review states
-abstract class ReviewsState extends Equatable {
+sealed class ReviewsState extends Equatable {
   const ReviewsState();
 
   @override

@@ -5,7 +5,7 @@ import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart
 import '../../domain/entities/booking_status.dart';
 
 /// Base class for all booking states.
-abstract class BookingState extends Equatable {
+sealed class BookingState extends Equatable {
   const BookingState();
 
   @override

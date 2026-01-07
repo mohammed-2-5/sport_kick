@@ -59,9 +59,13 @@ class _SearchPageState extends State<SearchPage> {
           },
         ),
         BlocProvider(
-          create: (context) =>
-              SearchCubit(fieldsCubit: context.read<FieldsCubit>())
-                ..loadHistory(),
+          create: (context) {
+            final fieldsCubit = context.read<FieldsCubit>();
+            return SearchCubit(
+              onSearch: (query) => fieldsCubit.searchFields(query),
+              onCityChange: (cityId) => fieldsCubit.setCurrentCity(cityId),
+            )..loadHistory();
+          },
         ),
       ],
       child: BlocListener<CityCubit, CityState>(

@@ -14,6 +14,7 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cub
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_fields/premium_all_field_card.dart';
 import 'package:spo_kick/features/super_admin/utils/field_filter_helper.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium All Fields view with advanced filtering.
 ///
@@ -71,7 +72,7 @@ class _PremiumAllFieldsViewState extends State<PremiumAllFieldsView> {
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: _buildBody(context, state),
         );
       },
@@ -229,15 +230,9 @@ class _SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.06),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: TextField(
         controller: controller,
@@ -288,19 +283,19 @@ class _StatsRow extends StatelessWidget {
         _StatChip(
           label: context.l10n.total,
           count: totalCount,
-          color: AppColors.navyDeep,
+          color: Theme.of(context).colorScheme.primary,
         ),
         const SizedBox(width: 12),
         _StatChip(
           label: context.l10n.active,
           count: activeCount,
-          color: const Color(0xFF10B981),
+          color: Theme.of(context).colorScheme.success,
         ),
         const SizedBox(width: 12),
         _StatChip(
           label: context.l10n.inactive,
           count: inactiveCount,
-          color: const Color(0xFFEF4444),
+          color: Theme.of(context).colorScheme.error,
         ),
       ],
     );
@@ -413,17 +408,21 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.navyDeep : Colors.white,
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected
-                ? AppColors.navyDeep
-                : AppColors.border.withValues(alpha: 0.5),
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.outline.withValues(alpha: 0.5),
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.navyDeep.withValues(alpha: 0.3),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -434,7 +433,9 @@ class _FilterChip extends StatelessWidget {
           label,
           style: AppTextStyles.labelMedium.copyWith(
             fontWeight: FontWeight.w600,
-            color: isSelected ? Colors.white : AppColors.textSecondary,
+            color: isSelected
+                ? Theme.of(context).colorScheme.onPrimary
+                : Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
       ),
@@ -579,12 +580,16 @@ class _EmptyState extends StatelessWidget {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: AppColors.accentCyan.withValues(alpha: 0.1),
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.sports_soccer_rounded,
-                color: AppColors.accentCyan.withValues(alpha: 0.6),
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondary.withValues(alpha: 0.6),
                 size: 48,
               ),
             ),

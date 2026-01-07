@@ -33,12 +33,6 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
     super.dispose();
   }
 
-  void _onSubmit() {
-    if (_formKey.currentState?.validate() ?? false) {
-      context.read<AuthCubit>().resetPassword(_emailController.text.trim());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -46,97 +40,43 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Info text
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Theme.of(
-                context,
-              ).colorScheme.secondary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Theme.of(
-                  context,
-                ).colorScheme.secondary.withValues(alpha: 0.2),
-              ),
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.info_outline,
-                  color: AppColors.accentCyan,
-                  size: 20,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    context.l10n.resetPasswordSubtitle,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: Colors.white.withValues(alpha: 0.8),
-                      height: 1.4,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
+          const _InfoBox(),
           const SizedBox(height: 28),
-
-          // Email field
-          PremiumAuthTextField(
-            label: context.l10n.emailAddress,
-            hintText: context.l10n.enterYourEmail,
-            controller: _emailController,
-            prefixIcon: Icons.email_outlined,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.done,
-            isDark: true,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return context.l10n.fieldRequired;
-              }
-              if (!RegExp(
-                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-              ).hasMatch(value)) {
-                return context.l10n.enterValidEmail;
-              }
-              return null;
-            },
-          ),
-
+          _EmailField(controller: _emailController),
           const SizedBox(height: 32),
-
-          // Submit button
-          PremiumButton(
-            label: context.l10n.sendResetLink,
-            onPressed: _onSubmit,
-            icon: Icons.send,
-            fullWidth: true,
-          ),
-
+          _SubmitButton(formKey: _formKey, emailController: _emailController),
           const SizedBox(height: 24),
+          const _BackToLoginLink(),
+        ],
+      ),
+    );
+  }
+}
 
-          // Back to login
-          Center(
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.arrow_back,
-                    size: 18,
-                    color: Colors.white.withValues(alpha: 0.7),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    context.l10n.backToLogin,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: Colors.white.withValues(alpha: 0.7),
-                    ),
-                  ),
-                ],
+class _InfoBox extends StatelessWidget {
+  const _InfoBox();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.2),
+        ),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.info_outline, color: AppColors.accentCyan, size: 20),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              context.l10n.resetPasswordSubtitle,
+              style: AppTextStyles.bodySmall.copyWith(
+                color: Colors.white.withValues(alpha: 0.8),
+                height: 1.4,
               ),
             ),
           ),
@@ -146,187 +86,76 @@ class _PremiumForgotPasswordFormState extends State<PremiumForgotPasswordForm> {
   }
 }
 
-/// Success screen after email sent.
-class PremiumForgotPasswordSuccess extends StatefulWidget {
-  final String email;
-  final VoidCallback onBackToLogin;
+class _EmailField extends StatelessWidget {
+  final TextEditingController controller;
 
-  const PremiumForgotPasswordSuccess({
-    super.key,
-    required this.email,
-    required this.onBackToLogin,
-  });
+  const _EmailField({required this.controller});
 
   @override
-  State<PremiumForgotPasswordSuccess> createState() =>
-      _PremiumForgotPasswordSuccessState();
+  Widget build(BuildContext context) {
+    return PremiumAuthTextField(
+      label: context.l10n.emailAddress,
+      hintText: context.l10n.enterYourEmail,
+      controller: controller,
+      prefixIcon: Icons.email_outlined,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.done,
+      isDark: true,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return context.l10n.fieldRequired;
+        }
+        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+          return context.l10n.enterValidEmail;
+        }
+        return null;
+      },
+    );
+  }
 }
 
-class _PremiumForgotPasswordSuccessState
-    extends State<PremiumForgotPasswordSuccess>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _opacityAnimation;
+class _SubmitButton extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController emailController;
+
+  const _SubmitButton({required this.formKey, required this.emailController});
 
   @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
+  Widget build(BuildContext context) {
+    return PremiumButton(
+      label: context.l10n.sendResetLink,
+      onPressed: () {
+        if (formKey.currentState?.validate() ?? false) {
+          context.read<AuthCubit>().resetPassword(emailController.text.trim());
+        }
+      },
+      icon: Icons.send,
+      fullWidth: true,
     );
-
-    _scaleAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
-
-    _opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.3, 1.0)),
-    );
-
-    _controller.forward();
   }
+}
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class _BackToLoginLink extends StatelessWidget {
+  const _BackToLoginLink();
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
+      child: GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Success icon
-            ScaleTransition(
-              scale: _scaleAnimation,
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.secondary,
-                      Theme.of(context).colorScheme.secondaryContainer,
-                    ],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.secondary.withValues(alpha: 0.4),
-                      blurRadius: 20,
-                      spreadRadius: 5,
-                    ),
-                  ],
-                ),
-                child: const Icon(
-                  Icons.mark_email_read_outlined,
-                  size: 50,
-                  color: Colors.white,
-                ),
-              ),
+            Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: Colors.white.withValues(alpha: 0.7),
             ),
-
-            const SizedBox(height: 32),
-
-            // Title
-            FadeTransition(
-              opacity: _opacityAnimation,
-              child: Text(
-                context.l10n.resetEmailSentTitle,
-                style: AppTextStyles.headlineMedium.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Message
-            FadeTransition(
-              opacity: _opacityAnimation,
-              child: Text(
-                context.l10n.resetEmailSentMessage,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: Colors.white.withValues(alpha: 0.7),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-            // Email
-            FadeTransition(
-              opacity: _opacityAnimation,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  widget.email,
-                  style: AppTextStyles.labelLarge.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Instructions
-            FadeTransition(
-              opacity: _opacityAnimation,
-              child: Text(
-                context.l10n.resetLinkExpires,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: Colors.white.withValues(alpha: 0.6),
-                  height: 1.5,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            // Back to login button
-            FadeTransition(
-              opacity: _opacityAnimation,
-              child: SizedBox(
-                width: 200,
-                child: PremiumButton(
-                  label: context.l10n.backToLogin,
-                  onPressed: widget.onBackToLogin,
-                  icon: Icons.login,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Didn't receive email
-            FadeTransition(
-              opacity: _opacityAnimation,
-              child: Text(
-                context.l10n.checkSpamFolder,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: Colors.white.withValues(alpha: 0.5),
-                ),
+            const SizedBox(width: 8),
+            Text(
+              context.l10n.backToLogin,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: Colors.white.withValues(alpha: 0.7),
               ),
             ),
           ],

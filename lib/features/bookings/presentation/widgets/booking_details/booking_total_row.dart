@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
@@ -26,11 +25,15 @@ class BookingTotalRow extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            gradient: AppColors.cyanGradient,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [colorScheme.primary, colorScheme.primaryContainer],
+            ),
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: AppColors.accentCyan.withValues(alpha: 0.3),
+                color: colorScheme.primary.withValues(alpha: 0.3),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
@@ -41,7 +44,7 @@ class BookingTotalRow extends StatelessWidget {
             style: AppTextStyles.headlineSmall.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              color: AppColors.textOnPrimary,
+              color: colorScheme.onPrimary,
             ),
           ),
         ),

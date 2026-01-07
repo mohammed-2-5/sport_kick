@@ -27,6 +27,8 @@ class PremiumSettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -52,7 +54,14 @@ class PremiumSettingsSection extends StatelessWidget {
               child: Icon(icon, size: 20, color: Colors.white),
             ),
             const SizedBox(width: 12),
-            Expanded(child: Text(title, style: AppTextStyles.titleMediumBold)),
+            Expanded(
+              child: Text(
+                title,
+                style: AppTextStyles.titleMediumBold.copyWith(
+                  color: colorScheme.onSurface,
+                ),
+              ),
+            ),
             if (isSaving) ...[
               SizedBox(
                 width: 16,
@@ -85,7 +94,7 @@ class PremiumSettingsSection extends StatelessWidget {
                   Divider(
                     height: 1,
                     indent: 56,
-                    color: AppColors.border.withValues(alpha: 0.5),
+                    color: colorScheme.outline.withValues(alpha: 0.5),
                   ),
               ],
             ],

@@ -36,14 +36,14 @@ class _ManageSportCategoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: BlocConsumer<SportCategoriesCubit, SportCategoriesState>(
         listener: (context, state) {
           if (state is SportCategoryOperationSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.green,
+                backgroundColor: Theme.of(context).colorScheme.error,
               ),
             );
             // Reload after showing success message
@@ -55,7 +55,7 @@ class _ManageSportCategoriesView extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.red,
+                backgroundColor: Theme.of(context).colorScheme.error,
               ),
             );
           }
@@ -177,8 +177,8 @@ class _ManageSportCategoriesView extends StatelessWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             child: Text(context.l10n.delete),
           ),

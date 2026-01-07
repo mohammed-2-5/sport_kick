@@ -1,7 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/create_booking_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/find_consecutive_slot_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_available_time_slots_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/group_time_slots_by_period_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/validate_slot_selection_usecase.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_state.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
@@ -18,12 +21,21 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 class BookingFlowCubit extends Cubit<BookingFlowState> {
   final GetAvailableTimeSlotsUseCase _getAvailableTimeSlotsUseCase;
   final CreateBookingUseCase _createBookingUseCase;
+  final GroupTimeSlotsByPeriodUseCase _groupTimeSlotsByPeriodUseCase;
+  final FindConsecutiveSlotUseCase _findConsecutiveSlotUseCase;
+  final ValidateSlotSelectionUseCase _validateSlotSelectionUseCase;
 
   BookingFlowCubit({
     required GetAvailableTimeSlotsUseCase getAvailableTimeSlotsUseCase,
     required CreateBookingUseCase createBookingUseCase,
+    required GroupTimeSlotsByPeriodUseCase groupTimeSlotsByPeriodUseCase,
+    required FindConsecutiveSlotUseCase findConsecutiveSlotUseCase,
+    required ValidateSlotSelectionUseCase validateSlotSelectionUseCase,
   }) : _getAvailableTimeSlotsUseCase = getAvailableTimeSlotsUseCase,
        _createBookingUseCase = createBookingUseCase,
+       _groupTimeSlotsByPeriodUseCase = groupTimeSlotsByPeriodUseCase,
+       _findConsecutiveSlotUseCase = findConsecutiveSlotUseCase,
+       _validateSlotSelectionUseCase = validateSlotSelectionUseCase,
        super(const BookingFlowInitial());
 
   /// Initialize the booking flow for a specific field.
@@ -106,7 +118,7 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
         );
       },
       (timeSlots) {
-        final slotsByPeriod = _groupSlotsByPeriod(timeSlots);
+        final slotsByPeriod = _groupTimeSlotsByPeriodUseCase(timeSlots);
         emit(
           currentState.copyWith(
             isLoadingSlots: false,
@@ -116,39 +128,6 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
         );
       },
     );
-  }
-
-  /// Group time slots by period (Morning, Afternoon, Evening, Late Night).
-  Map<String, List<TimeSlotEntity>> _groupSlotsByPeriod(
-    List<TimeSlotEntity> slots,
-  ) {
-    final Map<String, List<TimeSlotEntity>> grouped = {
-      'Morning': [],
-      'Afternoon': [],
-      'Evening': [],
-      'Late Night': [],
-    };
-
-    for (final slot in slots) {
-      // Late night slots are those on the next day (cross-midnight)
-      if (slot.isNextDay) {
-        grouped['Late Night']!.add(slot);
-      } else {
-        final hour = int.tryParse(slot.startTime.split(':')[0]) ?? 0;
-        if (hour < 12) {
-          grouped['Morning']!.add(slot);
-        } else if (hour < 17) {
-          grouped['Afternoon']!.add(slot);
-        } else {
-          grouped['Evening']!.add(slot);
-        }
-      }
-    }
-
-    // Remove empty periods
-    grouped.removeWhere((key, value) => value.isEmpty);
-
-    return grouped;
   }
 
   /// Select a time slot.
@@ -167,7 +146,10 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
     }
 
     // For 2-hour booking, find the consecutive slot
-    final secondSlot = _findConsecutiveSlot(slot, currentState.slotsByPeriod);
+    final secondSlot = _findConsecutiveSlotUseCase(
+      slot: slot,
+      slotsByPeriod: currentState.slotsByPeriod,
+    );
 
     if (secondSlot == null || !secondSlot.isAvailable) {
       // Can't select this slot for 2-hour booking
@@ -188,49 +170,16 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
     );
   }
 
-  /// Find the consecutive time slot for 2-hour bookings.
-  TimeSlotEntity? _findConsecutiveSlot(
-    TimeSlotEntity slot,
-    Map<String, List<TimeSlotEntity>> slotsByPeriod,
-  ) {
-    final startHour = int.parse(slot.startTime.split(':')[0]);
-    final nextHour = (startHour + 1) % 24;
-    final nextStartTime = '${nextHour.toString().padLeft(2, '0')}:00';
-
-    // Flatten all slots
-    final allSlots = slotsByPeriod.values.expand((s) => s).toList();
-
-    // Handle cross-midnight: if current slot is 23:00, next slot is 00:00 (next day)
-    final bool isNextSlotOnNextDay = slot.isNextDay || startHour == 23;
-
-    for (final s in allSlots) {
-      if (s.startTime == nextStartTime && s.isNextDay == isNextSlotOnNextDay) {
-        return s;
-      }
-      // Special case: 23:00 slot, look for 00:00 on next day
-      if (startHour == 23 &&
-          !slot.isNextDay &&
-          s.startTime == '00:00' &&
-          s.isNextDay) {
-        return s;
-      }
-    }
-
-    return null;
-  }
-
   /// Check if a slot can be selected for the current duration.
   bool canSelectSlot(TimeSlotEntity slot) {
     final currentState = state;
     if (currentState is! BookingFlowActive) return false;
 
-    if (currentState.selectedDuration == 1) {
-      return slot.isAvailable;
-    }
-
-    // For 2-hour booking, check if consecutive slot is also available
-    final secondSlot = _findConsecutiveSlot(slot, currentState.slotsByPeriod);
-    return slot.isAvailable && secondSlot != null && secondSlot.isAvailable;
+    return _validateSlotSelectionUseCase(
+      slot: slot,
+      durationHours: currentState.selectedDuration,
+      slotsByPeriod: currentState.slotsByPeriod,
+    );
   }
 
   /// Select time slot if valid for current duration.
@@ -253,7 +202,10 @@ class BookingFlowCubit extends Cubit<BookingFlowState> {
     for (final slot in allSlots) {
       if (!slot.isAvailable) continue;
 
-      final secondSlot = _findConsecutiveSlot(slot, currentState.slotsByPeriod);
+      final secondSlot = _findConsecutiveSlotUseCase(
+        slot: slot,
+        slotsByPeriod: currentState.slotsByPeriod,
+      );
       if (secondSlot != null && secondSlot.isAvailable) {
         return true;
       }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/shimmer_loading.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
@@ -11,6 +10,8 @@ class TimeSlotLoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,7 +19,7 @@ class TimeSlotLoadingState extends StatelessWidget {
           context.l10n.availableTimeSlots,
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: BookingConstants.itemSpacing),
@@ -32,7 +33,7 @@ class TimeSlotLoadingState extends StatelessWidget {
               child: Container(
                 height: BookingConstants.timeSlotHeight,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(
                     BookingConstants.borderRadius,
                   ),

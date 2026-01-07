@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/entities/recurring_booking_entity.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/active_subscription/recurring_active_subscription_details.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/active_subscription/recurring_active_subscription_footer.dart';
@@ -15,7 +14,6 @@ class ActiveSubscriptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -23,9 +21,7 @@ class ActiveSubscriptionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: isDark
-                ? Colors.black.withValues(alpha: 0.3)
-                : AppColors.navyDeep.withValues(alpha: 0.08),
+            color: colorScheme.shadow.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),

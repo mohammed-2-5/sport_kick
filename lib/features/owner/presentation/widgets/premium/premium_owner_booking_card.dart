@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -85,6 +85,7 @@ class _CardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Expanded(
@@ -95,14 +96,14 @@ class _CardHeader extends StatelessWidget {
                 booking.fieldName ?? context.l10n.unknownField,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 booking.userName ?? context.l10n.unknownCustomer,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary.withValues(alpha: 0.8),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                 ),
               ),
             ],
@@ -121,12 +122,13 @@ class _DateTimeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Icon(
           Icons.calendar_today,
           size: 16,
-          color: AppColors.textSecondary.withValues(alpha: 0.7),
+          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
         ),
         const SizedBox(width: 8),
         Text(booking.formattedDate, style: AppTextStyles.bodyMedium),
@@ -134,7 +136,7 @@ class _DateTimeRow extends StatelessWidget {
         Icon(
           Icons.access_time,
           size: 16,
-          color: AppColors.textSecondary.withValues(alpha: 0.7),
+          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
         ),
         const SizedBox(width: 8),
         Text(
@@ -158,18 +160,19 @@ class _PaymentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Icon(
           Icons.payment_rounded,
           size: 16,
-          color: AppColors.textSecondary.withValues(alpha: 0.7),
+          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
         ),
         const SizedBox(width: 8),
         Text(
           '${context.l10n.payment}:',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(width: 8),
@@ -184,7 +187,7 @@ class _PaymentRow extends StatelessWidget {
           ),
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w700,
-            color: AppColors.success,
+            color: colorScheme.success,
           ),
         ),
       ],
@@ -199,6 +202,7 @@ class _ViewProofButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton.icon(
@@ -206,8 +210,8 @@ class _ViewProofButton extends StatelessWidget {
         icon: const Icon(Icons.receipt_long_outlined, size: 16),
         label: Text(context.l10n.viewPaymentProof),
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.info,
-          side: BorderSide(color: AppColors.info.withValues(alpha: 0.5)),
+          foregroundColor: colorScheme.info,
+          side: BorderSide(color: colorScheme.info.withValues(alpha: 0.5)),
           padding: const EdgeInsets.symmetric(vertical: 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -226,6 +230,7 @@ class _PaymentActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Expanded(
@@ -234,8 +239,8 @@ class _PaymentActions extends StatelessWidget {
             icon: const Icon(Icons.close_rounded, size: 16),
             label: Text(context.l10n.reject),
             style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.error,
-              side: BorderSide(color: AppColors.error.withValues(alpha: 0.5)),
+              foregroundColor: colorScheme.error,
+              side: BorderSide(color: colorScheme.error.withValues(alpha: 0.5)),
               padding: const EdgeInsets.symmetric(vertical: 10),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -250,7 +255,7 @@ class _PaymentActions extends StatelessWidget {
             icon: const Icon(Icons.check_rounded, size: 16),
             label: Text(context.l10n.verify),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.success,
+              backgroundColor: colorScheme.success,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 10),
               shape: RoundedRectangleBorder(

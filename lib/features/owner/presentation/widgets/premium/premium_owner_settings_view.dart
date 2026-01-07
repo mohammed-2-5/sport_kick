@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
@@ -47,7 +46,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
       child: BlocBuilder<OwnerSettingsCubit, OwnerSettingsState>(
         builder: (context, settingsState) {
           return Scaffold(
-            backgroundColor: AppColors.backgroundLight,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             body: CustomScrollView(
               slivers: [
                 // Premium Header
@@ -358,7 +357,9 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
             },
             child: Text(
               context.l10n.logoutTitle,
-              style: AppTextStyles.bodyMedium.copyWith(color: Colors.red),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
             ),
           ),
         ],
@@ -367,15 +368,16 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
   }
 
   void _showBusinessHoursSheet() {
+    final colorScheme = Theme.of(context).colorScheme;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         height: MediaQuery.of(context).size.height * 0.85,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: Column(
           children: [
@@ -385,7 +387,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: AppColors.border,
+                color: colorScheme.outlineVariant,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -398,15 +400,18 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         colors: [
-                          AppColors.accentCyan,
-                          AppColors.accentCyanDark,
+                          colorScheme.secondary,
+                          colorScheme.secondaryContainer,
                         ],
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.access_time, color: Colors.white),
+                    child: Icon(
+                      Icons.access_time,
+                      color: colorScheme.onSecondary,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -417,13 +422,13 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                           context.l10n.businessHoursSheetTitle,
                           style: AppTextStyles.titleLarge.copyWith(
                             fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         Text(
                           context.l10n.businessHoursSheetSubtitle,
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textSecondary,
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -448,13 +453,13 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: AppColors.accentCyan.withValues(alpha: 0.1),
+                        color: colorScheme.secondary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.sports_soccer,
                         size: 40,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.secondary,
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -462,7 +467,7 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                       context.l10n.businessHoursPerField,
                       style: AppTextStyles.titleLarge.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -470,7 +475,9 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                       context.l10n.businessHoursPerFieldDesc,
                       textAlign: TextAlign.center,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary.withValues(alpha: 0.8),
+                        color: colorScheme.onSurfaceVariant.withValues(
+                          alpha: 0.8,
+                        ),
                         height: 1.5,
                       ),
                     ),
@@ -485,8 +492,8 @@ class _PremiumOwnerSettingsViewState extends State<PremiumOwnerSettingsView> {
                         icon: const Icon(Icons.list_alt),
                         label: Text(context.l10n.goToMyFields),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.accentCyan,
-                          foregroundColor: Colors.white,
+                          backgroundColor: colorScheme.secondary,
+                          foregroundColor: colorScheme.onSecondary,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),

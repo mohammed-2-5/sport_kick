@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_grid.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_error_view.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_loading_view.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_missing_hours_card.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_refresh_button.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/field_selector_dropdown.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/week_navigation_bar.dart';
 
 /// Premium booking table view with animated grid.
+///
+/// This view displays a weekly booking calendar for field owners.
+/// Features:
+/// - Field selector (if owner has multiple fields)
+/// - Week navigation
+/// - Business hours setup reminder
+/// - Interactive booking grid
 class BookingTableView extends StatelessWidget {
   const BookingTableView({super.key});
 
@@ -30,11 +39,13 @@ class BookingTableView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, BookingTableState state) {
     if (state is BookingTableLoading) {
-      return _LoadingView(message: state.message ?? context.l10n.initializing);
+      return BookingTableLoadingView(
+        message: state.message ?? context.l10n.initializing,
+      );
     }
 
     if (state is BookingTableError) {
-      return _ErrorView(
+      return BookingTableErrorView(
         message: state.message,
         onRetry: () => context.read<BookingTableCubit>().initialize(),
       );
@@ -44,12 +55,12 @@ class BookingTableView extends StatelessWidget {
       return _buildLoadedContent(context, state);
     }
 
-    return _LoadingView(message: context.l10n.initializing);
+    return BookingTableLoadingView(message: context.l10n.initializing);
   }
 
   Widget _buildLoadedContent(BuildContext context, BookingTableLoaded state) {
     return RefreshIndicator(
-      color: AppColors.goldAccent,
+      color: Theme.of(context).colorScheme.tertiary,
       onRefresh: () async {
         await context.read<BookingTableCubit>().refresh();
       },
@@ -62,7 +73,7 @@ class BookingTableView extends StatelessWidget {
               subtitle: state.selectedField.name,
               showBackButton: true,
               actions: [
-                _RefreshButton(
+                BookingTableRefreshButton(
                   onTap: () => context.read<BookingTableCubit>().refresh(),
                   isLoading: state.isRefreshing,
                 ),
@@ -110,7 +121,7 @@ class BookingTableView extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                child: _MissingHoursCard(
+                child: BookingTableMissingHoursCard(
                   fieldName: state.selectedField.name,
                   onSetup: () {
                     context.pushNamed(
@@ -136,217 +147,6 @@ class BookingTableView extends StatelessWidget {
             child: SafeArea(top: false, child: SizedBox(height: 32)),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Banner shown when business hours are missing.
-class _MissingHoursCard extends StatelessWidget {
-  final String fieldName;
-  final VoidCallback onSetup;
-
-  const _MissingHoursCard({required this.fieldName, required this.onSetup});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.goldAccent.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.goldAccent.withValues(alpha: 0.3)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(
-              Icons.schedule_outlined,
-              color: AppColors.goldAccent,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.l10n.businessHoursMissingTitle,
-                  style: AppTextStyles.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  context.l10n.businessHoursMissingBody(fieldName),
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          TextButton(
-            onPressed: onSetup,
-            child: Text(
-              context.l10n.setUp,
-              style: AppTextStyles.bodyMedium.copyWith(
-                fontWeight: FontWeight.w700,
-                color: AppColors.goldAccent,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Refresh button with loading state.
-class _RefreshButton extends StatelessWidget {
-  final VoidCallback onTap;
-  final bool isLoading;
-
-  const _RefreshButton({required this.onTap, this.isLoading = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.glassHighlight,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: IconButton(
-        icon: isLoading
-            ? const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: Colors.white,
-                ),
-              )
-            : const Icon(Icons.refresh_rounded, color: Colors.white, size: 22),
-        onPressed: isLoading ? null : onTap,
-      ),
-    );
-  }
-}
-
-/// Loading view.
-class _LoadingView extends StatelessWidget {
-  final String message;
-  const _LoadingView({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: AppColors.navyDeep.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.goldAccent,
-                strokeWidth: 3,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            message,
-            style: AppTextStyles.bodyLarge.copyWith(
-              color: colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Error view.
-class _ErrorView extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
-
-  const _ErrorView({required this.message, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final errorColor = isDark ? AppColors.darkError : AppColors.error;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: errorColor.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.error_outline_rounded,
-                color: errorColor,
-                size: 40,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              context.l10n.failedToLoad,
-              style: AppTextStyles.titleMedium.copyWith(
-                fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded),
-              label: Text(context.l10n.tryAgain),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.navyDeep,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

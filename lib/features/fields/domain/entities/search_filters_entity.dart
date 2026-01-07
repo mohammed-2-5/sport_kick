@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:spo_kick/l10n/app_localizations.dart';
 
 /// Search Filters Entity
@@ -121,22 +120,6 @@ extension SearchSortByExtension on SearchSortBy {
         return l10n.sortNewest;
       case SearchSortBy.popular:
         return l10n.sortPopular;
-    }
-  }
-
-  IconData get icon {
-    switch (this) {
-      case SearchSortBy.relevance:
-        return Icons.star;
-      case SearchSortBy.priceLowToHigh:
-      case SearchSortBy.priceHighToLow:
-        return Icons.attach_money;
-      case SearchSortBy.rating:
-        return Icons.star_rate;
-      case SearchSortBy.newest:
-        return Icons.new_releases;
-      case SearchSortBy.popular:
-        return Icons.trending_up;
     }
   }
 }

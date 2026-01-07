@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Reusable info badge widget for displaying icon with text.
@@ -17,6 +16,8 @@ class BookingListItemInfoBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       decoration: BoxDecoration(
@@ -33,7 +34,7 @@ class BookingListItemInfoBadge extends StatelessWidget {
               text,
               style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
               overflow: TextOverflow.ellipsis,
             ),

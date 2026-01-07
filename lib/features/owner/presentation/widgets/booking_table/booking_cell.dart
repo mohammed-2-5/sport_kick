@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
@@ -68,7 +67,7 @@ class BookingCell extends StatelessWidget {
     }
 
     if (isToday) {
-      return AppColors.goldAccent.withValues(alpha: 0.05);
+      return colorScheme.tertiary.withValues(alpha: 0.05);
     }
 
     return Colors.transparent;
@@ -156,7 +155,9 @@ class BookingCell extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                 decoration: BoxDecoration(
-                  color: AppColors.navyDeep.withValues(alpha: 0.1),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
@@ -164,7 +165,7 @@ class BookingCell extends StatelessWidget {
                   style: AppTextStyles.labelSmall.copyWith(
                     fontSize: 7,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.navyDeep,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -204,7 +205,7 @@ class BookingCell extends StatelessWidget {
         height: 24,
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors.accentCyan.withValues(alpha: 0.3),
+            color: colorScheme.secondary.withValues(alpha: 0.3),
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(6),
@@ -212,7 +213,7 @@ class BookingCell extends StatelessWidget {
         child: Icon(
           Icons.add_rounded,
           size: 16,
-          color: AppColors.accentCyan.withValues(alpha: 0.5),
+          color: colorScheme.secondary.withValues(alpha: 0.5),
         ),
       ),
     );

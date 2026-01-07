@@ -145,13 +145,10 @@ class _NotificationListPageState extends State<NotificationListPage> {
   }
 
   void _handleNotificationTap(NotificationEntity notification) {
-    if (!notification.isRead) {
-      context.read<NotificationCubit>().markAsRead(notification.id);
-    }
+    final cubit = context.read<NotificationCubit>();
 
-    final bookingId = notification.bookingId;
-    if (bookingId != null && notification.isBookingNotification) {
-      // TODO: Navigate to booking details when route is available
+    if (!notification.isRead) {
+      cubit.markAsRead(notification.id);
     }
   }
 }

@@ -12,6 +12,7 @@ class MyBookingsLoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return ListView.builder(
       padding: const EdgeInsets.all(BookingConstants.standardPadding),
       itemCount: itemCount,
@@ -23,7 +24,7 @@ class MyBookingsLoadingState extends StatelessWidget {
           child: Container(
             height: 140,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(
                 BookingConstants.borderRadius,
               ),

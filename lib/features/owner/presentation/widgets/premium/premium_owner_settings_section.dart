@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
@@ -23,6 +22,7 @@ class PremiumOwnerSettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -36,17 +36,17 @@ class PremiumOwnerSettingsSection extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: AppColors.accentCyan.withValues(alpha: 0.1),
+                    color: colorScheme.secondary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(icon, color: AppColors.accentCyan, size: 18),
+                  child: Icon(icon, color: colorScheme.secondary, size: 18),
                 ),
                 const SizedBox(width: 12),
                 Text(
                   title,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -92,6 +92,7 @@ class OwnerSettingsToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -101,8 +102,8 @@ class OwnerSettingsToggle extends StatelessWidget {
               icon,
               size: 20,
               color: enabled
-                  ? AppColors.textSecondary
-                  : AppColors.textSecondary.withValues(alpha: 0.5),
+                  ? colorScheme.onSurfaceVariant
+                  : colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
             const SizedBox(width: 12),
           ],
@@ -115,8 +116,8 @@ class OwnerSettingsToggle extends StatelessWidget {
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: enabled
-                        ? AppColors.textPrimary
-                        : AppColors.textSecondary.withValues(alpha: 0.5),
+                        ? colorScheme.onSurface
+                        : colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                   ),
                 ),
                 if (description != null) ...[
@@ -124,7 +125,9 @@ class OwnerSettingsToggle extends StatelessWidget {
                   Text(
                     description!,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.textSecondary.withValues(alpha: 0.7),
+                      color: colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.7,
+                      ),
                     ),
                   ),
                 ],
@@ -135,8 +138,8 @@ class OwnerSettingsToggle extends StatelessWidget {
           Switch(
             value: value,
             onChanged: enabled ? onChanged : null,
-            activeThumbColor: AppColors.accentCyan,
-            activeTrackColor: AppColors.accentCyan.withValues(alpha: 0.5),
+            activeThumbColor: colorScheme.secondary,
+            activeTrackColor: colorScheme.secondary.withValues(alpha: 0.5),
           ),
         ],
       ),
@@ -191,6 +194,7 @@ class _OwnerSettingsTileState extends State<OwnerSettingsTile>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) {
@@ -205,7 +209,11 @@ class _OwnerSettingsTileState extends State<OwnerSettingsTile>
           child: Row(
             children: [
               if (widget.icon != null) ...[
-                Icon(widget.icon, size: 20, color: AppColors.textSecondary),
+                Icon(
+                  widget.icon,
+                  size: 20,
+                  color: colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(width: 12),
               ],
               Expanded(
@@ -213,7 +221,7 @@ class _OwnerSettingsTileState extends State<OwnerSettingsTile>
                   widget.label,
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -222,7 +230,7 @@ class _OwnerSettingsTileState extends State<OwnerSettingsTile>
                 Text(
                   widget.value!,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.7),
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                   ),
                 ),
               ],
@@ -231,7 +239,7 @@ class _OwnerSettingsTileState extends State<OwnerSettingsTile>
                 Icon(
                   Icons.chevron_right,
                   size: 20,
-                  color: AppColors.textSecondary.withValues(alpha: 0.5),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                 ),
               ],
             ],

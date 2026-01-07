@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -63,8 +62,10 @@ class PremiumAdminFormButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: isSubmitting
-                    ? AppColors.border.withValues(alpha: 0.5)
-                    : AppColors.border,
+                    ? Theme.of(
+                        context,
+                      ).colorScheme.outline.withValues(alpha: 0.5)
+                    : Theme.of(context).colorScheme.outline,
               ),
             ),
             child: Center(
@@ -73,8 +74,10 @@ class PremiumAdminFormButtons extends StatelessWidget {
                 style: AppTextStyles.withColor(
                   AppTextStyles.bold(AppTextStyles.titleMedium),
                   isSubmitting
-                      ? AppColors.textSecondary
-                      : AppColors.textSecondary,
+                      ? Theme.of(
+                          context,
+                        ).colorScheme.onSurfaceVariant.withValues(alpha: 0.5)
+                      : Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
             ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
@@ -32,6 +31,7 @@ class PremiumOwnerStatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       height: 110,
       child: ListView(
@@ -58,7 +58,7 @@ class PremiumOwnerStatsRow extends StatelessWidget {
             label: context.l10n.today,
             value: LocaleFormatters.formatNumber(context, todayBookings),
             icon: Icons.today_rounded,
-            gradient: const [AppColors.accentCyan, AppColors.accentCyanDark],
+            gradient: [colorScheme.secondary, colorScheme.secondaryContainer],
             onTap: onBookingsTap,
           ),
           const SizedBox(width: 12),

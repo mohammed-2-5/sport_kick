@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -58,27 +57,28 @@ class _PremiumCustomerSelectorState extends State<PremiumCustomerSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Search field
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: colorScheme.outlineVariant),
           ),
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
               hintText: context.l10n.searchCustomers,
               hintStyle: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary.withValues(alpha: 0.6),
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
               ),
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 Icons.search,
                 size: 20,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(
@@ -145,25 +145,26 @@ class _CreateNewButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: AppColors.accentCyan.withValues(alpha: 0.1),
+          color: colorScheme.secondary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: AppColors.accentCyan.withValues(alpha: 0.3),
+            color: colorScheme.secondary.withValues(alpha: 0.3),
             style: BorderStyle.solid,
             width: 1,
           ),
         ),
         child: Row(
           children: [
-            const Icon(
+            Icon(
               Icons.add_circle_outline,
-              color: AppColors.accentCyan,
+              color: colorScheme.secondary,
               size: 20,
             ),
             const SizedBox(width: 12),
@@ -171,7 +172,7 @@ class _CreateNewButton extends StatelessWidget {
               context.l10n.createNewCustomer,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.accentCyan,
+                color: colorScheme.secondary,
               ),
             ),
           ],
@@ -195,6 +196,7 @@ class _CustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -202,16 +204,18 @@ class _CustomerCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.accentCyan : AppColors.border,
+            color: isSelected
+                ? colorScheme.secondary
+                : colorScheme.outlineVariant,
             width: isSelected ? 2 : 1,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.accentCyan.withValues(alpha: 0.2),
+                    color: colorScheme.secondary.withValues(alpha: 0.2),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -224,9 +228,12 @@ class _CustomerCard extends StatelessWidget {
             Container(
               width: 44,
               height: 44,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                  colors: [
+                    colorScheme.secondary,
+                    colorScheme.secondaryContainer,
+                  ],
                 ),
                 shape: BoxShape.circle,
               ),
@@ -250,7 +257,7 @@ class _CustomerCard extends StatelessWidget {
                     customer.name,
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   if (customer.phone != null) ...[
@@ -258,7 +265,9 @@ class _CustomerCard extends StatelessWidget {
                     Text(
                       customer.phone!,
                       style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.textSecondary.withValues(alpha: 0.8),
+                        color: colorScheme.onSurfaceVariant.withValues(
+                          alpha: 0.8,
+                        ),
                       ),
                     ),
                   ],
@@ -271,13 +280,16 @@ class _CustomerCard extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                  gradient: LinearGradient(
+                    colors: [
+                      colorScheme.secondary,
+                      colorScheme.secondaryContainer,
+                    ],
                   ),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.4),
+                      color: colorScheme.secondary.withValues(alpha: 0.4),
                       blurRadius: 8,
                       spreadRadius: 1,
                     ),

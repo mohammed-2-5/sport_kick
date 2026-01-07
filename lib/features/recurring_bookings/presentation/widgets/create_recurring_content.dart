@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/create_recurring_state.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/day_selector.dart';
@@ -88,26 +87,30 @@ class CreateRecurringContent extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.error.withValues(alpha: 0.1),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.error.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: AppColors.error.withValues(alpha: 0.3),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.error.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.error_outline_rounded,
-                          color: AppColors.error,
+                          color: Theme.of(context).colorScheme.error,
                           size: 20,
                         ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
                             editingState.errorMessage!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
-                              color: AppColors.error,
+                              color: Theme.of(context).colorScheme.error,
                             ),
                           ),
                         ),
@@ -140,7 +143,6 @@ class CreateRecurringContent extends StatelessWidget {
   ) {
     final field = editingState.field;
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -149,9 +151,7 @@ class CreateRecurringContent extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: isDark
-                ? Colors.black.withValues(alpha: 0.3)
-                : AppColors.navyDeep.withValues(alpha: 0.08),
+            color: colorScheme.shadow.withValues(alpha: 0.1),
             blurRadius: 15,
             offset: const Offset(0, 4),
           ),
@@ -169,18 +169,18 @@ class CreateRecurringContent extends StatelessWidget {
                     height: 64,
                     fit: BoxFit.cover,
                     placeholder: (_, _) => Container(
-                      color: AppColors.navyDeep.withValues(alpha: 0.1),
+                      color: colorScheme.surfaceContainerHighest,
                       child: const Icon(Icons.sports_soccer),
                     ),
                     errorWidget: (_, _, _) => Container(
-                      color: AppColors.navyDeep.withValues(alpha: 0.1),
+                      color: colorScheme.surfaceContainerHighest,
                       child: const Icon(Icons.sports_soccer),
                     ),
                   )
                 : Container(
                     width: 64,
                     height: 64,
-                    color: AppColors.navyDeep.withValues(alpha: 0.1),
+                    color: colorScheme.surfaceContainerHighest,
                     child: const Icon(Icons.sports_soccer),
                   ),
           ),
@@ -225,24 +225,24 @@ class CreateRecurringContent extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.accentCyan.withValues(alpha: 0.1),
+              color: colorScheme.secondary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
+                Icon(
                   Icons.event_repeat_rounded,
                   size: 14,
-                  color: AppColors.accentCyan,
+                  color: colorScheme.secondary,
                 ),
                 const SizedBox(width: 4),
                 Text(
                   context.l10n.weekly,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.accentCyan,
+                    color: colorScheme.secondary,
                   ),
                 ),
               ],
@@ -257,13 +257,14 @@ class CreateRecurringContent extends StatelessWidget {
     BuildContext context,
     CreateRecurringEditing editingState,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.navyDeep,
-            AppColors.navyDeep.withValues(alpha: 0.9),
+            colorScheme.primary,
+            colorScheme.primary.withValues(alpha: 0.8),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -394,16 +395,13 @@ class CreateRecurringContent extends StatelessWidget {
     CreateRecurringEditing editingState,
   ) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: isDark
-                ? Colors.black.withValues(alpha: 0.3)
-                : AppColors.navyDeep.withValues(alpha: 0.1),
+            color: colorScheme.shadow.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, -4),
           ),
@@ -415,7 +413,7 @@ class CreateRecurringContent extends StatelessWidget {
           child: ElevatedButton(
             onPressed: editingState.isValid ? onSubmit : null,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.accentCyan,
+              backgroundColor: colorScheme.primary,
               foregroundColor: colorScheme.onPrimary,
               disabledBackgroundColor: colorScheme.onSurface.withValues(
                 alpha: 0.12,
@@ -449,12 +447,12 @@ class CreateRecurringContent extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.accentCyan.withValues(alpha: 0.1),
+              color: colorScheme.secondary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Center(
+            child: Center(
               child: CircularProgressIndicator(
-                color: AppColors.accentCyan,
+                color: colorScheme.secondary,
                 strokeWidth: 3,
               ),
             ),

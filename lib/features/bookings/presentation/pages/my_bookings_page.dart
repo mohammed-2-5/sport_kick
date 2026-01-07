@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/error_handler.dart';
-import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
-import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/management/booking_management_cubit.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/management/booking_management_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_content.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_header.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_tab_selector.dart';
@@ -34,7 +34,7 @@ class _MyBookingsPageState extends State<MyBookingsPage>
   }
 
   Future<void> _refreshBookings() async {
-    await context.read<BookingCubit>().refreshBookings();
+    await context.read<BookingManagementCubit>().refreshBookings();
     // Also refresh recurring bookings if the cubit exists
     if (!mounted) return;
     context.read<MyRecurringBookingsCubit>().refresh();
@@ -53,15 +53,19 @@ class _MyBookingsPageState extends State<MyBookingsPage>
 
               // Bookings Content
               Expanded(
-                child: BlocConsumer<BookingCubit, BookingState>(
-                  listener: _handleStateChanges,
-                  builder: (context, state) => MyBookingsContent(
-                    state: state,
-                    tabController: _tabController,
-                    onRefresh: _refreshBookings,
-                    onBrowseFields: () => Navigator.of(context).maybePop(),
-                  ),
-                ),
+                child:
+                    BlocConsumer<
+                      BookingManagementCubit,
+                      BookingManagementState
+                    >(
+                      listener: _handleStateChanges,
+                      builder: (context, state) => MyBookingsContent(
+                        state: state,
+                        tabController: _tabController,
+                        onRefresh: _refreshBookings,
+                        onBrowseFields: () => Navigator.of(context).maybePop(),
+                      ),
+                    ),
               ),
             ],
           ),
@@ -70,12 +74,12 @@ class _MyBookingsPageState extends State<MyBookingsPage>
     );
   }
 
-  void _handleStateChanges(BuildContext context, BookingState state) {
-    if (state is BookingError) {
+  void _handleStateChanges(BuildContext context, BookingManagementState state) {
+    if (state is BookingManagementError) {
       ErrorHandler.showErrorSnackbar(context, state.message);
     } else if (state is BookingCanceled) {
       ErrorHandler.showSuccessSnackbar(context, context.l10n.bookingCancelled);
-      context.read<BookingCubit>().refreshBookings();
+      context.read<BookingManagementCubit>().refreshBookings();
     }
   }
 }

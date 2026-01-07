@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// States for manual booking form wizard.
-abstract class ManualBookingFormState extends Equatable {
+sealed class ManualBookingFormState extends Equatable {
   const ManualBookingFormState();
 }
 

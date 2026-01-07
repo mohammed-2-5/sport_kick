@@ -40,7 +40,7 @@ class FieldFilterOptions extends Equatable {
 }
 
 /// Base state for fields feature.
-abstract class FieldsState extends Equatable {
+sealed class FieldsState extends Equatable {
   const FieldsState();
 
   @override

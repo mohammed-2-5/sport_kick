@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
-import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/management/booking_management_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_empty_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_loading_state.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/my_bookings_tab_view.dart';
 import 'package:spo_kick/features/bookings/presentation/widgets/my_bookings/recurring_tab_view.dart';
 
 class MyBookingsContent extends StatelessWidget {
-  final BookingState state;
+  final BookingManagementState state;
   final TabController tabController;
   final Future<void> Function() onRefresh;
   final VoidCallback onBrowseFields;
@@ -24,7 +24,7 @@ class MyBookingsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final bookingState = state;
 
-    if (bookingState is BookingLoading) {
+    if (bookingState is BookingManagementLoading) {
       return const MyBookingsLoadingState();
     }
 

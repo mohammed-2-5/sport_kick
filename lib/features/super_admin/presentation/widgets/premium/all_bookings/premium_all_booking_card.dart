@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium booking card with status indicator.
 ///
@@ -85,15 +86,16 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
   }
 
   Color get _statusColor {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (widget.status) {
       case BookingStatus.pending:
-        return const Color(0xFFF59E0B);
+        return colorScheme.warning;
       case BookingStatus.confirmed:
-        return const Color(0xFF10B981);
+        return colorScheme.success;
       case BookingStatus.canceled:
-        return const Color(0xFFEF4444);
+        return colorScheme.error;
       case BookingStatus.completed:
-        return const Color(0xFF6366F1);
+        return colorScheme.info;
     }
   }
 
@@ -141,20 +143,9 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
         child: Container(
           margin: const EdgeInsets.only(bottom: 14),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: _statusColor.withValues(alpha: 0.12),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
+            boxShadow: context.cardShadow,
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),
@@ -189,7 +180,11 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
                             Expanded(
                               child: Text(
                                 widget.fieldName,
-                                style: AppTextStyles.titleMedium,
+                                style: AppTextStyles.titleMedium.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -211,7 +206,7 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
                             _InfoChip(
                               icon: Icons.person_outline_rounded,
                               text: widget.userName,
-                              color: AppColors.navyDeep,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                             if (widget.isManual) ...[
                               const SizedBox(width: 8),
@@ -227,13 +222,13 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
                             _InfoChip(
                               icon: Icons.calendar_today_rounded,
                               text: widget.formattedDate,
-                              color: AppColors.accentCyan,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                             const SizedBox(width: 12),
                             _InfoChip(
                               icon: Icons.access_time_rounded,
                               text: widget.formattedTimeSlot,
-                              color: AppColors.accentCyan,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                             const Spacer(),
                             _PriceBadge(price: widget.formattedPrice),

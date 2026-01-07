@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/statistics/statistics_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/statistics/statistics_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/booking_status_row.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/dashboard_drawer.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/dashboard/dashboard_error_state.dart';
@@ -29,9 +29,9 @@ class SuperAdminDashboardView extends StatelessWidget {
         toolbarHeight: 0,
       ),
       drawer: const DashboardDrawer(),
-      body: BlocConsumer<SuperAdminCubit, SuperAdminState>(
+      body: BlocConsumer<StatisticsCubit, StatisticsState>(
         listener: (context, state) {
-          if (state is SuperAdminError) {
+          if (state is StatisticsError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
@@ -42,16 +42,16 @@ class SuperAdminDashboardView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is SuperAdminLoading) {
+          if (state is StatisticsLoading) {
             return const Center(
               child: CircularProgressIndicator(color: AppColors.premiumGold),
             );
           }
 
-          if (state is SuperAdminError) {
+          if (state is StatisticsError) {
             return DashboardErrorState(
               onRetry: () =>
-                  context.read<SuperAdminCubit>().loadPlatformStatistics(),
+                  context.read<StatisticsCubit>().loadPlatformStatistics(),
             );
           }
 
@@ -78,7 +78,7 @@ class _DashboardContent extends StatelessWidget {
       color: AppColors.premiumGold,
       backgroundColor: AppColors.premiumSurface,
       onRefresh: () async {
-        context.read<SuperAdminCubit>().loadPlatformStatistics();
+        context.read<StatisticsCubit>().loadPlatformStatistics();
         await Future.delayed(const Duration(milliseconds: 500));
       },
       child: SingleChildScrollView(

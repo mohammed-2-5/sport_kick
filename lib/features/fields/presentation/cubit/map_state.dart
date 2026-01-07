@@ -3,7 +3,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
 /// State for the map cubit.
-abstract class MapState extends Equatable {
+sealed class MapState extends Equatable {
   const MapState();
 
   @override

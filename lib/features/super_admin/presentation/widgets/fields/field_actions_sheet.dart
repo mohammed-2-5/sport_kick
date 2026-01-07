@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Bottom sheet with action buttons for field management.
 ///
@@ -56,24 +56,19 @@ class FieldActionsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            spreadRadius: 1,
-          ),
-        ],
+        boxShadow: context.elevatedShadow,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildHeader(context),
-          const Divider(height: 1, color: AppColors.border),
+          Divider(height: 1, color: colorScheme.outlineVariant),
           _buildActions(context),
         ],
       ),
@@ -81,6 +76,7 @@ class FieldActionsSheet extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -90,7 +86,7 @@ class FieldActionsSheet extends StatelessWidget {
             height: 56,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: AppColors.primary,
+              color: colorScheme.primary,
             ),
             child: field.images.isNotEmpty
                 ? ClipRRect(
@@ -98,16 +94,16 @@ class FieldActionsSheet extends StatelessWidget {
                     child: Image.network(
                       field.images.first,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => const Icon(
+                      errorBuilder: (context, error, stackTrace) => Icon(
                         Icons.sports_soccer,
-                        color: AppColors.white,
+                        color: colorScheme.onPrimary,
                         size: 28,
                       ),
                     ),
                   )
-                : const Icon(
+                : Icon(
                     Icons.sports_soccer,
-                    color: AppColors.white,
+                    color: colorScheme.onPrimary,
                     size: 28,
                   ),
           ),
@@ -124,7 +120,7 @@ class FieldActionsSheet extends StatelessWidget {
                         style: AppTextStyles.titleMedium.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.darkGrey,
+                          color: colorScheme.onSurface,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -137,22 +133,22 @@ class FieldActionsSheet extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.successLight,
+                          color: colorScheme.successContainer,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.verified,
                               size: 14,
-                              color: AppColors.success,
+                              color: colorScheme.success,
                             ),
                             const SizedBox(width: 4),
                             Text(
                               context.l10n.verified,
                               style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.success,
+                                color: colorScheme.success,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -165,7 +161,7 @@ class FieldActionsSheet extends StatelessWidget {
                 Text(
                   '${field.city} • ${field.formattedPrice}',
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.mediumGrey,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -177,19 +173,22 @@ class FieldActionsSheet extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 20),
       child: Column(
         children: [
           _buildActionTile(
+            context: context,
             icon: Icons.edit,
             title: context.l10n.editField,
             subtitle: context.l10n.updateFieldDetailsPricingAndLocation,
-            color: AppColors.info,
+            color: colorScheme.info,
             onTap: onEdit,
           ),
           const SizedBox(height: 8),
           _buildActionTile(
+            context: context,
             icon: field.isVerified ? Icons.verified_outlined : Icons.verified,
             title: field.isVerified
                 ? context.l10n.removeVerification
@@ -197,15 +196,16 @@ class FieldActionsSheet extends StatelessWidget {
             subtitle: field.isVerified
                 ? context.l10n.removeVerifiedBadgeFromThisField
                 : context.l10n.addVerifiedBadgeToThisField,
-            color: AppColors.success,
+            color: colorScheme.success,
             onTap: onToggleVerify,
           ),
           const SizedBox(height: 8),
           _buildActionTile(
+            context: context,
             icon: Icons.delete,
             title: context.l10n.deleteField,
             subtitle: context.l10n.deactivateOrPermanentlyRemoveThisField,
-            color: AppColors.error,
+            color: colorScheme.error,
             onTap: onDelete,
           ),
         ],
@@ -214,12 +214,14 @@ class FieldActionsSheet extends StatelessWidget {
   }
 
   Widget _buildActionTile({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required String subtitle,
     required Color color,
     required VoidCallback onTap,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -258,7 +260,7 @@ class FieldActionsSheet extends StatelessWidget {
                     Text(
                       subtitle,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.mediumGrey,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],

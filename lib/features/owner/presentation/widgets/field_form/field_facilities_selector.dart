@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
-import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
@@ -29,13 +27,27 @@ class FieldFacilitiesSelector extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
               gradient: isSelected ? AppGradients.primary : null,
-              color: isSelected ? null : AppColors.surfaceVariant,
+              color: isSelected
+                  ? null
+                  : Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: isSelected ? Colors.transparent : AppColors.divider,
+                color: isSelected
+                    ? Colors.transparent
+                    : Theme.of(context).colorScheme.outlineVariant,
                 width: 1.5,
               ),
-              boxShadow: isSelected ? AppShadows.small : null,
+              boxShadow: isSelected
+                  ? [
+                      BoxShadow(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ]
+                  : null,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -43,14 +55,18 @@ class FieldFacilitiesSelector extends StatelessWidget {
                 Icon(
                   _getFacilityIcon(facility),
                   size: 18,
-                  color: isSelected ? Colors.white : AppColors.textSecondary,
+                  color: isSelected
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: 6),
                 Text(
                   _getFacilityLabel(context, facility),
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: isSelected ? Colors.white : AppColors.textPrimary,
+                    color: isSelected
+                        ? Colors.white
+                        : Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 if (isSelected) ...[

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/localization/l10n_extensions.dart';
-import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
-import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/next_day_badge.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/time_slot_status_display.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/time_slot_time_display.dart';
 
 /// Premium time slot card with selection animation.
 ///
@@ -85,17 +82,17 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
           duration: AppAnimations.fast,
           width: 110,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          decoration: _buildDecoration(),
+          decoration: _buildDecoration(context),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _TimeDisplay(
+              TimeSlotTimeDisplay(
                 slot: widget.slot,
                 isSelected: _showAsSelected,
                 isAvailable: _isAvailable,
               ),
               const SizedBox(height: 6),
-              _StatusDisplay(
+              TimeSlotStatusDisplay(
                 slot: widget.slot,
                 isSelected: _showAsSelected,
                 isAvailable: _isAvailable,
@@ -105,7 +102,7 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
                 const SizedBox(height: 6),
                 Icon(
                   widget.isSecondSlot ? Icons.link : Icons.check_circle,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   size: 18,
                 ),
               ],
@@ -116,7 +113,7 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
     );
   }
 
-  BoxDecoration _buildDecoration() {
+  BoxDecoration _buildDecoration(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -127,19 +124,19 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColors.accentCyan.withValues(alpha: 0.8),
-                  AppColors.accentCyanDark.withValues(alpha: 0.8),
+                  colorScheme.primary.withValues(alpha: 0.8),
+                  colorScheme.primaryContainer.withValues(alpha: 0.8),
                 ],
               )
-            : const LinearGradient(
+            : LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                colors: [colorScheme.primary, colorScheme.primaryContainer],
               ),
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: AppColors.accentCyan.withValues(alpha: 0.4),
+            color: colorScheme.primary.withValues(alpha: 0.4),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -161,181 +158,11 @@ class _PremiumTimeSlotCardState extends State<PremiumTimeSlotCard>
       border: Border.all(color: colorScheme.outline),
       boxShadow: [
         BoxShadow(
-          color: isDark
-              ? Colors.black.withValues(alpha: 0.2)
-              : Colors.black.withValues(alpha: 0.04),
+          color: colorScheme.shadow.withValues(alpha: isDark ? 0.2 : 0.04),
           blurRadius: 8,
           offset: const Offset(0, 2),
         ),
       ],
-    );
-  }
-}
-
-class _TimeDisplay extends StatelessWidget {
-  final TimeSlotEntity slot;
-  final bool isSelected;
-  final bool isAvailable;
-
-  const _TimeDisplay({
-    required this.slot,
-    required this.isSelected,
-    required this.isAvailable,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          LocaleFormatters.formatTimeRange(
-            context,
-            startTime: slot.startTime,
-            endTime: slot.endTime,
-            isEndNextDay: slot.isNextDay,
-          ),
-          style: AppTextStyles.labelLarge.copyWith(
-            fontSize: 13,
-            fontWeight: FontWeight.w700,
-            color: isSelected
-                ? Colors.white
-                : isAvailable
-                ? colorScheme.onSurface
-                : colorScheme.onSurfaceVariant,
-          ),
-        ),
-        if (slot.isNextDay) ...[const SizedBox(width: 4), const NextDayBadge()],
-      ],
-    );
-  }
-}
-
-class _StatusDisplay extends StatelessWidget {
-  final TimeSlotEntity slot;
-  final bool isSelected;
-  final bool isAvailable;
-  final bool isDisabledForDuration;
-
-  const _StatusDisplay({
-    required this.slot,
-    required this.isSelected,
-    required this.isAvailable,
-    required this.isDisabledForDuration,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (!slot.isAvailable) {
-      return _BookedBadge();
-    }
-
-    if (isDisabledForDuration) {
-      return _DurationUnavailableBadge();
-    }
-
-    return _PriceBadge(slot: slot, isSelected: isSelected);
-  }
-}
-
-class _PriceBadge extends StatelessWidget {
-  final TimeSlotEntity slot;
-  final bool isSelected;
-
-  const _PriceBadge({required this.slot, required this.isSelected});
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: isSelected
-            ? Colors.white.withValues(alpha: 0.2)
-            : successColor.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        LocaleFormatters.formatPrice(
-          context,
-          amount: slot.price,
-          currency: slot.currency,
-          decimalDigits: 0,
-        ),
-        style: AppTextStyles.labelSmall.copyWith(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: isSelected ? Colors.white : successColor,
-        ),
-      ),
-    );
-  }
-}
-
-class _BookedBadge extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final errorColor = isDark ? AppColors.darkError : AppColors.error;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: errorColor.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.block, size: 12, color: errorColor),
-          const SizedBox(width: 4),
-          Text(
-            context.l10n.bookedLabel,
-            style: AppTextStyles.labelSmall.copyWith(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: errorColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _DurationUnavailableBadge extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final warningColor = isDark ? AppColors.darkWarning : AppColors.warning;
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 90),
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-      decoration: BoxDecoration(
-        color: warningColor.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.timer_off_outlined, size: 12, color: warningColor),
-          const SizedBox(width: 2),
-          Flexible(
-            child: Text(
-              context.l10n.durationUnavailable,
-              style: AppTextStyles.labelSmall.copyWith(
-                fontSize: 9,
-                fontWeight: FontWeight.w600,
-                color: warningColor,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

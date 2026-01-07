@@ -16,6 +16,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/setti
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_settings_toggle.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/settings/premium_system_preferences_section.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium super admin settings view.
 ///
@@ -48,7 +49,7 @@ class PremiumSuperAdminSettingsView extends StatelessWidget {
           return Stack(
             children: [
               Scaffold(
-                backgroundColor: AppColors.backgroundLight,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 body: _buildBody(context, state),
               ),
 
@@ -266,15 +267,16 @@ class _SecuritySection extends StatelessWidget {
     int currentValue,
     SuperAdminSettingsCubit cubit,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     final options = [15, 30, 60, 120];
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -283,7 +285,7 @@ class _SecuritySection extends StatelessWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: AppColors.border,
+                color: colorScheme.outline,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -291,7 +293,7 @@ class _SecuritySection extends StatelessWidget {
             Text(
               context.l10n.sessionTimeout,
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 16),
@@ -303,7 +305,7 @@ class _SecuritySection extends StatelessWidget {
                       : Icons.circle_outlined,
                   color: currentValue == minutes
                       ? AppColors.premiumGold
-                      : AppColors.textSecondary,
+                      : colorScheme.onSurfaceVariant,
                 ),
                 title: Text(context.l10n.minutesMinutes(minutes)),
                 onTap: () {
@@ -345,7 +347,7 @@ class _AboutSection extends StatelessWidget {
           label: context.l10n.buildNumber,
           value: cubit.buildNumber,
           icon: Icons.build,
-          iconColor: Colors.grey,
+          iconColor: Theme.of(context).colorScheme.onSurfaceVariant,
           showArrow: false,
           onTap: null,
         ),
@@ -374,6 +376,8 @@ class _LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () {
         HapticFeedback.mediumImpact();
@@ -383,20 +387,20 @@ class _LogoutButton extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: Colors.red.withValues(alpha: 0.1),
+          color: colorScheme.error.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
+          border: Border.all(color: colorScheme.error.withValues(alpha: 0.3)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.logout, color: Colors.red, size: 20),
+            Icon(Icons.logout, color: colorScheme.error, size: 20),
             const SizedBox(width: 8),
             Text(
               context.l10n.logout,
               style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
-                color: Colors.red,
+                color: colorScheme.error,
               ),
             ),
           ],
@@ -413,7 +417,7 @@ class _LoadingOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black54,
+      color: context.overlayColor,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

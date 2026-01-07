@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -24,6 +23,7 @@ class OwnerBookingCustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -32,9 +32,9 @@ class OwnerBookingCustomerCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.person_rounded,
-                  color: AppColors.accentCyan,
+                  color: colorScheme.secondary,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -44,7 +44,7 @@ class OwnerBookingCustomerCard extends StatelessWidget {
                       : context.l10n.customerInformation,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 if (booking.isManual) ...[
@@ -55,14 +55,14 @@ class OwnerBookingCustomerCard extends StatelessWidget {
                       vertical: 2,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.accentCyan.withValues(alpha: 0.1),
+                      color: colorScheme.secondary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       context.l10n.manualBooking,
                       style: AppTextStyles.labelSmall.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.secondary,
                       ),
                     ),
                   ),
@@ -108,10 +108,10 @@ class OwnerBookingCustomerCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.navyDeep.withValues(alpha: 0.05),
+                  color: colorScheme.primary.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppColors.navyDeep.withValues(alpha: 0.1),
+                    color: colorScheme.primary.withValues(alpha: 0.1),
                   ),
                 ),
                 child: Column(
@@ -119,9 +119,9 @@ class OwnerBookingCustomerCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.admin_panel_settings,
-                          color: AppColors.navyDeep,
+                          color: colorScheme.primary,
                           size: 16,
                         ),
                         const SizedBox(width: 6),
@@ -129,7 +129,7 @@ class OwnerBookingCustomerCard extends StatelessWidget {
                           context.l10n.createdBy,
                           style: AppTextStyles.labelSmall.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: AppColors.navyDeep,
+                            color: colorScheme.primary,
                           ),
                         ),
                       ],
@@ -187,16 +187,17 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final content = Row(
       children: [
         Container(
           width: 36,
           height: 36,
           decoration: BoxDecoration(
-            color: AppColors.accentCyan.withValues(alpha: 0.1),
+            color: colorScheme.secondary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(icon, color: AppColors.accentCyan, size: 18),
+          child: Icon(icon, color: colorScheme.secondary, size: 18),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -206,14 +207,14 @@ class _InfoRow extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
               ),
               Text(
                 value,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -223,7 +224,7 @@ class _InfoRow extends StatelessWidget {
           Icon(
             Icons.copy_rounded,
             size: 18,
-            color: AppColors.textSecondary.withValues(alpha: 0.5),
+            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
           ),
       ],
     );

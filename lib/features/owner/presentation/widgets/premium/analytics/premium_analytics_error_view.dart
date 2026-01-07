@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
 
@@ -23,22 +22,23 @@ class PremiumAnalyticsErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.error_outline_rounded,
-              color: Colors.red,
+              color: colorScheme.error,
               size: 48,
             ),
             const SizedBox(height: 16),
             Text(
               message,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -48,8 +48,8 @@ class PremiumAnalyticsErrorView extends StatelessWidget {
               icon: const Icon(Icons.refresh_rounded),
               label: Text(context.l10n.retry),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.navyDeep,
-                foregroundColor: Colors.white,
+                backgroundColor: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
               ),
             ),
           ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium city card with glassmorphism design.
 ///
@@ -71,9 +71,11 @@ class _PremiumCityCardState extends State<PremiumCityCard>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final accentColor = widget.isActive
-        ? const Color(0xFF10B981) // Green for active
-        : const Color(0xFFEF4444); // Red for inactive
+        ? colorScheme
+              .success // Green for active
+        : colorScheme.error; // Red for inactive
 
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
@@ -91,20 +93,9 @@ class _PremiumCityCardState extends State<PremiumCityCard>
         child: Container(
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: accentColor.withValues(alpha: 0.15),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
+            boxShadow: context.cardShadow,
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),
@@ -145,7 +136,7 @@ class _PremiumCityCardState extends State<PremiumCityCard>
                                 widget.name,
                                 style: AppTextStyles.titleSmall.copyWith(
                                   fontWeight: FontWeight.w700,
-                                  color: AppColors.textPrimary,
+                                  color: colorScheme.onSurface,
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -227,7 +218,7 @@ class _FieldsBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.accentCyan.withValues(alpha: 0.1),
+        color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Row(
@@ -236,14 +227,15 @@ class _FieldsBadge extends StatelessWidget {
           Icon(
             Icons.sports_soccer,
             size: 12,
-            color: AppColors.accentCyan.withValues(alpha: 0.8),
+            color: Theme.of(
+              context,
+            ).colorScheme.secondary.withValues(alpha: 0.8),
           ),
           const SizedBox(width: 4),
           Text(
             context.l10n.fieldsCount(count),
-            style: AppTextStyles.withColor(
-              AppTextStyles.labelSmallBold,
-              AppColors.accentCyan,
+            style: AppTextStyles.labelSmallBold.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
         ],
@@ -260,7 +252,9 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? const Color(0xFF10B981) : const Color(0xFFEF4444);
+    final color = isActive
+        ? Theme.of(context).colorScheme.success
+        : Theme.of(context).colorScheme.error;
     final label = isActive ? context.l10n.active : context.l10n.inactive;
 
     return Container(
@@ -317,14 +311,16 @@ class _ActionButtons extends StatelessWidget {
         if (onEdit != null)
           _ActionButton(
             icon: Icons.edit_rounded,
-            color: AppColors.accentCyan,
+            color: Theme.of(context).colorScheme.secondary,
             onTap: onEdit!,
           ),
         if (onToggleStatus != null) ...[
           const SizedBox(width: 8),
           _ActionButton(
             icon: isActive ? Icons.pause_rounded : Icons.play_arrow_rounded,
-            color: isActive ? const Color(0xFFEF4444) : const Color(0xFF10B981),
+            color: isActive
+                ? Theme.of(context).colorScheme.error
+                : Theme.of(context).colorScheme.success,
             onTap: onToggleStatus!,
           ),
         ],

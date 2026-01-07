@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Bottom sheet with action buttons for city management.
 ///
@@ -59,7 +60,7 @@ class CityActionsSheet extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -73,7 +74,7 @@ class CityActionsSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildHeader(context),
-          const Divider(height: 1, color: AppColors.border),
+          Divider(height: 1, color: Theme.of(context).colorScheme.outline),
           _buildActions(context),
         ],
       ),
@@ -92,8 +93,14 @@ class CityActionsSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               gradient: LinearGradient(
                 colors: city.isActive
-                    ? [AppColors.accentCyan, AppColors.navyDeep]
-                    : [AppColors.mediumGrey, AppColors.darkGrey],
+                    ? [
+                        Theme.of(context).colorScheme.secondary,
+                        Theme.of(context).colorScheme.primary,
+                      ]
+                    : [
+                        Theme.of(context).colorScheme.onSurfaceVariant,
+                        Theme.of(context).colorScheme.onSurface,
+                      ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -116,7 +123,7 @@ class CityActionsSheet extends StatelessWidget {
                         city.name,
                         style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: AppColors.darkGrey,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -129,8 +136,8 @@ class CityActionsSheet extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: city.isActive
-                            ? AppColors.successLight
-                            : AppColors.errorLight,
+                            ? Theme.of(context).colorScheme.successContainer
+                            : Theme.of(context).colorScheme.errorContainer,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
@@ -139,8 +146,8 @@ class CityActionsSheet extends StatelessWidget {
                             : context.l10n.inactive,
                         style: AppTextStyles.labelSmall.copyWith(
                           color: city.isActive
-                              ? AppColors.success
-                              : AppColors.error,
+                              ? Theme.of(context).colorScheme.success
+                              : Theme.of(context).colorScheme.error,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -151,7 +158,7 @@ class CityActionsSheet extends StatelessWidget {
                 Text(
                   context.l10n.fieldsCount(city.fieldsCount),
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.mediumGrey,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -168,14 +175,16 @@ class CityActionsSheet extends StatelessWidget {
       child: Column(
         children: [
           _buildActionTile(
+            context: context,
             icon: Icons.edit,
             title: context.l10n.editCity,
             subtitle: context.l10n.updateCityName,
-            color: AppColors.info,
+            color: Theme.of(context).colorScheme.info,
             onTap: onEdit,
           ),
           const SizedBox(height: 8),
           _buildActionTile(
+            context: context,
             icon: city.isActive
                 ? Icons.visibility_off_outlined
                 : Icons.visibility_outlined,
@@ -185,15 +194,18 @@ class CityActionsSheet extends StatelessWidget {
             subtitle: city.isActive
                 ? context.l10n.hideThisCityFromUsers
                 : context.l10n.showThisCityToUsers,
-            color: city.isActive ? AppColors.warning : AppColors.success,
+            color: city.isActive
+                ? Theme.of(context).colorScheme.warning
+                : Theme.of(context).colorScheme.success,
             onTap: onToggleStatus,
           ),
           const SizedBox(height: 8),
           _buildActionTile(
+            context: context,
             icon: Icons.delete,
             title: context.l10n.deleteCity,
             subtitle: context.l10n.permanentlyRemoveThisCity,
-            color: AppColors.error,
+            color: Theme.of(context).colorScheme.error,
             onTap: onDelete,
           ),
         ],
@@ -202,6 +214,7 @@ class CityActionsSheet extends StatelessWidget {
   }
 
   Widget _buildActionTile({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required String subtitle,
@@ -246,7 +259,7 @@ class CityActionsSheet extends StatelessWidget {
                     Text(
                       subtitle,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.mediumGrey,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],

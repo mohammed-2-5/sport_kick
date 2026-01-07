@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/calculate_booking_end_time_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/calculate_booking_price_usecase.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/manual_booking_form_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/manual_booking_validator.dart';
@@ -12,7 +14,15 @@ import 'package:spo_kick/l10n/app_localizations.dart';
 /// - End time auto-calculation
 /// - Optional initialization from booking table
 class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
-  ManualBookingFormCubit() : super(const ManualBookingFormInitial());
+  final CalculateBookingEndTimeUseCase _calculateBookingEndTimeUseCase;
+  final CalculateBookingPriceUseCase _calculateBookingPriceUseCase;
+
+  ManualBookingFormCubit({
+    required CalculateBookingEndTimeUseCase calculateBookingEndTimeUseCase,
+    required CalculateBookingPriceUseCase calculateBookingPriceUseCase,
+  }) : _calculateBookingEndTimeUseCase = calculateBookingEndTimeUseCase,
+       _calculateBookingPriceUseCase = calculateBookingPriceUseCase,
+       super(const ManualBookingFormInitial());
 
   /// Initialize form with data from booking table.
   ///
@@ -29,13 +39,12 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
       final startTime = initialData['selectedTime'] as String?;
 
       // Calculate end time (1 hour after start)
-      String? endTime;
-      if (startTime != null) {
-        final hour = int.parse(startTime.split(':')[0]);
-        if (hour < 23) {
-          endTime = '${(hour + 1).toString().padLeft(2, '0')}:00';
-        }
-      }
+      final endTime = startTime != null
+          ? _calculateBookingEndTimeUseCase(
+              startTime: startTime,
+              durationHours: 1,
+            )
+          : null;
 
       // Store fieldId/fieldName for later use when fields are loaded
       final newData = _data.copyWith(
@@ -139,7 +148,10 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
   /// Update selected field (clears time selections and recalculates price).
   void setField(FieldEntity? field) {
     final price = field != null
-        ? field.pricePerHour * _data.durationHours
+        ? _calculateBookingPriceUseCase(
+            pricePerHour: field.pricePerHour,
+            durationHours: _data.durationHours,
+          )
         : null;
 
     final newData = _data.copyWith(
@@ -163,19 +175,13 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
 
   /// Update start time and auto-calculate end time based on duration.
   void setStartTime(String? time) {
-    String? endTime;
-    if (time != null) {
-      final hour = int.parse(time.split(':')[0]);
-      final minute = int.parse(time.split(':')[1]);
+    final endTime = time != null
+        ? _calculateBookingEndTimeUseCase(
+            startTime: time,
+            durationHours: _data.durationHours,
+          )
+        : null;
 
-      // Calculate end time based on duration (1 or 2 hours)
-      final endHour = hour + _data.durationHours;
-
-      if (endHour < 24) {
-        endTime =
-            '${endHour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
-      }
-    }
     final newData = _data.copyWith(
       selectedStartTime: time,
       selectedEndTime: endTime,
@@ -195,21 +201,19 @@ class ManualBookingFormCubit extends Cubit<ManualBookingFormState> {
 
     // Recalculate price based on field price per hour
     final price = _data.selectedField != null
-        ? _data.selectedField!.pricePerHour * hours
+        ? _calculateBookingPriceUseCase(
+            pricePerHour: _data.selectedField!.pricePerHour,
+            durationHours: hours,
+          )
         : null;
 
     // Recalculate end time if start time exists
-    String? endTime = _data.selectedEndTime;
-    if (_data.selectedStartTime != null) {
-      final hour = int.parse(_data.selectedStartTime!.split(':')[0]);
-      final minute = int.parse(_data.selectedStartTime!.split(':')[1]);
-      final endHour = hour + hours;
-
-      if (endHour < 24) {
-        endTime =
-            '${endHour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
-      }
-    }
+    final endTime = _data.selectedStartTime != null
+        ? _calculateBookingEndTimeUseCase(
+            startTime: _data.selectedStartTime!,
+            durationHours: hours,
+          )
+        : null;
 
     final newData = _data.copyWith(
       durationHours: hours,

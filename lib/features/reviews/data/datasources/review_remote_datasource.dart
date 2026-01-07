@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:spo_kick/core/errors/exceptions.dart';
 import 'package:spo_kick/features/reviews/data/models/review_model.dart';
+import 'package:spo_kick/features/reviews/data/mappers/review_response_mapper.dart';
 
 /// Remote data source for review operations.
 ///
@@ -87,7 +88,7 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
           ''')
           .single();
 
-      return _parseReviewResponse(response);
+      return ReviewResponseMapper.fromSupabaseResponse(response);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
@@ -113,9 +114,7 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
           .order('created_at', ascending: false)
           .range(offset, offset + limit - 1);
 
-      return (response as List)
-          .map((json) => _parseReviewResponse(json))
-          .toList();
+      return ReviewResponseMapper.fromSupabaseResponseList(response as List);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
@@ -136,7 +135,7 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
           .eq('id', reviewId)
           .single();
 
-      return _parseReviewResponse(response);
+      return ReviewResponseMapper.fromSupabaseResponse(response);
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
         throw const NotFoundException('Review not found');
@@ -168,7 +167,7 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
 
       if (response == null) return null;
 
-      return _parseReviewResponse(response);
+      return ReviewResponseMapper.fromSupabaseResponse(response);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
@@ -204,7 +203,7 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
           ''')
           .single();
 
-      return _parseReviewResponse(response);
+      return ReviewResponseMapper.fromSupabaseResponse(response);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
@@ -267,49 +266,11 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
           .order('created_at', ascending: false)
           .range(offset, offset + limit - 1);
 
-      return (response as List)
-          .map((json) => _parseReviewResponse(json))
-          .toList();
+      return ReviewResponseMapper.fromSupabaseResponseList(response as List);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
       throw ServerException('Failed to fetch user reviews: ${e.toString()}');
     }
-  }
-
-  /// Helper method to parse review response from Supabase
-  ReviewModel _parseReviewResponse(Map<String, dynamic> json) {
-    // Extract user info from nested profile object
-    String? userName;
-    String? userAvatar;
-
-    if (json['user_name'] != null) {
-      if (json['user_name'] is Map) {
-        userName = json['user_name']['full_name'] as String?;
-      } else if (json['user_name'] is String) {
-        userName = json['user_name'] as String?;
-      }
-    }
-
-    if (json['user_avatar'] != null) {
-      if (json['user_avatar'] is Map) {
-        userAvatar = json['user_avatar']['avatar_url'] as String?;
-      } else if (json['user_avatar'] is String) {
-        userAvatar = json['user_avatar'] as String?;
-      }
-    }
-
-    return ReviewModel(
-      id: json['id'] as String,
-      fieldId: json['field_id'] as String,
-      userId: json['user_id'] as String,
-      bookingId: json['booking_id'] as String?,
-      rating: json['rating'] as int,
-      comment: json['comment'] as String?,
-      userName: userName,
-      userAvatar: userAvatar,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-    );
   }
 }

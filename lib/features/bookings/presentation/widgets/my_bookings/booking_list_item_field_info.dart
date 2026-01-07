@@ -16,6 +16,7 @@ class BookingListItemFieldInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.colors;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Row(
       children: [
@@ -25,7 +26,9 @@ class BookingListItemFieldInfo extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
+                  color: isDark
+                      ? colorScheme.shadow.withValues(alpha: 0.2)
+                      : colorScheme.shadow.withValues(alpha: 0.05),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
                 ),

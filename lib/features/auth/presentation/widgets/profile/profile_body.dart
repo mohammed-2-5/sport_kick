@@ -24,23 +24,30 @@ class ProfileBody extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 60),
-        _buildUserInfo(context),
+        _UserInfo(user: user),
         const SizedBox(height: 32),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: _buildInfoCards(context),
+          child: _InfoCards(user: user),
         ),
         const SizedBox(height: 32),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: _buildActions(context),
+          child: _ActionButtons(user: user),
         ),
         const SizedBox(height: 40),
       ],
     );
   }
+}
 
-  Widget _buildUserInfo(BuildContext context) {
+class _UserInfo extends StatelessWidget {
+  final UserEntity user;
+
+  const _UserInfo({required this.user});
+
+  @override
+  Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Column(
@@ -54,7 +61,7 @@ class ProfileBody extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
-            _roleLabel(context),
+            _getRoleLabel(context, user.role),
             style: AppTextStyles.labelSmallBold.copyWith(
               color: colorScheme.primary,
               letterSpacing: 1.0,
@@ -65,7 +72,25 @@ class ProfileBody extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCards(BuildContext context) {
+  String _getRoleLabel(BuildContext context, String? role) {
+    switch (role) {
+      case 'admin':
+        return context.l10n.roleAdmin;
+      case 'super_admin':
+        return context.l10n.roleSuperAdmin;
+      default:
+        return context.l10n.roleUser;
+    }
+  }
+}
+
+class _InfoCards extends StatelessWidget {
+  final UserEntity user;
+
+  const _InfoCards({required this.user});
+
+  @override
+  Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
 
@@ -96,8 +121,15 @@ class ProfileBody extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildActions(BuildContext context) {
+class _ActionButtons extends StatelessWidget {
+  final UserEntity user;
+
+  const _ActionButtons({required this.user});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -126,16 +158,5 @@ class ProfileBody extends StatelessWidget {
         child: const EditProfileDialog(),
       ),
     );
-  }
-
-  String _roleLabel(BuildContext context) {
-    switch (user.role) {
-      case 'admin':
-        return context.l10n.roleAdmin;
-      case 'super_admin':
-        return context.l10n.roleSuperAdmin;
-      default:
-        return context.l10n.roleUser;
-    }
   }
 }

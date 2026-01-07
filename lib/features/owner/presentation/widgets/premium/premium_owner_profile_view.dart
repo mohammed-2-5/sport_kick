@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -66,7 +65,7 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
         }
 
         return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: BlocConsumer<OwnerProfileCubit, OwnerProfileState>(
             listener: (context, state) {
               // Reload profile data after successful auth actions
@@ -82,7 +81,7 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
                 onRefresh: () async {
                   await context.read<OwnerProfileCubit>().refresh();
                 },
-                color: AppColors.accentCyan,
+                color: Theme.of(context).colorScheme.secondary,
                 child: _buildContent(context, authState, state),
               );
             },
@@ -159,17 +158,18 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
   }
 
   Widget _buildErrorState(BuildContext context, OwnerProfileError state) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.error_outline, size: 64, color: Colors.red),
+          Icon(Icons.error_outline, size: 64, color: colorScheme.error),
           const SizedBox(height: 16),
           Text(
             state.message,
             style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -179,8 +179,8 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
             icon: const Icon(Icons.refresh),
             label: Text(context.l10n.retry),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.accentCyan,
-              foregroundColor: Colors.white,
+              backgroundColor: colorScheme.secondary,
+              foregroundColor: colorScheme.onSecondary,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -202,6 +202,7 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
   }
 
   void _handleLogout(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -215,7 +216,7 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
         content: Text(
           context.l10n.logoutMessage,
           style: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         actions: [
@@ -224,7 +225,7 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
             child: Text(
               context.l10n.cancel,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -235,8 +236,8 @@ class _PremiumOwnerProfileViewState extends State<PremiumOwnerProfileView> {
               context.read<AuthCubit>().logout();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+              backgroundColor: colorScheme.error,
+              foregroundColor: colorScheme.onError,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),

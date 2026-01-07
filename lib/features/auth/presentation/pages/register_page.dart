@@ -16,7 +16,7 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => RegisterCubit(),
+      create: (context) => RegisterCubit(authCubit: context.read<AuthCubit>()),
       child: Scaffold(
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {

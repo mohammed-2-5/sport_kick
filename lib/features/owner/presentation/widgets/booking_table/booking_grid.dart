@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_cell_handler.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_header_row.dart';
@@ -29,7 +28,7 @@ class BookingGrid extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.1),
+            color: colorScheme.shadow.withValues(alpha: 0.1),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),

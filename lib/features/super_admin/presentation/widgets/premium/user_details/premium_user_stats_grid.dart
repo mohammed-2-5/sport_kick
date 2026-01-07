@@ -6,6 +6,7 @@ import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/user_details/user_details_state.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium user statistics grid.
 ///
@@ -21,6 +22,8 @@ class PremiumUserStatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     final statItems = [
       _StatItem(
         label: context.l10n.totalBookings,
@@ -32,19 +35,19 @@ class PremiumUserStatsGrid extends StatelessWidget {
         label: context.l10n.statusCompleted,
         value: stats.completedBookings.toString(),
         icon: Icons.check_circle,
-        color: Colors.green,
+        color: colorScheme.success,
       ),
       _StatItem(
         label: context.l10n.statusCancelled,
         value: stats.cancelledBookings.toString(),
         icon: Icons.cancel,
-        color: Colors.red,
+        color: colorScheme.error,
       ),
       _StatItem(
         label: context.l10n.pending,
         value: stats.pendingBookings.toString(),
         icon: Icons.pending,
-        color: Colors.orange,
+        color: colorScheme.warning,
       ),
       _StatItem(
         label: context.l10n.totalSpent,
@@ -61,7 +64,7 @@ class PremiumUserStatsGrid extends StatelessWidget {
         label: context.l10n.memberDays,
         value: stats.memberDays.toString(),
         icon: Icons.timer,
-        color: Colors.purple,
+        color: colorScheme.tertiary,
       ),
     ];
 
@@ -129,7 +132,12 @@ class _SectionHeader extends StatelessWidget {
           child: Icon(icon, size: 18, color: Colors.white),
         ),
         const SizedBox(width: 12),
-        Text(title, style: AppTextStyles.titleMedium),
+        Text(
+          title,
+          style: AppTextStyles.titleMedium.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
       ],
     );
   }
@@ -189,7 +197,13 @@ class _StatCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 2),
-              Text(item.label, style: AppTextStyles.bodySmallSecondary),
+              const SizedBox(height: 2),
+              Text(
+                item.label,
+                style: AppTextStyles.bodySmallSecondary.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
         ],
@@ -235,12 +249,16 @@ class _FavoriteFieldCard extends StatelessWidget {
               children: [
                 Text(
                   context.l10n.favoriteField,
-                  style: AppTextStyles.bodySmallSecondary,
+                  style: AppTextStyles.bodySmallSecondary.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   fieldName,
-                  style: AppTextStyles.bold(AppTextStyles.labelLarge),
+                  style: AppTextStyles.bold(
+                    AppTextStyles.labelLarge,
+                  ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),

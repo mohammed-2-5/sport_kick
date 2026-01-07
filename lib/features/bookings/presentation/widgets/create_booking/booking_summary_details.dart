@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
@@ -19,10 +18,12 @@ class BookingSummaryDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(BookingConstants.standardPadding),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.05),
+        color: colorScheme.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(BookingConstants.borderRadius),
       ),
       child: Column(

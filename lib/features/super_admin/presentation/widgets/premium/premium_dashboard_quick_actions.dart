@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium dashboard quick action card.
 ///
@@ -58,6 +59,7 @@ class _PremiumDashboardQuickActionState
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final colors =
         widget.gradientColors ??
         [AppColors.premiumGold, AppColors.premiumGoldDark];
@@ -75,10 +77,10 @@ class _PremiumDashboardQuickActionState
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.premiumSurface,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.premiumBorder.withValues(alpha: 0.3),
+              color: colorScheme.outline.withValues(alpha: 0.3),
             ),
             boxShadow: [
               BoxShadow(
@@ -114,7 +116,7 @@ class _PremiumDashboardQuickActionState
                 widget.label,
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.premiumTextPrimary,
+                  color: colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -123,9 +125,7 @@ class _PremiumDashboardQuickActionState
                 Text(
                   widget.subtitle!,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.premiumTextSecondary.withValues(
-                      alpha: 0.7,
-                    ),
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -165,7 +165,7 @@ class PremiumQuickActionsSection extends StatelessWidget {
           title,
           style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.w700,
-            color: AppColors.premiumTextPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 16),
@@ -204,17 +204,16 @@ class PremiumDashboardStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final colors =
         gradientColors ?? [AppColors.premiumGold, AppColors.premiumGoldDark];
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.premiumSurface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.premiumBorder.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,8 +239,11 @@ class PremiumDashboardStatCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: (isTrendPositive == true ? Colors.green : Colors.red)
-                        .withValues(alpha: 0.1),
+                    color:
+                        (isTrendPositive == true
+                                ? colorScheme.success
+                                : colorScheme.error)
+                            .withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -253,8 +255,8 @@ class PremiumDashboardStatCard extends StatelessWidget {
                             : Icons.trending_down,
                         size: 12,
                         color: isTrendPositive == true
-                            ? Colors.green
-                            : Colors.red,
+                            ? colorScheme.success
+                            : colorScheme.error,
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -262,8 +264,8 @@ class PremiumDashboardStatCard extends StatelessWidget {
                         style: AppTextStyles.labelSmall.copyWith(
                           fontWeight: FontWeight.w600,
                           color: isTrendPositive == true
-                              ? Colors.green
-                              : Colors.red,
+                              ? colorScheme.success
+                              : colorScheme.error,
                         ),
                       ),
                     ],
@@ -277,7 +279,7 @@ class PremiumDashboardStatCard extends StatelessWidget {
             value,
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.w800,
-              color: AppColors.premiumTextPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 4),
@@ -285,7 +287,7 @@ class PremiumDashboardStatCard extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.premiumTextSecondary.withValues(alpha: 0.7),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ],

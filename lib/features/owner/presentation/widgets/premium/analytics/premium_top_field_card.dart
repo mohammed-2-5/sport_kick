@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
@@ -45,7 +44,8 @@ class PremiumTopFieldCard extends StatelessWidget {
     required this.rank,
   });
 
-  Color get _rankColor {
+  Color _getRankColor(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (rank) {
       case 1:
         return const Color(0xFFFFD700); // Gold
@@ -54,7 +54,7 @@ class PremiumTopFieldCard extends StatelessWidget {
       case 3:
         return const Color(0xFFCD7F32); // Bronze
       default:
-        return AppColors.textSecondary;
+        return colorScheme.onSurfaceVariant;
     }
   }
 
@@ -65,18 +65,20 @@ class PremiumTopFieldCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final rankColor = _getRankColor(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: rank <= 3
-            ? Border.all(color: _rankColor.withValues(alpha: 0.3), width: 2)
+            ? Border.all(color: rankColor.withValues(alpha: 0.3), width: 2)
             : null,
         boxShadow: [
           BoxShadow(
-            color: _rankColor.withValues(alpha: 0.1),
+            color: rankColor.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -84,7 +86,7 @@ class PremiumTopFieldCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _buildRankBadge(),
+          _buildRankBadge(context, rankColor),
           const SizedBox(width: 12),
           _buildFieldInfo(context),
           _buildRevenueBadge(context),
@@ -93,22 +95,22 @@ class PremiumTopFieldCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRankBadge() {
+  Widget _buildRankBadge(BuildContext context, Color rankColor) {
     return Container(
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: _rankColor.withValues(alpha: 0.15),
+        color: rankColor.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
         child: rank <= 3
-            ? Icon(_rankIcon, color: _rankColor, size: 22)
+            ? Icon(_rankIcon, color: rankColor, size: 22)
             : Text(
                 '#$rank',
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: _rankColor,
+                  color: rankColor,
                 ),
               ),
       ),
@@ -116,6 +118,7 @@ class PremiumTopFieldCard extends StatelessWidget {
   }
 
   Widget _buildFieldInfo(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +127,7 @@ class PremiumTopFieldCard extends StatelessWidget {
             field.name,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -136,7 +139,7 @@ class PremiumTopFieldCard extends StatelessWidget {
               LocaleFormatters.formatNumber(context, field.bookings),
             ),
             style: AppTextStyles.labelSmall.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -145,10 +148,11 @@ class PremiumTopFieldCard extends StatelessWidget {
   }
 
   Widget _buildRevenueBadge(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.goldAccent.withValues(alpha: 0.1),
+        color: colorScheme.tertiary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -160,7 +164,7 @@ class PremiumTopFieldCard extends StatelessWidget {
         ),
         style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w700,
-          color: AppColors.goldAccent,
+          color: colorScheme.tertiary,
         ),
       ),
     );

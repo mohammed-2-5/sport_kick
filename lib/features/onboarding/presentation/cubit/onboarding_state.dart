@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class OnboardingState extends Equatable {
+sealed class OnboardingState extends Equatable {
   const OnboardingState();
 
   @override

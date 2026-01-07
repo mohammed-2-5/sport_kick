@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/premium/premium_owner_booking_card.dart';
-import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/premium_owner_bookings_list/bookings_loading_shimmer.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/premium/bookings/premium_owner_bookings_list/bookings_empty_state.dart';
 
 /// Premium list view for owner bookings.
 ///
@@ -43,12 +42,13 @@ class PremiumOwnerBookingsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     if (isLoading && !isRefreshing) {
-      return _LoadingShimmer();
+      return const BookingsLoadingShimmer();
     }
 
     if (bookings.isEmpty) {
-      return _EmptyState(message: emptyMessage);
+      return BookingsEmptyState(message: emptyMessage);
     }
 
     return RefreshIndicator(
@@ -56,8 +56,8 @@ class PremiumOwnerBookingsList extends StatelessWidget {
         onRefresh();
         await Future.delayed(const Duration(milliseconds: 500));
       },
-      color: AppColors.accentCyan,
-      backgroundColor: Colors.white,
+      color: colorScheme.secondary,
+      backgroundColor: colorScheme.surface,
       child: ListView.separated(
         padding: const EdgeInsets.all(20),
         itemCount: bookings.length,
@@ -91,124 +91,6 @@ class PremiumOwnerBookingsList extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-/// Loading shimmer effect.
-class _LoadingShimmer extends StatefulWidget {
-  @override
-  State<_LoadingShimmer> createState() => _LoadingShimmerState();
-}
-
-class _LoadingShimmerState extends State<_LoadingShimmer>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    )..repeat();
-    _animation = Tween<double>(
-      begin: -2,
-      end: 2,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(20),
-      itemCount: 5,
-      separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemBuilder: (context, index) {
-        return AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) {
-            return Container(
-              height: 180,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: const [
-                    AppColors.shimmerBase,
-                    AppColors.shimmerHighlight,
-                    AppColors.shimmerBase,
-                  ],
-                  stops: [
-                    (0.3 + _animation.value / 4).clamp(0.0, 1.0),
-                    (0.5 + _animation.value / 4).clamp(0.0, 1.0),
-                    (0.7 + _animation.value / 4).clamp(0.0, 1.0),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-}
-
-/// Empty state with icon and message.
-class _EmptyState extends StatelessWidget {
-  final String message;
-
-  const _EmptyState({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [
-                  AppColors.accentCyan.withValues(alpha: 0.1),
-                  AppColors.premiumPeriwinkle.withValues(alpha: 0.1),
-                ],
-              ),
-            ),
-            child: Icon(
-              Icons.event_busy_rounded,
-              size: 60,
-              color: AppColors.textSecondary.withValues(alpha: 0.5),
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            message,
-            style: AppTextStyles.titleLarge.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            context.l10n.tryAdjustingYourFiltersOrSearch,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
-            ),
-          ),
-        ],
       ),
     );
   }

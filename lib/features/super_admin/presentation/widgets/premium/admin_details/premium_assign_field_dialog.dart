@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium assign field dialog.
 ///
@@ -78,7 +79,7 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.black54,
+      color: context.overlayColor,
       child: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -95,7 +96,7 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
             margin: const EdgeInsets.all(24),
             constraints: const BoxConstraints(maxWidth: 400, maxHeight: 500),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
@@ -140,13 +141,15 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                               context.l10n.assignField,
                               style: AppTextStyles.titleMedium.copyWith(
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.textPrimary,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                             ),
                             Text(
                               context.l10n.selectAFieldToAssign,
                               style: AppTextStyles.bodyMedium.copyWith(
-                                color: AppColors.textSecondary,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ],
@@ -154,9 +157,9 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                       ),
                       GestureDetector(
                         onTap: widget.onCancel,
-                        child: const Icon(
+                        child: Icon(
                           Icons.close,
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -174,7 +177,9 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                       hintText: context.l10n.searchFields,
                       prefixIcon: const Icon(Icons.search, size: 20),
                       filled: true,
-                      fillColor: AppColors.backgroundLight,
+                      fillColor: Theme.of(
+                        context,
+                      ).colorScheme.surfaceContainerHighest,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 12,
@@ -222,16 +227,22 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             decoration: BoxDecoration(
-                              color: AppColors.backgroundLight,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.surfaceContainerHighest,
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: AppColors.border),
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
                             ),
                             child: Center(
                               child: Text(
                                 context.l10n.cancel,
                                 style: AppTextStyles.labelLarge.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ),
@@ -259,7 +270,7 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                                     )
                                   : null,
                               color: widget.selectedFieldId == null
-                                  ? AppColors.border
+                                  ? Theme.of(context).colorScheme.outline
                                   : null,
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -270,7 +281,9 @@ class _PremiumAssignFieldDialogState extends State<PremiumAssignFieldDialog>
                                   fontWeight: FontWeight.w600,
                                   color: widget.selectedFieldId != null
                                       ? Colors.white
-                                      : AppColors.textSecondary,
+                                      : Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ),
@@ -312,10 +325,12 @@ class _FieldItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.premiumGold.withValues(alpha: 0.1)
-              : Colors.white,
+              : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.premiumGold : AppColors.border,
+            color: isSelected
+                ? AppColors.premiumGold
+                : Theme.of(context).colorScheme.outline,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -335,10 +350,14 @@ class _FieldItem extends StatelessWidget {
                         ],
                       )
                     : null,
-                color: isSelected ? null : Colors.white,
+                color: isSelected
+                    ? null
+                    : Theme.of(context).colorScheme.surface,
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? Colors.transparent : AppColors.border,
+                  color: isSelected
+                      ? Colors.transparent
+                      : Theme.of(context).colorScheme.outline,
                 ),
               ),
               child: isSelected
@@ -355,13 +374,15 @@ class _FieldItem extends StatelessWidget {
                     field.name,
                     style: AppTextStyles.titleSmall.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   Text(
                     field.city,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.textSecondary.withValues(alpha: 0.8),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                     ),
                   ),
                 ],
@@ -374,7 +395,7 @@ class _FieldItem extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: isSelected
                     ? AppColors.premiumGold
-                    : AppColors.textSecondary,
+                    : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
           ],
@@ -404,7 +425,9 @@ class _EmptyState extends StatelessWidget {
           Text(
             context.l10n.noAvailableFields,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ],

@@ -5,7 +5,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
 
 /// Base state for reports cubit.
-abstract class ReportsState extends Equatable {
+sealed class ReportsState extends Equatable {
   const ReportsState();
 
   @override

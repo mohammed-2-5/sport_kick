@@ -24,12 +24,14 @@ class FieldDetailsContent extends StatelessWidget {
     required this.scrollController,
   });
 
+  bool get _hasDescription =>
+      field.description != null && field.description!.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       controller: scrollController,
       slivers: [
-        // Hero Image
         SliverToBoxAdapter(
           child: PremiumFieldHero(
             images: field.images,
@@ -39,66 +41,32 @@ class FieldDetailsContent extends StatelessWidget {
             onImageTap: onImageTap,
           ),
         ),
-
-        // Content Sections
         SliverToBoxAdapter(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 24),
-              _buildInfoSection(),
-              const SizedBox(height: 20),
-              if (_hasDescription) _buildDescriptionSection(),
-              if (_hasDescription) const SizedBox(height: 20),
-              if (field.hasFacilities) _buildAmenitiesSection(),
-              if (field.hasFacilities) const SizedBox(height: 20),
-              _buildLocationSection(),
-              const SizedBox(height: 20),
-              _buildReviewsSection(),
-              // Extra bottom spacing for floating buttons (increased to prevent overlap)
-              const SizedBox(height: 200),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 24),
+                PremiumFieldInfoCard(field: field, category: category),
+                const SizedBox(height: 20),
+                if (_hasDescription) ...[
+                  PremiumDescriptionCard(description: field.description!),
+                  const SizedBox(height: 20),
+                ],
+                if (field.hasFacilities) ...[
+                  PremiumAmenitiesGrid(facilities: field.facilities),
+                  const SizedBox(height: 20),
+                ],
+                PremiumLocationCard(field: field),
+                const SizedBox(height: 20),
+                PremiumReviewsPreview(field: field),
+                const SizedBox(height: 200),
+              ],
+            ),
           ),
         ),
       ],
-    );
-  }
-
-  bool get _hasDescription =>
-      field.description != null && field.description!.isNotEmpty;
-
-  Widget _buildInfoSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: PremiumFieldInfoCard(field: field, category: category),
-    );
-  }
-
-  Widget _buildDescriptionSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: PremiumDescriptionCard(description: field.description!),
-    );
-  }
-
-  Widget _buildAmenitiesSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: PremiumAmenitiesGrid(facilities: field.facilities),
-    );
-  }
-
-  Widget _buildLocationSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: PremiumLocationCard(field: field),
-    );
-  }
-
-  Widget _buildReviewsSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: PremiumReviewsPreview(field: field),
     );
   }
 }

@@ -84,11 +84,6 @@ Future<void> _initializeApp() async {
     // 1. Initialize Hive for local storage
     await Hive.initFlutter();
 
-    // TODO: Open Hive boxes when needed
-    // await Hive.openBox(AppConstants.hiveBoxUser);
-    // await Hive.openBox(AppConstants.hiveBoxFields);
-    // await Hive.openBox(AppConstants.hiveBoxBookings);
-
     // 2. Initialize Firebase
     AppLogger.info('Initializing Firebase...', tag: 'INIT');
     await Firebase.initializeApp(
@@ -130,11 +125,13 @@ Future<void> _initializeApp() async {
     await NotificationService.instance.initialize();
 
     // 6. Set system UI styling
+    // 6. Set system UI styling
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
+        statusBarIconBrightness:
+            Brightness.dark, // Default for light theme start
+        systemNavigationBarColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );

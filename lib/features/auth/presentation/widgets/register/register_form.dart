@@ -34,31 +34,6 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
-  void _handleRegister() {
-    // Validate form
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    // Check if passwords match
-    if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.l10n.passwordsDoNotMatch)));
-      return;
-    }
-
-    // Trigger registration
-    context.read<AuthCubit>().register(
-      email: _emailController.text.trim(),
-      password: _passwordController.text,
-      fullName: _fullNameController.text.trim(),
-      phone: _phoneController.text.trim().isEmpty
-          ? null
-          : _phoneController.text.trim(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -66,150 +41,254 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Full Name Field
-          CustomTextField(
-            label: context.l10n.fullName,
-            hint: context.l10n.enterFullName,
-            controller: _fullNameController,
-            type: TextFieldType.text,
-            keyboardType: TextInputType.name,
-            prefixIcon: Icons.person_outline,
-            validator: (value) {
-              if (value == null || value.trim().isEmpty) {
-                return context.l10n.fieldRequired;
-              }
-              if (value.trim().length < 2) {
-                return context.l10n.nameTooShort;
-              }
-              return null;
-            },
-            textInputAction: TextInputAction.next,
-          ),
-
+          _FullNameField(controller: _fullNameController),
           const SizedBox(height: 16),
-
-          // Email Field
-          CustomTextField(
-            label: context.l10n.email,
-            hint: context.l10n.enterYourEmail,
-            controller: _emailController,
-            type: TextFieldType.email,
-            keyboardType: TextInputType.emailAddress,
-            prefixIcon: Icons.email_outlined,
-            validator: (value) {
-              if (value == null || value.trim().isEmpty) {
-                return context.l10n.fieldRequired;
-              }
-              final trimmed = value.trim();
-              final regex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
-              if (!regex.hasMatch(trimmed)) {
-                return context.l10n.invalidEmail;
-              }
-              return null;
-            },
-            textInputAction: TextInputAction.next,
-          ),
-
+          _EmailField(controller: _emailController),
           const SizedBox(height: 16),
-
-          // Phone Field (Optional)
-          CustomTextField(
-            label: context.l10n.phoneOptional,
-            hint: context.l10n.enterPhoneNumber,
-            controller: _phoneController,
-            type: TextFieldType.phone,
-            keyboardType: TextInputType.phone,
-            prefixIcon: Icons.phone_outlined,
-            validator: (value) {
-              // Phone is optional, but if provided, should be valid
-              if (value == null || value.isEmpty) {
-                return null; // Valid - optional field
-              }
-              final cleaned = value.replaceAll(RegExp(r'[\s\-]'), '');
-              if (cleaned.length != AppConstants.phoneNumberLength ||
-                  !RegExp(r'^\d+$').hasMatch(cleaned) ||
-                  !cleaned.startsWith('01')) {
-                return context.l10n.invalidPhone;
-              }
-              return null;
-            },
-            textInputAction: TextInputAction.next,
-          ),
-
+          _PhoneField(controller: _phoneController),
           const SizedBox(height: 16),
-
-          // Password Field
-          CustomTextField(
-            label: context.l10n.password,
-            hint: context.l10n.createPassword,
-            controller: _passwordController,
-            type: TextFieldType.password,
-            prefixIcon: Icons.lock_outline,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return context.l10n.fieldRequired;
-              }
-              if (value.length < AppConstants.minPasswordLength) {
-                return context.l10n.passwordTooShort;
-              }
-              return null;
-            },
-            textInputAction: TextInputAction.next,
-          ),
-
+          _PasswordField(controller: _passwordController),
           const SizedBox(height: 16),
-
-          // Confirm Password Field
-          CustomTextField(
-            label: context.l10n.confirmPassword,
-            hint: context.l10n.reenterPassword,
+          _ConfirmPasswordField(
             controller: _confirmPasswordController,
-            type: TextFieldType.password,
-            prefixIcon: Icons.lock_outline,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return context.l10n.pleaseConfirmPassword;
-              }
-              if (value != _passwordController.text) {
-                return context.l10n.passwordsDoNotMatch;
-              }
-              return null; // Valid
-            },
-            textInputAction: TextInputAction.done,
-            onSubmitted: (_) => _handleRegister(),
+            passwordController: _passwordController,
           ),
-
           const SizedBox(height: 8),
-
-          // Password Requirements Text
-          Text(
-            context.l10n.passwordRequirementText,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-
+          const _PasswordRequirementsText(),
           const SizedBox(height: 32),
-
-          // Register Button
-          CustomButton(
-            text: context.l10n.createAccount,
-            onPressed: _handleRegister,
-            variant: ButtonVariant.primary,
+          _RegisterButton(
+            formKey: _formKey,
+            fullNameController: _fullNameController,
+            emailController: _emailController,
+            phoneController: _phoneController,
+            passwordController: _passwordController,
+            confirmPasswordController: _confirmPasswordController,
           ),
-
           const SizedBox(height: 16),
-
-          // Terms and Privacy Text
-          Text(
-            context.l10n.termsAndPrivacyNote,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-            textAlign: TextAlign.center,
-          ),
+          const _TermsText(),
         ],
       ),
+    );
+  }
+}
+
+class _FullNameField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _FullNameField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextField(
+      label: context.l10n.fullName,
+      hint: context.l10n.enterFullName,
+      controller: controller,
+      type: TextFieldType.text,
+      keyboardType: TextInputType.name,
+      prefixIcon: Icons.person_outline,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return context.l10n.fieldRequired;
+        }
+        if (value.trim().length < 2) {
+          return context.l10n.nameTooShort;
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+    );
+  }
+}
+
+class _EmailField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _EmailField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextField(
+      label: context.l10n.email,
+      hint: context.l10n.enterYourEmail,
+      controller: controller,
+      type: TextFieldType.email,
+      keyboardType: TextInputType.emailAddress,
+      prefixIcon: Icons.email_outlined,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return context.l10n.fieldRequired;
+        }
+        final trimmed = value.trim();
+        final regex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
+        if (!regex.hasMatch(trimmed)) {
+          return context.l10n.invalidEmail;
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+    );
+  }
+}
+
+class _PhoneField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _PhoneField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextField(
+      label: context.l10n.phoneOptional,
+      hint: context.l10n.enterPhoneNumber,
+      controller: controller,
+      type: TextFieldType.phone,
+      keyboardType: TextInputType.phone,
+      prefixIcon: Icons.phone_outlined,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return null;
+        }
+        final cleaned = value.replaceAll(RegExp(r'[\s\-]'), '');
+        if (cleaned.length != AppConstants.phoneNumberLength ||
+            !RegExp(r'^\d+$').hasMatch(cleaned) ||
+            !cleaned.startsWith('01')) {
+          return context.l10n.invalidPhone;
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+    );
+  }
+}
+
+class _PasswordField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _PasswordField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextField(
+      label: context.l10n.password,
+      hint: context.l10n.createPassword,
+      controller: controller,
+      type: TextFieldType.password,
+      prefixIcon: Icons.lock_outline,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return context.l10n.fieldRequired;
+        }
+        if (value.length < AppConstants.minPasswordLength) {
+          return context.l10n.passwordTooShort;
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+    );
+  }
+}
+
+class _ConfirmPasswordField extends StatelessWidget {
+  final TextEditingController controller;
+  final TextEditingController passwordController;
+
+  const _ConfirmPasswordField({
+    required this.controller,
+    required this.passwordController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextField(
+      label: context.l10n.confirmPassword,
+      hint: context.l10n.reenterPassword,
+      controller: controller,
+      type: TextFieldType.password,
+      prefixIcon: Icons.lock_outline,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return context.l10n.pleaseConfirmPassword;
+        }
+        if (value != passwordController.text) {
+          return context.l10n.passwordsDoNotMatch;
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.done,
+    );
+  }
+}
+
+class _PasswordRequirementsText extends StatelessWidget {
+  const _PasswordRequirementsText();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      context.l10n.passwordRequirementText,
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
+    );
+  }
+}
+
+class _RegisterButton extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController fullNameController;
+  final TextEditingController emailController;
+  final TextEditingController phoneController;
+  final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController;
+
+  const _RegisterButton({
+    required this.formKey,
+    required this.fullNameController,
+    required this.emailController,
+    required this.phoneController,
+    required this.passwordController,
+    required this.confirmPasswordController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomButton(
+      text: context.l10n.createAccount,
+      onPressed: () {
+        if (!formKey.currentState!.validate()) {
+          return;
+        }
+        if (passwordController.text != confirmPasswordController.text) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.l10n.passwordsDoNotMatch)),
+          );
+          return;
+        }
+        context.read<AuthCubit>().register(
+          email: emailController.text.trim(),
+          password: passwordController.text,
+          fullName: fullNameController.text.trim(),
+          phone: phoneController.text.trim().isEmpty
+              ? null
+              : phoneController.text.trim(),
+        );
+      },
+      variant: ButtonVariant.primary,
+    );
+  }
+}
+
+class _TermsText extends StatelessWidget {
+  const _TermsText();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      context.l10n.termsAndPrivacyNote,
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
+      textAlign: TextAlign.center,
     );
   }
 }

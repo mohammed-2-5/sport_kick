@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
@@ -16,6 +16,7 @@ class OwnerBookingStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -30,7 +31,9 @@ class OwnerBookingStatusCard extends StatelessWidget {
                   Text(
                     context.l10n.bookingStatus,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.textSecondary.withValues(alpha: 0.7),
+                      color: colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.7,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -38,7 +41,7 @@ class OwnerBookingStatusCard extends StatelessWidget {
                     _statusLabel(context, booking.status),
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: _getStatusColor(booking.status),
+                      color: _getStatusColor(context, booking.status),
                     ),
                   ),
                 ],
@@ -51,16 +54,17 @@ class OwnerBookingStatusCard extends StatelessWidget {
     );
   }
 
-  Color _getStatusColor(BookingStatus status) {
+  Color _getStatusColor(BuildContext context, BookingStatus status) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (status) {
       case BookingStatus.pending:
         return Colors.orange;
       case BookingStatus.confirmed:
-        return AppColors.success;
+        return colorScheme.success;
       case BookingStatus.canceled:
-        return AppColors.error;
+        return colorScheme.error;
       case BookingStatus.completed:
-        return AppColors.info;
+        return colorScheme.info;
     }
   }
 
@@ -85,19 +89,20 @@ class _StatusIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gradientColors = _getGradientColors(context);
     return Container(
       width: 56,
       height: 56,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: _getGradientColors(),
+          colors: gradientColors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: _getGradientColors().first.withValues(alpha: 0.3),
+            color: gradientColors.first.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -107,16 +112,17 @@ class _StatusIcon extends StatelessWidget {
     );
   }
 
-  List<Color> _getGradientColors() {
+  List<Color> _getGradientColors(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (status) {
       case BookingStatus.pending:
         return [Colors.orange, Colors.deepOrange];
       case BookingStatus.confirmed:
-        return [AppColors.success, Colors.green.shade700];
+        return [colorScheme.success, Colors.green.shade700];
       case BookingStatus.canceled:
-        return [AppColors.error, Colors.red.shade700];
+        return [colorScheme.error, Colors.red.shade700];
       case BookingStatus.completed:
-        return [AppColors.info, Colors.blue.shade700];
+        return [colorScheme.info, Colors.blue.shade700];
     }
   }
 
@@ -141,34 +147,36 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statusColor = _getColor(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: _getColor().withValues(alpha: 0.1),
+        color: statusColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _getColor().withValues(alpha: 0.3)),
+        border: Border.all(color: statusColor.withValues(alpha: 0.3)),
       ),
       child: Text(
         _label(context).toUpperCase(),
         style: AppTextStyles.labelSmall.copyWith(
           fontWeight: FontWeight.w700,
-          color: _getColor(),
+          color: statusColor,
           letterSpacing: 1,
         ),
       ),
     );
   }
 
-  Color _getColor() {
+  Color _getColor(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (status) {
       case BookingStatus.pending:
         return Colors.orange;
       case BookingStatus.confirmed:
-        return AppColors.success;
+        return colorScheme.success;
       case BookingStatus.canceled:
-        return AppColors.error;
+        return colorScheme.error;
       case BookingStatus.completed:
-        return AppColors.info;
+        return colorScheme.info;
     }
   }
 

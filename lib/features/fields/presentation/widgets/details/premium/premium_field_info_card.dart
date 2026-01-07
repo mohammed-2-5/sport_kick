@@ -8,15 +8,9 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/sport_category_localizer.dart';
 import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/details/premium/premium_field_info_card/info_chip.dart';
 
 /// Premium field information card.
-///
-/// Features:
-/// - Field name with premium typography
-/// - Rating badge with gradient
-/// - Price and capacity cards
-/// - Surface type and indoor/outdoor chips
-/// - Booking count badge
 class PremiumFieldInfoCard extends StatelessWidget {
   final FieldEntity field;
   final SportCategoryEntity? category;
@@ -26,6 +20,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.colors;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PremiumCard(
       padding: const EdgeInsets.all(24),
@@ -257,56 +252,24 @@ class PremiumFieldInfoCard extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Surface Type and Indoor/Outdoor Chips
-          Builder(
-            builder: (context) {
-              final isDark = Theme.of(context).brightness == Brightness.dark;
-              final successColor = isDark
-                  ? AppColors.darkSuccess
-                  : AppColors.success;
-
-              return Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: [
-                  if (field.surfaceType != null)
-                    _buildInfoChip(
-                      Icons.grass,
-                      field.surfaceType!,
-                      successColor,
-                    ),
-                  _buildInfoChip(
-                    field.isIndoor ? Icons.home : Icons.wb_sunny,
-                    field.isIndoor ? 'Indoor' : 'Outdoor',
-                    field.isIndoor ? colorScheme.secondary : Colors.orange,
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfoChip(IconData icon, String label, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: color),
-          const SizedBox(width: 6),
-          Text(
-            label,
-            style: AppTextStyles.labelSmall.copyWith(
-              color: color,
-              fontWeight: FontWeight.w700,
-            ),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              if (field.surfaceType != null)
+                InfoChip(
+                  icon: Icons.grass,
+                  label: field.surfaceType!,
+                  color: isDark ? AppColors.darkSuccess : AppColors.success,
+                ),
+              InfoChip(
+                icon: field.isIndoor ? Icons.home : Icons.wb_sunny,
+                label: field.isIndoor
+                    ? context.l10n.indoor
+                    : context.l10n.outdoor,
+                color: field.isIndoor ? colorScheme.secondary : Colors.orange,
+              ),
+            ],
           ),
         ],
       ),

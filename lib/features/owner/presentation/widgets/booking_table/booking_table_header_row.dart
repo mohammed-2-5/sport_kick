@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/booking_table_helpers.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_header_row/time_column_header.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Header row for booking table showing TIME SLOTS across the top.
@@ -26,7 +26,7 @@ class BookingTableHeaderRow extends StatelessWidget {
           height: 56,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColors.navyDeep.withValues(alpha: 0.05),
+            color: colorScheme.primary.withValues(alpha: 0.05),
             border: Border(
               right: BorderSide(
                 color: colorScheme.outline.withValues(alpha: 0.3),
@@ -43,38 +43,8 @@ class BookingTableHeaderRow extends StatelessWidget {
         ),
 
         // Time columns headers
-        ...hours.map((hour) => _TimeColumnHeader(hour: hour)),
+        ...hours.map((hour) => TimeColumnHeader(hour: hour)),
       ],
-    );
-  }
-}
-
-/// Individual time column header.
-class _TimeColumnHeader extends StatelessWidget {
-  final String hour;
-
-  const _TimeColumnHeader({required this.hour});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      width: 65,
-      height: 56,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border(
-          right: BorderSide(color: colorScheme.outline.withValues(alpha: 0.3)),
-        ),
-      ),
-      child: Text(
-        hour,
-        style: AppTextStyles.labelSmall.copyWith(
-          fontWeight: FontWeight.w700,
-          color: colorScheme.onSurface,
-        ),
-      ),
     );
   }
 }

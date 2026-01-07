@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
@@ -32,7 +31,7 @@ class FieldDetailStats extends StatelessWidget {
                   icon: Icons.event_available,
                   label: context.l10n.bookings,
                   value: field.totalBookings.toString(),
-                  color: AppColors.primary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               const SizedBox(width: 12),
@@ -41,7 +40,7 @@ class FieldDetailStats extends StatelessWidget {
                   icon: Icons.star,
                   label: context.l10n.rating,
                   value: field.ratingDisplay,
-                  color: AppColors.warning,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
             ],
@@ -51,7 +50,9 @@ class FieldDetailStats extends StatelessWidget {
             icon: field.isActive ? Icons.check_circle : Icons.cancel,
             label: context.l10n.bookingStatus,
             value: field.isActive ? context.l10n.active : context.l10n.inactive,
-            color: field.isActive ? AppColors.success : AppColors.error,
+            color: field.isActive
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.error,
           ),
           const SizedBox(height: 24),
           const Divider(),

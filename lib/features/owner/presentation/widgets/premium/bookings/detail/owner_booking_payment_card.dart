@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
@@ -26,6 +26,7 @@ class OwnerBookingPaymentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -34,9 +35,9 @@ class OwnerBookingPaymentCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.payment_rounded,
-                  color: AppColors.accentCyan,
+                  color: colorScheme.secondary,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -44,7 +45,7 @@ class OwnerBookingPaymentCard extends StatelessWidget {
                   context.l10n.paymentInformation,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 const Spacer(),
@@ -82,16 +83,17 @@ class _PaymentStatusInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _getBackgroundColor(),
+        color: _getBackgroundColor(colorScheme),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: _getBorderColor()),
+        border: Border.all(color: _getBorderColor(colorScheme)),
       ),
       child: Row(
         children: [
-          Icon(_getIcon(), color: _getIconColor(), size: 24),
+          Icon(_getIcon(), color: _getIconColor(colorScheme), size: 24),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -101,14 +103,14 @@ class _PaymentStatusInfo extends StatelessWidget {
                   _getTitle(context),
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: _getIconColor(),
+                    color: _getIconColor(colorScheme),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   _getDescription(context),
                   style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.7),
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                   ),
                 ),
               ],
@@ -119,42 +121,42 @@ class _PaymentStatusInfo extends StatelessWidget {
     );
   }
 
-  Color _getBackgroundColor() {
+  Color _getBackgroundColor(ColorScheme colorScheme) {
     switch (status) {
       case PaymentStatus.pending:
         return Colors.orange.withValues(alpha: 0.1);
       case PaymentStatus.uploaded:
-        return AppColors.info.withValues(alpha: 0.1);
+        return colorScheme.info.withValues(alpha: 0.1);
       case PaymentStatus.verified:
-        return AppColors.success.withValues(alpha: 0.1);
+        return colorScheme.success.withValues(alpha: 0.1);
       case PaymentStatus.rejected:
-        return AppColors.error.withValues(alpha: 0.1);
+        return colorScheme.error.withValues(alpha: 0.1);
     }
   }
 
-  Color _getBorderColor() {
+  Color _getBorderColor(ColorScheme colorScheme) {
     switch (status) {
       case PaymentStatus.pending:
         return Colors.orange.withValues(alpha: 0.3);
       case PaymentStatus.uploaded:
-        return AppColors.info.withValues(alpha: 0.3);
+        return colorScheme.info.withValues(alpha: 0.3);
       case PaymentStatus.verified:
-        return AppColors.success.withValues(alpha: 0.3);
+        return colorScheme.success.withValues(alpha: 0.3);
       case PaymentStatus.rejected:
-        return AppColors.error.withValues(alpha: 0.3);
+        return colorScheme.error.withValues(alpha: 0.3);
     }
   }
 
-  Color _getIconColor() {
+  Color _getIconColor(ColorScheme colorScheme) {
     switch (status) {
       case PaymentStatus.pending:
         return Colors.orange;
       case PaymentStatus.uploaded:
-        return AppColors.info;
+        return colorScheme.info;
       case PaymentStatus.verified:
-        return AppColors.success;
+        return colorScheme.success;
       case PaymentStatus.rejected:
-        return AppColors.error;
+        return colorScheme.error;
     }
   }
 
@@ -205,6 +207,7 @@ class _ViewProofButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton.icon(
@@ -212,8 +215,8 @@ class _ViewProofButton extends StatelessWidget {
         icon: const Icon(Icons.receipt_long_outlined, size: 18),
         label: Text(context.l10n.viewPaymentProof),
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.info,
-          side: BorderSide(color: AppColors.info.withValues(alpha: 0.5)),
+          foregroundColor: colorScheme.info,
+          side: BorderSide(color: colorScheme.info.withValues(alpha: 0.5)),
           padding: const EdgeInsets.symmetric(vertical: 14),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -232,6 +235,7 @@ class _PaymentVerificationActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Expanded(
@@ -240,8 +244,8 @@ class _PaymentVerificationActions extends StatelessWidget {
             icon: const Icon(Icons.close_rounded, size: 18),
             label: Text(context.l10n.ownerRejectPayment),
             style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.error,
-              side: BorderSide(color: AppColors.error.withValues(alpha: 0.5)),
+              foregroundColor: colorScheme.error,
+              side: BorderSide(color: colorScheme.error.withValues(alpha: 0.5)),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -256,7 +260,7 @@ class _PaymentVerificationActions extends StatelessWidget {
             icon: const Icon(Icons.check_rounded, size: 18),
             label: Text(context.l10n.ownerVerifyPayment),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.success,
+              backgroundColor: colorScheme.success,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
@@ -277,21 +281,18 @@ class _RejectionReasonBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.1),
+        color: colorScheme.error.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
+        border: Border.all(color: colorScheme.error.withValues(alpha: 0.2)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.error,
-            size: 18,
-          ),
+          Icon(Icons.info_outline_rounded, color: colorScheme.error, size: 18),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -301,14 +302,14 @@ class _RejectionReasonBox extends StatelessWidget {
                   context.l10n.rejectionReason,
                   style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.error,
+                    color: colorScheme.error,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   reason,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ],

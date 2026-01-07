@@ -9,6 +9,7 @@ import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium user booking history list.
 ///
@@ -81,7 +82,12 @@ class _BookingListHeader extends StatelessWidget {
           child: const Icon(Icons.history, size: 18, color: Colors.white),
         ),
         const SizedBox(width: 12),
-        Text(context.l10n.bookingHistory, style: AppTextStyles.titleMediumBold),
+        Text(
+          context.l10n.bookingHistory,
+          style: AppTextStyles.titleMediumBold.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
       ],
     );
   }
@@ -93,16 +99,17 @@ class _BookingCard extends StatelessWidget {
 
   const _BookingCard({required this.booking});
 
-  Color get _statusColor {
+  Color _getStatusColor(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (booking.status) {
       case BookingStatus.completed:
-        return Colors.green;
+        return colorScheme.success;
       case BookingStatus.confirmed:
-        return Colors.blue;
+        return colorScheme.info;
       case BookingStatus.pending:
-        return Colors.orange;
+        return colorScheme.warning;
       case BookingStatus.canceled:
-        return Colors.red;
+        return colorScheme.error;
     }
   }
 
@@ -119,7 +126,7 @@ class _BookingCard extends StatelessWidget {
               width: 56,
               padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
-                color: _statusColor.withValues(alpha: 0.1),
+                color: _getStatusColor(context).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -128,14 +135,14 @@ class _BookingCard extends StatelessWidget {
                     DateFormat('dd').format(booking.date),
                     style: AppTextStyles.withColor(
                       AppTextStyles.titleLargeBold,
-                      _statusColor,
+                      _getStatusColor(context),
                     ),
                   ),
                   Text(
                     DateFormat('MMM').format(booking.date),
                     style: AppTextStyles.withColor(
                       AppTextStyles.labelSmallBold,
-                      _statusColor,
+                      _getStatusColor(context),
                     ),
                   ),
                 ],
@@ -149,7 +156,9 @@ class _BookingCard extends StatelessWidget {
                 children: [
                   Text(
                     booking.fieldName ?? context.l10n.unknownField,
-                    style: AppTextStyles.bold(AppTextStyles.titleMedium),
+                    style: AppTextStyles.bold(
+                      AppTextStyles.titleMedium,
+                    ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -159,12 +168,16 @@ class _BookingCard extends StatelessWidget {
                       Icon(
                         Icons.access_time,
                         size: 14,
-                        color: AppColors.textSecondary.withValues(alpha: 0.7),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         '${booking.startTime} - ${booking.endTime}',
-                        style: AppTextStyles.bodyMediumSecondary,
+                        style: AppTextStyles.bodyMediumSecondary.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ),
@@ -181,14 +194,14 @@ class _BookingCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: _statusColor.withValues(alpha: 0.1),
+                    color: _getStatusColor(context).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     booking.status.displayName,
                     style: AppTextStyles.withColor(
                       AppTextStyles.labelSmallBold,
-                      _statusColor,
+                      _getStatusColor(context),
                     ),
                   ),
                 ),
@@ -200,7 +213,9 @@ class _BookingCard extends StatelessWidget {
                     currency: booking.currency,
                     decimalDigits: 0,
                   ),
-                  style: AppTextStyles.bold(AppTextStyles.priceSmall),
+                  style: AppTextStyles.bold(
+                    AppTextStyles.priceSmall,
+                  ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
@@ -237,12 +252,16 @@ class _EmptyBookingsState extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             context.l10n.noBookingsYet2,
-            style: AppTextStyles.bold(AppTextStyles.titleMedium),
+            style: AppTextStyles.bold(
+              AppTextStyles.titleMedium,
+            ).copyWith(color: Theme.of(context).colorScheme.onSurface),
           ),
           const SizedBox(height: 4),
           Text(
             context.l10n.thisUserHasntMadeAnyBookings,
-            style: AppTextStyles.bodyMediumSecondary,
+            style: AppTextStyles.bodyMediumSecondary.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),

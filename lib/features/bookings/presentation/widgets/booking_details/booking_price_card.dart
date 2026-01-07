@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
@@ -26,7 +25,7 @@ class BookingPriceCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return PremiumCard(
-      accentColor: AppColors.accentCyan,
+      accentColor: colorScheme.primary,
       showAccentBorder: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,12 +35,12 @@ class BookingPriceCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.accentCyan.withValues(alpha: 0.1),
+                  color: colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.receipt_long,
-                  color: AppColors.accentCyan,
+                  color: colorScheme.primary,
                   size: 18,
                 ),
               ),

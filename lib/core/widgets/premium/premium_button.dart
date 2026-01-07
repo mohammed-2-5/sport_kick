@@ -159,13 +159,17 @@ class _PremiumButtonState extends State<PremiumButton>
           ),
           const SizedBox(width: 8),
         ],
-        Text(
-          widget.label,
-          style: TextStyle(
-            color: _getTextColor(context, isDisabled),
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 0.5,
+        Flexible(
+          child: Text(
+            widget.label,
+            style: TextStyle(
+              color: _getTextColor(context, isDisabled),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ),
         if (widget.rightIcon != null) ...[

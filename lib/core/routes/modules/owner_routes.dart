@@ -9,6 +9,7 @@ import 'package:spo_kick/features/business_hours/presentation/pages/manage_busin
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_crud_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/pages/add_edit_field_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/booking_table_page.dart';
 import 'package:spo_kick/features/owner/presentation/pages/create_manual_booking_page.dart';
@@ -104,7 +105,7 @@ final List<GoRoute> ownerRoutes = [
     name: 'ownerAddField',
     pageBuilder: (context, state) => buildSlidePage(
       child: BlocProvider(
-        create: (_) => sl<OwnerCubit>(),
+        create: (_) => sl<OwnerFieldsCrudCubit>(),
         child: const AddEditFieldPage(),
       ),
       state: state,
@@ -123,7 +124,7 @@ final List<GoRoute> ownerRoutes = [
       }
       return buildSlidePage(
         child: BlocProvider(
-          create: (_) => sl<OwnerCubit>(),
+          create: (_) => sl<OwnerFieldsCrudCubit>(),
           child: AddEditFieldPage(field: field),
         ),
         state: state,

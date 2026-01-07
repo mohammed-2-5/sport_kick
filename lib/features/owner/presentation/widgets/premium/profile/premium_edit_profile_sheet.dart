@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
@@ -57,11 +56,12 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       height: MediaQuery.of(context).size.height * 0.6,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
         children: [
@@ -71,7 +71,7 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: AppColors.border,
+              color: colorScheme.outlineVariant,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -84,12 +84,15 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                    gradient: LinearGradient(
+                      colors: [
+                        colorScheme.secondary,
+                        colorScheme.secondaryContainer,
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.edit, color: Colors.white),
+                  child: Icon(Icons.edit, color: colorScheme.onSecondary),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -100,13 +103,13 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
                         context.l10n.editProfile,
                         style: AppTextStyles.titleLarge.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                       Text(
                         context.l10n.updateYourInformation,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -129,6 +132,7 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
                 child: Column(
                   children: [
                     _buildTextField(
+                      context,
                       label: context.l10n.fullName,
                       controller: _nameController,
                       icon: Icons.person_outline,
@@ -141,6 +145,7 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
                     ),
                     const SizedBox(height: 16),
                     _buildTextField(
+                      context,
                       label: context.l10n.phone,
                       controller: _phoneController,
                       icon: Icons.phone_outlined,
@@ -166,13 +171,15 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
     );
   }
 
-  Widget _buildTextField({
+  Widget _buildTextField(
+    BuildContext context, {
     required String label,
     required TextEditingController controller,
     required IconData icon,
     TextInputType? keyboardType,
     String? Function(String?)? validator,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -180,7 +187,7 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
           label,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 8),
@@ -189,23 +196,24 @@ class _PremiumEditProfileSheetState extends State<PremiumEditProfileSheet> {
           keyboardType: keyboardType,
           validator: validator,
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, size: 20, color: AppColors.textSecondary),
+            prefixIcon: Icon(
+              icon,
+              size: 20,
+              color: colorScheme.onSurfaceVariant,
+            ),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: colorScheme.surface,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.border),
+              borderSide: BorderSide(color: colorScheme.outlineVariant),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.border),
+              borderSide: BorderSide(color: colorScheme.outlineVariant),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(
-                color: AppColors.accentCyan,
-                width: 2,
-              ),
+              borderSide: BorderSide(color: colorScheme.secondary, width: 2),
             ),
           ),
         ),

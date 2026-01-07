@@ -92,7 +92,6 @@ class BookingListItem extends StatelessWidget {
             'bookingInvoice',
             extra: {'booking': booking, 'field': field},
           );
-          // Refresh bookings when returning from invoice page
           if (context.mounted) {
             context.read<BookingCubit>().refreshBookings();
           }
@@ -102,13 +101,16 @@ class BookingListItem extends StatelessWidget {
   }
 
   void _showCancelDialog(BuildContext context) {
+    final cubit = context.read<BookingCubit>();
+    final l10n = context.l10n;
+
     BookingListItemCancelDialog.show(
       context: context,
       onCancelBooking: (reason) {
-        context.read<BookingCubit>().cancelBooking(
+        cubit.cancelBooking(
           bookingId: booking.id,
           reason: reason,
-          loadingMessage: context.l10n.cancelingBooking,
+          loadingMessage: l10n.cancelingBooking,
         );
       },
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
@@ -16,6 +15,7 @@ class OwnerBookingDateTimeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -24,9 +24,9 @@ class OwnerBookingDateTimeCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.calendar_today_rounded,
-                  color: AppColors.accentCyan,
+                  color: colorScheme.secondary,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -34,7 +34,7 @@ class OwnerBookingDateTimeCard extends StatelessWidget {
                   context.l10n.dateTimeLabel,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -51,10 +51,7 @@ class OwnerBookingDateTimeCard extends StatelessWidget {
                       booking.date,
                       pattern: 'EEE, MMM d, y',
                     ),
-                    gradient: const [
-                      AppColors.accentCyan,
-                      AppColors.premiumPeriwinkle,
-                    ],
+                    gradient: [colorScheme.secondary, colorScheme.tertiary],
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -68,10 +65,7 @@ class OwnerBookingDateTimeCard extends StatelessWidget {
                       endTime: booking.endTime,
                       baseDate: booking.date,
                     ),
-                    gradient: const [
-                      AppColors.premiumPeriwinkle,
-                      AppColors.accentCyan,
-                    ],
+                    gradient: [colorScheme.tertiary, colorScheme.secondary],
                   ),
                 ),
               ],
@@ -123,6 +117,7 @@ class _DateTimeBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -144,7 +139,7 @@ class _DateTimeBox extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -154,7 +149,7 @@ class _DateTimeBox extends StatelessWidget {
             value,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ],
@@ -171,22 +166,23 @@ class _InfoChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 16, color: AppColors.textSecondary),
+          Icon(icon, size: 16, color: colorScheme.onSurfaceVariant),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               label,
               style: AppTextStyles.bodySmall.copyWith(
                 fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
               overflow: TextOverflow.ellipsis,
             ),

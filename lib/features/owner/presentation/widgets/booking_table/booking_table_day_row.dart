@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/booking_table/booking_table_state.dart';
 import 'package:spo_kick/features/owner/presentation/utils/booking_table_helpers.dart';
@@ -41,10 +40,10 @@ class BookingTableDayRow extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: isToday
-                ? AppColors.goldAccent.withValues(alpha: 0.1)
+                ? colorScheme.tertiary.withValues(alpha: 0.1)
                 : isClosed
                 ? colorScheme.onSurfaceVariant.withValues(alpha: 0.05)
-                : AppColors.navyDeep.withValues(alpha: 0.03),
+                : colorScheme.primary.withValues(alpha: 0.03),
             border: Border(
               right: BorderSide(
                 color: colorScheme.outline.withValues(alpha: 0.3),
@@ -61,7 +60,7 @@ class BookingTableDayRow extends StatelessWidget {
                 _dayNames[dayIndex],
                 style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: isToday ? AppColors.goldAccent : colorScheme.onSurface,
+                  color: isToday ? colorScheme.tertiary : colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 2),
@@ -69,7 +68,7 @@ class BookingTableDayRow extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: isToday
                     ? BoxDecoration(
-                        color: AppColors.goldAccent,
+                        color: colorScheme.tertiary,
                         borderRadius: BorderRadius.circular(10),
                       )
                     : null,

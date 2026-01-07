@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/upload_payment_proof_usecase.dart';
 
@@ -14,11 +16,38 @@ part 'payment_proof_state.dart';
 /// - State management during upload process
 class PaymentProofCubit extends Cubit<PaymentProofState> {
   final UploadPaymentProofUseCase _uploadPaymentProofUseCase;
+  final ImagePicker _imagePicker;
 
   PaymentProofCubit({
     required UploadPaymentProofUseCase uploadPaymentProofUseCase,
+    ImagePicker? imagePicker,
   }) : _uploadPaymentProofUseCase = uploadPaymentProofUseCase,
+       _imagePicker = imagePicker ?? ImagePicker(),
        super(const PaymentProofInitial());
+
+  /// Pick image from given source and select it.
+  Future<void> pickAndSelectImage(ImageSource source) async {
+    try {
+      final pickedFile = await _imagePicker.pickImage(
+        source: source,
+        maxWidth: 1200,
+        maxHeight: 1200,
+        imageQuality: 85,
+      );
+
+      if (pickedFile == null) return;
+
+      // Read bytes from XFile (works on both web and mobile)
+      final bytes = await pickedFile.readAsBytes();
+      final fileName = pickedFile.name;
+
+      HapticFeedback.selectionClick();
+      emit(PaymentProofSelected(imageBytes: bytes, fileName: fileName));
+    } catch (e) {
+      debugPrint('❌ Error picking image: $e');
+      emit(PaymentProofError(message: e.toString()));
+    }
+  }
 
   /// Select an image with bytes (for cross-platform support).
   void selectImage({required Uint8List imageBytes, required String fileName}) {

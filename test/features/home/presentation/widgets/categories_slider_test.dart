@@ -142,10 +142,10 @@ void main() {
     await tester.pumpWidget(createWidgetUnderTest());
     await tester.pumpAndSettle();
 
-    // Should show Real Football
-    expect(find.text('Real Football'), findsOneWidget);
-    // Should NOT show mock "Football" (unless name matches, but here we used "Real Football")
-    expect(find.text('Football'), findsNothing);
+    // The widget localizes category names, so "Real Football" becomes "Football"
+    // and "Real Tennis" becomes "Tennis" via the SportCategoryLocalizer
+    expect(find.text('Football'), findsOneWidget);
+    expect(find.text('Tennis'), findsOneWidget);
   });
 
   testWidgets('Tapping a category navigates to fieldsList with categoryId', (
@@ -166,12 +166,13 @@ void main() {
     // Initial pump
     await tester.pumpAndSettle();
 
-    final soccerTextFinder = find.text('Soccer');
-    expect(soccerTextFinder, findsOneWidget);
+    // SportCategoryLocalizer converts "Soccer" to "Football" (localized name)
+    final footballTextFinder = find.text('Football');
+    expect(footballTextFinder, findsOneWidget);
 
     // Find the GestureDetector that contains this text
     final gestureDetectorFinder = find.ancestor(
-      of: soccerTextFinder,
+      of: footballTextFinder,
       matching: find.byType(GestureDetector),
     );
 

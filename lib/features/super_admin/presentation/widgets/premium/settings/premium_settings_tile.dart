@@ -61,6 +61,8 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) => _controller.reverse(),
@@ -96,14 +98,21 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile>
               Expanded(
                 child: Text(
                   widget.label,
-                  style: AppTextStyles.bold(AppTextStyles.titleMedium),
+                  style: AppTextStyles.bold(
+                    AppTextStyles.titleMedium,
+                  ).copyWith(color: colorScheme.onSurface),
                 ),
               ),
               // Value or trailing
               if (widget.trailing != null)
                 widget.trailing!
               else if (widget.value != null) ...[
-                Text(widget.value!, style: AppTextStyles.bodyMediumSecondary),
+                Text(
+                  widget.value!,
+                  style: AppTextStyles.bodyMediumSecondary.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
                 if (widget.showArrow) const SizedBox(width: 8),
               ],
               // Arrow
@@ -111,7 +120,7 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile>
                 Icon(
                   Icons.chevron_right,
                   size: 20,
-                  color: AppColors.textSecondary.withValues(alpha: 0.5),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                 ),
             ],
           ),

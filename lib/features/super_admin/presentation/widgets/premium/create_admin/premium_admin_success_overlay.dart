@@ -4,6 +4,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/admin_invitation_entity.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium success overlay for admin creation.
@@ -84,15 +85,17 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
             margin: const EdgeInsets.all(24),
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(24),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.premiumGold.withValues(alpha: 0.3),
-                  blurRadius: 30,
-                  offset: const Offset(0, 10),
-                ),
-              ],
+              boxShadow: context.isDarkMode
+                  ? context.cardShadow
+                  : [
+                      BoxShadow(
+                        color: AppColors.premiumGold.withValues(alpha: 0.3),
+                        blurRadius: 30,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -129,7 +132,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                   style: AppTextStyles.titleLarge.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -139,7 +142,9 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                 Text(
                   context.l10n.shareTheseCredentialsSecurely,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.8),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                   ),
                 ),
 
@@ -149,7 +154,9 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: AppColors.premiumGold.withValues(alpha: 0.3),
@@ -202,7 +209,7 @@ class _PremiumAdminSuccessOverlayState extends State<PremiumAdminSuccessOverlay>
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
-                            color: Colors.orange.shade700,
+                            color: Theme.of(context).colorScheme.warning,
                           ),
                         ),
                       ),
@@ -262,7 +269,9 @@ class _CredentialRow extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 2),
@@ -270,7 +279,7 @@ class _CredentialRow extends StatelessWidget {
                 isPassword ? value : value,
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontFamily: isPassword ? 'monospace' : null,
                 ),
               ),

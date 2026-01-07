@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -36,6 +35,7 @@ class PremiumOwnerFieldsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     if (isLoading && !isRefreshing) {
       return _LoadingShimmer();
     }
@@ -49,8 +49,8 @@ class PremiumOwnerFieldsList extends StatelessWidget {
         onRefresh();
         await Future.delayed(const Duration(milliseconds: 500));
       },
-      color: AppColors.accentCyan,
-      backgroundColor: Colors.white,
+      color: colorScheme.secondary,
+      backgroundColor: colorScheme.surface,
       child: ListView.separated(
         padding: const EdgeInsets.all(20),
         itemCount: fields.length,
@@ -114,6 +114,7 @@ class _LoadingShimmerState extends State<_LoadingShimmer>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return ListView.separated(
       padding: const EdgeInsets.all(20),
       itemCount: 3,
@@ -129,10 +130,10 @@ class _LoadingShimmerState extends State<_LoadingShimmer>
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: const [
-                    AppColors.shimmerBase,
-                    AppColors.shimmerHighlight,
-                    AppColors.shimmerBase,
+                  colors: [
+                    colorScheme.surfaceContainerHighest,
+                    colorScheme.surfaceContainerLow,
+                    colorScheme.surfaceContainerHighest,
                   ],
                   stops: [
                     (0.3 + _animation.value / 4).clamp(0.0, 1.0),
@@ -157,6 +158,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -168,15 +170,15 @@ class _EmptyState extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: LinearGradient(
                 colors: [
-                  AppColors.accentCyan.withValues(alpha: 0.1),
-                  AppColors.premiumPeriwinkle.withValues(alpha: 0.1),
+                  colorScheme.secondary.withValues(alpha: 0.1),
+                  colorScheme.tertiary.withValues(alpha: 0.1),
                 ],
               ),
             ),
             child: Icon(
               Icons.sports_soccer_rounded,
               size: 60,
-              color: AppColors.textSecondary.withValues(alpha: 0.5),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
           ),
           const SizedBox(height: 24),
@@ -184,14 +186,14 @@ class _EmptyState extends StatelessWidget {
             message,
             style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             context.l10n.addFirstField,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ],

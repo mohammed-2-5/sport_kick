@@ -10,6 +10,9 @@ class BookingListItemCancelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton.icon(
@@ -17,8 +20,8 @@ class BookingListItemCancelButton extends StatelessWidget {
         icon: const Icon(Icons.cancel_outlined, size: 18),
         label: Text(context.l10n.cancelBooking),
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.error,
-          side: const BorderSide(color: AppColors.error),
+          foregroundColor: errorColor,
+          side: BorderSide(color: errorColor),
           padding: const EdgeInsets.symmetric(vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

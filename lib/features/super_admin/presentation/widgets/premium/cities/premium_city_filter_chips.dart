@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -43,7 +42,7 @@ class PremiumCityFilterChips extends StatelessWidget {
         id: 'all',
         label: context.l10n.all,
         count: allCount,
-        color: AppColors.navyDeep,
+        color: Theme.of(context).colorScheme.primary,
       ),
       _FilterItem(
         id: 'active',
@@ -156,12 +155,16 @@ class _FilterChipState extends State<_FilterChip>
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           decoration: BoxDecoration(
-            color: widget.isSelected ? color : Colors.white,
+            color: widget.isSelected
+                ? color
+                : Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(22),
             border: Border.all(
               color: widget.isSelected
                   ? color
-                  : AppColors.border.withValues(alpha: 0.5),
+                  : Theme.of(
+                      context,
+                    ).colorScheme.outline.withValues(alpha: 0.5),
               width: widget.isSelected ? 2 : 1,
             ),
             boxShadow: widget.isSelected

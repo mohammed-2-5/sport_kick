@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium header for super admin users list.
 ///
@@ -32,6 +33,8 @@ class PremiumUsersListHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 16,
@@ -100,13 +103,13 @@ class PremiumUsersListHeader extends StatelessWidget {
                 _StatChip(
                   label: context.l10n.active,
                   count: stats[context.l10n.active2] ?? 0,
-                  color: Colors.green,
+                  color: colorScheme.success,
                 ),
                 const SizedBox(width: 8),
                 _StatChip(
                   label: context.l10n.inactive,
                   count: stats[context.l10n.inactive2] ?? 0,
-                  color: Colors.grey,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ],
             ),

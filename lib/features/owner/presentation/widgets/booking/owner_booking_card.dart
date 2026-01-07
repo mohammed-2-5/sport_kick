@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
+import 'package:spo_kick/features/bookings/presentation/extensions/booking_status_ui_extension.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/booking_action_buttons.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/booking_card_header.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/booking/booking_info_chip.dart';
@@ -74,28 +74,25 @@ class OwnerBookingCard extends StatelessWidget {
 
   BoxDecoration _buildCardDecoration(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final statusColor = booking.status.getColor(isDark: isDark);
+
     return BoxDecoration(
       gradient: LinearGradient(
-        colors: [
-          colorScheme.surface,
-          booking.status.color.withValues(alpha: 0.03),
-        ],
+        colors: [colorScheme.surface, statusColor.withValues(alpha: 0.03)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       borderRadius: BorderRadius.circular(20),
-      border: Border.all(
-        color: booking.status.color.withValues(alpha: 0.3),
-        width: 2,
-      ),
+      border: Border.all(color: statusColor.withValues(alpha: 0.3), width: 2),
       boxShadow: [
         BoxShadow(
-          color: booking.status.color.withValues(alpha: 0.2),
+          color: statusColor.withValues(alpha: 0.2),
           blurRadius: 12,
           offset: const Offset(0, 4),
         ),
         BoxShadow(
-          color: Colors.black.withValues(alpha: 0.05),
+          color: colorScheme.shadow.withValues(alpha: 0.05),
           blurRadius: 20,
           offset: const Offset(0, 8),
         ),
@@ -160,7 +157,6 @@ class _DateTimeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
         Expanded(
@@ -168,7 +164,7 @@ class _DateTimeRow extends StatelessWidget {
             icon: Icons.calendar_today_rounded,
             label: context.l10n.dateLabel,
             value: booking.formattedDate,
-            color: isDark ? Colors.blue[300]! : Colors.blue,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         const SizedBox(width: 12),
@@ -177,7 +173,7 @@ class _DateTimeRow extends StatelessWidget {
             icon: Icons.access_time_rounded,
             label: context.l10n.timeLabel,
             value: booking.formattedTimeSlot,
-            color: isDark ? AppColors.darkSuccess : AppColors.success,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ],
@@ -192,7 +188,6 @@ class _DurationPriceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
         Expanded(
@@ -207,7 +202,7 @@ class _DurationPriceRow extends StatelessWidget {
                 decimalDigits: 0,
               ),
             ),
-            color: isDark ? Colors.purple[300]! : Colors.purple,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
         const SizedBox(width: 12),
@@ -221,7 +216,7 @@ class _DurationPriceRow extends StatelessWidget {
               currency: context.l10n.currencyEgp,
               decimalDigits: 0,
             ),
-            color: isDark ? Colors.orange[300]! : Colors.orange,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ],
@@ -280,8 +275,10 @@ class _ViewPaymentProofButton extends StatelessWidget {
         icon: const Icon(Icons.receipt_long_outlined, size: 18),
         label: Text(context.l10n.viewPaymentProof),
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.info,
-          side: BorderSide(color: AppColors.info.withValues(alpha: 0.5)),
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+          ),
           padding: const EdgeInsets.symmetric(vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -300,9 +297,8 @@ class _PaymentVerificationButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final errorColor = isDark ? AppColors.darkError : AppColors.error;
-    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final errorColor = Theme.of(context).colorScheme.error;
+    final successColor = Theme.of(context).colorScheme.primary;
     return Row(
       children: [
         Expanded(
@@ -328,7 +324,7 @@ class _PaymentVerificationButtons extends StatelessWidget {
             label: Text(context.l10n.verify),
             style: ElevatedButton.styleFrom(
               backgroundColor: successColor,
-              foregroundColor: Colors.white,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),

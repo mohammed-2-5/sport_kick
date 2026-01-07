@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
@@ -23,6 +22,7 @@ class PremiumFormSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,10 +35,10 @@ class PremiumFormSection extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: AppColors.accentCyan.withValues(alpha: 0.1),
+                    color: colorScheme.secondary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(icon, color: AppColors.accentCyan, size: 18),
+                  child: Icon(icon, color: colorScheme.secondary, size: 18),
                 ),
                 const SizedBox(width: 12),
               ],
@@ -46,7 +46,7 @@ class PremiumFormSection extends StatelessWidget {
                 title,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],

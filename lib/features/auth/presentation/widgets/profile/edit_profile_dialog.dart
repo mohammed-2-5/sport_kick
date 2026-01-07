@@ -7,6 +7,7 @@ import 'package:spo_kick/core/widgets/custom_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
 
+/// Dialog for editing user profile.
 class EditProfileDialog extends StatefulWidget {
   const EditProfileDialog({super.key});
 
@@ -32,17 +33,6 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
     _nameController.dispose();
     _phoneController.dispose();
     super.dispose();
-  }
-
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      context.read<AuthCubit>().updateProfile(
-        fullName: _nameController.text.trim(),
-        phone: _phoneController.text.trim().isEmpty
-            ? null
-            : _phoneController.text.trim(),
-      );
-    }
   }
 
   @override
@@ -77,26 +67,9 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CustomTextField(
-                  controller: _nameController,
-                  label: context.l10n.fullName,
-                  hint: context.l10n.enterFullName,
-                  prefixIcon: Icons.person_outline,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return context.l10n.enterName;
-                    }
-                    return null;
-                  },
-                ),
+                _NameField(controller: _nameController),
                 const SizedBox(height: 16),
-                CustomTextField(
-                  controller: _phoneController,
-                  label: context.l10n.phone,
-                  hint: context.l10n.enterPhoneNumber,
-                  prefixIcon: Icons.phone_outlined,
-                  keyboardType: TextInputType.phone,
-                ),
+                _PhoneField(controller: _phoneController),
               ],
             ),
           ),
@@ -106,19 +79,90 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
             onPressed: () => Navigator.pop(context),
             child: Text(context.l10n.cancel),
           ),
-          BlocBuilder<AuthCubit, AuthState>(
-            builder: (context, state) {
-              return CustomButton(
-                text: context.l10n.save,
-                onPressed: state is AuthLoading ? null : _submit,
-                isLoading: state is AuthLoading,
-                variant: ButtonVariant.primary,
-                width: 100,
-              );
-            },
+          _SaveButton(
+            formKey: _formKey,
+            nameController: _nameController,
+            phoneController: _phoneController,
           ),
         ],
       ),
+    );
+  }
+}
+
+class _NameField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _NameField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextField(
+      controller: controller,
+      label: context.l10n.fullName,
+      hint: context.l10n.enterFullName,
+      prefixIcon: Icons.person_outline,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return context.l10n.enterName;
+        }
+        return null;
+      },
+    );
+  }
+}
+
+class _PhoneField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _PhoneField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextField(
+      controller: controller,
+      label: context.l10n.phone,
+      hint: context.l10n.enterPhoneNumber,
+      prefixIcon: Icons.phone_outlined,
+      keyboardType: TextInputType.phone,
+    );
+  }
+}
+
+class _SaveButton extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController nameController;
+  final TextEditingController phoneController;
+
+  const _SaveButton({
+    required this.formKey,
+    required this.nameController,
+    required this.phoneController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        return CustomButton(
+          text: context.l10n.save,
+          onPressed: state is AuthLoading
+              ? null
+              : () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<AuthCubit>().updateProfile(
+                      fullName: nameController.text.trim(),
+                      phone: phoneController.text.trim().isEmpty
+                          ? null
+                          : phoneController.text.trim(),
+                    );
+                  }
+                },
+          isLoading: state is AuthLoading,
+          variant: ButtonVariant.primary,
+          width: 100,
+        );
+      },
     );
   }
 }

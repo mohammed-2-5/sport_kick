@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium step indicator for multi-step forms.
@@ -23,6 +22,7 @@ class PremiumStepIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: List.generate(totalSteps, (index) {
         final stepNumber = index + 1;
@@ -51,8 +51,8 @@ class PremiumStepIndicator extends StatelessWidget {
                             ? FontWeight.w600
                             : FontWeight.w500,
                         color: isActive || isCompleted
-                            ? AppColors.accentCyan
-                            : AppColors.textSecondary,
+                            ? colorScheme.secondary
+                            : colorScheme.onSurfaceVariant,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -66,8 +66,8 @@ class PremiumStepIndicator extends StatelessWidget {
                     height: 2,
                     margin: const EdgeInsets.only(bottom: 28),
                     color: isCompleted
-                        ? AppColors.accentCyan
-                        : AppColors.border,
+                        ? colorScheme.secondary
+                        : colorScheme.outlineVariant,
                   ),
                 ),
             ],
@@ -92,22 +92,23 @@ class _StepCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       width: 40,
       height: 40,
       decoration: BoxDecoration(
         gradient: isActive || isCompleted
-            ? const LinearGradient(
-                colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+            ? LinearGradient(
+                colors: [colorScheme.secondary, colorScheme.secondaryContainer],
               )
             : null,
-        color: isActive || isCompleted ? null : AppColors.border,
+        color: isActive || isCompleted ? null : colorScheme.outlineVariant,
         shape: BoxShape.circle,
         boxShadow: isActive
             ? [
                 BoxShadow(
-                  color: AppColors.accentCyan.withValues(alpha: 0.4),
+                  color: colorScheme.secondary.withValues(alpha: 0.4),
                   blurRadius: 12,
                   spreadRadius: 2,
                 ),
@@ -116,14 +117,14 @@ class _StepCircle extends StatelessWidget {
       ),
       child: Center(
         child: isCompleted
-            ? const Icon(Icons.check, size: 20, color: Colors.white)
+            ? Icon(Icons.check, size: 20, color: colorScheme.onSecondary)
             : Text(
                 '$stepNumber',
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: isActive || isCompleted
-                      ? Colors.white
-                      : AppColors.textSecondary,
+                      ? colorScheme.onSecondary
+                      : colorScheme.onSurfaceVariant,
                 ),
               ),
       ),

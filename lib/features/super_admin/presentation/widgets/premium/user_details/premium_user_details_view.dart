@@ -60,7 +60,7 @@ class _PremiumUserDetailsViewState extends State<PremiumUserDetailsView> {
         return Stack(
           children: [
             Scaffold(
-              backgroundColor: AppColors.backgroundLight,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               body: _buildBody(context, state),
             ),
 
@@ -180,17 +180,19 @@ class _BackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: 44,
         height: 44,
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.15),
+          color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+          border: Border.all(color: colorScheme.outline),
         ),
-        child: const Icon(Icons.arrow_back, color: Colors.white, size: 20),
+        child: Icon(Icons.arrow_back, color: colorScheme.onSurface, size: 20),
       ),
     );
   }

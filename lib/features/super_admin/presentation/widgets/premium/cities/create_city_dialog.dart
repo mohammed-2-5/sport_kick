@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Dialog for creating a new city.
 ///
@@ -57,7 +58,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 400),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
@@ -146,7 +147,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
             context.l10n.cityName,
             style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
@@ -155,12 +156,12 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
             textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
               hintText: context.l10n.enterCityName,
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 Icons.location_city,
-                color: AppColors.mediumGrey,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               filled: true,
-              fillColor: AppColors.backgroundLight,
+              fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -168,19 +169,23 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: AppColors.border.withValues(alpha: 0.5),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.outline.withValues(alpha: 0.5),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: AppColors.accentCyan,
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
                   width: 2,
                 ),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.error),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                ),
               ),
             ),
             validator: (value) {
@@ -197,17 +202,21 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.backgroundLight,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: AppColors.border.withValues(alpha: 0.5),
+                color: Theme.of(
+                  context,
+                ).colorScheme.outline.withValues(alpha: 0.5),
               ),
             ),
             child: Row(
               children: [
                 Icon(
                   _isActive ? Icons.visibility : Icons.visibility_off,
-                  color: _isActive ? AppColors.success : AppColors.mediumGrey,
+                  color: _isActive
+                      ? Theme.of(context).colorScheme.success
+                      : Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -218,7 +227,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                         context.l10n.activeStatus,
                         style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       Text(
@@ -226,7 +235,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                             ? context.l10n.cityWillBeVisibleToUsers
                             : 'City will be hidden from users',
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -235,9 +244,13 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                 Switch(
                   value: _isActive,
                   onChanged: (value) => setState(() => _isActive = value),
-                  activeTrackColor: AppColors.successLight,
+                  activeTrackColor: Theme.of(
+                    context,
+                  ).colorScheme.success.withValues(alpha: 0.5),
                   thumbColor: WidgetStatePropertyAll(
-                    _isActive ? AppColors.success : AppColors.mediumGrey,
+                    _isActive
+                        ? Theme.of(context).colorScheme.success
+                        : Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -260,7 +273,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                   : () => Navigator.of(context).pop(),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                side: const BorderSide(color: AppColors.border),
+                side: BorderSide(color: Theme.of(context).colorScheme.outline),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -268,7 +281,7 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
               child: Text(
                 context.l10n.cancel,
                 style: AppTextStyles.labelLarge.copyWith(
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -279,8 +292,8 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
             child: ElevatedButton(
               onPressed: _isSubmitting ? null : _handleSubmit,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.navyDeep,
-                foregroundColor: AppColors.white,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -288,12 +301,12 @@ class _CreateCityDialogState extends State<CreateCityDialog> {
                 elevation: 0,
               ),
               child: _isSubmitting
-                  ? const SizedBox(
+                  ? SizedBox(
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        color: AppColors.white,
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     )
                   : Text(

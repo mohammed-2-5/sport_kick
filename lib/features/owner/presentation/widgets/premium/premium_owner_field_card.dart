@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium owner field card.
 ///
@@ -37,9 +37,8 @@ class PremiumOwnerFieldCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
-    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+    final successColor = colorScheme.success;
+    final errorColor = colorScheme.error;
 
     return PremiumCard(
       onTap: onViewDetails,
@@ -155,7 +154,7 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                         bookingsCount!,
                         bookingsCount!,
                       ),
-                      color: AppColors.accentCyan,
+                      color: colorScheme.secondary,
                     ),
                   ),
                 ],
@@ -188,7 +187,7 @@ class PremiumOwnerFieldCard extends StatelessWidget {
                     child: _ActionButton(
                       label: context.l10n.edit,
                       icon: Icons.edit_outlined,
-                      color: AppColors.accentCyan,
+                      color: colorScheme.secondary,
                       onTap: onEdit!,
                     ),
                   ),
@@ -219,9 +218,8 @@ class _StatusIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final colorScheme = Theme.of(context).colorScheme;
-    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final successColor = colorScheme.success;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),

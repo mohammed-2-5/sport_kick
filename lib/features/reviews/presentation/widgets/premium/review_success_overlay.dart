@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -81,7 +80,7 @@ class _ReviewSuccessOverlayState extends State<ReviewSuccessOverlay>
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.black.withValues(alpha: 0.7),
+      color: Colors.black.withValues(alpha: 0.7), // Scrim color stays dark
       child: Stack(
         children: [
           // Confetti
@@ -99,11 +98,13 @@ class _ReviewSuccessOverlayState extends State<ReviewSuccessOverlay>
                 margin: const EdgeInsets.all(32),
                 padding: const EdgeInsets.all(32),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.shadow.withValues(alpha: 0.2),
                       blurRadius: 30,
                       offset: const Offset(0, 10),
                     ),
@@ -150,10 +151,10 @@ class _ReviewSuccessOverlayState extends State<ReviewSuccessOverlay>
                       widget.isEdit
                           ? context.l10n.reviewUpdated
                           : context.l10n.reviewSubmittedSuccess,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
 
@@ -163,9 +164,9 @@ class _ReviewSuccessOverlayState extends State<ReviewSuccessOverlay>
                       widget.isEdit
                           ? context.l10n.yourReviewHasBeenUpdatedSuccessfully
                           : 'Thank you for sharing your experience',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
-                        color: AppColors.textSecondary,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -257,7 +258,7 @@ class _ConfettiParticle extends StatelessWidget {
       Colors.green,
       Colors.blue,
       Colors.purple,
-      AppColors.accentCyan,
+      Theme.of(context).colorScheme.primary,
     ][random.nextInt(7)];
     final size = 8.0 + random.nextDouble() * 8;
     final delay = random.nextDouble() * 0.3;

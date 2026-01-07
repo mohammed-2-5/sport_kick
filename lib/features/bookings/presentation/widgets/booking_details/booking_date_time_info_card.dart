@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
@@ -40,7 +39,7 @@ class BookingDateTimeInfoCard extends StatelessWidget {
             icon: Icons.calendar_today,
             title: context.l10n.bookingDate,
             value: LocaleFormatters.formatDate(context, booking.date),
-            iconColor: AppColors.primary,
+            iconColor: colorScheme.primary,
           ),
           const SizedBox(height: BookingConstants.standardPadding),
           BookingInfoRow(
@@ -52,7 +51,7 @@ class BookingDateTimeInfoCard extends StatelessWidget {
               endTime: booking.endTime,
               baseDate: booking.date,
             ),
-            iconColor: AppColors.accentCyan,
+            iconColor: colorScheme.secondary,
             trailing: BookingDurationBadge(
               durationInHours: booking.durationInHours,
             ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium logout confirmation dialog.
 ///
@@ -59,8 +59,11 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final errorColor = colorScheme.error;
+
     return Material(
-      color: Colors.black54,
+      color: context.overlayColor,
       child: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -77,11 +80,11 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
             margin: const EdgeInsets.all(24),
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.red.withValues(alpha: 0.2),
+                  color: errorColor.withValues(alpha: 0.2),
                   blurRadius: 30,
                   offset: const Offset(0, 10),
                 ),
@@ -95,10 +98,10 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                   width: 72,
                   height: 72,
                   decoration: BoxDecoration(
-                    color: Colors.red.withValues(alpha: 0.1),
+                    color: errorColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.logout, color: Colors.red, size: 36),
+                  child: Icon(Icons.logout, color: errorColor, size: 36),
                 ),
 
                 const SizedBox(height: 20),
@@ -106,7 +109,9 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                 // Title
                 Text(
                   context.l10n.logoutAction,
-                  style: AppTextStyles.titleLargeBold,
+                  style: AppTextStyles.titleLargeBold.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
                 ),
 
                 const SizedBox(height: 12),
@@ -115,7 +120,9 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                 Text(
                   context.l10n.confirmationPrompt,
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyMediumSecondary,
+                  style: AppTextStyles.bodyMediumSecondary.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
 
                 const SizedBox(height: 24),
@@ -132,16 +139,16 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           decoration: BoxDecoration(
-                            color: AppColors.backgroundLight,
+                            color: colorScheme.surfaceContainerHighest,
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: AppColors.border),
+                            border: Border.all(color: colorScheme.outline),
                           ),
                           child: Center(
                             child: Text(
                               context.l10n.cancel,
                               style: AppTextStyles.withColor(
                                 AppTextStyles.bold(AppTextStyles.titleMedium),
-                                AppColors.textSecondary,
+                                colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ),
@@ -158,13 +165,15 @@ class _PremiumLogoutDialogState extends State<PremiumLogoutDialog>
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: errorColor,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Center(
                             child: Text(
                               context.l10n.logout,
-                              style: AppTextStyles.titleMediumWhite,
+                              style: AppTextStyles.titleMediumWhite.copyWith(
+                                color: colorScheme.onError,
+                              ),
                             ),
                           ),
                         ),

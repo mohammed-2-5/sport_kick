@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 
 /// Field image widget for booking header.
@@ -32,13 +31,13 @@ class _BookingFieldPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       width: 60,
       height: 60,
-      color: isDark ? AppColors.darkBorder : AppColors.border,
-      child: const Icon(Icons.sports_soccer),
+      color: colorScheme.surfaceContainerHighest,
+      child: Icon(Icons.sports_soccer, color: colorScheme.onSurfaceVariant),
     );
   }
 }

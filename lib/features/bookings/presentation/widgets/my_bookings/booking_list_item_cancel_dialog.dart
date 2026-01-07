@@ -83,7 +83,11 @@ class _BookingListItemCancelDialogState
                 : _reasonController.text;
             widget.onCancelBooking(reason);
           },
-          style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.darkError
+                : AppColors.error,
+          ),
           child: Text(context.l10n.cancelBooking),
         ),
       ],

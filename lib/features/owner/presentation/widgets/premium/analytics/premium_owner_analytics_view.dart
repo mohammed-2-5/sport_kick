@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
@@ -56,12 +55,13 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: colorScheme.surface,
       body: BlocBuilder<OwnerCubit, OwnerState>(
         builder: (context, state) {
           return RefreshIndicator(
-            color: AppColors.goldAccent,
+            color: colorScheme.secondary,
             onRefresh: () async {
               _loadData();
               await Future.delayed(const Duration(milliseconds: 500));
@@ -88,10 +88,10 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
                   ),
                 ),
                 if (state is OwnerLoading)
-                  const SliverFillRemaining(
+                  SliverFillRemaining(
                     child: Center(
                       child: CircularProgressIndicator(
-                        color: AppColors.goldAccent,
+                        color: colorScheme.secondary,
                       ),
                     ),
                   )
@@ -111,14 +111,14 @@ class _PremiumOwnerAnalyticsViewState extends State<PremiumOwnerAnalyticsView> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const CircularProgressIndicator(
-                            color: AppColors.goldAccent,
+                          CircularProgressIndicator(
+                            color: colorScheme.secondary,
                           ),
                           const SizedBox(height: 16),
                           Text(
                             context.l10n.loadingAnalytics,
                             style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.textSecondary,
+                              color: colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],

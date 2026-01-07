@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
 
-/// Premium page transition definitions.
+// Re-export extracted classes
+export 'package:spo_kick/core/widgets/premium/transitions/premium_hero_page_route.dart';
+export 'package:spo_kick/core/widgets/premium/transitions/premium_navigator_extension.dart';
+
+/// Premium page transition factory methods.
 ///
-/// Provides custom page route transitions:
-/// - Fade transition
-/// - Slide transition
-/// - Scale transition
-/// - Combined transitions
+/// Provides static factory methods for creating custom page routes with
+/// various transition animations. Use these to create PageRouteBuilder
+/// instances with consistent, polished transitions.
+///
+/// Available transitions:
+/// - fade: Simple opacity fade transition
+/// - slideFromRight: Slide in from right with fade
+/// - slideFromBottom: Slide up from bottom with fade
+/// - scale: Scale up with fade effect
+/// - sharedAxisHorizontal: Material 3 shared axis horizontal
+/// - fadeThrough: Material 3 fade through transition
 class PremiumPageTransitions {
+  /// Private constructor to prevent instantiation.
   PremiumPageTransitions._();
 
-  /// Fade transition duration
+  /// Fade transition duration (300ms)
   static const Duration fadeDuration = Duration(milliseconds: 300);
 
-  /// Slide transition duration
+  /// Slide transition duration (350ms)
   static const Duration slideDuration = Duration(milliseconds: 350);
 
-  /// Scale transition duration
+  /// Scale transition duration (300ms)
   static const Duration scaleDuration = Duration(milliseconds: 300);
 
   /// Creates a fade page route.
+  ///
+  /// The page fades in over the specified [duration] (default: 300ms)
+  /// using an [Curves.easeInOut] curve.
   static PageRouteBuilder<T> fade<T>({
     required Widget child,
     RouteSettings? settings,
@@ -40,6 +54,9 @@ class PremiumPageTransitions {
   }
 
   /// Creates a slide from right page route.
+  ///
+  /// The page slides in from the right with a combined fade and slide
+  /// animation over the specified [duration] (default: 350ms).
   static PageRouteBuilder<T> slideFromRight<T>({
     required Widget child,
     RouteSettings? settings,
@@ -72,6 +89,9 @@ class PremiumPageTransitions {
   }
 
   /// Creates a slide from bottom page route.
+  ///
+  /// The page slides up from the bottom with a combined fade and slide
+  /// animation over the specified [duration] (default: 350ms).
   static PageRouteBuilder<T> slideFromBottom<T>({
     required Widget child,
     RouteSettings? settings,
@@ -104,6 +124,10 @@ class PremiumPageTransitions {
   }
 
   /// Creates a scale page route.
+  ///
+  /// The page scales up from 0.9 to 1.0 with a fade effect over the specified
+  /// [duration] (default: 300ms). The [alignment] parameter controls the
+  /// scale origin point (default: center).
   static PageRouteBuilder<T> scale<T>({
     required Widget child,
     RouteSettings? settings,
@@ -136,7 +160,11 @@ class PremiumPageTransitions {
     );
   }
 
-  /// Creates a shared axis horizontal page route.
+  /// Creates a shared axis horizontal page route (Material 3 style).
+  ///
+  /// Implements the Material Design 3 shared axis transition with
+  /// horizontal direction. The outgoing page exits to the left while
+  /// the incoming page enters from the right.
   static PageRouteBuilder<T> sharedAxisHorizontal<T>({
     required Widget child,
     RouteSettings? settings,
@@ -196,6 +224,10 @@ class PremiumPageTransitions {
   }
 
   /// Creates a fade through page route (Material 3 style).
+  ///
+  /// Implements the Material Design 3 fade through transition. The outgoing
+  /// page fades out quickly while the incoming page fades and scales in,
+  /// creating a smooth transition effect.
   static PageRouteBuilder<T> fadeThrough<T>({
     required Widget child,
     RouteSettings? settings,
@@ -240,53 +272,5 @@ class PremiumPageTransitions {
         );
       },
     );
-  }
-}
-
-/// Custom page route with Hero animations support.
-class PremiumHeroPageRoute<T> extends PageRouteBuilder<T> {
-  final Widget child;
-
-  PremiumHeroPageRoute({required this.child, super.settings})
-    : super(
-        transitionDuration: const Duration(milliseconds: 400),
-        reverseTransitionDuration: const Duration(milliseconds: 400),
-        pageBuilder: (context, animation, secondaryAnimation) => child,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final curvedAnimation = CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeOutCubic,
-          );
-
-          return FadeTransition(opacity: curvedAnimation, child: child);
-        },
-      );
-}
-
-/// Extension for Navigator with premium transitions.
-extension PremiumNavigatorExtension on NavigatorState {
-  /// Push with fade transition.
-  Future<T?> pushFade<T extends Object?>(Widget page) {
-    return push(PremiumPageTransitions.fade<T>(child: page));
-  }
-
-  /// Push with slide from right transition.
-  Future<T?> pushSlideRight<T extends Object?>(Widget page) {
-    return push(PremiumPageTransitions.slideFromRight<T>(child: page));
-  }
-
-  /// Push with slide from bottom transition.
-  Future<T?> pushSlideBottom<T extends Object?>(Widget page) {
-    return push(PremiumPageTransitions.slideFromBottom<T>(child: page));
-  }
-
-  /// Push with scale transition.
-  Future<T?> pushScale<T extends Object?>(Widget page) {
-    return push(PremiumPageTransitions.scale<T>(child: page));
-  }
-
-  /// Push with fade through transition.
-  Future<T?> pushFadeThrough<T extends Object?>(Widget page) {
-    return push(PremiumPageTransitions.fadeThrough<T>(child: page));
   }
 }

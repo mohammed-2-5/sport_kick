@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
@@ -60,15 +61,9 @@ class BookingActionsSheet extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            spreadRadius: 1,
-          ),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -91,11 +86,14 @@ class BookingActionsSheet extends StatelessWidget {
             height: 56,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: _getStatusColor(booking.status).withValues(alpha: 0.15),
+              color: _getStatusColor(
+                context,
+                booking.status,
+              ).withValues(alpha: 0.15),
             ),
             child: Icon(
               Icons.calendar_month_rounded,
-              color: _getStatusColor(booking.status),
+              color: _getStatusColor(context, booking.status),
               size: 28,
             ),
           ),
@@ -112,7 +110,7 @@ class BookingActionsSheet extends StatelessWidget {
                         style: AppTextStyles.titleMedium.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.darkGrey,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -125,6 +123,7 @@ class BookingActionsSheet extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: _getStatusColor(
+                          context,
                           booking.status,
                         ).withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(8),
@@ -133,7 +132,7 @@ class BookingActionsSheet extends StatelessWidget {
                         booking.status.displayName,
                         style: AppTextStyles.labelSmall.copyWith(
                           fontSize: 12,
-                          color: _getStatusColor(booking.status),
+                          color: _getStatusColor(context, booking.status),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -144,13 +143,13 @@ class BookingActionsSheet extends StatelessWidget {
                 Text(
                   '${booking.userName ?? context.l10n.unknownUser} • ${booking.formattedDate}',
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.mediumGrey,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 Text(
                   '${booking.formattedTimeSlot} • ${booking.formattedPrice}',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -300,16 +299,17 @@ class BookingActionsSheet extends StatelessWidget {
     );
   }
 
-  Color _getStatusColor(BookingStatus status) {
+  Color _getStatusColor(BuildContext context, BookingStatus status) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (status) {
       case BookingStatus.pending:
-        return const Color(0xFFF59E0B);
+        return colorScheme.warning;
       case BookingStatus.confirmed:
-        return const Color(0xFF10B981);
+        return colorScheme.success;
       case BookingStatus.completed:
-        return const Color(0xFF6366F1);
+        return colorScheme.info;
       case BookingStatus.canceled:
-        return const Color(0xFFEF4444);
+        return colorScheme.error;
     }
   }
 }

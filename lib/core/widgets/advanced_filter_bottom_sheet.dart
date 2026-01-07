@@ -1,12 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/widgets/filters/models/filter_group.dart';
 
-/// Reusable advanced filter bottom sheet
+// Re-export for backward compatibility
+export 'package:spo_kick/core/widgets/filters/models/filter_group.dart';
+export 'package:spo_kick/core/widgets/filters/models/filter_option.dart';
+export 'package:spo_kick/core/widgets/filters/date_range_filter_widget.dart';
+export 'package:spo_kick/core/widgets/filters/dropdown_filter_widget.dart';
+export 'package:spo_kick/core/widgets/filters/chip_filter_widget.dart';
+
+/// Reusable advanced filter bottom sheet widget.
+///
+/// Displays a bottom sheet with customizable filter groups. Each filter group
+/// contains a title and a filter widget. Provides apply and reset buttons.
+///
+/// Example:
+/// ```dart
+/// showModalBottomSheet(
+///   context: context,
+///   builder: (context) => AdvancedFilterBottomSheet(
+///     filterGroups: [
+///       FilterGroup(
+///         title: 'Status',
+///         widget: DropdownFilterWidget(...),
+///       ),
+///       FilterGroup(
+///         title: 'Date Range',
+///         widget: DateRangeFilterWidget(...),
+///       ),
+///     ],
+///     onApply: () { ... },
+///     onReset: () { ... },
+///   ),
+/// )
+/// ```
 class AdvancedFilterBottomSheet extends StatefulWidget {
+  /// List of filter groups to display in the sheet.
   final List<FilterGroup> filterGroups;
+
+  /// Callback triggered when the apply button is pressed.
   final VoidCallback onApply;
+
+  /// Callback triggered when the reset button is pressed.
   final VoidCallback onReset;
 
+  /// Creates an advanced filter bottom sheet.
   const AdvancedFilterBottomSheet({
     super.key,
     required this.filterGroups,
@@ -103,130 +141,6 @@ class _AdvancedFilterBottomSheetState extends State<AdvancedFilterBottomSheet> {
         const SizedBox(height: 12),
         group.widget,
       ],
-    );
-  }
-}
-
-/// Filter group model
-class FilterGroup {
-  final String title;
-  final Widget widget;
-
-  FilterGroup({required this.title, required this.widget});
-}
-
-/// Date range picker widget
-class DateRangeFilterWidget extends StatelessWidget {
-  final DateTimeRange? dateRange;
-  final Function(DateTimeRange?) onChanged;
-
-  const DateRangeFilterWidget({
-    super.key,
-    required this.dateRange,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: () async {
-        final picked = await showDateRangePicker(
-          context: context,
-          firstDate: DateTime(2020),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
-          currentDate: DateTime.now(),
-        );
-        if (picked != null) {
-          onChanged(picked);
-        }
-      },
-      icon: const Icon(Icons.date_range),
-      label: Text(
-        dateRange == null
-            ? context.l10n.selectDateRange
-            : '${dateRange!.start.toString().split(' ')[0]} - ${dateRange!.end.toString().split(' ')[0]}',
-      ),
-    );
-  }
-}
-
-/// Dropdown filter widget
-class DropdownFilterWidget extends StatelessWidget {
-  final String? value;
-  final List<FilterOption> options;
-  final Function(String?) onChanged;
-  final String hint;
-
-  const DropdownFilterWidget({
-    super.key,
-    required this.value,
-    required this.options,
-    required this.onChanged,
-    required this.hint,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      initialValue: value,
-      decoration: InputDecoration(
-        hintText: hint,
-        border: const OutlineInputBorder(),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      ),
-      items: options.map((option) {
-        return DropdownMenuItem<String>(
-          value: option.value,
-          child: Text(option.label),
-        );
-      }).toList(),
-      onChanged: onChanged,
-    );
-  }
-}
-
-/// Filter option model
-class FilterOption {
-  final String value;
-  final String label;
-
-  FilterOption({required this.value, required this.label});
-}
-
-/// Multi-select chip filter widget
-class ChipFilterWidget extends StatelessWidget {
-  final List<String> selectedValues;
-  final List<FilterOption> options;
-  final Function(List<String>) onChanged;
-
-  const ChipFilterWidget({
-    super.key,
-    required this.selectedValues,
-    required this.options,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: options.map((option) {
-        final isSelected = selectedValues.contains(option.value);
-        return FilterChip(
-          label: Text(option.label),
-          selected: isSelected,
-          onSelected: (selected) {
-            final newValues = List<String>.from(selectedValues);
-            if (selected) {
-              newValues.add(option.value);
-            } else {
-              newValues.remove(option.value);
-            }
-            onChanged(newValues);
-          },
-        );
-      }).toList(),
     );
   }
 }

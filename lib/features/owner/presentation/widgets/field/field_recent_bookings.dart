@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
@@ -44,22 +43,22 @@ class FieldRecentBookings extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Center(
                 child: Column(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.event_busy,
                       size: 48,
-                      color: AppColors.textSecondary,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       context.l10n.noBookingsYet,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -91,7 +90,7 @@ class FieldRecentBookings extends StatelessWidget {
                   LocaleFormatters.formatNumber(context, bookings.length),
                 ),
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -116,12 +115,13 @@ class _BookingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outlineVariant),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -148,29 +148,29 @@ class _BookingItem extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.calendar_today,
                 size: 14,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               const SizedBox(width: 4),
               Text(
                 DateFormat.yMMMd(context.l10n.localeName).format(booking.date),
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(width: 12),
-              const Icon(
+              Icon(
                 Icons.access_time,
                 size: 14,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               const SizedBox(width: 4),
               Text(
                 '${booking.startTime} - ${booking.endTime}',
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -184,7 +184,7 @@ class _BookingItem extends StatelessWidget {
             ),
             style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.bold,
-              color: AppColors.primary,
+              color: colorScheme.primary,
             ),
           ),
         ],
@@ -206,22 +206,22 @@ class _StatusBadge extends StatelessWidget {
 
     switch (status) {
       case BookingStatus.confirmed:
-        color = AppColors.success;
+        color = Theme.of(context).colorScheme.primary;
         icon = Icons.check_circle;
         statusText = context.l10n.statusConfirmed;
         break;
       case BookingStatus.pending:
-        color = AppColors.warning;
+        color = Theme.of(context).colorScheme.tertiary;
         icon = Icons.pending;
         statusText = context.l10n.statusPending;
         break;
       case BookingStatus.canceled:
-        color = AppColors.error;
+        color = Theme.of(context).colorScheme.error;
         icon = Icons.cancel;
         statusText = context.l10n.statusCancelled;
         break;
       case BookingStatus.completed:
-        color = AppColors.info;
+        color = Theme.of(context).colorScheme.primary;
         icon = Icons.done_all;
         statusText = context.l10n.statusCompleted;
         break;

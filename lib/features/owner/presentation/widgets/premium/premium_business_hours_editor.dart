@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -88,7 +87,7 @@ class PremiumBusinessHoursEditor extends StatelessWidget {
           context.l10n.businessHours,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 12),
@@ -150,15 +149,16 @@ class _DayScheduleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: schedule.isOpen
-              ? AppColors.accentCyan.withValues(alpha: 0.3)
-              : AppColors.border,
+              ? colorScheme.secondary.withValues(alpha: 0.3)
+              : colorScheme.outlineVariant,
         ),
       ),
       child: Column(
@@ -172,7 +172,7 @@ class _DayScheduleCard extends StatelessWidget {
                   schedule.day,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -182,8 +182,8 @@ class _DayScheduleCard extends StatelessWidget {
                   HapticFeedback.selectionClick();
                   onToggleDay();
                 },
-                activeThumbColor: AppColors.accentCyan,
-                activeTrackColor: AppColors.accentCyan.withValues(alpha: 0.5),
+                activeThumbColor: colorScheme.secondary,
+                activeTrackColor: colorScheme.secondary.withValues(alpha: 0.5),
               ),
             ],
           ),
@@ -212,27 +212,23 @@ class _DayScheduleCard extends StatelessWidget {
                   horizontal: 12,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.accentCyan.withValues(alpha: 0.05),
+                  color: colorScheme.secondary.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: AppColors.accentCyan.withValues(alpha: 0.2),
+                    color: colorScheme.secondary.withValues(alpha: 0.2),
                     style: BorderStyle.solid,
                   ),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
-                      Icons.add,
-                      size: 16,
-                      color: AppColors.accentCyan,
-                    ),
+                    Icon(Icons.add, size: 16, color: colorScheme.secondary),
                     const SizedBox(width: 6),
                     Text(
                       context.l10n.addTimeSlot,
                       style: AppTextStyles.bodySmall.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.secondary,
                       ),
                     ),
                   ],
@@ -244,7 +240,7 @@ class _DayScheduleCard extends StatelessWidget {
             Text(
               context.l10n.closed,
               style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textSecondary.withValues(alpha: 0.6),
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
               ),
             ),
           ],
@@ -292,6 +288,7 @@ class _TimeSlotRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         // Start time
@@ -302,23 +299,23 @@ class _TimeSlotRow extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
               decoration: BoxDecoration(
-                color: AppColors.backgroundLight,
+                color: colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: colorScheme.outlineVariant),
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.access_time,
                     size: 16,
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     slot.start,
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
@@ -326,12 +323,12 @@ class _TimeSlotRow extends StatelessWidget {
             ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Icon(
             Icons.arrow_forward,
             size: 16,
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         // End time
@@ -342,23 +339,23 @@ class _TimeSlotRow extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
               decoration: BoxDecoration(
-                color: AppColors.backgroundLight,
+                color: colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: colorScheme.outlineVariant),
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.access_time,
                     size: 16,
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     slot.end,
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
@@ -374,14 +371,16 @@ class _TimeSlotRow extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.red.withValues(alpha: 0.05),
+              color: colorScheme.error.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.red.withValues(alpha: 0.2)),
+              border: Border.all(
+                color: colorScheme.error.withValues(alpha: 0.2),
+              ),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.delete_outline,
               size: 16,
-              color: Colors.red,
+              color: colorScheme.error,
             ),
           ),
         ),

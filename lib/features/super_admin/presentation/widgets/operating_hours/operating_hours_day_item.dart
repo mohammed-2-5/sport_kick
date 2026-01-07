@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/day_hours_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_settings_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Operating Hours Day Item Widget
 ///
@@ -30,15 +31,9 @@ class OperatingHoursDayItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -78,7 +73,7 @@ class _DayLabel extends StatelessWidget {
         style: AppTextStyles.bodyMedium.copyWith(
           fontSize: 15,
           fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
+          color: Theme.of(context).colorScheme.onSurface,
         ),
       ),
     );
@@ -180,15 +175,15 @@ class _TimeButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: AppColors.backgroundLight,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: Theme.of(context).colorScheme.outline),
         ),
         child: Text(
           time,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),
@@ -205,14 +200,14 @@ class _ClosedLabel extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.red.withValues(alpha: 0.1),
+        color: Theme.of(context).colorScheme.error.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         context.l10n.closed,
         style: AppTextStyles.bodyMedium.copyWith(
           fontWeight: FontWeight.w600,
-          color: Colors.red,
+          color: Theme.of(context).colorScheme.error,
         ),
       ),
     );
@@ -234,10 +229,14 @@ class _OpenToggle extends StatelessWidget {
         HapticFeedback.selectionClick();
         onToggle(value);
       },
-      activeTrackColor: AppColors.success.withValues(alpha: 0.5),
-      activeThumbColor: AppColors.success,
-      inactiveThumbColor: Colors.grey,
-      inactiveTrackColor: Colors.grey.withValues(alpha: 0.3),
+      activeTrackColor: Theme.of(
+        context,
+      ).colorScheme.success.withValues(alpha: 0.5),
+      activeThumbColor: Theme.of(context).colorScheme.success,
+      inactiveThumbColor: Theme.of(context).colorScheme.onSurfaceVariant,
+      inactiveTrackColor: Theme.of(
+        context,
+      ).colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
     );
   }
 }

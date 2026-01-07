@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
-import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_hint_banner/empty_state_hint.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/booking_table/booking_table_hint_banner/scroll_hint.dart';
 
 /// Hint banner for booking table.
 ///
@@ -19,80 +18,7 @@ class BookingTableHintBanner extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Row(
         children: [
-          if (!hasBookings) const _EmptyStateHint() else const _ScrollHint(),
-        ],
-      ),
-    );
-  }
-}
-
-/// Empty state hint when no bookings.
-class _EmptyStateHint extends StatelessWidget {
-  const _EmptyStateHint();
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.info_outline_rounded,
-            size: 16,
-            color: colorScheme.onSurfaceVariant,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            context.l10n.noBookingsForThisFieldIn,
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Scroll hint when bookings exist.
-class _ScrollHint extends StatelessWidget {
-  const _ScrollHint();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: AppColors.goldAccent.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.goldAccent.withValues(alpha: 0.3)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.swipe_right_rounded,
-            size: 16,
-            color: AppColors.goldAccent,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            context.l10n.scrollRightToSeeAllDays,
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.goldAccent,
-            ),
-          ),
+          if (!hasBookings) const EmptyStateHint() else const ScrollHint(),
         ],
       ),
     );

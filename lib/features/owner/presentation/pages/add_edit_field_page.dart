@@ -8,8 +8,8 @@ import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/domain/constants/owner_constants.dart';
-import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
-import 'package:spo_kick/features/owner/presentation/cubit/owner_state.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_crud_cubit.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_crud_state.dart';
 import 'package:spo_kick/features/owner/presentation/widgets/field_form/add_edit_field_form.dart';
 
 /// Add/Edit Field Form Page
@@ -44,38 +44,19 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.field?.name ?? '');
-    _descriptionController = TextEditingController(
-      text: widget.field?.description ?? '',
-    );
-    _addressController = TextEditingController(
-      text: widget.field?.address ?? '',
-    );
-    _cityController = TextEditingController(text: widget.field?.city ?? '');
-    _priceController = TextEditingController(
-      text: widget.field?.pricePerHour.toString() ?? '',
-    );
 
+    // Initialize controllers with empty values
+    _nameController = TextEditingController();
+    _descriptionController = TextEditingController();
+    _addressController = TextEditingController();
+    _cityController = TextEditingController();
+    _priceController = TextEditingController();
+
+    // Request form initialization from cubit if in edit mode
     if (_isEditing) {
-      if (widget.field!.capacity != null) {
-        if (widget.field!.capacity! <= 10) {
-          _selectedSize = '5v5';
-        } else if (widget.field!.capacity! <= 14) {
-          _selectedSize = '7v7';
-        } else {
-          _selectedSize = '11v11';
-        }
-      }
-
-      _selectedSurface = _validateDropdownValue(
-        widget.field!.surfaceType,
-        OwnerConstants.surfaceTypes,
-      );
-      _selectedType = _validateDropdownValue(
-        widget.field!.isIndoor ? 'Indoor' : 'Outdoor',
-        OwnerConstants.fieldTypes,
-      );
-      _selectedFacilities = List.from(widget.field!.facilities);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.read<OwnerFieldsCrudCubit>().initializeFieldForm(widget.field);
+      });
     }
   }
 
@@ -87,6 +68,54 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
     _cityController.dispose();
     _priceController.dispose();
     super.dispose();
+  }
+
+  /// Populate form controllers and state from cubit-provided form data.
+  ///
+  /// This method only handles UI state synchronization.
+  /// Business logic (data mapping/validation) is handled by the cubit.
+  void _populateFormFromData(Map<String, dynamic> formData) {
+    _nameController.text = formData['name'] as String? ?? '';
+    _descriptionController.text = formData['description'] as String? ?? '';
+    _addressController.text = formData['address'] as String? ?? '';
+    _cityController.text = formData['city'] as String? ?? '';
+    _priceController.text = formData['pricePerHour'] as String? ?? '';
+
+    setState(() {
+      _selectedSize =
+          formData['size'] as String? ?? OwnerConstants.fieldSizes.first;
+      _selectedSurface =
+          formData['surface'] as String? ?? OwnerConstants.surfaceTypes.first;
+      _selectedType =
+          formData['type'] as String? ?? OwnerConstants.fieldTypes.first;
+      _selectedFacilities = List<String>.from(
+        formData['facilities'] as List? ?? [],
+      );
+    });
+  }
+
+  /// Handle form save by delegating to cubit.
+  ///
+  /// Only performs UI-level validation, delegates business logic to cubit.
+  void _handleSave() {
+    if (_formKey.currentState!.validate()) {
+      final formData = <String, dynamic>{
+        'name': _nameController.text,
+        'description': _descriptionController.text,
+        'address': _addressController.text,
+        'city': _cityController.text,
+        'pricePerHour': _priceController.text,
+        'size': _selectedSize,
+        'surface': _selectedSurface,
+        'type': _selectedType,
+        'facilities': _selectedFacilities,
+      };
+
+      context.read<OwnerFieldsCrudCubit>().submitFieldUpdate(
+        widget.field!.id,
+        formData,
+      );
+    }
   }
 
   @override
@@ -128,20 +157,23 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
             height: 160,
           ),
           Expanded(
-            child: BlocConsumer<OwnerCubit, OwnerState>(
+            child: BlocConsumer<OwnerFieldsCrudCubit, OwnerFieldsCrudState>(
               listener: (context, state) {
-                if (state is OwnerActionSuccess) {
-                  SnackbarHelper.showSuccess(context, state.message);
+                if (state is FieldFormInitialized) {
+                  _populateFormFromData(state.formData);
+                } else if (state is FieldUpdated) {
+                  SnackbarHelper.showSuccess(
+                    context,
+                    'Field updated successfully',
+                  );
                   Navigator.pop(context);
-                } else if (state is OwnerError) {
+                } else if (state is OwnerFieldsCrudError) {
                   SnackbarHelper.showError(context, state.message);
                 }
               },
               builder: (context, state) {
-                if (state is OwnerLoading) {
-                  return LoadingIndicator.fullScreen(
-                    message: context.l10n.updatingFieldMessage,
-                  );
+                if (state is OwnerFieldsCrudLoading) {
+                  return LoadingIndicator.fullScreen(message: state.message);
                 }
 
                 return AddEditFieldForm(
@@ -186,30 +218,5 @@ class _AddEditFieldPageState extends State<AddEditFieldPage> {
         ],
       ),
     );
-  }
-
-  void _handleSave() {
-    if (_formKey.currentState!.validate()) {
-      final updates = <String, dynamic>{
-        'name': _nameController.text,
-        'description': _descriptionController.text,
-        'address': _addressController.text,
-        'city': _cityController.text,
-        'price_per_hour': double.parse(_priceController.text),
-        'size': _selectedSize,
-        'surface': _selectedSurface,
-        'type': _selectedType,
-        'facilities': _selectedFacilities,
-      };
-
-      context.read<OwnerCubit>().updateField(widget.field!.id, updates);
-    }
-  }
-
-  String _validateDropdownValue(String? value, List<String> allowed) {
-    if (value != null && allowed.contains(value)) {
-      return value;
-    }
-    return allowed.first;
   }
 }

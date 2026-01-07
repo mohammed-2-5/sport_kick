@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/entities/recurring_booking_entity.dart';
@@ -24,7 +23,6 @@ class RecurringBookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -34,9 +32,7 @@ class RecurringBookingCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.3)
-                  : AppColors.navyDeep.withValues(alpha: 0.08),
+              color: colorScheme.shadow.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, 4),
             ),
@@ -66,8 +62,8 @@ class RecurringBookingCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.navyDeep,
-            AppColors.navyDeep.withValues(alpha: 0.9),
+            colorScheme.primary,
+            colorScheme.primary.withValues(alpha: 0.8),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -126,7 +122,6 @@ class RecurringBookingCard extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -144,7 +139,7 @@ class RecurringBookingCard extends StatelessWidget {
                     short: true,
                   ),
                 ),
-                color: AppColors.accentCyan,
+                color: colorScheme.secondary,
               ),
               const SizedBox(width: 12),
               _buildInfoChip(
@@ -173,7 +168,7 @@ class RecurringBookingCard extends StatelessWidget {
                     decimalDigits: 0,
                   ),
                 ),
-                color: isDark ? AppColors.darkWarning : AppColors.warning,
+                color: colorScheme.tertiary,
               ),
               const SizedBox(width: 12),
               _buildInfoChip(
@@ -181,7 +176,7 @@ class RecurringBookingCard extends StatelessWidget {
                 icon: Icons.payments_outlined,
                 label:
                     '${LocaleFormatters.formatPrice(context, amount: booking.pricePerBooking, currency: 'EGP', decimalDigits: 0)} / ${context.l10n.perWeek}',
-                color: isDark ? AppColors.darkSuccess : AppColors.success,
+                color: colorScheme.primary,
               ),
             ],
           ),
@@ -225,8 +220,7 @@ class RecurringBookingCard extends StatelessWidget {
 
   Widget _buildProgressBar(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final successColor = colorScheme.primary;
     final progress = booking.totalBookingsCount > 0
         ? booking.completedBookingsCount / booking.totalBookingsCount
         : 0.0;
@@ -268,8 +262,7 @@ class RecurringBookingCard extends StatelessWidget {
     if (booking.nextBookingDate == null) return const SizedBox.shrink();
 
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+    final successColor = colorScheme.primary;
     final isPaid = booking.nextBookingPaid ?? false;
 
     return Container(
@@ -278,19 +271,19 @@ class RecurringBookingCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isPaid
             ? successColor.withValues(alpha: 0.1)
-            : AppColors.goldAccent.withValues(alpha: 0.1),
+            : colorScheme.tertiary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isPaid
               ? successColor.withValues(alpha: 0.3)
-              : AppColors.goldAccent.withValues(alpha: 0.3),
+              : colorScheme.tertiary.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
         children: [
           Icon(
             isPaid ? Icons.check_circle_rounded : Icons.payment_rounded,
-            color: isPaid ? successColor : AppColors.goldAccent,
+            color: isPaid ? successColor : colorScheme.tertiary,
             size: 20,
           ),
           const SizedBox(width: 10),
@@ -321,7 +314,7 @@ class RecurringBookingCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: isPaid ? successColor : AppColors.goldAccent,
+              color: isPaid ? successColor : colorScheme.tertiary,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -338,8 +331,7 @@ class RecurringBookingCard extends StatelessWidget {
   }
 
   Widget _buildCancelButton(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+    final errorColor = Theme.of(context).colorScheme.error;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: SizedBox(
@@ -376,15 +368,17 @@ class RecurringBookingCard extends StatelessWidget {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.goldAccent.withValues(alpha: 0.1),
+        color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.goldAccent.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.3),
+        ),
       ),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.hourglass_empty_rounded,
-            color: AppColors.goldAccent,
+            color: Theme.of(context).colorScheme.tertiary,
             size: 20,
           ),
           const SizedBox(width: 10),
@@ -392,7 +386,9 @@ class RecurringBookingCard extends StatelessWidget {
             child: Text(
               context.l10n.pendingApprovalMessage,
               style: AppTextStyles.caption.copyWith(
-                color: AppColors.goldAccent.withValues(alpha: 0.9),
+                color: Theme.of(
+                  context,
+                ).colorScheme.tertiary.withValues(alpha: 0.9),
               ),
             ),
           ),
@@ -402,8 +398,7 @@ class RecurringBookingCard extends StatelessWidget {
   }
 
   Widget _buildRejectionMessage(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+    final errorColor = Theme.of(context).colorScheme.error;
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(12),

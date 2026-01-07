@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class SplashState extends Equatable {
+sealed class SplashState extends Equatable {
   const SplashState();
 
   @override

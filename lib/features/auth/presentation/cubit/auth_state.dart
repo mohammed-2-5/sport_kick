@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 
 /// Base class for all authentication states.
-abstract class AuthState extends Equatable {
+sealed class AuthState extends Equatable {
   const AuthState();
 
   @override

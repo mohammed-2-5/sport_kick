@@ -110,10 +110,10 @@ class _DurationOptionCardState extends State<DurationOptionCard>
                 children: [
                   // Selected indicator (start side in RTL)
                   if (widget.isSelected)
-                    const Icon(
+                    Icon(
                       Icons.check_circle_rounded,
                       size: 20,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     )
                   else
                     const SizedBox(width: 20),
@@ -153,13 +153,17 @@ class _DurationOptionCardState extends State<DurationOptionCard>
 
     if (widget.isSelected) {
       return BoxDecoration(
-        gradient: AppColors.cyanGradient,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [colorScheme.primary, colorScheme.primaryContainer],
+        ),
         borderRadius: BorderRadius.circular(
           BookingConstants.durationChipBorderRadius,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.accentCyan.withValues(alpha: 0.4),
+            color: colorScheme.primary.withValues(alpha: 0.4),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -191,15 +195,15 @@ class _DurationOptionCardState extends State<DurationOptionCard>
     final errorColor = isDark ? AppColors.darkError : AppColors.error;
 
     final textColor = widget.isSelected
-        ? Colors.white
+        ? colorScheme.onPrimary
         : widget.isAvailable
         ? colorScheme.onSurface
         : colorScheme.onSurfaceVariant;
 
     final priceColor = widget.isSelected
-        ? Colors.white.withValues(alpha: 0.9)
+        ? colorScheme.onPrimary.withValues(alpha: 0.9)
         : widget.isAvailable
-        ? AppColors.accentCyan
+        ? colorScheme.primary
         : colorScheme.onSurfaceVariant;
 
     return Column(
@@ -247,11 +251,12 @@ class _DurationOptionCardState extends State<DurationOptionCard>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
 
+    final colorScheme = Theme.of(context).colorScheme;
     final bgColor = widget.isSelected
-        ? Colors.white.withValues(alpha: 0.25)
+        ? colorScheme.onPrimary.withValues(alpha: 0.25)
         : successColor.withValues(alpha: 0.1);
 
-    final textColor = widget.isSelected ? Colors.white : successColor;
+    final textColor = widget.isSelected ? colorScheme.onPrimary : successColor;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),

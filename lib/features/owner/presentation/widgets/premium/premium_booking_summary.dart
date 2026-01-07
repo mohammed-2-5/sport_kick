@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -33,6 +32,7 @@ class PremiumBookingSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,21 +44,24 @@ class PremiumBookingSummary extends StatelessWidget {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                  gradient: LinearGradient(
+                    colors: [
+                      colorScheme.secondary,
+                      colorScheme.secondaryContainer,
+                    ],
                   ),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.3),
+                      color: colorScheme.secondary.withValues(alpha: 0.3),
                       blurRadius: 12,
                       spreadRadius: 2,
                     ),
                   ],
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.summarize,
-                  color: Colors.white,
+                  color: colorScheme.onSecondary,
                   size: 22,
                 ),
               ),
@@ -67,7 +70,7 @@ class PremiumBookingSummary extends StatelessWidget {
                 context.l10n.bookingSummary,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -126,12 +129,15 @@ class PremiumBookingSummary extends StatelessWidget {
                 context.l10n.totalPrice,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
               ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
-                  colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                shaderCallback: (bounds) => LinearGradient(
+                  colors: [
+                    colorScheme.secondary,
+                    colorScheme.secondaryContainer,
+                  ],
                 ).createShader(bounds),
                 child: Text(
                   price,
@@ -163,6 +169,7 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -170,10 +177,10 @@ class _SummaryRow extends StatelessWidget {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: AppColors.accentCyan.withValues(alpha: 0.1),
+            color: colorScheme.secondary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, size: 16, color: AppColors.accentCyan),
+          child: Icon(icon, size: 16, color: colorScheme.secondary),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -183,7 +190,7 @@ class _SummaryRow extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 2),
@@ -191,7 +198,7 @@ class _SummaryRow extends StatelessWidget {
                 value,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],

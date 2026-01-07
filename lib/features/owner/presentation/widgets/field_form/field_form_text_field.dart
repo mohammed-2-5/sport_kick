@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
-import 'package:spo_kick/core/constants/app_shadows.dart';
 
 class FieldFormTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -27,13 +25,19 @@ class FieldFormTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.2),
+          color: Theme.of(context).colorScheme.outlineVariant,
           width: 1.5,
         ),
-        boxShadow: AppShadows.small,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: TextFormField(
         controller: controller,
@@ -43,11 +47,11 @@ class FieldFormTextField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
-          prefixIcon: Icon(icon, color: AppColors.primary),
+          prefixIcon: Icon(icon, color: Theme.of(context).colorScheme.primary),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.all(16),
           labelStyle: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.w600,
           ),
         ),

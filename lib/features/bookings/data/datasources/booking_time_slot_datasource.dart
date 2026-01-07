@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:spo_kick/core/errors/exceptions.dart';
 import 'package:spo_kick/features/bookings/data/models/time_slot_model.dart';
+import 'package:spo_kick/features/bookings/data/utils/time_slot_generator.dart';
 
 /// Remote data source for time slot availability operations.
 ///
@@ -64,12 +65,16 @@ class BookingTimeSlotDataSourceImpl implements BookingTimeSlotDataSource {
       }
 
       // Parse business hours
-      final openingTime = _parseTime(businessHours['opening_time'] as String?);
-      final closingTime = _parseTime(businessHours['closing_time'] as String?);
+      final openingHour = TimeSlotGenerator.parseTimeToHour(
+        businessHours['opening_time'] as String?,
+      );
+      final closingHour = TimeSlotGenerator.parseTimeToHour(
+        businessHours['closing_time'] as String?,
+      );
       final closesNextDay = businessHours['closes_next_day'] as bool? ?? false;
 
       debugPrint(
-        '🕐 Business hours: ${openingTime?.hour}:00 - ${closingTime?.hour}:00 '
+        '🕐 Business hours: $openingHour:00 - $closingHour:00 '
         '(closesNextDay: $closesNextDay)',
       );
 
@@ -90,16 +95,13 @@ class BookingTimeSlotDataSourceImpl implements BookingTimeSlotDataSource {
           .eq('booking_date', dateString)
           .inFilter('status', ['pending', 'confirmed']);
 
-      // Convert to Sets for O(1) lookup
-      final bookedSlotsCurrentDay = <String>{};
-      for (final booking in currentDayBookings as List) {
-        final startTime = booking['start_time'] as String;
-        final normalizedTime = startTime.substring(0, 5);
-        bookedSlotsCurrentDay.add(normalizedTime);
-      }
+      // Extract booked slots using utility
+      final bookedSlotsCurrentDay = TimeSlotGenerator.extractBookedSlots(
+        currentDayBookings as List,
+      );
 
       // If cross-midnight, also fetch next day bookings
-      final bookedSlotsNextDay = <String>{};
+      Set<String> bookedSlotsNextDay = {};
       if (closesNextDay) {
         final nextDayBookings = await supabaseClient
             .from('bookings')
@@ -108,11 +110,9 @@ class BookingTimeSlotDataSourceImpl implements BookingTimeSlotDataSource {
             .eq('booking_date', nextDateString)
             .inFilter('status', ['pending', 'confirmed']);
 
-        for (final booking in nextDayBookings as List) {
-          final startTime = booking['start_time'] as String;
-          final normalizedTime = startTime.substring(0, 5);
-          bookedSlotsNextDay.add(normalizedTime);
-        }
+        bookedSlotsNextDay = TimeSlotGenerator.extractBookedSlots(
+          nextDayBookings as List,
+        );
       }
 
       debugPrint(
@@ -121,49 +121,20 @@ class BookingTimeSlotDataSourceImpl implements BookingTimeSlotDataSource {
       );
 
       // Step 4: Generate time slots based on business hours
-      final slots = <TimeSlotModel>[];
-
-      if (openingTime != null && closingTime != null) {
-        // Generate same-day slots (from opening to midnight or closing, whichever is earlier)
-        final sameDayEndHour = closesNextDay ? 24 : closingTime.hour;
-
-        for (int hour = openingTime.hour; hour < sameDayEndHour; hour++) {
-          final startTime = '${hour.toString().padLeft(2, '0')}:00';
-          final endTime = '${((hour + 1) % 24).toString().padLeft(2, '0')}:00';
-          final isAvailable = !bookedSlotsCurrentDay.contains(startTime);
-
-          slots.add(
-            TimeSlotModel(
-              startTime: startTime,
-              endTime: endTime,
-              isAvailable: isAvailable,
-              price: pricePerHour,
-              currency: currency,
-              isNextDay: false,
-            ),
-          );
-        }
-
-        // Generate next-day slots (from midnight to closing time) if cross-midnight
-        if (closesNextDay) {
-          for (int hour = 0; hour < closingTime.hour; hour++) {
-            final startTime = '${hour.toString().padLeft(2, '0')}:00';
-            final endTime = '${(hour + 1).toString().padLeft(2, '0')}:00';
-            final isAvailable = !bookedSlotsNextDay.contains(startTime);
-
-            slots.add(
-              TimeSlotModel(
-                startTime: startTime,
-                endTime: endTime,
-                isAvailable: isAvailable,
-                price: pricePerHour,
-                currency: currency,
-                isNextDay: true,
-              ),
-            );
-          }
-        }
+      if (openingHour == null || closingHour == null) {
+        debugPrint('⚠️ Invalid business hours');
+        return [];
       }
+
+      final slots = TimeSlotGenerator.generateTimeSlots(
+        openingHour: openingHour,
+        closingHour: closingHour,
+        closesNextDay: closesNextDay,
+        pricePerHour: pricePerHour,
+        currency: currency,
+        bookedSlotsCurrentDay: bookedSlotsCurrentDay,
+        bookedSlotsNextDay: bookedSlotsNextDay,
+      );
 
       debugPrint('✅ Generated ${slots.length} time slots');
       return slots;
@@ -210,17 +181,6 @@ class BookingTimeSlotDataSourceImpl implements BookingTimeSlotDataSource {
         'closing_time': '23:00:00',
         'closes_next_day': false,
       };
-    }
-  }
-
-  /// Parse time string (HH:MM:SS or HH:MM) to DateTime components.
-  DateTime? _parseTime(String? timeString) {
-    if (timeString == null || timeString.isEmpty) return null;
-    try {
-      final parts = timeString.split(':');
-      return DateTime(2000, 1, 1, int.parse(parts[0]), int.parse(parts[1]));
-    } catch (e) {
-      return null;
     }
   }
 

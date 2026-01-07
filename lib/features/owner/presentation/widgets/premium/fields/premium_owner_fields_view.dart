@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_cubit.dart';
@@ -36,8 +35,9 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: colorScheme.surface,
       floatingActionButton: _buildFAB(context),
       body: BlocConsumer<OwnerFieldsCubit, OwnerFieldsState>(
         listener: (context, state) {
@@ -124,17 +124,18 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
     }
 
     // Error state - show empty with retry
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.error_outline, size: 64, color: Colors.red),
+          Icon(Icons.error_outline, size: 64, color: colorScheme.error),
           const SizedBox(height: 16),
           Text(
             context.l10n.failedToLoadFields,
             style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 24),
@@ -143,7 +144,7 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
             icon: const Icon(Icons.refresh),
             label: Text(context.l10n.retry),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.accentCyan,
+              backgroundColor: colorScheme.secondary,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
@@ -157,6 +158,7 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
   }
 
   Widget _buildFAB(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
@@ -166,15 +168,15 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
         height: 56,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+          gradient: LinearGradient(
+            colors: [colorScheme.secondary, colorScheme.secondaryContainer],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(28),
           boxShadow: [
             BoxShadow(
-              color: AppColors.accentCyan.withValues(alpha: 0.4),
+              color: colorScheme.secondary.withValues(alpha: 0.4),
               blurRadius: 12,
               offset: const Offset(0, 6),
             ),
@@ -235,7 +237,7 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
         content: Text(
           context.l10n.deleteFieldMessage(fieldName),
           style: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
         actions: [
@@ -244,7 +246,7 @@ class _PremiumOwnerFieldsViewState extends State<PremiumOwnerFieldsView> {
             child: Text(
               context.l10n.cancel,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),

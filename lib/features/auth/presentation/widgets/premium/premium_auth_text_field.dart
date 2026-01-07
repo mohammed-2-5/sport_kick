@@ -128,7 +128,7 @@ class _PremiumAuthTextFieldState extends State<PremiumAuthTextField>
                       ? AppColors.accentCyan
                       : (widget.isDark
                             ? Colors.white.withValues(alpha: 0.2)
-                            : AppColors.border),
+                            : Theme.of(context).colorScheme.outline),
                   width: _isFocused ? 2 : 1.5,
                 ),
                 boxShadow: _isFocused

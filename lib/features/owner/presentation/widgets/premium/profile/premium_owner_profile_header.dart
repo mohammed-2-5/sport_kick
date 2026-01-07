@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
 
@@ -35,10 +34,11 @@ class PremiumOwnerProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
+          colors: [colorScheme.primary, colorScheme.primaryContainer],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -106,15 +106,15 @@ class PremiumOwnerProfileHeader extends StatelessWidget {
                       height: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [
-                            AppColors.accentCyan,
-                            AppColors.accentCyanDark,
+                            colorScheme.secondary,
+                            colorScheme.secondaryContainer,
                           ],
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.accentCyan.withValues(alpha: 0.4),
+                            color: colorScheme.secondary.withValues(alpha: 0.4),
                             blurRadius: 20,
                             offset: const Offset(0, 8),
                           ),
@@ -154,10 +154,10 @@ class PremiumOwnerProfileHeader extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.edit,
                             size: 16,
-                            color: AppColors.accentCyan,
+                            color: colorScheme.secondary,
                           ),
                         ),
                       ),

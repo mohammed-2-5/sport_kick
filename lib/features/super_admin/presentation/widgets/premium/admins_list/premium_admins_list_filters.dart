@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium filter chips for super admin admins list.
 ///
@@ -23,19 +24,15 @@ class PremiumAdminsListFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.surfaceWhite,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: Row(
         children: [
@@ -50,14 +47,14 @@ class PremiumAdminsListFilters extends StatelessWidget {
             count: stats[context.l10n.active2] ?? 0,
             isSelected: selectedFilter == context.l10n.active,
             onTap: () => onFilterChanged('Active'),
-            color: Colors.green,
+            color: colorScheme.success,
           ),
           _FilterChip(
             label: context.l10n.inactive,
             count: stats[context.l10n.inactive2] ?? 0,
             isSelected: selectedFilter == context.l10n.inactive,
             onTap: () => onFilterChanged('Inactive'),
-            color: Colors.grey,
+            color: colorScheme.onSurfaceVariant,
           ),
         ],
       ),
@@ -83,6 +80,8 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -121,7 +120,9 @@ class _FilterChip extends StatelessWidget {
                 label,
                 style: AppTextStyles.labelMedium.copyWith(
                   fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                  color: isSelected ? Colors.white : AppColors.textSecondary,
+                  color: isSelected
+                      ? Colors.white
+                      : colorScheme.onSurfaceVariant,
                 ),
               ),
               if (count > 0) ...[

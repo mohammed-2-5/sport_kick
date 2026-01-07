@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/fields/domain/usecases/get_all_fields_usecase.dart';
 import 'package:spo_kick/features/fields/domain/usecases/get_field_by_id_usecase.dart';
@@ -18,6 +19,7 @@ import '../../domain/entities/sport_category_entity.dart';
 /// - Filtering by category
 /// - Loading sport categories
 /// - Tracking current city for filtering
+/// - Category selection with haptic feedback
 class FieldsCubit extends Cubit<FieldsState> {
   final GetAllFieldsUseCase getAllFieldsUseCase;
   final GetFieldByIdUseCase getFieldByIdUseCase;
@@ -29,8 +31,14 @@ class FieldsCubit extends Cubit<FieldsState> {
   /// Current city ID for filtering fields.
   String? _currentCityId;
 
+  /// Selected category ID for filtering.
+  String? _selectedCategoryId;
+
   /// Get current city ID.
   String? get currentCityId => _currentCityId;
+
+  /// Get selected category ID.
+  String? get selectedCategoryId => _selectedCategoryId;
 
   FieldsCubit({
     required this.getAllFieldsUseCase,
@@ -40,7 +48,9 @@ class FieldsCubit extends Cubit<FieldsState> {
     required this.getSportCategoriesUseCase,
     required this.searchFieldsUseCase,
     String? initialCityId,
+    String? initialCategoryId,
   }) : _currentCityId = initialCityId,
+       _selectedCategoryId = initialCategoryId,
        super(const FieldsInitial());
 
   /// Set current city and reload fields.
@@ -236,6 +246,7 @@ class FieldsCubit extends Cubit<FieldsState> {
 
   /// Clear all filters and reload all fields.
   Future<void> clearFilters() async {
+    _selectedCategoryId = null;
     await loadAllFields();
   }
 
@@ -244,5 +255,57 @@ class FieldsCubit extends Cubit<FieldsState> {
   /// Useful for pull-to-refresh functionality.
   Future<void> refresh() async {
     await loadAllFields();
+  }
+
+  /// Handle city change from CityCubit.
+  ///
+  /// Updates the current city and reloads fields.
+  Future<void> handleCityChange(String? cityId) async {
+    await setCurrentCity(cityId);
+  }
+
+  /// Select category with haptic feedback.
+  ///
+  /// Provides tactile feedback and updates the filter.
+  void selectCategoryWithFeedback(String? categoryId) {
+    HapticFeedback.selectionClick();
+    _selectedCategoryId = categoryId;
+    filterByCategory(categoryId);
+  }
+
+  /// Clear search and reset filters.
+  void clearSearch() {
+    final currentState = state;
+    if (currentState is FieldsLoaded) {
+      emit(currentState.copyWith(clearSearchQuery: true, clearFilters: true));
+    }
+  }
+
+  /// Get current filter options for dialog.
+  FieldFilterOptions? getCurrentFilters() {
+    final currentState = state;
+    if (currentState is FieldsLoaded) {
+      return currentState.filterOptions;
+    }
+    return null;
+  }
+
+  /// Get category names for filter dialog.
+  List<String> getCategoryNames() {
+    final currentState = state;
+    if (currentState is FieldsLoaded) {
+      return currentState.categories.map((cat) => cat.name).toList();
+    }
+    return [];
+  }
+
+  /// Apply filters from dialog with haptic feedback.
+  void applyFiltersWithFeedback(FieldFilterOptions options) {
+    HapticFeedback.mediumImpact();
+
+    // Update local category selection if changed
+    _selectedCategoryId = options.categoryId;
+
+    applyFilters(options);
   }
 }

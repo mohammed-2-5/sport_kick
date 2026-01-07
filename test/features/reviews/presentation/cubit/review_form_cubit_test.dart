@@ -1,19 +1,35 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:spo_kick/core/errors/failures.dart';
+import 'package:spo_kick/features/reviews/domain/entities/review_entity.dart';
+import 'package:spo_kick/features/reviews/domain/usecases/create_review_usecase.dart';
+import 'package:spo_kick/features/reviews/domain/usecases/update_review_usecase.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.dart';
-import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 
-class MockReviewsCubit extends Mock implements ReviewsCubit {}
+class MockCreateReviewUseCase extends Mock implements CreateReviewUseCase {}
+
+class MockUpdateReviewUseCase extends Mock implements UpdateReviewUseCase {}
 
 void main() {
   late ReviewFormCubit cubit;
-  late MockReviewsCubit mockReviewsCubit;
+  late MockCreateReviewUseCase mockCreateReviewUseCase;
+  late MockUpdateReviewUseCase mockUpdateReviewUseCase;
+
+  setUpAll(() {
+    registerFallbackValue(
+      const CreateReviewParams(fieldId: '', userId: '', rating: 0),
+    );
+    registerFallbackValue(const UpdateReviewParams(reviewId: ''));
+  });
 
   setUp(() {
-    mockReviewsCubit = MockReviewsCubit();
+    mockCreateReviewUseCase = MockCreateReviewUseCase();
+    mockUpdateReviewUseCase = MockUpdateReviewUseCase();
     cubit = ReviewFormCubit(
-      reviewsCubit: mockReviewsCubit,
+      createReviewUseCase: mockCreateReviewUseCase,
+      updateReviewUseCase: mockUpdateReviewUseCase,
       fieldId: 'field-1',
       userId: 'user-1',
     );
@@ -33,7 +49,8 @@ void main() {
 
     test('should initialize with existing values when editing', () {
       final editCubit = ReviewFormCubit(
-        reviewsCubit: mockReviewsCubit,
+        createReviewUseCase: mockCreateReviewUseCase,
+        updateReviewUseCase: mockUpdateReviewUseCase,
         fieldId: 'field-1',
         reviewId: 'review-1',
         initialRating: 4,
@@ -83,7 +100,8 @@ void main() {
 
       test('should emit error when no userId for new review', () async {
         final noUserCubit = ReviewFormCubit(
-          reviewsCubit: mockReviewsCubit,
+          createReviewUseCase: mockCreateReviewUseCase,
+          updateReviewUseCase: mockUpdateReviewUseCase,
           fieldId: 'field-1',
         );
         noUserCubit.updateRating(4);
@@ -103,15 +121,20 @@ void main() {
       });
 
       test('should call createReview for new review', () async {
+        final now = DateTime.now();
+        final mockReview = ReviewEntity(
+          id: 'review-1',
+          fieldId: 'field-1',
+          userId: 'user-1',
+          rating: 5,
+          comment: 'Great!',
+          createdAt: now,
+          updatedAt: now,
+        );
+
         when(
-          () => mockReviewsCubit.createReview(
-            fieldId: any(named: 'fieldId'),
-            userId: any(named: 'userId'),
-            bookingId: any(named: 'bookingId'),
-            rating: any(named: 'rating'),
-            comment: any(named: 'comment'),
-          ),
-        ).thenAnswer((_) async {});
+          () => mockCreateReviewUseCase(any()),
+        ).thenAnswer((_) async => Right(mockReview));
 
         cubit.updateRating(5);
         cubit.updateComment('Great!');
@@ -120,28 +143,30 @@ void main() {
           errorLogin: 'User must be logged in',
         );
 
-        verify(
-          () => mockReviewsCubit.createReview(
-            fieldId: 'field-1',
-            userId: 'user-1',
-            bookingId: null,
-            rating: 5,
-            comment: 'Great!',
-          ),
-        ).called(1);
+        verify(() => mockCreateReviewUseCase(any())).called(1);
+
+        expect(cubit.state, isA<ReviewFormSuccess>());
+        expect((cubit.state as ReviewFormSuccess).isEdit, isFalse);
       });
 
       test('should call updateReview when editing', () async {
+        final now = DateTime.now();
+        final mockReview = ReviewEntity(
+          id: 'review-1',
+          fieldId: 'field-1',
+          userId: 'user-1',
+          rating: 5,
+          createdAt: now,
+          updatedAt: now,
+        );
+
         when(
-          () => mockReviewsCubit.updateReview(
-            reviewId: any(named: 'reviewId'),
-            rating: any(named: 'rating'),
-            comment: any(named: 'comment'),
-          ),
-        ).thenAnswer((_) async {});
+          () => mockUpdateReviewUseCase(any()),
+        ).thenAnswer((_) async => Right(mockReview));
 
         final editCubit = ReviewFormCubit(
-          reviewsCubit: mockReviewsCubit,
+          createReviewUseCase: mockCreateReviewUseCase,
+          updateReviewUseCase: mockUpdateReviewUseCase,
           fieldId: 'field-1',
           reviewId: 'review-1',
           initialRating: 3,
@@ -153,13 +178,57 @@ void main() {
           errorLogin: 'User must be logged in',
         );
 
-        verify(
-          () => mockReviewsCubit.updateReview(
-            reviewId: 'review-1',
-            rating: 5,
-            comment: null,
-          ),
-        ).called(1);
+        verify(() => mockUpdateReviewUseCase(any())).called(1);
+
+        expect(editCubit.state, isA<ReviewFormSuccess>());
+        expect((editCubit.state as ReviewFormSuccess).isEdit, isTrue);
+
+        editCubit.close();
+      });
+
+      test('should emit error when createReview fails', () async {
+        when(() => mockCreateReviewUseCase(any())).thenAnswer(
+          (_) async => const Left(ServerFailure('Failed to create review')),
+        );
+
+        cubit.updateRating(5);
+        cubit.updateComment('Great!');
+        await cubit.submit(
+          errorRating: 'Select valid rating',
+          errorLogin: 'User must be logged in',
+        );
+
+        expect(cubit.state, isA<ReviewFormError>());
+        expect(
+          (cubit.state as ReviewFormError).message,
+          contains('Failed to create review'),
+        );
+      });
+
+      test('should emit error when updateReview fails', () async {
+        when(() => mockUpdateReviewUseCase(any())).thenAnswer(
+          (_) async => const Left(ServerFailure('Failed to update review')),
+        );
+
+        final editCubit = ReviewFormCubit(
+          createReviewUseCase: mockCreateReviewUseCase,
+          updateReviewUseCase: mockUpdateReviewUseCase,
+          fieldId: 'field-1',
+          reviewId: 'review-1',
+          initialRating: 3,
+        );
+
+        editCubit.updateRating(5);
+        await editCubit.submit(
+          errorRating: 'Select valid rating',
+          errorLogin: 'User must be logged in',
+        );
+
+        expect(editCubit.state, isA<ReviewFormError>());
+        expect(
+          (editCubit.state as ReviewFormError).message,
+          contains('Failed to update review'),
+        );
 
         editCubit.close();
       });

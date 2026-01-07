@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -16,8 +15,9 @@ class ManageNotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: colorScheme.surface,
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -63,7 +63,7 @@ class ManageNotificationsPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: AppTextStyles.withColor(
                         AppTextStyles.bodyLarge,
-                        AppColors.textSecondary,
+                        colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],

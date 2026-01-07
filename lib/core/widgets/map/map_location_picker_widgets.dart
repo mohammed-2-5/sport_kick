@@ -4,9 +4,26 @@ import 'package:spo_kick/core/constants/map_location_picker_constants.dart';
 import 'package:spo_kick/core/models/location_data.dart';
 
 /// Search result item widget for location picker.
+///
+/// Displays address with icon in a tappable list item format.
 class MapSearchResultItem extends StatelessWidget {
+  /// The location data to display.
   final LocationData location;
+
+  /// Callback when this search result is tapped.
   final VoidCallback onTap;
+
+  /// Icon size for the location marker.
+  static const double _iconSize = 20;
+
+  /// Padding between icon and text.
+  static const double _iconTextSpacing = 12;
+
+  /// Icon padding within its container.
+  static const double _iconPadding = 8;
+
+  /// Icon container border radius.
+  static const double _iconBorderRadius = 8;
 
   const MapSearchResultItem({
     super.key,
@@ -25,19 +42,8 @@ class MapSearchResultItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.accentCyan.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.location_on,
-                color: AppColors.accentCyan,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
+            _buildLocationIcon(),
+            const SizedBox(width: _iconTextSpacing),
             Expanded(
               child: Text(
                 location.address,
@@ -54,10 +60,41 @@ class MapSearchResultItem extends StatelessWidget {
       ),
     );
   }
+
+  /// Builds the location icon with cyan background.
+  Widget _buildLocationIcon() {
+    return Container(
+      padding: const EdgeInsets.all(_iconPadding),
+      decoration: BoxDecoration(
+        color: AppColors.accentCyan.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(_iconBorderRadius),
+      ),
+      child: const Icon(
+        Icons.location_on,
+        color: AppColors.accentCyan,
+        size: _iconSize,
+      ),
+    );
+  }
 }
 
-/// Animated location marker for map.
+/// Animated location marker widget for map display.
+///
+/// Shows a circle with location icon and a stem line below it.
+/// Used as the center marker in the map location picker.
 class MapLocationMarker extends StatelessWidget {
+  /// Size for the location icon.
+  static const double _iconSize = 24;
+
+  /// Padding around the icon.
+  static const double _iconPadding = 8;
+
+  /// Height of the stem line below the marker.
+  static const double _stemHeight = 20;
+
+  /// Width of the stem line.
+  static const double _stemWidth = 2;
+
   const MapLocationMarker({super.key});
 
   @override
@@ -65,35 +102,55 @@ class MapLocationMarker extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: AppColors.accentCyan,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.accentCyan.withValues(alpha: 0.4),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: const Icon(Icons.location_on, color: Colors.white, size: 24),
+        _buildMarkerCircle(),
+        CustomPaint(
+          size: const Size(_stemWidth, _stemHeight),
+          painter: _MarkerStemPainter(),
         ),
-        CustomPaint(size: const Size(2, 20), painter: _MarkerStemPainter()),
       ],
+    );
+  }
+
+  /// Builds the circular marker with icon and shadow.
+  Widget _buildMarkerCircle() {
+    return Container(
+      padding: const EdgeInsets.all(_iconPadding),
+      decoration: BoxDecoration(
+        color: AppColors.accentCyan,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.accentCyan.withValues(alpha: 0.4),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: const Icon(
+        Icons.location_on,
+        color: Colors.white,
+        size: _iconSize,
+      ),
     );
   }
 }
 
+/// Custom painter for the stem line of the location marker.
 class _MarkerStemPainter extends CustomPainter {
+  /// Stroke width for the stem line.
+  static const double _strokeWidth = 2;
+
+  /// Radius of the dot at the bottom.
+  static const double _dotRadius = 3;
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = AppColors.accentCyan
-      ..strokeWidth = 2
+      ..strokeWidth = _strokeWidth
       ..style = PaintingStyle.stroke;
 
+    // Draw vertical line
     canvas.drawLine(
       Offset(size.width / 2, 0),
       Offset(size.width / 2, size.height),
@@ -103,140 +160,11 @@ class _MarkerStemPainter extends CustomPainter {
     // Draw dot at bottom
     canvas.drawCircle(
       Offset(size.width / 2, size.height),
-      3,
+      _dotRadius,
       Paint()..color = AppColors.accentCyan,
     );
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-/// Bottom sheet showing selected location info.
-class MapLocationInfoSheet extends StatelessWidget {
-  final LocationData? location;
-  final bool isLoading;
-  final VoidCallback onConfirm;
-
-  const MapLocationInfoSheet({
-    super.key,
-    required this.location,
-    required this.isLoading,
-    required this.onConfirm,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(MapLocationPickerConstants.cardPadding),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceWhite,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(MapLocationPickerConstants.borderRadius),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.2),
-            blurRadius: 16,
-            offset: const Offset(0, -4),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Drag handle
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: AppColors.disabled,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Location info
-            if (isLoading)
-              const Center(
-                child: SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-              )
-            else if (location != null) ...[
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      gradient: AppColors.cyanGradient,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.location_on,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          location!.address.split(',').first,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.lightTextPrimary,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          location!.coordinatesString,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.lightTextSecondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-
-            const SizedBox(height: 16),
-
-            // Confirm button
-            ElevatedButton(
-              onPressed: location != null && !isLoading ? onConfirm : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accentCyan,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                elevation: 0,
-              ),
-              child: const Text(
-                MapLocationPickerConstants.confirmButton,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

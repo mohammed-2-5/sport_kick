@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admin_form/admin_form_cubit.dart';
@@ -35,7 +34,7 @@ class PremiumCreateAdminView extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              backgroundColor: AppColors.backgroundLight,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               body: CustomScrollView(
                 slivers: [
                   // Premium Header

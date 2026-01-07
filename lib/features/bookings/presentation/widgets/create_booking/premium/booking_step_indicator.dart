@@ -125,6 +125,8 @@ class _StepCircleState extends State<_StepCircle>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: widget.onTap,
       child: Column(
@@ -148,7 +150,7 @@ class _StepCircleState extends State<_StepCircle>
                     boxShadow: widget.isActive
                         ? [
                             BoxShadow(
-                              color: AppColors.accentCyan.withValues(
+                              color: colorScheme.primary.withValues(
                                 alpha: 0.4 * _glowAnimation.value,
                               ),
                               blurRadius: 12,
@@ -165,7 +167,6 @@ class _StepCircleState extends State<_StepCircle>
           const SizedBox(height: 8),
           Builder(
             builder: (context) {
-              final colorScheme = Theme.of(context).colorScheme;
               return Text(
                 widget.step.title(context.l10n),
                 style: AppTextStyles.labelSmall.copyWith(
@@ -189,14 +190,16 @@ class _StepCircleState extends State<_StepCircle>
     final colorScheme = Theme.of(context).colorScheme;
 
     if (widget.isCompleted) {
-      return const Icon(Icons.check, color: Colors.white, size: 20);
+      return Icon(Icons.check, color: colorScheme.onPrimary, size: 20);
     }
 
     return Text(
       '${widget.stepNumber}',
       style: AppTextStyles.titleMedium.copyWith(
         fontWeight: FontWeight.w700,
-        color: widget.isActive ? Colors.white : colorScheme.onSurfaceVariant,
+        color: widget.isActive
+            ? colorScheme.onPrimary
+            : colorScheme.onSurfaceVariant,
       ),
     );
   }
@@ -205,9 +208,10 @@ class _StepCircleState extends State<_StepCircle>
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    if (widget.isCompleted)
+    if (widget.isCompleted) {
       return isDark ? AppColors.darkSuccess : AppColors.success;
-    if (widget.isActive) return AppColors.accentCyan;
+    }
+    if (widget.isActive) return colorScheme.primary;
     return colorScheme.surface;
   }
 
@@ -215,9 +219,10 @@ class _StepCircleState extends State<_StepCircle>
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    if (widget.isCompleted)
+    if (widget.isCompleted) {
       return isDark ? AppColors.darkSuccess : AppColors.success;
-    if (widget.isActive) return AppColors.accentCyan;
+    }
+    if (widget.isActive) return colorScheme.primary;
     return colorScheme.outline;
   }
 }
@@ -240,7 +245,7 @@ class _StepConnector extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(1.5),
         gradient: isCompleted
-            ? LinearGradient(colors: [successColor, AppColors.accentCyan])
+            ? LinearGradient(colors: [successColor, colorScheme.primary])
             : null,
         color: isCompleted ? null : colorScheme.outline,
       ),

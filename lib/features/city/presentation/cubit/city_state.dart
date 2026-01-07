@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/city/domain/entities/city_entity.dart';
 
 /// City State Base
-abstract class CityState extends Equatable {
+sealed class CityState extends Equatable {
   const CityState();
 
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/widgets/loading_indicator.dart';
 import 'package:spo_kick/core/widgets/premium/empty_states.dart';
@@ -27,6 +26,8 @@ class FieldDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -38,38 +39,31 @@ class FieldDetailsPage extends StatelessWidget {
         BlocProvider(create: (context) => FieldDetailsScrollCubit()),
       ],
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: colorScheme.surface,
         body: BlocBuilder<FieldsCubit, FieldsState>(
-          builder: (context, state) => _buildPageContent(context, state),
+          builder: (context, state) {
+            return switch (state) {
+              FieldsLoading() => LoadingIndicator.inline(
+                message: context.l10n.loading,
+              ),
+              FieldsError(:final message) => EmptyStates.error(
+                context,
+                message: message,
+                onRetry: () =>
+                    context.read<FieldsCubit>().loadFieldDetails(fieldId),
+              ),
+              FieldDetailsLoaded(:final field, :final category) =>
+                PremiumFieldDetailsView(field: field, category: category),
+              _ => EmptyStates.error(
+                context,
+                message: context.l10n.fieldNotFound,
+                onRetry: () =>
+                    context.read<FieldsCubit>().loadFieldDetails(fieldId),
+              ),
+            };
+          },
         ),
       ),
-    );
-  }
-
-  Widget _buildPageContent(BuildContext context, FieldsState state) {
-    if (state is FieldsLoading) {
-      return LoadingIndicator.inline(message: context.l10n.loading);
-    }
-
-    if (state is FieldsError) {
-      return EmptyStates.error(
-        context,
-        message: state.message,
-        onRetry: () => context.read<FieldsCubit>().loadFieldDetails(fieldId),
-      );
-    }
-
-    if (state is FieldDetailsLoaded) {
-      return PremiumFieldDetailsView(
-        field: state.field,
-        category: state.category,
-      );
-    }
-
-    return EmptyStates.error(
-      context,
-      message: context.l10n.fieldNotFound,
-      onRetry: () => context.read<FieldsCubit>().loadFieldDetails(fieldId),
     );
   }
 }

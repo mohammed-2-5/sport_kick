@@ -14,6 +14,7 @@ class BookingStatusBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
@@ -26,12 +27,14 @@ class BookingStatusBanner extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: isDark ? 0.15 : 0.2),
+              color: colorScheme.onPrimary.withValues(
+                alpha: isDark ? 0.15 : 0.2,
+              ),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               BookingStatusUtils.getStatusIcon(status),
-              color: Colors.white,
+              color: colorScheme.onPrimary,
               size: 22,
             ),
           ),
@@ -40,7 +43,7 @@ class BookingStatusBanner extends StatelessWidget {
             BookingStatusUtils.getStatusLabel(context, status).toUpperCase(),
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w800,
-              color: Colors.white,
+              color: colorScheme.onPrimary,
               letterSpacing: 1.5,
             ),
           ),

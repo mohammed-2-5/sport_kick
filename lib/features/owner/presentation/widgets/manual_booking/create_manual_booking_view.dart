@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_state.dart';
@@ -78,7 +79,7 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          ManualBookingFormCubit()..initializeWithData(widget.initialData),
+          sl<ManualBookingFormCubit>()..initializeWithData(widget.initialData),
       child: Scaffold(
         appBar: AppBar(
           title: Text(context.l10n.createManualBookingTitle),
@@ -229,7 +230,7 @@ class _CreateManualBookingViewState extends State<CreateManualBookingView> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),

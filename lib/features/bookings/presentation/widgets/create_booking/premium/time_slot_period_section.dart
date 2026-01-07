@@ -154,15 +154,16 @@ class _PeriodHeader extends StatelessWidget {
 
   Color _getPeriodColor(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     switch (period) {
       case 'Morning':
-        return const Color(0xFFFFB347);
+        return isDark ? const Color(0xFFFFCC80) : const Color(0xFFFFB347);
       case 'Afternoon':
-        return const Color(0xFFFFD700);
+        return isDark ? const Color(0xFFFFE082) : const Color(0xFFFFD700);
       case 'Evening':
-        return const Color(0xFF6B5B95);
+        return isDark ? const Color(0xFF9575CD) : const Color(0xFF6B5B95);
       case 'Late Night':
-        return const Color(0xFF2C3E50);
+        return isDark ? const Color(0xFF5C6BC0) : const Color(0xFF2C3E50);
       default:
         return colorScheme.primary;
     }

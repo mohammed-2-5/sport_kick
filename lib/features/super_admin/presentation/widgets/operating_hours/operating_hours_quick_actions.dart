@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/day_hours_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -25,9 +24,11 @@ class OperatingHoursQuickActions extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.premiumGold.withValues(alpha: 0.1),
+        color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.premiumGold.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.3),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,14 +38,16 @@ class OperatingHoursQuickActions extends StatelessWidget {
               Icon(
                 Icons.bolt,
                 size: 20,
-                color: AppColors.premiumGold.withValues(alpha: 0.8),
+                color: Theme.of(
+                  context,
+                ).colorScheme.tertiary.withValues(alpha: 0.8),
               ),
               const SizedBox(width: 8),
               Text(
                 context.l10n.quickActions,
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],
@@ -79,7 +82,9 @@ class OperatingHoursQuickActions extends StatelessWidget {
           Text(
             context.l10n.usingCurrentHours(currentHours.displayString),
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ],
@@ -103,7 +108,7 @@ class _ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
@@ -112,18 +117,22 @@ class _ActionButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: Theme.of(context).colorScheme.outline),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 16, color: AppColors.premiumGold),
+              Icon(
+                icon,
+                size: 16,
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
               const SizedBox(width: 8),
               Text(
                 label,
                 style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],

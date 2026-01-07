@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Premium Revenue Card with gradient design.
@@ -40,14 +40,15 @@ class PremiumRevenueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPositive = growthPercentage >= 0;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       decoration: BoxDecoration(
-        gradient: AppColors.navyGradient,
+        gradient: context.navyGradient,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.navyDeep.withValues(alpha: 0.3),
+            color: colorScheme.primary.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -70,17 +71,18 @@ class PremiumRevenueCard extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.glassWhite,
+            color: Colors.white.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Icon(
+          child: Icon(
             Icons.account_balance_wallet_rounded,
-            color: AppColors.goldAccent,
+            color: colorScheme.tertiary,
             size: 24,
           ),
         ),
@@ -91,14 +93,14 @@ class PremiumRevenueCard extends StatelessWidget {
             Text(
               context.l10n.totalRevenue,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textOnNavySecondary,
+                color: Colors.white.withValues(alpha: 0.8),
                 fontWeight: FontWeight.w500,
               ),
             ),
             Text(
               periodLabel,
               style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.textOnNavySecondary,
+                color: Colors.white.withValues(alpha: 0.8),
               ),
             ),
           ],
@@ -131,12 +133,12 @@ class PremiumRevenueCard extends StatelessWidget {
   }
 
   Widget _buildGrowthIndicator(BuildContext context, bool isPositive) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final indicatorColor = isPositive ? colorScheme.success : colorScheme.error;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: isPositive
-            ? const Color(0xFF10B981).withValues(alpha: 0.2)
-            : const Color(0xFFEF4444).withValues(alpha: 0.2),
+        color: indicatorColor.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -146,18 +148,14 @@ class PremiumRevenueCard extends StatelessWidget {
             isPositive
                 ? Icons.trending_up_rounded
                 : Icons.trending_down_rounded,
-            color: isPositive
-                ? const Color(0xFF10B981)
-                : const Color(0xFFEF4444),
+            color: indicatorColor,
             size: 18,
           ),
           const SizedBox(width: 6),
           Text(
             '${isPositive ? '+' : ''}${growthPercentage.toStringAsFixed(1)}%',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: isPositive
-                  ? const Color(0xFF10B981)
-                  : const Color(0xFFEF4444),
+              color: indicatorColor,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -165,7 +163,7 @@ class PremiumRevenueCard extends StatelessWidget {
           Text(
             context.l10n.vsLastPeriod,
             style: AppTextStyles.labelSmall.copyWith(
-              color: AppColors.textOnNavySecondary.withValues(alpha: 0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
           ),
         ],

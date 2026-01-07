@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium facility selector (multi-select chips).
@@ -47,6 +46,7 @@ class PremiumFacilitySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,7 +54,7 @@ class PremiumFacilitySelector extends StatelessWidget {
           label,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 12),
@@ -123,6 +123,7 @@ class _FacilityChipState extends State<_FacilityChip>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) {
@@ -137,19 +138,24 @@ class _FacilityChipState extends State<_FacilityChip>
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
             gradient: widget.isSelected
-                ? const LinearGradient(
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                ? LinearGradient(
+                    colors: [
+                      colorScheme.secondary,
+                      colorScheme.secondaryContainer,
+                    ],
                   )
                 : null,
-            color: widget.isSelected ? null : Colors.white,
+            color: widget.isSelected ? null : colorScheme.surface,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: widget.isSelected ? Colors.transparent : AppColors.border,
+              color: widget.isSelected
+                  ? Colors.transparent
+                  : colorScheme.outlineVariant,
             ),
             boxShadow: widget.isSelected
                 ? [
                     BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.3),
+                      color: colorScheme.secondary.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -164,7 +170,7 @@ class _FacilityChipState extends State<_FacilityChip>
                 size: 16,
                 color: widget.isSelected
                     ? Colors.white
-                    : AppColors.textSecondary,
+                    : colorScheme.onSurfaceVariant,
               ),
               const SizedBox(width: 6),
               Text(
@@ -173,7 +179,7 @@ class _FacilityChipState extends State<_FacilityChip>
                   fontWeight: FontWeight.w600,
                   color: widget.isSelected
                       ? Colors.white
-                      : AppColors.textPrimary,
+                      : colorScheme.onSurface,
                 ),
               ),
             ],

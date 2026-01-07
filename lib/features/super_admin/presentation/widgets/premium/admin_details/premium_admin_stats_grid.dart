@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admin_details/admin_details_state.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium admin statistics grid.
 ///
@@ -20,6 +21,8 @@ class PremiumAdminStatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     final statItems = [
       _StatItem(
         label: context.l10n.totalFields,
@@ -31,7 +34,7 @@ class PremiumAdminStatsGrid extends StatelessWidget {
         label: context.l10n.activeFields,
         value: stats.activeFields.toString(),
         icon: Icons.check_circle,
-        color: Colors.green,
+        color: colorScheme.success,
       ),
       _StatItem(
         label: context.l10n.totalBookings,
@@ -43,7 +46,7 @@ class PremiumAdminStatsGrid extends StatelessWidget {
         label: context.l10n.memberDays,
         value: stats.memberDays.toString(),
         icon: Icons.timer,
-        color: Colors.purple,
+        color: colorScheme.tertiary,
       ),
     ];
 
@@ -116,7 +119,7 @@ class _SectionHeader extends StatelessWidget {
           style: AppTextStyles.titleMedium.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ],
@@ -176,7 +179,9 @@ class _StatCard extends StatelessWidget {
               Text(
                 item.label,
                 style: AppTextStyles.labelMedium.copyWith(
-                  color: AppColors.textSecondary.withValues(alpha: 0.8),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                 ),
               ),
             ],
@@ -225,7 +230,9 @@ class _RatingCard extends StatelessWidget {
                 Text(
                   context.l10n.averageRating,
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.7),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                   ),
                 ),
                 const SizedBox(height: 4),

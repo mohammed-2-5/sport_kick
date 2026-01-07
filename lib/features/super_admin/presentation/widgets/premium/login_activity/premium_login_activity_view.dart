@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
@@ -78,7 +77,7 @@ class _PremiumLoginActivityViewState extends State<PremiumLoginActivityView> {
     return BlocBuilder<LoginActivityCubit, LoginActivityState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: _buildBody(context, state),
         );
       },
@@ -116,7 +115,7 @@ class _PremiumLoginActivityViewState extends State<PremiumLoginActivityView> {
         .length;
 
     return RefreshIndicator(
-      color: AppColors.goldAccent,
+      color: Theme.of(context).colorScheme.primary,
       onRefresh: () async {
         context.read<LoginActivityCubit>().refresh();
         await Future.delayed(const Duration(milliseconds: 500));
@@ -220,13 +219,13 @@ class _RefreshButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.glassHighlight,
+        color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: IconButton(
-        icon: const Icon(
+        icon: Icon(
           Icons.refresh_rounded,
-          color: AppColors.textOnNavy,
+          color: Theme.of(context).colorScheme.onPrimary,
           size: 22,
         ),
         onPressed: onTap,
@@ -245,15 +244,15 @@ class _LoadingView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(
-            color: AppColors.goldAccent,
+          CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.primary,
             strokeWidth: 3,
           ),
           const SizedBox(height: 20),
           Text(
             context.l10n.loadingLoginActivity,
             style: AppTextStyles.labelLarge.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -281,12 +280,14 @@ class _ErrorView extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.1),
+                color: Theme.of(
+                  context,
+                ).colorScheme.error.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.error_outline_rounded,
-                color: Colors.red,
+                color: Theme.of(context).colorScheme.error,
                 size: 40,
               ),
             ),
@@ -294,14 +295,14 @@ class _ErrorView extends StatelessWidget {
             Text(
               context.l10n.failedToLoadActivity,
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -311,8 +312,8 @@ class _ErrorView extends StatelessWidget {
               icon: const Icon(Icons.refresh_rounded),
               label: Text(context.l10n.tryAgain),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.navyDeep,
-                foregroundColor: Colors.white,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 12,
@@ -345,12 +346,16 @@ class _EmptyState extends StatelessWidget {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: AppColors.accentCyan.withValues(alpha: 0.1),
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.history_rounded,
-                color: AppColors.accentCyan.withValues(alpha: 0.6),
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondary.withValues(alpha: 0.6),
                 size: 48,
               ),
             ),
@@ -358,14 +363,14 @@ class _EmptyState extends StatelessWidget {
             Text(
               context.l10n.noLoginActivity,
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               context.l10n.noLoginEventsMatchNyourFilter,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -382,15 +387,15 @@ class _LoadMoreIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Center(
         child: SizedBox(
           width: 24,
           height: 24,
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            color: AppColors.accentCyan,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),

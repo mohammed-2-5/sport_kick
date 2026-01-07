@@ -43,52 +43,44 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
               const FirstLoginBanner(),
               const SizedBox(height: 32),
             ],
-
-            // Header
-            Text(
-              context.l10n.changePasswordDesc,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            ),
+            _HeaderText(),
             const SizedBox(height: 32),
-
-            // Current Password (skip if first login)
             if (!widget.isFirstLogin) ...[
               CurrentPasswordField(
                 controller: widget.currentPasswordController,
               ),
               const SizedBox(height: 16),
             ],
-
-            // New Password
             NewPasswordField(
               controller: widget.newPasswordController,
-              onChanged: _onNewPasswordChanged,
+              onChanged: (_) => setState(() {}),
             ),
             const SizedBox(height: 8),
             PasswordRequirementsList(
               password: widget.newPasswordController.text,
             ),
             const SizedBox(height: 16),
-
-            // Confirm Password
             ConfirmPasswordField(
               controller: widget.confirmPasswordController,
               newPasswordController: widget.newPasswordController,
             ),
             const SizedBox(height: 32),
-
-            // Submit Button
             ChangePasswordSubmitButton(onPressed: widget.onSubmit),
           ],
         ),
       ),
     );
   }
+}
 
-  void _onNewPasswordChanged(String _) {
-    // Rebuild to refresh requirements list
-    setState(() {});
+class _HeaderText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      context.l10n.changePasswordDesc,
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
+    );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 
 /// Premium settings toggle switch.
 ///
@@ -106,9 +105,9 @@ class _PremiumSwitch extends StatelessWidget {
         value: value,
         onChanged: onChanged,
         activeThumbColor: Colors.white,
-        activeTrackColor: AppColors.accentCyan,
+        activeTrackColor: Theme.of(context).colorScheme.primary,
         inactiveThumbColor: Colors.white,
-        inactiveTrackColor: AppColors.border,
+        inactiveTrackColor: Theme.of(context).colorScheme.outlineVariant,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
     );

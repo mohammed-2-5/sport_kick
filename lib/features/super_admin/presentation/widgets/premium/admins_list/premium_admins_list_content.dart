@@ -6,6 +6,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/premium_admin_card.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium list content for super admin admins.
 ///
@@ -57,7 +58,7 @@ class PremiumAdminsListContent extends StatelessWidget {
         await Future.delayed(const Duration(milliseconds: 500));
       },
       color: AppColors.premiumGold,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       child: _buildAdminsList(context),
     );
   }
@@ -194,10 +195,10 @@ class _LoadingShimmerState extends State<_LoadingShimmer>
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: const [
-                    AppColors.shimmerBase,
-                    AppColors.shimmerHighlight,
-                    AppColors.shimmerBase,
+                  colors: [
+                    Theme.of(context).colorScheme.shimmerBase,
+                    Theme.of(context).colorScheme.shimmerHighlight,
+                    Theme.of(context).colorScheme.shimmerBase,
                   ],
                   stops: [
                     (0.3 + _animation.value / 4).clamp(0.0, 1.0),
@@ -249,14 +250,16 @@ class _EmptyState extends StatelessWidget {
             message,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             context.l10n.tryAdjustingYourSearchOrFilters,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ],

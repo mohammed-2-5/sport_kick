@@ -6,6 +6,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium admin assigned fields list.
 ///
@@ -57,7 +58,7 @@ class PremiumAdminFieldsList extends StatelessWidget {
                   context.l10n.assignedFields,
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -196,7 +197,7 @@ class _FieldCard extends StatelessWidget {
                     field.name,
                     style: AppTextStyles.titleSmall.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -214,9 +215,10 @@ class _FieldCard extends StatelessWidget {
                         child: Text(
                           field.city,
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textSecondary.withValues(
-                              alpha: 0.8,
-                            ),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant
+                                .withValues(alpha: 0.8),
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -265,10 +267,13 @@ class _FieldStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final color = isActive ? colorScheme.success : colorScheme.onSurfaceVariant;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: (isActive ? Colors.green : Colors.grey).withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -276,7 +281,7 @@ class _FieldStatusBadge extends StatelessWidget {
         style: AppTextStyles.badge.copyWith(
           fontSize: 11,
           fontWeight: FontWeight.w600,
-          color: isActive ? Colors.green : Colors.grey,
+          color: color,
         ),
       ),
     );
@@ -311,14 +316,16 @@ class _EmptyFieldsState extends StatelessWidget {
             context.l10n.noFieldsAssigned,
             style: AppTextStyles.titleSmall.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             context.l10n.assignFieldsToThisAdminTo,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),

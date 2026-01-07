@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
 /// Premium user card for super admin user management.
@@ -58,6 +59,8 @@ class PremiumUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return PremiumCard(
       onTap: onTap,
       borderColor: isSelected ? AppColors.premiumGold : null,
@@ -87,12 +90,12 @@ class PremiumUserCard extends StatelessWidget {
                               ],
                             )
                           : null,
-                      color: isSelected ? null : Colors.white,
+                      color: isSelected ? null : colorScheme.surface,
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(
                         color: isSelected
                             ? Colors.transparent
-                            : AppColors.border,
+                            : colorScheme.outline,
                       ),
                     ),
                     child: isSelected
@@ -133,9 +136,14 @@ class PremiumUserCard extends StatelessWidget {
                       width: 14,
                       height: 14,
                       decoration: BoxDecoration(
-                        color: isActive ? Colors.green : Colors.grey,
+                        color: isActive
+                            ? colorScheme.success
+                            : colorScheme.onSurfaceVariant,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
+                        border: Border.all(
+                          color: colorScheme.surface,
+                          width: 2,
+                        ),
                       ),
                     ),
                   ),
@@ -201,7 +209,9 @@ class PremiumUserCard extends StatelessWidget {
                           ? context.l10n.deactivate
                           : context.l10n.activate,
                       icon: isActive ? Icons.block : Icons.check_circle_outline,
-                      color: isActive ? Colors.orange : Colors.green,
+                      color: isActive
+                          ? colorScheme.warning
+                          : colorScheme.success,
                       onTap: onToggleStatus!,
                     ),
                   ),
@@ -212,7 +222,7 @@ class PremiumUserCard extends StatelessWidget {
                     child: _ActionButton(
                       label: context.l10n.delete,
                       icon: Icons.delete_outline,
-                      color: Colors.red,
+                      color: colorScheme.error,
                       onTap: onDelete!,
                     ),
                   ),
@@ -233,17 +243,22 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final statusColor = isActive
+        ? colorScheme.success
+        : colorScheme.onSurfaceVariant;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: (isActive ? Colors.green : Colors.grey).withValues(alpha: 0.1),
+        color: statusColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
         isActive ? context.l10n.active : context.l10n.inactive,
         style: AppTextStyles.withColor(
           AppTextStyles.labelSmallBold,
-          isActive ? Colors.green : Colors.grey,
+          statusColor,
         ),
       ),
     );
@@ -259,22 +274,24 @@ class _StatChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppColors.textSecondary),
+          Icon(icon, size: 14, color: colorScheme.onSurfaceVariant),
           const SizedBox(width: 6),
           Text(
             label,
             style: AppTextStyles.withColor(
               AppTextStyles.labelSmall,
-              AppColors.textSecondary,
+              colorScheme.onSurfaceVariant,
             ),
           ),
         ],

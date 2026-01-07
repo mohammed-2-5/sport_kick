@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -19,6 +19,8 @@ class PremiumOwnerProfileStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final successColor = colorScheme.success;
     return PremiumCard(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -32,13 +34,16 @@ class PremiumOwnerProfileStats extends StatelessWidget {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Colors.green, Colors.teal],
+                    gradient: LinearGradient(
+                      colors: [
+                        successColor,
+                        successColor.withValues(alpha: 0.8),
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.green.withValues(alpha: 0.3),
+                        color: successColor.withValues(alpha: 0.3),
                         blurRadius: 12,
                         spreadRadius: 2,
                       ),
@@ -58,14 +63,14 @@ class PremiumOwnerProfileStats extends StatelessWidget {
                       Text(
                         context.l10n.totalRevenue,
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         context.l10n.thisMonth,
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -77,23 +82,19 @@ class PremiumOwnerProfileStats extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.green.withValues(alpha: 0.1),
+                    color: successColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.trending_up,
-                        size: 14,
-                        color: Colors.green,
-                      ),
+                      Icon(Icons.trending_up, size: 14, color: successColor),
                       const SizedBox(width: 4),
                       Text(
                         '+12%',
                         style: AppTextStyles.labelSmall.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: Colors.green,
+                          color: successColor,
                         ),
                       ),
                     ],
@@ -106,8 +107,8 @@ class PremiumOwnerProfileStats extends StatelessWidget {
             const SizedBox(height: 16),
             // Revenue Amount
             ShaderMask(
-              shaderCallback: (bounds) => const LinearGradient(
-                colors: [Colors.green, Colors.teal],
+              shaderCallback: (bounds) => LinearGradient(
+                colors: [successColor, successColor.withValues(alpha: 0.8)],
               ).createShader(bounds),
               child: Text(
                 LocaleFormatters.formatPrice(

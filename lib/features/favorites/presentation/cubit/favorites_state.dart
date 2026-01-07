@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 /// Base class for all favorites states.
-abstract class FavoritesState extends Equatable {
+sealed class FavoritesState extends Equatable {
   const FavoritesState();
 
   @override

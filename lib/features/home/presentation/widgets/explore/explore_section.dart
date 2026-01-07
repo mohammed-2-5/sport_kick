@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
@@ -90,13 +89,11 @@ class ExploreSection extends StatelessWidget {
     required dynamic field, // Should be FieldEntity
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final imageUrl = field.images.isNotEmpty ? field.images.first : null;
     final rating = field.averageRating ?? 0.0;
 
     return GestureDetector(
       onTap: () {
-        // TODO: Navigate to field details
         context.pushNamed(
           'fieldDetails',
           pathParameters: {'fieldId': field.id},
@@ -123,9 +120,7 @@ class ExploreSection extends StatelessWidget {
             Container(
               height: 120,
               decoration: BoxDecoration(
-                color: isDark
-                    ? colorScheme.surfaceContainerHighest
-                    : Colors.grey[300],
+                color: colorScheme.surfaceContainerHighest,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(24),
                 ),
@@ -143,9 +138,7 @@ class ExploreSection extends StatelessWidget {
                         height: 120,
                         fit: BoxFit.cover,
                         placeholder: (context, url) => Container(
-                          color: isDark
-                              ? colorScheme.surfaceContainerHighest
-                              : Colors.grey[300],
+                          color: colorScheme.surfaceContainerHighest,
                           child: Center(
                             child: CircularProgressIndicator(
                               color: colorScheme.primary,
@@ -154,9 +147,7 @@ class ExploreSection extends StatelessWidget {
                           ),
                         ),
                         errorWidget: (context, url, error) => Container(
-                          color: isDark
-                              ? colorScheme.surfaceContainerHighest
-                              : Colors.grey[300],
+                          color: colorScheme.surfaceContainerHighest,
                           child: Icon(
                             Icons.sports_soccer,
                             color: colorScheme.onSurfaceVariant,
@@ -167,9 +158,7 @@ class ExploreSection extends StatelessWidget {
                     )
                   else
                     Container(
-                      color: isDark
-                          ? colorScheme.surfaceContainerHighest
-                          : Colors.grey[300],
+                      color: colorScheme.surfaceContainerHighest,
                       child: Center(
                         child: Icon(
                           Icons.sports_soccer,
@@ -220,11 +209,7 @@ class ExploreSection extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.star,
-                        color: AppColors.ratingActive,
-                        size: 14,
-                      ),
+                      Icon(Icons.star, color: colorScheme.tertiary, size: 14),
                       const SizedBox(width: 4),
                       Text(
                         rating.toStringAsFixed(1),

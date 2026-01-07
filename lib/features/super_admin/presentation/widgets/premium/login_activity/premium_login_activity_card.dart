@@ -5,6 +5,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart' hide DeviceType;
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium card for displaying login activity.
 ///
@@ -33,15 +34,9 @@ class PremiumLoginActivityCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: Material(
         color: Colors.transparent,
@@ -53,7 +48,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeader(),
+                _buildHeader(context),
                 const SizedBox(height: 12),
                 _buildDetails(context),
                 const SizedBox(height: 12),
@@ -66,7 +61,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
         _DeviceIcon(deviceType: activity.deviceType),
@@ -86,8 +81,8 @@ class PremiumLoginActivityCard extends StatelessWidget {
                 activity.deviceName ?? activity.deviceType.displayName,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: userName != null
-                      ? AppColors.textSecondary
-                      : AppColors.textPrimary,
+                      ? Theme.of(context).colorScheme.onSurfaceVariant
+                      : Theme.of(context).colorScheme.onSurface,
                   fontWeight: userName != null
                       ? FontWeight.w500
                       : FontWeight.w600,
@@ -105,7 +100,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -147,7 +142,9 @@ class PremiumLoginActivityCard extends StatelessWidget {
             Icon(
               Icons.access_time_rounded,
               size: 14,
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
             const SizedBox(width: 4),
             Text(
@@ -167,7 +164,7 @@ class PremiumLoginActivityCard extends StatelessWidget {
               context.l10n.currentSession,
               style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.accentCyan,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
           ),
@@ -263,7 +260,7 @@ class _StatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: _getColor().withValues(alpha: 0.1),
+        color: _getColor(context).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -273,7 +270,7 @@ class _StatusBadge extends StatelessWidget {
             width: 6,
             height: 6,
             decoration: BoxDecoration(
-              color: _getColor(),
+              color: _getColor(context),
               shape: BoxShape.circle,
             ),
           ),
@@ -282,7 +279,7 @@ class _StatusBadge extends StatelessWidget {
             status.displayName,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w600,
-              color: _getColor(),
+              color: _getColor(context),
             ),
           ),
         ],
@@ -290,14 +287,15 @@ class _StatusBadge extends StatelessWidget {
     );
   }
 
-  Color _getColor() {
+  Color _getColor(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     switch (status) {
       case LoginStatus.success:
-        return const Color(0xFF10B981);
+        return colorScheme.success;
       case LoginStatus.failed:
-        return const Color(0xFFEF4444);
+        return colorScheme.error;
       case LoginStatus.blocked:
-        return const Color(0xFFF59E0B);
+        return colorScheme.warning;
     }
   }
 }
@@ -320,7 +318,11 @@ class _DetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: AppColors.textSecondary),
+        Icon(
+          icon,
+          size: 16,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
         const SizedBox(width: 8),
         Text(
           context.l10n.label(label),
@@ -331,17 +333,17 @@ class _DetailRow extends StatelessWidget {
             value,
             style: AppTextStyles.labelMedium.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ),
         if (onCopy != null)
           GestureDetector(
             onTap: onCopy,
-            child: const Icon(
+            child: Icon(
               Icons.copy_rounded,
               size: 16,
-              color: AppColors.accentCyan,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
       ],

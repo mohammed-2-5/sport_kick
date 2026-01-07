@@ -94,6 +94,22 @@ void main() {
       () => mockFieldsCubit.state,
     ).thenReturn(FieldsLoaded(fields: tFields, categories: tCategories));
     when(() => mockFieldsCubit.stream).thenAnswer((_) => const Stream.empty());
+
+    // Stub new methods used in UI
+    when(() => mockFieldsCubit.selectedCategoryId).thenReturn(null);
+    when(
+      () => mockFieldsCubit.getCurrentFilters(),
+    ).thenReturn(const FieldFilterOptions());
+    when(
+      () => mockFieldsCubit.getCategoryNames(),
+    ).thenReturn(tCategories.map((c) => c.name).toList());
+    when(
+      () => mockFieldsCubit.selectCategoryWithFeedback(any()),
+    ).thenReturn(null);
+    when(() => mockFieldsCubit.clearSearch()).thenReturn(null);
+    when(
+      () => mockFieldsCubit.applyFiltersWithFeedback(any()),
+    ).thenReturn(null);
   });
 
   Widget createWidgetUnderTest() {
@@ -173,9 +189,9 @@ void main() {
       await tester.tap(find.text('Apply Filters'));
       await tester.pumpAndSettle();
 
-      // Verify `applyFilters` called with correct options
+      // Verify `applyFiltersWithFeedback` called with correct options
       final captured = verify(
-        () => mockFieldsCubit.applyFilters(captureAny()),
+        () => mockFieldsCubit.applyFiltersWithFeedback(captureAny()),
       ).captured;
       final options = captured.last as FieldFilterOptions;
       expect(options.isIndoor, true);

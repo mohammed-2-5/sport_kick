@@ -6,6 +6,7 @@ import 'package:spo_kick/core/widgets/premium/premium_text_field.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/forgot_password_cubit.dart';
 
+/// Body widget for forgot password page.
 class ForgotPasswordBody extends StatefulWidget {
   const ForgotPasswordBody({super.key});
 
@@ -18,21 +19,9 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-    // Initialize controller with current cubit state if any (for persistence usually, but new instance here)
-  }
-
-  @override
   void dispose() {
     _emailController.dispose();
     super.dispose();
-  }
-
-  void _onResetPressed() {
-    if (_formKey.currentState?.validate() ?? false) {
-      context.read<AuthCubit>().resetPassword(_emailController.text.trim());
-    }
   }
 
   @override
@@ -53,33 +42,60 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
-            PremiumTextField(
-              label: context.l10n.email,
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              prefixIcon: Icons.email_outlined,
-              onChanged: (value) =>
-                  context.read<ForgotPasswordCubit>().updateEmail(value),
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return context.l10n.fieldRequired;
-                }
-                final regex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
-                if (!regex.hasMatch(value.trim())) {
-                  return context.l10n.invalidEmail;
-                }
-                return null;
-              },
-            ),
+            _EmailField(controller: _emailController),
             const SizedBox(height: 32),
-            PremiumButton(
-              label: context.l10n.resetPassword,
-              onPressed: _onResetPressed,
-              icon: Icons.send_rounded,
-            ),
+            _ResetButton(formKey: _formKey, emailController: _emailController),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _EmailField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _EmailField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return PremiumTextField(
+      label: context.l10n.email,
+      controller: controller,
+      keyboardType: TextInputType.emailAddress,
+      prefixIcon: Icons.email_outlined,
+      onChanged: (value) =>
+          context.read<ForgotPasswordCubit>().updateEmail(value),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return context.l10n.fieldRequired;
+        }
+        final regex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
+        if (!regex.hasMatch(value.trim())) {
+          return context.l10n.invalidEmail;
+        }
+        return null;
+      },
+    );
+  }
+}
+
+class _ResetButton extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController emailController;
+
+  const _ResetButton({required this.formKey, required this.emailController});
+
+  @override
+  Widget build(BuildContext context) {
+    return PremiumButton(
+      label: context.l10n.resetPassword,
+      onPressed: () {
+        if (formKey.currentState?.validate() ?? false) {
+          context.read<AuthCubit>().resetPassword(emailController.text.trim());
+        }
+      },
+      icon: Icons.send_rounded,
     );
   }
 }

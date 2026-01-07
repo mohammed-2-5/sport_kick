@@ -1,7 +1,7 @@
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
-
-import '../../domain/entities/booking_status.dart';
-import '../../domain/entities/payment_status.dart';
+import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
+import 'package:spo_kick/features/bookings/domain/entities/payment_status.dart';
+import 'package:spo_kick/features/bookings/domain/utils/booking_status_rules.dart';
 
 /// Booking data model (DTO) for JSON serialization.
 ///
@@ -173,8 +173,8 @@ class BookingModel extends BookingEntity {
       if (notes != null && notes!.isNotEmpty) 'notes': notes,
       // Manual booking fields
       'is_manual': isManual,
-      if (isManual)
-        'status': 'confirmed', // Manual bookings are confirmed immediately
+      // Apply business rule for initial status
+      'status': BookingStatusRules.getInitialStatusString(isManual: isManual),
       if (createdBy != null) 'created_by': createdBy,
       if (customerName != null) 'customer_name': customerName,
       if (customerPhone != null) 'customer_phone': customerPhone,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -64,15 +65,9 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 400),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.15),
-              blurRadius: 20,
-              spreadRadius: 5,
-            ),
-          ],
+          boxShadow: context.cardShadow,
         ),
         child: Form(
           key: _formKey,
@@ -88,13 +83,16 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
   Widget _buildHeader() {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.error, Color(0xFFDC6A5E)],
+          colors: [
+            Theme.of(context).colorScheme.error,
+            Theme.of(context).colorScheme.errorContainer,
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
         ),
@@ -104,12 +102,14 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.white.withValues(alpha: 0.2),
+              color: Theme.of(
+                context,
+              ).colorScheme.onError.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.cancel_outlined,
-              color: AppColors.white,
+              color: Theme.of(context).colorScheme.onError,
               size: 24,
             ),
           ),
@@ -123,21 +123,26 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                   style: AppTextStyles.titleLarge.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.white,
+                    color: Theme.of(context).colorScheme.onError,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   context.l10n.thisActionCannotBeUndone,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textOnNavy,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onError.withValues(alpha: 0.8),
                   ),
                 ),
               ],
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.close, color: AppColors.white),
+            icon: Icon(
+              Icons.close,
+              color: Theme.of(context).colorScheme.onError,
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],
@@ -155,12 +160,15 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.backgroundLight,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
               children: [
-                const Icon(Icons.calendar_month, color: AppColors.mediumGrey),
+                Icon(
+                  Icons.calendar_month,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -170,13 +178,13 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                         widget.booking.fieldName ?? context.l10n.unknownField,
                         style: AppTextStyles.titleSmall.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       Text(
                         '${widget.booking.formattedDate} • ${widget.booking.formattedTimeSlot}',
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -201,7 +209,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
             decoration: InputDecoration(
               hintText: context.l10n.enterReasonForCancellation,
               filled: true,
-              fillColor: AppColors.backgroundLight,
+              fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -209,16 +217,23 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: AppColors.border.withValues(alpha: 0.5),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.outline.withValues(alpha: 0.5),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.error, width: 2),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                  width: 2,
+                ),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.error),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                ),
               ),
             ),
             validator: (value) {
@@ -248,7 +263,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
                   : () => Navigator.of(context).pop(),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                side: const BorderSide(color: AppColors.border),
+                side: BorderSide(color: Theme.of(context).colorScheme.outline),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -256,7 +271,7 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
               child: Text(
                 context.l10n.keepBooking,
                 style: AppTextStyles.button.copyWith(
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -267,8 +282,8 @@ class _CancelBookingDialogState extends State<CancelBookingDialog> {
             child: ElevatedButton(
               onPressed: _isSubmitting ? null : _handleSubmit,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.error,
-                foregroundColor: AppColors.white,
+                backgroundColor: Theme.of(context).colorScheme.error,
+                foregroundColor: Theme.of(context).colorScheme.onError,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

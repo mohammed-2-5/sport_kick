@@ -20,6 +20,7 @@ class BookingListItemHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final statusColor = BookingStatusUtils.getStatusColor(status);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -38,12 +39,12 @@ class BookingListItemHeader extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.25),
+              color: colorScheme.onPrimary.withValues(alpha: 0.25),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               BookingStatusUtils.getStatusIcon(status),
-              color: Colors.white,
+              color: colorScheme.onPrimary,
               size: 18,
             ),
           ),
@@ -52,7 +53,7 @@ class BookingListItemHeader extends StatelessWidget {
             BookingStatusUtils.getStatusLabel(context, status).toUpperCase(),
             style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.w800,
-              color: Colors.white,
+              color: colorScheme.onPrimary,
               letterSpacing: 1.0,
             ),
           ),
@@ -60,7 +61,7 @@ class BookingListItemHeader extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.9),
+              color: colorScheme.onPrimary.withValues(alpha: 0.9),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(

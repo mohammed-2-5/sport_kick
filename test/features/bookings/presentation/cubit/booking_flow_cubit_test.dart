@@ -7,7 +7,10 @@ import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
 import 'package:spo_kick/features/bookings/domain/entities/time_slot_entity.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/create_booking_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/find_consecutive_slot_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_available_time_slots_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/group_time_slots_by_period_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/validate_slot_selection_usecase.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_state.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
@@ -18,10 +21,36 @@ class MockGetAvailableTimeSlotsUseCase extends Mock
 
 class MockCreateBookingUseCase extends Mock implements CreateBookingUseCase {}
 
+class MockGroupTimeSlotsByPeriodUseCase extends Mock
+    implements GroupTimeSlotsByPeriodUseCase {}
+
+class MockFindConsecutiveSlotUseCase extends Mock
+    implements FindConsecutiveSlotUseCase {}
+
+class MockValidateSlotSelectionUseCase extends Mock
+    implements ValidateSlotSelectionUseCase {}
+
 void main() {
+  setUpAll(() {
+    // Register fallback values for mocktail
+    registerFallbackValue(
+      const TimeSlotEntity(
+        startTime: '00:00',
+        endTime: '01:00',
+        isAvailable: true,
+        price: 0,
+        currency: 'EGP',
+        isNextDay: false,
+      ),
+    );
+  });
+
   late BookingFlowCubit cubit;
   late MockGetAvailableTimeSlotsUseCase mockGetTimeSlots;
   late MockCreateBookingUseCase mockCreateBooking;
+  late MockGroupTimeSlotsByPeriodUseCase mockGroupTimeSlots;
+  late MockFindConsecutiveSlotUseCase mockFindConsecutiveSlot;
+  late MockValidateSlotSelectionUseCase mockValidateSlotSelection;
 
   // Test data
   final testField = FieldEntity(
@@ -80,10 +109,16 @@ void main() {
   setUp(() {
     mockGetTimeSlots = MockGetAvailableTimeSlotsUseCase();
     mockCreateBooking = MockCreateBookingUseCase();
+    mockGroupTimeSlots = MockGroupTimeSlotsByPeriodUseCase();
+    mockFindConsecutiveSlot = MockFindConsecutiveSlotUseCase();
+    mockValidateSlotSelection = MockValidateSlotSelectionUseCase();
 
     cubit = BookingFlowCubit(
       getAvailableTimeSlotsUseCase: mockGetTimeSlots,
       createBookingUseCase: mockCreateBooking,
+      groupTimeSlotsByPeriodUseCase: mockGroupTimeSlots,
+      findConsecutiveSlotUseCase: mockFindConsecutiveSlot,
+      validateSlotSelectionUseCase: mockValidateSlotSelection,
     );
   });
 
@@ -107,6 +142,9 @@ void main() {
             date: any(named: 'date'),
           ),
         ).thenAnswer((_) async => const Right([testSlot, testSlot2]));
+        when(() => mockGroupTimeSlots(any())).thenReturn(const {
+          'Morning': [testSlot, testSlot2],
+        });
         return cubit;
       },
       act: (cubit) => cubit.initializeFlow(testField),
@@ -166,6 +204,9 @@ void main() {
             date: any(named: 'date'),
           ),
         ).thenAnswer((_) async => const Right([testSlot]));
+        when(() => mockGroupTimeSlots(any())).thenReturn(const {
+          'Morning': [testSlot],
+        });
         return cubit;
       },
       seed: () => initialState,
@@ -247,7 +288,15 @@ void main() {
 
     blocTest<BookingFlowCubit, BookingFlowState>(
       'selects time slot with consecutive slot for 2-hour booking',
-      build: () => cubit,
+      build: () {
+        when(
+          () => mockFindConsecutiveSlot(
+            slot: any(named: 'slot'),
+            slotsByPeriod: any(named: 'slotsByPeriod'),
+          ),
+        ).thenReturn(testSlot2);
+        return cubit;
+      },
       seed: () => activeState.copyWith(selectedDuration: 2),
       act: (cubit) => cubit.selectTimeSlot(testSlot),
       expect: () => [

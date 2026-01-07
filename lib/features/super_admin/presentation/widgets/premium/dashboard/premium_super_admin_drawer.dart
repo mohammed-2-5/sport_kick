@@ -30,7 +30,7 @@ class PremiumSuperAdminDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           // Header
@@ -307,6 +307,7 @@ class _SectionDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
       child: Row(
@@ -315,14 +316,14 @@ class _SectionDivider extends StatelessWidget {
             title.toUpperCase(),
             style: AppTextStyles.withColor(
               AppTextStyles.labelSmallBold,
-              AppColors.textSecondary,
+              colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(width: 8),
           Expanded(
             child: Container(
               height: 1,
-              color: AppColors.textSecondary.withValues(alpha: 0.1),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.1),
             ),
           ),
         ],
@@ -417,7 +418,9 @@ class _DrawerItemState extends State<_DrawerItem>
                           colors: [AppColors.goldAccent, Color(0xFFD4A574)],
                         )
                       : null,
-                  color: widget.isSelected ? null : AppColors.backgroundLight,
+                  color: widget.isSelected
+                      ? null
+                      : Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: widget.isSelected
                       ? [
@@ -433,7 +436,7 @@ class _DrawerItemState extends State<_DrawerItem>
                   size: 18,
                   color: widget.isSelected
                       ? Colors.white
-                      : AppColors.textSecondary,
+                      : Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(width: 12),
@@ -448,7 +451,7 @@ class _DrawerItemState extends State<_DrawerItem>
                         : AppTextStyles.bodyMedium,
                     widget.isSelected
                         ? AppColors.goldAccent
-                        : AppColors.textPrimary,
+                        : Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -504,6 +507,7 @@ class _LogoutButtonState extends State<_LogoutButton>
 
   @override
   Widget build(BuildContext context) {
+    final errorColor = Theme.of(context).colorScheme.error;
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) => _controller.reverse(),
@@ -521,20 +525,20 @@ class _LogoutButtonState extends State<_LogoutButton>
           margin: const EdgeInsets.symmetric(horizontal: 16),
           padding: const EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
-            color: Colors.red.withValues(alpha: 0.1),
+            color: errorColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
+            border: Border.all(color: errorColor.withValues(alpha: 0.3)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.logout_rounded, color: Colors.red, size: 20),
+              Icon(Icons.logout_rounded, color: errorColor, size: 20),
               const SizedBox(width: 8),
               Text(
                 context.l10n.logout,
                 style: AppTextStyles.withColor(
                   AppTextStyles.bold(AppTextStyles.labelLarge),
-                  AppColors.error,
+                  errorColor,
                 ),
               ),
             ],

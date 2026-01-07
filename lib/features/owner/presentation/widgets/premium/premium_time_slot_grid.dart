@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium time slot grid selector.
@@ -114,6 +113,7 @@ class _TimeSlotChipState extends State<_TimeSlotChip>
   @override
   Widget build(BuildContext context) {
     final isEnabled = widget.slot.isAvailable;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
       onTapDown: isEnabled ? (_) => _controller.forward() : null,
@@ -130,27 +130,30 @@ class _TimeSlotChipState extends State<_TimeSlotChip>
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             gradient: widget.isSelected
-                ? const LinearGradient(
-                    colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                ? LinearGradient(
+                    colors: [
+                      colorScheme.secondary,
+                      colorScheme.secondaryContainer,
+                    ],
                   )
                 : null,
             color: widget.isSelected
                 ? null
                 : isEnabled
-                ? Colors.white
-                : AppColors.backgroundLight,
+                ? colorScheme.surface
+                : colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: widget.isSelected
                   ? Colors.transparent
                   : isEnabled
-                  ? AppColors.border
-                  : AppColors.border.withValues(alpha: 0.3),
+                  ? colorScheme.outlineVariant
+                  : colorScheme.outlineVariant.withValues(alpha: 0.3),
             ),
             boxShadow: widget.isSelected
                 ? [
                     BoxShadow(
-                      color: AppColors.accentCyan.withValues(alpha: 0.3),
+                      color: colorScheme.secondary.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -163,10 +166,10 @@ class _TimeSlotChipState extends State<_TimeSlotChip>
               style: AppTextStyles.labelSmall.copyWith(
                 fontWeight: FontWeight.w600,
                 color: widget.isSelected
-                    ? Colors.white
+                    ? colorScheme.onSecondary
                     : isEnabled
-                    ? AppColors.textPrimary
-                    : AppColors.textSecondary.withValues(alpha: 0.5),
+                    ? colorScheme.onSurface
+                    : colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
               ),
             ),
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 /// Premium Period Selector widget.
@@ -27,6 +26,7 @@ class PremiumPeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       height: 40,
       child: ListView.separated(
@@ -43,17 +43,17 @@ class PremiumPeriodSelector extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.navyDeep : Colors.white,
+                color: isSelected ? colorScheme.primary : colorScheme.surface,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isSelected
-                      ? AppColors.navyDeep
-                      : AppColors.border.withValues(alpha: 0.5),
+                      ? colorScheme.primary
+                      : colorScheme.outlineVariant.withValues(alpha: 0.5),
                 ),
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
-                          color: AppColors.navyDeep.withValues(alpha: 0.3),
+                          color: colorScheme.primary.withValues(alpha: 0.3),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -65,7 +65,9 @@ class PremiumPeriodSelector extends StatelessWidget {
                   period,
                   style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: isSelected ? Colors.white : AppColors.textSecondary,
+                    color: isSelected
+                        ? colorScheme.onPrimary
+                        : colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),

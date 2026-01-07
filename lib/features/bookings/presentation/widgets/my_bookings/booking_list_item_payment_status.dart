@@ -109,6 +109,7 @@ class _PaymentStatusIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       width: 40,
@@ -117,7 +118,7 @@ class _PaymentStatusIcon extends StatelessWidget {
         color: _getIconBackgroundColor(isDark),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(_getIcon(), size: 20, color: Colors.white),
+      child: Icon(_getIcon(), size: 20, color: colorScheme.onPrimary),
     );
   }
 
@@ -214,7 +215,7 @@ class _ActionButton extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         backgroundColor: color,
-        foregroundColor: Colors.white,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),

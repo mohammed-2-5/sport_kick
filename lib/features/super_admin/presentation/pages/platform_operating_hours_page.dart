@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
@@ -45,7 +44,7 @@ class _OperatingHoursContent extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -68,9 +67,11 @@ class _OperatingHoursContent extends StatelessWidget {
 
   Widget _buildContent(BuildContext context, PlatformSettingsState state) {
     if (state is PlatformSettingsLoading) {
-      return const SliverFillRemaining(
+      return SliverFillRemaining(
         child: Center(
-          child: CircularProgressIndicator(color: AppColors.premiumGold),
+          child: CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
         ),
       );
     }
@@ -160,14 +161,15 @@ class _EnforceToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: colorScheme.shadow.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -179,14 +181,10 @@ class _EnforceToggle extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: AppColors.accentCyan.withValues(alpha: 0.1),
+              color: colorScheme.secondary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
-              Icons.schedule,
-              color: AppColors.accentCyan,
-              size: 22,
-            ),
+            child: Icon(Icons.schedule, color: colorScheme.secondary, size: 22),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -197,13 +195,13 @@ class _EnforceToggle extends StatelessWidget {
                   context.l10n.enforceOperatingHours,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 Text(
                   context.l10n.applyToAllFieldBookings,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.8),
+                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -212,8 +210,8 @@ class _EnforceToggle extends StatelessWidget {
           Switch(
             value: enforceHours,
             onChanged: (_) => onToggle(),
-            activeTrackColor: AppColors.success.withValues(alpha: 0.5),
-            activeThumbColor: AppColors.success,
+            activeTrackColor: colorScheme.primary.withValues(alpha: 0.5),
+            activeThumbColor: colorScheme.primary,
           ),
         ],
       ),
@@ -233,7 +231,7 @@ class _SectionHeader extends StatelessWidget {
       title,
       style: AppTextStyles.titleMedium.copyWith(
         fontWeight: FontWeight.w700,
-        color: AppColors.textPrimary,
+        color: Theme.of(context).colorScheme.onSurface,
       ),
     );
   }
@@ -245,22 +243,23 @@ class _SavingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(
+        SizedBox(
           width: 16,
           height: 16,
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            color: AppColors.premiumGold,
+            color: colorScheme.tertiary,
           ),
         ),
         const SizedBox(width: 8),
         Text(
           context.l10n.saving,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
       ],
@@ -277,19 +276,20 @@ class _ErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+            Icon(Icons.error_outline, size: 48, color: colorScheme.error),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 16),

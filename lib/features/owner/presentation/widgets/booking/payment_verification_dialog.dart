@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -38,12 +37,14 @@ class _VerifyConfirmationDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: AppColors.success.withValues(alpha: 0.1),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.check_circle_outline,
-              color: AppColors.success,
+              color: Theme.of(context).colorScheme.primary,
               size: 24,
             ),
           ),
@@ -59,7 +60,7 @@ class _VerifyConfirmationDialog extends StatelessWidget {
       content: Text(
         context.l10n.ownerVerifyPaymentMessage,
         style: AppTextStyles.bodyMedium.copyWith(
-          color: AppColors.textSecondary,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
           height: 1.5,
         ),
       ),
@@ -69,14 +70,14 @@ class _VerifyConfirmationDialog extends StatelessWidget {
           child: Text(
             context.l10n.cancel,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ),
         ElevatedButton(
           onPressed: () => Navigator.pop(context, true),
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.success,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -127,12 +128,12 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: AppColors.error.withValues(alpha: 0.1),
+              color: Theme.of(context).colorScheme.error.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.cancel_outlined,
-              color: AppColors.error,
+              color: Theme.of(context).colorScheme.error,
               size: 24,
             ),
           ),
@@ -152,7 +153,7 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
           Text(
             context.l10n.ownerRejectPaymentMessage,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               height: 1.5,
             ),
           ),
@@ -163,15 +164,20 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
             decoration: InputDecoration(
               hintText: context.l10n.ownerRejectReasonHint,
               hintStyle: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.border),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.error, width: 2),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                  width: 2,
+                ),
               ),
               contentPadding: const EdgeInsets.all(14),
             ),
@@ -182,7 +188,9 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
               _reasonController.text.trim().length,
             ),
             style: AppTextStyles.labelSmall.copyWith(
-              color: _isValid ? AppColors.success : AppColors.textSecondary,
+              color: _isValid
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -193,7 +201,7 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
           child: Text(
             context.l10n.cancel,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ),
@@ -202,9 +210,11 @@ class _RejectReasonDialogState extends State<_RejectReasonDialog> {
               ? () => Navigator.pop(context, _reasonController.text.trim())
               : null,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.error,
+            backgroundColor: Theme.of(context).colorScheme.error,
             foregroundColor: Colors.white,
-            disabledBackgroundColor: AppColors.error.withValues(alpha: 0.3),
+            disabledBackgroundColor: Theme.of(
+              context,
+            ).colorScheme.error.withValues(alpha: 0.3),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),

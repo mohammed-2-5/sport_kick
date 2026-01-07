@@ -61,7 +61,13 @@
       "Bash(for dir in \"C:/Users/moham/StudioProjects/spo_kick/lib/features\"/*)",
       "Bash(ls:*)",
       "Bash(for file in \"book_now_button\" \"field_action_buttons\" \"field_details_view\" \"reviews_section\")",
-      "Bash(do echo \"=== $file ===\")"
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(Select-String -Pattern \"error|warning|issue\" -Context 0,1)",
+      "Bash(dart analyze:*)",
+      "Bash(wc:*)",
+      "Bash(for file in lib/features/bookings/data/datasources/*.dart)",
+      "Bash(dart doc:*)",
+      "Bash(git status:*)"
     ],
     "deny": [],
     "ask": []

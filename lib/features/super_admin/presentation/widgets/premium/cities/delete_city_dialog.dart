@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Dialog for confirming city deletion.
 ///
@@ -47,7 +48,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 400),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
@@ -68,13 +69,16 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
   Widget _buildHeader() {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.error, Color(0xFFDC6A5E)],
+          colors: [
+            Theme.of(context).colorScheme.error,
+            const Color(0xFFDC6A5E),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
         ),
@@ -133,14 +137,14 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.warningLight,
+              color: Theme.of(context).colorScheme.warningContainer,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.info_outline,
-                  color: AppColors.warning,
+                  color: Theme.of(context).colorScheme.warning,
                   size: 24,
                 ),
                 const SizedBox(width: 12),
@@ -152,7 +156,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                         context.l10n.thisActionMayBeIrreversible,
                         style: AppTextStyles.labelMedium.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: AppColors.warning,
+                          color: Theme.of(context).colorScheme.warning,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -161,7 +165,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                           widget.city.fieldsCount,
                         ),
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -198,14 +202,14 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.infoLight,
+                  color: Theme.of(context).colorScheme.infoContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.info_outline,
-                      color: AppColors.info,
+                      color: Theme.of(context).colorScheme.info,
                       size: 16,
                     ),
                     const SizedBox(width: 8),
@@ -213,7 +217,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                       child: Text(
                         context.l10n.permanentDeleteIsDisabledForCities,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.info,
+                          color: Theme.of(context).colorScheme.info,
                         ),
                       ),
                     ),
@@ -235,8 +239,12 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
     bool disabled = false,
     VoidCallback? onTap,
   }) {
-    final color = isDangerous ? AppColors.error : AppColors.warning;
-    final effectiveColor = disabled ? AppColors.mediumGrey : color;
+    final color = isDangerous
+        ? Theme.of(context).colorScheme.error
+        : Theme.of(context).colorScheme.warning;
+    final effectiveColor = disabled
+        ? Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.5)
+        : color;
 
     return Material(
       color: Colors.transparent,
@@ -254,7 +262,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
             border: Border.all(
               color: isSelected
                   ? effectiveColor
-                  : AppColors.border.withValues(alpha: 0.5),
+                  : Theme.of(
+                      context,
+                    ).colorScheme.outline.withValues(alpha: 0.5),
               width: isSelected ? 2 : 1,
             ),
           ),
@@ -278,8 +288,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                       style: AppTextStyles.labelLarge.copyWith(
                         fontWeight: FontWeight.w600,
                         color: disabled
-                            ? AppColors.mediumGrey
-                            : AppColors.textPrimary,
+                            ? Theme.of(context).colorScheme.onSurfaceVariant
+                                  .withValues(alpha: 0.5)
+                            : Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -287,8 +298,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
                       subtitle,
                       style: AppTextStyles.labelSmall.copyWith(
                         color: disabled
-                            ? AppColors.mediumGrey
-                            : AppColors.textSecondary,
+                            ? Theme.of(context).colorScheme.onSurfaceVariant
+                                  .withValues(alpha: 0.5)
+                            : Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -313,7 +325,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
               onPressed: () => Navigator.of(context).pop(),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                side: const BorderSide(color: AppColors.border),
+                side: BorderSide(color: Theme.of(context).colorScheme.outline),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -321,7 +333,7 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
               child: Text(
                 context.l10n.cancel,
                 style: AppTextStyles.labelMedium.copyWith(
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -336,9 +348,9 @@ class _DeleteCityDialogState extends State<DeleteCityDialog> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: _hardDelete
-                    ? AppColors.error
-                    : AppColors.warning,
-                foregroundColor: AppColors.white,
+                    ? Theme.of(context).colorScheme.error
+                    : Theme.of(context).colorScheme.warning,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

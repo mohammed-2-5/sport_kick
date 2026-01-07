@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -104,7 +103,7 @@ class _PremiumDateSelectorState extends State<PremiumDateSelector> {
                 DateFormat('MMMM yyyy', locale).format(widget.selectedDate),
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w500,
-                  color: AppColors.accentCyan,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ],
@@ -212,12 +211,12 @@ class _DateCardState extends State<_DateCard>
               width: 68,
               decoration: BoxDecoration(
                 gradient: widget.isSelected
-                    ? const LinearGradient(
+                    ? LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          AppColors.accentCyan,
-                          AppColors.accentCyanDark,
+                          colorScheme.primary,
+                          colorScheme.primaryContainer,
                         ],
                       )
                     : null,
@@ -227,23 +226,23 @@ class _DateCardState extends State<_DateCard>
                     ? null
                     : Border.all(
                         color: widget.isToday
-                            ? AppColors.accentCyan.withValues(alpha: 0.5)
+                            ? colorScheme.primary.withValues(alpha: 0.5)
                             : colorScheme.outline,
                         width: widget.isToday ? 2 : 1,
                       ),
                 boxShadow: widget.isSelected
                     ? [
                         BoxShadow(
-                          color: AppColors.accentCyan.withValues(alpha: 0.4),
+                          color: colorScheme.primary.withValues(alpha: 0.4),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
                       ]
                     : [
                         BoxShadow(
-                          color: isDark
-                              ? Colors.black.withValues(alpha: 0.2)
-                              : Colors.black.withValues(alpha: 0.04),
+                          color: colorScheme.shadow.withValues(
+                            alpha: isDark ? 0.2 : 0.04,
+                          ),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -258,7 +257,7 @@ class _DateCardState extends State<_DateCard>
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       color: widget.isSelected
-                          ? Colors.white.withValues(alpha: 0.9)
+                          ? colorScheme.onPrimary.withValues(alpha: 0.9)
                           : colorScheme.onSurfaceVariant,
                       letterSpacing: 0.5,
                     ),
@@ -269,7 +268,7 @@ class _DateCardState extends State<_DateCard>
                     style: AppTextStyles.headlineSmall.copyWith(
                       fontWeight: FontWeight.w800,
                       color: widget.isSelected
-                          ? Colors.white
+                          ? colorScheme.onPrimary
                           : colorScheme.onSurface,
                     ),
                   ),
@@ -278,9 +277,9 @@ class _DateCardState extends State<_DateCard>
                     Container(
                       width: 6,
                       height: 6,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.accentCyan,
+                        color: colorScheme.primary,
                       ),
                     )
                   else

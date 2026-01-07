@@ -7,7 +7,7 @@ import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/platform_statistics_entity.dart';
 
 /// Base state for super admin features.
-abstract class SuperAdminState extends Equatable {
+sealed class SuperAdminState extends Equatable {
   const SuperAdminState();
 
   @override

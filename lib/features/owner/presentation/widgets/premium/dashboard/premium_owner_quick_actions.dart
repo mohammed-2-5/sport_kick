@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -38,11 +37,12 @@ class PremiumOwnerQuickActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final actions = [
       _QuickAction(
         label: context.l10n.createBooking,
         icon: Icons.add_circle_outline_rounded,
-        gradient: const [AppColors.accentCyan, AppColors.accentCyanDark],
+        gradient: [colorScheme.secondary, colorScheme.secondaryContainer],
         onTap: onManualBooking,
         isPrimary: true,
       ),
@@ -137,14 +137,15 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
           width: 4,
           height: 20,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+            gradient: LinearGradient(
+              colors: [colorScheme.secondary, colorScheme.secondaryContainer],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -156,7 +157,7 @@ class _SectionHeader extends StatelessWidget {
           title,
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
       ],
@@ -226,7 +227,7 @@ class _QuickActionCard extends StatelessWidget {
                 action.label,
                 style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],

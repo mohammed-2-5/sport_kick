@@ -6,8 +6,8 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/city_management/city_management_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/city_management/city_management_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/city_actions_sheet.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/create_city_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/delete_city_dialog.dart';
@@ -52,7 +52,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
     CreateCityDialog.show(
       context: context,
       onSubmit: (name, isActive) {
-        context.read<SuperAdminCubit>().createCity(
+        context.read<CityManagementCubit>().createCity(
           name: name,
           isActive: isActive,
         );
@@ -65,7 +65,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
       context: context,
       city: city,
       onSubmit: (name, isActive) {
-        context.read<SuperAdminCubit>().updateCity(
+        context.read<CityManagementCubit>().updateCity(
           cityId: city.id,
           name: name != city.name ? name : null,
           isActive: isActive != city.isActive ? isActive : null,
@@ -79,7 +79,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
       context: context,
       city: city,
       onConfirm: (hardDelete) {
-        context.read<SuperAdminCubit>().deleteCity(
+        context.read<CityManagementCubit>().deleteCity(
           cityId: city.id,
           hardDelete: hardDelete,
         );
@@ -93,7 +93,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
       city: city,
       onEdit: () => _showEditCityDialog(city),
       onToggleStatus: () {
-        context.read<SuperAdminCubit>().updateCity(
+        context.read<CityManagementCubit>().updateCity(
           cityId: city.id,
           isActive: !city.isActive,
         );
@@ -104,9 +104,9 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SuperAdminCubit, SuperAdminState>(
+    return BlocConsumer<CityManagementCubit, CityManagementState>(
       listener: (context, state) {
-        if (state is SuperAdminError) {
+        if (state is CityManagementError) {
           SnackbarHelper.showError(context, state.message);
         } else if (state is CityCreated) {
           SnackbarHelper.showSuccess(context, state.successMessage);
@@ -118,12 +118,12 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: _buildBody(context, state),
           floatingActionButton: state is CitiesLoaded
               ? FloatingActionButton.extended(
                   onPressed: _showCreateCityDialog,
-                  backgroundColor: AppColors.navyDeep,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   icon: const Icon(Icons.add_location_alt_rounded),
                   label: Text(context.l10n.addCity),
                 )
@@ -133,15 +133,15 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
     );
   }
 
-  Widget _buildBody(BuildContext context, SuperAdminState state) {
-    if (state is SuperAdminLoading) {
+  Widget _buildBody(BuildContext context, CityManagementState state) {
+    if (state is CityManagementLoading) {
       return _LoadingView(message: state.message);
     }
 
-    if (state is SuperAdminError) {
+    if (state is CityManagementError) {
       return _ErrorView(
         message: state.message,
-        onRetry: () => context.read<SuperAdminCubit>().loadCities(),
+        onRetry: () => context.read<CityManagementCubit>().loadCities(),
       );
     }
 
@@ -164,7 +164,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
     return RefreshIndicator(
       color: AppColors.goldAccent,
       onRefresh: () async {
-        context.read<SuperAdminCubit>().loadCities();
+        context.read<CityManagementCubit>().loadCities();
         await Future.delayed(const Duration(milliseconds: 500));
       },
       child: CustomScrollView(
@@ -177,7 +177,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
               showBackButton: true,
               actions: [
                 _RefreshButton(
-                  onTap: () => context.read<SuperAdminCubit>().loadCities(),
+                  onTap: () => context.read<CityManagementCubit>().loadCities(),
                 ),
               ],
             ),
@@ -234,7 +234,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
                           onTap: () => _showCityActions(city),
                           onEdit: () => _showEditCityDialog(city),
                           onToggleStatus: () {
-                            context.read<SuperAdminCubit>().updateCity(
+                            context.read<CityManagementCubit>().updateCity(
                               cityId: city.id,
                               isActive: !city.isActive,
                             );
@@ -300,7 +300,7 @@ class _LoadingView extends StatelessWidget {
           Text(
             message,
             style: AppTextStyles.labelLarge.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -318,6 +318,7 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -328,12 +329,12 @@ class _ErrorView extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.1),
+                color: colorScheme.error.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.error_outline_rounded,
-                color: Colors.red,
+                color: colorScheme.error,
                 size: 40,
               ),
             ),
@@ -341,14 +342,14 @@ class _ErrorView extends StatelessWidget {
             Text(
               context.l10n.oopsSomethingWentWrong,
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -358,8 +359,8 @@ class _ErrorView extends StatelessWidget {
               icon: const Icon(Icons.refresh_rounded),
               label: Text(context.l10n.tryAgain),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.navyDeep,
-                foregroundColor: Colors.white,
+                backgroundColor: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 12,
@@ -382,6 +383,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -392,12 +394,12 @@ class _EmptyState extends StatelessWidget {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: AppColors.accentCyan.withValues(alpha: 0.1),
+                color: colorScheme.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.location_city_rounded,
-                color: AppColors.accentCyan.withValues(alpha: 0.6),
+                color: colorScheme.primary.withValues(alpha: 0.6),
                 size: 48,
               ),
             ),
@@ -405,14 +407,14 @@ class _EmptyState extends StatelessWidget {
             Text(
               context.l10n.noCitiesFound,
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               context.l10n.tryAdjustingYourFiltersNorAdd,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 
@@ -26,7 +25,7 @@ class FieldSelectorDropdown extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.08),
+            color: colorScheme.shadow.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -40,12 +39,12 @@ class FieldSelectorDropdown extends StatelessWidget {
           icon: Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: AppColors.navyDeep.withValues(alpha: 0.1),
+              color: colorScheme.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.keyboard_arrow_down_rounded,
-              color: AppColors.navyDeep,
+              color: colorScheme.primary,
               size: 20,
             ),
           ),
@@ -59,12 +58,12 @@ class FieldSelectorDropdown extends StatelessWidget {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: AppColors.accentCyan.withValues(alpha: 0.1),
+                      color: colorScheme.secondary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.sports_soccer_rounded,
-                      color: AppColors.accentCyan,
+                      color: colorScheme.secondary,
                       size: 18,
                     ),
                   ),

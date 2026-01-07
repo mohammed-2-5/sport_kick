@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -17,6 +17,7 @@ class OwnerBookingPriceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pricePerHour = booking.totalPrice / booking.durationHours;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return PremiumCard(
       child: Padding(
@@ -26,9 +27,9 @@ class OwnerBookingPriceCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.receipt_outlined,
-                  color: AppColors.accentCyan,
+                  color: colorScheme.secondary,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -36,7 +37,7 @@ class OwnerBookingPriceCard extends StatelessWidget {
                   context.l10n.priceBreakdown,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -97,6 +98,7 @@ class _PriceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -106,8 +108,8 @@ class _PriceRow extends StatelessWidget {
               .copyWith(
                 fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
                 color: isTotal
-                    ? AppColors.textPrimary
-                    : AppColors.textSecondary,
+                    ? colorScheme.onSurface
+                    : colorScheme.onSurfaceVariant,
               ),
         ),
         Text(
@@ -116,7 +118,9 @@ class _PriceRow extends StatelessWidget {
               (isTotal ? AppTextStyles.titleMedium : AppTextStyles.bodyMedium)
                   .copyWith(
                     fontWeight: FontWeight.w700,
-                    color: isTotal ? AppColors.success : AppColors.textPrimary,
+                    color: isTotal
+                        ? colorScheme.success
+                        : colorScheme.onSurface,
                   ),
         ),
       ],

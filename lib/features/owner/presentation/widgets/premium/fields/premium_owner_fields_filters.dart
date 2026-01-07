@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -23,11 +22,12 @@ class PremiumOwnerFieldsFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.surfaceWhite,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -83,6 +83,8 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final chipColor = color ?? colorScheme.secondary;
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -93,10 +95,7 @@ class _FilterChip extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: isSelected
                 ? LinearGradient(
-                    colors: [
-                      color ?? AppColors.accentCyan,
-                      (color ?? AppColors.accentCyan).withValues(alpha: 0.8),
-                    ],
+                    colors: [chipColor, chipColor.withValues(alpha: 0.8)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   )
@@ -105,9 +104,7 @@ class _FilterChip extends StatelessWidget {
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: (color ?? AppColors.accentCyan).withValues(
-                        alpha: 0.3,
-                      ),
+                      color: chipColor.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -121,7 +118,9 @@ class _FilterChip extends StatelessWidget {
                 label,
                 style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                  color: isSelected ? Colors.white : AppColors.textSecondary,
+                  color: isSelected
+                      ? Colors.white
+                      : colorScheme.onSurfaceVariant,
                 ),
               ),
               if (count > 0) ...[
@@ -134,18 +133,14 @@ class _FilterChip extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? Colors.white.withValues(alpha: 0.3)
-                        : (color ?? AppColors.accentCyan).withValues(
-                            alpha: 0.1,
-                          ),
+                        : chipColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
                     count.toString(),
                     style: AppTextStyles.labelSmall.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: isSelected
-                          ? Colors.white
-                          : (color ?? AppColors.accentCyan),
+                      color: isSelected ? Colors.white : chipColor,
                     ),
                   ),
                 ),

@@ -38,15 +38,6 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
     super.dispose();
   }
 
-  void _onLogin() {
-    if (_formKey.currentState?.validate() ?? false) {
-      context.read<AuthCubit>().login(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
@@ -56,133 +47,30 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Mode Switcher
               PremiumModeSwitcher(
                 currentMode: state.loginMode,
-                onModeChanged: (mode) {
-                  context.read<LoginCubit>().changeLoginMode(mode);
-                },
+                onModeChanged: (mode) =>
+                    context.read<LoginCubit>().changeLoginMode(mode),
               ),
-
               const SizedBox(height: 28),
-
-              // Email field
-              PremiumAuthTextField(
-                label: context.l10n.email,
-                hintText: context.l10n.enterYourEmail,
+              _EmailField(
                 controller: _emailController,
-                prefixIcon: Icons.email_outlined,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                isDark: true,
-                errorText:
-                    !state.isEmailValid && _emailController.text.isNotEmpty
-                    ? context.l10n.enterValidEmail
-                    : null,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return context.l10n.fieldRequired;
-                  }
-                  return null;
-                },
+                isValid: state.isEmailValid,
               ),
-
               const SizedBox(height: 20),
-
-              // Password field
-              PremiumAuthTextField(
-                label: context.l10n.password,
-                hintText: context.l10n.enterPassword,
+              _PasswordField(
                 controller: _passwordController,
-                isPassword: true,
-                obscureText: !state.isPasswordVisible,
-                onTogglePassword: () {
-                  context.read<LoginCubit>().togglePasswordVisibility();
-                },
-                prefixIcon: Icons.lock_outline,
-                textInputAction: TextInputAction.done,
-                isDark: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return context.l10n.fieldRequired;
-                  }
-                  return null;
-                },
+                isVisible: state.isPasswordVisible,
               ),
-
               const SizedBox(height: 16),
-
-              // Remember me & Forgot password
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Remember me
-                  GestureDetector(
-                    onTap: () => context.read<LoginCubit>().toggleRememberMe(),
-                    child: Row(
-                      children: [
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          width: 22,
-                          height: 22,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: state.rememberMe
-                                ? Theme.of(context).colorScheme.secondary
-                                : Colors.transparent,
-                            border: Border.all(
-                              color: state.rememberMe
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Colors.white.withValues(alpha: 0.4),
-                              width: 2,
-                            ),
-                          ),
-                          child: state.rememberMe
-                              ? const Icon(
-                                  Icons.check,
-                                  size: 14,
-                                  color: Colors.white,
-                                )
-                              : null,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          context.l10n.rememberMe,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: Colors.white.withValues(alpha: 0.8),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // Forgot password
-                  GestureDetector(
-                    onTap: () => context.pushNamed('forgot-password'),
-                    child: Text(
-                      context.l10n.forgotPassword,
-                      style: AppTextStyles.labelMedium.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.accentCyan,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
+              _RememberMeRow(rememberMe: state.rememberMe),
               const SizedBox(height: 32),
-
-              // Login button
-              PremiumButton(
-                label: context.l10n.signIn,
-                onPressed: _onLogin,
-                icon: Icons.login,
-                fullWidth: true,
+              _LoginButton(
+                formKey: _formKey,
+                emailController: _emailController,
+                passwordController: _passwordController,
               ),
-
               const SizedBox(height: 28),
-
-              // Social login
               PremiumSocialButtons(
                 onGooglePressed: () {
                   // TODO: Implement Google login
@@ -191,35 +79,187 @@ class _PremiumLoginFormState extends State<PremiumLoginForm> {
                   // TODO: Implement Facebook login
                 },
               ),
-
               const SizedBox(height: 28),
-
-              // Register link
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '${context.l10n.dontHaveAccount} ',
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: Colors.white.withValues(alpha: 0.7),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => context.pushNamed('register'),
-                    child: Text(
-                      context.l10n.signUp,
-                      style: AppTextStyles.labelLarge.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.accentCyan,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              const _RegisterLink(),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+class _EmailField extends StatelessWidget {
+  final TextEditingController controller;
+  final bool isValid;
+
+  const _EmailField({required this.controller, required this.isValid});
+
+  @override
+  Widget build(BuildContext context) {
+    return PremiumAuthTextField(
+      label: context.l10n.email,
+      hintText: context.l10n.enterYourEmail,
+      controller: controller,
+      prefixIcon: Icons.email_outlined,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      isDark: true,
+      errorText: !isValid && controller.text.isNotEmpty
+          ? context.l10n.enterValidEmail
+          : null,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return context.l10n.fieldRequired;
+        }
+        return null;
+      },
+    );
+  }
+}
+
+class _PasswordField extends StatelessWidget {
+  final TextEditingController controller;
+  final bool isVisible;
+
+  const _PasswordField({required this.controller, required this.isVisible});
+
+  @override
+  Widget build(BuildContext context) {
+    return PremiumAuthTextField(
+      label: context.l10n.password,
+      hintText: context.l10n.enterPassword,
+      controller: controller,
+      isPassword: true,
+      obscureText: !isVisible,
+      onTogglePassword: () =>
+          context.read<LoginCubit>().togglePasswordVisibility(),
+      prefixIcon: Icons.lock_outline,
+      textInputAction: TextInputAction.done,
+      isDark: true,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return context.l10n.fieldRequired;
+        }
+        return null;
+      },
+    );
+  }
+}
+
+class _RememberMeRow extends StatelessWidget {
+  final bool rememberMe;
+
+  const _RememberMeRow({required this.rememberMe});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () => context.read<LoginCubit>().toggleRememberMe(),
+          child: Row(
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: 22,
+                height: 22,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: rememberMe
+                      ? Theme.of(context).colorScheme.secondary
+                      : Colors.transparent,
+                  border: Border.all(
+                    color: rememberMe
+                        ? Theme.of(context).colorScheme.secondary
+                        : Colors.white.withValues(alpha: 0.4),
+                    width: 2,
+                  ),
+                ),
+                child: rememberMe
+                    ? const Icon(Icons.check, size: 14, color: Colors.white)
+                    : null,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                context.l10n.rememberMe,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: Colors.white.withValues(alpha: 0.8),
+                ),
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () => context.pushNamed('forgot-password'),
+          child: Text(
+            context.l10n.forgotPassword,
+            style: AppTextStyles.labelMedium.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.accentCyan,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LoginButton extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  const _LoginButton({
+    required this.formKey,
+    required this.emailController,
+    required this.passwordController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PremiumButton(
+      label: context.l10n.signIn,
+      onPressed: () {
+        if (formKey.currentState?.validate() ?? false) {
+          context.read<AuthCubit>().login(
+            email: emailController.text.trim(),
+            password: passwordController.text,
+          );
+        }
+      },
+      icon: Icons.login,
+      fullWidth: true,
+    );
+  }
+}
+
+class _RegisterLink extends StatelessWidget {
+  const _RegisterLink();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          '${context.l10n.dontHaveAccount} ',
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: Colors.white.withValues(alpha: 0.7),
+          ),
+        ),
+        GestureDetector(
+          onTap: () => context.pushNamed('register'),
+          child: Text(
+            context.l10n.signUp,
+            style: AppTextStyles.labelLarge.copyWith(
+              fontWeight: FontWeight.w700,
+              color: AppColors.accentCyan,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

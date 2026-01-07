@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/login_activity_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Filter chips for login activity status.
 ///
@@ -47,7 +47,7 @@ class PremiumLoginActivityFilterChips extends StatelessWidget {
             label: LoginStatus.success.displayName,
             count: successCount,
             isSelected: selectedFilter == context.l10n.successStatus,
-            color: const Color(0xFF10B981),
+            color: Theme.of(context).colorScheme.success,
             onTap: () => onFilterChanged('success'),
           ),
           const SizedBox(width: 10),
@@ -55,7 +55,7 @@ class PremiumLoginActivityFilterChips extends StatelessWidget {
             label: LoginStatus.failed.displayName,
             count: failedCount,
             isSelected: selectedFilter == context.l10n.failed,
-            color: const Color(0xFFEF4444),
+            color: Theme.of(context).colorScheme.error,
             onTap: () => onFilterChanged('failed'),
           ),
           const SizedBox(width: 10),
@@ -63,7 +63,7 @@ class PremiumLoginActivityFilterChips extends StatelessWidget {
             label: LoginStatus.blocked.displayName,
             count: blockedCount,
             isSelected: selectedFilter == context.l10n.blocked,
-            color: const Color(0xFFF59E0B),
+            color: Theme.of(context).colorScheme.warning,
             onTap: () => onFilterChanged('blocked'),
           ),
         ],
@@ -90,7 +90,7 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chipColor = color ?? AppColors.navyDeep;
+    final chipColor = color ?? Theme.of(context).colorScheme.primary;
 
     return GestureDetector(
       onTap: onTap,
@@ -98,10 +98,12 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? chipColor : Colors.white,
+          color: isSelected ? chipColor : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? chipColor : AppColors.divider,
+            color: isSelected
+                ? chipColor
+                : Theme.of(context).colorScheme.outline.withValues(alpha: 0.5),
             width: 1.5,
           ),
           boxShadow: isSelected
@@ -122,7 +124,9 @@ class _FilterChip extends StatelessWidget {
               style: AppTextStyles.labelMedium.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: isSelected ? Colors.white : AppColors.textSecondary,
+                color: isSelected
+                    ? Theme.of(context).colorScheme.onPrimary
+                    : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(width: 6),
@@ -130,7 +134,9 @@ class _FilterChip extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? Colors.white.withValues(alpha: 0.2)
+                    ? Theme.of(
+                        context,
+                      ).colorScheme.onPrimary.withValues(alpha: 0.2)
                     : chipColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -138,7 +144,9 @@ class _FilterChip extends StatelessWidget {
                 count.toString(),
                 style: AppTextStyles.labelSmall.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: isSelected ? Colors.white : chipColor,
+                  color: isSelected
+                      ? Theme.of(context).colorScheme.onPrimary
+                      : chipColor,
                 ),
               ),
             ),

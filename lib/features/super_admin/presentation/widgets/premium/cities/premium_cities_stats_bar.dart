@@ -113,7 +113,7 @@ class _StatCard extends StatelessWidget {
       width: 130,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -163,7 +163,9 @@ class _StatCard extends StatelessWidget {
             item.label,
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w500,
-              color: AppColors.textSecondary.withValues(alpha: 0.8),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

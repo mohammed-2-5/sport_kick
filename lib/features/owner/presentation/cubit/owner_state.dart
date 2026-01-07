@@ -4,7 +4,7 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/owner/domain/entities/owner_revenue_entity.dart';
 
 /// Base state for owner operations
-abstract class OwnerState extends Equatable {
+sealed class OwnerState extends Equatable {
   const OwnerState();
 
   @override

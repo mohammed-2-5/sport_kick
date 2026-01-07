@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -80,14 +79,15 @@ class PremiumOwnerRecentBookings extends StatelessWidget {
 class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
           width: 4,
           height: 20,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+            gradient: LinearGradient(
+              colors: [colorScheme.secondary, colorScheme.secondaryContainer],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -99,7 +99,7 @@ class _SectionHeader extends StatelessWidget {
           context.l10n.recentBookings,
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
           ),
         ),
       ],
@@ -115,6 +115,7 @@ class _ViewAllButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
@@ -126,14 +127,14 @@ class _ViewAllButton extends StatelessWidget {
             context.l10n.viewAll,
             style: AppTextStyles.bodySmall.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.accentCyan,
+              color: colorScheme.secondary,
             ),
           ),
           const SizedBox(width: 4),
-          const Icon(
+          Icon(
             Icons.arrow_forward_rounded,
             size: 16,
-            color: AppColors.accentCyan,
+            color: colorScheme.secondary,
           ),
         ],
       ),
@@ -191,6 +192,7 @@ class _BookingCardState extends State<_BookingCard>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) => _controller.reverse(),
@@ -233,7 +235,7 @@ class _BookingCardState extends State<_BookingCard>
                                 context.l10n.customerName,
                             style: AppTextStyles.bodyMedium.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: AppColors.textPrimary,
+                              color: colorScheme.onSurface,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -251,14 +253,16 @@ class _BookingCardState extends State<_BookingCard>
                         Icon(
                           Icons.sports_soccer,
                           size: 14,
-                          color: AppColors.textSecondary.withValues(alpha: 0.7),
+                          color: colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.7,
+                          ),
                         ),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
                             widget.booking.fieldName ?? context.l10n.field,
                             style: AppTextStyles.labelSmall.copyWith(
-                              color: AppColors.textSecondary.withValues(
+                              color: colorScheme.onSurfaceVariant.withValues(
                                 alpha: 0.8,
                               ),
                             ),
@@ -270,13 +274,15 @@ class _BookingCardState extends State<_BookingCard>
                         Icon(
                           Icons.access_time,
                           size: 14,
-                          color: AppColors.textSecondary.withValues(alpha: 0.7),
+                          color: colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.7,
+                          ),
                         ),
                         const SizedBox(width: 4),
                         Text(
                           '${widget.booking.startTime} - ${widget.booking.endTime}',
                           style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.textSecondary.withValues(
+                            color: colorScheme.onSurfaceVariant.withValues(
                               alpha: 0.8,
                             ),
                           ),
@@ -326,6 +332,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -334,13 +341,13 @@ class _EmptyState extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: AppColors.accentCyan.withValues(alpha: 0.1),
+              color: colorScheme.secondary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.calendar_today_rounded,
               size: 24,
-              color: AppColors.accentCyan,
+              color: colorScheme.secondary,
             ),
           ),
           const SizedBox(height: 12),
@@ -348,14 +355,14 @@ class _EmptyState extends StatelessWidget {
             context.l10n.noRecentBookings,
             style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             context.l10n.yourRecentBookingsWillAppearHere,
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ],

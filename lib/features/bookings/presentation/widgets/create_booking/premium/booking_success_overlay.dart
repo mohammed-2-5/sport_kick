@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
@@ -7,6 +6,7 @@ import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/features/bookings/presentation/widgets/create_booking/premium/success_particle.dart';
 
 /// Animated success overlay displayed after booking confirmation.
 ///
@@ -131,16 +131,22 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
+
     return Container(
-      color: Colors.white,
+      color: colorScheme.surface,
       child: SafeArea(
         child: Stack(
           children: [
             // Confetti particles
             ...List.generate(
               20,
-              (index) =>
-                  _Particle(controller: _particleController, index: index),
+              (index) => SuccessParticle(
+                controller: _particleController,
+                index: index,
+              ),
             ),
 
             // Main content - scrollable to prevent overflow
@@ -174,15 +180,13 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                         colors: [
-                                          AppColors.success,
-                                          AppColors.success.withValues(
-                                            alpha: 0.8,
-                                          ),
+                                          successColor,
+                                          successColor.withValues(alpha: 0.8),
                                         ],
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: AppColors.success.withValues(
+                                          color: successColor.withValues(
                                             alpha: 0.4,
                                           ),
                                           blurRadius: 30,
@@ -192,7 +196,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                     ),
                                     child: Icon(
                                       Icons.check,
-                                      color: Colors.white,
+                                      color: colorScheme.onPrimary,
                                       size: 60 * _circleAnimation.value,
                                     ),
                                   ),
@@ -221,7 +225,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                   context.l10n.bookingConfirmedTitle,
                                   style: AppTextStyles.headlineMedium.copyWith(
                                     fontWeight: FontWeight.w800,
-                                    color: AppColors.textPrimary,
+                                    color: colorScheme.onSurface,
                                   ),
                                 ),
                                 const SizedBox(height: 12),
@@ -229,7 +233,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                   context.l10n.bookingConfirmedDescription,
                                   textAlign: TextAlign.center,
                                   style: AppTextStyles.bodyMedium.copyWith(
-                                    color: AppColors.textSecondary,
+                                    color: colorScheme.onSurfaceVariant,
                                     height: 1.5,
                                   ),
                                 ),
@@ -239,7 +243,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                 Container(
                                   padding: const EdgeInsets.all(20),
                                   decoration: BoxDecoration(
-                                    color: AppColors.backgroundLight,
+                                    color: colorScheme.surfaceContainerHighest,
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Column(
@@ -248,9 +252,9 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          const Icon(
+                                          Icon(
                                             Icons.confirmation_number,
-                                            color: AppColors.accentCyan,
+                                            color: colorScheme.primary,
                                             size: 20,
                                           ),
                                           const SizedBox(width: 8),
@@ -259,8 +263,8 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                             style: AppTextStyles.labelMedium
                                                 .copyWith(
                                                   fontWeight: FontWeight.w500,
-                                                  color:
-                                                      AppColors.textSecondary,
+                                                  color: colorScheme
+                                                      .onSurfaceVariant,
                                                 ),
                                           ),
                                         ],
@@ -271,7 +275,7 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
                                         style: AppTextStyles.titleLarge
                                             .copyWith(
                                               fontWeight: FontWeight.w800,
-                                              color: AppColors.textPrimary,
+                                              color: colorScheme.onSurface,
                                               letterSpacing: 1,
                                             ),
                                       ),
@@ -334,57 +338,6 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
           ],
         ),
       ),
-    );
-  }
-}
-
-/// Animated particle for confetti effect.
-class _Particle extends StatelessWidget {
-  final AnimationController controller;
-  final int index;
-
-  const _Particle({required this.controller, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    final random = math.Random(index);
-    final startX = random.nextDouble() * MediaQuery.of(context).size.width;
-    final size = 6.0 + random.nextDouble() * 6;
-    final color = [
-      AppColors.accentCyan,
-      AppColors.success,
-      AppColors.warning,
-      AppColors.primary,
-    ][index % 4];
-
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, child) {
-        final progress = (controller.value + index / 20) % 1.0;
-        final y = -50 + progress * (MediaQuery.of(context).size.height + 100);
-        final x = startX + math.sin(progress * math.pi * 4) * 30;
-        final opacity = progress < 0.8 ? 1.0 : (1.0 - progress) * 5;
-        final rotation = progress * math.pi * 4;
-
-        return Positioned(
-          left: x,
-          top: y,
-          child: Transform.rotate(
-            angle: rotation,
-            child: Opacity(
-              opacity: opacity.clamp(0.0, 1.0),
-              child: Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
@@ -10,16 +9,19 @@ class MyBookingsTabSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Transform.translate(
       offset: const Offset(0, -25),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: colorScheme.shadow.withValues(alpha: isDark ? 0.3 : 0.1),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
@@ -27,10 +29,10 @@ class MyBookingsTabSelector extends StatelessWidget {
         ),
         child: TabBar(
           controller: tabController,
-          labelColor: AppColors.primary,
-          unselectedLabelColor: AppColors.textSecondary,
+          labelColor: colorScheme.primary,
+          unselectedLabelColor: colorScheme.onSurfaceVariant,
           indicator: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.1),
+            color: colorScheme.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(25),
           ),
           indicatorSize: TabBarIndicatorSize.tab,

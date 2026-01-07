@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
@@ -41,15 +40,14 @@ class InvoiceDetailsCard extends StatelessWidget {
               ),
               if (booking.invoiceNumber != null)
                 GestureDetector(
-                  onTap: () =>
-                      _copyToClipboard(context, booking.invoiceNumber!),
+                  onTap: () => copyToClipboard(context, booking.invoiceNumber!),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.accentCyan.withValues(alpha: 0.1),
+                      color: colorScheme.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -59,15 +57,15 @@ class InvoiceDetailsCard extends StatelessWidget {
                           booking.invoiceNumber!,
                           style: AppTextStyles.labelSmall.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: AppColors.accentCyan,
+                            color: colorScheme.primary,
                             letterSpacing: 0.5,
                           ),
                         ),
                         const SizedBox(width: 4),
-                        const Icon(
+                        Icon(
                           Icons.copy_rounded,
                           size: 14,
-                          color: AppColors.accentCyan,
+                          color: colorScheme.primary,
                         ),
                       ],
                     ),
@@ -135,7 +133,11 @@ class InvoiceDetailsCard extends StatelessWidget {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  gradient: AppColors.cyanGradient,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [colorScheme.primary, colorScheme.primaryContainer],
+                  ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -147,7 +149,7 @@ class InvoiceDetailsCard extends StatelessWidget {
                   ),
                   style: AppTextStyles.titleLarge.copyWith(
                     fontWeight: FontWeight.w800,
-                    color: Colors.white,
+                    color: colorScheme.onPrimary,
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -159,7 +161,7 @@ class InvoiceDetailsCard extends StatelessWidget {
     );
   }
 
-  void _copyToClipboard(BuildContext context, String text) {
+  static void copyToClipboard(BuildContext context, String text) {
     Clipboard.setData(ClipboardData(text: text));
     HapticFeedback.lightImpact();
     ScaffoldMessenger.of(context).showSnackBar(

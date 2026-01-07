@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium quick action card.
 ///
@@ -54,7 +54,8 @@ class _PremiumQuickActionCardState extends State<PremiumQuickActionCard>
 
   @override
   Widget build(BuildContext context) {
-    final color = widget.color ?? AppColors.accentCyan;
+    final colorScheme = Theme.of(context).colorScheme;
+    final color = widget.color ?? colorScheme.secondary;
 
     return GestureDetector(
       onTapDown: (_) => _controller.forward(),
@@ -69,15 +70,9 @@ class _PremiumQuickActionCardState extends State<PremiumQuickActionCard>
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            boxShadow: context.cardShadow,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +94,11 @@ class _PremiumQuickActionCardState extends State<PremiumQuickActionCard>
                     ),
                   ],
                 ),
-                child: Icon(widget.icon, color: Colors.white, size: 32),
+                child: Icon(
+                  widget.icon,
+                  color: colorScheme.onPrimary,
+                  size: 32,
+                ),
               ),
               const SizedBox(height: 16),
               // Label
@@ -107,7 +106,7 @@ class _PremiumQuickActionCardState extends State<PremiumQuickActionCard>
                 widget.label,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,

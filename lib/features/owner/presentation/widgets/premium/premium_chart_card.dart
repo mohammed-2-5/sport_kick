@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 
@@ -28,6 +27,7 @@ class PremiumChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +43,7 @@ class PremiumChartCard extends StatelessWidget {
                       title,
                       style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     if (subtitle != null) ...[
@@ -51,7 +51,9 @@ class PremiumChartCard extends StatelessWidget {
                       Text(
                         subtitle!,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondary.withValues(alpha: 0.7),
+                          color: colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.7,
+                          ),
                         ),
                       ),
                     ],
@@ -86,6 +88,7 @@ class ChartLegendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
@@ -101,7 +104,7 @@ class ChartLegendItem extends StatelessWidget {
           child: Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ),
@@ -110,7 +113,7 @@ class ChartLegendItem extends StatelessWidget {
             value!,
             style: AppTextStyles.bodySmall.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
       ],

@@ -45,25 +45,38 @@ import 'package:spo_kick/features/bookings/data/datasources/booking_time_slot_da
 import 'package:spo_kick/features/bookings/data/datasources/booking_user_operations_datasource.dart';
 import 'package:spo_kick/features/bookings/data/repositories/booking_repository_impl.dart';
 import 'package:spo_kick/features/bookings/domain/repositories/booking_repository.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/calculate_booking_end_time_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/calculate_booking_price_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/cancel_booking_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/create_booking_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/create_manual_booking_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/find_consecutive_slot_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_available_time_slots_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_booking_by_id_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_owner_bookings_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/get_user_bookings_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/group_time_slots_by_period_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/update_booking_status_usecase.dart';
 import 'package:spo_kick/features/bookings/domain/usecases/upload_payment_proof_usecase.dart';
+import 'package:spo_kick/features/bookings/domain/usecases/validate_slot_selection_usecase.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_flow_cubit.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/time_slots/time_slot_cubit.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/creation/booking_creation_cubit.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/management/booking_management_cubit.dart';
 
 // Super Admin Feature
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_admin_operations_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_city_management_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_field_assignment_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_field_creation_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_field_management_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_field_operations_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_remote_datasource_facade.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_sport_category_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_statistics_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/datasources/super_admin_user_management_datasource.dart';
+import 'package:spo_kick/features/super_admin/data/datasources/super_admin_user_queries_datasource.dart';
 import 'package:spo_kick/features/super_admin/data/repositories/super_admin_repository_impl.dart';
 import 'package:spo_kick/features/super_admin/domain/repositories/super_admin_repository.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/activate_user_usecase.dart';
@@ -100,6 +113,14 @@ import 'package:spo_kick/features/super_admin/domain/usecases/create_sport_categ
 import 'package:spo_kick/features/super_admin/domain/usecases/update_sport_category_usecase.dart';
 import 'package:spo_kick/features/super_admin/domain/usecases/delete_sport_category_usecase.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/sport_categories_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/statistics/statistics_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/export/export_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/admin_management/admin_management_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/user_management/user_management_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/city_management/city_management_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/field_management/field_management_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/booking_management/booking_management_cubit.dart'
+    as super_admin_booking;
 
 // Settings Feature
 import 'package:spo_kick/features/settings/data/datasources/settings_local_data_source.dart';
@@ -132,11 +153,16 @@ import 'package:spo_kick/features/owner/domain/usecases/get_owner_revenue_usecas
 import 'package:spo_kick/features/owner/domain/usecases/reject_booking_usecase.dart';
 import 'package:spo_kick/features/owner/domain/usecases/update_field_usecase.dart';
 import 'package:spo_kick/features/owner/domain/usecases/update_owner_profile_usecase.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/manual_booking_form_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_dashboard/owner_dashboard_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_cubit.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_bookings/owner_bookings_approval_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_cubit.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_fields/owner_fields_crud_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_profile/owner_profile_cubit.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_profile/owner_profile_update_cubit.dart';
+import 'package:spo_kick/features/owner/presentation/cubit/owner_revenue/owner_revenue_cubit.dart';
 import 'package:spo_kick/features/owner/presentation/cubit/owner_settings/owner_settings_cubit.dart';
 import 'package:spo_kick/features/owner/data/datasources/owner_remote_datasource.dart';
 import 'package:spo_kick/features/owner/data/datasources/owner_remote_datasource_impl.dart';
@@ -222,6 +248,7 @@ import 'package:spo_kick/features/recurring_bookings/domain/usecases/approve_rec
 import 'package:spo_kick/features/recurring_bookings/domain/usecases/reject_recurring_booking_usecase.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_pending_recurring_requests_usecase.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_reserved_slots_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_active_recurring_bookings_for_owner_usecase.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_cubit.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/create_recurring_cubit.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/recurring_requests_cubit.dart';
@@ -330,10 +357,6 @@ Future<void> _initExternal() async {
 
   // Hive (Local Database)
   // Note: Hive.initFlutter() should be called in main()
-  // Here we just register the box accessors
-  // Example:
-  // final userBox = await Hive.openBox('user_box');
-  // sl.registerLazySingleton<Box>(() => userBox, instanceName: 'userBox');
 }
 
 /// Initialize core dependencies.
@@ -357,10 +380,10 @@ Future<void> _initCore() async {
   sl.registerLazySingleton<ErrorLoggingService>(() => ErrorLoggingService());
 
   // Localization - app locale
-  sl.registerLazySingleton<AppLocaleCubit>(() => AppLocaleCubit(sl()));
+  sl.registerFactory<AppLocaleCubit>(() => AppLocaleCubit(sl()));
 
   // Theme Cubit - manages app theme mode
-  sl.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
+  sl.registerFactory<ThemeCubit>(() => ThemeCubit());
 }
 
 // ==================== FEATURE: AUTH ====================
@@ -476,6 +499,29 @@ void _initBookings() {
     () => BookingFlowCubit(
       getAvailableTimeSlotsUseCase: sl(),
       createBookingUseCase: sl(),
+      groupTimeSlotsByPeriodUseCase: sl(),
+      findConsecutiveSlotUseCase: sl(),
+      validateSlotSelectionUseCase: sl(),
+    ),
+  );
+
+  // Time Slot Cubit (extracted from BookingCubit)
+  sl.registerFactory(() => TimeSlotCubit(getAvailableTimeSlotsUseCase: sl()));
+
+  // Booking Creation Cubit (extracted from BookingCubit)
+  sl.registerFactory(
+    () => BookingCreationCubit(
+      createBookingUseCase: sl(),
+      createManualBookingUseCase: sl(),
+    ),
+  );
+
+  // Booking Management Cubit (extracted from BookingCubit)
+  sl.registerFactory(
+    () => BookingManagementCubit(
+      getUserBookingsUseCase: sl(),
+      getBookingByIdUseCase: sl(),
+      cancelBookingUseCase: sl(),
     ),
   );
 
@@ -489,6 +535,15 @@ void _initBookings() {
   sl.registerLazySingleton(() => GetOwnerBookingsUseCase(sl()));
   sl.registerLazySingleton(() => UpdateBookingStatusUseCase(sl()));
   sl.registerLazySingleton(() => UploadPaymentProofUseCase(sl()));
+
+  // Booking Business Logic Use Cases
+  sl.registerLazySingleton(() => GroupTimeSlotsByPeriodUseCase());
+  sl.registerLazySingleton(() => FindConsecutiveSlotUseCase());
+  sl.registerLazySingleton(
+    () => ValidateSlotSelectionUseCase(findConsecutiveSlotUseCase: sl()),
+  );
+  sl.registerLazySingleton(() => CalculateBookingEndTimeUseCase());
+  sl.registerLazySingleton(() => CalculateBookingPriceUseCase());
 
   // Repository
   sl.registerLazySingleton<BookingRepository>(
@@ -633,6 +688,72 @@ void _initSuperAdmin() {
     ),
   );
 
+  // Statistics Cubit (Refactored from SuperAdminCubit)
+  sl.registerFactory(
+    () => StatisticsCubit(
+      getPlatformStatisticsUseCase: sl(),
+      getAllBookingsUseCase: sl(),
+      getAllFieldsUseCase: sl(),
+    ),
+  );
+
+  // Export Cubit (Refactored from SuperAdminCubit)
+  sl.registerFactory(
+    () => ExportCubit(csvExportService: sl(), pdfExportService: sl()),
+  );
+
+  // Admin Management Cubit (Refactored from SuperAdminCubit)
+  sl.registerFactory(
+    () => AdminManagementCubit(
+      createAdminAccountUseCase: sl(),
+      getAllAdminsUseCase: sl(),
+      activateUserUseCase: sl(),
+      deactivateUserUseCase: sl(),
+    ),
+  );
+
+  // User Management Cubit (Refactored from SuperAdminCubit)
+  sl.registerFactory(
+    () => UserManagementCubit(
+      getAllUsersUseCase: sl(),
+      activateUserUseCase: sl(),
+      deactivateUserUseCase: sl(),
+    ),
+  );
+
+  // City Management Cubit (Refactored from SuperAdminCubit)
+  sl.registerFactory(
+    () => CityManagementCubit(
+      getActiveCitiesUseCase: sl(),
+      createCityUseCase: sl(),
+      updateCityUseCase: sl(),
+      deleteCityUseCase: sl(),
+    ),
+  );
+
+  // Field Management Cubit (Refactored from SuperAdminCubit)
+  sl.registerFactory(
+    () => FieldManagementCubit(
+      createFieldUseCase: sl(),
+      assignFieldToAdminUseCase: sl(),
+      getAllFieldsUseCase: sl(),
+      updateFieldUseCase: sl.get(instanceName: 'superAdminUpdateField'),
+      deleteFieldUseCase: sl.get(instanceName: 'superAdminDeleteField'),
+      verifyFieldUseCase: sl.get(instanceName: 'superAdminVerifyField'),
+      getAllAdminsUseCase: sl(),
+      getActiveCitiesUseCase: sl(),
+    ),
+  );
+
+  // Booking Management Cubit (Refactored from SuperAdminCubit)
+  sl.registerFactory(
+    () => super_admin_booking.BookingManagementCubit(
+      getAllBookingsUseCase: sl(),
+      updateBookingStatusUseCase: sl(),
+      cancelBookingUseCase: sl(),
+    ),
+  );
+
   // Sport Category Use Cases
   sl.registerLazySingleton(() => GetAllSportCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => CreateSportCategoryUseCase(sl()));
@@ -677,12 +798,41 @@ void _initSuperAdmin() {
     () => SuperAdminStatisticsDataSourceImpl(supabaseClient: sl()),
   );
 
+  // User Management - Split into two focused datasources
+  sl.registerLazySingleton<SuperAdminAdminOperationsDataSource>(
+    () => SuperAdminAdminOperationsDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<SuperAdminUserQueriesDataSource>(
+    () => SuperAdminUserQueriesDataSourceImpl(supabaseClient: sl()),
+  );
+
   sl.registerLazySingleton<SuperAdminUserManagementDataSource>(
-    () => SuperAdminUserManagementDataSourceImpl(supabaseClient: sl()),
+    () => SuperAdminUserManagementDataSourceImpl(
+      adminOperationsDataSource: sl(),
+      userQueriesDataSource: sl(),
+    ),
+  );
+
+  // Field Management - Split into focused datasources
+  sl.registerLazySingleton<SuperAdminFieldCreationDataSource>(
+    () => SuperAdminFieldCreationDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<SuperAdminFieldOperationsDataSource>(
+    () => SuperAdminFieldOperationsDataSourceImpl(supabaseClient: sl()),
+  );
+
+  sl.registerLazySingleton<SuperAdminFieldAssignmentDataSource>(
+    () => SuperAdminFieldAssignmentDataSourceImpl(supabaseClient: sl()),
   );
 
   sl.registerLazySingleton<SuperAdminFieldManagementDataSource>(
-    () => SuperAdminFieldManagementDataSourceImpl(supabaseClient: sl()),
+    () => SuperAdminFieldManagementDataSourceImpl(
+      creationDataSource: sl(),
+      operationsDataSource: sl(),
+      assignmentDataSource: sl(),
+    ),
   );
 
   sl.registerLazySingleton<SuperAdminCityManagementDataSource>(
@@ -770,6 +920,40 @@ void _initOwner() {
 
   // Owner Settings Cubit (Premium UI)
   sl.registerFactory(() => OwnerSettingsCubit());
+
+  // Owner Fields CRUD Cubit (extracted from OwnerCubit)
+  sl.registerFactory(
+    () => OwnerFieldsCrudCubit(
+      getOwnerFieldsUseCase: sl(),
+      updateFieldUseCase: sl(),
+      deleteFieldUseCase: sl(),
+    ),
+  );
+
+  // Owner Bookings Approval Cubit (extracted from OwnerCubit)
+  sl.registerFactory(
+    () => OwnerBookingsApprovalCubit(
+      getOwnerBookingsUseCase: sl(),
+      approveBookingUseCase: sl(),
+      rejectBookingUseCase: sl(),
+    ),
+  );
+
+  // Owner Revenue Cubit (extracted from OwnerCubit)
+  sl.registerFactory(() => OwnerRevenueCubit(getOwnerRevenueUseCase: sl()));
+
+  // Owner Profile Update Cubit (extracted from OwnerCubit)
+  sl.registerFactory(
+    () => OwnerProfileUpdateCubit(updateOwnerProfileUseCase: sl()),
+  );
+
+  // Manual Booking Form Cubit (for booking table wizard)
+  sl.registerFactory(
+    () => ManualBookingFormCubit(
+      calculateBookingEndTimeUseCase: sl(),
+      calculateBookingPriceUseCase: sl(),
+    ),
+  );
 
   // Use Cases
   sl.registerLazySingleton(() => GetOwnerFieldsUseCase(sl()));
@@ -1193,7 +1377,7 @@ void _initRecurringBookings() {
       getPendingRequestsUseCase: sl(),
       approveUseCase: sl(),
       rejectUseCase: sl(),
-      repository: sl(),
+      getActiveBookingsUseCase: sl(),
     ),
   );
 
@@ -1205,6 +1389,9 @@ void _initRecurringBookings() {
   sl.registerLazySingleton(() => RejectRecurringBookingUseCase(sl()));
   sl.registerLazySingleton(() => GetPendingRecurringRequestsUseCase(sl()));
   sl.registerLazySingleton(() => GetReservedSlotsUseCase(sl()));
+  sl.registerLazySingleton(
+    () => GetActiveRecurringBookingsForOwnerUseCase(sl()),
+  );
 
   // Repository
   sl.registerLazySingleton<RecurringBookingRepository>(

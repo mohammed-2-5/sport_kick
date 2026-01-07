@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
@@ -15,6 +14,8 @@ class BookingConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocBuilder<BookingCubit, BookingState>(
       builder: (context, state) {
         final isLoading = state is BookingLoading;
@@ -25,8 +26,8 @@ class BookingConfirmButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: isLoading ? null : onConfirm,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.textOnPrimary,
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                   BookingConstants.borderRadius,
@@ -35,13 +36,13 @@ class BookingConfirmButton extends StatelessWidget {
               elevation: 0,
             ),
             child: isLoading
-                ? const SizedBox(
+                ? SizedBox(
                     width: 24,
                     height: 24,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        AppColors.textOnPrimary,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        colorScheme.onPrimary,
                       ),
                     ),
                   )
@@ -49,7 +50,7 @@ class BookingConfirmButton extends StatelessWidget {
                     context.l10n.confirmBooking,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textOnPrimary,
+                      color: colorScheme.onPrimary,
                     ),
                   ),
           ),

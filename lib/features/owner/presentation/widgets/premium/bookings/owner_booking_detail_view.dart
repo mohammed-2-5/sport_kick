@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -26,7 +25,7 @@ class OwnerBookingDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
           PremiumCurvedHeader(
@@ -92,7 +91,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.l10n.paymentVerifiedSuccess),
-            backgroundColor: AppColors.success,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -116,7 +115,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.l10n.paymentRejectedSuccess),
-            backgroundColor: AppColors.error,
+            backgroundColor: Theme.of(context).colorScheme.error,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -134,7 +133,7 @@ class OwnerBookingDetailView extends StatelessWidget {
       title: context.l10n.approveBooking,
       message: context.l10n.ownerApproveBookingConfirm,
       confirmText: context.l10n.approve,
-      confirmColor: AppColors.success,
+      confirmColor: Theme.of(context).colorScheme.primary,
     );
     if (confirmed && context.mounted) {
       await context.read<OwnerBookingsCubit>().approveBooking(booking.id);
@@ -143,7 +142,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.l10n.bookingApprovedSuccess),
-            backgroundColor: AppColors.success,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -161,7 +160,7 @@ class OwnerBookingDetailView extends StatelessWidget {
       title: context.l10n.rejectBooking,
       message: context.l10n.ownerRejectBookingConfirm,
       confirmText: context.l10n.reject,
-      confirmColor: AppColors.error,
+      confirmColor: Theme.of(context).colorScheme.error,
     );
     if (confirmed && context.mounted) {
       await context.read<OwnerBookingsCubit>().rejectBooking(booking.id);
@@ -170,7 +169,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.l10n.bookingRejectedSuccess),
-            backgroundColor: AppColors.error,
+            backgroundColor: Theme.of(context).colorScheme.error,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -202,7 +201,7 @@ class OwnerBookingDetailView extends StatelessWidget {
         content: Text(
           message,
           style: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         actions: [
@@ -211,7 +210,7 @@ class OwnerBookingDetailView extends StatelessWidget {
             child: Text(
               context.l10n.cancel,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -265,7 +264,7 @@ class _BottomActions extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -283,8 +282,8 @@ class _BottomActions extends StatelessWidget {
                 icon: const Icon(Icons.close_rounded, size: 18),
                 label: Text(context.l10n.reject),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.error,
-                  side: const BorderSide(color: AppColors.error),
+                  foregroundColor: Theme.of(context).colorScheme.error,
+                  side: BorderSide(color: Theme.of(context).colorScheme.error),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -299,7 +298,7 @@ class _BottomActions extends StatelessWidget {
                 icon: const Icon(Icons.check_rounded, size: 18),
                 label: Text(context.l10n.approve),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.success,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(

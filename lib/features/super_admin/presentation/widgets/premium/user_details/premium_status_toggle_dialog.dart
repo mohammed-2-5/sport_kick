@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -64,11 +65,14 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final isActivating = !widget.user.isActive;
-    final actionColor = isActivating ? Colors.green : Colors.orange;
+    final actionColor = isActivating
+        ? colorScheme.success
+        : colorScheme.warning;
 
     return Material(
-      color: Colors.black54,
+      color: context.overlayColor,
       child: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -85,7 +89,7 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
             margin: const EdgeInsets.all(24),
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
@@ -129,7 +133,7 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
+                    color: colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -163,11 +167,15 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                         children: [
                           Text(
                             widget.user.displayName,
-                            style: AppTextStyles.bold(AppTextStyles.labelLarge),
+                            style: AppTextStyles.bold(
+                              AppTextStyles.labelLarge,
+                            ).copyWith(color: colorScheme.onSurface),
                           ),
                           Text(
                             widget.user.email,
-                            style: AppTextStyles.bodySmallSecondary,
+                            style: AppTextStyles.bodySmallSecondary.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
                           ),
                         ],
                       ),
@@ -183,7 +191,9 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                       ? context.l10n.thisUserWillBeAbleTo
                       : 'This user will no longer be able to login or make new bookings.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyMediumSecondary,
+                  style: AppTextStyles.bodyMediumSecondary.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
 
                 const SizedBox(height: 24),
@@ -200,16 +210,16 @@ class _PremiumStatusToggleDialogState extends State<PremiumStatusToggleDialog>
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           decoration: BoxDecoration(
-                            color: AppColors.backgroundLight,
+                            color: colorScheme.surfaceContainerHighest,
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: AppColors.border),
+                            border: Border.all(color: colorScheme.outline),
                           ),
                           child: Center(
                             child: Text(
                               context.l10n.cancel,
                               style: AppTextStyles.withColor(
                                 AppTextStyles.bold(AppTextStyles.titleMedium),
-                                AppColors.textSecondary,
+                                colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ),

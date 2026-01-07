@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 
 /// Displays the field image for booking details.
 ///
@@ -17,6 +16,7 @@ class BookingFieldImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       height: height,
       width: double.infinity,
@@ -27,20 +27,20 @@ class BookingFieldImage extends StatelessWidget {
             imageUrl: imageUrl,
             fit: BoxFit.cover,
             placeholder: (context, url) => Container(
-              color: AppColors.navyDeep,
-              child: const Center(
+              color: colorScheme.surfaceContainerHighest,
+              child: Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.accentCyan,
+                  color: colorScheme.primary,
                   strokeWidth: 2,
                 ),
               ),
             ),
             errorWidget: (context, url, error) => Container(
-              color: AppColors.navyDeep,
-              child: const Center(
+              color: colorScheme.surfaceContainerHighest,
+              child: Center(
                 child: Icon(
                   Icons.sports_soccer,
-                  color: AppColors.accentCyan,
+                  color: colorScheme.primary,
                   size: 64,
                 ),
               ),
@@ -59,7 +59,7 @@ class BookingFieldImage extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withValues(alpha: 0.6),
+                    colorScheme.scrim.withValues(alpha: 0.6),
                   ],
                 ),
               ),

@@ -56,11 +56,18 @@ class PremiumSettingsToggle extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: AppTextStyles.bold(AppTextStyles.titleMedium),
+                    style: AppTextStyles.bold(
+                      AppTextStyles.titleMedium,
+                    ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                   ),
                   if (description != null) ...[
                     const SizedBox(height: 2),
-                    Text(description!, style: AppTextStyles.bodySmallSecondary),
+                    Text(
+                      description!,
+                      style: AppTextStyles.bodySmallSecondary.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                   ],
                 ],
               ),
@@ -76,8 +83,10 @@ class PremiumSettingsToggle extends StatelessWidget {
                   : null,
               activeThumbColor: AppColors.premiumGold,
               activeTrackColor: AppColors.premiumGold.withValues(alpha: 0.3),
-              inactiveThumbColor: Colors.grey.shade400,
-              inactiveTrackColor: Colors.grey.shade200,
+              inactiveThumbColor: Theme.of(context).colorScheme.outline,
+              inactiveTrackColor: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest,
             ),
           ],
         ),

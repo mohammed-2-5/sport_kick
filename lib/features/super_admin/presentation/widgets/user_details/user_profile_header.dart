@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/admin_ui_constants.dart';
 import 'package:spo_kick/features/super_admin/utils/user_card_utils.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Profile header widget for user details page
 class UserProfileHeader extends StatelessWidget {
@@ -96,13 +96,15 @@ class UserProfileHeader extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: user.isActive
-                  ? AppColors.success.withValues(alpha: 0.2)
-                  : AppColors.error.withValues(alpha: 0.2),
+                  ? Theme.of(context).colorScheme.success.withValues(alpha: 0.2)
+                  : Theme.of(context).colorScheme.error.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(
                 AdminUIConstants.radiusXLarge,
               ),
               border: Border.all(
-                color: user.isActive ? AppColors.success : AppColors.error,
+                color: user.isActive
+                    ? Theme.of(context).colorScheme.success
+                    : Theme.of(context).colorScheme.error,
                 width: 2,
               ),
             ),
@@ -113,7 +115,9 @@ class UserProfileHeader extends StatelessWidget {
                   width: AdminUIConstants.badgeIndicatorSize,
                   height: AdminUIConstants.badgeIndicatorSize,
                   decoration: BoxDecoration(
-                    color: user.isActive ? AppColors.success : AppColors.error,
+                    color: user.isActive
+                        ? Theme.of(context).colorScheme.success
+                        : Theme.of(context).colorScheme.error,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -125,7 +129,9 @@ class UserProfileHeader extends StatelessWidget {
                   style: AppTextStyles.bold(
                     AppTextStyles.withColor(
                       AppTextStyles.bodyMedium,
-                      user.isActive ? AppColors.success : AppColors.error,
+                      user.isActive
+                          ? Theme.of(context).colorScheme.success
+                          : Theme.of(context).colorScheme.error,
                     ),
                   ),
                 ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 
 import '../../../../../../core/widgets/premium/premium_card.dart';
@@ -40,6 +39,7 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -47,7 +47,7 @@ class PremiumOwnerSettingsSections extends StatelessWidget {
         _SettingsSection(
           title: context.l10n.account,
           icon: Icons.person_outline,
-          iconGradient: const [AppColors.accentCyan, AppColors.accentCyanDark],
+          iconGradient: [colorScheme.secondary, colorScheme.secondaryContainer],
           children: [
             _SettingsTile(
               icon: Icons.lock_outline,
@@ -208,6 +208,7 @@ class _SettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -229,7 +230,7 @@ class _SettingsSection extends StatelessWidget {
                 title,
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -257,13 +258,14 @@ class _SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            Icon(icon, color: AppColors.textSecondary),
+            Icon(icon, color: colorScheme.onSurfaceVariant),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -273,20 +275,20 @@ class _SettingsTile extends StatelessWidget {
                     title,
                     style: AppTextStyles.bodyLarge.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     subtitle,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: AppColors.textSecondary),
+            Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant),
           ],
         ),
       ),
@@ -312,11 +314,12 @@ class _SwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.textSecondary),
+          Icon(icon, color: colorScheme.onSurfaceVariant),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -326,14 +329,14 @@ class _SwitchTile extends StatelessWidget {
                   title,
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -342,7 +345,7 @@ class _SwitchTile extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeTrackColor: AppColors.accentCyan,
+            activeTrackColor: colorScheme.secondary,
             activeThumbColor: Colors.white,
           ),
         ],
@@ -365,25 +368,26 @@ class _InfoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.textSecondary),
+          Icon(icon, color: colorScheme.onSurfaceVariant),
           const SizedBox(width: 16),
           Expanded(
             child: Text(
               title,
               style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
           ),
           Text(
             value,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],

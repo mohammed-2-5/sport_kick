@@ -4,7 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/theme/theme_extensions.dart';
-import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/management/booking_management_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/pages/fields_list_page.dart';
@@ -36,7 +36,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
       MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => sl<BookingCubit>()
+            create: (_) => sl<BookingManagementCubit>()
               ..loadUserBookings(loadingMessage: 'Loading your bookings...'),
           ),
           BlocProvider(

@@ -4,6 +4,7 @@ import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/routes/route_builders.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/management/booking_management_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/booking_details_page.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/booking_invoice_page.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/create_booking_page.dart';
@@ -108,7 +109,7 @@ final List<GoRoute> userRoutes = [
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => sl<BookingCubit>()
+            create: (_) => sl<BookingManagementCubit>()
               ..loadUserBookings(loadingMessage: 'Loading your bookings...'),
           ),
           BlocProvider(

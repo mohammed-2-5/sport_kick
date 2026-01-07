@@ -72,10 +72,18 @@ class AuthCubit extends Cubit<AuthState> {
 
   /// Logs in a user with email and password.
   ///
+  /// Validates inputs before attempting login.
   /// Emits [AuthLoading] while logging in.
   /// Emits [Authenticated] on success with user data.
   /// Emits [AuthError] on failure with error message.
   Future<void> login({required String email, required String password}) async {
+    // Validate inputs
+    final validationError = _validateLoginInputs(email, password);
+    if (validationError != null) {
+      emit(AuthError(validationError));
+      return;
+    }
+
     emit(const AuthLoading());
 
     final result = await loginUseCase(
@@ -97,6 +105,34 @@ class AuthCubit extends Cubit<AuthState> {
         emit(Authenticated(user));
       },
     );
+  }
+
+  /// Validates login inputs and returns error message if invalid
+  String? _validateLoginInputs(String email, String password) {
+    final trimmedEmail = email.trim();
+
+    if (trimmedEmail.isEmpty) {
+      return 'Email is required';
+    }
+
+    if (!_isValidEmail(trimmedEmail)) {
+      return 'Please enter a valid email address';
+    }
+
+    if (password.isEmpty) {
+      return 'Password is required';
+    }
+
+    if (password.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+
+    return null;
+  }
+
+  /// Validates email format
+  bool _isValidEmail(String email) {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }
 
   /// Registers a new user.

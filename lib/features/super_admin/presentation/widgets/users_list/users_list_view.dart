@@ -15,6 +15,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/us
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_list_loading_state.dart';
 import 'package:spo_kick/features/super_admin/utils/user_filter_helper.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Users List View - displays and manages users list with filtering and bulk actions.
 class UsersListView extends StatefulWidget {
@@ -149,19 +150,19 @@ class _UsersListViewState extends State<UsersListView>
                           selected,
                         );
                       },
-                      color: Colors.blue,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     BulkAction(
                       icon: Icons.check_circle_outline,
                       label: context.l10n.activate,
                       onPressed: _handleBulkActivate,
-                      color: Colors.green,
+                      color: Theme.of(context).colorScheme.success,
                     ),
                     BulkAction(
                       icon: Icons.block,
                       label: context.l10n.deactivate,
                       onPressed: _handleBulkDeactivate,
-                      color: Colors.red,
+                      color: Theme.of(context).colorScheme.error,
                     ),
                   ],
                 )
@@ -169,7 +170,7 @@ class _UsersListViewState extends State<UsersListView>
                   title: Text(context.l10n.customersUsers),
                   elevation: 0,
                   backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Colors.white,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   actions: [
                     IconButton(
                       icon: Badge(

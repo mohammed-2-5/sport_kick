@@ -17,8 +17,8 @@ class LogoutButton extends StatelessWidget {
         icon: const Icon(Icons.logout),
         label: Text(context.l10n.logout),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.error,
+          foregroundColor: Theme.of(context).colorScheme.onError,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -44,7 +44,9 @@ class LogoutButton extends StatelessWidget {
               Navigator.pop(context);
               await _performLogout(context);
             },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
             child: Text(context.l10n.logout),
           ),
         ],

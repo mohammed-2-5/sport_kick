@@ -3,6 +3,7 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium info card explaining the admin creation process.
 ///
@@ -30,13 +31,7 @@ class PremiumAdminFormInfoCard extends StatelessWidget {
                     colors: [AppColors.premiumGold, AppColors.premiumGoldDark],
                   ),
                   borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.premiumGold.withValues(alpha: 0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+                  boxShadow: context.cardShadow,
                 ),
                 child: const Icon(
                   Icons.admin_panel_settings,
@@ -67,10 +62,10 @@ class PremiumAdminFormInfoCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.premiumGold.withValues(alpha: 0.08),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: AppColors.premiumGold.withValues(alpha: 0.2),
+                color: Theme.of(context).colorScheme.outlineVariant,
               ),
             ),
             child: Column(
@@ -154,7 +149,12 @@ class _InfoStepItem extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(top: 2),
-            child: Text(text, style: AppTextStyles.bodyMedium),
+            child: Text(
+              text,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
           ),
         ),
       ],

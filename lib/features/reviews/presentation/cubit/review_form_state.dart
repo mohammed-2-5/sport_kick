@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 /// State for review form.
-abstract class ReviewFormState extends Equatable {
+sealed class ReviewFormState extends Equatable {
   const ReviewFormState();
 
   @override

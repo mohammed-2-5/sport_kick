@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
 
 /// Base state for sport categories management.
-abstract class SportCategoriesState extends Equatable {
+sealed class SportCategoriesState extends Equatable {
   const SportCategoriesState();
 
   @override

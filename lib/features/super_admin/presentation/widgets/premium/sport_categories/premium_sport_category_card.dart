@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/fields/domain/entities/sport_category_entity.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium card for displaying a sport category.
 ///
@@ -23,15 +23,9 @@ class PremiumSportCategoryCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: Material(
         color: Colors.transparent,
@@ -49,15 +43,19 @@ class PremiumSportCategoryCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        AppColors.goldAccent.withValues(alpha: 0.2),
-                        AppColors.goldAccent.withValues(alpha: 0.1),
+                        Theme.of(
+                          context,
+                        ).colorScheme.tertiary.withValues(alpha: 0.2),
+                        Theme.of(
+                          context,
+                        ).colorScheme.tertiary.withValues(alpha: 0.1),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Icon(
                     _getIcon(),
-                    color: AppColors.goldAccent,
+                    color: Theme.of(context).colorScheme.tertiary,
                     size: 28,
                   ),
                 ),
@@ -72,7 +70,7 @@ class PremiumSportCategoryCard extends StatelessWidget {
                         category.name,
                         style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       if (category.description != null) ...[
@@ -80,7 +78,9 @@ class PremiumSportCategoryCard extends StatelessWidget {
                         Text(
                           category.description!,
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textSecondary,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -96,14 +96,18 @@ class PremiumSportCategoryCard extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: onEdit,
-                      icon: const Icon(Icons.edit_rounded),
-                      color: AppColors.accentCyan,
+                      icon: Icon(
+                        Icons.edit_rounded,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                       iconSize: 20,
                     ),
                     IconButton(
                       onPressed: onDelete,
-                      icon: const Icon(Icons.delete_rounded),
-                      color: Colors.red,
+                      icon: Icon(
+                        Icons.delete_rounded,
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                       iconSize: 20,
                     ),
                   ],

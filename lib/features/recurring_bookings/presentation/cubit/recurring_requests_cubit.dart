@@ -1,27 +1,27 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/usecases/approve_recurring_booking_usecase.dart';
+import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_active_recurring_bookings_for_owner_usecase.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_pending_recurring_requests_usecase.dart';
 import 'package:spo_kick/features/recurring_bookings/domain/usecases/reject_recurring_booking_usecase.dart';
-import 'package:spo_kick/features/recurring_bookings/domain/repositories/recurring_booking_repository.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/recurring_requests_state.dart';
 
 /// Cubit for managing recurring booking requests (owner side).
 class RecurringRequestsCubit extends Cubit<RecurringRequestsState> {
   final GetPendingRecurringRequestsUseCase _getPendingRequestsUseCase;
+  final GetActiveRecurringBookingsForOwnerUseCase _getActiveBookingsUseCase;
   final ApproveRecurringBookingUseCase _approveUseCase;
   final RejectRecurringBookingUseCase _rejectUseCase;
-  final RecurringBookingRepository _repository;
 
   RecurringRequestsCubit({
     required GetPendingRecurringRequestsUseCase getPendingRequestsUseCase,
+    required GetActiveRecurringBookingsForOwnerUseCase getActiveBookingsUseCase,
     required ApproveRecurringBookingUseCase approveUseCase,
     required RejectRecurringBookingUseCase rejectUseCase,
-    required RecurringBookingRepository repository,
   }) : _getPendingRequestsUseCase = getPendingRequestsUseCase,
+       _getActiveBookingsUseCase = getActiveBookingsUseCase,
        _approveUseCase = approveUseCase,
        _rejectUseCase = rejectUseCase,
-       _repository = repository,
        super(const RecurringRequestsInitial());
 
   /// Load pending requests and active subscriptions.
@@ -32,7 +32,7 @@ class RecurringRequestsCubit extends Cubit<RecurringRequestsState> {
       // Load both pending requests and active subscriptions in parallel
       final results = await Future.wait([
         _getPendingRequestsUseCase(),
-        _repository.getActiveRecurringBookingsForOwner(),
+        _getActiveBookingsUseCase(),
       ]);
 
       final pendingResult = results[0];

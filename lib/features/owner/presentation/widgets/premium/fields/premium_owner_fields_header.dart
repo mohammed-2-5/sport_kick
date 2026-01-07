@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -36,13 +36,7 @@ class PremiumOwnerFieldsHeader extends StatelessWidget {
         right: 20,
         bottom: 24,
       ),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      decoration: BoxDecoration(gradient: context.navyGradient),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -176,7 +170,9 @@ class _BackButtonState extends State<_BackButton>
                 color: Colors.white.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: AppColors.accentCyan.withValues(alpha: 0.3),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.secondary.withValues(alpha: 0.3),
                 ),
               ),
               child: const Icon(
@@ -289,7 +285,8 @@ class _StatChip extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: (color ?? AppColors.accentCyan).withValues(alpha: 0.9),
+                  color: (color ?? Theme.of(context).colorScheme.secondary)
+                      .withValues(alpha: 0.9),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(

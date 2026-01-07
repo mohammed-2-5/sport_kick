@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 
 /// Premium field card with glassmorphism and animations.
@@ -107,15 +108,9 @@ class _PremiumAllFieldCardState extends State<PremiumAllFieldCard>
         child: Container(
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.shadow.withValues(alpha: 0.08),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-              ),
-            ],
+            boxShadow: context.cardShadow,
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
@@ -235,12 +230,12 @@ class _ImagePlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.backgroundLight,
-      child: const Center(
+      color: Theme.of(context).colorScheme.surfaceContainerHighest,
+      child: Center(
         child: Icon(
           Icons.sports_soccer_rounded,
           size: 40,
-          color: AppColors.textSecondary,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
       ),
     );
@@ -273,22 +268,24 @@ class _SportBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.95),
+        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 4),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(_sportIcon, size: 14, color: AppColors.navyDeep),
+          Icon(
+            _sportIcon,
+            size: 14,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           const SizedBox(width: 4),
           Text(
             sportType,
             style: AppTextStyles.badge.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.navyDeep,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ],
@@ -303,8 +300,8 @@ class _VerifiedBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(6),
-      decoration: const BoxDecoration(
-        color: Color(0xFF10B981),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.success,
         shape: BoxShape.circle,
       ),
       child: const Icon(Icons.verified_rounded, size: 12, color: Colors.white),
@@ -320,7 +317,9 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? const Color(0xFF10B981) : const Color(0xFFEF4444);
+    final color = isActive
+        ? Theme.of(context).colorScheme.success
+        : Theme.of(context).colorScheme.error;
     final label = isActive ? context.l10n.active : context.l10n.inactive;
 
     return Container(
@@ -352,7 +351,7 @@ class _RatingBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.95),
+        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -364,7 +363,7 @@ class _RatingBadge extends StatelessWidget {
             LocaleFormatters.formatNumber(context, rating, decimalDigits: 1),
             style: AppTextStyles.labelSmall.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(width: 4),
@@ -406,7 +405,7 @@ class _ContentSection extends StatelessWidget {
                 Text(
                   name,
                   style: AppTextStyles.titleMedium.copyWith(
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -417,14 +416,18 @@ class _ContentSection extends StatelessWidget {
                     Icon(
                       Icons.location_on_rounded,
                       size: 14,
-                      color: AppColors.textSecondary.withValues(alpha: 0.7),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                     ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         cityName,
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.textSecondary.withValues(alpha: 0.8),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

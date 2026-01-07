@@ -1,13 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spo_kick/features/reviews/domain/usecases/create_review_usecase.dart';
+import 'package:spo_kick/features/reviews/domain/usecases/update_review_usecase.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.dart';
-import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
-import 'package:spo_kick/features/reviews/presentation/cubit/reviews_state.dart';
 
 /// Cubit for managing review form state.
 ///
 /// Handles rating changes, comment updates, and form submission.
 class ReviewFormCubit extends Cubit<ReviewFormState> {
-  final ReviewsCubit reviewsCubit;
+  final CreateReviewUseCase createReviewUseCase;
+  final UpdateReviewUseCase updateReviewUseCase;
   final String fieldId;
   final String? bookingId;
   final String? reviewId;
@@ -17,7 +18,8 @@ class ReviewFormCubit extends Cubit<ReviewFormState> {
   String _comment = '';
 
   ReviewFormCubit({
-    required this.reviewsCubit,
+    required this.createReviewUseCase,
+    required this.updateReviewUseCase,
     required this.fieldId,
     this.bookingId,
     this.reviewId,
@@ -86,37 +88,38 @@ class ReviewFormCubit extends Cubit<ReviewFormState> {
 
     emit(const ReviewFormSubmitting());
 
-    try {
-      final commentToSubmit = _comment.trim().isEmpty ? null : _comment.trim();
+    final commentToSubmit = _comment.trim().isEmpty ? null : _comment.trim();
 
-      if (isEditing) {
-        await reviewsCubit.updateReview(
+    if (isEditing) {
+      // Update existing review
+      final result = await updateReviewUseCase(
+        UpdateReviewParams(
           reviewId: reviewId!,
           rating: _rating,
           comment: commentToSubmit,
-        );
-      } else {
-        await reviewsCubit.createReview(
+        ),
+      );
+
+      result.fold(
+        (failure) => emit(ReviewFormError(message: failure.message)),
+        (_) => emit(const ReviewFormSuccess(isEdit: true)),
+      );
+    } else {
+      // Create new review
+      final result = await createReviewUseCase(
+        CreateReviewParams(
           fieldId: fieldId,
           userId: userId!,
           bookingId: bookingId,
           rating: _rating,
           comment: commentToSubmit,
-        );
-      }
+        ),
+      );
 
-      // Check if the operation succeeded by examining ReviewsCubit's state
-      final reviewsState = reviewsCubit.state;
-      if (reviewsState is ReviewCreated || reviewsState is ReviewUpdated) {
-        emit(ReviewFormSuccess(isEdit: isEditing));
-      } else if (reviewsState is ReviewsError) {
-        emit(ReviewFormError(message: reviewsState.message));
-      } else {
-        // Fallback - assume success if no error state
-        emit(ReviewFormSuccess(isEdit: isEditing));
-      }
-    } catch (e) {
-      emit(ReviewFormError(message: e.toString()));
+      result.fold(
+        (failure) => emit(ReviewFormError(message: failure.message)),
+        (_) => emit(const ReviewFormSuccess(isEdit: false)),
+      );
     }
   }
 }

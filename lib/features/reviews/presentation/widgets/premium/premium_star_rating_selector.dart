@@ -45,7 +45,7 @@ class _PremiumStarRatingSelectorState extends State<PremiumStarRatingSelector>
   ];
 
   static const List<Color> _ratingColors = [
-    Colors.grey,
+    Colors.grey, // 0 - Unset (will be overridden by outline color)
     Colors.red,
     Colors.orange,
     Colors.amber,
@@ -135,7 +135,7 @@ class _PremiumStarRatingSelectorState extends State<PremiumStarRatingSelector>
             border: Border.all(
               color: _currentRating > 0
                   ? _ratingColors[_currentRating].withValues(alpha: 0.3)
-                  : colorScheme.outline,
+                  : colorScheme.outlineVariant,
               width: 2,
             ),
           ),

@@ -1,13 +1,19 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/login_cubit.dart';
+
+class MockAuthCubit extends Mock implements AuthCubit {}
 
 void main() {
   group('LoginCubit', () {
     late LoginCubit loginCubit;
+    late MockAuthCubit mockAuthCubit;
 
     setUp(() {
-      loginCubit = LoginCubit();
+      mockAuthCubit = MockAuthCubit();
+      loginCubit = LoginCubit(authCubit: mockAuthCubit);
     });
 
     tearDown(() {
@@ -20,21 +26,21 @@ void main() {
 
     blocTest<LoginCubit, LoginState>(
       'emits [isPasswordVisible: true] when togglePasswordVisibility is called',
-      build: () => loginCubit,
+      build: () => LoginCubit(authCubit: mockAuthCubit),
       act: (cubit) => cubit.togglePasswordVisibility(),
       expect: () => [const LoginState(isPasswordVisible: true)],
     );
 
     blocTest<LoginCubit, LoginState>(
       'emits [loginMode: admin] when changeLoginMode is called',
-      build: () => loginCubit,
+      build: () => LoginCubit(authCubit: mockAuthCubit),
       act: (cubit) => cubit.changeLoginMode('admin'),
       expect: () => [const LoginState(loginMode: 'admin')],
     );
 
     blocTest<LoginCubit, LoginState>(
       'emits updated validity when valid',
-      build: () => loginCubit,
+      build: () => LoginCubit(authCubit: mockAuthCubit),
       act: (cubit) {
         cubit.updateEmailValidity(false);
         cubit.updatePasswordValidity(false);
@@ -47,7 +53,7 @@ void main() {
 
     blocTest<LoginCubit, LoginState>(
       'toggles rememberMe',
-      build: () => loginCubit,
+      build: () => LoginCubit(authCubit: mockAuthCubit),
       act: (cubit) => cubit.toggleRememberMe(),
       expect: () => [const LoginState(rememberMe: true)],
     );

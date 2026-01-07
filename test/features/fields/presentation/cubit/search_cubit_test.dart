@@ -1,23 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:spo_kick/core/utils/search_history.dart';
-import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/search_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/search_state.dart';
 
 // Mocks
-class MockFieldsCubit extends Mock implements FieldsCubit {}
-
 class MockSearchHistoryService extends Mock implements SearchHistoryService {}
 
 void main() {
   late SearchCubit cubit;
-  late MockFieldsCubit mockFieldsCubit;
   late MockSearchHistoryService mockHistoryService;
+  late List<String> searchCallbacks;
+  late List<String> cityChangeCallbacks;
 
   setUp(() {
-    mockFieldsCubit = MockFieldsCubit();
     mockHistoryService = MockSearchHistoryService();
+    searchCallbacks = [];
+    cityChangeCallbacks = [];
 
     // Setup default mock responses
     when(() => mockHistoryService.getHistory()).thenAnswer((_) async => []);
@@ -28,7 +27,8 @@ void main() {
     when(() => mockHistoryService.clearHistory()).thenAnswer((_) async {});
 
     cubit = SearchCubit(
-      fieldsCubit: mockFieldsCubit,
+      onSearch: (query) => searchCallbacks.add(query),
+      onCityChange: (cityId) => cityChangeCallbacks.add(cityId),
       historyService: mockHistoryService,
     );
   });
@@ -68,7 +68,7 @@ void main() {
 
         await Future.delayed(const Duration(milliseconds: 600));
 
-        verifyNever(() => mockFieldsCubit.searchFields(any()));
+        expect(searchCallbacks, isEmpty);
       });
 
       test('should not search when query is only whitespace', () async {
@@ -76,48 +76,49 @@ void main() {
 
         await Future.delayed(const Duration(milliseconds: 600));
 
-        verifyNever(() => mockFieldsCubit.searchFields(any()));
+        expect(searchCallbacks, isEmpty);
+      });
+
+      test('should trigger search callback after debounce delay', () async {
+        cubit.search('test query');
+
+        await Future.delayed(const Duration(milliseconds: 600));
+
+        expect(searchCallbacks, contains('test query'));
+        expect(searchCallbacks.length, 1);
       });
     });
 
     group('submitSearch -', () {
-      test('should call fieldsCubit.searchFields and add to history', () async {
-        when(
-          () => mockFieldsCubit.searchFields(any()),
-        ).thenAnswer((_) async {});
-
+      test('should trigger search callback and add to history', () async {
         await cubit.submitSearch('test query');
 
         verify(() => mockHistoryService.addToHistory('test query')).called(1);
-        verify(() => mockFieldsCubit.searchFields('test query')).called(1);
+        expect(searchCallbacks, contains('test query'));
         verify(() => mockHistoryService.getHistory()).called(1);
       });
 
       test('should not search when query is empty', () async {
         await cubit.submitSearch('');
 
-        verifyNever(() => mockFieldsCubit.searchFields(any()));
+        expect(searchCallbacks, isEmpty);
         verifyNever(() => mockHistoryService.addToHistory(any()));
       });
 
       test('should not search when query is whitespace only', () async {
         await cubit.submitSearch('   ');
 
-        verifyNever(() => mockFieldsCubit.searchFields(any()));
+        expect(searchCallbacks, isEmpty);
         verifyNever(() => mockHistoryService.addToHistory(any()));
       });
     });
 
     group('selectHistoryItem -', () {
-      test('should add to history and search', () async {
-        when(
-          () => mockFieldsCubit.searchFields(any()),
-        ).thenAnswer((_) async {});
-
+      test('should add to history and trigger search callback', () async {
         await cubit.selectHistoryItem('history item');
 
         verify(() => mockHistoryService.addToHistory('history item')).called(1);
-        verify(() => mockFieldsCubit.searchFields('history item')).called(1);
+        expect(searchCallbacks, contains('history item'));
       });
     });
 
@@ -142,14 +143,11 @@ void main() {
     });
 
     group('onCityChanged -', () {
-      test('should call fieldsCubit.setCurrentCity', () {
-        when(
-          () => mockFieldsCubit.setCurrentCity(any()),
-        ).thenAnswer((_) async {});
-
+      test('should trigger onCityChange callback', () {
         cubit.onCityChanged('city-123');
 
-        verify(() => mockFieldsCubit.setCurrentCity('city-123')).called(1);
+        expect(cityChangeCallbacks, contains('city-123'));
+        expect(cityChangeCallbacks.length, 1);
       });
     });
 
@@ -161,7 +159,7 @@ void main() {
 
         await Future.delayed(const Duration(milliseconds: 600));
 
-        verifyNever(() => mockFieldsCubit.searchFields(any()));
+        expect(searchCallbacks, isEmpty);
       });
     });
   });

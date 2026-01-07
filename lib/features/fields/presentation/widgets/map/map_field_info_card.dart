@@ -141,7 +141,7 @@ class MapFieldInfoCard extends StatelessWidget {
         Row(
           children: [
             if (field.hasReviews) ...[
-              Icon(Icons.star, size: 14, color: AppColors.ratingActive),
+              const Icon(Icons.star, size: 14, color: AppColors.ratingActive),
               const SizedBox(width: 4),
               Text(
                 LocaleFormatters.formatNumber(

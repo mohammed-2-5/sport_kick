@@ -70,13 +70,14 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Text(
         context.l10n.availableTimeSlots,
         style: AppTextStyles.titleLarge.copyWith(
           fontWeight: FontWeight.w700,
-          color: AppColors.textPrimary,
+          color: colorScheme.onSurface,
         ),
       ),
     );
@@ -152,6 +153,15 @@ class _ShimmerBoxState extends State<_ShimmerBox>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+    final baseColor = isDark
+        ? colorScheme.surfaceContainerHighest
+        : colorScheme.surfaceContainerLow;
+    final highlightColor = isDark
+        ? colorScheme.surfaceContainerHigh
+        : colorScheme.surface;
+
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
@@ -163,11 +173,7 @@ class _ShimmerBoxState extends State<_ShimmerBox>
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: const [
-                Color(0xFFE8E8E8),
-                Color(0xFFF5F5F5),
-                Color(0xFFE8E8E8),
-              ],
+              colors: [baseColor, highlightColor, baseColor],
               stops: [
                 _animation.value - 1,
                 _animation.value,
@@ -186,6 +192,10 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final warningColor = isDark ? AppColors.darkWarning : AppColors.warning;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(40),
@@ -195,21 +205,17 @@ class _EmptyState extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.warning.withValues(alpha: 0.1),
+                color: warningColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.event_busy,
-                size: 48,
-                color: AppColors.warning,
-              ),
+              child: Icon(Icons.event_busy, size: 48, color: warningColor),
             ),
             const SizedBox(height: 20),
             Text(
               context.l10n.noSlotsAvailable,
               style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
@@ -217,7 +223,7 @@ class _EmptyState extends StatelessWidget {
               context.l10n.allSlotsBookedMessage,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
                 height: 1.5,
               ),
             ),
@@ -235,6 +241,10 @@ class _ErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(40),
@@ -244,21 +254,17 @@ class _ErrorState extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.error.withValues(alpha: 0.1),
+                color: errorColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.error_outline,
-                size: 48,
-                color: AppColors.error,
-              ),
+              child: Icon(Icons.error_outline, size: 48, color: errorColor),
             ),
             const SizedBox(height: 20),
             Text(
               context.l10n.somethingWentWrong,
               style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
@@ -266,7 +272,7 @@ class _ErrorState extends StatelessWidget {
               message,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
                 height: 1.5,
               ),
             ),

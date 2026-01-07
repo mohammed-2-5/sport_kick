@@ -422,7 +422,7 @@ void main() {
     test('currentUser returns user when authenticated', () async {
       when(() => mockLogin(any())).thenAnswer((_) async => Right(testUser));
 
-      await authCubit.login(email: 'test@example.com', password: 'pass');
+      await authCubit.login(email: 'test@example.com', password: 'password123');
 
       expect(authCubit.currentUser, testUser);
       expect(authCubit.isAuthenticated, isTrue);

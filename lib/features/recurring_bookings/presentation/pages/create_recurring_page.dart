@@ -11,6 +11,7 @@ import 'package:spo_kick/features/recurring_bookings/domain/usecases/get_reserve
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/create_recurring_cubit.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/cubit/create_recurring_state.dart';
 import 'package:spo_kick/features/recurring_bookings/presentation/widgets/create_recurring_content.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/widgets/recurring_success_dialog.dart';
 import 'package:spo_kick/l10n/l10n_extensions.dart';
 
 /// Page for creating a new recurring booking request.
@@ -111,7 +112,7 @@ class _CreateRecurringPageState extends State<CreateRecurringPage> {
 
   void _handleStateChanges(BuildContext context, CreateRecurringState state) {
     if (state is CreateRecurringSuccess) {
-      _showSuccessDialog();
+      RecurringSuccessDialog.show(context);
     } else if (state is CreateRecurringError) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -125,86 +126,5 @@ class _CreateRecurringPageState extends State<CreateRecurringPage> {
       );
       context.read<CreateRecurringCubit>().resetAfterError();
     }
-  }
-
-  void _showSuccessDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Builder(
-              builder: (context) {
-                final isDark = Theme.of(context).brightness == Brightness.dark;
-                final successColor = isDark
-                    ? AppColors.darkSuccess
-                    : AppColors.success;
-                final colorScheme = Theme.of(context).colorScheme;
-                return Column(
-                  children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: successColor.withValues(alpha: 0.1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.check_circle_rounded,
-                        size: 48,
-                        color: successColor,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
-                      context.l10n.recurringRequestSubmittedTitle,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurface,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      context.l10n.recurringRequestSubmittedBody,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context); // Close dialog
-                  context.go('/myRecurringBookings'); // Navigate to list
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.accentCyan,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  context.l10n.viewMySubscriptions,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

@@ -15,6 +15,7 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_sta
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/booking_actions_sheet.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/cancel_booking_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/premium_all_booking_card.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium All Bookings view with tabbed filtering.
 ///
@@ -158,7 +159,7 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: _buildBody(context, state),
         );
       },
@@ -252,25 +253,25 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
                       _StatChip(
                         label: context.l10n.pending,
                         count: pendingCount,
-                        color: const Color(0xFFF59E0B),
+                        color: Theme.of(context).colorScheme.warning,
                       ),
                       const SizedBox(width: 10),
                       _StatChip(
                         label: context.l10n.statusConfirmed,
                         count: confirmedCount,
-                        color: const Color(0xFF10B981),
+                        color: Theme.of(context).colorScheme.success,
                       ),
                       const SizedBox(width: 10),
                       _StatChip(
                         label: context.l10n.statusCompleted,
                         count: completedCount,
-                        color: const Color(0xFF6366F1),
+                        color: Theme.of(context).colorScheme.info,
                       ),
                       const SizedBox(width: 10),
                       _StatChip(
                         label: context.l10n.statusCanceled,
                         count: canceledCount,
-                        color: const Color(0xFFEF4444),
+                        color: Theme.of(context).colorScheme.error,
                       ),
                     ],
                   ),
@@ -322,26 +323,20 @@ class _PremiumTabBar extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: TabBar(
         controller: controller,
         isScrollable: true,
         indicator: BoxDecoration(
-          color: AppColors.navyDeep,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(12),
         ),
         indicatorSize: TabBarIndicatorSize.tab,
-        labelColor: Colors.white,
-        unselectedLabelColor: AppColors.textSecondary,
+        labelColor: Theme.of(context).colorScheme.onPrimary,
+        unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
         labelStyle: AppTextStyles.labelMedium.copyWith(
           fontSize: 13,
           fontWeight: FontWeight.w600,
@@ -417,15 +412,9 @@ class _SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.06),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: context.cardShadow,
       ),
       child: TextField(
         controller: controller,

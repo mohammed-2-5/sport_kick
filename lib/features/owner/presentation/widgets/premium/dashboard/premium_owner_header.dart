@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium owner dashboard header with gradient background.
 ///
@@ -39,13 +39,7 @@ class PremiumOwnerHeader extends StatelessWidget {
         right: 20,
         bottom: 24,
       ),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      decoration: BoxDecoration(gradient: context.navyGradient),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -235,9 +229,12 @@ class _NotificationButtonState extends State<_NotificationButton>
                 top: 0,
                 child: Container(
                   padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                      colors: [
+                        Theme.of(context).colorScheme.secondary,
+                        Theme.of(context).colorScheme.secondaryContainer,
+                      ],
                     ),
                     shape: BoxShape.circle,
                   ),

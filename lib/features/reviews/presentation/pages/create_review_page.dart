@@ -5,9 +5,10 @@ import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_state.dart';
+import 'package:spo_kick/features/reviews/domain/usecases/create_review_usecase.dart';
+import 'package:spo_kick/features/reviews/domain/usecases/update_review_usecase.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/cubit/review_form_state.dart';
-import 'package:spo_kick/features/reviews/presentation/cubit/reviews_cubit.dart';
 import 'package:spo_kick/features/reviews/presentation/widgets/create/create_review_body.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
@@ -42,7 +43,8 @@ class CreateReviewPage extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => ReviewFormCubit(
-        reviewsCubit: sl<ReviewsCubit>(),
+        createReviewUseCase: sl<CreateReviewUseCase>(),
+        updateReviewUseCase: sl<UpdateReviewUseCase>(),
         fieldId: fieldId,
         bookingId: bookingId,
         reviewId: reviewId,

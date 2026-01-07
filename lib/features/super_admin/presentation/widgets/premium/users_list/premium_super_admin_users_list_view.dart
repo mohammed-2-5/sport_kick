@@ -9,6 +9,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/premium_users_list_content.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/premium_users_bulk_action_bar.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Premium view for super admin users list management.
 ///
@@ -41,15 +42,17 @@ class _PremiumSuperAdminUsersListViewState
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: colorScheme.surface,
       body: BlocConsumer<SuperAdminUsersListCubit, SuperAdminUsersListState>(
         listener: (context, state) {
           if (state is SuperAdminUsersListError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.red,
+                backgroundColor: colorScheme.error,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -60,7 +63,7 @@ class _PremiumSuperAdminUsersListViewState
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.green,
+                backgroundColor: colorScheme.success,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -180,7 +183,7 @@ class _PremiumSuperAdminUsersListViewState
           Text(
             context.l10n.failedToLoadUsers,
             style: AppTextStyles.titleMedium.copyWith(
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 24),
@@ -226,7 +229,7 @@ class _PremiumSuperAdminUsersListViewState
         state.selectedIds.length,
       ),
       confirmText: context.l10n.activate,
-      confirmColor: Colors.green,
+      confirmColor: Theme.of(context).colorScheme.success,
     );
 
     if (confirmed) {
@@ -246,7 +249,7 @@ class _PremiumSuperAdminUsersListViewState
         state.selectedIds.length,
       ),
       confirmText: context.l10n.deactivate,
-      confirmColor: Colors.red,
+      confirmColor: Theme.of(context).colorScheme.error,
     );
 
     if (confirmed) {
@@ -265,11 +268,11 @@ class _PremiumSuperAdminUsersListViewState
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(title, style: AppTextStyles.titleLarge),
+        title: Text(title, style: AppTextStyles.titleLargeBold),
         content: Text(
           message,
           style: AppTextStyles.labelLarge.copyWith(
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
         actions: [
@@ -278,7 +281,7 @@ class _PremiumSuperAdminUsersListViewState
             child: Text(
               context.l10n.cancel,
               style: AppTextStyles.labelLarge.copyWith(
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),

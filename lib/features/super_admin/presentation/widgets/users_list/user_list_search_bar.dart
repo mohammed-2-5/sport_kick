@@ -29,7 +29,7 @@ class UserListSearchBar extends StatelessWidget {
               ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)
               : null,
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Theme.of(context).colorScheme.surface,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,

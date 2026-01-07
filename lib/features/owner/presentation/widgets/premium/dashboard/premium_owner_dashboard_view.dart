@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
@@ -65,7 +64,7 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
 
         return Scaffold(
           key: _scaffoldKey,
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           drawer: _buildDrawer(context, state, cubit),
           body: _buildBody(context, state, cubit),
         );
@@ -114,7 +113,7 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
     if (state is OwnerDashboardLoaded) {
       return RefreshIndicator(
         onRefresh: cubit.refresh,
-        color: AppColors.accentCyan,
+        color: Theme.of(context).colorScheme.secondary,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
@@ -228,7 +227,9 @@ class _PremiumOwnerDashboardViewState extends State<PremiumOwnerDashboardView> {
             },
             child: Text(
               context.l10n.logoutTitle,
-              style: AppTextStyles.bodyMedium.copyWith(color: Colors.red),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
             ),
           ),
         ],

@@ -4,7 +4,7 @@ import 'package:spo_kick/features/settings/domain/entities/user_preferences_enti
 /// Settings State
 ///
 /// Represents the state of user settings and preferences.
-abstract class SettingsState extends Equatable {
+sealed class SettingsState extends Equatable {
   const SettingsState();
 
   @override

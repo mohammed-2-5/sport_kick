@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
@@ -29,6 +28,7 @@ class PremiumRevenueSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return PremiumCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +41,7 @@ class PremiumRevenueSummary extends StatelessWidget {
                 context.l10n.totalRevenue,
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
               Container(
@@ -50,17 +50,17 @@ class PremiumRevenueSummary extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.accentCyan.withValues(alpha: 0.1),
+                  color: colorScheme.secondary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: AppColors.accentCyan.withValues(alpha: 0.2),
+                    color: colorScheme.secondary.withValues(alpha: 0.2),
                   ),
                 ),
                 child: Text(
                   period,
                   style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.accentCyan,
+                    color: colorScheme.secondary,
                   ),
                 ),
               ),
@@ -75,7 +75,7 @@ class PremiumRevenueSummary extends StatelessWidget {
                 totalRevenue,
                 style: AppTextStyles.displaySmall.copyWith(
                   fontWeight: FontWeight.w800,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                   letterSpacing: 0.5,
                 ),
               ),
@@ -144,7 +144,7 @@ class PremiumRevenueSummary extends StatelessWidget {
                       child: Text(
                         item.label,
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -152,7 +152,7 @@ class PremiumRevenueSummary extends StatelessWidget {
                       item.value,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ],

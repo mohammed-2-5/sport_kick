@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
@@ -53,16 +52,19 @@ class PremiumReviewForm extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [AppColors.accentCyan, AppColors.accentCyanDark],
+                    gradient: LinearGradient(
+                      colors: [
+                        colorScheme.primary,
+                        colorScheme.primaryContainer,
+                      ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.sports_soccer,
-                    color: Colors.white,
+                    color: colorScheme.onPrimary,
                     size: 24,
                   ),
                 ),
@@ -217,7 +219,7 @@ class _CommentFieldState extends State<_CommentField> {
             border: Border.all(color: outline, width: 1.5),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.03),
+                color: colorScheme.shadow.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -246,7 +248,9 @@ class _CommentFieldState extends State<_CommentField> {
           style: AppTextStyles.labelMedium.copyWith(
             fontWeight: FontWeight.w600,
             color: isNearLimit
-                ? (currentLength >= _maxLength ? Colors.red : Colors.orange)
+                ? (currentLength >= _maxLength
+                      ? colorScheme.error
+                      : colorScheme.tertiary)
                 : onSurfaceVariant,
           ),
         ),

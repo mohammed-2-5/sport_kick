@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:spo_kick/features/business_hours/domain/entities/business_hours_entity.dart';
 
 /// Base state for business hours feature.
-abstract class BusinessHoursState extends Equatable {
+sealed class BusinessHoursState extends Equatable {
   const BusinessHoursState();
 
   @override

@@ -72,38 +72,51 @@ class PremiumAdminFormField extends StatelessWidget {
             prefixIcon: Icon(
               icon,
               size: 20,
-              color: hasError ? Colors.red.shade400 : AppColors.textSecondary,
+              color: hasError
+                  ? Theme.of(context).colorScheme.error
+                  : Theme.of(context).colorScheme.onSurfaceVariant,
             ),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Theme.of(context).colorScheme.surface,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 14,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.border),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.outline,
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: hasError ? Colors.red.shade300 : AppColors.border,
+                color: hasError
+                    ? Theme.of(context).colorScheme.error
+                    : Theme.of(context).colorScheme.outline,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: hasError ? Colors.red.shade400 : AppColors.premiumGold,
+                color: hasError
+                    ? Theme.of(context).colorScheme.error
+                    : AppColors.premiumGold,
                 width: 2,
               ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.red.shade300),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.error,
+              ),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.red.shade400, width: 2),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.error,
+                width: 2,
+              ),
             ),
           ),
         ),
@@ -111,14 +124,18 @@ class PremiumAdminFormField extends StatelessWidget {
           const SizedBox(height: 6),
           Row(
             children: [
-              Icon(Icons.error_outline, size: 14, color: Colors.red.shade400),
+              Icon(
+                Icons.error_outline,
+                size: 14,
+                color: Theme.of(context).colorScheme.error,
+              ),
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
                   errorText!,
                   style: AppTextStyles.withColor(
                     AppTextStyles.bodySmall,
-                    Colors.red.shade400,
+                    Theme.of(context).colorScheme.error,
                   ),
                 ),
               ),

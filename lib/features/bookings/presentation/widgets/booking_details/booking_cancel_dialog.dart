@@ -40,6 +40,9 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDark ? AppColors.darkError : AppColors.error;
+
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       title: Row(
@@ -47,14 +50,10 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.error.withValues(alpha: 0.1),
+              color: errorColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
-              Icons.cancel_outlined,
-              color: AppColors.error,
-              size: 24,
-            ),
+            child: Icon(Icons.cancel_outlined, color: errorColor, size: 24),
           ),
           const SizedBox(width: 12),
           Text(
@@ -108,13 +107,16 @@ class _BookingCancelDialogState extends State<BookingCancelDialog> {
   }
 
   void _cancelBooking() {
+    final reason = _reasonController.text.isEmpty
+        ? context.l10n.canceledByUser
+        : _reasonController.text;
+    final loadingMessage = context.l10n.cancelingBooking;
+
     Navigator.of(context).pop(true);
     context.read<BookingCubit>().cancelBooking(
       bookingId: widget.bookingId,
-      reason: _reasonController.text.isEmpty
-          ? context.l10n.canceledByUser
-          : _reasonController.text,
-      loadingMessage: context.l10n.cancelingBooking,
+      reason: reason,
+      loadingMessage: loadingMessage,
     );
   }
 }

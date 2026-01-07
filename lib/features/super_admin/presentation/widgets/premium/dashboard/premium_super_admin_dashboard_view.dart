@@ -59,7 +59,7 @@ class _PremiumSuperAdminDashboardViewState
 
         return Scaffold(
           key: _scaffoldKey,
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           drawer: _buildDrawer(context, state, cubit),
           body: _buildBody(context, state, cubit),
         );

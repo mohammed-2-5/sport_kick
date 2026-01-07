@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/di/injection_container.dart';
-import 'package:spo_kick/features/bookings/presentation/cubit/booking_cubit.dart';
+import 'package:spo_kick/features/bookings/presentation/cubit/management/booking_management_cubit.dart';
+import 'package:spo_kick/features/recurring_bookings/presentation/cubit/my_recurring_bookings_cubit.dart';
 import 'package:spo_kick/features/bookings/presentation/pages/my_bookings_page.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/fields_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/pages/fields_list_page.dart';
@@ -77,10 +78,17 @@ class _MainContent extends StatelessWidget {
         ),
 
         // Bookings
-        BlocProvider(
-          create: (_) =>
-              sl<BookingCubit>()
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => sl<BookingManagementCubit>()
                 ..loadUserBookings(loadingMessage: 'Loading your bookings...'),
+            ),
+            BlocProvider(
+              create: (_) =>
+                  sl<MyRecurringBookingsCubit>()..loadRecurringBookings(),
+            ),
+          ],
           child: const MyBookingsPage(),
         ),
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_gradients.dart';
-import 'package:spo_kick/core/constants/app_shadows.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
@@ -59,16 +57,23 @@ class RecentBookingsSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant.withValues(alpha: 0.3),
+        color: Theme.of(
+          context,
+        ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.divider, width: 1),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.outlineVariant,
+          width: 1,
+        ),
       ),
       child: Column(
         children: [
           Icon(
             Icons.inbox_rounded,
             size: 64,
-            color: AppColors.textSecondary.withValues(alpha: 0.5),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(
@@ -82,7 +87,7 @@ class RecentBookingsSection extends StatelessWidget {
             context.l10n.bookingsWillAppearMessage,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -104,14 +109,23 @@ class _BookingItem extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.white, AppColors.primary.withValues(alpha: 0.03)],
+          colors: [
+            Theme.of(context).colorScheme.surface,
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.03),
+          ],
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.2),
+          color: Theme.of(context).colorScheme.outlineVariant,
           width: 1.5,
         ),
-        boxShadow: AppShadows.small,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -142,7 +156,7 @@ class _BookingItem extends StatelessWidget {
                 Text(
                   booking.formattedDate,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],

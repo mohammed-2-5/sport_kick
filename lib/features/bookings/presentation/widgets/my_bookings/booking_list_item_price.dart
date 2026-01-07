@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -19,6 +18,7 @@ class BookingListItemPrice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final priceText = amount != null && currency != null
         ? LocaleFormatters.formatPrice(
             context,
@@ -30,26 +30,26 @@ class BookingListItemPrice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.lightGrey),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.receipt_long,
                 size: 18,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               const SizedBox(width: 8),
               Text(
                 context.l10n.totalPrice,
                 style: AppTextStyles.labelLarge.copyWith(
                   fontWeight: FontWeight.w500,
-                  color: AppColors.textSecondary,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -58,7 +58,7 @@ class BookingListItemPrice extends StatelessWidget {
             priceText,
             style: AppTextStyles.titleLarge.copyWith(
               fontWeight: FontWeight.w800,
-              color: AppColors.primary,
+              color: colorScheme.primary,
             ),
           ),
         ],

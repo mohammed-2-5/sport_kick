@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 
 /// Premium settings tile (tappable).
 ///
@@ -39,7 +38,8 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile> {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = widget.iconColor ?? AppColors.accentCyan;
+    final colorScheme = Theme.of(context).colorScheme;
+    final iconColor = widget.iconColor ?? colorScheme.primary;
 
     return GestureDetector(
       onTapDown: widget.onTap != null
@@ -59,7 +59,9 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile> {
         duration: const Duration(milliseconds: 100),
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: _isPressed ? AppColors.backgroundLight : Colors.transparent,
+          color: _isPressed
+              ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.5)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -79,10 +81,10 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile> {
             Expanded(
               child: Text(
                 widget.label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ),
@@ -92,7 +94,7 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile> {
                 widget.value!,
                 style: TextStyle(
                   fontSize: 14,
-                  color: AppColors.textSecondary.withValues(alpha: 0.7),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
               ),
             if (widget.trailing != null) widget.trailing!,
@@ -102,7 +104,7 @@ class _PremiumSettingsTileState extends State<PremiumSettingsTile> {
               Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: AppColors.textSecondary.withValues(alpha: 0.5),
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
               ),
             ],
           ],

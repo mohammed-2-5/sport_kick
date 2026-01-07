@@ -37,20 +37,17 @@ class _PremiumFieldDetailsViewState extends State<PremiumFieldDetailsView> {
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
+    _scrollController.addListener(() {
+      context.read<FieldDetailsScrollCubit>().updateScroll(
+        _scrollController.offset,
+      );
+    });
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _onScroll() {
-    context.read<FieldDetailsScrollCubit>().updateScroll(
-      _scrollController.offset,
-    );
   }
 
   @override
@@ -59,21 +56,25 @@ class _PremiumFieldDetailsViewState extends State<PremiumFieldDetailsView> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
-          // Main scrollable content
           FieldDetailsContent(
             field: widget.field,
             category: widget.category,
-            onImageTap: _showGalleryViewer,
+            onImageTap: () {
+              if (widget.field.images.isEmpty) return;
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (context) => PremiumFieldGalleryViewer(
+                    images: widget.field.images,
+                    initialIndex: 0,
+                  ),
+                ),
+              );
+            },
             scrollController: _scrollController,
           ),
-
-          // Floating header (appears on scroll)
           FieldDetailsFloatingHeaderBuilder(field: widget.field),
-
-          // Back button (visible when header is hidden)
           const FieldDetailsBackButton(),
-
-          // Floating book now buttons
           Positioned(
             left: 0,
             right: 0,
@@ -81,20 +82,6 @@ class _PremiumFieldDetailsViewState extends State<PremiumFieldDetailsView> {
             child: FieldDetailsFloatingActions(field: widget.field),
           ),
         ],
-      ),
-    );
-  }
-
-  void _showGalleryViewer() {
-    if (widget.field.images.isEmpty) return;
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (context) => PremiumFieldGalleryViewer(
-          images: widget.field.images,
-          initialIndex: 0,
-        ),
       ),
     );
   }

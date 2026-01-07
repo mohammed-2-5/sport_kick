@@ -9,8 +9,8 @@ import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/domain/models/field_creation_data.dart';
 import 'package:spo_kick/features/super_admin/presentation/constants/field_form_constants.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
-import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/field_management/field_management_cubit.dart';
+import 'package:spo_kick/features/super_admin/presentation/cubit/field_management/field_management_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/create_field_form_body.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/create_field/field_creation_success_dialog.dart';
 
@@ -19,7 +19,7 @@ import '../../../../core/localization/l10n_extensions.dart';
 /// Create Field Page for Super Admin
 ///
 /// Allows super admin to create new fields and assign them to admins.
-/// All business logic and validation handled by cubit.
+/// All business logic and validation handled by FieldManagementCubit.
 class CreateFieldPage extends StatefulWidget {
   const CreateFieldPage({super.key});
 
@@ -57,9 +57,7 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<SuperAdminCubit>()
-        ..loadAdmins()
-        ..loadCities(),
+      create: (_) => sl<FieldManagementCubit>()..loadFormData(),
       child: Scaffold(
         appBar: AppBar(
           title: Text(context.l10n.createNewField2),
@@ -69,7 +67,7 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
             decoration: const BoxDecoration(gradient: AppGradients.primary),
           ),
         ),
-        body: BlocConsumer<SuperAdminCubit, SuperAdminState>(
+        body: BlocConsumer<FieldManagementCubit, FieldManagementState>(
           listener: (context, state) {
             if (state is FieldCreated) {
               showDialog(
@@ -80,7 +78,7 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
               );
             }
 
-            if (state is SuperAdminError) {
+            if (state is FieldManagementError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
@@ -90,30 +88,20 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
             }
           },
           builder: (context, state) {
-            if (state is SuperAdminLoading) {
-              return LoadingIndicator.inline(
-                message: context.l10n.creatingField,
-              );
+            // Show loading while creating field
+            if (state is FieldManagementLoading) {
+              return LoadingIndicator.inline(message: state.message);
             }
 
-            // Extract data from state
+            // Extract data from FormDataLoaded state
             List<UserEntity> admins = [];
             List<CityEntity> cities = [];
             Map<String, String> sportCategories = {};
-            bool isLoadingAdmins = true;
-            bool isLoadingCities = true;
 
-            if (state is AdminsListLoaded) {
+            if (state is FormDataLoaded) {
               admins = state.admins;
-              isLoadingAdmins = false;
-            }
-
-            if (state is CitiesLoaded) {
               cities = state.cities;
-              isLoadingCities = false;
             }
-
-            // TODO: Load sport categories from fields feature
 
             return CreateFieldFormBody(
               formKey: _formKey,
@@ -136,8 +124,8 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
               sizes: FieldFormConstants.sizes,
               surfaces: FieldFormConstants.surfaces,
               availableFacilities: FieldFormConstants.facilities,
-              isLoadingAdmins: isLoadingAdmins,
-              isLoadingCities: isLoadingCities,
+              isLoadingAdmins: state is! FormDataLoaded,
+              isLoadingCities: state is! FormDataLoaded,
               isLoadingSportCategories: false,
               onAdminChanged: (v) => setState(() => _selectedAdmin = v),
               onCityChanged: (v) => setState(() => _selectedCity = v),
@@ -174,7 +162,7 @@ class _CreateFieldPageState extends State<CreateFieldPage> {
                 );
 
                 // Cubit handles all validation and logic
-                context.read<SuperAdminCubit>().submitFieldCreation(
+                context.read<FieldManagementCubit>().submitFieldCreation(
                   data,
                   sportCategories,
                 );

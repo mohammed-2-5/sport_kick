@@ -4,6 +4,7 @@ import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cubit.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Dialog utility for user status toggle confirmation.
 /// Shows appropriate message based on current user status.
@@ -30,8 +31,12 @@ void showUserStatusToggleDialog({
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: user.isActive ? Colors.red : Colors.green,
-            foregroundColor: Colors.white,
+            backgroundColor: user.isActive
+                ? Theme.of(context).colorScheme.error
+                : Theme.of(context).colorScheme.success,
+            foregroundColor: user.isActive
+                ? Theme.of(context).colorScheme.onError
+                : Theme.of(context).colorScheme.onSuccess,
           ),
           onPressed: () {
             if (user.isActive) {

@@ -6,6 +6,7 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/us
 import 'package:spo_kick/features/super_admin/presentation/widgets/users_list/user_status_badge.dart';
 import 'package:spo_kick/features/super_admin/utils/user_card_utils.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 
 /// Admin card widget displaying field owner information.
 class AdminCard extends StatelessWidget {
@@ -33,14 +34,14 @@ class AdminCard extends StatelessWidget {
               UserInfoRow(
                 icon: Icons.email_outlined,
                 text: admin.email,
-                iconColor: Colors.blue,
+                iconColor: Theme.of(context).colorScheme.primary,
               ),
               if (admin.phone != null && admin.phone!.isNotEmpty) ...[
                 const SizedBox(height: 8),
                 UserInfoRow(
                   icon: Icons.phone_outlined,
                   text: admin.phone!,
-                  iconColor: Colors.green,
+                  iconColor: Theme.of(context).colorScheme.success,
                 ),
               ],
               const SizedBox(height: 8),
@@ -49,7 +50,7 @@ class AdminCard extends StatelessWidget {
                 text: context.l10n.joinedDate(
                   formatRelativeDate(admin.createdAt),
                 ),
-                iconColor: Colors.grey,
+                iconColor: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               const SizedBox(height: 12),
               const Divider(height: 1),
@@ -88,7 +89,7 @@ class AdminCard extends StatelessWidget {
                 admin.fullName ?? admin.email,
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
