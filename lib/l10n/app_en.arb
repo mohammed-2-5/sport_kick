@@ -25,6 +25,8 @@
   "register": "Register",
   "logout": "Logout",
   "logoutConfirmationMessage": "Are you sure you want to logout?",
+  "logoutDesc": "Sign out from your account",
+  "dangerZone": "Danger Zone",
   "email": "Email",
   "emailAddress": "Email Address",
   "password": "Password",

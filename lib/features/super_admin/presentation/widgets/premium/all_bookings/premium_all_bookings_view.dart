@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
@@ -14,8 +13,14 @@ import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_cub
 import 'package:spo_kick/features/super_admin/presentation/cubit/super_admin_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/booking_actions_sheet.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/cancel_booking_dialog.dart';
-import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/premium_all_booking_card.dart';
-import 'package:spo_kick/core/theme/theme_extensions.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/bookings_list.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/error_view.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/loading_view.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/premium_tab_bar.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/refresh_button.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/search_bar.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/stat_chip.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/tab_item.dart';
 
 /// Premium All Bookings view with tabbed filtering.
 ///
@@ -41,7 +46,7 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
   final _searchController = TextEditingController();
   Timer? _debounceTimer;
   String _searchQuery = '';
-  late List<_TabItem> _tabs; // Declared late to be initialized with context
+  late List<TabItem> _tabs;
 
   @override
   void initState() {
@@ -52,19 +57,18 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Initialize tabs here where context is available
     _tabs = [
-      _TabItem(label: context.l10n.all, status: null),
-      _TabItem(label: context.l10n.pending, status: BookingStatus.pending),
-      _TabItem(
+      TabItem(label: context.l10n.all, status: null),
+      TabItem(label: context.l10n.pending, status: BookingStatus.pending),
+      TabItem(
         label: context.l10n.statusConfirmed,
         status: BookingStatus.confirmed,
       ),
-      _TabItem(
+      TabItem(
         label: context.l10n.statusCompleted,
         status: BookingStatus.completed,
       ),
-      _TabItem(
+      TabItem(
         label: context.l10n.statusCanceled,
         status: BookingStatus.canceled,
       ),
@@ -125,12 +129,10 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
   ) {
     var result = bookings;
 
-    // Filter by status
     if (statusFilter != null) {
       result = result.where((b) => b.status == statusFilter).toList();
     }
 
-    // Filter by search query
     if (_searchQuery.isNotEmpty) {
       final query = _searchQuery.toLowerCase();
       result = result.where((b) {
@@ -139,7 +141,6 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
       }).toList();
     }
 
-    // Sort by date (newest first)
     result.sort((a, b) => b.date.compareTo(a.date));
 
     return result;
@@ -168,11 +169,11 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
 
   Widget _buildBody(BuildContext context, SuperAdminState state) {
     if (state is SuperAdminLoading) {
-      return _LoadingView(message: state.message);
+      return LoadingView(message: state.message);
     }
 
     if (state is SuperAdminError) {
-      return _ErrorView(
+      return ErrorView(
         message: state.message,
         onRetry: () => context.read<SuperAdminCubit>().loadAllBookings(),
       );
@@ -182,14 +183,13 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
       return _buildLoadedContent(context, state.bookings.cast<BookingEntity>());
     }
 
-    return _LoadingView(message: context.l10n.loadingBookings);
+    return LoadingView(message: context.l10n.loadingBookings);
   }
 
   Widget _buildLoadedContent(
     BuildContext context,
     List<BookingEntity> bookings,
   ) {
-    // Calculate counts for each status
     final pendingCount = bookings
         .where((b) => b.status == BookingStatus.pending)
         .length;
@@ -212,26 +212,23 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
-            // Premium Header
             SliverToBoxAdapter(
               child: PremiumCurvedHeader(
                 title: context.l10n.allBookings,
                 subtitle: context.l10n.totalBookingsCount(bookings.length),
                 showBackButton: true,
                 actions: [
-                  _RefreshButton(
+                  RefreshButton(
                     onTap: () =>
                         context.read<SuperAdminCubit>().loadAllBookings(),
                   ),
                 ],
               ),
             ),
-
-            // Search Bar
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: _SearchBar(
+                child: BookingsSearchBar(
                   controller: _searchController,
                   onChanged: _onSearchChanged,
                   onClear: () {
@@ -241,8 +238,6 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
                 ),
               ),
             ),
-
-            // Stats Row
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -250,25 +245,25 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      _StatChip(
+                      StatChip(
                         label: context.l10n.pending,
                         count: pendingCount,
                         color: Theme.of(context).colorScheme.warning,
                       ),
                       const SizedBox(width: 10),
-                      _StatChip(
+                      StatChip(
                         label: context.l10n.statusConfirmed,
                         count: confirmedCount,
                         color: Theme.of(context).colorScheme.success,
                       ),
                       const SizedBox(width: 10),
-                      _StatChip(
+                      StatChip(
                         label: context.l10n.statusCompleted,
                         count: completedCount,
                         color: Theme.of(context).colorScheme.info,
                       ),
                       const SizedBox(width: 10),
-                      _StatChip(
+                      StatChip(
                         label: context.l10n.statusCanceled,
                         count: canceledCount,
                         color: Theme.of(context).colorScheme.error,
@@ -278,12 +273,10 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
                 ),
               ),
             ),
-
-            // Tab Bar
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                child: _PremiumTabBar(controller: _tabController, tabs: _tabs),
+                child: PremiumTabBar(controller: _tabController, tabs: _tabs),
               ),
             ),
           ];
@@ -292,366 +285,11 @@ class _PremiumAllBookingsViewState extends State<PremiumAllBookingsView>
           controller: _tabController,
           children: _tabs.map((tab) {
             final filteredBookings = _filterBookings(bookings, tab.status);
-            return _BookingsList(
+            return BookingsList(
               bookings: filteredBookings,
               onBookingTap: _showBookingActions,
             );
           }).toList(),
-        ),
-      ),
-    );
-  }
-}
-
-/// Tab item data.
-class _TabItem {
-  final String label;
-  final BookingStatus? status;
-
-  const _TabItem({required this.label, this.status});
-}
-
-/// Premium tab bar.
-class _PremiumTabBar extends StatelessWidget {
-  final TabController controller;
-  final List<_TabItem> tabs;
-
-  const _PremiumTabBar({required this.controller, required this.tabs});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: context.cardShadow,
-      ),
-      child: TabBar(
-        controller: controller,
-        isScrollable: true,
-        indicator: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        indicatorSize: TabBarIndicatorSize.tab,
-        labelColor: Theme.of(context).colorScheme.onPrimary,
-        unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
-        labelStyle: AppTextStyles.labelMedium.copyWith(
-          fontSize: 13,
-          fontWeight: FontWeight.w600,
-        ),
-        dividerColor: Colors.transparent,
-        padding: const EdgeInsets.all(4),
-        tabs: tabs.map((tab) => Tab(text: tab.label)).toList(),
-      ),
-    );
-  }
-}
-
-/// Bookings list widget.
-class _BookingsList extends StatelessWidget {
-  final List<BookingEntity> bookings;
-  final void Function(BookingEntity booking)? onBookingTap;
-
-  const _BookingsList({required this.bookings, this.onBookingTap});
-
-  @override
-  Widget build(BuildContext context) {
-    if (bookings.isEmpty) {
-      return const _EmptyState();
-    }
-
-    return AnimationLimiter(
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: bookings.length,
-        itemBuilder: (context, index) {
-          final booking = bookings[index];
-          return AnimationConfiguration.staggeredList(
-            position: index,
-            duration: const Duration(milliseconds: 400),
-            child: SlideAnimation(
-              verticalOffset: 50,
-              child: FadeInAnimation(
-                child: PremiumAllBookingCard(
-                  bookingId: booking.id,
-                  userName: booking.userName ?? 'Unknown User',
-                  fieldName: booking.fieldName ?? 'Unknown Field',
-                  formattedDate: booking.formattedDate,
-                  formattedTimeSlot: booking.formattedTimeSlot,
-                  formattedPrice: booking.formattedPrice,
-                  status: booking.status,
-                  isManual: booking.isManual,
-                  onTap: () {
-                    onBookingTap?.call(booking);
-                  },
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-/// Search bar widget.
-class _SearchBar extends StatelessWidget {
-  final TextEditingController controller;
-  final ValueChanged<String> onChanged;
-  final VoidCallback onClear;
-
-  const _SearchBar({
-    required this.controller,
-    required this.onChanged,
-    required this.onClear,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: context.cardShadow,
-      ),
-      child: TextField(
-        controller: controller,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          hintText: context.l10n.searchByUserOrField,
-          hintStyle: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary.withValues(alpha: 0.6),
-          ),
-          prefixIcon: Icon(
-            Icons.search_rounded,
-            color: AppColors.textSecondary.withValues(alpha: 0.6),
-          ),
-          suffixIcon: controller.text.isNotEmpty
-              ? IconButton(
-                  icon: const Icon(Icons.close_rounded),
-                  color: AppColors.textSecondary,
-                  onPressed: onClear,
-                )
-              : null,
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Stat chip widget.
-class _StatChip extends StatelessWidget {
-  final String label;
-  final int count;
-  final Color color;
-
-  const _StatChip({
-    required this.label,
-    required this.count,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '$count',
-            style: AppTextStyles.bodyMedium.copyWith(
-              fontWeight: FontWeight.w700,
-              color: color,
-            ),
-          ),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w500,
-              color: color.withValues(alpha: 0.8),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Refresh button.
-class _RefreshButton extends StatelessWidget {
-  final VoidCallback onTap;
-
-  const _RefreshButton({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.glassHighlight,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: IconButton(
-        icon: const Icon(
-          Icons.refresh_rounded,
-          color: AppColors.textOnNavy,
-          size: 22,
-        ),
-        onPressed: onTap,
-      ),
-    );
-  }
-}
-
-/// Loading view.
-class _LoadingView extends StatelessWidget {
-  final String message;
-
-  const _LoadingView({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CircularProgressIndicator(
-            color: AppColors.goldAccent,
-            strokeWidth: 3,
-          ),
-          const SizedBox(height: 20),
-          Text(
-            message,
-            style: AppTextStyles.labelLarge.copyWith(
-              color: AppColors.textSecondary,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Error view.
-class _ErrorView extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
-
-  const _ErrorView({required this.message, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.error_outline_rounded,
-                color: Colors.red,
-                size: 40,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              context.l10n.failedToLoadBookings,
-              style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded),
-              label: Text(context.l10n.tryAgain),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.navyDeep,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Empty state.
-class _EmptyState extends StatelessWidget {
-  const _EmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: AppColors.accentCyan.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.calendar_month_rounded,
-                color: AppColors.accentCyan.withValues(alpha: 0.6),
-                size: 48,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              context.l10n.noBookingsFound,
-              style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              context.l10n.tryAdjustingYourSearchNorFilters,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
         ),
       ),
     );

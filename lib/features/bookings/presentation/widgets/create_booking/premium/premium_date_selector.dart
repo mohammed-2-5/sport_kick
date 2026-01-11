@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:spo_kick/core/constants/app_animations.dart';
+import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/features/bookings/presentation/constants/booking_constants.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
@@ -211,14 +212,9 @@ class _DateCardState extends State<_DateCard>
               width: 68,
               decoration: BoxDecoration(
                 gradient: widget.isSelected
-                    ? LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          colorScheme.primary,
-                          colorScheme.primaryContainer,
-                        ],
-                      )
+                    ? (isDark
+                          ? AppColors.darkNavyGradient
+                          : AppColors.navyGradient)
                     : null,
                 color: widget.isSelected ? null : colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
@@ -226,14 +222,21 @@ class _DateCardState extends State<_DateCard>
                     ? null
                     : Border.all(
                         color: widget.isToday
-                            ? colorScheme.primary.withValues(alpha: 0.5)
+                            ? (isDark
+                                      ? AppColors.navyLight
+                                      : AppColors.navyDeep)
+                                  .withValues(alpha: 0.5)
                             : colorScheme.outline,
                         width: widget.isToday ? 2 : 1,
                       ),
                 boxShadow: widget.isSelected
                     ? [
                         BoxShadow(
-                          color: colorScheme.primary.withValues(alpha: 0.4),
+                          color:
+                              (isDark
+                                      ? AppColors.navyLight
+                                      : AppColors.navyDeep)
+                                  .withValues(alpha: 0.4),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -279,7 +282,9 @@ class _DateCardState extends State<_DateCard>
                       height: 6,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: colorScheme.primary,
+                        color: isDark
+                            ? AppColors.navyLight
+                            : AppColors.navyDeep,
                       ),
                     )
                   else

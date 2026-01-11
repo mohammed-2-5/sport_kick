@@ -1,10 +1,15 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/theme/theme_extensions.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/components/users_list_header_back_button.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/components/users_list_header_selection_button.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/components/users_list_header_search_bar.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/users_list/components/users_list_header_stat_chip.dart';
 
 /// Premium header for super admin users list.
 ///
@@ -55,7 +60,7 @@ class PremiumUsersListHeader extends StatelessWidget {
           // Title row
           Row(
             children: [
-              _BackButton(onTap: () => Navigator.pop(context)),
+              UsersListHeaderBackButton(onTap: () => Navigator.pop(context)),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -73,7 +78,7 @@ class PremiumUsersListHeader extends StatelessWidget {
                   ],
                 ),
               ),
-              _SelectionButton(
+              UsersListHeaderSelectionButton(
                 isActive: isSelectionMode,
                 onTap: onToggleSelection,
               ),
@@ -82,7 +87,7 @@ class PremiumUsersListHeader extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Search bar
-          _SearchBar(
+          UsersListHeaderSearchBar(
             query: searchQuery,
             onChanged: onSearchChanged,
             onClear: onClearSearch,
@@ -95,18 +100,18 @@ class PremiumUsersListHeader extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _StatChip(
+                UsersListHeaderStatChip(
                   label: context.l10n.total,
                   count: stats[context.l10n.total2] ?? 0,
                 ),
                 const SizedBox(width: 8),
-                _StatChip(
+                UsersListHeaderStatChip(
                   label: context.l10n.active,
                   count: stats[context.l10n.active2] ?? 0,
                   color: colorScheme.success,
                 ),
                 const SizedBox(width: 8),
-                _StatChip(
+                UsersListHeaderStatChip(
                   label: context.l10n.inactive,
                   count: stats[context.l10n.inactive2] ?? 0,
                   color: colorScheme.onSurfaceVariant,
@@ -264,121 +269,6 @@ class _SelectionButtonState extends State<_SelectionButton>
                 size: 22,
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Search bar with glass effect.
-class _SearchBar extends StatelessWidget {
-  final String query;
-  final Function(String) onChanged;
-  final VoidCallback onClear;
-
-  const _SearchBar({
-    required this.query,
-    required this.onChanged,
-    required this.onClear,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
-          ),
-          child: TextField(
-            onChanged: onChanged,
-            style: AppTextStyles.bodyMediumWhite,
-            decoration: InputDecoration(
-              hintText: context.l10n.searchByNameEmailOrPhone,
-              hintStyle: AppTextStyles.withColor(
-                AppTextStyles.bodyMedium,
-                Colors.white54,
-              ),
-              prefixIcon: Icon(
-                Icons.search,
-                color: Colors.white.withValues(alpha: 0.7),
-              ),
-              suffixIcon: query.isNotEmpty
-                  ? IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: Colors.white.withValues(alpha: 0.7),
-                      ),
-                      onPressed: onClear,
-                    )
-                  : null,
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Stat chip showing count.
-class _StatChip extends StatelessWidget {
-  final String label;
-  final int count;
-  final Color? color;
-
-  const _StatChip({required this.label, required this.count, this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: (color ?? Colors.white).withValues(alpha: 0.3),
-            ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.withColor(
-                  AppTextStyles.labelSmallBold,
-                  Colors.white,
-                ),
-              ),
-              const SizedBox(width: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: (color ?? Colors.white).withValues(alpha: 0.9),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  count.toString(),
-                  style: AppTextStyles.withColor(
-                    AppTextStyles.bold(AppTextStyles.labelSmall),
-                    Colors.white,
-                  ),
-                ),
-              ),
-            ],
           ),
         ),
       ),

@@ -19,20 +19,23 @@ class TimeSlotBookedBadge extends StatelessWidget {
         color: errorColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.block, size: 12, color: errorColor),
-          const SizedBox(width: 4),
-          Text(
-            context.l10n.bookedLabel,
-            style: AppTextStyles.labelSmall.copyWith(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: errorColor,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.block, size: 12, color: errorColor),
+            const SizedBox(width: 4),
+            Text(
+              context.l10n.bookedLabel,
+              style: AppTextStyles.labelSmall.copyWith(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: errorColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

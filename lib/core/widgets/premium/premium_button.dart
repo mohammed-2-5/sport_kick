@@ -108,24 +108,26 @@ class _PremiumButtonState extends State<PremiumButton>
   Widget build(BuildContext context) {
     final isDisabled = widget.onPressed == null || widget.loading;
 
-    return GestureDetector(
-      onTapDown: _onTapDown,
-      onTapUp: _onTapUp,
-      onTapCancel: _onTapCancel,
-      onTap: isDisabled
-          ? null
-          : () {
-              HapticFeedback.lightImpact();
-              widget.onPressed?.call();
-            },
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Container(
-          width: widget.fullWidth ? double.infinity : widget.width,
-          height: widget.height,
-          decoration: _getDecoration(context, isDisabled),
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: _buildContent(context, isDisabled),
+    return SelectionContainer.disabled(
+      child: GestureDetector(
+        onTapDown: _onTapDown,
+        onTapUp: _onTapUp,
+        onTapCancel: _onTapCancel,
+        onTap: isDisabled
+            ? null
+            : () {
+                HapticFeedback.lightImpact();
+                widget.onPressed?.call();
+              },
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Container(
+            width: widget.fullWidth ? double.infinity : widget.width,
+            height: widget.height,
+            decoration: _getDecoration(context, isDisabled),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: _buildContent(context, isDisabled),
+          ),
         ),
       ),
     );

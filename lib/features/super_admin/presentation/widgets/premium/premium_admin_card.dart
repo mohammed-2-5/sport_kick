@@ -5,6 +5,9 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/utils/locale_formatters.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_card/components/admin_card_action_button.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_card/components/admin_card_stat_chip.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_card/components/admin_card_status_badge.dart';
 
 /// Premium admin card for super admin management.
 ///
@@ -232,7 +235,7 @@ class PremiumAdminCard extends StatelessWidget {
               ),
 
               // Status badge
-              _StatusBadge(isActive: isActive),
+              AdminCardStatusBadge(isActive: isActive),
             ],
           ),
 
@@ -243,13 +246,13 @@ class PremiumAdminCard extends StatelessWidget {
           // Stats row
           Row(
             children: [
-              _StatChip(
+              AdminCardStatChip(
                 icon: Icons.sports_soccer,
                 label: context.l10n.fieldsCount(fieldsCount),
                 color: AppColors.accentCyan,
               ),
               const SizedBox(width: 12),
-              _StatChip(
+              AdminCardStatChip(
                 icon: Icons.attach_money,
                 label: LocaleFormatters.formatPrice(
                   context,
@@ -262,7 +265,7 @@ class PremiumAdminCard extends StatelessWidget {
               if (phone != null) ...[
                 const SizedBox(width: 12),
                 Expanded(
-                  child: _StatChip(
+                  child: AdminCardStatChip(
                     icon: Icons.phone,
                     label: phone!,
                     color: colorScheme.secondary,
@@ -282,7 +285,7 @@ class PremiumAdminCard extends StatelessWidget {
               children: [
                 if (onAssignField != null)
                   Expanded(
-                    child: _ActionButton(
+                    child: AdminCardActionButton(
                       label: context.l10n.assignField,
                       icon: Icons.add_circle_outline,
                       color: AppColors.accentCyan,
@@ -294,7 +297,7 @@ class PremiumAdminCard extends StatelessWidget {
                   const SizedBox(width: 8),
                 if (onToggleStatus != null)
                   Expanded(
-                    child: _ActionButton(
+                    child: AdminCardActionButton(
                       label: isActive
                           ? context.l10n.deactivate
                           : context.l10n.activate,
@@ -309,7 +312,7 @@ class PremiumAdminCard extends StatelessWidget {
                   const SizedBox(width: 8),
                 if (onDelete != null)
                   Expanded(
-                    child: _ActionButton(
+                    child: AdminCardActionButton(
                       label: context.l10n.delete,
                       icon: Icons.delete_outline,
                       color: isDark ? AppColors.darkError : AppColors.error,
@@ -320,124 +323,6 @@ class PremiumAdminCard extends StatelessWidget {
             ),
           ],
         ],
-      ),
-    );
-  }
-}
-
-/// Status badge widget.
-class _StatusBadge extends StatelessWidget {
-  final bool isActive;
-
-  const _StatusBadge({required this.isActive});
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
-    final inactiveColor = Theme.of(context).colorScheme.onSurfaceVariant;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: (isActive ? successColor : inactiveColor).withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        isActive ? context.l10n.active : context.l10n.inactive,
-        style: AppTextStyles.labelSmall.copyWith(
-          fontWeight: FontWeight.w600,
-          color: isActive ? successColor : inactiveColor,
-        ),
-      ),
-    );
-  }
-}
-
-/// Stat chip widget.
-class _StatChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final Color color;
-
-  const _StatChip({
-    required this.icon,
-    required this.label,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: color),
-          const SizedBox(width: 6),
-          Text(
-            label,
-            style: AppTextStyles.labelSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: color,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Action button widget.
-class _ActionButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  const _ActionButton({
-    required this.label,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        onTap();
-      },
-      borderRadius: BorderRadius.circular(8),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: color.withValues(alpha: 0.3)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 16, color: color),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                label,
-                style: AppTextStyles.labelSmall.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: color,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

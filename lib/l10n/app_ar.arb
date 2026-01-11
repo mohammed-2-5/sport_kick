@@ -25,6 +25,8 @@
   "register": "إنشاء حساب",
   "logout": "تسجيل الخروج",
   "logoutConfirmationMessage": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "logoutDesc": "تسجيل الخروج من حسابك",
+  "dangerZone": "منطقة الخطر",
   "email": "البريد الإلكتروني",
   "emailAddress": "عنوان البريد الإلكتروني",
   "password": "كلمة المرور",

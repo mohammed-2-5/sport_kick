@@ -4,7 +4,6 @@ import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/fields/presentation/cubit/field_details_scroll_cubit.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/field_details_back_button.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/field_details_content.dart';
-import 'package:spo_kick/features/fields/presentation/widgets/details/premium/field_details_floating_actions.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/field_details_floating_header_builder.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/premium_field_gallery_viewer.dart';
 
@@ -75,12 +74,6 @@ class _PremiumFieldDetailsViewState extends State<PremiumFieldDetailsView> {
           ),
           FieldDetailsFloatingHeaderBuilder(field: widget.field),
           const FieldDetailsBackButton(),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: FieldDetailsFloatingActions(field: widget.field),
-          ),
         ],
       ),
     );

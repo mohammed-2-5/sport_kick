@@ -16,27 +16,21 @@ class FieldDetailsFloatingActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.white.withValues(alpha: 0),
-            Colors.white.withValues(alpha: 0.9),
-            Colors.white,
-          ],
-        ),
-      ),
-      child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _WeeklySubscriptionButton(field: field),
-            const SizedBox(height: 12),
-            _BookNowButton(field: field),
-          ],
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SelectionContainer.disabled(
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(color: colorScheme.surface),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _WeeklySubscriptionButton(field: field),
+              const SizedBox(height: 12),
+              _BookNowButton(field: field),
+            ],
+          ),
         ),
       ),
     );
@@ -51,6 +45,9 @@ class _WeeklySubscriptionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: () => context.pushNamed('createRecurring', extra: field),
       child: Container(
@@ -62,13 +59,15 @@ class _WeeklySubscriptionButton extends StatelessWidget {
             color: AppColors.goldAccent.withValues(alpha: 0.5),
             width: 1.5,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.goldAccent.withValues(alpha: 0.1),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          boxShadow: isDark
+              ? []
+              : [
+                  BoxShadow(
+                    color: AppColors.goldAccent.withValues(alpha: 0.1),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -95,13 +94,15 @@ class _WeeklySubscriptionButton extends StatelessWidget {
                     context.l10n.reserveWeeklySlot,
                     style: AppTextStyles.labelLarge.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: AppColors.navyDeep,
+                      color: isDark
+                          ? colorScheme.onSurface
+                          : AppColors.navyDeep,
                     ),
                   ),
                   Text(
                     context.l10n.autoBookSameTimeEveryWeek,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],

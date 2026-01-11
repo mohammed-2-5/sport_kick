@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/components/premium_owner_drawer_header.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/components/premium_owner_drawer_item.dart';
+import 'package:spo_kick/features/owner/presentation/widgets/premium/dashboard/components/premium_owner_logout_button.dart';
 
 /// Premium owner navigation drawer.
 ///
@@ -38,38 +40,42 @@ class PremiumOwnerDrawer extends StatelessWidget {
       child: Column(
         children: [
           // Header
-          _DrawerHeader(name: ownerName, email: email, avatarUrl: avatarUrl),
+          PremiumOwnerDrawerHeader(
+            name: ownerName,
+            email: email,
+            avatarUrl: avatarUrl,
+          ),
 
           // Menu items
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: 8),
               children: [
-                _DrawerItem(
+                PremiumOwnerDrawerItem(
                   icon: Icons.dashboard_rounded,
                   label: context.l10n.dashboard,
                   isSelected: selectedIndex == 0,
                   onTap: () => onItemTap(0),
                 ),
-                _DrawerItem(
+                PremiumOwnerDrawerItem(
                   icon: Icons.calendar_month_rounded,
                   label: context.l10n.bookings,
                   isSelected: selectedIndex == 1,
                   onTap: () => onItemTap(1),
                 ),
-                _DrawerItem(
+                PremiumOwnerDrawerItem(
                   icon: Icons.sports_soccer_rounded,
                   label: context.l10n.myFields,
                   isSelected: selectedIndex == 2,
                   onTap: () => onItemTap(2),
                 ),
-                _DrawerItem(
+                PremiumOwnerDrawerItem(
                   icon: Icons.analytics_rounded,
                   label: context.l10n.analytics,
                   isSelected: selectedIndex == 3,
                   onTap: () => onItemTap(3),
                 ),
-                _DrawerItem(
+                PremiumOwnerDrawerItem(
                   icon: Icons.event_repeat_rounded,
                   label: context.l10n.subscriptions,
                   isSelected: selectedIndex == 4,
@@ -77,13 +83,13 @@ class PremiumOwnerDrawer extends StatelessWidget {
                   badgeCount: pendingRecurringCount,
                 ),
                 const Divider(height: 32),
-                _DrawerItem(
+                PremiumOwnerDrawerItem(
                   icon: Icons.person_rounded,
                   label: context.l10n.profile,
                   isSelected: selectedIndex == 5,
                   onTap: () => onItemTap(5),
                 ),
-                _DrawerItem(
+                PremiumOwnerDrawerItem(
                   icon: Icons.settings_rounded,
                   label: context.l10n.settings,
                   isSelected: selectedIndex == 6,
@@ -94,7 +100,7 @@ class PremiumOwnerDrawer extends StatelessWidget {
           ),
 
           // Logout
-          _LogoutButton(onTap: onLogout),
+          PremiumOwnerLogoutButton(onTap: onLogout),
 
           // Version info
           Padding(
@@ -107,341 +113,6 @@ class PremiumOwnerDrawer extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Drawer header with user info.
-class _DrawerHeader extends StatelessWidget {
-  final String name;
-  final String email;
-  final String? avatarUrl;
-
-  const _DrawerHeader({
-    required this.name,
-    required this.email,
-    this.avatarUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top + 24,
-        left: 20,
-        right: 20,
-        bottom: 24,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [colorScheme.primary, colorScheme.primaryContainer],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Row(
-        children: [
-          // Avatar
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: colorScheme.secondary, width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: colorScheme.secondary.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                ),
-              ],
-            ),
-            child: CircleAvatar(
-              backgroundColor: colorScheme.secondary.withValues(alpha: 0.2),
-              backgroundImage: avatarUrl != null
-                  ? NetworkImage(avatarUrl!)
-                  : null,
-              child: avatarUrl == null
-                  ? Text(
-                      name.isNotEmpty ? name[0].toUpperCase() : context.l10n.o,
-                      style: AppTextStyles.headlineSmall.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: colorScheme.secondary,
-                      ),
-                    )
-                  : null,
-            ),
-          ),
-          const SizedBox(width: 14),
-
-          // Info
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: AppTextStyles.titleMedium.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: colorScheme.onPrimary,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  email,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: colorScheme.onPrimary.withValues(alpha: 0.7),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.secondary.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    context.l10n.fieldOwner,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.secondary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Drawer menu item.
-class _DrawerItem extends StatefulWidget {
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-  final int? badgeCount; // For future badge feature
-
-  const _DrawerItem({
-    required this.icon,
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-    // ignore: unused_element_parameter
-    this.badgeCount,
-  });
-
-  @override
-  State<_DrawerItem> createState() => _DrawerItemState();
-}
-
-class _DrawerItemState extends State<_DrawerItem>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 100),
-    );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.97,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return GestureDetector(
-      onTapDown: (_) => _controller.forward(),
-      onTapUp: (_) => _controller.reverse(),
-      onTapCancel: () => _controller.reverse(),
-      onTap: () {
-        HapticFeedback.lightImpact();
-        widget.onTap();
-      },
-      child: AnimatedBuilder(
-        animation: _scaleAnimation,
-        builder: (context, child) {
-          return Transform.scale(scale: _scaleAnimation.value, child: child);
-        },
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: widget.isSelected
-                ? colorScheme.secondary.withValues(alpha: 0.1)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            children: [
-              // Icon
-              Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: widget.isSelected
-                      ? colorScheme.secondary.withValues(alpha: 0.15)
-                      : colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  widget.icon,
-                  size: 20,
-                  color: widget.isSelected
-                      ? colorScheme.secondary
-                      : colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(width: 12),
-
-              // Label
-              Expanded(
-                child: Text(
-                  widget.label,
-                  style: AppTextStyles.bodyLarge.copyWith(
-                    fontWeight: widget.isSelected
-                        ? FontWeight.w600
-                        : FontWeight.w500,
-                    color: widget.isSelected
-                        ? colorScheme.secondary
-                        : colorScheme.onSurface,
-                  ),
-                ),
-              ),
-
-              // Badge
-              if (widget.badgeCount != null && widget.badgeCount! > 0)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.error,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    widget.badgeCount! > 99
-                        ? '99+'
-                        : widget.badgeCount.toString(),
-                    style: AppTextStyles.labelSmall.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onError,
-                    ),
-                  ),
-                ),
-
-              // Arrow for selected
-              if (widget.isSelected)
-                Icon(
-                  Icons.chevron_right,
-                  size: 20,
-                  color: colorScheme.secondary,
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Logout button.
-class _LogoutButton extends StatefulWidget {
-  final VoidCallback onTap;
-
-  const _LogoutButton({required this.onTap});
-
-  @override
-  State<_LogoutButton> createState() => _LogoutButtonState();
-}
-
-class _LogoutButtonState extends State<_LogoutButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 100),
-    );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.97,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return GestureDetector(
-      onTapDown: (_) => _controller.forward(),
-      onTapUp: (_) => _controller.reverse(),
-      onTapCancel: () => _controller.reverse(),
-      onTap: () {
-        HapticFeedback.mediumImpact();
-        widget.onTap();
-      },
-      child: AnimatedBuilder(
-        animation: _scaleAnimation,
-        builder: (context, child) {
-          return Transform.scale(scale: _scaleAnimation.value, child: child);
-        },
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          decoration: BoxDecoration(
-            color: colorScheme.error.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: colorScheme.error.withValues(alpha: 0.3)),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.logout_rounded, color: colorScheme.error, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                context.l10n.logout,
-                style: AppTextStyles.bodyLarge.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.error,
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

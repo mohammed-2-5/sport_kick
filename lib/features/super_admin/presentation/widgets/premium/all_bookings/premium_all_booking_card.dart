@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_status.dart';
-import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/theme/theme_extensions.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/info_chip.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/manual_badge.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/price_badge.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/all_bookings/components/status_badge.dart';
 
 /// Premium booking card with status indicator.
 ///
@@ -190,7 +192,7 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
                               ),
                             ),
                             const SizedBox(width: 12),
-                            _StatusBadge(
+                            StatusBadge(
                               status: _statusLabel,
                               color: _statusColor,
                               icon: _statusIcon,
@@ -203,14 +205,14 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
                         Row(
                           children: [
                             // User
-                            _InfoChip(
+                            InfoChip(
                               icon: Icons.person_outline_rounded,
                               text: widget.userName,
                               color: Theme.of(context).colorScheme.primary,
                             ),
                             if (widget.isManual) ...[
                               const SizedBox(width: 8),
-                              _ManualBadge(),
+                              const ManualBadge(),
                             ],
                           ],
                         ),
@@ -219,19 +221,19 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
                         // Bottom row: Date, time, price
                         Row(
                           children: [
-                            _InfoChip(
+                            InfoChip(
                               icon: Icons.calendar_today_rounded,
                               text: widget.formattedDate,
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             const SizedBox(width: 12),
-                            _InfoChip(
+                            InfoChip(
                               icon: Icons.access_time_rounded,
                               text: widget.formattedTimeSlot,
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             const Spacer(),
-                            _PriceBadge(price: widget.formattedPrice),
+                            PriceBadge(price: widget.formattedPrice),
                           ],
                         ),
                       ],
@@ -241,128 +243,6 @@ class _PremiumAllBookingCardState extends State<PremiumAllBookingCard>
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Status badge widget.
-class _StatusBadge extends StatelessWidget {
-  final String status;
-  final Color color;
-  final IconData icon;
-
-  const _StatusBadge({
-    required this.status,
-    required this.color,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: color),
-          const SizedBox(width: 4),
-          Text(
-            status,
-            style: AppTextStyles.withColor(
-              AppTextStyles.bold(AppTextStyles.badge),
-              color,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Info chip (date, time, user).
-class _InfoChip extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final Color color;
-
-  const _InfoChip({
-    required this.icon,
-    required this.text,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 14, color: color.withValues(alpha: 0.7)),
-        const SizedBox(width: 4),
-        Text(
-          text,
-          style: AppTextStyles.withColor(AppTextStyles.labelSmall, color),
-        ),
-      ],
-    );
-  }
-}
-
-/// Manual booking badge.
-class _ManualBadge extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: AppColors.goldAccent.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        context.l10n.manual,
-        style: AppTextStyles.withColor(
-          AppTextStyles.bold(AppTextStyles.badge),
-          AppColors.goldAccent,
-        ),
-      ),
-    );
-  }
-}
-
-/// Price badge.
-class _PriceBadge extends StatelessWidget {
-  final String price;
-
-  const _PriceBadge({required this.price});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.goldAccent, Color(0xFFD4A574)],
-        ),
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.goldAccent.withValues(alpha: 0.3),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Text(
-        price,
-        style: AppTextStyles.withColor(
-          AppTextStyles.bold(AppTextStyles.labelSmall),
-          Colors.white,
         ),
       ),
     );

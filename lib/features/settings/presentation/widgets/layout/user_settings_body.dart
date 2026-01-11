@@ -12,6 +12,7 @@ import 'package:spo_kick/features/settings/presentation/widgets/sections/about_s
 import 'package:spo_kick/features/settings/presentation/widgets/sections/account_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/appearance_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/bookings_settings_section.dart';
+import 'package:spo_kick/features/settings/presentation/widgets/sections/logout_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/notifications_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/privacy_settings_section.dart';
 import 'package:spo_kick/features/settings/presentation/widgets/sections/security_settings_section.dart';
@@ -87,6 +88,9 @@ class UserSettingsBody extends StatelessWidget {
         const SecuritySettingsSection(),
         const SizedBox(height: SettingsConstants.sectionSpacing),
         const AboutSettingsSection(),
+        const SizedBox(height: SettingsConstants.sectionSpacing),
+        const LogoutSettingsSection(),
+        const SizedBox(height: 32),
       ],
     );
   }

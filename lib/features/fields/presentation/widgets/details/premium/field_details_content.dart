@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
+import 'package:spo_kick/features/fields/presentation/widgets/details/premium/field_details_floating_actions.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/premium_amenities_grid.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/premium_description_card.dart';
 import 'package:spo_kick/features/fields/presentation/widgets/details/premium/premium_field_hero.dart';
@@ -61,11 +62,12 @@ class FieldDetailsContent extends StatelessWidget {
                 PremiumLocationCard(field: field),
                 const SizedBox(height: 20),
                 PremiumReviewsPreview(field: field),
-                const SizedBox(height: 200),
+                const SizedBox(height: 20),
               ],
             ),
           ),
         ),
+        SliverToBoxAdapter(child: FieldDetailsFloatingActions(field: field)),
       ],
     );
   }

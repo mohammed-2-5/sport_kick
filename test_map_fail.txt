@@ -1,0 +1,36 @@
+00:00 +0: loading C:/Users/moham/StudioProjects/spo_kick/test/features/fields/presentation/cubit/map_cubit_test.dart
+00:00 +0: MapCubit initial state is MapInitial
+00:00 +1: getUserLocation emits [Loading, Loaded] when location service enabled and permission granted
+00:00 +1 -1: getUserLocation emits [Loading, Loaded] when location service enabled and permission granted [E]
+  Expected: should do the following in order:
+            * emit an event that MapLocationLoading:<MapLocationLoading()>
+            * emit an event that <Instance of 'MapLocationLoaded'> with `lat`: <31.0>
+    Actual: <Instance of '_BroadcastStream<MapState>'>
+     Which: emitted * MapLocationLoaded(LatLng(latitude:31.0, longitude:30.0))
+              which didn't emit an event that MapLocationLoading:<MapLocationLoading()>
+  
+  package:matcher                                                    expectLater
+  package:flutter_test/src/widget_tester.dart 507:8                  expectLater
+  test\features\fields\presentation\cubit\map_cubit_test.dart 70:15  main.<fn>.<fn>
+  
+00:00 +1 -1: getUserLocation emits [Loading, PermissionDenied] when permission denied
+00:00 +1 -2: getUserLocation emits [Loading, PermissionDenied] when permission denied [E]
+  Expected: should do the following in order:
+            * emit an event that MapLocationLoading:<MapLocationLoading()>
+            * emit an event that <Instance of 'MapLocationPermissionDenied'>
+    Actual: <Instance of '_BroadcastStream<MapState>'>
+     Which: emitted * MapLocationPermissionDenied(Please enable location permissions in settings.)
+              which didn't emit an event that MapLocationLoading:<MapLocationLoading()>
+  
+  package:matcher                                                    expectLater
+  package:flutter_test/src/widget_tester.dart 507:8                  expectLater
+  test\features\fields\presentation\cubit\map_cubit_test.dart 99:13  main.<fn>.<fn>
+  
+00:00 +1 -2: Filters setVerifiedOnly updates filters
+00:00 +2 -2: Filters setMinRating updates filters
+00:00 +3 -2: Filters setMaxPrice updates filters
+00:00 +4 -2: Filters setSurfaceType updates filters
+00:00 +5 -2: Filters setSortByDistance updates filters
+00:00 +6 -2: Filters clearFilters resets filters
+00:00 +7 -2: reset resets to initial state
+00:00 +8 -2: Some tests failed.

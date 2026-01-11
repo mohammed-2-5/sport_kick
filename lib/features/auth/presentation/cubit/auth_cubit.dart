@@ -73,10 +73,15 @@ class AuthCubit extends Cubit<AuthState> {
   /// Logs in a user with email and password.
   ///
   /// Validates inputs before attempting login.
+  /// Validates user role matches the selected login mode.
   /// Emits [AuthLoading] while logging in.
   /// Emits [Authenticated] on success with user data.
   /// Emits [AuthError] on failure with error message.
-  Future<void> login({required String email, required String password}) async {
+  Future<void> login({
+    required String email,
+    required String password,
+    String loginMode = 'user',
+  }) async {
     // Validate inputs
     final validationError = _validateLoginInputs(email, password);
     if (validationError != null) {
@@ -98,6 +103,18 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthError(failure.message));
       },
       (user) {
+        // Validate role matches login mode
+        final roleError = _validateUserRole(user.role, loginMode);
+        if (roleError != null) {
+          debugPrint(
+            '❌ Role Mismatch: ${user.role} tried to login as $loginMode',
+          );
+          // Log failed login attempt due to wrong login type
+          _logLoginActivity(user.id, LoginStatus.failed);
+          emit(AuthError(roleError));
+          return;
+        }
+
         debugPrint('✅ Login Success: ${user.email}');
         // Log successful login (fire and forget)
         _logLoginActivity(user.id, LoginStatus.success);
@@ -133,6 +150,23 @@ class AuthCubit extends Cubit<AuthState> {
   /// Validates email format
   bool _isValidEmail(String email) {
     return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
+  /// Validates that user role matches the selected login mode
+  /// Returns error message if role doesn't match, null if valid
+  String? _validateUserRole(String userRole, String loginMode) {
+    // If logging in as user, but account is admin or super_admin
+    if (loginMode == 'user' &&
+        (userRole == 'admin' || userRole == 'super_admin')) {
+      return 'This account is registered as a Field Owner. Please use the "Field Owner" login option.';
+    }
+
+    // If logging in as admin/field owner, but account is regular user
+    if (loginMode == 'admin' && userRole == 'user') {
+      return 'This account is registered as a User. Please use the "User" login option.';
+    }
+
+    return null; // Valid role for login mode
   }
 
   /// Registers a new user.

@@ -5,6 +5,9 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/theme/theme_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_card/components/user_card_action_button.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_card/components/user_card_stat_chip.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_card/components/user_card_status_badge.dart';
 
 /// Premium user card for super admin user management.
 ///
@@ -174,7 +177,7 @@ class PremiumUserCard extends StatelessWidget {
               ),
 
               // Status badge
-              _StatusBadge(isActive: isActive),
+              UserCardStatusBadge(isActive: isActive),
             ],
           ),
 
@@ -185,13 +188,13 @@ class PremiumUserCard extends StatelessWidget {
           // Stats row
           Row(
             children: [
-              _StatChip(
+              UserCardStatChip(
                 icon: Icons.calendar_month,
                 label: context.l10n.bookingsCount(bookingsCount, bookingsCount),
               ),
               if (phone != null) ...[
                 const SizedBox(width: 12),
-                _StatChip(icon: Icons.phone, label: phone!),
+                UserCardStatChip(icon: Icons.phone, label: phone!),
               ],
             ],
           ),
@@ -204,7 +207,7 @@ class PremiumUserCard extends StatelessWidget {
               children: [
                 if (onToggleStatus != null)
                   Expanded(
-                    child: _ActionButton(
+                    child: UserCardActionButton(
                       label: isActive
                           ? context.l10n.deactivate
                           : context.l10n.activate,
@@ -219,7 +222,7 @@ class PremiumUserCard extends StatelessWidget {
                   const SizedBox(width: 8),
                 if (onDelete != null)
                   Expanded(
-                    child: _ActionButton(
+                    child: UserCardActionButton(
                       label: context.l10n.delete,
                       icon: Icons.delete_outline,
                       color: colorScheme.error,
@@ -230,119 +233,6 @@ class PremiumUserCard extends StatelessWidget {
             ),
           ],
         ],
-      ),
-    );
-  }
-}
-
-/// Status badge widget.
-class _StatusBadge extends StatelessWidget {
-  final bool isActive;
-
-  const _StatusBadge({required this.isActive});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final statusColor = isActive
-        ? colorScheme.success
-        : colorScheme.onSurfaceVariant;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: statusColor.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        isActive ? context.l10n.active : context.l10n.inactive,
-        style: AppTextStyles.withColor(
-          AppTextStyles.labelSmallBold,
-          statusColor,
-        ),
-      ),
-    );
-  }
-}
-
-/// Stat chip widget.
-class _StatChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _StatChip({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: colorScheme.onSurfaceVariant),
-          const SizedBox(width: 6),
-          Text(
-            label,
-            style: AppTextStyles.withColor(
-              AppTextStyles.labelSmall,
-              colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Action button widget.
-class _ActionButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  const _ActionButton({
-    required this.label,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        onTap();
-      },
-      borderRadius: BorderRadius.circular(8),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: color.withValues(alpha: 0.3)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 16, color: color),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: AppTextStyles.withColor(
-                AppTextStyles.labelSmallBold,
-                color,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -148,7 +148,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
               // Price Card
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(18),
+                  padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -156,7 +156,7 @@ class PremiumFieldInfoCard extends StatelessWidget {
                         colorScheme.primaryContainer,
                       ],
                     ),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
                         color: colorScheme.primary.withValues(alpha: 0.4),
@@ -173,25 +173,34 @@ class PremiumFieldInfoCard extends StatelessWidget {
                           Icon(
                             Icons.attach_money_rounded,
                             color: Colors.white.withValues(alpha: 0.9),
-                            size: 18,
+                            size: 16,
                           ),
                           const SizedBox(width: 4),
-                          Text(
-                            context.l10n.ratePerHour,
-                            style: AppTextStyles.labelSmall.copyWith(
-                              color: Colors.white.withValues(alpha: 0.9),
-                              fontWeight: FontWeight.w600,
+                          Flexible(
+                            child: Text(
+                              context.l10n.ratePerHour,
+                              style: AppTextStyles.labelSmall.copyWith(
+                                color: Colors.white.withValues(alpha: 0.9),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 11,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
-                        style: AppTextStyles.headlineSmall.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
-                          letterSpacing: -0.5,
+                      const SizedBox(height: 6),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '${LocaleFormatters.formatPrice(context, amount: field.pricePerHour, currency: field.currency, decimalDigits: 0)}/${context.l10n.perHour}',
+                          style: AppTextStyles.titleLarge.copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            letterSpacing: -0.5,
+                          ),
                         ),
                       ),
                     ],
@@ -204,10 +213,10 @@ class PremiumFieldInfoCard extends StatelessWidget {
               // Capacity Card
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(18),
+                  padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     color: colorScheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: colorScheme.primary.withValues(alpha: 0.2),
                       width: 2,
@@ -221,25 +230,34 @@ class PremiumFieldInfoCard extends StatelessWidget {
                           Icon(
                             Icons.people_outline_rounded,
                             color: colorScheme.primary,
-                            size: 18,
+                            size: 16,
                           ),
                           const SizedBox(width: 4),
-                          Text(
-                            context.l10n.fieldSize,
-                            style: AppTextStyles.labelSmall.copyWith(
-                              color: colorScheme.primary,
-                              fontWeight: FontWeight.w600,
+                          Flexible(
+                            child: Text(
+                              context.l10n.fieldSize,
+                              style: AppTextStyles.labelSmall.copyWith(
+                                color: colorScheme.primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 11,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        field.fieldSize,
-                        style: AppTextStyles.titleLarge.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: colorScheme.primary,
-                          letterSpacing: -0.5,
+                      const SizedBox(height: 6),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          field.fieldSize,
+                          style: AppTextStyles.titleLarge.copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: colorScheme.primary,
+                            letterSpacing: -0.5,
+                          ),
                         ),
                       ),
                     ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
-import 'package:spo_kick/core/widgets/premium/premium_card.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
-import 'package:spo_kick/core/theme/theme_extensions.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/components/add_field_button.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/components/field_card.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/components/empty_fields_state.dart';
 
 /// Premium admin assigned fields list.
 ///
@@ -62,7 +62,7 @@ class PremiumAdminFieldsList extends StatelessWidget {
                   ),
                 ),
               ),
-              _AddFieldButton(onTap: onAssignField),
+              AddFieldButton(onTap: onAssignField),
             ],
           ),
 
@@ -70,7 +70,7 @@ class PremiumAdminFieldsList extends StatelessWidget {
 
           // Content
           if (fields.isEmpty)
-            const _EmptyFieldsState()
+            const EmptyFieldsState()
           else
             AnimationLimiter(
               child: Column(
@@ -84,7 +84,7 @@ class PremiumAdminFieldsList extends StatelessWidget {
                       .map(
                         (field) => Padding(
                           padding: const EdgeInsets.only(bottom: 12),
-                          child: _FieldCard(
+                          child: FieldCard(
                             field: field,
                             onTap: () => onFieldTap(field),
                           ),
@@ -94,241 +94,6 @@ class PremiumAdminFieldsList extends StatelessWidget {
                 ),
               ),
             ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Add field button widget.
-class _AddFieldButton extends StatelessWidget {
-  final VoidCallback onTap;
-
-  const _AddFieldButton({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        onTap();
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [AppColors.premiumGold, AppColors.premiumGoldDark],
-          ),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.premiumGold.withValues(alpha: 0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.add, size: 16, color: Colors.white),
-            const SizedBox(width: 6),
-            Text(
-              context.l10n.assignField,
-              style: AppTextStyles.labelMedium.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Field card widget.
-class _FieldCard extends StatelessWidget {
-  final FieldEntity field;
-  final VoidCallback onTap;
-
-  const _FieldCard({required this.field, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        onTap();
-      },
-      child: PremiumCard(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            // Field image/icon
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                color: AppColors.accentCyan.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
-                image: field.images.isNotEmpty
-                    ? DecorationImage(
-                        image: NetworkImage(field.images.first),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-              ),
-              child: field.images.isEmpty
-                  ? const Icon(
-                      Icons.sports_soccer,
-                      size: 24,
-                      color: AppColors.accentCyan,
-                    )
-                  : null,
-            ),
-            const SizedBox(width: 14),
-            // Field info
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    field.name,
-                    style: AppTextStyles.titleSmall.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 14,
-                        color: AppColors.textSecondary.withValues(alpha: 0.7),
-                      ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          field.city,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant
-                                .withValues(alpha: 0.8),
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Status and rating
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                _FieldStatusBadge(isActive: field.isActive),
-                if ((field.averageRating ?? 0) > 0) ...[
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      const Icon(Icons.star, size: 14, color: Colors.orange),
-                      const SizedBox(width: 4),
-                      Text(
-                        field.averageRating!.toStringAsFixed(1),
-                        style: AppTextStyles.labelMedium.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.orange,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Field status badge widget.
-class _FieldStatusBadge extends StatelessWidget {
-  final bool isActive;
-
-  const _FieldStatusBadge({required this.isActive});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final color = isActive ? colorScheme.success : colorScheme.onSurfaceVariant;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        isActive ? context.l10n.active : context.l10n.inactive,
-        style: AppTextStyles.badge.copyWith(
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-          color: color,
-        ),
-      ),
-    );
-  }
-}
-
-/// Empty fields state widget.
-class _EmptyFieldsState extends StatelessWidget {
-  const _EmptyFieldsState();
-
-  @override
-  Widget build(BuildContext context) {
-    return PremiumCard(
-      padding: const EdgeInsets.all(32),
-      child: Column(
-        children: [
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              color: AppColors.premiumGold.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.sports_soccer,
-              size: 28,
-              color: AppColors.premiumGold,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            context.l10n.noFieldsAssigned,
-            style: AppTextStyles.titleSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            context.l10n.assignFieldsToThisAdminTo,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: Theme.of(
-                context,
-              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-            ),
-            textAlign: TextAlign.center,
-          ),
         ],
       ),
     );

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'components/actions/section_header.dart';
+import 'components/actions/quick_action.dart';
+import 'components/actions/quick_action_card.dart';
 
 /// Premium quick actions for super admin dashboard.
 ///
@@ -38,49 +39,49 @@ class PremiumSuperAdminQuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = [
-      _QuickAction(
+      QuickAction(
         label: context.l10n.manageUsers,
         icon: Icons.people_rounded,
         gradient: const [Color(0xFF6366F1), Color(0xFF8B5CF6)],
         onTap: onManageUsers,
       ),
-      _QuickAction(
+      QuickAction(
         label: context.l10n.fieldOwners2,
         icon: Icons.admin_panel_settings_rounded,
         gradient: const [AppColors.goldAccent, Color(0xFFD4A574)],
         onTap: onManageAdmins,
       ),
-      _QuickAction(
+      QuickAction(
         label: context.l10n.allFields,
         icon: Icons.sports_soccer_rounded,
         gradient: const [Color(0xFF10B981), Color(0xFF059669)],
         onTap: onManageFields,
       ),
-      _QuickAction(
+      QuickAction(
         label: context.l10n.allBookings,
         icon: Icons.calendar_month_rounded,
         gradient: const [Color(0xFF3B82F6), Color(0xFF1D4ED8)],
         onTap: onManageBookings,
       ),
-      _QuickAction(
+      QuickAction(
         label: context.l10n.cities,
         icon: Icons.location_city_rounded,
         gradient: const [Color(0xFFF59E0B), Color(0xFFEF4444)],
         onTap: onManageCities,
       ),
-      _QuickAction(
+      QuickAction(
         label: context.l10n.analytics,
         icon: Icons.analytics_rounded,
         gradient: const [Color(0xFFEC4899), Color(0xFFBE185D)],
         onTap: onViewAnalytics,
       ),
-      _QuickAction(
+      QuickAction(
         label: context.l10n.reports,
         icon: Icons.assessment_rounded,
         gradient: const [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
         onTap: onViewReports,
       ),
-      _QuickAction(
+      QuickAction(
         label: context.l10n.settings,
         icon: Icons.settings_rounded,
         gradient: const [Color(0xFF64748B), Color(0xFF475569)],
@@ -93,7 +94,7 @@ class PremiumSuperAdminQuickActions extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _SectionHeader(title: context.l10n.quickActions),
+          SectionHeader(title: context.l10n.quickActions),
           const SizedBox(height: 14),
           AnimationLimiter(
             child: GridView.builder(
@@ -113,7 +114,7 @@ class PremiumSuperAdminQuickActions extends StatelessWidget {
                   duration: const Duration(milliseconds: 375),
                   child: ScaleAnimation(
                     child: FadeInAnimation(
-                      child: _QuickActionCard(action: actions[index]),
+                      child: QuickActionCard(action: actions[index]),
                     ),
                   ),
                 );
@@ -121,140 +122,6 @@ class PremiumSuperAdminQuickActions extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Section header.
-class _SectionHeader extends StatelessWidget {
-  final String title;
-
-  const _SectionHeader({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 20,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [AppColors.goldAccent, Color(0xFFD4A574)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Text(title, style: AppTextStyles.titleMediumBold),
-      ],
-    );
-  }
-}
-
-/// Quick action data class.
-class _QuickAction {
-  final String label;
-  final IconData icon;
-  final List<Color> gradient;
-  final VoidCallback onTap;
-
-  const _QuickAction({
-    required this.label,
-    required this.icon,
-    required this.gradient,
-    required this.onTap,
-  });
-}
-
-/// Quick action card widget.
-class _QuickActionCard extends StatefulWidget {
-  final _QuickAction action;
-
-  const _QuickActionCard({required this.action});
-
-  @override
-  State<_QuickActionCard> createState() => _QuickActionCardState();
-}
-
-class _QuickActionCardState extends State<_QuickActionCard>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 100),
-    );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.9,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => _controller.forward(),
-      onTapUp: (_) => _controller.reverse(),
-      onTapCancel: () => _controller.reverse(),
-      onTap: () {
-        HapticFeedback.lightImpact();
-        widget.action.onTap();
-      },
-      child: AnimatedBuilder(
-        animation: _scaleAnimation,
-        builder: (context, child) {
-          return Transform.scale(scale: _scaleAnimation.value, child: child);
-        },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Icon container
-            Container(
-              width: 52,
-              height: 52,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: widget.action.gradient,
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: widget.action.gradient.first.withValues(alpha: 0.35),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Icon(widget.action.icon, color: Colors.white, size: 24),
-            ),
-            const SizedBox(height: 8),
-
-            // Label
-            Text(
-              widget.action.label,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.labelSmallBold,
-            ),
-          ],
-        ),
       ),
     );
   }

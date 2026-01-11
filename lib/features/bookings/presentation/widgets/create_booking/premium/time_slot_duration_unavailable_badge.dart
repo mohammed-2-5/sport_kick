@@ -20,24 +20,27 @@ class TimeSlotDurationUnavailableBadge extends StatelessWidget {
         color: warningColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.timer_off_outlined, size: 12, color: warningColor),
-          const SizedBox(width: 2),
-          Flexible(
-            child: Text(
-              context.l10n.durationUnavailable,
-              style: AppTextStyles.labelSmall.copyWith(
-                fontSize: 9,
-                fontWeight: FontWeight.w600,
-                color: warningColor,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.timer_off_outlined, size: 12, color: warningColor),
+            const SizedBox(width: 2),
+            Flexible(
+              child: Text(
+                context.l10n.durationUnavailable,
+                style: AppTextStyles.labelSmall.copyWith(
+                  fontSize: 9,
+                  fontWeight: FontWeight.w600,
+                  color: warningColor,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -78,6 +78,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
       context.read<AuthCubit>().login(
         email: _emailController.text.trim(),
         password: _passwordController.text,
+        loginMode: 'admin',
       );
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/features/owner/presentation/models/time_slot_ui_model.dart';
 
 /// Premium time slot grid selector.
 ///
@@ -10,7 +11,7 @@ import 'package:spo_kick/core/constants/app_text_styles.dart';
 /// - Available/Booked/Selected states
 /// - Tap animation
 class PremiumTimeSlotGrid extends StatelessWidget {
-  final List<TimeSlot> timeSlots;
+  final List<TimeSlotUiModel> timeSlots;
   final String? selectedSlotId;
   final ValueChanged<String> onSlotSelected;
 
@@ -38,7 +39,7 @@ class PremiumTimeSlotGrid extends StatelessWidget {
       itemCount: timeSlots.length,
       itemBuilder: (context, index) {
         final slot = timeSlots[index];
-        return _TimeSlotChip(
+        return _TimeSlotUiModelChip(
           slot: slot,
           isSelected: slot.id == selectedSlotId,
           onTap: slot.isAvailable
@@ -53,40 +54,23 @@ class PremiumTimeSlotGrid extends StatelessWidget {
   }
 }
 
-/// Time slot data model.
-class TimeSlot {
-  final String id;
-  final String startTime;
-  final String endTime;
-  final bool isAvailable;
-
-  const TimeSlot({
-    required this.id,
-    required this.startTime,
-    required this.endTime,
-    required this.isAvailable,
-  });
-
-  String get displayTime => '$startTime-$endTime';
-}
-
 /// Individual time slot chip.
-class _TimeSlotChip extends StatefulWidget {
-  final TimeSlot slot;
+class _TimeSlotUiModelChip extends StatefulWidget {
+  final TimeSlotUiModel slot;
   final bool isSelected;
   final VoidCallback? onTap;
 
-  const _TimeSlotChip({
+  const _TimeSlotUiModelChip({
     required this.slot,
     required this.isSelected,
     this.onTap,
   });
 
   @override
-  State<_TimeSlotChip> createState() => _TimeSlotChipState();
+  State<_TimeSlotUiModelChip> createState() => _TimeSlotUiModelChipState();
 }
 
-class _TimeSlotChipState extends State<_TimeSlotChip>
+class _TimeSlotUiModelChipState extends State<_TimeSlotUiModelChip>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;

@@ -4,12 +4,13 @@ import 'package:spo_kick/core/constants/app_colors.dart';
 /// Premium splash screen view.
 ///
 /// Features:
-/// - Navy gradient background
+/// - Electric Modern theme (Dark Grey & Cyan)
 /// - Animated logo
 /// - Fade and scale entrance
 /// - Glow effect
 class PremiumSplashView extends StatefulWidget {
-  final Widget child;
+  final Widget
+  child; // Kept for signature compatibility, but unused if we hardcode the logo asset
   final String appName;
   final String tagline;
 
@@ -72,22 +73,22 @@ class _PremiumSplashViewState extends State<PremiumSplashView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.electricBlack,
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+          // Subtle radial gradient for depth
+          gradient: RadialGradient(
+            center: Alignment.center,
+            radius: 1.5,
             colors: [
-              AppColors.navyDeep,
-              AppColors.navyLight,
-              AppColors.navyDeep,
+              Color(0xFF1E1E1E), // Slightly lighter center
+              AppColors.electricBlack,
             ],
-            stops: [0.0, 0.5, 1.0],
           ),
         ),
         child: Stack(
           children: [
-            // Decorative glow orbs
+            // Decorative glow orbs (Electric Cyan)
             _DecorativeGlowOrb(
               top: -100,
               left: -100,
@@ -116,24 +117,29 @@ class _PremiumSplashViewState extends State<PremiumSplashView>
                           child: ScaleTransition(
                             scale: _scaleAnimation,
                             child: Container(
+                              width: 160, // Slightly larger for the shield
+                              height: 160,
                               decoration: BoxDecoration(
-                                shape: BoxShape.circle,
+                                // No circle shape constraint strictly, but keep shadow soft
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.accentCyan.withValues(
-                                      alpha: 0.3 * _glowAnimation.value,
+                                    color: AppColors.electricCyan.withValues(
+                                      alpha: 0.2 * _glowAnimation.value,
                                     ),
-                                    blurRadius: 40,
+                                    blurRadius: 50,
                                     spreadRadius: 10,
                                   ),
                                 ],
                               ),
-                              child: child,
+                              child: Image.asset(
+                                'assets/images/logo.png',
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         );
                       },
-                      child: widget.child,
+                      child: const SizedBox(), // Child not used
                     ),
                     const SizedBox(height: 32),
                     // App name
@@ -146,6 +152,13 @@ class _PremiumSplashViewState extends State<PremiumSplashView>
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
                           letterSpacing: 1.5,
+                          shadows: [
+                            BoxShadow(
+                              color: AppColors.electricCyan,
+                              blurRadius: 20,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -157,8 +170,8 @@ class _PremiumSplashViewState extends State<PremiumSplashView>
                         widget.tagline,
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.white.withValues(alpha: 0.8),
-                          letterSpacing: 0.5,
+                          color: Colors.white.withValues(alpha: 0.7),
+                          letterSpacing: 0.8,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -173,7 +186,7 @@ class _PremiumSplashViewState extends State<PremiumSplashView>
                         child: CircularProgressIndicator(
                           strokeWidth: 3,
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.accentCyan,
+                            AppColors.electricCyan,
                           ),
                         ),
                       ),
@@ -219,7 +232,7 @@ class _DecorativeGlowOrb extends StatelessWidget {
         animation: animation,
         builder: (context, child) {
           return Opacity(
-            opacity: 0.15 * animation.value,
+            opacity: 0.1 * animation.value, // Reduced opacity for subtle effect
             child: Container(
               width: size,
               height: size,
@@ -227,8 +240,8 @@ class _DecorativeGlowOrb extends StatelessWidget {
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    AppColors.accentCyan,
-                    AppColors.accentCyan.withValues(alpha: 0),
+                    AppColors.electricCyan,
+                    AppColors.electricCyan.withValues(alpha: 0),
                   ],
                 ),
               ),

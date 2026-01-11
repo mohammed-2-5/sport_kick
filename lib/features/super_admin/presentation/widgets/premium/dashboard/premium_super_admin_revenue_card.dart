@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/localization/l10n_extensions.dart';
+import 'components/revenue/revenue_breakdown_item.dart';
+import 'components/revenue/revenue_growth_badge.dart';
 
 /// Premium revenue card for super admin dashboard.
 ///
@@ -143,7 +145,7 @@ class _PremiumSuperAdminRevenueCardState
                         ),
                       ],
                     ),
-                    _GrowthBadge(growth: widget.growthPercentage),
+                    RevenueGrowthBadge(growth: widget.growthPercentage),
                   ],
                 ),
                 const SizedBox(height: 24),
@@ -162,7 +164,7 @@ class _PremiumSuperAdminRevenueCardState
                 Row(
                   children: [
                     Expanded(
-                      child: _RevenueBreakdownItem(
+                      child: RevenueBreakdownItem(
                         label: context.l10n.thisWeek,
                         value: widget.weeklyRevenue,
                         icon: Icons.calendar_view_week_rounded,
@@ -174,7 +176,7 @@ class _PremiumSuperAdminRevenueCardState
                       color: Colors.white.withValues(alpha: 0.1),
                     ),
                     Expanded(
-                      child: _RevenueBreakdownItem(
+                      child: RevenueBreakdownItem(
                         label: context.l10n.thisMonth,
                         value: widget.monthlyRevenue,
                         icon: Icons.calendar_month_rounded,
@@ -186,106 +188,6 @@ class _PremiumSuperAdminRevenueCardState
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// Revenue breakdown item.
-class _RevenueBreakdownItem extends StatelessWidget {
-  final String label;
-  final String value;
-  final IconData icon;
-
-  const _RevenueBreakdownItem({
-    required this.label,
-    required this.value,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: AppColors.goldAccent.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, size: 16, color: AppColors.goldAccent),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: AppTextStyles.withColor(
-                    AppTextStyles.labelSmall,
-                    Colors.white54,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  value,
-                  style: AppTextStyles.bold(AppTextStyles.bodyMediumWhite),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Growth indicator badge.
-class _GrowthBadge extends StatelessWidget {
-  final double growth;
-
-  const _GrowthBadge({required this.growth});
-
-  @override
-  Widget build(BuildContext context) {
-    final isPositive = growth >= 0;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: isPositive
-            ? Colors.green.withValues(alpha: 0.2)
-            : Colors.red.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isPositive
-              ? Colors.green.withValues(alpha: 0.3)
-              : Colors.red.withValues(alpha: 0.3),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            isPositive
-                ? Icons.trending_up_rounded
-                : Icons.trending_down_rounded,
-            size: 14,
-            color: isPositive ? Colors.green : Colors.red,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            '${isPositive ? '+' : ''}${growth.toStringAsFixed(1)}%',
-            style: AppTextStyles.withColor(
-              AppTextStyles.labelSmallBold,
-              isPositive ? Colors.green : Colors.red,
-            ),
-          ),
-        ],
       ),
     );
   }

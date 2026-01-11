@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/core/widgets/premium/premium_curved_header.dart';
 import 'package:spo_kick/features/super_admin/domain/entities/city_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/city_management/city_management_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/city_management/city_management_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/city_actions_sheet.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/components/cities_empty_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/components/cities_error_view.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/components/cities_loading_view.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/components/cities_refresh_button.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/create_city_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/delete_city_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/cities/edit_city_dialog.dart';
@@ -135,11 +138,11 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
 
   Widget _buildBody(BuildContext context, CityManagementState state) {
     if (state is CityManagementLoading) {
-      return _LoadingView(message: state.message);
+      return CitiesLoadingView(message: state.message);
     }
 
     if (state is CityManagementError) {
-      return _ErrorView(
+      return CitiesErrorView(
         message: state.message,
         onRetry: () => context.read<CityManagementCubit>().loadCities(),
       );
@@ -149,7 +152,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
       return _buildLoadedContent(context, state.cities);
     }
 
-    return _LoadingView(message: context.l10n.cityLoading);
+    return CitiesLoadingView(message: context.l10n.cityLoading);
   }
 
   Widget _buildLoadedContent(BuildContext context, List<CityEntity> cities) {
@@ -176,7 +179,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
               subtitle: context.l10n.managePlatformLocations,
               showBackButton: true,
               actions: [
-                _RefreshButton(
+                CitiesRefreshButton(
                   onTap: () => context.read<CityManagementCubit>().loadCities(),
                 ),
               ],
@@ -214,7 +217,7 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
 
           // Cities List
           if (filteredCities.isEmpty)
-            const SliverFillRemaining(child: _EmptyState())
+            const SliverFillRemaining(child: CitiesEmptyState())
           else
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -250,176 +253,6 @@ class _PremiumCitiesViewState extends State<PremiumCitiesView> {
           // Bottom padding for FAB
           const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
-      ),
-    );
-  }
-}
-
-/// Refresh button for the header.
-class _RefreshButton extends StatelessWidget {
-  final VoidCallback onTap;
-
-  const _RefreshButton({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.glassHighlight,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: IconButton(
-        icon: const Icon(
-          Icons.refresh_rounded,
-          color: AppColors.textOnNavy,
-          size: 22,
-        ),
-        onPressed: onTap,
-      ),
-    );
-  }
-}
-
-/// Loading view with premium spinner.
-class _LoadingView extends StatelessWidget {
-  final String message;
-
-  const _LoadingView({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CircularProgressIndicator(
-            color: AppColors.goldAccent,
-            strokeWidth: 3,
-          ),
-          const SizedBox(height: 20),
-          Text(
-            message,
-            style: AppTextStyles.labelLarge.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Error view with retry button.
-class _ErrorView extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
-
-  const _ErrorView({required this.message, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: colorScheme.error.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.error_outline_rounded,
-                color: colorScheme.error,
-                size: 40,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              context.l10n.oopsSomethingWentWrong,
-              style: AppTextStyles.titleMedium.copyWith(
-                color: colorScheme.onSurface,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded),
-              label: Text(context.l10n.tryAgain),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: colorScheme.primary,
-                foregroundColor: colorScheme.onPrimary,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Empty state when no cities match filter.
-class _EmptyState extends StatelessWidget {
-  const _EmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: colorScheme.primary.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.location_city_rounded,
-                color: colorScheme.primary.withValues(alpha: 0.6),
-                size: 48,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              context.l10n.noCitiesFound,
-              style: AppTextStyles.titleMedium.copyWith(
-                color: colorScheme.onSurface,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              context.l10n.tryAdjustingYourFiltersNorAdd,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
       ),
     );
   }

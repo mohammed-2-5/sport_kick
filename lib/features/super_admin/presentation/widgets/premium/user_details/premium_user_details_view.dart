@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/bookings/domain/entities/booking_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/user_details/user_details_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/user_details/user_details_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/components/user_details_back_button.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/components/user_details_error_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/components/user_details_loading_state.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_status_toggle_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_action_buttons.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_booking_list.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_profile_header.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_user_stats_grid.dart';
-import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium user details view.
 ///
@@ -81,11 +81,11 @@ class _PremiumUserDetailsViewState extends State<PremiumUserDetailsView> {
 
   Widget _buildBody(BuildContext context, UserDetailsState state) {
     if (state is UserDetailsLoading) {
-      return const _LoadingState();
+      return const UserDetailsLoadingState();
     }
 
     if (state is UserDetailsError && state.user == null) {
-      return _ErrorState(
+      return UserDetailsErrorState(
         message: state.message,
         onRetry: () => context.read<UserDetailsCubit>().initialize(widget.user),
       );
@@ -107,7 +107,7 @@ class _PremiumUserDetailsViewState extends State<PremiumUserDetailsView> {
               padding: const EdgeInsets.all(16),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: _BackButton(onTap: () => context.pop()),
+                child: UserDetailsBackButton(onTap: () => context.pop()),
               ),
             ),
           ),
@@ -169,108 +169,5 @@ class _PremiumUserDetailsViewState extends State<PremiumUserDetailsView> {
   bool _getIsTogglingStatus(UserDetailsState state) {
     if (state is UserDetailsLoaded) return state.isTogglingStatus;
     return false;
-  }
-}
-
-/// Back button widget.
-class _BackButton extends StatelessWidget {
-  final VoidCallback onTap;
-
-  const _BackButton({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 44,
-        height: 44,
-        decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colorScheme.outline),
-        ),
-        child: Icon(Icons.arrow_back, color: colorScheme.onSurface, size: 20),
-      ),
-    );
-  }
-}
-
-/// Loading state widget.
-class _LoadingState extends StatelessWidget {
-  const _LoadingState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: const Center(
-        child: CircularProgressIndicator(color: AppColors.premiumGold),
-      ),
-    );
-  }
-}
-
-/// Error state widget.
-class _ErrorState extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
-
-  const _ErrorState({required this.message, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.error_outline, size: 64, color: Colors.red.shade300),
-              const SizedBox(height: 16),
-              Text(
-                message,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.bodyLargeWhite,
-              ),
-              const SizedBox(height: 24),
-              GestureDetector(
-                onTap: onRetry,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.premiumGold,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    context.l10n.retry,
-                    style: AppTextStyles.labelLargeWhite,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

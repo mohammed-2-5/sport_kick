@@ -583,6 +583,12 @@ class AppColors {
   /// Premium gold dark
   static const Color premiumGoldDark = Color(0xFFB08C2F);
 
+  /// Electric black (Splash background)
+  static const Color electricBlack = Color(0xFF121212);
+
+  /// Electric cyan (Splash accent)
+  static const Color electricCyan = Color(0xFF00E5FF);
+
   // ============================================================================
   // GLASS COLORS
   // ============================================================================

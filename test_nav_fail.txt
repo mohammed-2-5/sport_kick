@@ -1,0 +1,61 @@
+00:00 +0: loading C:/Users/moham/StudioProjects/spo_kick/test/features/home/presentation/cubit/navigation_cubit_test.dart
+00:00 +0: NavigationCubit initial state is NavigationActive(index=0)
+00:00 +1: NavigationCubit currentIndex getter returns correct index
+00:00 +2: NavigationCubit isNavigatingForward returns correct direction
+00:00 +3: changeTab emits [animating true, animating false] when tab changes
+00:00 +2 -1: changeTab emits [animating true, animating false] when tab changes
+00:00 +2 -1: NavigationCubit currentIndex getter returns correct index [E]
+  Bad state: Cannot emit new states after calling close
+  package:bloc/src/bloc_base.dart 100:9                                                     BlocBase.emit
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 31:11  NavigationCubit.changeTab.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                                                                new Future.delayed
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 28:14  NavigationCubit.changeTab
+  test\features\home\presentation\cubit\navigation_cubit_test.dart 25:13                    main.<fn>.<fn>
+  
+  This test failed after it had already completed.
+  Make sure to use a matching library which informs the test runner
+  of pending async work.
+  package:bloc/src/bloc_base.dart 100:9                                                     BlocBase.emit
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 31:11  NavigationCubit.changeTab.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                                                                new Future.delayed
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 28:14  NavigationCubit.changeTab
+  test\features\home\presentation\cubit\navigation_cubit_test.dart 25:13                    main.<fn>.<fn>
+  
+00:00 +1 -2: changeTab emits [animating true, animating false] when tab changes
+00:00 +1 -2: NavigationCubit isNavigatingForward returns correct direction [E]
+  Bad state: Cannot emit new states after calling close
+  package:bloc/src/bloc_base.dart 100:9                                                     BlocBase.emit
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 31:11  NavigationCubit.changeTab.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                                                                new Future.delayed
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 28:14  NavigationCubit.changeTab
+  test\features\home\presentation\cubit\navigation_cubit_test.dart 34:13                    main.<fn>.<fn>
+  
+  This test failed after it had already completed.
+  Make sure to use a matching library which informs the test runner
+  of pending async work.
+  package:bloc/src/bloc_base.dart 100:9                                                     BlocBase.emit
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 31:11  NavigationCubit.changeTab.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                                                                new Future.delayed
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 28:14  NavigationCubit.changeTab
+  test\features\home\presentation\cubit\navigation_cubit_test.dart 34:13                    main.<fn>.<fn>
+  
+  Bad state: Cannot emit new states after calling close
+  package:bloc/src/bloc_base.dart 100:9                                                     BlocBase.emit
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 31:11  NavigationCubit.changeTab.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                                                                new Future.delayed
+  package:spo_kick/features/home/presentation/cubit/navigation/navigation_cubit.dart 28:14  NavigationCubit.changeTab
+  test\features\home\presentation\cubit\navigation_cubit_test.dart 37:13                    main.<fn>.<fn>
+  
+00:00 +2 -2: changeTab does nothing if index is same
+00:00 +3 -2: helpers goToHome switches to index 0
+00:00 +4 -2: helpers goToExplore switches to index 1
+00:01 +5 -2: helpers goToBookings switches to index 2
+00:01 +6 -2: helpers goToProfile switches to index 3
+00:01 +7 -2: FAB visibility etFabVisibility updates showFab
+00:01 +8 -2: FAB visibility toggleFab flips showFab
+00:01 +9 -2: Some tests failed.

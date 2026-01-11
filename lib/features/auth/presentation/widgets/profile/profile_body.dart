@@ -6,7 +6,6 @@ import 'package:spo_kick/core/localization/l10n_extensions.dart';
 import 'package:spo_kick/core/widgets/premium/premium_button.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:spo_kick/features/auth/presentation/utils/logout_dialog.dart';
 import 'package:spo_kick/features/auth/presentation/utils/profile_utils.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/edit_profile_dialog.dart';
 import 'package:spo_kick/features/auth/presentation/widgets/profile/profile_info_card.dart';
@@ -130,23 +129,12 @@ class _ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        PremiumButton(
-          label: context.l10n.editProfile,
-          onPressed: () => _showEditDialog(context),
-          style: PremiumButtonStyle.outline,
-          icon: Icons.edit_outlined,
-        ),
-        const SizedBox(height: 16),
-        PremiumButton(
-          label: context.l10n.logout,
-          onPressed: () => showLogoutConfirmation(context),
-          style: PremiumButtonStyle.text,
-          icon: Icons.logout,
-        ),
-      ],
+    return PremiumButton(
+      label: context.l10n.editProfile,
+      onPressed: () => _showEditDialog(context),
+      style: PremiumButtonStyle.outline,
+      icon: Icons.edit_outlined,
+      fullWidth: true,
     );
   }
 

@@ -107,13 +107,18 @@ class PremiumCurvedHeader extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            title,
-                            style: const TextStyle(
-                              color: AppColors.textOnNavy,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              height: 1.2,
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              title,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                color: AppColors.textOnNavy,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                height: 1.2,
+                              ),
                             ),
                           ),
                           if (subtitle != null) ...[

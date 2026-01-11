@@ -92,7 +92,11 @@ class LoginCubit extends Cubit<LoginState> {
 
     // All validations passed - trigger haptic and login
     HapticFeedback.mediumImpact();
-    _authCubit.login(email: state.email.trim(), password: state.password);
+    _authCubit.login(
+      email: state.email.trim(),
+      password: state.password,
+      loginMode: state.loginMode,
+    );
   }
 
   /// Update forgot password email.

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
-import 'package:spo_kick/core/constants/app_text_styles.dart';
 import 'package:spo_kick/core/utils/snackbar_helper.dart';
 import 'package:spo_kick/features/auth/domain/entities/user_entity.dart';
 import 'package:spo_kick/features/fields/domain/entities/field_entity.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admin_details/admin_details_cubit.dart';
 import 'package:spo_kick/features/super_admin/presentation/cubit/admin_details/admin_details_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/components/admin_details_back_button.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/components/admin_details_error_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/components/admin_details_loading_state.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/components/admin_details_refresh_button.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_admin_action_buttons.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_admin_fields_list.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_admin_profile_header.dart';
@@ -16,7 +19,6 @@ import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_password_reset_success_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/admin_details/premium_reset_password_dialog.dart';
 import 'package:spo_kick/features/super_admin/presentation/widgets/premium/user_details/premium_status_toggle_dialog.dart';
-import 'package:spo_kick/core/localization/l10n_extensions.dart';
 
 /// Premium admin details view.
 ///
@@ -122,11 +124,11 @@ class _PremiumAdminDetailsViewState extends State<PremiumAdminDetailsView> {
 
   Widget _buildBody(BuildContext context, AdminDetailsState state) {
     if (state is AdminDetailsLoading) {
-      return const _LoadingState();
+      return const AdminDetailsLoadingState();
     }
 
     if (state is AdminDetailsError && state.admin == null) {
-      return _ErrorState(
+      return AdminDetailsErrorState(
         message: state.message,
         onRetry: () =>
             context.read<AdminDetailsCubit>().initialize(widget.admin),
@@ -154,9 +156,11 @@ class _PremiumAdminDetailsViewState extends State<PremiumAdminDetailsView> {
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
-                    _BackButton(onTap: () => context.pop()),
+                    AdminDetailsBackButton(onTap: () => context.pop()),
                     const Spacer(),
-                    _RefreshButton(onTap: () => cubit.refreshFields()),
+                    AdminDetailsRefreshButton(
+                      onTap: () => cubit.refreshFields(),
+                    ),
                   ],
                 ),
               ),
@@ -241,141 +245,5 @@ class _PremiumAdminDetailsViewState extends State<PremiumAdminDetailsView> {
   bool _getIsResettingPassword(AdminDetailsState state) {
     if (state is AdminDetailsLoaded) return state.isResettingPassword;
     return false;
-  }
-}
-
-/// Back button widget.
-class _BackButton extends StatelessWidget {
-  final VoidCallback onTap;
-
-  const _BackButton({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 44,
-        height: 44,
-        decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colorScheme.outline),
-        ),
-        child: Icon(Icons.arrow_back, color: colorScheme.onSurface, size: 20),
-      ),
-    );
-  }
-}
-
-/// Refresh button widget.
-class _RefreshButton extends StatelessWidget {
-  final VoidCallback onTap;
-
-  const _RefreshButton({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 44,
-        height: 44,
-        decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colorScheme.outline),
-        ),
-        child: Icon(Icons.refresh, color: colorScheme.onSurface, size: 20),
-      ),
-    );
-  }
-}
-
-/// Loading state widget.
-class _LoadingState extends StatelessWidget {
-  const _LoadingState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: const Center(
-        child: CircularProgressIndicator(color: AppColors.premiumGold),
-      ),
-    );
-  }
-}
-
-/// Error state widget.
-class _ErrorState extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
-
-  const _ErrorState({required this.message, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.navyDeep, AppColors.navyLight],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.error_outline, size: 64, color: Colors.red.shade300),
-              const SizedBox(height: 16),
-              Text(
-                message,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
-              ),
-              const SizedBox(height: 24),
-              GestureDetector(
-                onTap: onRetry,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        AppColors.premiumGold,
-                        AppColors.premiumGoldDark,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    context.l10n.retry,
-                    style: AppTextStyles.labelLarge.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

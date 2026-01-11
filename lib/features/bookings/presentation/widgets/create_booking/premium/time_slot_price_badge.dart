@@ -30,17 +30,22 @@ class TimeSlotPriceBadge extends StatelessWidget {
             : successColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
-        LocaleFormatters.formatPrice(
-          context,
-          amount: slot.price,
-          currency: slot.currency,
-          decimalDigits: 0,
-        ),
-        style: AppTextStyles.labelSmall.copyWith(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: isSelected ? colorScheme.onPrimary : successColor,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          LocaleFormatters.formatPrice(
+            context,
+            amount: slot.price,
+            currency: slot.currency,
+            decimalDigits: 0,
+          ),
+          style: AppTextStyles.labelSmall.copyWith(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: isSelected ? colorScheme.onPrimary : successColor,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

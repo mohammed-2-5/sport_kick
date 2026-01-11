@@ -1,0 +1,88 @@
+00:00 +0: loading C:/Users/moham/StudioProjects/spo_kick/test/features/owner/presentation/cubit/booking_table_cubit_test.dart
+00:00 +0: BookingTableCubit initial state is BookingTableInitial
+00:00 +1: initialize emits [Loading, Loaded] when initialization succeeds
+≡ƒöì [BookingTableCubit] Initializing with ownerId: "owner-1"
+Γ£à [BookingTableCubit] Found 1 fields
+≡ƒöì [BookingTableCubit] ========================================
+≡ƒÅƒ∩╕Å [BookingTableCubit] Selected field ID: field-1
+≡ƒôà [BookingTableCubit] Week: 2026-01-03T00:00:00.000 to 2026-01-10T00:00:00.000
+≡ƒôè [BookingTableCubit] Total bookings in database: 1
+   ≡ƒô¥ Booking: field-1 on 2026-01-03T17:29:14.998162 at 10:00 (Status: confirmed)
+Γ£à [BookingTableCubit] Including booking: booking-1 on 2026-01-03T17:29:14.998162 at 10:00
+Γ£à [BookingTableCubit] Bookings matching field + week: 1
+Γ£à [BookingTableCubit] Including booking: booking-1 on 2026-01-03T17:29:14.998162 at 10:00
+Γ£à [BookingTableCubit] Including booking: booking-1 on 2026-01-03T17:29:14.998162 at 10:00
+≡ƒôì [BookingTableCubit] Mapped booking to slot: 0_10:00 (1/1 hours)
+≡ƒÄ» [BookingTableCubit] Grid slots populated: 1
+≡ƒöì [BookingTableCubit] ========================================
+00:00 +2: initialize emits [Loading, Error] when ownerId is empty
+≡ƒöì [BookingTableCubit] Initializing with ownerId: ""
+00:00 +3: initialize emits [Loading, Error] when no fields found
+≡ƒöì [BookingTableCubit] Initializing with ownerId: "owner-1"
+Γ£à [BookingTableCubit] Found 0 fields
+00:00 +4: initialize emits [Loading, Error] when repository fails
+≡ƒöì [BookingTableCubit] Initializing with ownerId: "owner-1"
+Γ¥î [BookingTableCubit] getFieldsByOwner failed: Network error
+00:00 +4 -1: initialize emits [Loading, Error] when repository fails [E]
+  Expected: [
+              BookingTableLoading:BookingTableLoading(Loading fields...),
+              BookingTableError:BookingTableError(Failed to load data: Network error)
+            ]
+    Actual: [
+              BookingTableLoading:BookingTableLoading(Loading fields...),
+              BookingTableError:BookingTableError(No fields found for this owner. Please add a field first.)
+            ]
+     Which: at location [1] is BookingTableError:<BookingTableError(No fields found for this owner. Please add a field first.)> instead of BookingTableError:<BookingTableError(Failed to load data: Network error)>
+  
+  ==== diff ========================================
+  
+  [90m[BookingTableLoading(Loading fields...), BookingTableError([0m[31m[-Fa-][0m[32m{+No f+}[0m[90mi[0m[32m{+e+}[0m[90ml[0m[31m[-e-][0m[32m{+ds foun+}[0m[90md [0m[32m{+for +}[0m[90mt[0m[32m{+his +}[0m[90mo[0m[32m{+wner.+}[0m[90m [0m[32m{+P+}[0m[90ml[0m[31m[-o-][0m[32m{+e+}[0m[90ma[0m[31m[-d-][0m[32m{+se+}[0m[90m [0m[32m{+ad+}[0m[90md[0m[32m{+ +}[0m[90ma[0m[31m[-ta:-][0m[90m [0m[31m[-N-][0m[32m{+fi+}[0m[90me[0m[31m[-twork-][0m[32m{+ld+}[0m[90m [0m[31m[-er-][0m[32m{+fi+}[0m[90mr[0m[31m[-or-][0m[32m{+st.+}[0m[90m)][0m
+  
+  ==== end diff ====================================
+  
+  package:bloc_test/src/bloc_test.dart 224:11  testBloc.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                   _Completer.completeError
+  package:bloc_test/src/bloc_test.dart 255:43  _runZonedGuarded.<fn>
+  ===== asynchronous gap ===========================
+  dart:async                                   _CustomZone.registerBinaryCallback
+  package:bloc_test/src/bloc_test.dart 252:5   _runZonedGuarded.<fn>
+  dart:async                                   runZonedGuarded
+  package:bloc_test/src/bloc_test.dart 251:3   _runZonedGuarded
+  package:bloc_test/src/bloc_test.dart 198:11  testBloc
+  package:bloc_test/src/bloc_test.dart 156:13  blocTest.<fn>
+  
+00:00 +4 -1: navigation nextWeek advances week and reloads
+≡ƒöì [BookingTableCubit] ========================================
+≡ƒÅƒ∩╕Å [BookingTableCubit] Selected field ID: field-1
+≡ƒôà [BookingTableCubit] Week: 2026-01-10T17:29:14.998162 to 2026-01-17T17:29:14.998162
+≡ƒôè [BookingTableCubit] Total bookings in database: 1
+   ≡ƒô¥ Booking: field-1 on 2026-01-03T17:29:14.998162 at 10:00 (Status: confirmed)
+Γ£à [BookingTableCubit] Bookings matching field + week: 0
+≡ƒÆí [BookingTableCubit] No bookings found for this field in this week!
+≡ƒÄ» [BookingTableCubit] Grid slots populated: 0
+≡ƒöì [BookingTableCubit] ========================================
+00:00 +5 -1: navigation previousWeek subtracts week and reloads
+≡ƒöì [BookingTableCubit] ========================================
+≡ƒÅƒ∩╕Å [BookingTableCubit] Selected field ID: field-1
+≡ƒôà [BookingTableCubit] Week: 2025-12-27T17:29:14.998162 to 2026-01-03T17:29:14.998162
+≡ƒôè [BookingTableCubit] Total bookings in database: 1
+   ≡ƒô¥ Booking: field-1 on 2026-01-03T17:29:14.998162 at 10:00 (Status: confirmed)
+Γ£à [BookingTableCubit] Bookings matching field + week: 0
+≡ƒÆí [BookingTableCubit] No bookings found for this field in this week!
+≡ƒÄ» [BookingTableCubit] Grid slots populated: 0
+≡ƒöì [BookingTableCubit] ========================================
+00:00 +6 -1: selectField updates selected field and reloads data
+≡ƒöì [BookingTableCubit] ========================================
+≡ƒÅƒ∩╕Å [BookingTableCubit] Selected field ID: field-1
+≡ƒôà [BookingTableCubit] Week: 2026-01-03T17:29:14.998162 to 2026-01-10T17:29:14.998162
+≡ƒôè [BookingTableCubit] Total bookings in database: 1
+   ≡ƒô¥ Booking: field-1 on 2026-01-03T17:29:14.998162 at 10:00 (Status: confirmed)
+Γ£à [BookingTableCubit] Including booking: booking-1 on 2026-01-03T17:29:14.998162 at 10:00
+Γ£à [BookingTableCubit] Bookings matching field + week: 1
+Γ£à [BookingTableCubit] Including booking: booking-1 on 2026-01-03T17:29:14.998162 at 10:00
+Γ£à [BookingTableCubit] Including booking: booking-1 on 2026-01-03T17:29:14.998162 at 10:00
+≡ƒôì [BookingTableCubit] Mapped booking to slot: 0_10:00 (1/1 hours)
+≡ƒÄ» [BookingTableCubit] Grid slots populated: 1
+≡ƒöì [BookingTableCubit] ========================================
+00:00 +7 -1: Some tests failed.

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spo_kick/core/constants/app_colors.dart';
 import 'package:spo_kick/core/constants/app_text_styles.dart';
+import 'package:spo_kick/features/super_admin/presentation/widgets/premium/components/search_filter_button.dart';
 
 /// Premium search bar for super admin.
 ///
@@ -118,7 +119,7 @@ class _PremiumAdminSearchBarState extends State<PremiumAdminSearchBar> {
           // Filter button
           if (widget.onFilterTap != null) ...[
             Container(width: 1, height: 30, color: colorScheme.outline),
-            _FilterButton(
+            SearchFilterButton(
               hasActiveFilters: widget.hasActiveFilters,
               onTap: () {
                 HapticFeedback.lightImpact();
@@ -127,58 +128,6 @@ class _PremiumAdminSearchBarState extends State<PremiumAdminSearchBar> {
             ),
           ],
         ],
-      ),
-    );
-  }
-}
-
-/// Filter button widget.
-class _FilterButton extends StatelessWidget {
-  final bool hasActiveFilters;
-  final VoidCallback onTap;
-
-  const _FilterButton({required this.hasActiveFilters, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return InkWell(
-      onTap: onTap,
-      borderRadius: const BorderRadius.horizontal(right: Radius.circular(14)),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Icon(
-              Icons.tune,
-              size: 20,
-              color: hasActiveFilters
-                  ? AppColors.premiumGold
-                  : colorScheme.onSurfaceVariant,
-            ),
-            if (hasActiveFilters)
-              Positioned(
-                top: -4,
-                right: -4,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: AppColors.premiumGold,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.premiumGold.withValues(alpha: 0.4),
-                        blurRadius: 4,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }

@@ -135,207 +135,214 @@ class _BookingSuccessOverlayState extends State<BookingSuccessOverlay>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final successColor = isDark ? AppColors.darkSuccess : AppColors.success;
 
-    return Container(
-      color: colorScheme.surface,
-      child: SafeArea(
-        child: Stack(
-          children: [
-            // Confetti particles
-            ...List.generate(
-              20,
-              (index) => SuccessParticle(
-                controller: _particleController,
-                index: index,
+    return SelectionContainer.disabled(
+      child: Container(
+        color: colorScheme.surface,
+        child: SafeArea(
+          child: Stack(
+            children: [
+              // Confetti particles
+              ...List.generate(
+                20,
+                (index) => SuccessParticle(
+                  controller: _particleController,
+                  index: index,
+                ),
               ),
-            ),
 
-            // Main content - scrollable to prevent overflow
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.all(32),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight - 64,
-                    ),
-                    child: IntrinsicHeight(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          // Success Icon
-                          AnimatedBuilder(
-                            animation: _checkController,
-                            builder: (context, child) {
-                              return Transform.scale(
-                                scale: _checkScaleAnimation.value,
-                                child: Opacity(
-                                  opacity: _checkOpacityAnimation.value,
-                                  child: Container(
-                                    width: 120,
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          successColor,
-                                          successColor.withValues(alpha: 0.8),
+              // Main content - scrollable to prevent overflow
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.all(32),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight - 64,
+                      ),
+                      child: IntrinsicHeight(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            // Success Icon
+                            AnimatedBuilder(
+                              animation: _checkController,
+                              builder: (context, child) {
+                                return Transform.scale(
+                                  scale: _checkScaleAnimation.value,
+                                  child: Opacity(
+                                    opacity: _checkOpacityAnimation.value,
+                                    child: Container(
+                                      width: 120,
+                                      height: 120,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            successColor,
+                                            successColor.withValues(alpha: 0.8),
+                                          ],
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: successColor.withValues(
+                                              alpha: 0.4,
+                                            ),
+                                            blurRadius: 30,
+                                            spreadRadius: 5,
+                                          ),
                                         ],
                                       ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: successColor.withValues(
-                                            alpha: 0.4,
-                                          ),
-                                          blurRadius: 30,
-                                          spreadRadius: 5,
+                                      child: Icon(
+                                        Icons.check,
+                                        color: colorScheme.onPrimary,
+                                        size: 60 * _circleAnimation.value,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+
+                            const SizedBox(height: 32),
+
+                            // Content
+                            AnimatedBuilder(
+                              animation: _contentController,
+                              builder: (context, child) {
+                                return Transform.translate(
+                                  offset: Offset(
+                                    0,
+                                    _contentSlideAnimation.value,
+                                  ),
+                                  child: Opacity(
+                                    opacity: _contentOpacityAnimation.value,
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Text(
+                                    context.l10n.bookingConfirmedTitle,
+                                    style: AppTextStyles.headlineMedium
+                                        .copyWith(
+                                          fontWeight: FontWeight.w800,
+                                          color: colorScheme.onSurface,
+                                        ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    context.l10n.bookingConfirmedDescription,
+                                    textAlign: TextAlign.center,
+                                    style: AppTextStyles.bodyMedium.copyWith(
+                                      color: colorScheme.onSurfaceVariant,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 32),
+
+                                  // Booking ID Card
+                                  Container(
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          colorScheme.surfaceContainerHighest,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.confirmation_number,
+                                              color: colorScheme.primary,
+                                              size: 20,
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              context.l10n.bookingId,
+                                              style: AppTextStyles.labelMedium
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w500,
+                                                    color: colorScheme
+                                                        .onSurfaceVariant,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          '#${widget.booking.id.substring(0, 8).toUpperCase()}',
+                                          style: AppTextStyles.titleLarge
+                                              .copyWith(
+                                                fontWeight: FontWeight.w800,
+                                                color: colorScheme.onSurface,
+                                                letterSpacing: 1,
+                                              ),
                                         ),
                                       ],
                                     ),
-                                    child: Icon(
-                                      Icons.check,
-                                      color: colorScheme.onPrimary,
-                                      size: 60 * _circleAnimation.value,
-                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
+                                ],
+                              ),
+                            ),
 
-                          const SizedBox(height: 32),
+                            const SizedBox(height: 24),
 
-                          // Content
-                          AnimatedBuilder(
-                            animation: _contentController,
-                            builder: (context, child) {
-                              return Transform.translate(
-                                offset: Offset(0, _contentSlideAnimation.value),
-                                child: Opacity(
+                            // Actions
+                            AnimatedBuilder(
+                              animation: _contentController,
+                              builder: (context, child) {
+                                return Opacity(
                                   opacity: _contentOpacityAnimation.value,
                                   child: child,
-                                ),
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                Text(
-                                  context.l10n.bookingConfirmedTitle,
-                                  style: AppTextStyles.headlineMedium.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    color: colorScheme.onSurface,
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-                                Text(
-                                  context.l10n.bookingConfirmedDescription,
-                                  textAlign: TextAlign.center,
-                                  style: AppTextStyles.bodyMedium.copyWith(
-                                    color: colorScheme.onSurfaceVariant,
-                                    height: 1.5,
-                                  ),
-                                ),
-                                const SizedBox(height: 32),
-
-                                // Booking ID Card
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.surfaceContainerHighest,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.confirmation_number,
-                                            color: colorScheme.primary,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            context.l10n.bookingId,
-                                            style: AppTextStyles.labelMedium
-                                                .copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: colorScheme
-                                                      .onSurfaceVariant,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        '#${widget.booking.id.substring(0, 8).toUpperCase()}',
-                                        style: AppTextStyles.titleLarge
-                                            .copyWith(
-                                              fontWeight: FontWeight.w800,
-                                              color: colorScheme.onSurface,
-                                              letterSpacing: 1,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(height: 24),
-
-                          // Actions
-                          AnimatedBuilder(
-                            animation: _contentController,
-                            builder: (context, child) {
-                              return Opacity(
-                                opacity: _contentOpacityAnimation.value,
-                                child: child,
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                // Primary: View Invoice (for payment)
-                                if (widget.field != null) ...[
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  // Primary: View Invoice (for payment)
+                                  if (widget.field != null) ...[
+                                    PremiumButton(
+                                      label: context.l10n.viewInvoiceAndPay,
+                                      onPressed: widget.onViewInvoice,
+                                      fullWidth: true,
+                                      icon: Icons.receipt_long_rounded,
+                                    ),
+                                    const SizedBox(height: 12),
+                                  ],
                                   PremiumButton(
-                                    label: context.l10n.viewInvoiceAndPay,
-                                    onPressed: widget.onViewInvoice,
+                                    label: context.l10n.viewMyBookings,
+                                    onPressed: widget.onViewBookings,
                                     fullWidth: true,
-                                    icon: Icons.receipt_long_rounded,
+                                    icon: Icons.list_alt,
+                                    style: widget.field != null
+                                        ? PremiumButtonStyle.outline
+                                        : PremiumButtonStyle.primary,
                                   ),
                                   const SizedBox(height: 12),
+                                  PremiumButton(
+                                    label: context.l10n.done,
+                                    onPressed: widget.onDone,
+                                    fullWidth: true,
+                                    style: PremiumButtonStyle.outline,
+                                  ),
                                 ],
-                                PremiumButton(
-                                  label: context.l10n.viewMyBookings,
-                                  onPressed: widget.onViewBookings,
-                                  fullWidth: true,
-                                  icon: Icons.list_alt,
-                                  style: widget.field != null
-                                      ? PremiumButtonStyle.outline
-                                      : PremiumButtonStyle.primary,
-                                ),
-                                const SizedBox(height: 12),
-                                PremiumButton(
-                                  label: context.l10n.done,
-                                  onPressed: widget.onDone,
-                                  fullWidth: true,
-                                  style: PremiumButtonStyle.outline,
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
