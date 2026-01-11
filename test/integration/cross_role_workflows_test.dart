@@ -379,6 +379,7 @@ void main() {
           await ownerAuthCubit.login(
             email: testData.owner.email,
             password: 'ownerpass123',
+            loginMode: 'admin',
           );
 
           // Assert
@@ -905,6 +906,7 @@ void main() {
         await superAdminAuthCubit.login(
           email: testData.superAdmin.email,
           password: 'superadminpass',
+          loginMode: 'admin',
         );
 
         // Assert
@@ -962,6 +964,7 @@ void main() {
         await newAdminAuthCubit.login(
           email: testData.newAdmin.email,
           password: testData.tempPassword,
+          loginMode: 'admin',
         );
 
         // Assert

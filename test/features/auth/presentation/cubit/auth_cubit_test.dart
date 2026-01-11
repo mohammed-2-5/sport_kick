@@ -201,8 +201,11 @@ void main() {
         when(() => mockLogin(any())).thenAnswer((_) async => Right(testAdmin));
         return authCubit;
       },
-      act: (cubit) =>
-          cubit.login(email: 'admin@example.com', password: 'admin123'),
+      act: (cubit) => cubit.login(
+        email: 'admin@example.com',
+        password: 'admin123',
+        loginMode: 'admin',
+      ),
       expect: () => [const AuthLoading(), Authenticated(testAdmin)],
       verify: (cubit) {
         expect(cubit.currentUser?.role, 'admin');

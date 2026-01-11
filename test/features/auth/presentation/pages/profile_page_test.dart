@@ -62,12 +62,12 @@ void main() {
     expect(find.text('Jan 1, 2023'), findsOneWidget);
   });
 
-  testWidgets('should show Edit Profile and Logout buttons', (tester) async {
+  testWidgets('should show Edit Profile button', (tester) async {
     when(() => mockAuthCubit.state).thenReturn(Authenticated(tUser));
 
     await tester.pumpWidget(createWidgetUnderTest());
 
     expect(find.text('Edit Profile'), findsOneWidget);
-    expect(find.text('Logout'), findsOneWidget);
+    // Logout button moved to Settings page
   });
 }
